@@ -1,0 +1,14 @@
+__pycache__
+
+.vscode/
+/include/
+/lib/
+/Library/
+/Scripts
+/share
+.devcontainer/
+build/
+*.egg-info/
+
+*.code-workspace
+pyvenv.cfg

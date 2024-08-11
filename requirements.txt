@@ -1,0 +1,7 @@
+librosa
+numpy
+pandas
+requests
+soundfile
+tqdm
+packaging
