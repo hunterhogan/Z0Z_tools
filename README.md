@@ -4,7 +4,7 @@
 
 Try to install a package that doesn't have installation files.
 ```sh
-py -m Z0Z_tools.pipAnything
+python -m Z0Z_tools.pipAnything <pathPackage>
 ```
 
 # Z0Z_io
