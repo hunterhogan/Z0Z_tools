@@ -57,15 +57,15 @@ def installPackageTarget(packageTarget):
 def everyone_knows_what___main___is():
     packageTarget = sys.argv[1] if len(sys.argv) > 1 else ''
     if not os.path.isdir(packageTarget) or len(sys.argv) != 2:
-        print(f"\n{os.path.basename(__file__)} says, 'That didn't work. Try again?'\n"
-            f"Usage:\tpython -m {os.path.basename(__file__)} <packageTarget>\n"
-              f"\t<packageTarget> is a path to an existing directory\n"
-              f"\tExample: python -m {os.path.basename(__file__)} {os.path.join('.', 'Z0Z_tools')}") # os.path.join for platform-independent path separator
+        print(f"\n{(namespaceModule:=os.path.splitext(os.path.basename(__file__))[0])} says, 'That didn't work. Try again?'\n"
+            f"Usage:\tpython -m {(namespacePackage:=os.path.basename(os.path.dirname(__file__)))}.{namespaceModule} '<packageTarget>'\n"
+              f"\t<packageTarget> is a path to a directory with Python modules\n"
+              f"\tExample: python -m {namespacePackage}.{namespaceModule} '{os.path.join('.', 'Z0Z_tools')}'") # os.path.join for platform-independent path separator
         # What is `-m`? Obviously, `-m` creates a namespace for the module, which is obviously necessary, except when it isn't.
         sys.exit(1)
 
     installPackageTarget(packageTarget)
-    print(f"{os.path.basename(__file__)} finished trying to trick pip into installing {os.path.basename(packageTarget)}")
+    print(f"{__name__.split('.')[-1]} finished trying to trick pip into installing {os.path.basename(packageTarget)}")
 
 def readability_counts():
     everyone_knows_what___main___is()
