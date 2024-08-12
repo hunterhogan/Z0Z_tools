@@ -11,40 +11,47 @@ installPackageTarget('path/to/packageTarget')
 pip will attempt to install requirements.txt, but don't rely on dependencies being installed.
 """
 
-def make_setupDOTpy(packageTarget):
-    pathPackage = os.path.abspath(packageTarget)
+def make_setupDOTpy(relativePathPackage):
     listRequirements = []
 
-    pathFilenameRequirements = os.path.join(pathPackage, 'requirements.txt')
+    pathFilenameRequirements = os.path.join(relativePathPackage, 'requirements.txt')
     if os.path.exists(pathFilenameRequirements):
-        fileRequirements = open(pathFilenameRequirements, 'r')
-        listRequirements = [str(Requirement(requirement.strip())) for requirement in fileRequirements if requirement.strip()]
-        fileRequirements.close()
-
-    return f"""
+        pileOFbarf = open(pathFilenameRequirements, 'r')
+        for commentedLine in pileOFbarf:
+            whereIStheSanitizeFunction = commentedLine.split('#')[0]
+            thisISabsurd = whereIStheSanitizeFunction.strip() 
+            if "\t" in thisISabsurd or " " in thisISabsurd or not thisISabsurd: 
+                continue
+            try:
+                Requirement(thisISabsurd)  
+                listRequirements.append(thisISabsurd)
+            except:
+                pass 
+        pileOFbarf.close()
+    return rf"""
 import os
 from setuptools import setup, find_packages
 
 setup(
-    name='{os.path.basename(pathPackage)}',
+    name='{os.path.basename(relativePathPackage)}',
     version='0.0.0',
-    packages=find_packages(where='{pathPackage}'),
-    package_dir={{'': '{pathPackage}'}},
+    packages=find_packages(where=r'{relativePathPackage}'),
+    package_dir={{'': r'{relativePathPackage}'}},
     install_requires={listRequirements},
     include_package_data=True,
 )
-"""
+""" 
 
 def installPackageTarget(packageTarget):
-    systemTemporaryDirectory = tempfile.mkdtemp()
-
-    pathFilename_setupDOTpy = os.path.join(systemTemporaryDirectory, 'setup.py')
+    pathPackage = os.path.abspath(packageTarget)
+    pathSystemTemporary = tempfile.mkdtemp()
+    pathFilename_setupDOTpy = os.path.join(pathSystemTemporary, 'setup.py')
     fileOut = open(pathFilename_setupDOTpy, 'w')
-    fileOut.write(make_setupDOTpy(packageTarget))
+    fileOut.write(make_setupDOTpy(os.path.relpath(pathPackage, start=pathSystemTemporary).replace(os.sep, '/')))
     fileOut.close()
 
     subprocessPython = subprocess.Popen(
-        [sys.executable, '-m', 'pip', 'install', systemTemporaryDirectory],
+        [sys.executable, '-m', 'pip', 'install', pathSystemTemporary],
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
 
     for lineStdout in subprocessPython.stdout:
@@ -65,7 +72,7 @@ def everyone_knows_what___main___is():
         sys.exit(1)
 
     installPackageTarget(packageTarget)
-    print(f"{__name__.split('.')[-1]} finished trying to trick pip into installing {os.path.basename(packageTarget)}")
+    print(f"\n{os.path.splitext(os.path.basename(__file__))[0]} finished trying to trick pip into installing {os.path.basename(packageTarget)}. Did it work?")
 
 def readability_counts():
     everyone_knows_what___main___is()
