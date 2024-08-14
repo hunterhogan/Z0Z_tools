@@ -9,7 +9,6 @@ import numpy
 import librosa
 import soundfile
 from tqdm import tqdm
-import requests
 
 def alignWaveforms(listWaveforms: List[numpy.ndarray], listCOUNTsamples: List[int]) -> Tuple[numpy.ndarray, List[int]]:
     """
@@ -133,7 +132,7 @@ def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget:
     COUNTchannels = max(entry['COUNTchannels'] for entry in dictionaryMetadata.values())
     arraySpectrograms = numpy.zeros(shape=(COUNTchannels, int(numpy.ceil(binsFFT / 2)) + 1, int(numpy.ceil(samplesTotal / hopLength)), len(dictionaryMetadata)), dtype=numpy.complex64)
 
-    for index, (pathFilename, entry) in enumerate(tqdm(dictionaryMetadata.items())):
+    for index, (pathFilename, entry) in enumerate(dictionaryMetadata.items()): # tqdm, disable if... items < 10?
         waveform, DISCARDsampleRate = librosa.load(path=pathFilename, sr=sampleRateTarget, mono=forceMonoChannel)
 
         # paddedWaveform = numpy.pad(waveform, ((0, 0), (entry['samplesLeading'], entry['samplesTrailing'])), mode='constant')
@@ -142,19 +141,19 @@ def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget:
 
     if frequencyAttenuate is not None:
         cutHighFrequencies(arraySpectrograms, frequencyAttenuate, sampleRateTarget, binsFFT)
-
+    # the dictionary of samples is not tenable; how do other people handle this?
     return arraySpectrograms, [{'COUNTsamples': entry['COUNTsamples'], 'samplesLeading': entry['samplesLeading'], 'samplesTrailing': entry['samplesTrailing']} for entry in dictionaryMetadata.values()]
 
 def spectrogramTOpathFilenameAudio(spectrogram: numpy.ndarray, pathFilename: str, binsFFT: int = 2048, hopLength: int = 1024, COUNTsamples: int = None, sampleRate: int = 44100, bitdepth: str = 'FLOAT') -> None:
     """
-    Writes the complex spectrogram to a waveform file in the specified format and bit depth.
+    Writes a complex spectrogram to a WAV file.
 
     Args:
-    pathFilename (str): Location for the file of the waveform output.
     spectrogram (numpy.ndarray): The complex spectrogram to be written to the file. (Not mel-scaled.)
-    fftbins (int): How many FFT bins to convert the spectrogram. Defaults to 2048.
-    hopLength (int): How many samples are in each time bin of the spectrogram. Defaults to 1024.
-    COUNTsamples (int): The length of the output waveform in samples: the waveform may be zero-padded or truncated to this length. If None, "a partial frame at the end of" the waveform will be truncated. See librosa.istft(), examples. Defaults to None. (Supply this value to avoid data loss.)
+    pathFilename (str): Location for the file of the waveform output.
+    binsFFT (int): How many FFT bins to convert the spectrogram. You want this to match the stft value. Defaults to 2048.
+    hopLength (int): How many samples are in each time bin of the spectrogram. You want this to match the stft value. Defaults to 1024.
+    COUNTsamples (int): The length of the output waveform in samples: if necessary, it will be zero-padded or truncated to this length. If `None`, then "a partial frame at the end of" the waveform will be truncated. See the documentaiton in the examples of librosa.istft(). Defaults to None. (Supply this value to avoid data loss.)
     sampleRate (int): The sample rate of the output waveform file. Defaults to 44100.
     bitdepth (str): The bit depth of the output waveform file (e.g., 'FLOAT', 'INT16'; see soundfile.write()). Defaults to 'FLOAT', which is a 32-bit floating-point depth.
 
@@ -164,16 +163,21 @@ def spectrogramTOpathFilenameAudio(spectrogram: numpy.ndarray, pathFilename: str
     Note:
     If the windowing parameters for the istft do not match the stft, the waveform values will be distorted.
     """
-    waveform = librosa.istft(stft_matrix=spectrogram, hop_length=hopLength, n_fft=binsFFT, length=COUNTsamples)
     os.makedirs(os.path.dirname(pathFilename), exist_ok=True)
+    waveform = librosa.istft(stft_matrix=spectrogram, hop_length=hopLength, n_fft=binsFFT, length=COUNTsamples)
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype=bitdepth)
 
+import wget
+# if I'm going to keep this, maybe it could handle path (folders) and pathfilename and/or gdown and/or other downloaders (yt-dlp?)
 def URLtoPathFilename(url: str, pathFilename: str) -> None:
-    HTTPresponse = requests.get(url, stream=True)
-    with tqdm.wrapattr(
-        open(pathFilename, "wb"), "write",
-        unit='B', unit_scale=True, unit_divisor=1024, miniters=1,
-        desc=os.path.basename(pathFilename), total=int(HTTPresponse.headers.get('content-length', 999999))
-    ) as fileOut:
-        for chunk in HTTPresponse.iter_content(chunk_size=4096):
-            fileOut.write(chunk)
+    wget.download(url, pathFilename)
+    
+# def URLtoPathFilename(url: str, pathFilename: str) -> None:
+#     HTTPresponse = requests.get(url, stream=True)
+#     with tqdm.wrapattr(
+#         open(pathFilename, "wb"), "write",
+#         unit='B', unit_scale=True, unit_divisor=1024, miniters=1,
+#         desc=os.path.basename(pathFilename), total=int(HTTPresponse.headers.get('content-length', 999999))
+#     ) as fileOut:
+#         for chunk in HTTPresponse.iter_content(chunk_size=4096):
+#             fileOut.write(chunk)
