@@ -96,7 +96,11 @@ def getPathFilenames(pathTarget: Optional[str], maskFilename: Optional[str], get
 def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget: int = 44100, forceMonoChannel: bool = False, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None, aligned: bool = False):
     # whereToPadWaveformHARDCODED = 'trailing'
     # whereToPadWaveform = whereToPadWaveformHARDCODED
-
+    # to unpack a request for a single spectrogram, maybe:
+    # spectrogram.squeeze(), dictionarySamples[0] = loadSpectrograms(pathFilename)
+    # spectrogram, dictionarySample = loadSpectrograms(pathFilename)
+    # spectrogram = spectrogram.squeeze()
+    
     if isinstance(listPathFilenames, str):
         listPathFilenames = [listPathFilenames]
 
@@ -143,6 +147,28 @@ def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget:
         cutHighFrequencies(arraySpectrograms, frequencyAttenuate, sampleRateTarget, binsFFT)
     # the dictionary of samples is not tenable; how do other people handle this?
     return arraySpectrograms, [{'COUNTsamples': entry['COUNTsamples'], 'samplesLeading': entry['samplesLeading'], 'samplesTrailing': entry['samplesTrailing']} for entry in dictionaryMetadata.values()]
+
+# def loadSpectrogram(pathFilename: str, sampleRateTarget: int = 44100, forceMonoChannel: bool = False, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None) -> numpy.ndarray:
+#     """
+#     Loads a waveform from a file and converts it to a complex spectrogram.
+
+#     Args:
+#     pathFilename (str): The path to the waveform file.
+#     sampleRateTarget (int): The target sample rate for the waveform. Defaults to 44100.
+#     forceMonoChannel (bool): Whether to force the waveform to have only one channel. Defaults to False.
+#     binsFFT (int): The number of FFT bins to use for the spectrogram. Defaults to 2048.
+#     hopLength (int): The number of samples in each time bin of the spectrogram. Defaults to 1024.
+#     frequencyAttenuate (int): The frequency at which to attenuate the spectrogram. Defaults to None.
+
+#     Returns:
+#     numpy.ndarray: The complex spectrogram.
+#     """
+#     waveform, DISCARDsampleRate = librosa.load(path=pathFilename, sr=sampleRateTarget, mono=forceMonoChannel)
+#     COUNTsamples = waveform.shape[-1]
+#     spectrogram = librosa.stft(y=waveform, n_fft=binsFFT, hop_length=hopLength)
+#     if frequencyAttenuate is not None:
+#         cutHighFrequencies(spectrogram, frequencyAttenuate, sampleRateTarget, binsFFT)
+#     return spectrogram, COUNTsamples
 
 def spectrogramTOpathFilenameAudio(spectrogram: numpy.ndarray, pathFilename: str, binsFFT: int = 2048, hopLength: int = 1024, COUNTsamples: int = None, sampleRate: int = 44100, bitdepth: str = 'FLOAT') -> None:
     """
