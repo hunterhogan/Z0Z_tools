@@ -1,19 +1,16 @@
-from glob import glob
-import posixpath
-import os
-from typing import List, Optional, Tuple, Union, Dict
 from collections import defaultdict
+from glob import glob
+from typing import List, Optional, Tuple, Union, Dict
 import json
-import pandas
-import numpy
 import librosa
+import numpy
+import os
+import pandas
+import posixpath
 import soundfile
-from tqdm import tqdm
 
 def alignWaveforms(listWaveforms: List[numpy.ndarray], listCOUNTsamples: List[int]) -> Tuple[numpy.ndarray, List[int]]:
     """
-    numpy.correlate: o.m.g. no.
-
     do not truncate data
     track the new length of each waveform
     """
@@ -100,7 +97,7 @@ def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget:
     # spectrogram.squeeze(), dictionarySamples[0] = loadSpectrograms(pathFilename)
     # spectrogram, dictionarySample = loadSpectrograms(pathFilename)
     # spectrogram = spectrogram.squeeze()
-    
+
     if isinstance(listPathFilenames, str):
         listPathFilenames = [listPathFilenames]
 
@@ -136,7 +133,7 @@ def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget:
     COUNTchannels = max(entry['COUNTchannels'] for entry in dictionaryMetadata.values())
     arraySpectrograms = numpy.zeros(shape=(COUNTchannels, int(numpy.ceil(binsFFT / 2)) + 1, int(numpy.ceil(samplesTotal / hopLength)), len(dictionaryMetadata)), dtype=numpy.complex64)
 
-    for index, (pathFilename, entry) in enumerate(dictionaryMetadata.items()): # tqdm, disable if... items < 10?
+    for index, (pathFilename, entry) in enumerate(dictionaryMetadata.items()):
         waveform, DISCARDsampleRate = librosa.load(path=pathFilename, sr=sampleRateTarget, mono=forceMonoChannel)
 
         # paddedWaveform = numpy.pad(waveform, ((0, 0), (entry['samplesLeading'], entry['samplesTrailing'])), mode='constant')
@@ -147,28 +144,6 @@ def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget:
         cutHighFrequencies(arraySpectrograms, frequencyAttenuate, sampleRateTarget, binsFFT)
     # the dictionary of samples is not tenable; how do other people handle this?
     return arraySpectrograms, [{'COUNTsamples': entry['COUNTsamples'], 'samplesLeading': entry['samplesLeading'], 'samplesTrailing': entry['samplesTrailing']} for entry in dictionaryMetadata.values()]
-
-# def loadSpectrogram(pathFilename: str, sampleRateTarget: int = 44100, forceMonoChannel: bool = False, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None) -> numpy.ndarray:
-#     """
-#     Loads a waveform from a file and converts it to a complex spectrogram.
-
-#     Args:
-#     pathFilename (str): The path to the waveform file.
-#     sampleRateTarget (int): The target sample rate for the waveform. Defaults to 44100.
-#     forceMonoChannel (bool): Whether to force the waveform to have only one channel. Defaults to False.
-#     binsFFT (int): The number of FFT bins to use for the spectrogram. Defaults to 2048.
-#     hopLength (int): The number of samples in each time bin of the spectrogram. Defaults to 1024.
-#     frequencyAttenuate (int): The frequency at which to attenuate the spectrogram. Defaults to None.
-
-#     Returns:
-#     numpy.ndarray: The complex spectrogram.
-#     """
-#     waveform, DISCARDsampleRate = librosa.load(path=pathFilename, sr=sampleRateTarget, mono=forceMonoChannel)
-#     COUNTsamples = waveform.shape[-1]
-#     spectrogram = librosa.stft(y=waveform, n_fft=binsFFT, hop_length=hopLength)
-#     if frequencyAttenuate is not None:
-#         cutHighFrequencies(spectrogram, frequencyAttenuate, sampleRateTarget, binsFFT)
-#     return spectrogram, COUNTsamples
 
 def spectrogramTOpathFilenameAudio(spectrogram: numpy.ndarray, pathFilename: str, binsFFT: int = 2048, hopLength: int = 1024, COUNTsamples: int = None, sampleRate: int = 44100, bitdepth: str = 'FLOAT') -> None:
     """
@@ -192,18 +167,3 @@ def spectrogramTOpathFilenameAudio(spectrogram: numpy.ndarray, pathFilename: str
     os.makedirs(os.path.dirname(pathFilename), exist_ok=True)
     waveform = librosa.istft(stft_matrix=spectrogram, hop_length=hopLength, n_fft=binsFFT, length=COUNTsamples)
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype=bitdepth)
-
-import wget
-# if I'm going to keep this, maybe it could handle path (folders) and pathfilename and/or gdown and/or other downloaders (yt-dlp?)
-def URLtoPathFilename(url: str, pathFilename: str) -> None:
-    wget.download(url, pathFilename)
-    
-# def URLtoPathFilename(url: str, pathFilename: str) -> None:
-#     HTTPresponse = requests.get(url, stream=True)
-#     with tqdm.wrapattr(
-#         open(pathFilename, "wb"), "write",
-#         unit='B', unit_scale=True, unit_divisor=1024, miniters=1,
-#         desc=os.path.basename(pathFilename), total=int(HTTPresponse.headers.get('content-length', 999999))
-#     ) as fileOut:
-#         for chunk in HTTPresponse.iter_content(chunk_size=4096):
-#             fileOut.write(chunk)

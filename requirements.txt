@@ -1,8 +1,5 @@
 librosa
 numpy
-pandas
-requests
-soundfile
-tqdm
 packaging
-wget
+pandas
+soundfile
