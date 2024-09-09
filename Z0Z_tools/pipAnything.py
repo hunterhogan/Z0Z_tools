@@ -1,33 +1,72 @@
-import sys
-import os
-import subprocess
-import tempfile
+"""
+Functions:
+    - installPackageTarget: Tries to trick pip into installing the package from a given directory.
+    - makeListRequirementsFromRequirementsFile: Reads a requirements.txt file, discards anything it couldn't understand, and creates a list of packages. 
+
+Usage:
+    from Z0Z_tools.pipAnything import installPackageTarget
+    installPackageTarget('path/to/packageTarget')
+
+    pip will attempt to install requirements.txt, but don't rely on dependencies being installed.
+"""
+
 from packaging.requirements import Requirement
+from os import PathLike
+import os
+import pathlib
+import subprocess
+import sys
+import tempfile
 
-"""
-from path.to.Z0Z_tools.pipAnything import installPackageTarget
-installPackageTarget('path/to/packageTarget')
+def makeListRequirementsFromRequirementsFile(pathFilename: PathLike) -> list[str]:
+    """
+    Creates a list of valid package names from the provided requirements file.
 
-pip will attempt to install requirements.txt, but don't rely on dependencies being installed.
-"""
+    Args:
+        pathFilename (PathLike): Location of a requirements file, e.g., requirements.txt.
 
-def make_setupDOTpy(relativePathPackage):
+    Returns:
+        list[str]: A list of packages.
+    """
     listRequirements = []
+    
 
-    pathFilenameRequirements = os.path.join(relativePathPackage, 'requirements.txt')
-    if os.path.exists(pathFilenameRequirements):
-        pileOFbarf = open(pathFilenameRequirements, 'r')
-        for commentedLine in pileOFbarf:
-            whereIStheSanitizeFunction = commentedLine.split('#')[0]
-            thisISabsurd = whereIStheSanitizeFunction.strip() 
-            if "\t" in thisISabsurd or " " in thisISabsurd or not thisISabsurd: 
-                continue
-            try:
-                Requirement(thisISabsurd)  
-                listRequirements.append(thisISabsurd)
-            except:
-                pass 
-        pileOFbarf.close()
+    if os.path.exists(pathFilename):
+        try:
+            filesystemObjectRead = open(pathFilename, 'r')
+            for commentedLine in filesystemObjectRead:
+                sanitizedLine = commentedLine.split('#')[0].strip()  # Remove comments and trim whitespace
+
+                # Skip lines that are empty or contain spaces/tabs after sanitization
+                if "\t" in sanitizedLine or " " in sanitizedLine or not sanitizedLine:
+                    continue
+
+                # Validate if it's a valid requirement
+                try:
+                    Requirement(sanitizedLine)
+                    listRequirements.append(sanitizedLine)
+                except:
+                    pass  # Skip invalid requirement lines
+        finally:
+            filesystemObjectRead.close()
+
+    return listRequirements
+
+
+def make_setupDOTpy(relativePathPackage: PathLike) -> str:
+    """
+    Generates setup.py file content for installing the package.
+
+    Args:
+        relativePathPackage (str): The relative path to the package directory.
+
+    Returns:
+        str: The setup.py content to be written to a file.
+    """
+    filenameRequirementsHARDCODED: str = 'requirements.txt'
+    filenameRequirements: str = filenameRequirementsHARDCODED
+    relativePathFilenameRequirements = os.path.join(relativePathPackage, filenameRequirements)
+    listRequirements = makeListRequirementsFromRequirementsFile(relativePathFilenameRequirements)
     return rf"""
 import os
 from setuptools import setup, find_packages
@@ -42,26 +81,47 @@ setup(
 )
 """ 
 
-def installPackageTarget(packageTarget):
-    pathPackage = os.path.abspath(packageTarget)
-    pathSystemTemporary = tempfile.mkdtemp()
-    pathFilename_setupDOTpy = os.path.join(pathSystemTemporary, 'setup.py')
-    fileOut = open(pathFilename_setupDOTpy, 'w')
-    fileOut.write(make_setupDOTpy(os.path.relpath(pathPackage, start=pathSystemTemporary).replace(os.sep, '/')))
-    fileOut.close()
 
+def installPackageTarget(packageTarget: PathLike):
+    """
+    Installs a package by creating a temporary setup.py and tricking pip into installing it.
+
+    Args:
+        packageTarget (str): The directory path of the package to be installed.
+    """
+    pathPackage = pathlib.Path(packageTarget).resolve()
+    pathSystemTemporary = pathlib.Path(tempfile.mkdtemp())
+    pathFilename_setupDOTpy = pathSystemTemporary / 'setup.py'
+
+    # Try-finally block for file handling
+    filesystemObjectWrite = None
+    try:
+        filesystemObjectWrite = pathFilename_setupDOTpy.open('w')
+        relativePathPackage = pathPackage.relative_to(pathSystemTemporary).as_posix()
+        filesystemObjectWrite.write(make_setupDOTpy(relativePathPackage))
+    finally:
+        if filesystemObjectWrite:
+            filesystemObjectWrite.close()
+
+    # Run pip to install the package from the temporary directory
     subprocessPython = subprocess.Popen(
-        [sys.executable, '-m', 'pip', 'install', pathSystemTemporary],
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    # `pip` needs a RELATIVE PATH, not an absolute path, and not a path+filename. 
+        [sys.executable, '-m', 'pip', 'install', str(pathSystemTemporary)],
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
+    )
 
+    # Output the subprocess stdout in real-time
     for lineStdout in subprocessPython.stdout:
         print(lineStdout, end="")
 
     subprocessPython.wait()
 
-    os.remove(pathFilename_setupDOTpy)
+    # Clean up by removing setup.py
+    pathFilename_setupDOTpy.unlink()
+
 
 def everyone_knows_what___main___is():
+    """Handles command-line arguments and installs the package."""
     packageTarget = sys.argv[1] if len(sys.argv) > 1 else ''
     if not os.path.isdir(packageTarget) or len(sys.argv) != 2:
         print(f"\n{(namespaceModule:=os.path.splitext(os.path.basename(__file__))[0])} says, 'That didn't work. Try again?'\n"

@@ -6,7 +6,7 @@ with open('requirements.txt') as fileRequirements:
 
 setup(
     name='Z0Z_tools',
-    version='0.0.2',
+    version='0.0.3',
     packages=find_packages(),
     install_requires=listRequirements,
     download_url='https://github.com/hunterhogan/Z0Z_tools.git',
