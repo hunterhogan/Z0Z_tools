@@ -1,5 +1,0 @@
-librosa
-numpy
-packaging
-pandas
-soundfile
