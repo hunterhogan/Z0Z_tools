@@ -10,6 +10,12 @@ import pandas
 import posixpath
 import soundfile
 
+sampleRate=44100
+audIOargs= {
+    'librosaLoad' : {'sr': sampleRate, 'mono': False},
+    'soundfileWrite' : {'samplerate': sampleRate, 'subtype': 'FLOAT'},
+}
+
 def alignWaveforms(dictionaryMetadata):
     """
     do not truncate data
