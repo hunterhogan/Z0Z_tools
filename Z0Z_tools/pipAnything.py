@@ -4,75 +4,76 @@ Functions:
     - makeListRequirementsFromRequirementsFile: Reads a requirements.txt file, discards anything it couldn't understand, and creates a list of packages. 
 
 Usage:
-    from Z0Z_tools.pipAnything import installPackageTarget
+    from pipAnything import installPackageTarget
     installPackageTarget('path/to/packageTarget')
 
     pip will attempt to install requirements.txt, but don't rely on dependencies being installed.
 """
 
-from packaging.requirements import Requirement
 from os import PathLike
-import os
-import pathlib
+from packaging.requirements import Requirement
+from pathlib import Path, PurePath
 import subprocess
 import sys
 import tempfile
 
-def makeListRequirementsFromRequirementsFile(pathFilename: PathLike) -> list[str]:
+def makeListRequirementsFromRequirementsFile(*pathFilenames: PathLike) -> list[str]:
     """
-    Creates a list of valid package names from the provided requirements file.
-
+    Reads one or more requirements files and extracts valid package requirements.
     Args:
-        pathFilename (PathLike): Location of a requirements file, e.g., requirements.txt.
-
+        *pathFilenames (PathLike): One or more paths to requirements files.
     Returns:
-        list[str]: A list of packages.
+        list[str]: A list of unique, valid package requirements found in the provided files.
+    The function performs the following steps:
+    1. Iterates over each provided file path.
+    2. Checks if the file exists.
+    3. Reads the file line by line, removing comments and trimming whitespace.
+    4. Skips lines that are empty or contain spaces/tabs after sanitization.
+    5. Validates if the sanitized line is a valid requirement.
+    6. Collects valid requirements and removes duplicates before returning the list.
     """
     listRequirements = []
     
+    for pathFilename in pathFilenames:
+        if Path(pathFilename).exists():
+            try:
+                filesystemObjectRead = open(pathFilename, 'r')
+                for commentedLine in filesystemObjectRead:
+                    sanitizedLine = commentedLine.split('#')[0].strip()  # Remove comments and trim whitespace
 
-    if os.path.exists(pathFilename):
-        try:
-            filesystemObjectRead = open(pathFilename, 'r')
-            for commentedLine in filesystemObjectRead:
-                sanitizedLine = commentedLine.split('#')[0].strip()  # Remove comments and trim whitespace
+                    # Skip lines that are empty or contain spaces/tabs after sanitization
+                    if "\t" in sanitizedLine or " " in sanitizedLine or not sanitizedLine:
+                        continue
 
-                # Skip lines that are empty or contain spaces/tabs after sanitization
-                if "\t" in sanitizedLine or " " in sanitizedLine or not sanitizedLine:
-                    continue
+                    # Validate if it's a valid requirement
+                    try:
+                        Requirement(sanitizedLine)
+                        listRequirements.append(sanitizedLine)
+                    except:
+                        pass  # Skip invalid requirement lines
+            finally:
+                filesystemObjectRead.close()
 
-                # Validate if it's a valid requirement
-                try:
-                    Requirement(sanitizedLine)
-                    listRequirements.append(sanitizedLine)
-                except:
-                    pass  # Skip invalid requirement lines
-        finally:
-            filesystemObjectRead.close()
-
-    return listRequirements
+    return list(set(listRequirements))  # Remove duplicates
 
 
-def make_setupDOTpy(relativePathPackage: PathLike) -> str:
+def make_setupDOTpy(relativePathPackage: PathLike, listRequirements) -> str:
     """
     Generates setup.py file content for installing the package.
 
     Args:
-        relativePathPackage (str): The relative path to the package directory.
+        relativePathPackage (PathLike): The relative path to the package directory.
+        listRequirements (list): A list of requirements to be included in install_requires.
 
     Returns:
         str: The setup.py content to be written to a file.
     """
-    filenameRequirementsHARDCODED: str = 'requirements.txt'
-    filenameRequirements: str = filenameRequirementsHARDCODED
-    relativePathFilenameRequirements = os.path.join(relativePathPackage, filenameRequirements)
-    listRequirements = makeListRequirementsFromRequirementsFile(relativePathFilenameRequirements)
     return rf"""
 import os
 from setuptools import setup, find_packages
 
 setup(
-    name='{os.path.basename(relativePathPackage)}',
+    name='{Path(relativePathPackage).name}',
     version='0.0.0',
     packages=find_packages(where=r'{relativePathPackage}'),
     package_dir={{'': r'{relativePathPackage}'}},
@@ -89,19 +90,25 @@ def installPackageTarget(packageTarget: PathLike):
     Args:
         packageTarget (str): The directory path of the package to be installed.
     """
-    pathPackage = pathlib.Path(packageTarget).resolve()
-    pathSystemTemporary = pathlib.Path(tempfile.mkdtemp())
+    filenameRequirementsHARDCODED = Path('requirements.txt')
+    filenameRequirements = Path(filenameRequirementsHARDCODED)
+
+    pathPackage = Path(packageTarget).resolve()
+    pathSystemTemporary = Path(tempfile.mkdtemp())
     pathFilename_setupDOTpy = pathSystemTemporary / 'setup.py'
 
-    # Try-finally block for file handling
-    filesystemObjectWrite = None
+    pathFilenameRequirements = pathPackage / filenameRequirements
+    listRequirements = makeListRequirementsFromRequirementsFile(pathFilenameRequirements)
+
+    # Try-finally block for file handling: with-as doesn't always work
+    writeStream = None
     try:
-        filesystemObjectWrite = pathFilename_setupDOTpy.open('w')
-        relativePathPackage = pathPackage.relative_to(pathSystemTemporary).as_posix()
-        filesystemObjectWrite.write(make_setupDOTpy(relativePathPackage))
+        writeStream = pathFilename_setupDOTpy.open('w')
+        relativePathPackage = pathPackage.relative_to(pathSystemTemporary, walk_up=True).as_posix()
+        writeStream.write(make_setupDOTpy(relativePathPackage, listRequirements))
     finally:
-        if filesystemObjectWrite:
-            filesystemObjectWrite.close()
+        if writeStream:
+            writeStream.close()
 
     # Run pip to install the package from the temporary directory
     subprocessPython = subprocess.Popen(
@@ -121,30 +128,29 @@ def installPackageTarget(packageTarget: PathLike):
 
 
 def everyone_knows_what___main___is():
-    """Handles command-line arguments and installs the package."""
+    """A rudimentary CLI for the module.
+    call `installPackageTarget` from other modules."""
     packageTarget = sys.argv[1] if len(sys.argv) > 1 else ''
-    if not os.path.isdir(packageTarget) or len(sys.argv) != 2:
-        print(f"\n{(namespaceModule:=os.path.splitext(os.path.basename(__file__))[0])} says, 'That didn't work. Try again?'\n"
-            f"Usage:\tpython -m {(namespacePackage:=os.path.basename(os.path.dirname(__file__)))}.{namespaceModule} '<packageTarget>'\n"
+    if not Path(packageTarget).is_dir() or len(sys.argv) != 2:
+        namespaceModule = Path(__file__).stem
+        namespacePackage = Path(__file__).parent.stem
+        print(f"\n{namespaceModule} says, 'That didn't work. Try again?'\n\n"
+              f"Usage:\tpython -m {namespacePackage}.{namespaceModule} <packageTarget>\n"
               f"\t<packageTarget> is a path to a directory with Python modules\n"
-              f"\tExample: python -m {namespacePackage}.{namespaceModule} '{os.path.join('.', 'Z0Z_tools')}'") # os.path.join for platform-independent path separator
+              f"\tExample: python -m {namespacePackage}.{namespaceModule} '{PurePath('path' ,'to', 'Z0Z_tools')}'") 
         # What is `-m`? Obviously, `-m` creates a namespace for the module, which is obviously necessary, except when it isn't.
         sys.exit(1)
 
     installPackageTarget(packageTarget)
-    print(f"\n{os.path.splitext(os.path.basename(__file__))[0]} finished trying to trick pip into installing {os.path.basename(packageTarget)}. Did it work?")
+    print(f"\n{Path(__file__).stem} finished trying to trick pip into installing {Path(packageTarget).name}. Did it work?")
 
 def readability_counts():
+    """Brings the snark."""
     everyone_knows_what___main___is()
 
-def main_mainly():
-    readability_counts()
-
-def mainly():
-    main_mainly()
-
 def main():
-    mainly()
+    """Jabs subtly."""
+    readability_counts()
 
 if __name__ == "__main__":
     main()

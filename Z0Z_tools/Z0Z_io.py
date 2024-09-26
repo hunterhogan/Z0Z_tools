@@ -1,13 +1,11 @@
 from collections import defaultdict
-from glob import glob
 from numpy.typing import NDArray
-from typing import List, Optional, Tuple, Union, Dict
+from pathlib import Path
+from typing import List, Optional, Union, Dict
 import json
 import librosa
 import numpy
-import os
 import pandas
-import posixpath
 import soundfile
 
 sampleRate=44100
@@ -15,6 +13,46 @@ audIOargs= {
     'librosaLoad' : {'sr': sampleRate, 'mono': False},
     'soundfileWrite' : {'samplerate': sampleRate, 'subtype': 'FLOAT'},
 }
+
+def readAudioFile(pathFilename: str, sampleRate: int = 44100) -> NDArray:
+        """
+        Reads an audio file and returns its data as a NumPy array.
+
+        Parameters:
+        pathFilename (str): The path to the audio file.
+        sampleRate (int, optional): The sample rate to use when reading the file. Defaults to 44100.
+
+        Returns:
+        NDArray: A NumPy array containing the audio data.
+        """
+        return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
+
+
+def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> None:
+    """
+    Writes a waveform to a WAV file. 
+
+    Parameters:
+    -----------
+    pathFilename : str
+        The path and filename where the WAV file will be saved.
+    waveform : NDArray
+        The waveform data to be written to the WAV file. The waveform should be in the shape (channels, samples).
+    sampleRate : int, optional
+        The sample rate of the waveform. Defaults to 44100 Hz.
+    --------
+    Notes:
+    ------
+    - The function will create any necessary directories if they do not exist.
+    - The function will overwrite the file if it already exists without prompting or informing the user.
+
+    Returns:
+    None
+    
+    """
+    Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
+    soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT')
+
 
 def alignWaveforms(dictionaryMetadata):
     """
@@ -64,39 +102,21 @@ def dataTabularTOpathFilenameDelimited(pathFilename: str, tableRows: List[List[U
     dataframeOutput.to_csv(pathFilename, sep=delimiterOutput, index=False)
 
 def getPathFilenames(pathTarget: Optional[str], maskFilename: Optional[str], getMode: Optional[str] = 'mask', pathFilenameJSON: Optional[str] = None) -> List[str]:
-    """
-    Retrieves a list of filenames based on the specified mode.
-
-    Args:
-        pathTarget (str): The path to the target directory.
-        maskFilename (str): The wildcard pattern for matching filenames.
-        pathFilenameJSON (str, optional): The name of the JSON file containing filenames.
-        getMode (str, optional): The mode for retrieving filenames. Can be 'json' or 'mask'. Defaults to 'mask'.
-
-    Returns:
-        List[str]: A list of filenames.
-
-    Notes:
-        JSON keys must be named 'filename' (case-sensitive).
-        In JSON values, avoid drive letters and backslashes.
-    """
-    posixpath.normpath(pathTarget)
-
+    """This crappy function will either be replaced or overhauled. FYI."""
+    pathTarget = Path(pathTarget) if pathTarget else Path.cwd()
+    
     if getMode == 'mask':
-        listFilenames = glob(maskFilename, root_dir=pathTarget)
-        listPathFilenames = [posixpath.join(pathTarget, filename) for filename in listFilenames]
-        return listPathFilenames
+        return [pathFilename.as_posix() for pathFilename in pathTarget.glob(maskFilename)]
     elif getMode == 'json':
-        with open(pathFilenameJSON, 'r') as fileJSON:
-            # dictionaryJSON = json.load(fileJSON)
-            listFilenames = [posixpath.normpath(item['filename']) for item in json.load(fileJSON)]
-        if not listFilenames:
+        with open(pathFilenameJSON, 'r') as readStream:
+            list_filename = [Path(item['filename']).as_posix() for item in json.load(readStream)]
+        if not list_filename:
             raise ValueError(f"The JSON file {pathFilenameJSON} does not have any keys named 'filename' (case-sensitive).")
-        return listFilenames
+        return list_filename
     else:
         raise ValueError(f"Invalid input mode: {getMode}. Choose 'json' or 'mask'.")
-
-def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget: int = 44100, forceMonoChannel: bool = False, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None, aligned: bool = False):
+   
+def loadSpectrograms(listPathFilenames: List[str] | str, sampleRateTarget: int = 44100, forceMonoChannel: bool = False, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None, aligned: bool = False):
     """
     Load spectrograms from audio files.
     Args:
@@ -133,7 +153,7 @@ def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget:
 
     dictionaryMetadata: Dict[str, Dict[str, int]] = defaultdict(dict)
     for pathFilename in listPathFilenames:
-        waveform, DISCARDsampleRate = librosa.load(path=pathFilename, sr=sampleRateTarget, mono=forceMonoChannel)
+        waveform = readAudioFile(pathFilename, sampleRateTarget)
         COUNTsamples = waveform.shape[-1]
         COUNTchannels = 1 if len(waveform.shape) == 1 else waveform.shape[0]
         dictionaryMetadata[pathFilename] = {
@@ -164,7 +184,7 @@ def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget:
     arraySpectrograms = numpy.zeros(shape=(COUNTchannels, int(numpy.ceil(binsFFT / 2)) + 1, int(numpy.ceil(samplesTotal / hopLength)), len(dictionaryMetadata)), dtype=numpy.complex64)
 
     for index, (pathFilename, entry) in enumerate(dictionaryMetadata.items()):
-        waveform, DISCARDsampleRate = librosa.load(path=pathFilename, sr=sampleRateTarget, mono=forceMonoChannel)
+        waveform = readAudioFile(pathFilename, sampleRateTarget)
 
         # paddedWaveform = numpy.pad(waveform, ((0, 0), (entry['samplesLeading'], entry['samplesTrailing'])), mode='constant')
 
@@ -175,7 +195,7 @@ def loadSpectrograms(listPathFilenames: Union[List[str], str], sampleRateTarget:
     # the dictionary of samples is not tenable; how do other people handle this?
     return arraySpectrograms, [{'COUNTsamples': entry['COUNTsamples'], 'samplesLeading': entry['samplesLeading'], 'samplesTrailing': entry['samplesTrailing']} for entry in dictionaryMetadata.values()]
 
-def spectrogramTOpathFilenameAudio(spectrogram: NDArray, pathFilename: str, binsFFT: int = 2048, hopLength: int = 1024, COUNTsamples: int = None, sampleRate: int = 44100, bitdepth: str = 'FLOAT') -> None:
+def spectrogramTOpathFilenameAudio(spectrogram: NDArray, pathFilename: str, binsFFT: int = 2048, hopLength: int = 1024, COUNTsamples: int = None, sampleRate: int = 44100) -> None:
     """
     Writes a complex spectrogram to a WAV file.
 
@@ -186,14 +206,14 @@ def spectrogramTOpathFilenameAudio(spectrogram: NDArray, pathFilename: str, bins
     hopLength (int): How many samples are in each time bin of the spectrogram. You want this to match the stft value. Defaults to 1024.
     COUNTsamples (int): The length of the output waveform in samples: if necessary, it will be zero-padded or truncated to this length. If `None`, then "a partial frame at the end of" the waveform will be truncated. See the documentaiton in the examples of librosa.istft(). Defaults to None. (Supply this value to avoid data loss.)
     sampleRate (int): The sample rate of the output waveform file. Defaults to 44100.
-    bitdepth (str): The bit depth of the output waveform file (e.g., 'FLOAT', 'INT16'; see soundfile.write()). Defaults to 'FLOAT', which is a 32-bit floating-point depth.
 
     Returns:
     None
 
     Note:
     If the windowing parameters for the istft do not match the stft, the waveform values will be distorted.
+    Bitdepth is always 32-bit floating-point.
     """
-    os.makedirs(os.path.dirname(pathFilename), exist_ok=True)
+    Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
     waveform = librosa.istft(stft_matrix=spectrogram, hop_length=hopLength, n_fft=binsFFT, length=COUNTsamples)
-    soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype=bitdepth)
+    writeWav(pathFilename, waveform, sampleRate)
