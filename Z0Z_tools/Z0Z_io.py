@@ -1,31 +1,25 @@
 from collections import defaultdict
 from numpy.typing import NDArray
 from pathlib import Path
-from typing import List, Optional, Union, Dict
+from typing import List, Optional, Union, Dict, Tuple
 import json
 import librosa
 import numpy
 import pandas
 import soundfile
 
-sampleRate=44100
-audIOargs= {
-    'librosaLoad' : {'sr': sampleRate, 'mono': False},
-    'soundfileWrite' : {'samplerate': sampleRate, 'subtype': 'FLOAT'},
-}
-
 def readAudioFile(pathFilename: str, sampleRate: int = 44100) -> NDArray:
-        """
-        Reads an audio file and returns its data as a NumPy array.
+    """
+    Reads an audio file and returns its data as a NumPy array.
 
-        Parameters:
+    Parameters:
         pathFilename (str): The path to the audio file.
         sampleRate (int, optional): The sample rate to use when reading the file. Defaults to 44100.
 
-        Returns:
+    Returns:
         NDArray: A NumPy array containing the audio data.
-        """
-        return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
+    """
+    return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
 
 
 def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> None:
@@ -33,21 +27,16 @@ def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> N
     Writes a waveform to a WAV file. 
 
     Parameters:
-    -----------
-    pathFilename : str
-        The path and filename where the WAV file will be saved.
-    waveform : NDArray
-        The waveform data to be written to the WAV file. The waveform should be in the shape (channels, samples).
-    sampleRate : int, optional
-        The sample rate of the waveform. Defaults to 44100 Hz.
-    --------
+        pathFilename: (str): The path and filename where the WAV file will be saved.
+        waveform: (NDArray): The waveform data to be written to the WAV file. The waveform should be in the shape (channels, samples).
+        sampleRate: (int, optional): The sample rate of the waveform. Defaults to 44100 Hz.
+
     Notes:
-    ------
-    - The function will create any necessary directories if they do not exist.
-    - The function will overwrite the file if it already exists without prompting or informing the user.
+        The function will create any necessary directories if they do not exist.
+        The function will overwrite the file if it already exists without prompting or informing the user.
 
     Returns:
-    None
+        None
     
     """
     Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
@@ -96,13 +85,18 @@ def dataTabularTOpathFilenameDelimited(pathFilename: str, tableRows: List[List[U
         pathFilename (str): The path to the output file.
         tableRows (List[List[Union[str, float]]]): A list of rows representing the tabular data.
         tableColumns (List[str]): A list of column names.
-        delimiterOutput (str, optional): The delimiter to use. Defaults to '\t'.
+        delimiterOutput (str, optional): The delimiter to use. Defaults to `tab`.
+    
+    Returns:
+        None
     """
     dataframeOutput = pandas.DataFrame(tableRows, columns=tableColumns)
     dataframeOutput.to_csv(pathFilename, sep=delimiterOutput, index=False)
 
 def getPathFilenames(pathTarget: Optional[str], maskFilename: Optional[str], getMode: Optional[str] = 'mask', pathFilenameJSON: Optional[str] = None) -> List[str]:
-    """This crappy function will either be replaced or overhauled. FYI."""
+    """Don't use this function. Use the `pathlib` module instead.
+
+    This crappy function will either be replaced or overhauled. FYI."""
     pathTarget = Path(pathTarget) if pathTarget else Path.cwd()
     
     if getMode == 'mask':
@@ -116,28 +110,20 @@ def getPathFilenames(pathTarget: Optional[str], maskFilename: Optional[str], get
     else:
         raise ValueError(f"Invalid input mode: {getMode}. Choose 'json' or 'mask'.")
    
-def loadSpectrograms(listPathFilenames: List[str] | str, sampleRateTarget: int = 44100, forceMonoChannel: bool = False, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None, aligned: bool = False):
+def loadSpectrograms(listPathFilenames: List[str] | str, sampleRateTarget: int = 44100, forceMonoChannel: bool = False, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None, aligned: bool = False) -> Tuple[NDArray, List[Dict[str, int]]]:
     """
     Load spectrograms from audio files.
+    
     Args:
         listPathFilenames (Union[List[str], str]): A list of file paths or a single file path.
         sampleRateTarget (int, optional): The target sample rate. Defaults to 44100.
-        forceMonoChannel (bool, optional): Whether to force mono channel. Defaults to False.
+        forceMonoChannel (bool, optional): Removed. Always False.
         binsFFT (int, optional): The number of FFT bins. Defaults to 2048.
         hopLength (int, optional): The hop length for the STFT. Defaults to 1024.
         frequencyAttenuate (Optional[int], optional): The frequency to attenuate. Defaults to None.
         aligned (bool, optional): Whether to align the waveforms. Defaults to False.
     Returns:
-        Tuple[numpy.ndarray, List[Dict[str, int]]]: A tuple containing the array of spectrograms and a list of metadata dictionaries for each spectrogram.
-    Raises:
-        None
-    Examples:
-        # Load a single spectrogram
-        spectrogram, metadata = loadSpectrograms('/path/to/file.wav')
-        # Load multiple spectrograms
-        spectrograms, metadata = loadSpectrograms(['/path/to/file1.wav', '/path/to/file2.wav'])
-        # Load spectrograms with custom parameters
-        spectrograms, metadata = loadSpectrograms('/path/to/file.wav', sampleRateTarget=22050, binsFFT=1024)
+        Tuple (NDArray, List[Dict[str, int]]): A tuple containing the array of spectrograms and a list of metadata dictionaries for each spectrogram.
     """
     # Function implementation
     pass
@@ -200,19 +186,19 @@ def spectrogramTOpathFilenameAudio(spectrogram: NDArray, pathFilename: str, bins
     Writes a complex spectrogram to a WAV file.
 
     Args:
-    spectrogram (NDArray): The complex spectrogram to be written to the file. (Not mel-scaled.)
-    pathFilename (str): Location for the file of the waveform output.
-    binsFFT (int): How many FFT bins to convert the spectrogram. You want this to match the stft value. Defaults to 2048.
-    hopLength (int): How many samples are in each time bin of the spectrogram. You want this to match the stft value. Defaults to 1024.
-    COUNTsamples (int): The length of the output waveform in samples: if necessary, it will be zero-padded or truncated to this length. If `None`, then "a partial frame at the end of" the waveform will be truncated. See the documentaiton in the examples of librosa.istft(). Defaults to None. (Supply this value to avoid data loss.)
-    sampleRate (int): The sample rate of the output waveform file. Defaults to 44100.
+        spectrogram (NDArray): The complex spectrogram to be written to the file. (Not mel-scaled.)
+        pathFilename (str): Location for the file of the waveform output.
+        binsFFT (int): How many FFT bins to convert the spectrogram. You want this to match the stft value. Defaults to 2048.
+        hopLength (int): How many samples are in each time bin of the spectrogram. You want this to match the stft value. Defaults to 1024.
+        COUNTsamples (int): The length of the output waveform in samples: if necessary, it will be zero-padded or truncated to this length. If `None`, then "a partial frame at the end of" the waveform will be truncated. See the documentaiton in the examples of librosa.istft(). Defaults to None. (Supply this value to avoid data loss.)
+        sampleRate (int): The sample rate of the output waveform file. Defaults to 44100.
 
     Returns:
-    None
+        None
 
     Note:
-    If the windowing parameters for the istft do not match the stft, the waveform values will be distorted.
-    Bitdepth is always 32-bit floating-point.
+        If the windowing parameters for the istft do not match the stft, the waveform values will be distorted.
+        Bitdepth is always 32-bit floating-point.
     """
     Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
     waveform = librosa.istft(stft_matrix=spectrogram, hop_length=hopLength, n_fft=binsFFT, length=COUNTsamples)
