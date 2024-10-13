@@ -43,8 +43,7 @@ def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> N
         Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
     except Exception as ERRORmessage:
         pass
-    
-    soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT')
+    soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
 
 
 def alignWaveforms(dictionaryMetadata):
