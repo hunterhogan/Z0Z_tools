@@ -24,7 +24,7 @@ def readAudioFile(pathFilename: str, sampleRate: int = 44100) -> NDArray:
 
 def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> None:
     """
-    Writes a waveform to a WAV file. 
+    Writes a waveform to a WAV file.
 
     Parameters:
         pathFilename: (str): The path and filename where the WAV file will be saved.
@@ -37,9 +37,13 @@ def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> N
 
     Returns:
         None
-    
+
     """
-    Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
+    try:
+        Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
+    except Exception as ERRORmessage:
+        pass
+    
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT')
 
 
@@ -58,7 +62,7 @@ def cutHighFrequencies(spectrogramInplace: NDArray, frequencyAttenuate: int, sam
     # find the index number of the first bin that will be multiplied by a rolloff coefficient
     indexBinRolloff = numpy.searchsorted(librosa.fft_frequencies(n_fft=binsFFT, sr=sampleRate), frequencyAttenuate, side='right')
     if iWillSMASHyourArray:
-        # elminate all bins above the rolloff bins
+        # eliminate all bins above the rolloff bins
         spectrogramInplace.resize((*spectrogramInplace.shape[:-3],
                                  indexBinRolloff + (SIZEbinsRolloff := int(0.05 * (binsFFT / 2))),
                                  *spectrogramInplace.shape[:-2]), refcheck=False)
@@ -67,7 +71,7 @@ def cutHighFrequencies(spectrogramInplace: NDArray, frequencyAttenuate: int, sam
         raise NotImplementedError("You can't reduce memory usage if you are copying arrays.")
 
     # Make an ndarray jig to rolloff the volume
-    # Start with a symetrical hanning window and keep the declining coefficients, hence bins*2 and only keep the right side
+    # Start with a symmetrical hanning window and keep the declining coefficients, hence bins*2 and only keep the right side
     jigRolloffCoefficients = (numpy.hanning(SIZEbinsRolloff * 2)[-SIZEbinsRolloff:]
                                 ).reshape(*( # Reshape the jig so the coefficients target the cells on the frequency axis
                                         [1 for axis in range(spectrogramInplace.ndim - 3)] # Channels, if present
@@ -86,7 +90,7 @@ def dataTabularTOpathFilenameDelimited(pathFilename: str, tableRows: List[List[U
         tableRows (List[List[Union[str, float]]]): A list of rows representing the tabular data.
         tableColumns (List[str]): A list of column names.
         delimiterOutput (str, optional): The delimiter to use. Defaults to `tab`.
-    
+
     Returns:
         None
     """
@@ -98,7 +102,7 @@ def getPathFilenames(pathTarget: Optional[str], maskFilename: Optional[str], get
 
     This crappy function will either be replaced or overhauled. FYI."""
     pathTarget = Path(pathTarget) if pathTarget else Path.cwd()
-    
+
     if getMode == 'mask':
         return [pathFilename.as_posix() for pathFilename in pathTarget.glob(maskFilename)]
     elif getMode == 'json':
@@ -109,11 +113,11 @@ def getPathFilenames(pathTarget: Optional[str], maskFilename: Optional[str], get
         return list_filename
     else:
         raise ValueError(f"Invalid input mode: {getMode}. Choose 'json' or 'mask'.")
-   
+
 def loadSpectrograms(listPathFilenames: List[str] | str, sampleRateTarget: int = 44100, forceMonoChannel: bool = False, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None, aligned: bool = False) -> Tuple[NDArray, List[Dict[str, int]]]:
     """
     Load spectrograms from audio files.
-    
+
     Args:
         listPathFilenames (Union[List[str], str]): A list of file paths or a single file path.
         sampleRateTarget (int, optional): The target sample rate. Defaults to 44100.
@@ -126,7 +130,6 @@ def loadSpectrograms(listPathFilenames: List[str] | str, sampleRateTarget: int =
         Tuple (NDArray, List[Dict[str, int]]): A tuple containing the array of spectrograms and a list of metadata dictionaries for each spectrogram.
     """
     # Function implementation
-    pass
     # whereToPadWaveformHARDCODED = 'trailing'
     # whereToPadWaveform = whereToPadWaveformHARDCODED
     # to unpack a request for a single spectrogram, maybe:
@@ -190,7 +193,7 @@ def spectrogramTOpathFilenameAudio(spectrogram: NDArray, pathFilename: str, bins
         pathFilename (str): Location for the file of the waveform output.
         binsFFT (int): How many FFT bins to convert the spectrogram. You want this to match the stft value. Defaults to 2048.
         hopLength (int): How many samples are in each time bin of the spectrogram. You want this to match the stft value. Defaults to 1024.
-        COUNTsamples (int): The length of the output waveform in samples: if necessary, it will be zero-padded or truncated to this length. If `None`, then "a partial frame at the end of" the waveform will be truncated. See the documentaiton in the examples of librosa.istft(). Defaults to None. (Supply this value to avoid data loss.)
+        COUNTsamples (int): The length of the output waveform in samples: if necessary, it will be zero-padded or truncated to this length. If `None`, then "a partial frame at the end of" the waveform will be truncated. See the documentation in the examples of librosa.istft(). Defaults to None. (Supply this value to avoid data loss.)
         sampleRate (int): The sample rate of the output waveform file. Defaults to 44100.
 
     Returns:
