@@ -14,6 +14,17 @@ python -m Z0Z_tools.pipAnything <pathPackage>
 
 If you have a lot of spectrograms, `loadSpectrograms` might, well, load them.
 
+## Merge and/or lightly clean dictionary of lists with `updateExtendPolishDictionaryLists`
+
+- Merges multiple dictionaries of lists into a single dictionary.
+- Optionally remove duplicates each list.
+- Optionally sort each list.
+- Optionally delete data that won't merge.
+
+## Basic read/write WAV files with `readAudioFile` and `writeWav`
+
+The only option is the sample rate.
+
 ## Install this package
 
 ### From Github

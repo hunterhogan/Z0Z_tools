@@ -10,18 +10,17 @@ Usage:
     pip will attempt to install requirements.txt, but don't rely on dependencies being installed.
 """
 
-from os import PathLike
 from packaging.requirements import Requirement
 from pathlib import Path, PurePath
 import subprocess
 import sys
 import tempfile
 
-def makeListRequirementsFromRequirementsFile(*pathFilenames: PathLike) -> list[str]:
+def makeListRequirementsFromRequirementsFile(*pathFilenames: str | Path) -> list[str]:
     """
     Reads one or more requirements files and extracts valid package requirements.
     Args:
-        *pathFilenames (PathLike): One or more paths to requirements files.
+        *pathFilenames (str | Path): One or more paths to requirements files.
     Returns:
         list[str]: A list of unique, valid package requirements found in the provided files.
     The function performs the following steps:
@@ -57,12 +56,12 @@ def makeListRequirementsFromRequirementsFile(*pathFilenames: PathLike) -> list[s
     return list(set(listRequirements))  # Remove duplicates
 
 
-def make_setupDOTpy(relativePathPackage: PathLike, listRequirements) -> str:
+def make_setupDOTpy(relativePathPackage: str | Path, listRequirements) -> str:
     """
     Generates setup.py file content for installing the package.
 
     Args:
-        relativePathPackage (PathLike): The relative path to the package directory.
+        relativePathPackage (str | Path): The relative path to the package directory.
         listRequirements (list): A list of requirements to be included in install_requires.
 
     Returns:
@@ -83,7 +82,7 @@ setup(
 """ 
 
 
-def installPackageTarget(packageTarget: PathLike):
+def installPackageTarget(packageTarget: str | Path):
     """
     Installs a package by creating a temporary setup.py and tricking pip into installing it.
 
