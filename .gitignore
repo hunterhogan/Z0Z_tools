@@ -1,14 +1,13 @@
 __pycache__
 
-.vscode/
+*.egg-info/
 /include/
 /lib/
 /Library/
-/Scripts
-/share
-.devcontainer/
+/Scripts/
+/share/
 build/
-*.egg-info/
 
-*.code-workspace
 pyvenv.cfg
+
+# .git\info\exclude
