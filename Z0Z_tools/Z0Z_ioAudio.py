@@ -1,12 +1,13 @@
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from collections import defaultdict
 from numpy.typing import NDArray
 from pathlib import Path
-from typing import List, Optional, Dict, Tuple
+from typing import Dict, List, Optional, Tuple
 import librosa
 import numpy
 import soundfile
 
-def readAudioFile(pathFilename: str, sampleRate: int = 44100) -> NDArray:
+def readAudioFile(pathFilename: str | Path, sampleRate: int = 44100) -> NDArray:
     """
     Reads an audio file and returns its data as a NumPy array.
 
@@ -17,7 +18,11 @@ def readAudioFile(pathFilename: str, sampleRate: int = 44100) -> NDArray:
     Returns:
         NDArray: A NumPy array containing the audio data.
     """
-    return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
+    # TODO: librosa needs to go.
+    try:
+        return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
+    except Exception as ERRORmessage:
+        raise ERRORmessage
 
 def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> None:
     """
@@ -42,11 +47,35 @@ def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> N
         pass
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
 
+def loadWaveforms(listPathFilenames: List[str | Path], sampleRate: int = 44100) -> NDArray:
+    """
+    Load multiple audio waveforms from a list of file paths into a single NumPy array with shape (..., samples, COUNTwaveforms).
+
+    Parameters:
+        listPathFilenames (List[str | Path]): List of file paths to the audio files.
+        sampleRate (int, optional): The sample rate to use when reading the audio files. Defaults to 44100.
+
+    Returns:
+        arrayWaveforms (NDArray): A single NumPy array containing the loaded waveforms, which are indexed on the last axis.
+            The shape of the array will be (..., samples, COUNTwaveforms), where:
+                - if channels > 1: The first axis represents the channels.
+                - samples: Number of audio samples per channel.
+                - COUNTwaveforms: Number of waveforms loaded (equal to the length of listPathFilenames).
+    """
+    COUNTwaveforms = len(listPathFilenames)
+    arrayWaveforms = numpy.tile(readAudioFile(listPathFilenames[0], sampleRate=sampleRate)[..., numpy.newaxis], COUNTwaveforms)
+
+    with ProcessPoolExecutor() as concurrencyManager:
+        dictionaryConcurrency = {concurrencyManager.submit(readAudioFile, listPathFilenames[index]): index for index in range(1, COUNTwaveforms)}
+        for claimTicket in as_completed(dictionaryConcurrency):
+            arrayWaveforms[..., dictionaryConcurrency[claimTicket]] = claimTicket.result()
+    return arrayWaveforms
+
 def loadSpectrograms(listPathFilenames: List[str] | str, sampleRateTarget: int = 44100, forceMonoChannel: bool = False, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None, aligned: bool = False) -> Tuple[NDArray, List[Dict[str, int]]]:
     """
     Load spectrograms from audio files.
 
-    Args:
+    Parameters:
         listPathFilenames (Union[List[str], str]): A list of file paths or a single file path.
         sampleRateTarget (int, optional): The target sample rate. Defaults to 44100.
         forceMonoChannel (bool, optional): Removed. Always False.
@@ -118,7 +147,7 @@ def spectrogramTOpathFilenameAudio(spectrogram: NDArray, pathFilename: str, bins
     """
     Writes a complex spectrogram to a WAV file.
 
-    Args:
+    Parameters:
         spectrogram (NDArray): The complex spectrogram to be written to the file. (Not mel-scaled.)
         pathFilename (str): Location for the file of the waveform output.
         binsFFT (int): How many FFT bins to convert the spectrogram. You want this to match the stft value. Defaults to 2048.

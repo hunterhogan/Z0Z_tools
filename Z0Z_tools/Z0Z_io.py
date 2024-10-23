@@ -1,24 +1,23 @@
 from pathlib import Path
 from typing import List, Optional
 import json
-import pandas
 
 def dataTabularTOpathFilenameDelimited(pathFilename: str, tableRows: List[List[str | float]], tableColumns: List[str], delimiterOutput: str = '\t') -> None:
     """
     Writes tabular data to a delimited file.
-    This function is lame; I'll change it when I change the stuff that uses it.
-
-    Args:
-        pathFilename (str): The path to the output file.
-        tableRows (List[List[Union[str, float]]]): A list of rows representing the tabular data.
-        tableColumns (List[str]): A list of column names.
-        delimiterOutput (str, optional): The delimiter to use. Defaults to `tab`.
-
+    Parameters:
+        pathFilename (str): The path and filename where the data will be written.
+        tableRows (List[List[str | float]]): The rows of the table, where each row is a list of strings or floats.
+        tableColumns (List[str]): The column headers for the table.
+        delimiterOutput (str, optional): The delimiter to use in the output file. Defaults to '\t'.
     Returns:
-        None
+        None:
     """
-    dataframeOutput = pandas.DataFrame(tableRows, columns=tableColumns)
-    dataframeOutput.to_csv(pathFilename, sep=delimiterOutput, index=False)
+    with open(pathFilename, 'w', newline='') as writeStream:
+        writeStream.write(delimiterOutput.join(tableColumns) + '\n')
+        
+        for row in tableRows:
+            writeStream.write(delimiterOutput.join(map(str, row)) + '\n')
 
 def getPathFilenames(pathTarget: Optional[str], maskFilename: Optional[str], getMode: Optional[str] = 'mask', pathFilenameJSON: Optional[str] = None) -> List[str]:
     """Don't use this function. Use the `pathlib` module instead.

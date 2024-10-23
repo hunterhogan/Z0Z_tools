@@ -14,6 +14,8 @@ python -m Z0Z_tools.pipAnything <pathPackage>
 
 If you have a lot of spectrograms, `loadSpectrograms` might, well, load them.
 
+## Use `loadWaveforms` to create one array of waveforms from multiple files
+
 ## Merge and/or lightly clean dictionary of lists with `updateExtendPolishDictionaryLists`
 
 - Merges multiple dictionaries of lists into a single dictionary.
