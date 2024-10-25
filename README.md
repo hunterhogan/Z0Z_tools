@@ -41,7 +41,7 @@ pip install Z0Z_tools@git+https://github.com/hunterhogan/Z0Z_tools.git
 
 ```powershell
 git clone https://github.com/hunterhogan/Z0Z_tools.git \path\to\Z0Z_tools
-pip install Z0Z_tools@file:C:\path\to\Z0Z_tools
+pip install Z0Z_tools@file:\path\to\Z0Z_tools
 ```
 
 #### POSIX

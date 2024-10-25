@@ -1,5 +1,5 @@
-from concurrent.futures import ProcessPoolExecutor, as_completed
 from collections import defaultdict
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from numpy.typing import NDArray
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -7,16 +7,16 @@ import librosa
 import numpy
 import soundfile
 
-def readAudioFile(pathFilename: str | Path, sampleRate: int = 44100) -> NDArray:
+def readAudioFile(pathFilename: str | Path, sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Reads an audio file and returns its data as a NumPy array.
 
     Parameters:
-        pathFilename (str): The path to the audio file.
+        pathFilename (str | Path): The path to the audio file.
         sampleRate (int, optional): The sample rate to use when reading the file. Defaults to 44100.
 
     Returns:
-        NDArray: A NumPy array containing the audio data.
+        waveform (NDArray[numpy.float32]): The audio data in an array shaped (samples,) if there is only one channel or (channels, samples) if there is more than one channel.
     """
     # TODO: librosa needs to go.
     try:
@@ -38,7 +38,7 @@ def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> N
         The function will overwrite the file if it already exists without prompting or informing the user.
 
     Returns:
-        None
+        None:
 
     """
     try:
@@ -47,20 +47,20 @@ def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> N
         pass
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
 
-def loadWaveforms(listPathFilenames: List[str | Path], sampleRate: int = 44100) -> NDArray:
+def loadWaveforms(listPathFilenames: List[str | Path], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
-    Load multiple audio waveforms from a list of file paths into a single NumPy array with shape (..., samples, COUNTwaveforms).
+    Load multiple audio waveforms from a list of file paths into a single NumPy array.
 
     Parameters:
         listPathFilenames (List[str | Path]): List of file paths to the audio files.
         sampleRate (int, optional): The sample rate to use when reading the audio files. Defaults to 44100.
 
     Returns:
-        arrayWaveforms (NDArray): A single NumPy array containing the loaded waveforms, which are indexed on the last axis.
-            The shape of the array will be (..., samples, COUNTwaveforms), where:
-                - if channels > 1: The first axis represents the channels.
-                - samples: Number of audio samples per channel.
-                - COUNTwaveforms: Number of waveforms loaded (equal to the length of listPathFilenames).
+        arrayWaveforms (NDArray[numpy.float32]): The audio data in an array shaped (..., samples, COUNTwaveforms), where
+            - (samples, COUNTwaveforms) if there is only one channel
+            - or (channels, samples, COUNTwaveforms) if there is more than one channel
+            - samples: Number of audio samples per channel.
+            - COUNTwaveforms: Number of waveforms loaded (equal to the length of listPathFilenames).
     """
     COUNTwaveforms = len(listPathFilenames)
     arrayWaveforms = numpy.tile(readAudioFile(listPathFilenames[0], sampleRate=sampleRate)[..., numpy.newaxis], COUNTwaveforms)
@@ -156,7 +156,7 @@ def spectrogramTOpathFilenameAudio(spectrogram: NDArray, pathFilename: str, bins
         sampleRate (int): The sample rate of the output waveform file. Defaults to 44100.
 
     Returns:
-        None
+        None:
 
     Note:
         If the windowing parameters for the istft do not match the stft, the waveform values will be distorted.
