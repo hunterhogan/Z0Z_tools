@@ -71,32 +71,21 @@ def loadWaveforms(listPathFilenames: List[str | Path], sampleRate: int = 44100) 
             arrayWaveforms[..., dictionaryConcurrency[claimTicket]] = claimTicket.result()
     return arrayWaveforms
 
-def loadSpectrograms(listPathFilenames: List[str] | str, sampleRateTarget: int = 44100, forceMonoChannel: bool = False, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None, aligned: bool = False) -> Tuple[NDArray, List[Dict[str, int]]]:
+def loadSpectrograms(listPathFilenames: List[str | Path], sampleRateTarget: int = 44100, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None, aligned: bool = False) -> Tuple[NDArray[numpy.complex64], List[Dict[str, int]]]:
     """
     Load spectrograms from audio files.
 
     Parameters:
-        listPathFilenames (Union[List[str], str]): A list of file paths or a single file path.
-        sampleRateTarget (int, optional): The target sample rate. Defaults to 44100.
-        forceMonoChannel (bool, optional): Removed. Always False.
-        binsFFT (int, optional): The number of FFT bins. Defaults to 2048.
-        hopLength (int, optional): The hop length for the STFT. Defaults to 1024.
-        frequencyAttenuate (Optional[int], optional): The frequency to attenuate. Defaults to None.
-        aligned (bool, optional): Whether to align the waveforms. Defaults to False.
+        listPathFilenames: A list of file paths.
+        sampleRateTarget (44100): The target sample rate. Defaults to 44100.
+        binsFFT (2048): The number of FFT bins. Defaults to 2048.
+        hopLength (1024): The hop length for the STFT. Defaults to 1024.
+        frequencyAttenuate (None): The frequency to attenuate. Defaults to None.
+        aligned (False): Whether to align the waveforms. Defaults to False.
+
     Returns:
-        Tuple (NDArray, List[Dict[str, int]]): A tuple containing the array of spectrograms and a list of metadata dictionaries for each spectrogram.
+        tupleSpectrogramsCOUNTsamples: A tuple containing the array of spectrograms and a list of metadata dictionaries for each spectrogram.
     """
-    # Function implementation
-    # whereToPadWaveformHARDCODED = 'trailing'
-    # whereToPadWaveform = whereToPadWaveformHARDCODED
-    # to unpack a request for a single spectrogram, maybe:
-    # spectrogram.squeeze(), dictionarySamples[0] = loadSpectrograms(pathFilename)
-    # spectrogram, dictionarySample = loadSpectrograms(pathFilename)
-    # spectrogram = spectrogram.squeeze()
-
-    if isinstance(listPathFilenames, str):
-        listPathFilenames = [listPathFilenames]
-
     dictionaryMetadata: Dict[str, Dict[str, int]] = defaultdict(dict)
     for pathFilename in listPathFilenames:
         waveform = readAudioFile(pathFilename, sampleRateTarget)
@@ -115,32 +104,18 @@ def loadSpectrograms(listPathFilenames: List[str] | str, sampleRateTarget: int =
         dictionaryMetadata = alignWaveforms(dictionaryMetadata)
 
     samplesTotal = max(entry['samplesTotal'] for entry in dictionaryMetadata.values())
-    # Padding logic
-    # for entry in dictionaryMetadata.values():
-    #     if whereToPadWaveform == 'trailing':
-    #         entry['samplesTrailing'] = samplesTotal - entry['COUNTsamples']
-    #     elif whereToPadWaveform == 'leading':
-    #         entry['samplesLeading'] = samplesTotal - entry['COUNTsamples']
-    #     elif whereToPadWaveform == 'both':
-    #         remainingPadding = samplesTotal - entry['COUNTsamples']
-    #         entry['samplesLeading'] = remainingPadding // 2
-    #         entry['samplesTrailing'] = remainingPadding - entry['samplesLeading']
-    #     entry['samplesTotal'] = entry['COUNTsamples'] + entry['samplesLeading'] + entry['samplesTrailing']
 
     COUNTchannels = max(entry['COUNTchannels'] for entry in dictionaryMetadata.values())
     arraySpectrograms = numpy.zeros(shape=(COUNTchannels, int(numpy.ceil(binsFFT / 2)) + 1, int(numpy.ceil(samplesTotal / hopLength)), len(dictionaryMetadata)), dtype=numpy.complex64)
 
     for index, (pathFilename, entry) in enumerate(dictionaryMetadata.items()):
         waveform = readAudioFile(pathFilename, sampleRateTarget)
-
-        # paddedWaveform = numpy.pad(waveform, ((0, 0), (entry['samplesLeading'], entry['samplesTrailing'])), mode='constant')
-
-        librosa.stft(y=waveform, n_fft=binsFFT, hop_length=hopLength, out=arraySpectrograms[..., index])
+        arraySpectrograms[..., index] = librosa.stft(y=waveform, n_fft=binsFFT, hop_length=hopLength)
 
     if frequencyAttenuate is not None:
         from Z0Z_tools.Z0Z_AudioHelpers import cutHighFrequencies
         cutHighFrequencies(arraySpectrograms, frequencyAttenuate, sampleRateTarget, binsFFT)
-    # the dictionary of samples is not tenable; how do other people handle this?
+
     return arraySpectrograms, [{'COUNTsamples': entry['COUNTsamples'], 'samplesLeading': entry['samplesLeading'], 'samplesTrailing': entry['samplesTrailing']} for entry in dictionaryMetadata.values()]
 
 def spectrogramTOpathFilenameAudio(spectrogram: NDArray, pathFilename: str, binsFFT: int = 2048, hopLength: int = 1024, COUNTsamples: int = None, sampleRate: int = 44100) -> None:
