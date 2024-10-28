@@ -10,10 +10,6 @@ Try to install a package that doesn't have installation files.
 python -m Z0Z_tools.pipAnything <pathPackage>
 ```
 
-## Use `loadSpectrograms` to create one array of spectrograms from multiple files
-
-If you have a lot of spectrograms, `loadSpectrograms` might, well, load them.
-
 ## Use `loadWaveforms` to create one array of waveforms from multiple files
 
 ## Merge and/or lightly clean dictionary of lists with `updateExtendPolishDictionaryLists`

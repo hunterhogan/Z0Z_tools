@@ -1,8 +1,7 @@
-from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from numpy.typing import NDArray
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import List
 import librosa
 import numpy
 import soundfile
@@ -70,73 +69,3 @@ def loadWaveforms(listPathFilenames: List[str | Path], sampleRate: int = 44100) 
         for claimTicket in as_completed(dictionaryConcurrency):
             arrayWaveforms[..., dictionaryConcurrency[claimTicket]] = claimTicket.result()
     return arrayWaveforms
-
-def loadSpectrograms(listPathFilenames: List[str | Path], sampleRateTarget: int = 44100, binsFFT: int = 2048, hopLength: int = 1024, frequencyAttenuate: Optional[int] = None, aligned: bool = False) -> Tuple[NDArray[numpy.complex64], List[Dict[str, int]]]:
-    """
-    Load spectrograms from audio files.
-
-    Parameters:
-        listPathFilenames: A list of file paths.
-        sampleRateTarget (44100): The target sample rate. Defaults to 44100.
-        binsFFT (2048): The number of FFT bins. Defaults to 2048.
-        hopLength (1024): The hop length for the STFT. Defaults to 1024.
-        frequencyAttenuate (None): The frequency to attenuate. Defaults to None.
-        aligned (False): Whether to align the waveforms. Defaults to False.
-
-    Returns:
-        tupleSpectrogramsCOUNTsamples: A tuple containing the array of spectrograms and a list of metadata dictionaries for each spectrogram.
-    """
-    dictionaryMetadata: Dict[str, Dict[str, int]] = defaultdict(dict)
-    for pathFilename in listPathFilenames:
-        waveform = readAudioFile(pathFilename, sampleRateTarget)
-        COUNTsamples = waveform.shape[-1]
-        COUNTchannels = 1 if len(waveform.shape) == 1 else waveform.shape[0]
-        dictionaryMetadata[pathFilename] = {
-            'COUNTchannels': COUNTchannels,
-            'COUNTsamples': COUNTsamples,
-            'samplesLeading': 0,
-            'samplesTrailing': 0,
-            'samplesTotal': COUNTsamples
-        }
-
-    if aligned:
-        from Z0Z_tools.Z0Z_AudioHelpers import alignWaveforms
-        dictionaryMetadata = alignWaveforms(dictionaryMetadata)
-
-    samplesTotal = max(entry['samplesTotal'] for entry in dictionaryMetadata.values())
-
-    COUNTchannels = max(entry['COUNTchannels'] for entry in dictionaryMetadata.values())
-    arraySpectrograms = numpy.zeros(shape=(COUNTchannels, int(numpy.ceil(binsFFT / 2)) + 1, int(numpy.ceil(samplesTotal / hopLength)), len(dictionaryMetadata)), dtype=numpy.complex64)
-
-    for index, (pathFilename, entry) in enumerate(dictionaryMetadata.items()):
-        waveform = readAudioFile(pathFilename, sampleRateTarget)
-        arraySpectrograms[..., index] = librosa.stft(y=waveform, n_fft=binsFFT, hop_length=hopLength)
-
-    if frequencyAttenuate is not None:
-        from Z0Z_tools.Z0Z_AudioHelpers import cutHighFrequencies
-        cutHighFrequencies(arraySpectrograms, frequencyAttenuate, sampleRateTarget, binsFFT)
-
-    return arraySpectrograms, [{'COUNTsamples': entry['COUNTsamples'], 'samplesLeading': entry['samplesLeading'], 'samplesTrailing': entry['samplesTrailing']} for entry in dictionaryMetadata.values()]
-
-def spectrogramTOpathFilenameAudio(spectrogram: NDArray, pathFilename: str, binsFFT: int = 2048, hopLength: int = 1024, COUNTsamples: int = None, sampleRate: int = 44100) -> None:
-    """
-    Writes a complex spectrogram to a WAV file.
-
-    Parameters:
-        spectrogram (NDArray): The complex spectrogram to be written to the file. (Not mel-scaled.)
-        pathFilename (str): Location for the file of the waveform output.
-        binsFFT (int): How many FFT bins to convert the spectrogram. You want this to match the stft value. Defaults to 2048.
-        hopLength (int): How many samples are in each time bin of the spectrogram. You want this to match the stft value. Defaults to 1024.
-        COUNTsamples (int): The length of the output waveform in samples: if necessary, it will be zero-padded or truncated to this length. If `None`, then "a partial frame at the end of" the waveform will be truncated. See the documentation in the examples of librosa.istft(). Defaults to None. (Supply this value to avoid data loss.)
-        sampleRate (int): The sample rate of the output waveform file. Defaults to 44100.
-
-    Returns:
-        None:
-
-    Note:
-        If the windowing parameters for the istft do not match the stft, the waveform values will be distorted.
-        Bitdepth is always 32-bit floating-point.
-    """
-    Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
-    waveform = librosa.istft(stft_matrix=spectrogram, hop_length=hopLength, n_fft=binsFFT, length=COUNTsamples)
-    writeWav(pathFilename, waveform, sampleRate)
