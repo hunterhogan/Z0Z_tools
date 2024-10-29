@@ -10,13 +10,14 @@ Usage:
     pip will attempt to install requirements.txt, but don't rely on dependencies being installed.
 """
 
+from os import PathLike
 from packaging.requirements import Requirement
 from pathlib import Path, PurePath
 import subprocess
 import sys
 import tempfile
 
-def makeListRequirementsFromRequirementsFile(*pathFilenames: str | Path) -> list[str]:
+def makeListRequirementsFromRequirementsFile(*pathFilenames: PathLike) -> list[str]:
     """
     Reads one or more requirements files and extracts valid package requirements.
     Args:
@@ -55,8 +56,7 @@ def makeListRequirementsFromRequirementsFile(*pathFilenames: str | Path) -> list
 
     return list(set(listRequirements))  # Remove duplicates
 
-
-def make_setupDOTpy(relativePathPackage: str | Path, listRequirements) -> str:
+def make_setupDOTpy(relativePathPackage: str|PathLike, listRequirements: list[str]) -> str:
     """
     Generates setup.py file content for installing the package.
 
@@ -81,8 +81,7 @@ setup(
 )
 """ 
 
-
-def installPackageTarget(packageTarget: str | Path):
+def installPackageTarget(packageTarget: str|PathLike) -> None:
     """
     Installs a package by creating a temporary setup.py and tricking pip into installing it.
 
@@ -102,7 +101,7 @@ def installPackageTarget(packageTarget: str | Path):
     # Try-finally block for file handling: with-as doesn't always work
     writeStream = None
     try:
-        writeStream = pathFilename_setupDOTpy.open('w')
+        writeStream = pathFilename_setupDOTpy.open(mode='w')
         relativePathPackage = pathPackage.relative_to(pathSystemTemporary, walk_up=True).as_posix()
         writeStream.write(make_setupDOTpy(relativePathPackage, listRequirements))
     finally:
@@ -112,13 +111,14 @@ def installPackageTarget(packageTarget: str | Path):
     # Run pip to install the package from the temporary directory
     subprocessPython = subprocess.Popen(
     # `pip` needs a RELATIVE PATH, not an absolute path, and not a path+filename. 
-        [sys.executable, '-m', 'pip', 'install', str(pathSystemTemporary)],
+        args=[sys.executable, '-m', 'pip', 'install', str(pathSystemTemporary)],
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
     )
 
     # Output the subprocess stdout in real-time
-    for lineStdout in subprocessPython.stdout:
-        print(lineStdout, end="")
+    if subprocessPython.stdout:
+        for lineStdout in subprocessPython.stdout:
+            print(lineStdout, end="")
 
     subprocessPython.wait()
 
@@ -126,7 +126,7 @@ def installPackageTarget(packageTarget: str | Path):
     pathFilename_setupDOTpy.unlink()
 
 
-def everyone_knows_what___main___is():
+def everyone_knows_what___main___is() -> None:
     """A rudimentary CLI for the module.
     call `installPackageTarget` from other modules."""
     packageTarget = sys.argv[1] if len(sys.argv) > 1 else ''
@@ -143,11 +143,11 @@ def everyone_knows_what___main___is():
     installPackageTarget(packageTarget)
     print(f"\n{Path(__file__).stem} finished trying to trick pip into installing {Path(packageTarget).name}. Did it work?")
 
-def readability_counts():
+def readability_counts() -> None:
     """Brings the snark."""
     everyone_knows_what___main___is()
 
-def main():
+def main() -> None:
     """Jabs subtly."""
     readability_counts()
 

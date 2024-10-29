@@ -1,12 +1,13 @@
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from numpy.typing import NDArray
+from os import PathLike
 from pathlib import Path
-from typing import List
+from typing import BinaryIO, List
 import librosa
 import numpy
 import soundfile
 
-def readAudioFile(pathFilename: str | Path, sampleRate: int = 44100) -> NDArray[numpy.float32]:
+def readAudioFile(pathFilename: PathLike | BinaryIO, sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Reads an audio file and returns its data as a NumPy array.
 
@@ -18,12 +19,9 @@ def readAudioFile(pathFilename: str | Path, sampleRate: int = 44100) -> NDArray[
         waveform (NDArray[numpy.float32]): The audio data in an array shaped (samples,) if there is only one channel or (channels, samples) if there is more than one channel.
     """
     # TODO: librosa needs to go.
-    try:
-        return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
-    except Exception as ERRORmessage:
-        raise ERRORmessage
+    return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
 
-def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> None:
+def writeWav(pathFilename: PathLike | BinaryIO, waveform: NDArray, sampleRate: int = 44100) -> None:
     """
     Writes a waveform to a WAV file.
 
@@ -41,12 +39,13 @@ def writeWav(pathFilename: str, waveform: NDArray, sampleRate: int = 44100) -> N
 
     """
     try:
-        Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
-    except Exception as ERRORmessage:
+        if not isinstance(pathFilename, BinaryIO):
+            Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
+    except Exception:
         pass
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
 
-def loadWaveforms(listPathFilenames: List[str | Path], sampleRate: int = 44100) -> NDArray[numpy.float32]:
+def loadWaveforms(listPathFilenames: List[PathLike | BinaryIO], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Load multiple audio waveforms from a list of file paths into a single NumPy array.
 

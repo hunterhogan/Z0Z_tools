@@ -7,12 +7,11 @@ __author__ = parse_setupDOTcfg.get('metadata', 'author', fallback='Unknown')
 
 from Z0Z_tools.pipAnything import installPackageTarget, makeListRequirementsFromRequirementsFile
 from Z0Z_tools.Z0Z_dataStructure import updateExtendPolishDictionaryLists
-from Z0Z_tools.Z0Z_io import dataTabularTOpathFilenameDelimited, getPathFilenames
+from Z0Z_tools.Z0Z_io import dataTabularTOpathFilenameDelimited
 from Z0Z_tools.Z0Z_ioAudio import writeWav, readAudioFile, loadWaveforms
 
 __all__ = [
     'dataTabularTOpathFilenameDelimited', 
-    'getPathFilenames', 
     'installPackageTarget', 
     'loadWaveforms', 
     'makeListRequirementsFromRequirementsFile', 
