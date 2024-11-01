@@ -17,13 +17,13 @@ import subprocess
 import sys
 import tempfile
 
-def makeListRequirementsFromRequirementsFile(*pathFilenames: PathLike) -> list[str]:
+def makeListRequirementsFromRequirementsFile(*pathFilenames: str|PathLike) -> list[str]:
     """
     Reads one or more requirements files and extracts valid package requirements.
-    Args:
-        *pathFilenames (str | Path): One or more paths to requirements files.
+    Parameters:
+        *pathFilenames: One or more paths to requirements files.
     Returns:
-        list[str]: A list of unique, valid package requirements found in the provided files.
+        listRequirements: A list of unique, valid package requirements found in the provided files.
     The function performs the following steps:
     1. Iterates over each provided file path.
     2. Checks if the file exists.
@@ -60,9 +60,9 @@ def make_setupDOTpy(relativePathPackage: str|PathLike, listRequirements: list[st
     """
     Generates setup.py file content for installing the package.
 
-    Args:
-        relativePathPackage (str | Path): The relative path to the package directory.
-        listRequirements (list): A list of requirements to be included in install_requires.
+    Parameters:
+        relativePathPackage: The relative path to the package directory.
+        listRequirements: A list of requirements to be included in install_requires.
 
     Returns:
         str: The setup.py content to be written to a file.
@@ -85,8 +85,8 @@ def installPackageTarget(packageTarget: str|PathLike) -> None:
     """
     Installs a package by creating a temporary setup.py and tricking pip into installing it.
 
-    Args:
-        packageTarget (str): The directory path of the package to be installed.
+    Parameters:
+        packageTarget: The directory path of the package to be installed.
     """
     filenameRequirementsHARDCODED = Path('requirements.txt')
     filenameRequirements = Path(filenameRequirementsHARDCODED)
