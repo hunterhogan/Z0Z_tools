@@ -1,12 +1,15 @@
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from numpy.typing import NDArray
 from os import PathLike
-from pathlib import Path
 from typing import BinaryIO, Sequence
 import librosa
+import multiprocessing
 import numpy
+import pathlib
 import soundfile
 
+if __name__ == '__main__':
+    multiprocessing.set_start_method('spawn')
 def readAudioFile(pathFilename: PathLike | BinaryIO, sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Reads an audio file and returns its data as a NumPy array.
@@ -40,7 +43,7 @@ def writeWav(pathFilename: PathLike | BinaryIO, waveform: NDArray, sampleRate: i
     """
     try:
         if not isinstance(pathFilename, BinaryIO):
-            Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
+            pathlib.Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
     except Exception:
         pass
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')

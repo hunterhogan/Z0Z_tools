@@ -1,5 +1,6 @@
 import unittest
 from Z0Z_tools.Z0Z_dataStructure import updateExtendPolishDictionaryLists
+import numpy as np
 
 class TestUpdateExtendDictionaryLists(unittest.TestCase):
 
@@ -134,5 +135,27 @@ class TestUpdateExtendDictionaryLists(unittest.TestCase):
         expected = {'a': [1, 3, 6, 9, 22], 'b': [2, 3, 111111]}
         result = updateExtendPolishDictionaryLists(secundus, destroyDuplicates=True, ignoreListOrdering=True)
         self.assertEqual(result, expected)
+
+    def test_with_sets(self):
+        primus = {'a': {3, 1}, 'b': {2}}
+        secundus = {'a': {9, 6, 1, 22, 3}, 'b': {111111, 2, 3}}
+        expected = {'a': [3, 1, 9, 6, 22], 'b': [2, 111111, 3]}
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=True, ignoreListOrdering=False) # type: ignore
+        self.assertEqual(result, expected)
+
+    def test_with_tuples(self):
+        primus = {'a': (3, 1), 'b': (2,)}
+        secundus = {'a': (9, 6, 1, 22, 3), 'b': (111111, 2, 3)}
+        expected = {'a': [3, 1, 9, 6, 1, 22, 3], 'b': [2, 111111, 2, 3]}
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, ignoreListOrdering=False)
+        self.assertEqual(result, expected)
+
+    def test_with_ndarrays(self):
+        primus = {'a': np.array([3, 1]), 'b': np.array([2])}
+        secundus = {'a': np.array([9, 6, 1, 22, 3]), 'b': np.array([111111, 2, 3])}
+        expected = {'a': [3, 1, 9, 6, 1, 22, 3], 'b': [2, 111111, 2, 3]}
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, ignoreListOrdering=False) # type: ignore
+        self.assertEqual(result, expected)
+
 if __name__ == '__main__':
     unittest.main()

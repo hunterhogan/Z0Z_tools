@@ -1,4 +1,6 @@
-from typing import List, Dict, Any
+from typing import Dict, Any, List, Union
+import numpy
+import numpy.typing
 
 def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, List[Any]], destroyDuplicates: bool = False, ignoreListOrdering: bool = False, killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
     """
@@ -16,6 +18,7 @@ def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, List[Any]], de
 
     for dictionaryListTarget in dictionaryLists:
         for keyName, ImaList in dictionaryListTarget.items():
+            ImaList = list(ImaList)
             try:
                 ePluribusUnum.setdefault(keyName, []).extend(ImaList)
             except TypeError:
