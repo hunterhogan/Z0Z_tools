@@ -1,8 +1,6 @@
-from typing import Dict, Any, List, Union
-import numpy
-import numpy.typing
+from typing import Dict, Any, List, Collection, Mapping
 
-def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, List[Any]], destroyDuplicates: bool = False, ignoreListOrdering: bool = False, killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
+def updateExtendPolishDictionaryLists(*dictionaryLists: Mapping[str, Collection[Any]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
     """
     Merges multiple dictionaries containing lists into a single dictionary, with options to handle duplicates, list ordering, and erroneous data types.
     Parameters:
@@ -17,22 +15,22 @@ def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, List[Any]], de
     ePluribusUnum: Dict[str, List[Any]] = {}
 
     for dictionaryListTarget in dictionaryLists:
-        for keyName, ImaList in dictionaryListTarget.items():
-            ImaList = list(ImaList)
+        for keyName, keyValue in dictionaryListTarget.items():
             try:
-                ePluribusUnum.setdefault(keyName, []).extend(ImaList)
+                ImaStr = str(keyName)
+                ImaList = list(keyValue)
+                ePluribusUnum.setdefault(ImaStr, []).extend(ImaList)
             except TypeError:
                 if killErroneousDataTypes:
                     continue
                 else:
                     raise
 
-    for keyName, ImaList in ePluribusUnum.items():
-        if destroyDuplicates and ignoreListOrdering:
-            ePluribusUnum[keyName] = list(set(ImaList))
-        elif ignoreListOrdering:
-            ePluribusUnum[keyName] = sorted(ImaList)
-        elif destroyDuplicates:
-            ePluribusUnum[keyName] = list(dict.fromkeys(ImaList))
+    if destroyDuplicates:
+        for ImaStr, ImaList in ePluribusUnum.items():
+            ePluribusUnum[ImaStr] = list(dict.fromkeys(ImaList))
+    if reorderLists:
+        for ImaStr, ImaList in ePluribusUnum.items():
+            ePluribusUnum[ImaStr] = sorted(ImaList)
     
     return ePluribusUnum

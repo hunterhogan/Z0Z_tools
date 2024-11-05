@@ -1,7 +1,7 @@
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from numpy.typing import NDArray
 from os import PathLike
-from typing import BinaryIO, Sequence
+from typing import BinaryIO, Collection
 import librosa
 import multiprocessing
 import numpy
@@ -10,6 +10,7 @@ import soundfile
 
 if __name__ == '__main__':
     multiprocessing.set_start_method('spawn')
+
 def readAudioFile(pathFilename: PathLike | BinaryIO, sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Reads an audio file and returns its data as a NumPy array.
@@ -41,6 +42,7 @@ def writeWav(pathFilename: PathLike | BinaryIO, waveform: NDArray, sampleRate: i
         None:
 
     """
+    # TODO: soundfile needs to go.
     try:
         if not isinstance(pathFilename, BinaryIO):
             pathlib.Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
@@ -48,7 +50,7 @@ def writeWav(pathFilename: PathLike | BinaryIO, waveform: NDArray, sampleRate: i
         pass
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
 
-def loadWaveforms(listPathFilenames: Sequence[PathLike | BinaryIO], sampleRate: int = 44100) -> NDArray[numpy.float32]:
+def loadWaveforms(listPathFilenames: Collection[PathLike | BinaryIO], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Load multiple audio waveforms from a list of file paths into a single NumPy array.
 
@@ -63,11 +65,12 @@ def loadWaveforms(listPathFilenames: Sequence[PathLike | BinaryIO], sampleRate: 
             - samples: Number of audio samples per channel.
             - COUNTwaveforms: Number of waveforms loaded (equal to the length of listPathFilenames).
     """
+    listPathFilenames = list(listPathFilenames)
     COUNTwaveforms = len(listPathFilenames)
     arrayWaveforms = numpy.tile(readAudioFile(listPathFilenames[0], sampleRate=sampleRate)[..., numpy.newaxis], COUNTwaveforms)
 
     with ProcessPoolExecutor() as concurrencyManager:
-        dictionaryConcurrency = {concurrencyManager.submit(readAudioFile, listPathFilenames[index]): index for index in range(1, COUNTwaveforms)}
+        dictionaryConcurrency = {concurrencyManager.submit(readAudioFile, listPathFilenames[index], sampleRate=sampleRate): index for index in range(1, COUNTwaveforms)}
         for claimTicket in as_completed(dictionaryConcurrency):
             arrayWaveforms[..., dictionaryConcurrency[claimTicket]] = claimTicket.result()
     return arrayWaveforms

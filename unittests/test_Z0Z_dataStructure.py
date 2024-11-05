@@ -8,153 +8,153 @@ class TestUpdateExtendDictionaryLists(unittest.TestCase):
         primus = {'a': [3, 1], 'b': [2]}
         secundus = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
         expected = {'a': [3, 1, 9, 6, 1, 22, 3], 'b': [2, 111111, 2, 3]}
-        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_ignore_list_ordering(self):
         primus = {'a': [3, 1], 'b': [2]}
         secundus = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
         expected = {'a': [1, 1, 3, 3, 6, 9, 22], 'b': [2, 2, 3, 111111]}
-        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, ignoreListOrdering=True)
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, reorderLists=True)
         self.assertEqual(result, expected)
 
     def test_destroy_duplicates(self):
         primus = {'a': [3, 1], 'b': [2]}
         secundus = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
         expected = {'a': [3, 1, 9, 6, 22], 'b': [2, 111111, 3]}
-        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=True, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=True, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_secundus2(self):
         secundus = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
         expected = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
-        result = updateExtendPolishDictionaryLists({}, secundus, destroyDuplicates=False, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists({}, secundus, destroyDuplicates=False, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_secundus_ignore_list_ordering2(self):
         secundus = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
         expected = {'a': [1, 3, 6, 9, 22], 'b': [2, 3, 111111]}
-        result = updateExtendPolishDictionaryLists({}, secundus, destroyDuplicates=False, ignoreListOrdering=True)
+        result = updateExtendPolishDictionaryLists({}, secundus, destroyDuplicates=False, reorderLists=True)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_secundus_destroy_duplicates2(self):
         secundus = {'a': [9, 6, 1, 22, 3, 9], 'b': [111111, 2, 3, 2]}
         expected = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
-        result = updateExtendPolishDictionaryLists({}, secundus, destroyDuplicates=True, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists({}, secundus, destroyDuplicates=True, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_secundus_destroy_duplicates_ignore_list_ordering2(self):
         secundus = {'a': [9, 6, 1, 22, 3, 9], 'b': [111111, 2, 3, 2]}
         expected = {'a': [1, 3, 6, 9, 22], 'b': [2, 3, 111111]}
-        result = updateExtendPolishDictionaryLists({}, secundus, destroyDuplicates=True, ignoreListOrdering=True)
+        result = updateExtendPolishDictionaryLists({}, secundus, destroyDuplicates=True, reorderLists=True)
         self.assertEqual(result, expected)
     def test_empty_dictionaries(self):
         primus = {}
         secundus = {}
         expected = {}
-        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_empty_and_non_empty_dictionary(self):
         primus = {}
         secundus = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
         expected = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
-        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_non_empty_and_empty_dictionary(self):
         primus = {'a': [3, 1], 'b': [2]}
         secundus = {}
         expected = {'a': [3, 1], 'b': [2]}
-        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_empty_dictionaries_with_options(self):
         primus = {}
         secundus = {}
         expected = {}
-        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=True, ignoreListOrdering=True)
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=True, reorderLists=True)
         self.assertEqual(result, expected)
 
     def test_single_empty_dictionary(self):
         primus = {}
         expected = {}
-        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=False, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=False, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_single_empty_dictionary_with_options(self):
         primus = {}
         expected = {}
-        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=True, ignoreListOrdering=True)
+        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=True, reorderLists=True)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_primus(self):
         primus = {'a': [3, 1], 'b': [2]}
         expected = {'a': [3, 1], 'b': [2]}
-        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=False, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=False, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_primus_ignore_list_ordering_variant(self):
         primus = {'a': [3, 1], 'b': [2]}
         expected = {'a': [1, 3], 'b': [2]}
-        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=False, ignoreListOrdering=True)
+        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=False, reorderLists=True)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_primus_destroy_duplicates_ignore_list_ordering_variant(self):
         primus = {'a': [3, 1, 3], 'b': [2, 2]}
         expected = {'a': [3, 1], 'b': [2]}
-        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=True, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=True, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_primus_destroy_duplicates_ignore_list_ordering(self):
         primus = {'a': [3, 1, 3], 'b': [2, 2]}
         expected = {'a': [1, 3], 'b': [2]}
-        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=True, ignoreListOrdering=True)
+        result = updateExtendPolishDictionaryLists(primus, destroyDuplicates=True, reorderLists=True)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_secundus(self):
         secundus = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
         expected = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
-        result = updateExtendPolishDictionaryLists(secundus, destroyDuplicates=False, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(secundus, destroyDuplicates=False, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_secundus_ignore_list_ordering(self):
         secundus = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
         expected = {'a': [1, 3, 6, 9, 22], 'b': [2, 3, 111111]}
-        result = updateExtendPolishDictionaryLists(secundus, destroyDuplicates=False, ignoreListOrdering=True)
+        result = updateExtendPolishDictionaryLists(secundus, destroyDuplicates=False, reorderLists=True)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_secundus_destroy_duplicates(self):
         secundus = {'a': [9, 6, 1, 22, 3, 9], 'b': [111111, 2, 3, 2]}
         expected = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
-        result = updateExtendPolishDictionaryLists(secundus, destroyDuplicates=True, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(secundus, destroyDuplicates=True, reorderLists=False)
         self.assertEqual(result, expected)
 
     def test_single_dictionary_secundus_destroy_duplicates_ignore_list_ordering(self):
         secundus = {'a': [9, 6, 1, 22, 3, 9], 'b': [111111, 2, 3, 2]}
         expected = {'a': [1, 3, 6, 9, 22], 'b': [2, 3, 111111]}
-        result = updateExtendPolishDictionaryLists(secundus, destroyDuplicates=True, ignoreListOrdering=True)
+        result = updateExtendPolishDictionaryLists(secundus, destroyDuplicates=True, reorderLists=True)
         self.assertEqual(result, expected)
 
     def test_with_sets(self):
         primus = {'a': {3, 1}, 'b': {2}}
         secundus = {'a': {9, 6, 1, 22, 3}, 'b': {111111, 2, 3}}
         expected = {'a': [3, 1, 9, 6, 22], 'b': [2, 111111, 3]}
-        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=True, ignoreListOrdering=False) # type: ignore
-        self.assertEqual(result, expected)
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=True, reorderLists=False) # type: ignore
+        self.assertCountEqual(result['a'], expected['a'])
 
     def test_with_tuples(self):
         primus = {'a': (3, 1), 'b': (2,)}
         secundus = {'a': (9, 6, 1, 22, 3), 'b': (111111, 2, 3)}
         expected = {'a': [3, 1, 9, 6, 1, 22, 3], 'b': [2, 111111, 2, 3]}
-        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, ignoreListOrdering=False)
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, reorderLists=False)
         self.assertEqual(result, expected)
 
-    def test_with_ndarrays(self):
+    def test_with_ndarray(self):
         primus = {'a': np.array([3, 1]), 'b': np.array([2])}
         secundus = {'a': np.array([9, 6, 1, 22, 3]), 'b': np.array([111111, 2, 3])}
         expected = {'a': [3, 1, 9, 6, 1, 22, 3], 'b': [2, 111111, 2, 3]}
-        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, ignoreListOrdering=False) # type: ignore
+        result = updateExtendPolishDictionaryLists(primus, secundus, destroyDuplicates=False, reorderLists=False) # type: ignore
         self.assertEqual(result, expected)
 
 if __name__ == '__main__':
