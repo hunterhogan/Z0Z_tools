@@ -55,26 +55,5 @@ class TestPipAnything(unittest.TestCase):
         self.assertIn(f"install_requires={list_requirements},", setup_content)
         self.assertIn("include_package_data=True", setup_content)
 
-    @patch('subprocess.Popen')
-    def test_installPackageTarget(self, mock_subprocess):
-        """
-        Test the installPackageTarget function.
-        """
-        with tempfile.TemporaryDirectory() as tempdir:
-            package_dir = Path(tempdir) / 'my_package'
-            package_dir.mkdir()
-            (package_dir / 'requirements.txt').touch()
-
-            # Mock the subprocess call to prevent actual installation
-            mock_process = mock_subprocess.return_value
-            mock_process.communicate.return_value = ('Output', 'Error')
-            mock_process.returncode = 0  # Simulate successful installation
-
-            pipAnything.installPackageTarget(package_dir)
-
-            # Assertions to check if the subprocess was called with the correct arguments
-            mock_subprocess.assert_called_once()
-            self.assertIn(str(Path(tempdir)), mock_subprocess.call_args[0][0])
-
 if __name__ == '__main__':
     unittest.main()

@@ -10,9 +10,9 @@ Try to install a package that doesn't have installation files.
 python -m Z0Z_tools.pipAnything <pathPackage>
 ```
 
-## Use `loadWaveforms` to create one array of waveforms from multiple files
+## Unpack and convert elements to `str` types with `stringItUp`
 
-## Merge and/or lightly clean dictionary of lists with `updateExtendPolishDictionaryLists`
+## Merge and/or lightly clean a dictionary of lists with `updateExtendPolishDictionaryLists`
 
 - Merges multiple dictionaries of lists into a single dictionary.
 - Optionally remove duplicates each list.
@@ -22,6 +22,8 @@ python -m Z0Z_tools.pipAnything <pathPackage>
 ## Basic read/write WAV files with `readAudioFile` and `writeWav`
 
 The only option is the sample rate.
+
+## Use `loadWaveforms` to create one array of waveforms from multiple files
 
 ## Install this package
 

@@ -1,4 +1,40 @@
-from typing import Dict, Any, List, Collection, Mapping
+from typing import Any, Collection, Dict, List, Mapping
+
+def stringItUp(*scrapPile: Any) -> List[str]:
+    """
+    Recursively extracts all elements from nested data structures and converts the elements to strings.
+    Order is not preserved.
+    Parameters:
+        *scrapPile: One or more data structures to unpack and convert to strings.
+    Returns:
+        listStrungUp: A list of string versions of all elements in the input data structure.
+    """
+    listStrungUp = []
+
+    def drill(KitKat: Any) -> None:
+        if isinstance(KitKat, str):
+            listStrungUp.append(KitKat)
+        elif isinstance(KitKat, (int, float, complex)):
+            listStrungUp.append(str(KitKat))
+        elif isinstance(KitKat, dict):
+            for broken, piece in KitKat.items():
+                drill(broken)
+                drill(piece)
+        elif isinstance(KitKat, (list, set, tuple)):
+            for kit in KitKat:
+                drill(kit)
+        elif hasattr(KitKat, '__iter__'): # Unpack other iterables
+            for kat in KitKat:
+                drill(kat)
+        else:
+            try:
+                sharingIsCaring = KitKat.__str__()
+                listStrungUp.append(sharingIsCaring)
+            except AttributeError:
+                pass
+
+    drill(scrapPile)
+    return listStrungUp
 
 def updateExtendPolishDictionaryLists(*dictionaryLists: Mapping[str, Collection[Any]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
     """
