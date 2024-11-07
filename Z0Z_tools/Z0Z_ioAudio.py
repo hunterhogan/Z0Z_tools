@@ -1,7 +1,7 @@
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from numpy.typing import NDArray
 from os import PathLike
-from typing import BinaryIO, Collection
+from typing import BinaryIO, Iterable
 import librosa
 import multiprocessing
 import numpy
@@ -50,7 +50,7 @@ def writeWav(pathFilename: PathLike | BinaryIO, waveform: NDArray, sampleRate: i
         pass
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
 
-def loadWaveforms(listPathFilenames: Collection[PathLike | BinaryIO], sampleRate: int = 44100) -> NDArray[numpy.float32]:
+def loadWaveforms(listPathFilenames: Iterable[PathLike], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Load multiple audio waveforms from a list of file paths into a single NumPy array.
 
@@ -66,6 +66,7 @@ def loadWaveforms(listPathFilenames: Collection[PathLike | BinaryIO], sampleRate
             - COUNTwaveforms: Number of waveforms loaded (equal to the length of listPathFilenames).
     """
     listPathFilenames = list(listPathFilenames)
+    listPathFilenames = [pathlib.Path(pathFilename) for pathFilename in listPathFilenames]
     COUNTwaveforms = len(listPathFilenames)
     arrayWaveforms = numpy.tile(readAudioFile(listPathFilenames[0], sampleRate=sampleRate)[..., numpy.newaxis], COUNTwaveforms)
 
