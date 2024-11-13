@@ -1,7 +1,7 @@
 import configparser
-from pathlib import Path
+import pathlib
 parse_setupDOTcfg = configparser.ConfigParser()
-parse_setupDOTcfg.read(Path(__file__).resolve().parent.parent / 'setup.cfg')
+parse_setupDOTcfg.read(pathlib.Path(__file__).resolve().parent.parent / 'setup.cfg')
 __version__ = parse_setupDOTcfg.get('metadata', 'version', fallback='0.0.0')
 __author__ = parse_setupDOTcfg.get('metadata', 'author', fallback='Unknown')
 

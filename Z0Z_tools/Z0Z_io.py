@@ -1,9 +1,10 @@
 from typing import Iterable, Any
-from os import PathLike
+import os
 
-def dataTabularTOpathFilenameDelimited(pathFilename: PathLike, tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
+def dataTabularTOpathFilenameDelimited(pathFilename: os.PathLike[Any], tableRows: Iterable[Iterable[Any]], \
+    tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
     """
-    Writes tabular data to a delimited file.
+    Writes tabular data to a delimited file. This is a low-quality function: you'd probably be better off with something else.
     Parameters:
         pathFilename: The path and filename where the data will be written.
         tableRows: The rows of the table, where each row is a list of strings or floats.

@@ -1,4 +1,4 @@
-from typing import Any, Collection, Dict, List, Mapping
+from typing import Any, Dict, List
 
 def stringItUp(*scrapPile: Any) -> List[str]:
     """
@@ -32,20 +32,30 @@ def stringItUp(*scrapPile: Any) -> List[str]:
                 listStrungUp.append(sharingIsCaring)
             except AttributeError:
                 pass
+            except TypeError: # "The error traceback provided indicates that there is an issue when calling the __str__ method on an object that does not have this method properly defined, leading to a TypeError."
+                pass
 
     drill(scrapPile)
     return listStrungUp
 
-def updateExtendPolishDictionaryLists(*dictionaryLists: Mapping[str, Collection[Any]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
+def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, List[Any]], destroyDuplicates: bool = False, reorderLists: bool = False, \
+    killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
     """
-    Merges multiple dictionaries containing lists into a single dictionary, with options to handle duplicates, list ordering, and erroneous data types.
+    Merges multiple dictionaries containing lists into a single dictionary, with options to handle duplicates, 
+    list ordering, and erroneous data types.
     Parameters:
         *dictionaryLists: Variable number of dictionaries to be merged. If only one dictionary is passed, it will be processed based on the provided options.
         destroyDuplicates (False): If True, removes duplicate elements from the lists. Defaults to False.
         ignoreListOrdering (False): If True, sorts the lists. Defaults to False.
         killErroneousDataTypes (False): If True, skips lists that cause a TypeError during merging. Defaults to False.
     Returns:
-        dictionaryLists: A single dictionary with merged lists based on the provided options. If only one dictionary is passed, it will be cleaned up based on the options.
+        ePluribusUnum: A single dictionary with merged lists based on the provided options. If only one dictionary is passed, 
+        it will be cleaned up based on the options.
+    Note:
+        The returned value, `ePluribusUnum`, is a so-called primitive dictionary (`typing.Dict`). Furthermore, every dictionary key is a 
+        so-called primitive string (cf. `str()`) and every dictionary value is a so-called primitive list (`typing.List`). If `dictionaryLists` 
+        has other data types, the data types will not be preserved. That could have unexpected consequences: in some cases, for example, conversion 
+        from the original data type to a `typing.List` will not preserve the order even if you want the order preserved. 
     """
 
     ePluribusUnum: Dict[str, List[Any]] = {}
