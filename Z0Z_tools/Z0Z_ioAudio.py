@@ -1,5 +1,5 @@
 from numpy.typing import NDArray
-from typing import BinaryIO, Dict, List, Sequence, Tuple
+from typing import Any, BinaryIO, Dict, List, Sequence, Tuple, Union
 import librosa
 import numpy
 import os
@@ -7,7 +7,7 @@ import pathlib
 import samplerate
 import soundfile
 
-def readAudioFile(pathFilename: os.PathLike | BinaryIO, sampleRate: int = 44100) -> NDArray[numpy.float32]:
+def readAudioFile(pathFilename: Union[os.PathLike[Any], BinaryIO], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Reads an audio file and returns its data as a NumPy array.
 
@@ -21,7 +21,7 @@ def readAudioFile(pathFilename: os.PathLike | BinaryIO, sampleRate: int = 44100)
     # TODO: librosa needs to go.
     return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
 
-def writeWav(pathFilename: os.PathLike | BinaryIO, waveform: NDArray, sampleRate: int = 44100) -> None:
+def writeWav(pathFilename: Union[os.PathLike[Any], BinaryIO], waveform: NDArray[numpy.float64], sampleRate: int = 44100) -> None:
     """
     Writes a waveform to a WAV file.
 
@@ -46,10 +46,7 @@ def writeWav(pathFilename: os.PathLike | BinaryIO, waveform: NDArray, sampleRate
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
 
 
-def loadWaveforms(
-    listPathFilenames: Sequence[os.PathLike[str]],
-    sampleRate: int = 44100
-) -> NDArray[numpy.float32]:
+def loadWaveforms(listPathFilenames: Sequence[os.PathLike[str]], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Load a list of audio files into a single array.
     Parameters:
