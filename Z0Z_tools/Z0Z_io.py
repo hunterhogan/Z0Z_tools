@@ -1,7 +1,7 @@
-from typing import Iterable, Any
+from typing import Iterable, Any, Union
 import os
 
-def dataTabularTOpathFilenameDelimited(pathFilename: os.PathLike[Any], tableRows: Iterable[Iterable[Any]], \
+def dataTabularTOpathFilenameDelimited(pathFilename: Union[str, os.PathLike[Any]], tableRows: Iterable[Iterable[Any]], \
     tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
     """
     Writes tabular data to a delimited file. This is a low-quality function: you'd probably be better off with something else.

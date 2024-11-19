@@ -1,3 +1,4 @@
+import io
 from numpy.typing import NDArray
 from typing import Any, BinaryIO, Dict, List, Sequence, Tuple, Union
 import librosa
@@ -7,7 +8,7 @@ import pathlib
 import samplerate
 import soundfile
 
-def readAudioFile(pathFilename: Union[os.PathLike[Any], BinaryIO], sampleRate: int = 44100) -> NDArray[numpy.float32]:
+def readAudioFile(pathFilename: Union[str, os.PathLike[Any], BinaryIO], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Reads an audio file and returns its data as a NumPy array.
 
@@ -21,7 +22,7 @@ def readAudioFile(pathFilename: Union[os.PathLike[Any], BinaryIO], sampleRate: i
     # TODO: librosa needs to go.
     return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
 
-def writeWav(pathFilename: Union[os.PathLike[Any], BinaryIO], waveform: NDArray[Any], sampleRate: int = 44100) -> None:
+def writeWav(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: NDArray[Any], sampleRate: int = 44100) -> None:
     """
     Writes a waveform to a WAV file.
 
@@ -38,15 +39,15 @@ def writeWav(pathFilename: Union[os.PathLike[Any], BinaryIO], waveform: NDArray[
         None:
 
     """
-    try:
-        if not isinstance(pathFilename, BinaryIO):
+    if not isinstance(pathFilename, io.IOBase):
+        try:
             pathlib.Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
-    except Exception:
-        pass
+        except OSError:
+            pass
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
 
 
-def loadWaveforms(listPathFilenames: Sequence[os.PathLike[str]], sampleRate: int = 44100) -> NDArray[numpy.float32]:
+def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Load a list of audio files into a single array.
     Parameters:
@@ -55,9 +56,9 @@ def loadWaveforms(listPathFilenames: Sequence[os.PathLike[str]], sampleRate: int
     Returns:
         arrayWaveforms: A single NumPy array of shape (channels, COUNTsamplesMaximum, COUNTwaveforms)
     """
-    axesOrdering: Dict[str, int] = {'indexingAxis': -1, 'axisTime': -2, 'axisChannels': 0}
-    axesSizes: Dict[str, int] = {keyName: 1 for keyName in axesOrdering.keys()}
-    COUNTaxes: int = len(axesOrdering)
+    axisOrderMapping: Dict[str, int] = {'indexingAxis': -1, 'axisTime': -2, 'axisChannels': 0}
+    axesSizes: Dict[str, int] = {keyName: 1 for keyName in axisOrderMapping.keys()}
+    COUNTaxes: int = len(axisOrderMapping)
     listShapeIndexToSize: List[int] = [9001] * COUNTaxes
 
     COUNTwaveforms: int = len(listPathFilenames)
@@ -88,7 +89,7 @@ def loadWaveforms(listPathFilenames: Sequence[os.PathLike[str]], sampleRate: int
     axesSizes['axisTime'] = COUNTsamplesMaximum
 
     for keyName, axisSize in axesSizes.items():
-        axisNormalized: int = (axesOrdering[keyName] + COUNTaxes) % COUNTaxes
+        axisNormalized: int = (axisOrderMapping[keyName] + COUNTaxes) % COUNTaxes
         listShapeIndexToSize[axisNormalized] = axisSize
     tupleShapeArray: Tuple[int, ...] = tuple(listShapeIndexToSize)
 
