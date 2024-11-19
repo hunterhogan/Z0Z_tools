@@ -21,7 +21,7 @@ def readAudioFile(pathFilename: Union[os.PathLike[Any], BinaryIO], sampleRate: i
     # TODO: librosa needs to go.
     return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
 
-def writeWav(pathFilename: Union[os.PathLike[Any], BinaryIO], waveform: NDArray[numpy.float64], sampleRate: int = 44100) -> None:
+def writeWav(pathFilename: Union[os.PathLike[Any], BinaryIO], waveform: NDArray[Any], sampleRate: int = 44100) -> None:
     """
     Writes a waveform to a WAV file.
 
