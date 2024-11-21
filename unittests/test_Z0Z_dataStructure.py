@@ -207,5 +207,37 @@ class TestStringItUp(unittest.TestCase):
                 return "MyObject"
         self.assertEqual(stringItUp(MyObject()), ["MyObject"])
 
+    def test_with_none(self):
+        self.assertEqual(stringItUp(None), ["None"])
+
+    def test_with_boolean(self):
+        self.assertCountEqual(stringItUp(True, False), ["True", "False"])
+
+    def test_with_complex_number(self):
+        self.assertEqual(stringItUp(1+2j), ["(1+2j)"])
+
+    def test_with_bytes(self):
+        self.assertEqual(stringItUp(b"bytes"), ["b'bytes'"])
+
+    def test_with_bytearray(self):
+        self.assertEqual(stringItUp(bytearray(b"bytearray")), ["bytearray(b'bytearray')"])
+
+    def test_with_memoryview(self):
+        self.assertEqual(stringItUp(memoryview(b"memoryview")), ["<memory at 0x...>"]) #Output will vary based on memory address
+
+    def test_empty_iterable_types(self):
+      self.assertEqual(stringItUp([], (), set()), [])
+
+    def test_mixed_nested_iterables(self):
+        data = [1, (2, {3, "four"}), {"five": [6, 7]}]
+        self.assertCountEqual(stringItUp(data), ["1", "2", "3", "four", "five", "6", "7"])
+
+    def test_large_data(self):
+        large_list = list(range(1000))
+        result = stringItUp(large_list)
+        self.assertEqual(len(result), 1000)
+        for i in range(1000):
+            self.assertEqual(result[i], str(i))
+
 if __name__ == '__main__':
     unittest.main()

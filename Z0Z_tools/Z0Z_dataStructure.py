@@ -14,13 +14,13 @@ def stringItUp(*scrapPile: Any) -> List[str]:
     def drill(KitKat: Any) -> None:
         if isinstance(KitKat, str):
             listStrungUp.append(KitKat)
-        elif isinstance(KitKat, (int, float, complex)):
+        elif isinstance(KitKat, (int, float, complex, bytes, bool, type(None))):
             listStrungUp.append(str(KitKat))
         elif isinstance(KitKat, dict):
             for broken, piece in KitKat.items():
                 drill(broken)
                 drill(piece)
-        elif isinstance(KitKat, (list, set, tuple)):
+        elif isinstance(KitKat, (list, set, tuple, frozenset, range)):
             for kit in KitKat:
                 drill(kit)
         elif hasattr(KitKat, '__iter__'): # Unpack other iterables
