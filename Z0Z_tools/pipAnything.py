@@ -55,7 +55,7 @@ def makeListRequirementsFromRequirementsFile(*pathFilenames: Union[str, os.PathL
             finally:
                 filesystemObjectRead.close()
 
-    return list(set(listRequirements))  # Remove duplicates
+    return sorted(set(listRequirements))  # Remove duplicates
 
 def make_setupDOTpy(relativePathPackage: Union[str, os.PathLike[str]], listRequirements: List[str]) -> str:
     """

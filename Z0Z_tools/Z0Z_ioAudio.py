@@ -1,26 +1,102 @@
-import io
 from numpy.typing import NDArray
 from typing import Any, BinaryIO, Dict, List, Sequence, Tuple, Union
-import librosa
+import io
 import numpy
 import os
 import pathlib
 import samplerate
 import soundfile
 
+def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]], sampleRate: int = 44100) -> NDArray[numpy.float32]:
+    """
+    Load a list of audio files into a single array.
+    Parameters:
+        listPathFilenames: List of file paths to the audio files.
+        sampleRate (44100): Target sample rate for the waveforms; the function will resample if necessary. Defaults to 44100.
+    Returns:
+        arrayWaveforms: A single NumPy array of shape (COUNTchannels, COUNTsamplesMaximum, COUNTwaveforms)
+    """
+    axisOrderMapping: Dict[str, int] = {'indexingAxis': -1, 'axisTime': -2, 'axisChannels': 0}
+    axesSizes: Dict[str, int] = {keyName: 1 for keyName in axisOrderMapping.keys()}
+    COUNTaxes: int = len(axisOrderMapping)
+    listShapeIndexToSize: List[int] = [9001] * COUNTaxes
+
+    COUNTwaveforms: int = len(listPathFilenames)
+    axesSizes['indexingAxis'] = COUNTwaveforms
+    COUNTchannels: int = 2
+    axesSizes['axisChannels'] = COUNTchannels
+
+    listCOUNTsamples: List[int] = []
+    axisTime: int = 0
+    
+    for pathFilename in listPathFilenames:
+        with soundfile.SoundFile(pathFilename) as readSoundFile:
+            sampleRateSoundFile: int = readSoundFile.samplerate
+            waveform: NDArray[numpy.float32] = readSoundFile.read(dtype='float32', always_2d=True).astype(numpy.float32)
+            if sampleRateSoundFile != sampleRate:
+                waveform = resampleWaveform(waveform, sampleRate, sampleRateSoundFile)
+            listCOUNTsamples.append(waveform.shape[axisTime])
+            
+    COUNTsamplesMaximum: int = max(listCOUNTsamples)
+    axesSizes['axisTime'] = COUNTsamplesMaximum
+
+    for keyName, axisSize in axesSizes.items():
+        axisNormalized: int = (axisOrderMapping[keyName] + COUNTaxes) % COUNTaxes
+        listShapeIndexToSize[axisNormalized] = axisSize
+    tupleShapeArray: Tuple[int, ...] = tuple(listShapeIndexToSize)
+
+    # `numpy.zeros` so that shorter waveforms are safely padded with zeros
+    arrayWaveforms: NDArray[numpy.float32] = numpy.zeros(tupleShapeArray, dtype=numpy.float32)
+
+    for index in range(COUNTwaveforms):
+        with soundfile.SoundFile(listPathFilenames[index]) as readSoundFile:
+            sampleRateSoundFile: int = readSoundFile.samplerate
+            waveform: NDArray[numpy.float32] = readSoundFile.read(dtype='float32', always_2d=True).astype(numpy.float32)
+
+            if sampleRateSoundFile != sampleRate:
+                waveform = resampleWaveform(waveform, sampleRate, sampleRateSoundFile)
+
+            COUNTsamples: int = waveform.shape[axisTime]
+            arrayWaveforms[:, 0:COUNTsamples, index] = waveform.T
+
+    return arrayWaveforms
+
 def readAudioFile(pathFilename: Union[str, os.PathLike[Any], BinaryIO], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
-    Reads an audio file and returns its data as a NumPy array.
+    Reads an audio file and returns its data as a NumPy array. Mono is always converted to stereo.
 
     Parameters:
         pathFilename: The path to the audio file.
         sampleRate (44100): The sample rate to use when reading the file. Defaults to 44100.
 
     Returns:
-        waveform: The audio data in an array shaped (samples,) if there is only one channel or (channels, samples) if there is more than one channel.
+        waveform: The audio data in an array shaped (channels, samples).
     """
-    # TODO: librosa needs to go.
-    return librosa.load(path=pathFilename, sr=sampleRate, mono=False)[0]
+    with soundfile.SoundFile(pathFilename) as readStream:
+        sampleRateSource: int = readStream.samplerate
+        waveform: NDArray[numpy.float32] = readStream.read(dtype='float32', always_2d=True).astype(numpy.float32)
+        waveform = resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource)
+        return waveform.T
+
+def resampleWaveform(waveform: NDArray[numpy.float32], sampleRateDesired: int, sampleRateSource: int) -> NDArray[numpy.float32]:
+    """
+    Resamples the waveform to the desired sample rate.
+
+    Parameters:
+        waveform: The input audio data.
+        sampleRateDesired: The desired sample rate.
+        sampleRateSource: The original sample rate of the waveform.
+
+    Returns:
+        waveformResampled: The resampled waveform.
+    """
+    if sampleRateSource != sampleRateDesired:
+        converter: str = 'sinc_best'
+        ratio: float = sampleRateDesired / sampleRateSource
+        waveformResampled: NDArray[numpy.float32] = samplerate.resample(waveform, ratio, converter)
+        return waveformResampled
+    else:
+        return waveform
 
 def writeWav(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: NDArray[Any], sampleRate: int = 44100) -> None:
     """
@@ -45,65 +121,3 @@ def writeWav(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: ND
         except OSError:
             pass
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
-
-
-def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]], sampleRate: int = 44100) -> NDArray[numpy.float32]:
-    """
-    Load a list of audio files into a single array.
-    Parameters:
-        listPathFilenames: List of file paths to the audio files.
-        sampleRate (44100): Target sample rate for the waveforms; the function will resample if necessary. Defaults to 44100.
-    Returns:
-        arrayWaveforms: A single NumPy array of shape (channels, COUNTsamplesMaximum, COUNTwaveforms)
-    """
-    axisOrderMapping: Dict[str, int] = {'indexingAxis': -1, 'axisTime': -2, 'axisChannels': 0}
-    axesSizes: Dict[str, int] = {keyName: 1 for keyName in axisOrderMapping.keys()}
-    COUNTaxes: int = len(axisOrderMapping)
-    listShapeIndexToSize: List[int] = [9001] * COUNTaxes
-
-    COUNTwaveforms: int = len(listPathFilenames)
-    axesSizes['indexingAxis'] = COUNTwaveforms
-    channels: int = 2
-    axesSizes['axisChannels'] = channels
-
-    def resampleWaveform(waveform: NDArray[numpy.float32], sampleRateTarget: int, sampleRateActual: int) -> NDArray[numpy.float32]:
-        converter: str = 'sinc_best'
-        if sampleRateActual != sampleRateTarget:
-            ratio: float = sampleRateTarget / sampleRateActual
-            return samplerate.resample(waveform, ratio, converter)
-        else:
-            return waveform
-
-    listCOUNTsamples: List[int] = []
-    axisTime: int = 0
-    
-    for pathFilename in listPathFilenames:
-        with soundfile.SoundFile(pathFilename) as readSoundFile:
-            sampleRateSoundFile: int = readSoundFile.samplerate
-            waveform: NDArray[numpy.float32] = readSoundFile.read(dtype='float32', always_2d=True).astype(numpy.float32)
-            if sampleRateSoundFile != sampleRate:
-                waveform = resampleWaveform(waveform, sampleRate, sampleRateSoundFile)
-            listCOUNTsamples.append(waveform.shape[axisTime])
-            
-    COUNTsamplesMaximum: int = max(listCOUNTsamples)
-    axesSizes['axisTime'] = COUNTsamplesMaximum
-
-    for keyName, axisSize in axesSizes.items():
-        axisNormalized: int = (axisOrderMapping[keyName] + COUNTaxes) % COUNTaxes
-        listShapeIndexToSize[axisNormalized] = axisSize
-    tupleShapeArray: Tuple[int, ...] = tuple(listShapeIndexToSize)
-
-    arrayWaveforms: NDArray[numpy.float32] = numpy.zeros(tupleShapeArray, dtype=numpy.float32)
-
-    for index in range(COUNTwaveforms):
-        with soundfile.SoundFile(listPathFilenames[index]) as readSoundFile:
-            sampleRateSoundFile: int = readSoundFile.samplerate
-            waveform: NDArray[numpy.float32] = readSoundFile.read(dtype='float32', always_2d=True).astype(numpy.float32)
-
-            if sampleRateSoundFile != sampleRate:
-                waveform = resampleWaveform(waveform, sampleRate, sampleRateSoundFile)
-
-            COUNTsamples: int = waveform.shape[axisTime]
-            arrayWaveforms[:, 0:COUNTsamples, index] = waveform.T
-
-    return arrayWaveforms

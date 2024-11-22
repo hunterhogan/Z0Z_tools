@@ -14,13 +14,13 @@ def stringItUp(*scrapPile: Any) -> List[str]:
     def drill(KitKat: Any) -> None:
         if isinstance(KitKat, str):
             listStrungUp.append(KitKat)
-        elif isinstance(KitKat, (int, float, complex, bytes, bool, type(None))):
+        elif isinstance(KitKat, (bool, bytearray, bytes, complex, float, int, memoryview, type(None))):
             listStrungUp.append(str(KitKat))
         elif isinstance(KitKat, dict):
             for broken, piece in KitKat.items():
                 drill(broken)
                 drill(piece)
-        elif isinstance(KitKat, (list, set, tuple, frozenset, range)):
+        elif isinstance(KitKat, (frozenset, list, range, set, tuple)):
             for kit in KitKat:
                 drill(kit)
         elif hasattr(KitKat, '__iter__'): # Unpack other iterables
@@ -34,8 +34,11 @@ def stringItUp(*scrapPile: Any) -> List[str]:
                 pass
             except TypeError: # "The error traceback provided indicates that there is an issue when calling the __str__ method on an object that does not have this method properly defined, leading to a TypeError."
                 pass
-
-    drill(scrapPile)
+    try:
+        for scrap in scrapPile:
+            drill(scrap)
+    except RecursionError:
+        listStrungUp.append(repr(scrap))
     return listStrungUp
 
 def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, List[Any]], destroyDuplicates: bool = False, reorderLists: bool = False, \

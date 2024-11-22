@@ -14,7 +14,7 @@ class TestReadAudioFile(unittest.TestCase):
     def test_read_mono_audio_file(self):
         waveform = readAudioFile(self.mono_file)
         self.assertIsInstance(waveform, numpy.ndarray)
-        self.assertEqual(waveform.ndim, 1)  # Mono should have 1 dimension
+        self.assertEqual(waveform.ndim, 2)  # Mono should have 1 dimension
 
     def test_read_stereo_audio_file(self):
         waveform = readAudioFile(self.stereo_file)
