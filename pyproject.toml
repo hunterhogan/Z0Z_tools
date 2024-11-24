@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "Z0Z_tools"
 dynamic = [
     "authors", 
-    "dependencies"
+    "dependencies",
     "description", 
     "urls", 
     "version", 
