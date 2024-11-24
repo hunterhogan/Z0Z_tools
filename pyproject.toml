@@ -8,9 +8,6 @@ dynamic = ["version", "description", "authors", "urls", "dependencies"]
 requires-python = ">= 3.10"
 readme = "README.md"
 
-[project.urls]
-"Homepage" = "https://github.com/hunterhogan/Z0Z_tools"
-
 [tool.setuptools]
 include-package-data = true
 
