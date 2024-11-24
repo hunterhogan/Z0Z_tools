@@ -6,8 +6,6 @@ build-backend = "setuptools.build_meta"
 name = "Z0Z_tools"
 description = "Audio processing, data structure, and package management tools."
 dynamic = [
-    "authors", 
-    "urls", 
     "version", 
     ]
 requires-python = ">= 3.10"
@@ -23,11 +21,12 @@ dependencies = [
 [tool.setuptools]
 include-package-data = true
 
+[project.urls]
+"Homepage" = "https://github.com/hunterhogan/Z0Z_tools"
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["*"]
 
 [tool.setuptools.dynamic]
-authors = [{ attr = "Z0Z_tools.__author__" }]
 version = { attr = "Z0Z_tools.__version__" }
-urls = { attr = "Z0Z_tools.__url__" }
