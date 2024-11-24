@@ -2,21 +2,18 @@
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+packages = ["find:"]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+
 [project]
 name = "Z0Z_tools"
-version = "0.5.1"
+dynamic = ["version", "description", "authors", "urls", "dependencies"]
 requires-python = ">= 3.10"
-description = "Reusable tools for various projects"
-authors = [{ name = "Hunter Hogan" }]
 readme = "README.md"
-dependencies = [
-    "numpy",
-    "packaging",
-    # Google Colab
-    "samplerate @ git+https://github.com/tuxu/python-samplerate.git@fix_cmake_dep ; platform_system == 'Linux' and platform_machine == 'x86_64' and python_version <= '3.10'",
-    "samplerate",
-    "soundfile"
-]
 
 [project.urls]
 "Homepage" = "https://github.com/hunterhogan/Z0Z_tools"
