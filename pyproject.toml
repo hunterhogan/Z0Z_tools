@@ -2,13 +2,6 @@
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-packages = ["find:"]
-include-package-data = true
-
-[tool.setuptools.packages.find]
-where = ["."]
-
 [project]
 name = "Z0Z_tools"
 dynamic = ["version", "description", "authors", "urls", "dependencies"]
@@ -17,3 +10,10 @@ readme = "README.md"
 
 [project.urls]
 "Homepage" = "https://github.com/hunterhogan/Z0Z_tools"
+
+[tool.setuptools]
+packages = ["find"]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
