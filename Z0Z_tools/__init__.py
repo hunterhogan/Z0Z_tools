@@ -1,9 +1,9 @@
 """Z0Z_tools package for reusable tools across various projects."""
 
-__version__ = "0.5.2"
 __author__ = "Hunter Hogan"
 __description__ = "Audio processing, data structure, and package management tools."
 __url__ = "https://github.com/hunterhogan/Z0Z_tools"
+__version__ = "0.5.2"
 __dependencies__ = [
     "numpy",
     "packaging",

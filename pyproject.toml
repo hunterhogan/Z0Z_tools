@@ -4,7 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "Z0Z_tools"
-dynamic = ["version", "description", "authors", "urls", "dependencies"]
+dynamic = [
+    "authors", 
+    "dependencies"
+    "description", 
+    "urls", 
+    "version", 
+    ]
 requires-python = ">= 3.10"
 readme = "README.md"
 
@@ -13,3 +19,10 @@ include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["."]
+
+[tool.setuptools.dynamic]
+authors = [{ attr = "Z0Z_tools.__author__" }]
+version = { attr = "Z0Z_tools.__version__" }
+description = { attr = "Z0Z_tools.__description__" }
+dependencies = { attr = "Z0Z_tools.__dependencies__" }
+urls = { attr = "Z0Z_tools.__url__" }
