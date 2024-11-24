@@ -7,12 +7,18 @@ name = "Z0Z_tools"
 description = "Audio processing, data structure, and package management tools."
 dynamic = [
     "authors", 
-    "dependencies",
     "urls", 
     "version", 
     ]
 requires-python = ">= 3.10"
 readme = "README.md"
+dependencies = [
+    "numpy",
+    "packaging",
+    "samplerate @ git+https://github.com/tuxu/python-samplerate.git@fix_cmake_dep ; platform_system == 'Linux' and platform_machine == 'x86_64' and python_version <= '3.10'",
+    "samplerate",
+    "soundfile"
+]
 
 [tool.setuptools]
 include-package-data = true
@@ -24,5 +30,4 @@ include = ["*"]
 [tool.setuptools.dynamic]
 authors = [{ attr = "Z0Z_tools.__author__" }]
 version = { attr = "Z0Z_tools.__version__" }
-dependencies = { attr = "Z0Z_tools.__dependencies__" }
 urls = { attr = "Z0Z_tools.__url__" }
