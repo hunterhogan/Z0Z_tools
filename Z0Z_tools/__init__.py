@@ -1,5 +1,3 @@
-"""Z0Z_tools package for reusable tools across various projects."""
-
 __author__ = "Hunter Hogan"
 __description__ = "Audio processing, data structure, and package management tools."
 __url__ = "https://github.com/hunterhogan/Z0Z_tools"

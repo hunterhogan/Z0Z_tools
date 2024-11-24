@@ -19,6 +19,7 @@ include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["."]
+include = ["*"]
 
 [tool.setuptools.dynamic]
 authors = [{ attr = "Z0Z_tools.__author__" }]
