@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "Z0Z_tools"
+description = "Audio processing, data structure, and package management tools."
 dynamic = [
     "authors", 
     "dependencies",
-    "description", 
     "urls", 
     "version", 
     ]
@@ -24,6 +24,5 @@ include = ["*"]
 [tool.setuptools.dynamic]
 authors = [{ attr = "Z0Z_tools.__author__" }]
 version = { attr = "Z0Z_tools.__version__" }
-description = { attr = "Z0Z_tools.__description__" }
 dependencies = { attr = "Z0Z_tools.__dependencies__" }
 urls = { attr = "Z0Z_tools.__url__" }
