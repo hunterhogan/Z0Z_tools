@@ -12,6 +12,9 @@ def dataTabularTOpathFilenameDelimited(pathFilename: Union[str, os.PathLike[Any]
         delimiterOutput (tab): The delimiter to use in the output file. Defaults to *tab*.
     Returns:
         None:
+
+    This function still exists because I have not refactored `analyzeAudio.analyzeAudioListPathFilenames()`. The structure of
+    that function's returned data is easily handled by this function. See https://github.com/hunterhogan/analyzeAudio
     """
     with open(pathFilename, 'w', newline='') as writeStream:
         writeStream.write(delimiterOutput.join(tableColumns) + '\n')
