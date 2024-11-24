@@ -12,7 +12,6 @@ readme = "README.md"
 "Homepage" = "https://github.com/hunterhogan/Z0Z_tools"
 
 [tool.setuptools]
-packages = ["find"]
 include-package-data = true
 
 [tool.setuptools.packages.find]
