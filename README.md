@@ -30,11 +30,3 @@ The only option is the sample rate.
 ```sh
 pip install Z0Z-tools
 ```
-
-## Install this package on Colab
-
-```sh
-pip install Z0Z-tools[Colab]
-```
-
-See ["Can't install sample rate in google colab"](https://github.com/tuxu/python-samplerate/issues/15)

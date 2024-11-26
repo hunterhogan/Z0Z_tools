@@ -1,11 +1,13 @@
-from numpy.typing import NDArray
-from typing import Any, BinaryIO, Dict, List, Sequence, Tuple, Union
 import io
-import numpy
 import os
 import pathlib
-import samplerate
+from typing import Any, BinaryIO, Dict, List, Sequence, Tuple, Union
+
+import numpy
+import resampy
 import soundfile
+from numpy.typing import NDArray
+
 
 def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
@@ -28,14 +30,19 @@ def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[s
 
     listCOUNTsamples: List[int] = []
     axisTime: int = 0
-    
     for pathFilename in listPathFilenames:
-        with soundfile.SoundFile(pathFilename) as readSoundFile:
-            sampleRateSoundFile: int = readSoundFile.samplerate
-            waveform: NDArray[numpy.float32] = readSoundFile.read(dtype='float32', always_2d=True).astype(numpy.float32)
-            if sampleRateSoundFile != sampleRate:
-                waveform = resampleWaveform(waveform, sampleRate, sampleRateSoundFile)
-            listCOUNTsamples.append(waveform.shape[axisTime])
+        try:
+            with soundfile.SoundFile(pathFilename) as readSoundFile:
+                sampleRateSoundFile: int = readSoundFile.samplerate
+                waveform: NDArray[numpy.float32] = readSoundFile.read(dtype='float32', always_2d=True).astype(numpy.float32)
+                if sampleRateSoundFile != sampleRate:
+                    waveform = resampleWaveform(waveform, sampleRate, sampleRateSoundFile)
+                listCOUNTsamples.append(waveform.shape[axisTime])
+        except soundfile.LibsndfileError as ERRORmessage:
+            if 'System error' in str(ERRORmessage):
+                raise FileNotFoundError(f"File not found: {pathFilename}") from ERRORmessage
+            else:
+                raise
             
     COUNTsamplesMaximum: int = max(listCOUNTsamples)
     axesSizes['axisTime'] = COUNTsamplesMaximum
@@ -72,15 +79,24 @@ def readAudioFile(pathFilename: Union[str, os.PathLike[Any], BinaryIO], sampleRa
     Returns:
         waveform: The audio data in an array shaped (channels, samples).
     """
-    with soundfile.SoundFile(pathFilename) as readStream:
-        sampleRateSource: int = readStream.samplerate
-        waveform: NDArray[numpy.float32] = readStream.read(dtype='float32', always_2d=True).astype(numpy.float32)
-        waveform = resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource)
-        return waveform.T
+    try:
+        with soundfile.SoundFile(pathFilename) as readSoundFile:
+            sampleRateSource: int = readSoundFile.samplerate
+            waveform: NDArray[numpy.float32] = readSoundFile.read(dtype='float32', always_2d=True).astype(numpy.float32)
+            waveform = resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource)
+            # If the audio is mono (1 channel), convert it to stereo by duplicating the channel
+            if waveform.shape[1] == 1:
+                waveform = numpy.repeat(waveform, 2, axis=1)
+            return waveform.T
+    except soundfile.LibsndfileError as ERRORmessage:
+        if 'System error' in str(ERRORmessage):
+            raise FileNotFoundError(f"File not found: {pathFilename}") from ERRORmessage
+        else:
+            raise
 
 def resampleWaveform(waveform: NDArray[numpy.float32], sampleRateDesired: int, sampleRateSource: int) -> NDArray[numpy.float32]:
     """
-    Resamples the waveform to the desired sample rate.
+    Resamples the waveform to the desired sample rate using resampy.
 
     Parameters:
         waveform: The input audio data.
@@ -91,9 +107,7 @@ def resampleWaveform(waveform: NDArray[numpy.float32], sampleRateDesired: int, s
         waveformResampled: The resampled waveform.
     """
     if sampleRateSource != sampleRateDesired:
-        converter: str = 'sinc_best'
-        ratio: float = sampleRateDesired / sampleRateSource
-        waveformResampled: NDArray[numpy.float32] = samplerate.resample(waveform, ratio, converter)
+        waveformResampled: NDArray[numpy.float32] = resampy.resample(waveform, sampleRateSource, sampleRateDesired, axis=0)
         return waveformResampled
     else:
         return waveform
