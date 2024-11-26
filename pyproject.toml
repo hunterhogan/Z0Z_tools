@@ -17,6 +17,11 @@ dependencies = [
     "soundfile"
 ]
 
+[project.optional-dependencies]
+Colab = [
+    "samplerate@git+https://github.com/tuxu/python-samplerate.git@fix_cmake_dep"
+]
+
 [tool.setuptools]
 include-package-data = true
 

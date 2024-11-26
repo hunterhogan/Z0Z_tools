@@ -19,7 +19,7 @@ python -m Z0Z_tools.pipAnything <pathPackage>
 - Optionally sort each list.
 - Optionally delete data that won't merge.
 
-## Basic read/write WAV files with `readAudioFile` and `writeWav`
+## Easily read/write WAV files with `readAudioFile` and `writeWav`
 
 The only option is the sample rate.
 
@@ -27,30 +27,14 @@ The only option is the sample rate.
 
 ## Install this package
 
-### From Github
+```sh
+pip install Z0Z-tools
+```
+
+## Install this package on Colab
 
 ```sh
-pip install Z0Z_tools@git+https://github.com/hunterhogan/Z0Z_tools.git
+pip install Z0Z-tools[Colab]
 ```
 
-### From a local directory
-
-#### Windows
-
-```powershell
-git clone https://github.com/hunterhogan/Z0Z_tools.git \path\to\Z0Z_tools
-pip install Z0Z_tools@file:\path\to\Z0Z_tools
-```
-
-#### POSIX
-
-```bash
-git clone https://github.com/hunterhogan/Z0Z_tools.git /path/to/Z0Z_tools
-pip install Z0Z_tools@file:/path/to/Z0Z_tools
-```
-
-## Install updates
-
-```sh
-pip install --upgrade Z0Z_tools@git+https://github.com/hunterhogan/Z0Z_tools.git
-```
+See ["Can't install sample rate in google colab"](https://github.com/tuxu/python-samplerate/issues/15)
