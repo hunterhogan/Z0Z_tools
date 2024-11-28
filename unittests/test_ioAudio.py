@@ -1,5 +1,5 @@
 from Z0Z_tools import readAudioFile, loadWaveforms, writeWav
-from Z0Z_tools.Z0Z_ioAudio import resampleWaveform
+from Z0Z_tools.ioAudio import resampleWaveform
 from numpy.typing import NDArray
 import numpy
 import pathlib 

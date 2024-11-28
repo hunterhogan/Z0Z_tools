@@ -1,7 +1,7 @@
 from decimal import Decimal
 from fractions import Fraction
 from itertools import count, islice
-from Z0Z_tools.Z0Z_dataStructure import updateExtendPolishDictionaryLists, stringItUp
+from Z0Z_tools import updateExtendPolishDictionaryLists, stringItUp
 import datetime
 import numpy
 import unittest
