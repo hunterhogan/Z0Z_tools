@@ -1,37 +1,52 @@
 # Z0Z_tools
 
-"Z0Z_"- is a placeholder, and a Z0Z_tool is at best, a prototype.
+A collection of tools to solve common Python development frustrations. "Z0Z_" indicates these are prototype solutions - they work, but might not be pretty.
 
-## Do you also get irritated by "'true' is invalid and stupid. Did you mean 'True'?"
+## Want to install a package that lacks proper installation files?
 
-`oopsieKwargsie()` will try to interpret an errant parameter value as `True`, `False`, or `None`.
-
-## Allow a calling function to limit concurrency to a ratio, absolute count, or relative count with `defineConcurrencyLimit()`
-
-## Install an arbitrary package with `pipAnything`
-
-Try to install a package that doesn't have installation files.
+If you have a Python package that doesn't have an installation file, `pipAnything()` creates a temporary setup environment to help `pip` install the unpackaged code.
 
 ```sh
 python -m Z0Z_tools.pipAnything <pathPackage>
 ```
 
-## Unpack and convert elements to `str` types with `stringItUp()`
+## Tired of handling string vs boolean parameter confusion?
 
-## Merge and/or lightly clean a dictionary of lists with `updateExtendPolishDictionaryLists()`
+Add `oopsieKwargsie()` to your function: it intelligently converts string parameters to their proper boolean or None types.
 
-- Merges multiple dictionaries of lists into a single dictionary.
-- Optionally remove duplicates each list.
-- Optionally sort each list.
-- Optionally delete data that won't merge.
+## Need flexible control over parallel processing?
 
-## Easily read/write WAV files with `readAudioFile()` and `writeWav()`
+Add a flexible parameter to your function, and use `defineConcurrencyLimit()` to give users more control over concurrent processing by using intuitive ratios or counts:
 
-The only option is the sample rate.
+- Use fractions (0.75 = 75% of CPUs)
+- Specify exact counts (8 = use 8 CPUs)
+- Use negative values (-2 = total CPUs minus 2)
 
-## Use `loadWaveforms()` to create one array of waveforms from multiple files
+## Extract data as strings from simple or complex nested data structures?
 
-## Install this package
+Extract and standardize values from complex data structures with `stringItUp()`:
+
+- Recursively unpack nested structures
+- Convert all elements to strings
+- Handle arbitrary iterables and custom objects
+
+## Want to merge multiple dictionaries of lists?
+
+`updateExtendPolishDictionaryLists()` can combine and clean dictionary data with optional:
+
+- Duplicate removal
+- List sorting
+- Error handling for incompatible data
+
+## "I just want to load the audio: I don't need 714 options!"
+
+Load audio, `readAudioFile()`, and save WAV files, `writeWav()`, without the complexity:
+
+- Automatic stereo conversion
+- Sample rate control
+- Multi-file batch processing, too: `loadWaveforms()`
+
+## Installation
 
 ```sh
 pip install Z0Z-tools

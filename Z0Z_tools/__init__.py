@@ -1,5 +1,5 @@
 __author__ = "Hunter Hogan"
-__version__ = "0.6.0"
+__version__ = "0.6.1"
 
 from Z0Z_tools.dataStructures import stringItUp, updateExtendPolishDictionaryLists
 from Z0Z_tools.ioAudio import writeWav, readAudioFile, loadWaveforms

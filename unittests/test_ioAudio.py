@@ -2,36 +2,48 @@ from Z0Z_tools import readAudioFile, loadWaveforms, writeWav
 from Z0Z_tools.ioAudio import resampleWaveform
 from numpy.typing import NDArray
 import numpy
-import pathlib 
+import pathlib
 import soundfile
 import unittest
 import tempfile
 import os
 
+# Define test data directory and file paths
+pathDirectoryTestData = pathlib.Path("unittests/dataSamples")
+
+pathFilenameAudioMono = pathDirectoryTestData / "testWooWooMono16kHz32integerClipping9sec.wav"
+pathFilenameAudioStereo = pathDirectoryTestData / "testSine2ch5sec.wav"
+pathFilenameNonAudioVideo = pathDirectoryTestData / "testVideo11sec.mkv"
+
+listPathFilenamesAudioMonoCopies = [
+    pathDirectoryTestData / f"testWooWooMono16kHz32integerClipping9secCopy{i}.wav" for i in range(1, 4)
+]
+listPathFilenamesAudioStereoCopies = [
+    pathDirectoryTestData / f"testSine2ch5secCopy{i}.wav" for i in range(1, 5)
+]
 
 class TestReadAudioFile(unittest.TestCase):
 
     def setUp(self):
-        self.test_data_dir = pathlib.Path("unittests/dataSamples")
-        self.mono_file = self.test_data_dir / "testWooWooMono16kHz32integerClipping9sec.wav"
-        self.stereo_file = self.test_data_dir / "testSine2ch5sec.wav"
-        self.non_audio_file = self.test_data_dir / "testVideo11sec.mkv"  #Assuming this file exists for the test.
+        self.pathFilenameAudioMono = pathFilenameAudioMono
+        self.pathFilenameAudioStereo = pathFilenameAudioStereo
+        self.pathFilenameNonAudioVideo = pathFilenameNonAudioVideo
 
     def test_read_mono_audio_file(self):
-        waveform = readAudioFile(self.mono_file)
+        waveform = readAudioFile(self.pathFilenameAudioMono)
         self.assertIsInstance(waveform, numpy.ndarray)
         self.assertEqual(waveform.ndim, 2)  # Mono should be converted to stereo, hence 2 dimensions
         self.assertEqual(waveform.shape[0], 2) # Verify stereo output
 
     def test_read_stereo_audio_file(self):
-        waveform = readAudioFile(self.stereo_file)
+        waveform = readAudioFile(self.pathFilenameAudioStereo)
         self.assertIsInstance(waveform, numpy.ndarray)
         self.assertEqual(waveform.ndim, 2)
         self.assertEqual(waveform.shape[0], 2)
 
     def test_read_audio_file_resampling(self):
-        waveform_original_sr = readAudioFile(self.mono_file, sampleRate=16000) # Original Sample Rate
-        waveform_resampled_sr = readAudioFile(self.mono_file, sampleRate=44100) # Resampled
+        waveform_original_sr = readAudioFile(self.pathFilenameAudioMono, sampleRate=16000) # Original Sample Rate
+        waveform_resampled_sr = readAudioFile(self.pathFilenameAudioMono, sampleRate=44100) # Resampled
         self.assertNotEqual(waveform_original_sr.shape[1], waveform_resampled_sr.shape[1])
 
 
@@ -39,27 +51,25 @@ class TestReadAudioFile(unittest.TestCase):
         with self.assertRaises(FileNotFoundError): # Or appropriate exception from soundfile library
             readAudioFile("nonexistent_file.wav")
         with self.assertRaises(soundfile.LibsndfileError): # Or a more specific exception type
-            readAudioFile(self.non_audio_file)
+            readAudioFile(self.pathFilenameNonAudioVideo)
 
 
 class TestLoadWaveforms(unittest.TestCase):
 
     def setUp(self):
-        self.test_data_dir = pathlib.Path("unittests/dataSamples")
-        self.mono_files = [self.test_data_dir / f"testWooWooMono16kHz32integerClipping9secCopy{i}.wav" for i in range(1,4)]
-        self.stereo_files = [self.test_data_dir / f"testSine2ch5secCopy{i}.wav" for i in range(1,5)]
-
+        self.listPathFilenamesAudioMonoCopies = listPathFilenamesAudioMonoCopies
+        self.listPathFilenamesAudioStereoCopies = listPathFilenamesAudioStereoCopies
 
     def test_load_waveforms_mono(self):
-        array_waveforms = loadWaveforms(self.mono_files, sampleRate=44100)
+        array_waveforms = loadWaveforms(self.listPathFilenamesAudioMonoCopies, sampleRate=44100)
         self.assertEqual(array_waveforms.shape, (2, 396900, 3))
 
     def test_load_waveforms_stereo(self):
-        array_waveforms = loadWaveforms(self.stereo_files, sampleRate=44100)
+        array_waveforms = loadWaveforms(self.listPathFilenamesAudioStereoCopies, sampleRate=44100)
         self.assertEqual(array_waveforms.shape, (2, 220500, 4))
 
     def test_load_waveforms_mixed_channels(self):
-        mixed_files = self.mono_files[:1] + self.stereo_files[:1]
+        mixed_files = self.listPathFilenamesAudioMonoCopies[:1] + self.listPathFilenamesAudioStereoCopies[:1]
         array_waveforms = loadWaveforms(mixed_files, sampleRate=44100)
         self.assertEqual(array_waveforms.shape, (2, 396900, 2))
 
@@ -68,26 +78,26 @@ class TestLoadWaveforms(unittest.TestCase):
             loadWaveforms([])
 
     def test_load_waveforms_invalid_file(self):
-        invalid_files = self.mono_files + ["invalid_file.wav"]
+        invalid_files = self.listPathFilenamesAudioMonoCopies + ["invalid_file.wav"]
         with self.assertRaises(FileNotFoundError) as context: # Or a more specific exception
             loadWaveforms(invalid_files) # type: ignore
         # Optionally check the error message for more precise testing
+
 class TestResampleWaveform(unittest.TestCase):
 
     def setUp(self):
-        pathDirectoryTestData: pathlib.Path = pathlib.Path("unittests/dataSamples")
-        self.pathFilenameMono: pathlib.Path = pathDirectoryTestData / "testWooWooMono16kHz32integerClipping9sec.wav"
-        self.pathFilenameStereo: pathlib.Path = pathDirectoryTestData / "testSine2ch5sec.wav"
+        self.pathFilenameAudioMono = pathFilenameAudioMono
+        self.pathFilenameAudioStereo = pathFilenameAudioStereo
 
         # Load real audio files
         self.arrayWaveformMono: NDArray[numpy.float32]
         self.sampleRateMono: int
-        self.arrayWaveformMono, self.sampleRateMono = soundfile.read(self.pathFilenameMono, dtype='float32') # type: ignore
+        self.arrayWaveformMono, self.sampleRateMono = soundfile.read(self.pathFilenameAudioMono, dtype='float32') # type: ignore
         self.arrayWaveformMono = self.arrayWaveformMono.astype(numpy.float32)
 
         self.arrayWaveformStereo: NDArray[numpy.float32]
         self.sampleRateStereo: int
-        self.arrayWaveformStereo, self.sampleRateStereo = soundfile.read(self.pathFilenameStereo, dtype='float32') # type: ignore
+        self.arrayWaveformStereo, self.sampleRateStereo = soundfile.read(self.pathFilenameAudioStereo, dtype='float32') # type: ignore
         self.arrayWaveformStereo = self.arrayWaveformStereo.astype(numpy.float32)
 
     def testResampleWaveformUpsampleMono(self):
@@ -140,6 +150,7 @@ class TestResampleWaveform(unittest.TestCase):
         """
         with self.assertRaises(ValueError):
             resampleWaveform(self.arrayWaveformStereo, -44100, self.sampleRateStereo)
+
 class TestWriteWav(unittest.TestCase):
     def test_write_wav_mono(self):
         waveform = numpy.random.rand(1, 1000)  #Example mono waveform
