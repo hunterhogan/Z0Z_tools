@@ -29,3 +29,23 @@ include = ["*"]
 
 [tool.setuptools.dynamic]
 version = { attr = "Z0Z_tools.__version__" }
+
+[tool.coverage.run]
+branch = true
+source = ["Z0Z_tools"]
+data_file = "unittests/coverage/.coverage"
+omit = [
+    "Z0Z_tools/__init__.py",
+    "unittests/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
+ignore_errors = false
+fail_under = 80

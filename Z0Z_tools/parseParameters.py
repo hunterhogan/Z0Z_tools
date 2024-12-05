@@ -24,6 +24,8 @@ def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
     match limit:
         case None | False | 0:
             pass
+        case True:
+            concurrencyLimit = 1
         case _ if limit >= 1:
             concurrencyLimit = limit
         case _ if 0 < limit < 1:
@@ -32,8 +34,6 @@ def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
             concurrencyLimit = cpuTotal - abs(int(limit * cpuTotal))
         case _ if limit <= 1:
             concurrencyLimit = cpuTotal - abs(limit)
-        case True:
-            concurrencyLimit = 1
 
     return max(int(concurrencyLimit), 1)
 
