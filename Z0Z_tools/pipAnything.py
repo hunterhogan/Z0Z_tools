@@ -17,6 +17,7 @@ import pathlib
 import subprocess
 import sys
 import tempfile
+from Z0Z_tools.Z0Z_io import findRelativePath
 
 def makeListRequirementsFromRequirementsFile(*pathFilenames: Union[str, os.PathLike[str]]) -> List[str]:
     """
@@ -66,7 +67,7 @@ def make_setupDOTpy(relativePathPackage: Union[str, os.PathLike[str]], listRequi
         listRequirements: A list of requirements to be included in install_requires.
 
     Returns:
-        str: The setup.py content to be written to a file.
+        setupDOTpy: The setup.py content to be written to a file.
     """
     return rf"""
 import os
@@ -103,7 +104,7 @@ def installPackageTarget(pathPackageTarget: Union[str, os.PathLike[str]]) -> Non
     writeStream = None
     try:
         writeStream = pathFilename_setupDOTpy.open(mode='w')
-        relativePathPackage = pathPackage.relative_to(pathSystemTemporary, walk_up=True).as_posix()
+        relativePathPackage = findRelativePath(pathSystemTemporary, pathPackage)
         writeStream.write(make_setupDOTpy(relativePathPackage, listRequirements))
     finally:
         if writeStream:

@@ -46,6 +46,15 @@ Load audio, `readAudioFile()`, and save WAV files, `writeWav()`, without the com
 - Sample rate control
 - Multi-file batch processing, too: `loadWaveforms()`
 
+## Want to create relative paths between any two locations?
+
+Convert between paths easily with `findRelativePath()`:
+
+- Works with files or directories
+- Handles paths on different branches
+- Supports both string and Path-like inputs
+- Returns platform-independent paths
+
 ## Installation
 
 ```sh
