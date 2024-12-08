@@ -1,7 +1,7 @@
-name: Python unit tests
+name: Python Tests
+
 on: [push, pull_request]
-permissions:
-  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,49 +10,29 @@ jobs:
         python-version: ["3.10", "3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Ensure all history is fetched for tagging
+      
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install .
-      - name: Run tests
+          pip install .[test]
+          
+      - name: Run tests with coverage
         run: |
-          python -m unittest discover -s './unittests' -p 'test_*.py'
-      - name: Get version number
-        id: version
-        run: |
-          versionNumber=$(python -c "import Z0Z_tools; print(Z0Z_tools.__version__)")
-          echo "versionNumber=$versionNumber" >> $GITHUB_OUTPUT
-      - name: Check if release exists
-        id: check_release
-        run: |
-          git fetch --tags
-          if git rev-parse "v${{ steps.version.outputs.versionNumber }}" >/dev/null 2>&1; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-          fi
-      - name: Create and push tag
-        if: steps.check_release.outputs.exists == 'false'
-        run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git tag v${{ steps.version.outputs.versionNumber }}
-          git push origin v${{ steps.version.outputs.versionNumber }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create GitHub Release
-        if: steps.check_release.outputs.exists == 'false'
-        uses: actions/create-release@v1
+          pytest --junitxml=junit.xml -o junit_family=legacy
+          
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
         with:
-          tag_name: v${{ steps.version.outputs.versionNumber }}
-          release_name: v${{ steps.version.outputs.versionNumber }}
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: junit.xml
+          
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

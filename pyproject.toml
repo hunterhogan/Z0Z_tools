@@ -4,48 +4,77 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "Z0Z_tools"
-description = "Audio processing, data structure, and package management tools."
-dynamic = [
-    "version", 
-    ]
-requires-python = ">= 3.10"
+description = "A collection of tools to solve common Python development frustrations"
 readme = "README.md"
+requires-python = ">=3.10"
+version = "0.6.2"
+authors = [
+    { name = "Hunter Hogan", email = "HunterHogan@pm.me" }
+]
+classifiers = [
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
 dependencies = [
     "numpy",
-    "packaging",
     "resampy",
     "soundfile",
+    "packaging",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-env",
+    'pytest-mock',
+    "pytest-xdist",
+    "coverage",
+    "pandas",
 ]
 
 [tool.setuptools]
 include-package-data = true
 
-[project.urls]
-"Homepage" = "https://github.com/hunterhogan/Z0Z_tools"
-
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["*"]
 
-[tool.setuptools.dynamic]
-version = { attr = "Z0Z_tools.__version__" }
+[project.urls]
+Homepage = "https://github.com/hunterhogan/Z0Z_tools"
+Repository = "https://github.com/hunterhogan/Z0Z_tools.git"
+
+[tool.pytest.ini_options]
+addopts = "--cov=Z0Z_tools --cov-report=term-missing --cov-report=xml --cov-report=lcov -n 8"
+testpaths = ["tests"]
 
 [tool.coverage.run]
-branch = true
 source = ["Z0Z_tools"]
-data_file = "unittests/coverage/.coverage"
+branch = true
+data_file = "tests/coverage/.coverage"
 omit = [
     "Z0Z_tools/__init__.py",
-    "unittests/*",
+    "tests/*",
+    "setup.py",
+    "**/site-packages/*",
 ]
+parallel = true
+relative_files = true
 
 [tool.coverage.report]
 exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
     "if TYPE_CHECKING:",
-    "raise NotImplementedError",
-    "if __name__ == .__main__.:",
+    "if __name__ == '__main__':",
+    "pass",
+    "pragma: no cover",
 ]
 ignore_errors = false
-fail_under = 80
+precision = 2
+
+[tool.coverage.xml]
+output = "tests/coverage/coverage.xml"
+
+[tool.coverage.lcov]
+output = "tests/coverage/coverage.lcov"
