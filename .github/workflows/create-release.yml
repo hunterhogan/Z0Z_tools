@@ -1,0 +1,68 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Python Tests"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install toml
+        run: pip install toml
+      - name: Get project version
+        id: get_version
+        run: |
+          python -c "
+          from toml import load
+          with open('pyproject.toml', 'r') as readStream:
+              dictionaryPyproject = load(readStream)
+              versionProject = dictionaryPyproject['project']['version']
+              print(f'::set-output name=version::{versionProject}')
+          "
+      - name: Check for existing release
+        id: check_release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const versionProject = '${{ steps.get_version.outputs.version }}';
+            const responseReleases = await github.rest.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            const releaseExists = responseReleases.data.some(
+              release => release.tag_name === `v${versionProject}`
+            );
+            return { release_exists: releaseExists };
+      - name: Create GitHub Release
+        if: steps.check_release.outputs.release_exists == 'false'
+        uses: actions/create-release@v1
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          release_name: v${{ steps.get_version.outputs.version }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Trigger PyPI publish
+        if: steps.check_release.outputs.release_exists == 'false'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'python-publish.yml',
+              ref: context.ref,
+            });
