@@ -24,11 +24,8 @@ jobs:
       - name: Get project version
         id: version
         run: |
-          echo "version=$(python -c "
-          from toml import load
-          with open('pyproject.toml', 'r') as readStream:
-              print(load(readStream)['project']['version'])
-          ")" >> $GITHUB_OUTPUT
+          VERSION=$(python -c "import toml; print(toml.load(open('pyproject.toml'))['project']['version'])")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
       - name: Check for existing release
         id: check_release
         run: |
