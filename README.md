@@ -2,14 +2,6 @@
 
 A collection of tools to solve common Python development frustrations. "Z0Z_" indicates these are prototype solutions - they work, but might not be pretty.
 
-## Want to install a package that lacks proper installation files?
-
-If you have a Python package that doesn't have an installation file, `pipAnything()` creates a temporary setup environment to help `pip` install the unpackaged code.
-
-```sh
-python -m Z0Z_tools.pipAnything <pathPackage>
-```
-
 ## Tired of handling string vs boolean parameter confusion?
 
 Add `oopsieKwargsie()` to your function: it intelligently converts string parameters to their proper boolean or None types.
@@ -54,6 +46,23 @@ Convert between paths easily with `findRelativePath()`:
 - Handles paths on different branches
 - Supports both string and Path-like inputs
 - Returns platform-independent paths
+
+## Need to validate integer inputs?
+
+`intInnit()` rigorously validates and converts input lists to integers:
+
+- Converts valid numeric types to integers
+- Rejects non-whole numbers
+- Provides clear error messages
+- Perfect for validating user inputs
+
+## Want to install a package that lacks proper installation files?
+
+If you have a Python package that doesn't have an installation file, `pipAnything()` creates a temporary setup environment to help `pip` install the unpackaged code.
+
+```sh
+python -m Z0Z_tools.pipAnything <pathPackage>
+```
 
 ## Installation
 
