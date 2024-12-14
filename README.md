@@ -28,7 +28,7 @@ Add a flexible parameter to your function, and use `defineConcurrencyLimit()` to
 Use the pre-built test suites in `pytest_parseParameters.py` to quickly test your implementations:
 
 ```python
-from Z0Z_tools import makeTestSuiteOopsieKwargsie
+from Z0Z_tools.pytest_parseParameters import makeTestSuiteOopsieKwargsie
 
 def test_a_function_with_bool():
     smurfSuite = makeTestSuiteOopsieKwargsie(mySmurfyFunction)
@@ -60,6 +60,14 @@ Load audio, `readAudioFile()`, and save WAV files, `writeWav()`, without the com
 - Sample rate control
 - Multi-file batch processing, too: `loadWaveforms()`
 
+## Want to install a package that lacks proper installation files?
+
+If you have a Python package that doesn't have an installation file, `pipAnything()` creates a temporary setup environment to help `pip` install the unpackaged code.
+
+```sh
+python -m Z0Z_tools.pipAnything <pathPackage>
+```
+
 ## Want to create relative paths between any two locations?
 
 Convert between paths easily with `findRelativePath()`:
@@ -68,14 +76,6 @@ Convert between paths easily with `findRelativePath()`:
 - Handles paths on different branches
 - Supports both string and Path-like inputs
 - Returns platform-independent paths
-
-## Want to install a package that lacks proper installation files?
-
-If you have a Python package that doesn't have an installation file, `pipAnything()` creates a temporary setup environment to help `pip` install the unpackaged code.
-
-```sh
-python -m Z0Z_tools.pipAnything <pathPackage>
-```
 
 ## Installation
 

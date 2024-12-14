@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "Z0Z_tools"
-description = "A collection of tools to solve common Python development frustrations"
+description = "Solve some common Python development frustrations"
 readme = "README.md"
 requires-python = ">=3.10"
 version = "0.6.4"
@@ -22,6 +22,7 @@ dependencies = [
     "resampy",
     "soundfile",
     "packaging",
+    "pytest>=7.0",
 ]
 
 [project.optional-dependencies]
@@ -57,6 +58,7 @@ source = ["Z0Z_tools"]
 data_file = "tests/coverage/.coverage"
 omit = [
     "Z0Z_tools/__init__.py",
+    "Z0Z_tools/pytest_*.py",
     "tests/*",
 ]
 
