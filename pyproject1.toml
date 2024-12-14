@@ -1,0 +1,72 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Z0Z_tools"
+description = "A collection of tools to solve common Python development frustrations"
+readme = "README.md"
+requires-python = ">=3.10"
+version = "0.6.4"
+authors = [
+    { name = "Hunter Hogan", email = "HunterHogan@pm.me" }
+]
+classifiers = [
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "numpy",
+    "resampy",
+    "soundfile",
+    "packaging",
+]
+
+[project.optional-dependencies]
+testing = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "pytest-mock",
+    "pandas",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*"]
+
+[project.urls]
+homepage = "https://github.com/hunterhogan/Z0Z_tools"
+repository = "https://github.com/hunterhogan/Z0Z_tools.git"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = """
+    --cov=Z0Z_tools
+    --cov-report=term-missing
+    --cov-report=xml:tests/coverage/coverage.xml
+    """
+
+[tool.coverage.run]
+branch = true
+source = ["Z0Z_tools"]
+data_file = "tests/coverage/.coverage"
+omit = [
+    "Z0Z_tools/__init__.py",
+    "tests/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]
+
+[tool.coverage.xml]
+output = "tests/coverage/coverage.xml"
