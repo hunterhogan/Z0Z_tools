@@ -7,7 +7,7 @@ name = "Z0Z_tools"
 description = "Solve some common Python development frustrations"
 readme = "README.md"
 requires-python = ">=3.10"
-version = "0.6.4"
+version = "0.6.5"
 authors = [
     { name = "Hunter Hogan", email = "HunterHogan@pm.me" }
 ]

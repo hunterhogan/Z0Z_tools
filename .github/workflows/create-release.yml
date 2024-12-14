@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   release:
@@ -51,13 +52,3 @@ jobs:
           release_name: v${{ steps.getVersion.outputs.version }}
           draft: false
           prerelease: false
-      - name: Trigger PyPI publish
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'python-publish.yml',
-              ref: context.ref,
-            });
