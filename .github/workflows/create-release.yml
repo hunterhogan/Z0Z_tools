@@ -22,27 +22,27 @@ jobs:
       - name: Install Poetry
         run: pip install poetry
       - name: Get project version
-        id: version
+        id: getVersion
         run: |
           version=$(poetry version -s)
-          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - name: Check for existing release
-        id: check_release
+        id: checkRelease
         run: |
           git fetch --tags
-          if git rev-parse "v${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
-            echo "exists=true" >> $GITHUB_OUTPUT
+          if git rev-parse "v${{ steps.getVersion.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
           else
-            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
       - name: Create GitHub Release
-        if: steps.check_release.outputs.exists == 'false'
+        if: steps.checkRelease.outputs.exists == 'false'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.version.outputs.version }}
-          release_name: v${{ steps.version.outputs.version }}
+          tag_name: v${{ steps.getVersion.outputs.version }}
+          release_name: v${{ steps.getVersion.outputs.version }}
           draft: false
           prerelease: false
       - name: Trigger PyPI publish
