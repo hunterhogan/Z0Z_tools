@@ -21,7 +21,7 @@ Add a flexible parameter to your function, and use `defineConcurrencyLimit()` to
 - Converts valid numeric types to integers
 - Rejects non-whole numbers
 - Provides clear error messages
-- Perfect for validating user inputs
+- Made for validating user inputs
 
 ## Want to unit test the above functions in your package?
 

@@ -1,6 +1,5 @@
 import multiprocessing
-from typing import Any, Callable, List, Optional, Union
-from unittest.mock import patch
+from typing import List, Optional, Union, NoReturn
 
 
 def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
@@ -8,7 +7,7 @@ def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
     Determine the concurrency limit based on the provided `limit` parameter.
 
     Parameters:
-        limit: The concurrency limit specification. Your user can set a limit with 
+        limit: The concurrency limit specification. Your user can set a limit with
         a simple True/False, a quantity of CPUs, or a ratio of CPUs. Furthermore, positive
         numbers define the maximum usage, and negative numbers define the amount to keep
         in reserve.
@@ -21,7 +20,7 @@ def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
     """
     """Example docstring:
     Parameters:
-        CPUlimit: whether and how to limit the CPU usage. See notes for details. 
+        CPUlimit: whether and how to limit the CPU usage. See notes for details.
 
     Limits on CPU usage `CPUlimit`:
         - `False`, `None`, or `0`: No limits on CPU usage; uses all available CPUs. All other values will potentially limit CPU usage.
@@ -35,7 +34,14 @@ def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
     concurrencyLimit = cpuTotal
 
     if isinstance(limit, str):
-        limit = oopsieKwargsie(limit) # type: ignore
+        limitFromString = oopsieKwargsie(limit) # type: ignore
+        if isinstance(limitFromString, str):
+            try:
+                limit = float(limitFromString)
+            except ValueError:
+                raise ValueError(f"I received '{limitFromString}', but it must be a number, True, False, or None.")
+        else:
+            limit = limitFromString
 
     match limit:
         case None | False | 0:
@@ -43,13 +49,13 @@ def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
         case True:
             concurrencyLimit = 1
         case _ if limit >= 1:
-            concurrencyLimit = limit
+            concurrencyLimit = int(limit)
         case _ if 0 < limit < 1:
             concurrencyLimit = int(limit * cpuTotal)
         case _ if -1 < limit < 0:
             concurrencyLimit = cpuTotal - abs(int(limit * cpuTotal))
         case _ if limit <= 1:
-            concurrencyLimit = cpuTotal - abs(limit)
+            concurrencyLimit = cpuTotal - abs(int(limit))
 
     return max(int(concurrencyLimit), 1)
 
@@ -75,8 +81,7 @@ def oopsieKwargsie(huh: str) -> None | str | bool:
 
 def intInnit(listInt_Allegedly: List[int], parameterName: str = 'unnamed parameter') -> List[int]:
     """
-    Rigorously validates and converts input to a list of non-negative integers.
-    Also returns a filtered list containing only positive integers.
+    Rigorously validates and converts input to a list of integers.
 
     Parameters:
         listInt_Allegedly: Input that should be a list of integers
@@ -89,26 +94,46 @@ def intInnit(listInt_Allegedly: List[int], parameterName: str = 'unnamed paramet
         Various built-in Python exceptions with enhanced error messages.
     """
     if not listInt_Allegedly:
-        raise ValueError(f"{parameterName} must not be empty")
+        raise ValueError(f"I did not receive a value for {parameterName}, but it is required.")
 
     try:
         iter(listInt_Allegedly)
         lengthInitial = len(listInt_Allegedly)
-        
+
+        def aintNoInt(value) -> NoReturn:
+            raise ValueError(f"I received {value}, but {parameterName} must be an integer number.")
+
         listValidated = []
         for allegedInt in listInt_Allegedly:
             if isinstance(allegedInt, bool):
-                raise TypeError(f"Boolean values ({allegedInt}) are not integers.")
-            elif isinstance(allegedInt, (int, float)):
-                if float(allegedInt).is_integer():
-                    allegedInt = int(allegedInt)
+                raise TypeError(f"Pop quiz!\nA Boolean value such as ({allegedInt}) is an integer. Choose: True/False.\n\nJust kidding. It's False. Booleans are not integers.")
+
+            elif isinstance(allegedInt, (bytes, bytearray)):
+                if len(allegedInt) != 1:
+                    aintNoInt(f"a {type(allegedInt)} type")
+                allegedInt = int.from_bytes(allegedInt, byteorder='big')
+            elif isinstance(allegedInt, memoryview):
+                if allegedInt.nbytes != 1:
+                    aintNoInt(f"a {type(allegedInt)} type")
+                allegedInt = int.from_bytes(allegedInt.tobytes(), byteorder='big')
+            elif isinstance(allegedInt, complex):
+                if allegedInt.imag == 0:
+                    allegedInt = float(allegedInt.real)  # Let the float conversion potentially fail
                 else:
-                    raise ValueError(f"Value {allegedInt} must be a whole number")
-            else:
-                raise TypeError(f"Value {allegedInt} must be numeric")
+                    aintNoInt(allegedInt)
+            elif isinstance(allegedInt, str):
+                allegedInt = float(allegedInt.strip())  # Let it fail if not numeric
             
+            # Now try to convert to int, will raise ValueError if not possible
+            if isinstance(allegedInt, float):
+                if not float(allegedInt).is_integer():
+                    aintNoInt(allegedInt)
+                allegedInt = int(allegedInt)
+            else:
+                allegedInt = int(allegedInt)  # Let it fail if not convertible
+
             listValidated.append(allegedInt)
-                
+
             if len(listInt_Allegedly) != lengthInitial:
                 raise RuntimeError("Input sequence was modified during iteration")
 
@@ -120,6 +145,12 @@ def intInnit(listInt_Allegedly: List[int], parameterName: str = 'unnamed paramet
         else:
             ERRORmessage = f"Invalid element in {parameterName}: {ERRORtype.args[0]}"
         raise TypeError(ERRORmessage) from None
+    except ValueError as ERRORvalue:
+        # If it's our custom error message, pass it through
+        if "I received" in str(ERRORvalue):
+            raise
+        # Otherwise wrap the standard ValueError in our custom message
+        raise ValueError(f"I received {listInt_Allegedly}, but {parameterName} must be an integer number.") from None
 
 if __name__ == '__main__':
     multiprocessing.set_start_method('spawn')
