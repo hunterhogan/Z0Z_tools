@@ -2,7 +2,6 @@ import pytest
 from pathlib import Path
 from Z0Z_tools import pipAnything
 import sys
-import shutil
 
 TEST_DATA_DIR = Path('tests/dataSamples/tmp')
 
@@ -11,8 +10,6 @@ def setup_test_directory():
     """Ensure test directory exists and is clean before each test."""
     TEST_DATA_DIR.mkdir(parents=True, exist_ok=True)
     yield
-    if TEST_DATA_DIR.exists():
-        shutil.rmtree(TEST_DATA_DIR)
 
 @pytest.fixture
 def requirements_file():
