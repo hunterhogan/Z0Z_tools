@@ -1,15 +1,11 @@
-__pycache__
+__pycache__/
 
 *.egg-info/
 /include/
-/lib/
+/Lib/
 /Library/
 /Scripts/
 /share/
 build/
 
-unittests/coverage/.coverage
-
 pyvenv.cfg
-
-# .git\info\exclude

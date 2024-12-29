@@ -49,7 +49,7 @@ def test_multiple_requirements_files():
     """Test processing multiple requirements files."""
     req1 = TEST_DATA_DIR / 'req1.txt'
     req2 = TEST_DATA_DIR / 'req2.txt'
-    
+
     req1.write_text('package-A==1.0\npackage-B==2.0')
     req2.write_text('package-B==2.0\npackage-C==3.0')
 
@@ -80,7 +80,7 @@ def test_make_setupDOTpy():
     relative_path = 'my_package'
     requirements = ['numpy', 'pandas']
     setup_content = pipAnything.make_setupDOTpy(relative_path, requirements)
-    
+
     assert f"name='{Path(relative_path).name}'" in setup_content
     assert f"packages=find_packages(where=r'{relative_path}')" in setup_content
     assert f"package_dir={{'': r'{relative_path}'}}" in setup_content
@@ -94,11 +94,9 @@ def test_installPackageTarget(mocker, package_dir):
     mock_process.stdout = ['Installing...', 'Done!']
     mock_process.wait.return_value = 0
     mock_popen.return_value = mock_process
-    
-    # No need to mock mkdtemp anymore since we're using TEST_DATA_DIR
-    
+
     pipAnything.installPackageTarget(package_dir)
-    
+
     mock_popen.assert_called_once()
     args = mock_popen.call_args[1]['args']
     assert args[0] == sys.executable
@@ -113,9 +111,9 @@ def test_CLI_functions(mocker, argv, should_exit):
     mocker.patch('sys.argv', argv)
     mock_exit = mocker.patch('sys.exit')
     mock_print = mocker.patch('builtins.print')
-    
+
     pipAnything.everyone_knows_what___main___is()
-    
+
     if should_exit:
         mock_exit.assert_called_once_with(1)
         mock_print.assert_called()
@@ -125,12 +123,12 @@ def test_snark_level(mocker):
     mocker.patch('sys.argv', ['script.py'])
     mock_exit = mocker.patch('sys.exit')
     mock_print = mocker.patch('builtins.print')
-    
+
     pipAnything.main()
-    
+
     mock_print.assert_called()
     mock_exit.assert_called_once_with(1)
-    
-    printed_messages = ' '.join(str(call.args[0]) 
+
+    printed_messages = ' '.join(str(call.args[0])
                               for call in mock_print.call_args_list)
     assert 'obviously' not in printed_messages.lower()

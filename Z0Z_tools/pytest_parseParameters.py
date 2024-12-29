@@ -1,8 +1,10 @@
+from typing import Callable, Any, Optional, Union, Dict, Callable
 import pytest
 from unittest.mock import patch
-from typing import Callable, Any, Optional, Union
 
-def makeTestSuiteOopsieKwargsie(functionUnderTest: Callable[[str], Optional[Union[bool, str]]]):
+def makeTestSuiteOopsieKwargsie(
+    functionUnderTest: Callable[[str], Optional[Union[bool, str]]]
+) -> Dict[str, Callable[[], None]]:
     """
     Creates a test suite for oopsieKwargsie-like functions.
     
@@ -35,7 +37,10 @@ def makeTestSuiteOopsieKwargsie(functionUnderTest: Callable[[str], Optional[Unio
         'testReturnsOriginalString': testReturnsOriginalString
     }
 
-def makeTestSuiteConcurrencyLimit(functionUnderTest: Callable[[Any], int], cpuCount: int = 8):
+def makeTestSuiteConcurrencyLimit(
+    functionUnderTest: Callable[[Any], int], 
+    cpuCount: int = 8
+) -> Dict[str, Callable[[], None]]:
     """
     Creates a test suite for defineConcurrencyLimit-like functions.
     
@@ -71,14 +76,24 @@ def makeTestSuiteConcurrencyLimit(functionUnderTest: Callable[[Any], int], cpuCo
         for limitParameter in [-10, -0.99, 0.1]:
             assert functionUnderTest(limitParameter) >= 1
 
+    @patch('multiprocessing.cpu_count', return_value=cpuCount)
+    def testBooleanTrue(_mockCpu):
+        assert functionUnderTest(True) == 1
+        assert functionUnderTest('True') == 1
+        assert functionUnderTest('TRUE') == 1
+        assert functionUnderTest(' true ') == 1
+
     return {
         'testDefaults': testDefaults,
         'testDirectIntegers': testDirectIntegers,
         'testFractionalFloats': testFractionalFloats,
-        'testMinimumOne': testMinimumOne
+        'testMinimumOne': testMinimumOne,
+        'testBooleanTrue': testBooleanTrue
     }
 
-def makeTestSuiteIntInnit(functionUnderTest):
+def makeTestSuiteIntInnit(
+    functionUnderTest: Callable[[list, str], list]
+) -> Dict[str, Callable[[], None]]:
     """
     Creates a test suite for intInnit-like functions.
     
@@ -91,32 +106,42 @@ def makeTestSuiteIntInnit(functionUnderTest):
     def testHandlesValidIntegers():
         assert functionUnderTest([1, 2, 3], 'test') == [1, 2, 3]
         assert functionUnderTest([1.0, 2.0, 3.0], 'test') == [1, 2, 3]
+        assert functionUnderTest(['1', '2', '3'], 'test') == [1, 2, 3]
+        assert functionUnderTest([' 42 ', '0', '-1'], 'test') == [42, 0, -1]
 
     def testRejectsNonWholeNumbers():
-        with pytest.raises(ValueError):
-            functionUnderTest([1.5, 2, 3], 'test')
+        for invalidNumber in [1.5, '1.5', ' 1.5 ', -2.7]:
+            with pytest.raises(ValueError):
+                functionUnderTest([invalidNumber], 'test')
 
     def testRejectsBooleans():
         with pytest.raises(TypeError):
             functionUnderTest([True, False], 'test')
 
-    def testRejectsNonNumerics():
-        with pytest.raises(TypeError):
-            functionUnderTest(['1', '2', '3'], 'test')
+    def testRejectsInvalidStrings():
+        for invalidString in ['abc', '', ' ', '1.2.3']:
+            with pytest.raises(ValueError):
+                functionUnderTest([invalidString], 'test')
 
     def testRejectsEmptyList():
         with pytest.raises(ValueError):
             functionUnderTest([], 'test')
 
     def testHandlesMixedValidTypes():
-        assert functionUnderTest([1, 2.0, 3], 'test') == [1, 2, 3]
+        assert functionUnderTest([1, '2', 3.0], 'test') == [1, 2, 3]
+
+    def testHandlesSingleBytes():
+        assert functionUnderTest([b'\x01', bytearray(b'\x02')], 'test') == [1, 2]
+        with pytest.raises(ValueError):
+            functionUnderTest([b'\x01\x02'], 'test')  # Multi-byte not allowed
 
     return {
         'testHandlesValidIntegers': testHandlesValidIntegers,
         'testRejectsNonWholeNumbers': testRejectsNonWholeNumbers,
         'testRejectsBooleans': testRejectsBooleans,
-        'testRejectsNonNumerics': testRejectsNonNumerics,
+        'testRejectsInvalidStrings': testRejectsInvalidStrings,
         'testRejectsEmptyList': testRejectsEmptyList,
-        'testHandlesMixedValidTypes': testHandlesMixedValidTypes
+        'testHandlesMixedValidTypes': testHandlesMixedValidTypes,
+        'testHandlesSingleBytes': testHandlesSingleBytes
     }
 

@@ -4,6 +4,9 @@
 name: Upload Python Package
 
 on:
+  workflow_run:
+    workflows: ["Python Tests"]
+    types: [completed]
   workflow_dispatch:
   release:
     types: [published, released]
@@ -12,7 +15,40 @@ permissions:
   contents: read
 
 jobs:
+  check-version:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    outputs:
+      should_publish: ${{ steps.check.outputs.should_publish }}
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Get project version
+        id: version
+        run: |
+          pip install toml
+          version=$(python -c "import toml; print(toml.load('pyproject.toml')['project']['version'])")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Check PyPI version
+        id: check
+        run: |
+          pip install requests
+          version="${{ steps.version.outputs.version }}"
+          echo "Checking version $version"
+          if python -c "import requests; exit(0 if '$version' in requests.get('https://pypi.org/pypi/Z0Z-tools/json').json()['releases'] else 1)"; then
+            echo "Version already on PyPI"
+            echo "should_publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "New version - should publish"
+            echo "should_publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
   release-build:
+    needs: check-version
+    if: needs.check-version.outputs.should_publish == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,27 +66,21 @@ jobs:
           path: dist/
 
   pypi-publish:
+    needs: [check-version, release-build]
+    if: needs.check-version.outputs.should_publish == 'true'
     runs-on: ubuntu-latest
-    needs:
-      - release-build
-    permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing
-      id-token: write
     environment:
       name: pypi
-      # OPTIONAL: uncomment and update to include your PyPI project URL in the deployment status:
-      # url: https://pypi.org/project/Z0Z-tools/
-      #
-      # ALTERNATIVE: if your GitHub Release name is the PyPI project version string
-      # ALTERNATIVE: exactly, uncomment the following line instead:
-      url: https://pypi.org/project/YOURPROJECT/${{ github.event.release.name }}
+      url: https://pypi.org/project/Z0Z-tools/${{ needs.check-version.outputs.version }}
+    permissions:
+      id-token: write
     steps:
       - name: Retrieve release distributions
         uses: actions/download-artifact@v4
         with:
           name: release-dists
           path: dist/
-      - name: pypi-publish
+      - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@v1.12.2
         with:
           packages-dir: dist/
