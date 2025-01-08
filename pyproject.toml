@@ -7,32 +7,18 @@ name = "Z0Z_tools"
 description = "Solve some common Python development frustrations"
 readme = "README.md"
 requires-python = ">=3.10"
-version = "0.6.7"
-authors = [
-    { name = "Hunter Hogan", email = "HunterHogan@pm.me" }
-]
+version = "0.6.8"
+authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
 classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 ]
-dependencies = [
-    "numpy",
-    "resampy",
-    "soundfile",
-    "packaging",
-    "pytest>=7.0",
-]
+dependencies = ["numpy", "resampy", "soundfile", "packaging", "pytest>=7.0"]
 
 [project.optional-dependencies]
-testing = [
-    "pytest>=7.0",
-    "pytest-cov",
-    "pytest-mock",
-    "pytest-xdist",
-    "pandas",
-]
+testing = ["pytest>=7.0", "pytest-cov", "pytest-mock", "pytest-xdist", "pandas"]
 
 [tool.setuptools]
 include-package-data = true
@@ -47,36 +33,11 @@ repository = "https://github.com/hunterhogan/Z0Z_tools.git"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = """
-    --cov=Z0Z_tools
-    --cov-report=term-missing
-    --cov-report=xml:tests/coverage/coverage.xml
-    --cov-branch
-    -n 8
-    """
+addopts = ["--color=yes", "-n 8"]
 
 [tool.coverage.run]
-branch = true
-parallel = true
-source = ["Z0Z_tools"]
 data_file = "tests/coverage/.coverage"
-omit = [
-    "Z0Z_tools/__init__.py",
-    "tests/*",
-]
+omit = ["Z0Z_tools/__init__.py", "tests/*"]
 
 [tool.coverage.paths]
 source = ["Z0Z_tools"]
-
-[tool.coverage.report]
-exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "if __name__ == .__main__.:",
-    "raise NotImplementedError",
-    "pass",
-    "raise AssertionError",
-]
-
-[tool.coverage.xml]
-output = "tests/coverage/coverage.xml"

@@ -7,7 +7,7 @@ def makeTestSuiteOopsieKwargsie(
 ) -> Dict[str, Callable[[], None]]:
     """
     Creates a test suite for oopsieKwargsie-like functions.
-    
+
     Parameters:
         functionUnderTest: The function to test, must accept str and return bool|None|str
 
@@ -30,20 +30,34 @@ def makeTestSuiteOopsieKwargsie(
         for stringInput in ['hello', '123', 'True story', 'False alarm']:
             assert functionUnderTest(stringInput) == stringInput
 
+    def testHandlesNonStringObjects():
+        class UnStringable:
+            def __str__(self):
+                raise TypeError("Cannot be stringified")
+
+        # This integer should get converted to string
+        assert functionUnderTest(123) == "123" # type: ignore
+
+        # This custom object should be returned as-is (same object) if str() fails
+        unStringableObject = UnStringable()
+        result = functionUnderTest(unStringableObject) # type: ignore
+        assert result is unStringableObject
+
     return {
         'testHandlesTrueVariants': testHandlesTrueVariants,
         'testHandlesFalseVariants': testHandlesFalseVariants,
         'testHandlesNoneVariants': testHandlesNoneVariants,
-        'testReturnsOriginalString': testReturnsOriginalString
+        'testReturnsOriginalString': testReturnsOriginalString,
+        'testHandlesNonStringObjects': testHandlesNonStringObjects
     }
 
 def makeTestSuiteConcurrencyLimit(
-    functionUnderTest: Callable[[Any], int], 
+    functionUnderTest: Callable[[Any], int],
     cpuCount: int = 8
 ) -> Dict[str, Callable[[], None]]:
     """
     Creates a test suite for defineConcurrencyLimit-like functions.
-    
+
     Parameters:
         functionUnderTest: The function to test, must return int
         cpuCount (8): Number of CPUs to simulate
@@ -96,7 +110,7 @@ def makeTestSuiteIntInnit(
 ) -> Dict[str, Callable[[], None]]:
     """
     Creates a test suite for intInnit-like functions.
-    
+
     Parameters:
         functionUnderTest: The function to test, must accept list and return list[int]
 
@@ -144,4 +158,3 @@ def makeTestSuiteIntInnit(
         'testHandlesMixedValidTypes': testHandlesMixedValidTypes,
         'testHandlesSingleBytes': testHandlesSingleBytes
     }
-

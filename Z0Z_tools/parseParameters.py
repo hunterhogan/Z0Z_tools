@@ -69,6 +69,11 @@ def oopsieKwargsie(huh: str) -> None | str | bool:
     Returns:
         (bool | None | str): The reserved keywords `True`, `False`, or `None` or the original string, `huh`.
     """
+    if not isinstance(huh, str):
+        try:
+            huh = str(huh)
+        except Exception:
+            return huh
     formatted = huh.strip().title()
     if formatted == str(True):
         return True
@@ -123,7 +128,7 @@ def intInnit(listInt_Allegedly: List[int], parameterName: str = 'unnamed paramet
                     aintNoInt(allegedInt)
             elif isinstance(allegedInt, str):
                 allegedInt = float(allegedInt.strip())  # Let it fail if not numeric
-            
+
             # Now try to convert to int, will raise ValueError if not possible
             if isinstance(allegedInt, float):
                 if not float(allegedInt).is_integer():

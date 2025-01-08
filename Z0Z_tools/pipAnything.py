@@ -1,7 +1,7 @@
 """
 Functions:
     - installPackageTarget: Tries to trick pip into installing the package from a given directory.
-    - makeListRequirementsFromRequirementsFile: Reads a requirements.txt file, discards anything it couldn't understand, and creates a list of packages. 
+    - makeListRequirementsFromRequirementsFile: Reads a requirements.txt file, discards anything it couldn't understand, and creates a list of packages.
 
 Usage:
     from pipAnything import installPackageTarget
@@ -35,7 +35,7 @@ def makeListRequirementsFromRequirementsFile(*pathFilenames: Union[str, os.PathL
     6. Collects valid requirements and removes duplicates before returning the list.
     """
     listRequirements = []
-    
+
     for pathFilename in pathFilenames:
         if pathlib.Path(pathFilename).exists():
             try:
@@ -43,8 +43,8 @@ def makeListRequirementsFromRequirementsFile(*pathFilenames: Union[str, os.PathL
                 for commentedLine in filesystemObjectRead:
                     sanitizedLine = commentedLine.split('#')[0].strip()  # Remove comments and trim whitespace
 
-                    # Skip lines that are empty or contain spaces/tabs after sanitization
-                    if "\t" in sanitizedLine or " " in sanitizedLine or not sanitizedLine:
+                    # Skip lines that are empty or contain only whitespace after sanitization
+                    if not sanitizedLine:
                         continue
 
                     # Validate if it's a valid requirement
@@ -81,7 +81,7 @@ setup(
     install_requires={listRequirements},
     include_package_data=True,
 )
-""" 
+"""
 
 def installPackageTarget(pathPackageTarget: Union[str, os.PathLike[str]]) -> None:
     """
@@ -112,7 +112,7 @@ def installPackageTarget(pathPackageTarget: Union[str, os.PathLike[str]]) -> Non
 
     # Run pip to install the package from the temporary directory
     subprocessPython = subprocess.Popen(
-    # `pip` needs a RELATIVE PATH, not an absolute path, and not a path+filename. 
+    # `pip` needs a RELATIVE PATH, not an absolute path, and not a path+filename.
         args=[sys.executable, '-m', 'pip', 'install', str(pathSystemTemporary)],
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
     )
@@ -138,7 +138,7 @@ def everyone_knows_what___main___is() -> None:
         print(f"\n{namespaceModule} says, 'That didn't work. Try again?'\n\n"
               f"Usage:\tpython -m {namespacePackage}.{namespaceModule} <packageTarget>\n"
               f"\t<packageTarget> is a path to a directory with Python modules\n"
-              f"\tExample: python -m {namespacePackage}.{namespaceModule} '{pathlib.PurePath('path' ,'to', 'Z0Z_tools')}'") 
+              f"\tExample: python -m {namespacePackage}.{namespaceModule} '{pathlib.PurePath('path' ,'to', 'Z0Z_tools')}'")
         # What is `-m`? Obviously, `-m` creates a namespace for the module, which is obviously necessary, except when it isn't.
         sys.exit(1)
 
