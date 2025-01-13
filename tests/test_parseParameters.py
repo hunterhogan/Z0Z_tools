@@ -72,7 +72,7 @@ def testMutableSequence():
             self.append(4)
             return super().__iter__()
 
-    with pytest.raises(RuntimeError, match="Input sequence was modified during iteration"):
+    with pytest.raises(RuntimeError, match=".*modified during iteration.*"):
         intInnit(MutableList([1, 2, 3]), 'test')
 
 @pytest.mark.parametrize("complex_input,expected", [

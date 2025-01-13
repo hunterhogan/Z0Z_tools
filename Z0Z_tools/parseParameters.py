@@ -1,6 +1,47 @@
 import multiprocessing
-from typing import List, Optional, Union, NoReturn
+from typing import List, Iterable, Optional, Sequence, Union, NoReturn
+from dataclasses import dataclass
+from typing import Any, Optional
 
+@dataclass
+class MessageContext:
+    value: Any = None
+    valueType: Optional[str] = None
+    containerType: Optional[str] = None
+    isElement: bool = False
+
+def constructErrorMessage(context: MessageContext, parameterName: str, parameterType: Optional[type] = None) -> str:
+    """Constructs error message from available context using template:
+    I received ["value" | a value | None] [of type `type` | None] [as an element in | None] [a `containerType` type | None] but `parameterName` must have integers [in type(s) `parameterType` | None].
+    """
+    messageParts = ["I received "]
+
+    # Value part
+    if context.value is not None and not isinstance(context.value, (bytes, bytearray, memoryview)):
+        messageParts.append(f'"{context.value}"')
+    else:
+        messageParts.append("a value")
+
+    # Type part
+    if context.valueType:
+        messageParts.append(f" of type `{context.valueType}`")
+
+    # Element part
+    if context.isElement:
+        messageParts.append(" as an element in")
+
+    # Container part
+    if context.containerType:
+        messageParts.append(f" a `{context.containerType}` type")
+
+    # Required part
+    messageParts.append(f" but {parameterName} must have integers")
+
+    # Parameter type part
+    if parameterType:
+        messageParts.append(f" in type(s) `{parameterType}`")
+
+    return "".join(messageParts)
 
 def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
     """
@@ -59,6 +100,87 @@ def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
 
     return max(int(concurrencyLimit), 1)
 
+def intInnit(listInt_Allegedly: Iterable[int], parameterName: str = 'the parameter', parameterType: Optional[type] = None) -> List[int]:
+    """
+    Rigorously validates and converts input to a list of integers.
+
+    Parameters:
+        listInt_Allegedly: Input that should be a list of integers
+        parameterName: Name of parameter for error messages
+
+    Returns:
+        listValidated: List of integers as `int` type
+
+    Raises:
+        Various built-in Python exceptions with enhanced error messages.
+    """
+    if not listInt_Allegedly:
+        raise ValueError(f"I did not receive a value for {parameterName}, but it is required.")
+
+    try:
+        iter(listInt_Allegedly)
+        lengthInitial = len(listInt_Allegedly)
+        listValidated = []
+
+        for allegedInt in listInt_Allegedly:
+            messageContext = MessageContext(
+                value=allegedInt,
+                valueType=type(allegedInt).__name__,
+                isElement=True
+            )
+
+            if isinstance(allegedInt, bool):
+                raise TypeError(messageContext)
+
+            if isinstance(allegedInt, (bytes, bytearray, memoryview)):
+                if (isinstance(allegedInt, memoryview) and allegedInt.nbytes != 1) or \
+                    (not isinstance(allegedInt, memoryview) and len(allegedInt) != 1):
+                    messageContext.value = None  # Don't include binary data in message
+                    raise ValueError(messageContext)
+                allegedInt = int.from_bytes(
+                    allegedInt if isinstance(allegedInt, (bytes, bytearray))
+                    else allegedInt.tobytes(),
+                    byteorder='big'
+                )
+
+            if isinstance(allegedInt, complex):
+                if allegedInt.imag != 0:
+                    raise ValueError(messageContext)
+                allegedInt = float(allegedInt.real)
+            elif isinstance(allegedInt, str):
+                allegedInt = float(allegedInt.strip())
+
+            if isinstance(allegedInt, float):
+                if not float(allegedInt).is_integer():
+                    raise ValueError(messageContext)
+                allegedInt = int(allegedInt)
+            else:
+                allegedInt = int(allegedInt)
+
+            listValidated.append(allegedInt)
+
+            if len(listInt_Allegedly) != lengthInitial:
+                raise RuntimeError((lengthInitial, len(listInt_Allegedly)))
+
+        return listValidated
+
+    except (TypeError, ValueError) as ERRORmessage:
+        if isinstance(ERRORmessage.args[0], MessageContext):
+            context = ERRORmessage.args[0]
+            if not context.containerType:
+                context.containerType = type(listInt_Allegedly).__name__
+            message = constructErrorMessage(context, parameterName, parameterType)
+            raise type(ERRORmessage)(message) from None
+        # If it's not our MessageContext, let it propagate
+        raise
+
+    except RuntimeError as ERRORruntime:
+        lengthInitial, lengthCurrent = ERRORruntime.args[0]
+        raise RuntimeError(
+            f"The input sequence {parameterName} was modified during iteration. "
+            f"Initial length {lengthInitial}, current length {lengthCurrent}."
+        ) from None
+
 def oopsieKwargsie(huh: str) -> None | str | bool:
     """
     If a calling function passes a `str` to a parameter that shouldn't receive a `str`, `oopsieKwargsie()` might help you avoid an Exception. It tries to interpret the string as `True`, `False`, or `None`.
@@ -83,79 +205,6 @@ def oopsieKwargsie(huh: str) -> None | str | bool:
         return None
     else:
         return huh
-
-def intInnit(listInt_Allegedly: List[int], parameterName: str = 'unnamed parameter') -> List[int]:
-    """
-    Rigorously validates and converts input to a list of integers.
-
-    Parameters:
-        listInt_Allegedly: Input that should be a list of integers
-        parameterName: Name of parameter for error messages
-
-    Returns:
-        listValidated: List of integers as `int` type
-
-    Raises:
-        Various built-in Python exceptions with enhanced error messages.
-    """
-    if not listInt_Allegedly:
-        raise ValueError(f"I did not receive a value for {parameterName}, but it is required.")
-
-    try:
-        iter(listInt_Allegedly)
-        lengthInitial = len(listInt_Allegedly)
-
-        def aintNoInt(value) -> NoReturn:
-            raise ValueError(f"I received {value}, but {parameterName} must be an integer number.")
-
-        listValidated = []
-        for allegedInt in listInt_Allegedly:
-            if isinstance(allegedInt, bool):
-                raise TypeError(f"Pop quiz!\nA Boolean value such as ({allegedInt}) is an integer. Choose: True/False.\n\nJust kidding. It's False. Booleans are not integers.")
-
-            elif isinstance(allegedInt, (bytes, bytearray)):
-                if len(allegedInt) != 1:
-                    aintNoInt(f"a {type(allegedInt)} type")
-                allegedInt = int.from_bytes(allegedInt, byteorder='big')
-            elif isinstance(allegedInt, memoryview):
-                if allegedInt.nbytes != 1:
-                    aintNoInt(f"a {type(allegedInt)} type")
-                allegedInt = int.from_bytes(allegedInt.tobytes(), byteorder='big')
-            elif isinstance(allegedInt, complex):
-                if allegedInt.imag == 0:
-                    allegedInt = float(allegedInt.real)  # Let the float conversion potentially fail
-                else:
-                    aintNoInt(allegedInt)
-            elif isinstance(allegedInt, str):
-                allegedInt = float(allegedInt.strip())  # Let it fail if not numeric
-
-            # Now try to convert to int, will raise ValueError if not possible
-            if isinstance(allegedInt, float):
-                if not float(allegedInt).is_integer():
-                    aintNoInt(allegedInt)
-                allegedInt = int(allegedInt)
-            else:
-                allegedInt = int(allegedInt)  # Let it fail if not convertible
-
-            listValidated.append(allegedInt)
-
-            if len(listInt_Allegedly) != lengthInitial:
-                raise RuntimeError("Input sequence was modified during iteration")
-
-        return listValidated
-
-    except TypeError as ERRORtype:
-        if not hasattr(listInt_Allegedly, '__iter__'):
-            ERRORmessage = f"{parameterName} does not have the '__iter__' attribute (it is not iterable), but it must have the '__iter__' attribute. Value was passed as data type '{type(listInt_Allegedly)}'."
-        else:
-            ERRORmessage = f"Invalid element in {parameterName}: {ERRORtype.args[0]}"
-        raise TypeError(ERRORmessage) from None
-    except ValueError as ERRORvalue:
-        # If it's our custom error message, pass it through
-        if "I received" in str(ERRORvalue):
-            raise
-        # Otherwise wrap the standard ValueError in our custom message
-        raise ValueError(f"I received {listInt_Allegedly}, but {parameterName} must be an integer number.") from None
 
 if __name__ == '__main__':
     multiprocessing.set_start_method('spawn')
