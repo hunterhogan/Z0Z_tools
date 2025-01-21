@@ -1,9 +1,9 @@
-import os
+from pathlib import Path
+from typing import Generator, Set
+import pytest
 import shutil
 import uuid
-from pathlib import Path
-import pytest
-from typing import Generator, Set, Dict
+from unittest.mock import patch
 
 # SSOT for test data paths
 pathDataSamples = Path("tests/dataSamples")
@@ -37,7 +37,7 @@ def setupTeardownTestData() -> Generator[None, None, None]:
     cleanupTempFileRegister()
 
 @pytest.fixture
-def pathTempTesting(request) -> Path:
+def pathTempTesting(request: pytest.FixtureRequest) -> Path:
     """Create a unique temp directory for each test function."""
     # Sanitize test name for filesystem compatibility
     sanitizedName = request.node.name.replace('[', '_').replace(']', '_').replace('/', '_')
@@ -49,7 +49,7 @@ def pathTempTesting(request) -> Path:
     return pathTemp
 
 @pytest.fixture
-def redirectPipAnything(monkeypatch, pathTempTesting) -> None:
+def redirectPipAnything(monkeypatch: pytest.MonkeyPatch, pathTempTesting: Path) -> None:
     """Redirect pip package operations to test directories."""
     def mockTempdir(*args, **kwargs) -> str:
         pathTemp = pathTempTesting / f"pip_temp_{uuid.uuid4()}"

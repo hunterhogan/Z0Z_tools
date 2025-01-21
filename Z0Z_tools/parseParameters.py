@@ -1,7 +1,10 @@
+"""
+Provides parameter and input validation, integer parsing, and concurrency handling utilities.
+"""
 import multiprocessing
-from typing import List, Iterable, Optional, Sequence, Union, NoReturn
+from collections.abc import Sized
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any, Iterable, List, Optional, Type, Union
 
 @dataclass
 class MessageContext:
@@ -10,7 +13,7 @@ class MessageContext:
     containerType: Optional[str] = None
     isElement: bool = False
 
-def constructErrorMessage(context: MessageContext, parameterName: str, parameterType: Optional[type] = None) -> str:
+def _constructErrorMessage(context: MessageContext, parameterName: str, parameterType: Optional[Type[Any]] = None) -> str:
     """Constructs error message from available context using template:
     I received ["value" | a value | None] [of type `type` | None] [as an element in | None] [a `containerType` type | None] but `parameterName` must have integers [in type(s) `parameterType` | None].
     """
@@ -45,21 +48,34 @@ def constructErrorMessage(context: MessageContext, parameterName: str, parameter
 
 def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
     """
-    Determine the concurrency limit based on the provided `limit` parameter.
+    Determines the concurrency limit based on the provided parameter. This package has Pytest tests you can import and run on this function. `from Z0Z_tools.pytest_parseParameters import makeTestSuiteConcurrencyLimit`
 
     Parameters:
-        limit: The concurrency limit specification. Your user can set a limit with
-        a simple True/False, a quantity of CPUs, or a ratio of CPUs. Furthermore, positive
-        numbers define the maximum usage, and negative numbers define the amount to keep
-        in reserve.
+        limit: Whether and how to limit CPU usage. Accepts True/False, an integer count, or a fraction of total CPUs.
+               Positive and negative values have different behaviors, see code for details.
 
     Returns:
         concurrencyLimit: The calculated concurrency limit, ensuring it is at least 1.
 
-    If you want to be extra nice to your users, consider using `oopsieKwargsie()` to handle
-    malformed inputs.
-    """
-    """Example docstring:
+    Notes:
+        If you want to be extra nice to your users, consider using `Z0Z_tools.oopsieKwargsie()` to handle
+    malformed inputs. For example:
+
+    ```
+    if not (CPUlimit is None or isinstance(CPUlimit, (bool, int, float))):
+        CPUlimit = oopsieKwargsie(CPUlimit)
+    ```
+
+    Example parameter:
+        from typing import Optional, Union
+        CPUlimit: Optional[Union[int, float, bool]] = None
+
+    Example parameter:
+        from typing import Union
+        CPUlimit: Union[bool, float, int, None]
+
+    Example docstring:
+
     Parameters:
         CPUlimit: whether and how to limit the CPU usage. See notes for details.
 
@@ -100,26 +116,30 @@ def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
 
     return max(int(concurrencyLimit), 1)
 
-def intInnit(listInt_Allegedly: Iterable[int], parameterName: str = 'the parameter', parameterType: Optional[type] = None) -> List[int]:
+def intInnit(listInt_Allegedly: Iterable[int], parameterName: str = 'the parameter', parameterType: Optional[Type[Any]] = None) -> List[int]:
     """
-    Rigorously validates and converts input to a list of integers.
+    Validates and converts input to a list of integers. This package has Pytest tests you can import and run on this function. `from Z0Z_tools.pytest_parseParameters import makeTestSuiteIntInnit`
+
 
     Parameters:
-        listInt_Allegedly: Input that should be a list of integers
-        parameterName: Name of parameter for error messages
+        listInt_Allegedly: Input that should be a list of integers.
+        parameterName: Name of parameter for error messages.
 
     Returns:
-        listValidated: List of integers as `int` type
+        listValidated: The validated integers.
 
     Raises:
-        Various built-in Python exceptions with enhanced error messages.
+        Various built-in exceptions with enhanced error messages.
     """
     if not listInt_Allegedly:
         raise ValueError(f"I did not receive a value for {parameterName}, but it is required.")
 
     try:
         iter(listInt_Allegedly)
-        lengthInitial = len(listInt_Allegedly)
+        lengthInitial = None
+        if isinstance(listInt_Allegedly, Sized):
+            lengthInitial = len(listInt_Allegedly)
+
         listValidated = []
 
         for allegedInt in listInt_Allegedly:
@@ -159,8 +179,9 @@ def intInnit(listInt_Allegedly: Iterable[int], parameterName: str = 'the paramet
 
             listValidated.append(allegedInt)
 
-            if len(listInt_Allegedly) != lengthInitial:
-                raise RuntimeError((lengthInitial, len(listInt_Allegedly)))
+            if lengthInitial is not None and isinstance(listInt_Allegedly, Sized):
+                if len(listInt_Allegedly) != lengthInitial:
+                    raise RuntimeError((lengthInitial, len(listInt_Allegedly)))
 
         return listValidated
 
@@ -169,7 +190,7 @@ def intInnit(listInt_Allegedly: Iterable[int], parameterName: str = 'the paramet
             context = ERRORmessage.args[0]
             if not context.containerType:
                 context.containerType = type(listInt_Allegedly).__name__
-            message = constructErrorMessage(context, parameterName, parameterType)
+            message = _constructErrorMessage(context, parameterName, parameterType)
             raise type(ERRORmessage)(message) from None
         # If it's not our MessageContext, let it propagate
         raise
@@ -183,7 +204,7 @@ def intInnit(listInt_Allegedly: Iterable[int], parameterName: str = 'the paramet
 
 def oopsieKwargsie(huh: str) -> None | str | bool:
     """
-    If a calling function passes a `str` to a parameter that shouldn't receive a `str`, `oopsieKwargsie()` might help you avoid an Exception. It tries to interpret the string as `True`, `False`, or `None`.
+    If a calling function passes a `str` to a parameter that shouldn't receive a `str`, `oopsieKwargsie()` might help you avoid an Exception. It tries to interpret the string as `True`, `False`, or `None`. This package has Pytest tests you can import and run on this function. `from Z0Z_tools.pytest_parseParameters import makeTestSuiteOopsieKwargsie`
 
     Parameters:
         huh: The input string to be parsed.

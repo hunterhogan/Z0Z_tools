@@ -1,17 +1,19 @@
+"""
+Provides utilities for reading, writing, and resampling audio waveforms.
+"""
+from numpy.typing import NDArray
+from typing import Any, BinaryIO, Dict, List, Sequence, Tuple, Union
 import io
+import numpy
 import os
 import pathlib
-from typing import Any, BinaryIO, Dict, List, Sequence, Tuple, Union
-
-import numpy
 import resampy
 import soundfile
-from numpy.typing import NDArray
-
 
 def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
     Load a list of audio files into a single array.
+
     Parameters:
         listPathFilenames: List of file paths to the audio files.
         sampleRate (44100): Target sample rate for the waveforms; the function will resample if necessary. Defaults to 44100.
@@ -43,7 +45,7 @@ def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[s
                 raise FileNotFoundError(f"File not found: {pathFilename}") from ERRORmessage
             else:
                 raise
-            
+
     COUNTsamplesMaximum: int = max(listCOUNTsamples)
     axesSizes['axisTime'] = COUNTsamplesMaximum
 
@@ -127,7 +129,6 @@ def writeWav(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: ND
 
     Returns:
         None:
-
     """
     if not isinstance(pathFilename, io.IOBase):
         try:

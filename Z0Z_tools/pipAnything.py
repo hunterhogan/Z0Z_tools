@@ -10,6 +10,7 @@ Usage:
     pip will attempt to install requirements.txt, but don't rely on dependencies being installed.
 """
 
+from Z0Z_tools.Z0Z_io import findRelativePath
 from packaging.requirements import Requirement
 from typing import List, Union
 import os
@@ -17,22 +18,15 @@ import pathlib
 import subprocess
 import sys
 import tempfile
-from Z0Z_tools.Z0Z_io import findRelativePath
 
 def makeListRequirementsFromRequirementsFile(*pathFilenames: Union[str, os.PathLike[str]]) -> List[str]:
     """
     Reads one or more requirements files and extracts valid package requirements.
+
     Parameters:
         *pathFilenames: One or more paths to requirements files.
     Returns:
         listRequirements: A list of unique, valid package requirements found in the provided files.
-    The function performs the following steps:
-    1. Iterates over each provided file path.
-    2. Checks if the file exists.
-    3. Reads the file line by line, removing comments and trimming whitespace.
-    4. Skips lines that are empty or contain spaces/tabs after sanitization.
-    5. Validates if the sanitized line is a valid requirement.
-    6. Collects valid requirements and removes duplicates before returning the list.
     """
     listRequirements = []
 
@@ -136,9 +130,9 @@ def everyone_knows_what___main___is() -> None:
         namespaceModule = pathlib.Path(__file__).stem
         namespacePackage = pathlib.Path(__file__).parent.stem
         print(f"\n{namespaceModule} says, 'That didn't work. Try again?'\n\n"
-              f"Usage:\tpython -m {namespacePackage}.{namespaceModule} <packageTarget>\n"
-              f"\t<packageTarget> is a path to a directory with Python modules\n"
-              f"\tExample: python -m {namespacePackage}.{namespaceModule} '{pathlib.PurePath('path' ,'to', 'Z0Z_tools')}'")
+                f"Usage:\tpython -m {namespacePackage}.{namespaceModule} <packageTarget>\n"
+                f"\t<packageTarget> is a path to a directory with Python modules\n"
+                f"\tExample: python -m {namespacePackage}.{namespaceModule} '{pathlib.PurePath('path' ,'to', 'Z0Z_tools')}'")
         # What is `-m`? Obviously, `-m` creates a namespace for the module, which is obviously necessary, except when it isn't.
         sys.exit(1)
 
