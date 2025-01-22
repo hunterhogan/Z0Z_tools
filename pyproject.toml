@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,7 +7,7 @@ name = "Z0Z_tools"
 description = "Solve some common Python development frustrations"
 readme = "README.md"
 requires-python = ">=3.10, <3.13" # numba is part of numpy
-version = "0.6.10"
+version = "0.7.0"
 authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
 classifiers = [
     "Operating System :: OS Independent",
@@ -15,10 +15,15 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 ]
-dependencies = ["numpy", "resampy", "soundfile", "packaging", "pytest>=7.0"]
+dependencies = ["numpy", "resampy", "soundfile", "packaging", "scipy"]
+
+[project.urls]
+homepage = "https://github.com/hunterhogan/Z0Z_tools"
+repository = "https://github.com/hunterhogan/Z0Z_tools.git"
 
 [project.optional-dependencies]
-testing = ["pytest>=7.0", "pytest-cov", "pytest-mock", "pytest-xdist", "pandas"]
+PyTorch = ["torch"]
+testing = ["pytest>=7.0", "pytest-cov", "pytest-mock", "pytest-xdist", "pandas", "torch"]
 
 [tool.setuptools]
 include-package-data = true
@@ -27,17 +32,22 @@ include-package-data = true
 where = ["."]
 include = ["*"]
 
-[project.urls]
-homepage = "https://github.com/hunterhogan/Z0Z_tools"
-repository = "https://github.com/hunterhogan/Z0Z_tools.git"
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["--color=yes", "-n 8"]
+addopts = ["--color=yes", "-n 2"]
 
 [tool.coverage.run]
+branch = true
+source = ["Z0Z_tools"]
 data_file = "tests/coverage/.coverage"
 omit = ["Z0Z_tools/__init__.py", "tests/*"]
 
-[tool.coverage.paths]
-source = ["Z0Z_tools"]
+[tool.coverage.report]
+exclude_lines = [
+    "if TYPE_CHECKING:",
+    "if __name__ == \"__main__\":",
+]
+ignore_errors = false
+
+[tool.coverage.xml]
+output = "tests/coverage/coverage.xml"

@@ -42,15 +42,26 @@ Testing Support:
         dictionaryTests = makeTestSuiteIntInnit(my_integer_function)
 """
 
+try:
+    from Z0Z_tools.optionalPyTorch import def_asTensor
+    from Z0Z_tools.windowingFunctions import halfsineTensor, tukeyTensor, cosineWingsTensor, equalPowerTensor # type: ignore
+except (ImportError, ModuleNotFoundError):
+    from Z0Z_tools.optionalPyTorchAlternative import def_asTensor
+
 from Z0Z_tools.dataStructures import stringItUp, updateExtendPolishDictionaryLists
 from Z0Z_tools.ioAudio import writeWav, readAudioFile, loadWaveforms
 from Z0Z_tools.parseParameters import defineConcurrencyLimit, oopsieKwargsie, intInnit
 from Z0Z_tools.pipAnything import installPackageTarget, makeListRequirementsFromRequirementsFile
+from Z0Z_tools.windowingFunctions import halfsine, tukey, cosineWings, equalPower
 from Z0Z_tools.Z0Z_io import dataTabularTOpathFilenameDelimited, findRelativePath
 
 __all__ = [
     'dataTabularTOpathFilenameDelimited',
     'defineConcurrencyLimit',
+    'halfsine',
+    'tukey',
+    'cosineWings',
+    'equalPower',
     'findRelativePath',
     'installPackageTarget',
     'intInnit',
