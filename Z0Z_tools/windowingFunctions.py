@@ -1,74 +1,102 @@
+"""
+Generate various windowing functions used in signal processing.
+"""
+
 from Z0Z_tools import def_asTensor
-from numpy.typing import NDArray
+from numpy import cos, pi, sin
+from typing import Optional
 import numpy
 import numpy.typing
 import scipy.signal.windows as SciPy
 
-@def_asTensor
-def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> NDArray[numpy.float64]:
+def getLengthTaper(lengthWindow: int, ratioTaper: Optional[float]) -> int:
     """
-    Generates a cosine-tapered window.
+    Calculate the length of the taper section for windowing functions.
 
-    Parameters:
-        lengthWindow: The length of the window.
-        ratioTaper (0.1): The ratio of the total tapering to the total window length. Defaults to 0.1.
+    Parameters
+        lengthWindow: Total length of the windowing function.
+        ratioTaper (0.1): Ratio of taper length to windowing-function length; must be between 0 and 1, inclusive.
 
-    Returns:
-        window: The generated cosine-tapered window.
+    Returns
+        lengthTaper: Number of samples in one taper section.
     """
-    from numpy import cos, pi
-
     if ratioTaper is None:
         lengthTaper = int(lengthWindow * 0.1 / 2)
     elif 0 <= ratioTaper <= 1:
         lengthTaper = int(lengthWindow * ratioTaper / 2)
     else:
-        raise ValueError(f"Parameter `ratioTaper` is {ratioTaper}. If set, `ratioTaper` must be between 0 and 1.")
-
-    window = numpy.ones(shape=lengthWindow)
-    # Apply cosine taper to the beginning and end
-    if lengthTaper > 0:
-        window[0:lengthTaper] = 1 - cos(numpy.linspace(start=0, stop=pi / 2, num=lengthTaper))
-        window[-lengthTaper:None] = 1 + cos(numpy.linspace(start=pi / 2, stop=pi, num=lengthTaper))
-    return window
+        raise ValueError(f"I received {ratioTaper} for parameter `ratioTaper`. If set, `ratioTaper` must be between 0 and 1, inclusive.")
+    return lengthTaper
 
 @def_asTensor
-def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> NDArray[numpy.float64]:
-    if ratioTaper is None:
-        lengthTaper = int(lengthWindow * 0.1 / 2)
-    elif 0 <= ratioTaper <= 1:
-        lengthTaper = int(lengthWindow * ratioTaper / 2)
-    else:
-        raise ValueError(f"Parameter `ratioTaper` is {ratioTaper}. If set, `ratioTaper` must be between 0 and 1.")
+def cosineWings(lengthWindow: int, ratioTaper: Optional[float] = None) -> numpy.typing.NDArray[numpy.float64]:
+    """
+    Generate a cosine-tapered windowing function with flat center and tapered ends.
 
-    window = numpy.ones(shape=lengthWindow)
+    Parameters
+        lengthWindow: Total length of the windowing function.
+        ratioTaper (0.1): Ratio of taper length to windowing-function length; must be between 0 and 1 inclusive.
+
+    Returns
+        windowingFunction: Array of windowing coefficients with cosine tapers.
+    """
+    lengthTaper = getLengthTaper(lengthWindow, ratioTaper)
+
+    windowingFunction = numpy.ones(shape=lengthWindow)
     if lengthTaper > 0:
-        window[0:lengthTaper] = numpy.sqrt(numpy.linspace(start=0, stop=1, num=lengthTaper))
-        window[-lengthTaper:None] = numpy.sqrt(numpy.linspace(start=1, stop=0, num=lengthTaper))
-    return numpy.absolute(window)
+        windowingFunction[0:lengthTaper] = 1 - cos(numpy.linspace(start=0, stop=pi / 2, num=lengthTaper))
+        windowingFunction[-lengthTaper:None] = 1 + cos(numpy.linspace(start=pi / 2, stop=pi, num=lengthTaper))
+    return windowingFunction
 
 @def_asTensor
-def halfsine(lengthWindow: int) -> NDArray:
-    from numpy import sin, pi
+def equalPower(lengthWindow: int, ratioTaper: Optional[float] = None) -> numpy.typing.NDArray[numpy.float64]:
+    """
+    Generate a windowing function used for an equal power crossfade.
+
+    Parameters
+        lengthWindow: Total length of the windowing function.
+        ratioTaper (0.1): Ratio of taper length to windowing-function length; must be between 0 and 1 inclusive.
+
+    Returns
+        windowingFunction: Array of windowing coefficients with tapers.
+    """
+    lengthTaper = getLengthTaper(lengthWindow, ratioTaper)
+
+    windowingFunction = numpy.ones(shape=lengthWindow)
+    if lengthTaper > 0:
+        windowingFunction[0:lengthTaper] = numpy.sqrt(numpy.linspace(start=0, stop=1, num=lengthTaper))
+        windowingFunction[-lengthTaper:None] = numpy.sqrt(numpy.linspace(start=1, stop=0, num=lengthTaper))
+    return numpy.absolute(windowingFunction)
+
+@def_asTensor
+def halfsine(lengthWindow: int) -> numpy.typing.NDArray[numpy.float64]:
+    """
+    Generate a half-sine windowing function.
+
+    Parameters
+        lengthWindow: Total length of the windowing function.
+
+    Returns
+        windowingFunction: Array of windowing coefficients following half-sine shape.
+    """
     return sin(pi * (numpy.arange(lengthWindow) + 0.5) / lengthWindow)
 
 @def_asTensor
-def tukey(lengthWindow: int, ratioTaper: float | None = None, **keywordArguments) -> NDArray[numpy.float64]:
+def tukey(lengthWindow: int, ratioTaper: Optional[float] = None, **keywordArguments: float) -> numpy.typing.NDArray[numpy.float64]:
     """
     Create a Tukey windowing-function.
 
-    Parameters:
-        lengthWindow: The total length of the window.
-        ratioTaper (0.1): The ratio of the total tapering to the total window length. Defaults to 0.1.
-        **keywordArguments: Additional keyword arguments. Can include 'alpha' for backward compatibility.
+    Parameters
+        lengthWindow: Total length of the windowing function.
+        ratioTaper (0.1): Ratio of taper length to windowing-function length; must be between 0 and 1 inclusive.
+        **keywordArguments: `alpha: float | None = None` to be nice and for the Tevye cases: "Tradition!"
 
-    Returns:
-        windowingFunction: The generated Tukey windowing-function.
+    Returns
+        windowingFunction: Array of Tukey windowing function coefficients.
     """
-    # Do not add logic that creates ValueError for invalid ratioTaper values because
-    # the scipy developers are much better at coding than you are at coding,
-    # and they will handle the errors.
-    alpha = keywordArguments.get('alpha', ratioTaper)
+    # Do not add logic that creates `ValueError` for invalid `ratioTaper` values because
+    # the SciPy developers are much better at coding than you are at coding: they will handle invalid values.
+    alpha = keywordArguments.get('alpha', ratioTaper) # Are you tempted to use `or 0.1`? Don't be: it will override the user's value for `ratioTaper=0`.
     if alpha is None:
         alpha = 0.1
     return SciPy.tukey(lengthWindow, alpha)

@@ -1,5 +1,11 @@
+"""
+Pytest tests you can use in your package to test some Z0Z_tools functions.
+
+Each function in this module returns a list of test functions that can be used with `pytest.parametrize`.
+"""
+
 from Z0Z_tools import defineConcurrencyLimit, oopsieKwargsie, intInnit
-from typing import Any, Callable, Dict, List, Optional, Sequence, Union, Tuple
+from typing import Any, Callable, List, Optional, Sequence, Union, Tuple
 from unittest.mock import patch
 import pytest
 

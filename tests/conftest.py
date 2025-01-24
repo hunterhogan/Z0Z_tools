@@ -8,6 +8,7 @@
 from Z0Z_tools import halfsine, tukey, cosineWings, equalPower
 from Z0Z_tools import halfsineTensor, tukeyTensor, cosineWingsTensor, equalPowerTensor  # type: ignore
 from Z0Z_tools import stringItUp, updateExtendPolishDictionaryLists
+from Z0Z_tools.pipAnything import everyone_knows_what___main___is, installPackageTarget, main, makeListRequirementsFromRequirementsFile, make_setupDOTpy, readability_counts
 from numpy.typing import ArrayLike, NDArray
 from typing import Generator, Set, Any, Type, Union, Sequence, Callable
 from unittest.mock import patch
@@ -24,8 +25,14 @@ all = [
     'cosineWingsTensor',
     'equalPower',
     'equalPowerTensor',
+    'everyone_knows_what___main___is',
     'halfsine',
     'halfsineTensor',
+    'installPackageTarget',
+    'main',
+    'makeListRequirementsFromRequirementsFile',
+    'make_setupDOTpy',
+    'readability_counts',
     'stringItUp',
     'tukey',
     'tukeyTensor',
@@ -67,8 +74,8 @@ def setupTeardownTestData() -> Generator[None, None, None]:
 def pathTempTesting(request: pytest.FixtureRequest) -> pathlib.Path:
     """Create a unique temp directory for each test function."""
     # Sanitize test name for filesystem compatibility
-    sanitizedName = request.node.name.replace('[', '_').replace(']', '_').replace('/', '_')
-    uniqueDirectory = f"{sanitizedName}_{uuid.uuid4()}"
+    # sanitizedName = request.node.name.replace('[', '_').replace(']', '_').replace('/', '_')
+    uniqueDirectory = f"thatwasnotsanitized_{uuid.uuid4()}"
     pathTemp = pathTempRoot / uniqueDirectory
     pathTemp.mkdir(parents=True)
 
@@ -78,7 +85,7 @@ def pathTempTesting(request: pytest.FixtureRequest) -> pathlib.Path:
 @pytest.fixture
 def redirectPipAnything(monkeypatch: pytest.MonkeyPatch, pathTempTesting: pathlib.Path) -> None:
     """Redirect pip package operations to test directories."""
-    def mockTempdir(*args, **kwargs) -> str:
+    def mockTempdir(*arguments, **keywordArguments) -> str:
         pathTemp = pathTempTesting / f"pip_temp_{uuid.uuid4()}"
         pathTemp.mkdir(parents=True)
         addTempFileToRegister(pathTemp)

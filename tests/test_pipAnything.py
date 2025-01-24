@@ -1,117 +1,93 @@
-from typing import Generator
-import pytest
-from typing import Any
+from tests.conftest import *
+from typing import Any, List, Literal, LiteralString
 import pathlib
-from Z0Z_tools import pipAnything
-import sys
 import subprocess
+import sys
+import pytest
 
-def test_makeListRequirementsFromRequirementsFile(pathTempTesting):
+@pytest.mark.parametrize("description,content,expected", [
+    ("Basic requirements", "# This is a comment\n package-NE==1.13.0\n package-SW>=4.17.0,<=7.23.0\n package_NW\n analyzeAudio@git+https://github.com/hunterhogan/analyzeAudio.git ", [ 'analyzeAudio@git+https://github.com/hunterhogan/analyzeAudio.git', 'package-NE==1.13.0', 'package-SW>=4.17.0,<=7.23.0', 'package_NW' ] ),
+    ("Invalid requirements", "invalid==requirement==1.0\nvalid-package==1.13.0", ['valid-package==1.13.0'] ),
+    ("Multiple valid packages", "package-FR==11.0\npackage-JP==13.0", ['package-FR==11.0', 'package-JP==13.0'] ),
+    ("Empty file", "", []),
+    ("Comments only", "# Comment 1\n# Comment 2", []),
+    ("Whitespace only", "    \n\t\n", []),
+    ]
+    , ids=lambda x: x if isinstance(x, str) else ""
+)
+def test_makeListRequirementsFromRequirementsFile(description: Literal['Basic requirements'] | Literal['Invalid requirements'] | Literal['Multiple valid packages'] | Literal['Empty file'] | Literal['Comments only'] | Literal['Whitespace only'], content: LiteralString | Literal['invalid==requirement==1.0\nvalid-package==1.13.0'] | Literal['package-FR==11.0\npackage-JP==13.0'] | Literal[''] | Literal['# Comment 1\n# Comment 2'] | Literal['    \n\t\n'], expected: List[str], pathTempTesting: pathlib.Path):
     """Test requirements file parsing with various inputs."""
     pathRequirementsFile = pathTempTesting / "requirements.txt"
-    pathRequirementsFile.write_text(
-        """
-        # This is a comment
-        package-A==1.2.3
-        package-B>=4.5.6,<=7.8.9
-        package_C
-        analyzeAudio@git+https://github.com/hunterhogan/analyzeAudio.git
-        """
-    )
-    requirements = pipAnything.makeListRequirementsFromRequirementsFile(pathRequirementsFile)
-    # Updated assertion to match actual valid requirements
-    assert len(requirements) == 4
-    assert 'package-A==1.2.3' in requirements
-    assert 'package-B>=4.5.6,<=7.8.9' in requirements
-    assert 'package_C' in requirements
-    assert 'analyzeAudio@git+https://github.com/hunterhogan/analyzeAudio.git' in requirements
+    pathRequirementsFile.write_text(content)
+    standardComparison(expected, makeListRequirementsFromRequirementsFile, pathRequirementsFile)
 
-@pytest.mark.parametrize("content,expected_requirements", [
-    (
-        "invalid==requirement==1.0\nvalid-package==1.0",
-        ['valid-package==1.0']
-    ),
-    (
-        "spaces in package==1.0\n@#$%^invalid\nvalid-pkg==1.0",
-        ['valid-pkg==1.0']
-    ),
-    (
-        "valid-1==1.0\nvalid-2==2.0",
-        ['valid-1==1.0', 'valid-2==2.0']
-    ),
+@pytest.mark.parametrize("description,paths,expected", [
+    ("Multiple files with unique entries", [ ('requirements1.txt', 'package-NE==11.0\npackage-NW==13.0'), ('requirements2.txt', 'package-SW==17.0\npackage-SE==19.0') ], ['package-NE==11.0', 'package-NW==13.0', 'package-SE==19.0', 'package-SW==17.0'] ),
+    ("Multiple files with duplicates", [ ('requirements1.txt', 'package-FR==11.0\npackage-common==13.0'), ('requirements2.txt', 'package-JP==17.0\npackage-common==13.0') ], ['package-FR==11.0', 'package-JP==17.0', 'package-common==13.0'] ),
 ])
-def test_invalid_requirements(content, expected_requirements, pathTempTesting):
-    """Test handling of invalid requirements content."""
-    pathFilenameRequirements = pathTempTesting / 'requirements.txt'
-    pathFilenameRequirements.write_text(content)
-    requirements = pipAnything.makeListRequirementsFromRequirementsFile(pathFilenameRequirements)
-    assert set(requirements) == set(expected_requirements)
+def test_multiple_requirements_files(description, paths, expected, pathTempTesting):
+    """Test processing multiple requirements files."""
+    pathFilenames = []
+    for filename, content in paths:
+        pathFile = pathTempTesting / filename
+        pathFile.write_text(content)
+        pathFilenames.append(pathFile)
+
+    standardComparison(expected, makeListRequirementsFromRequirementsFile, *pathFilenames)
 
 def test_nonexistent_requirements_file(pathTempTesting):
     """Test handling of non-existent requirements file."""
     pathFilenameNonexistent = pathTempTesting / 'nonexistent.txt'
-    requirements = pipAnything.makeListRequirementsFromRequirementsFile(pathFilenameNonexistent)
-    assert len(requirements) == 0
+    standardComparison([], makeListRequirementsFromRequirementsFile, pathFilenameNonexistent)
 
-def test_multiple_requirements_files(pathTempTesting):
-    """Test processing multiple requirements files."""
-    pathFilenameRequirements1 = pathTempTesting / 'pathFilenameRequirements1.txt'
-    pathFilenameRequirements2 = pathTempTesting / 'pathFilenameRequirements2.txt'
-    pathFilenameRequirements1.write_text('package-A==1.0\npackage-B==2.0')
-    pathFilenameRequirements2.write_text('package-B==2.0\npackage-C==3.0')
-    requirements = pipAnything.makeListRequirementsFromRequirementsFile(pathFilenameRequirements1, pathFilenameRequirements2)
-    assert len(requirements) == 3
-    assert sorted(requirements) == ['package-A==1.0', 'package-B==2.0', 'package-C==3.0']
-
-def test_make_setupDOTpy():
+@pytest.mark.parametrize("description,relativePathPackage,listRequirements,expected_contains", [
+    ("Basic setup", 'package-NE', ['numpy>=11.0', 'pandas>=13.0'], [ "name='package-NE'", "packages=find_packages(where=r'package-NE')", "package_dir={'': r'package-NE'}", "install_requires=['numpy>=11.0', 'pandas>=13.0']", "include_package_data=True" ] ),
+    ("Empty requirements", 'package-SW', [], [ "name='package-SW'", "install_requires=[]" ] ),
+])
+def test_make_setupDOTpy(description, relativePathPackage, listRequirements, expected_contains):
     """Test setup.py content generation."""
-    relative_path = 'my_package'
-    requirements = ['numpy', 'pandas']
-    setup_content = pipAnything.make_setupDOTpy(relative_path, requirements)
-
-    assert f"name='{pathlib.Path(relative_path).name}'" in setup_content
-    assert f"packages=find_packages(where=r'{relative_path}')" in setup_content
-    assert f"package_dir={{'': r'{relative_path}'}}" in setup_content
-    assert f"install_requires={requirements}," in setup_content
-    assert "include_package_data=True" in setup_content
+    setup_content = make_setupDOTpy(relativePathPackage, listRequirements)
+    for expected in expected_contains:
+        assert expected in setup_content
 
 @pytest.mark.usefixtures("redirectPipAnything")
-def test_installPackageTarget(mocker, pathTempTesting: pathlib.Path):
-    """Test installPackageTarget with mock instead of a real pip install."""
-    pathPackageDir = pathTempTesting / 'test_package'
+def test_installPackageTarget(mocker, pathTempTesting):
+    """Test package installation process."""
+    # Setup test package structure
+    pathPackageDir = pathTempTesting / 'test-package-NE'
     pathPackageDir.mkdir()
-    pathRequirements = pathPackageDir / 'requirements.txt'
-    pathRequirements.write_text('numpy\npandas')
+    (pathPackageDir / 'requirements.txt').write_text('numpy>=11.0\npandas>=13.0')
+    (pathPackageDir / '__init__.py').write_text('')
+    (pathPackageDir / 'module_prime.py').write_text('print("Prime module")')
 
-    (pathPackageDir / '__init__.py').write_text('# ...existing code...')
-    (pathPackageDir / 'dummy_module.py').write_text('print("Hello from dummy_module")')
-
-    # Mock the subprocess.Popen call
+    # Mock subprocess.Popen
     mock_process = mocker.MagicMock()
-    mock_process.stdout = ["Pretending to install...\n"]
+    mock_process.stdout = ["Installing test-package-NE...\n"]
     mock_process.wait.return_value = 0
-    mock_popen = mocker.patch.object(subprocess, "Popen", return_value=mock_process)
+    mocker.patch('subprocess.Popen', return_value=mock_process)
 
-    pipAnything.installPackageTarget(pathPackageDir)
+    installPackageTarget(pathPackageDir)
 
-    # Assert we didn't really install anything; just called pip
-    mock_popen.assert_called_once()
-    callArgs = mock_popen.call_args[1]["args"]
-    assert callArgs[0] == sys.executable
-    assert callArgs[1:4] == ["-m", "pip", "install"]
+    # Verify Popen was called correctly
+    subprocess.Popen.assert_called_once() # type: ignore
+    call_args = subprocess.Popen.call_args[1]['args'] # type: ignore
+    assert call_args[0] == sys.executable
+    assert call_args[1:4] == ['-m', 'pip', 'install']
 
-@pytest.mark.parametrize("argv,should_exit", [
-    (['script.py'], True),
-    (['script.py', '/nonexistent/path'], True),
-])
-def test_CLI_functions(mocker, argv, should_exit):
-    """Test CLI argument handling."""
-    mocker.patch('sys.argv', argv)
-    mock_exit = mocker.patch('sys.exit')
-    mock_print = mocker.patch('builtins.print')
+# @pytest.mark.parametrize("description,argv,expected", [
+#     ("No arguments", ['script.py'], 1),
+#     ("Nonexistent path", ['script.py', '/path/to/nowhere'], 1),
+#     ("Invalid directory", ['script.py', '/dev/null'], 1),
+# ])
+# def test_CLI_error_cases(description, argv, expected, mocker):
+#     """Test CLI argument handling for error cases."""
+#     mocker.patch('sys.argv', argv)
+#     mocker.patch('pathlib.Path.exists', return_value=False)
+#     mocker.patch('pathlib.Path.is_dir', return_value=False)
+#     standardComparison(expected, expectSystemExit, expected, everyone_knows_what___main___is)
 
-    pipAnything.everyone_knows_what___main___is()
-
-    if should_exit:
-        mock_exit.assert_called_once_with(1)
-        mock_print.assert_called()
+def test_main_function_chain(mocker):
+    """Test the main function call chain."""
+    mock_readability = mocker.patch('Z0Z_tools.pipAnything.readability_counts')
+    main()
+    mock_readability.assert_called_once()

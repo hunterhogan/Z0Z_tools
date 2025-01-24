@@ -1,11 +1,9 @@
 from tests.conftest import *
 from decimal import Decimal
 from fractions import Fraction
-from itertools import count, islice
 import datetime
 import numpy
 import pytest
-import uuid
 
 class CustomIterable:
     def __init__(self, items): self.items = items

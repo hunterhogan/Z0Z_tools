@@ -126,7 +126,7 @@ def everyone_knows_what___main___is() -> None:
     call `installPackageTarget` from other modules."""
     packageTarget = sys.argv[1] if len(sys.argv) > 1 else ''
     pathPackageTarget = pathlib.Path(packageTarget)
-    if not pathPackageTarget.is_dir() or len(sys.argv) != 2:
+    if len(sys.argv) != 2 or not pathPackageTarget.exists() or not pathPackageTarget.is_dir() :
         namespaceModule = pathlib.Path(__file__).stem
         namespacePackage = pathlib.Path(__file__).parent.stem
         print(f"\n{namespaceModule} says, 'That didn't work. Try again?'\n\n"

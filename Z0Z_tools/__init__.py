@@ -38,8 +38,13 @@ Package Installation (pipAnything):
 
 Testing Support:
     Some functions come with ready-to-use test suites:
-        from Z0Z_tools.pytest_parseParameters import makeTestSuiteIntInnit
-        dictionaryTests = makeTestSuiteIntInnit(my_integer_function)
+    ```
+    from Z0Z_tools.pytest_parseParameters import PytestFor_intInnit
+
+    test_functions = PytestFor_intInnit(Z0Z_tools.intInnit)
+    for nameOfTest, callablePytest in test_functions:
+        callablePytest()  # Runs each test case
+    ```
 """
 
 try:

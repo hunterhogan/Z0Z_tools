@@ -1,3 +1,4 @@
+"""If `torch` is installed, this module creates tensor versions of the windowing functions."""
 from numpy.typing import NDArray
 from torch.types import Device
 from typing import Any, Callable, ParamSpec, Protocol, TypeVar, cast
