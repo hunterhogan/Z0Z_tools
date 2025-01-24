@@ -7,13 +7,12 @@ from typing import Any, Dict, List
 
 def stringItUp(*scrapPile: Any) -> List[str]:
     """
-    Recursively extracts all elements from nested data structures and converts the elements to strings.
-    Order is not preserved.
+    Convert, if possible, every element in the input data structure to a string. Order is not preserved or readily predictable.
 
     Parameters:
         *scrapPile: One or more data structures to unpack and convert to strings.
     Returns:
-        listStrungUp: A list of string versions of all elements in the input data structure.
+        listStrungUp: A list of string versions of all convertible elements.
     """
     listStrungUp = []
 
@@ -40,6 +39,9 @@ def stringItUp(*scrapPile: Any) -> List[str]:
                 pass
             except TypeError: # "The error traceback provided indicates that there is an issue when calling the __str__ method on an object that does not have this method properly defined, leading to a TypeError."
                 pass
+            except:
+                print(f"\nWoah! I received '{repr(KitKat)}'.\nTheir report card says, 'Plays well with others: Needs improvement.'\n")
+                raise
     try:
         for scrap in scrapPile:
             drill(scrap)

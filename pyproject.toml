@@ -34,7 +34,7 @@ include = ["*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["--color=yes", "-n 2"]
+addopts = ["--color=yes", "-n 4"]
 
 [tool.coverage.run]
 branch = true

@@ -1,21 +1,18 @@
-from Z0Z_tools.parseParameters import defineConcurrencyLimit, oopsieKwargsie, intInnit
+import pytest
 from Z0Z_tools.pytest_parseParameters import (
-    makeTestSuiteOopsieKwargsie,
-    makeTestSuiteConcurrencyLimit,
-    makeTestSuiteIntInnit
+    PytestFor_defineConcurrencyLimit,
+    PytestFor_intInnit,
+    PytestFor_oopsieKwargsie,
 )
 
-def testOopsieKwargsie():
-    dictionaryTests = makeTestSuiteOopsieKwargsie(oopsieKwargsie)
-    for testName, testFunction in dictionaryTests.items():
-        testFunction()
+@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_defineConcurrencyLimit())
+def testConcurrencyLimit(nameOfTest, callablePytest):
+    callablePytest()
 
-def testConcurrencyLimitGenerated():
-    dictionaryTests = makeTestSuiteConcurrencyLimit(defineConcurrencyLimit)
-    for testName, testFunction in dictionaryTests.items():
-        testFunction()
+@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_intInnit())
+def testIntInnit(nameOfTest, callablePytest):
+    callablePytest()
 
-def testIntInnitGenerated():
-    dictionaryTests = makeTestSuiteIntInnit(intInnit)
-    for testName, testFunction in dictionaryTests.items():
-        testFunction()
+@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_oopsieKwargsie())
+def testOopsieKwargsie(nameOfTest, callablePytest):
+    callablePytest()

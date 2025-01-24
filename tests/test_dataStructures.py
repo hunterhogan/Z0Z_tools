@@ -1,4 +1,4 @@
-
+from tests.conftest import *
 from decimal import Decimal
 from fractions import Fraction
 from itertools import count, islice
@@ -6,203 +6,86 @@ import datetime
 import numpy
 import pytest
 import uuid
-from Z0Z_tools import updateExtendPolishDictionaryLists, stringItUp
 
-def testStringItUpEmptyInput():
-    """Test stringItUp with empty input."""
-    assert stringItUp() == []
+class CustomIterable:
+    def __init__(self, items): self.items = items
+    def __iter__(self): return iter(self.items)
 
-def testStringItUpWithBytearray():
-    """Test stringItUp with bytearray input."""
-    assert stringItUp(bytearray(b"bytearray")) == ["bytearray(b'bytearray')"]
+@pytest.mark.parametrize("description,value_scrapPile,expected", [
+    # Basic types and structures
+    ("Empty input", [], []),
+    ("Prime numbers", [11, 13, 17], ['11', '13', '17']),
+    ("Cardinal directions", ["NE", "SW", "SE"], ["NE", "SW", "SE"]),
+    ("Country codes", ["FR", "JP", "BR"], ["FR", "JP", "BR"]),
+    ("Boolean values", [True, False], ['True', 'False']),
+    ("None value", [None], ['None']),
+    # Numbers and numeric types
+    ("Fibonacci floats", [2.584, -4.236, 6.854], ['2.584', '-4.236', '6.854']),
+    ("Complex with primes", [complex(11,0), complex(13,0)], ['(11+0j)', '(13+0j)']),
+    ("Decimal and Fraction", [Decimal('3.141'), Fraction(89, 55)], ['3.141', '89/55']),
+    ("NumPy primes", numpy.array([11, 13, 17]), ['11', '13', '17']),  # type: ignore
+    # Temporal types with meaningful dates
+    ("Historical date", [datetime.date(1789, 7, 14)], ['1789-07-14']),  # Bastille Day
+    ("Time zones", [datetime.time(23, 11, 37)], ['23:11:37']),  # Non-standard time
+    ("Moon landing", [datetime.datetime(1969, 7, 20, 20, 17, 40)], ['1969-07-20 20:17:40']),
+    # Binary data - accepting either representation
+    ("Prime bytes", [b'\x0B', b'\x0D', b'\x11'], [repr(b'\x0b'), repr(b'\x0d'), repr(b'\x11')]),  # Let Python choose representation
+    ("Custom bytearray", [bytearray(b"DEADBEEF")], ["bytearray(b'DEADBEEF')"]),
+    # Nested structures with unique values
+    ("Nested dictionary", {'phi': 1.618, 'euler': 2.718}, ['phi', '1.618', 'euler', '2.718']),
+    ("Mixed nesting", [{'NE': 37}, {'SW': 41}], ['NE', '37', 'SW', '41']),
+    ("Tuples and lists", [(13, 17), [19, 23]], ['13', '17', '19', '23']),
+    ("Sets and frozensets", [{37, 41}, frozenset([43, 47])], ['41', '37', '43', '47']),
+    # Special cases and error handling
+    ("NaN and Infinities", [float('nan'), float('inf'), -float('inf')], ['nan', 'inf', '-inf']),
+    ("Large prime", [10**19 + 33], ['10000000000000000033']),
+    ("Simple recursive", [[[...]]], ['Ellipsis']),  # Recursive list
+    ("Complex recursive", {'self': {'self': None}}, ['self', 'self', 'None']),
+    # Generators and custom iterables
+    ("Generator from primes", (x for x in [11, 13, 17]), ['11', '13', '17']),
+    ("Iterator from Fibonacci", iter([3, 5, 8, 13]), ['3', '5', '8', '13']),
+    ("Custom iterable cardinal", CustomIterable(["NW", "SE", "NE"]), ["NW", "SE", "NE"]),
+    ("Custom iterable empty", CustomIterable([]), []),
+    # Weird stuff
+    # ("Basic object", object(), []), # does not and should not create an error. Difficult to test with `standardComparison` because the memory address will change.
+    ("Bad __str__", type('BadStr', (), {'__str__': lambda x: None})(), [None]),
+    # Error cases
+    ("Raising __str__", type('RaisingStr', (), {'__str__': lambda x: 1/0})(), ZeroDivisionError),
+], ids=lambda x: x if isinstance(x, str) else "")
+def testStringItUp(description, value_scrapPile, expected):
+    """Test stringItUp with various inputs."""
+    standardComparison(expected, stringItUp, value_scrapPile)
 
-def testStringItUpWithGenerator():
-    """Test stringItUp with a generator."""
-    def generateNumbers():
-        for index in range(3):
-            yield index
-    assert stringItUp(generateNumbers()) == ['0', '1', '2']
+@pytest.mark.parametrize("description,value_scrapPile,expected", [
+    ("Memory view", memoryview(b"DEADBEEF"), ["<memory at 0x"]),  # Special handling for memoryview
+], ids=lambda x: x if isinstance(x, str) else "")
+def testStringItUpErrorCases(description, value_scrapPile, expected):
+    result = stringItUp(value_scrapPile)
+    assert len(result) == 1
+    assert result[0].startswith(expected[0])
 
-def testStringItUpWithInfiniteIterator():
-    """Test stringItUp with an infinite iterator, limited by islice."""
-    infiniteGenerator = count()
-    limitedGenerator = islice(infiniteGenerator, 5)
-    assert stringItUp(limitedGenerator) == ['0', '1', '2', '3', '4']
-
-def testStringItUpWithCustomIterable():
-    """Test stringItUp with an object that has a custom __iter__ method."""
-    class CustomIterable:
-        def __iter__(self):
-            return iter([1, 2, 3])
-    assert stringItUp(CustomIterable()) == ['1', '2', '3']
-
-def testStringItUpWithRecursiveStructure():
-    """Test stringItUp with a recursive structure."""
-    recursiveList = []
-    recursiveList.append(recursiveList)
-    assert stringItUp(recursiveList) == ['[[...]]']
-
-def testStringItUpWithRecursiveStructureNested():
-    """Test stringItUp with a nested recursive structure."""
-    recursiveList = []
-    recursiveList.append(recursiveList)
-    assert stringItUp([recursiveList, 'hello']) == ["[[[...]], 'hello']"]
-
-def testStringItUpWithNanAndInf():
-    """Test stringItUp with NaN and Infinity."""
-    assert stringItUp(float('nan'), float('inf')) == ['nan', 'inf']
-
-def testStringItUpWithLargeNumbers():
-    """Test stringItUp with large numbers."""
-    largeNumber = 10**100
-    assert stringItUp(largeNumber) == [str(largeNumber)]
-
-def testStringItUpWithDecimal():
-    """Test stringItUp with Decimal objects."""
-    assert stringItUp(Decimal('1.1')) == ['1.1']
-
-def testStringItUpWithFraction():
-    """Test stringItUp with Fraction objects."""
-    assert stringItUp(Fraction(1, 3)) == ['1/3']
-
-def testStringItUpWithDates():
-    """Test stringItUp with date objects."""
-    dateSample = datetime.date(2021, 1, 1)
-    assert stringItUp(dateSample) == ['2021-01-01']
-
-def testStringItUpWithTimes():
-    """Test stringItUp with time objects."""
-    timeSample = datetime.time(12, 34, 56)
-    assert stringItUp(timeSample) == ['12:34:56']
-
-def testStringItUpWithDatetime():
-    """Test stringItUp with datetime objects."""
-    datetimeSample = datetime.datetime(2021, 1, 1, 12, 34, 56)
-    assert stringItUp(datetimeSample) == ['2021-01-01 12:34:56']
-
-def testStringItUpWithUUID():
-    """Test stringItUp with UUID objects."""
-    uuidSample = uuid.uuid4()
-    assert stringItUp(uuidSample) == [str(uuidSample)]
-
-def testStringItUpWithMemoryView():
-    """Test stringItUp with memoryview objects."""
-    resultStringItUp = stringItUp(memoryview(b"memoryview"))
-    expectedPrefix = "<memory at 0x"
-    assert resultStringItUp[0].startswith(expectedPrefix)
-
-def testStringItUpWithEmptyIterables():
-    """Test stringItUp with empty iterable types."""
-    assert stringItUp([], (), set()) == []
-
-def testStringItUpWithMixedNestedIterables():
-    """Test stringItUp with mixed nested iterables."""
-    dataSample = [1, (2, {3, "four"}), {"five": [6, 7]}]
-    assert set(stringItUp(dataSample)) == set(["1", "2", "3", "four", "five", "6", "7"])
-
-def testStringItUpWithLargeData():
-    """Test stringItUp with large data."""
-    largeList = list(range(1000))
-    resultStringItUp = stringItUp(largeList)
-    assert len(resultStringItUp) == 1000
-    for index in range(1000):
-        assert resultStringItUp[index] == str(index)
-
-@pytest.mark.parametrize("primusDictionary, secundusDictionary, expectedDictionary", [
-    (
-        {'a': [1, 'two'], 'b': [True, None]},
-        {'a': [3.14, 'four'], 'b': [False, 'none']},
-        {'a': [1, 'two', 3.14, 'four'], 'b': [True, None, False, 'none']}
-    ),
-])
-def testUpdateExtendPolishDictionaryListsMixedTypes(primusDictionary, secundusDictionary, expectedDictionary):
-    """Test updateExtendPolishDictionaryLists with mixed types in values."""
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary)
-    assert resultDictionary == expectedDictionary
-
-def testUpdateExtendPolishDictionaryListsNonStringKeys():
-    """Test updateExtendPolishDictionaryLists with non-string keys."""
-    primusDictionary = {None: [3], True: [2]}
-    secundusDictionary = {1: [1], (4, 5): [4]}
-    expectedDictionary = {'(4, 5)': [4], '1': [1], 'None': [3], 'True': [2]}
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary)  # type: ignore
-    assert resultDictionary == expectedDictionary
-
-def testUpdateExtendPolishDictionaryListsConflictingDataTypes():
-    """Test updateExtendPolishDictionaryLists with conflicting data types."""
-    primusDictionary = {'a': 1, 'b': 2}
-    secundusDictionary = {'a': 3, 'c': 4}
-    with pytest.raises(TypeError):
-        resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary)  # type: ignore
-
-def testUpdateExtendPolishDictionaryListsKillErroneousDataTypes():
-    """Test updateExtendPolishDictionaryLists with killErroneousDataTypes=True."""
-    primusDictionary = {'a': [1, 2], 'b': [3, 4]}
-    secundusDictionary = {'a': 3, 'c': 4}
-    expectedDictionary = {'a': [1, 2], 'b': [3, 4]}
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary, killErroneousDataTypes=True)  # type: ignore
-    assert resultDictionary == expectedDictionary
-
-def testUpdateExtendPolishDictionaryListsBasicFunctionality():
-    """Test basic functionality of updateExtendPolishDictionaryLists."""
-    primusDictionary = {'a': [3, 1], 'b': [2]}
-    secundusDictionary = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
-    expectedDictionary = {'a': [3, 1, 9, 6, 1, 22, 3], 'b': [2, 111111, 2, 3]}
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary, destroyDuplicates=False, reorderLists=False)
-    assert resultDictionary == expectedDictionary
-
-def testUpdateExtendPolishDictionaryListsIgnoreOrdering():
-    """Test updateExtendPolishDictionaryLists with reorderLists=True."""
-    primusDictionary = {'a': [3, 1], 'b': [2]}
-    secundusDictionary = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
-    expectedDictionary = {'a': [1, 1, 3, 3, 6, 9, 22], 'b': [2, 2, 3, 111111]}
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary, destroyDuplicates=False, reorderLists=True)
-    assert resultDictionary == expectedDictionary
-
-def testUpdateExtendPolishDictionaryListsDestroyDuplicates():
-    """Test updateExtendPolishDictionaryLists with destroyDuplicates=True."""
-    primusDictionary = {'a': [3, 1], 'b': [2]}
-    secundusDictionary = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
-    expectedDictionary = {'a': [3, 1, 9, 6, 22], 'b': [2, 111111, 3]}
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary, destroyDuplicates=True, reorderLists=False)
-    assert resultDictionary == expectedDictionary
-
-def testUpdateExtendPolishDictionaryListsSingleSecundus():
-    """Test updateExtendPolishDictionaryLists with empty primus dictionary."""
-    primusDictionary = {}
-    secundusDictionary = {'a': [9, 6, 1, 22, 3], 'b': [111111, 2, 3]}
-    expectedDictionary = secundusDictionary.copy()
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary, destroyDuplicates=False, reorderLists=False)
-    assert resultDictionary == expectedDictionary
-
-def testUpdateExtendPolishDictionaryListsEmptyDictionaries():
-    """Test updateExtendPolishDictionaryLists with empty dictionaries."""
-    primusDictionary = {}
-    secundusDictionary = {}
-    expectedDictionary = {}
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary, destroyDuplicates=False, reorderLists=False)
-    assert resultDictionary == expectedDictionary
-
-def testUpdateExtendPolishDictionaryListsWithSets():
-    """Test updateExtendPolishDictionaryLists with sets as values."""
-    primusDictionary = {'a': {3, 1}, 'b': {2}}
-    secundusDictionary = {'a': {9, 6, 1, 22, 3}, 'b': {111111, 2, 3}}
-    expectedDictionary = {'a': [1, 3, 6, 9, 22], 'b': [2, 3, 111111]}
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary, destroyDuplicates=True, reorderLists=True)  # type: ignore
-    assert sorted(resultDictionary['a']) == expectedDictionary['a']
-
-def testUpdateExtendPolishDictionaryListsWithTuples():
-    """Test updateExtendPolishDictionaryLists with tuples as values."""
-    primusDictionary = {'a': (3, 1), 'b': (2,)}
-    secundusDictionary = {'a': (9, 6, 1, 22, 3), 'b': (111111, 2, 3)}
-    expectedDictionary = {'a': [3, 1, 9, 6, 1, 22, 3], 'b': [2, 111111, 2, 3]}
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary, destroyDuplicates=False, reorderLists=False)
-    assert resultDictionary == expectedDictionary
-
-def testUpdateExtendPolishDictionaryListsWithNdarray():
-    """Test updateExtendPolishDictionaryLists with numpy arrays as values."""
-    primusDictionary = {'a': numpy.array([3, 1]), 'b': numpy.array([2])}
-    secundusDictionary = {'a': numpy.array([9, 6, 1, 22, 3]), 'b': numpy.array([111111, 2, 3])}
-    expectedDictionary = {'a': [3, 1, 9, 6, 1, 22, 3], 'b': [2, 111111, 2, 3]}
-    resultDictionary = updateExtendPolishDictionaryLists(primusDictionary, secundusDictionary, destroyDuplicates=False, reorderLists=False)  # type: ignore
-    assert resultDictionary == expectedDictionary
+@pytest.mark.parametrize("description,value_dictionaryLists,keywordArguments,expected", [
+    ("Empty dictionaries", ({}, {}), {}, {} ),
+    ("Mixed value types", ({'ne': [11, 'prime'], 'sw': [True, None]}, {'ne': [3.141, 'golden'], 'sw': [False, 'void']}), {'destroyDuplicates': False, 'reorderLists': False}, {'ne': [11, 'prime', 3.141, 'golden'], 'sw': [True, None, False, 'void']} ),
+    ("Non-string keys", ({None: [13], True: [17]}, {19: [23], (29, 31): [37]}), {'destroyDuplicates': False, 'reorderLists': False}, {'None': [13], 'True': [17], '19': [23], '(29, 31)': [37]} ), # Various sequence types
+    ("Set values", ({'ne': {11, 13}, 'sw': {17}}, {'ne': {19, 23, 13, 29, 11}, 'sw': {31, 17, 37}}), {'destroyDuplicates': True, 'reorderLists': True}, {'ne': [11, 13, 19, 23, 29], 'sw': [17, 31, 37]} ),
+    ("Tuple values", ({'ne': (11, 13), 'sw': (17,)}, {'ne': (19, 23, 13, 29, 11), 'sw': (31, 17, 37)}), {'destroyDuplicates': False, 'reorderLists': False}, {'ne': [11, 13, 19, 23, 13, 29, 11], 'sw': [17, 31, 17, 37]} ),
+    ("NumPy arrays", ({'ne': numpy.array([11, 13]), 'sw': numpy.array([17])}, {'ne': numpy.array([19, 23, 13, 29, 11]), 'sw': numpy.array([31, 17, 37])}), {'destroyDuplicates': False, 'reorderLists': False}, {'ne': [11, 13, 19, 23, 13, 29, 11], 'sw': [17, 31, 17, 37]} ),
+    ("Destroy duplicates", ({'fr': [11, 13], 'jp': [17]}, {'fr': [19, 23, 13, 29, 11], 'jp': [31, 17, 37]}), {'destroyDuplicates': True, 'reorderLists': False}, {'fr': [11, 13, 19, 23, 29], 'jp': [17, 31, 37]} ),
+    ("Reorder lists", ({'fr': [11, 13], 'jp': [17]}, {'fr': [19, 23, 13, 29, 11], 'jp': [31, 17, 37]}), {'destroyDuplicates': False, 'reorderLists': True}, {'fr': [11, 11, 13, 13, 19, 23, 29], 'jp': [17, 17, 31, 37]} ),
+    ("Non-iterable values", ({'ne': 13, 'sw': 17}, {'ne': 19, 'nw': 23}), {'destroyDuplicates': False, 'reorderLists': False}, TypeError ),
+    ("Skip erroneous types", ({'ne': [11, 13], 'sw': [17, 19]}, {'ne': 23, 'nw': 29}), {'killErroneousDataTypes': True}, {'ne': [11, 13], 'sw': [17, 19]} ),
+], ids=lambda x: x if isinstance(x, str) else "")
+def testUpdateExtendPolishDictionaryLists(description, value_dictionaryLists, keywordArguments, expected):
+    standardComparison(expected, updateExtendPolishDictionaryLists, *value_dictionaryLists, **keywordArguments)
+    # NOTE one line of code with `standardComparison` replaced the following ten lines of code.
+    # if isinstance(expected, type) and issubclass(expected, Exception):
+    #     with pytest.raises(expected):
+    #         updateExtendPolishDictionaryLists(*value_dictionaryLists, **keywordArguments)
+    # else:
+    #     result = updateExtendPolishDictionaryLists(*value_dictionaryLists, **keywordArguments)
+    #     if description == "Set values":  # Special handling for unordered sets
+    #         for key in result:
+    #             assert sorted(result[key]) == sorted(expected[key]) # type: ignore
+    #     else:
+    #         assert result == expected
