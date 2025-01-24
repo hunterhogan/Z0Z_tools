@@ -1,5 +1,5 @@
 from tests.conftest import *
-from typing import Any, List, Literal, LiteralString
+from typing import Any, List
 import pathlib
 import subprocess
 import sys
@@ -15,7 +15,7 @@ import pytest
     ]
     , ids=lambda x: x if isinstance(x, str) else ""
 )
-def test_makeListRequirementsFromRequirementsFile(description: Literal['Basic requirements'] | Literal['Invalid requirements'] | Literal['Multiple valid packages'] | Literal['Empty file'] | Literal['Comments only'] | Literal['Whitespace only'], content: LiteralString | Literal['invalid==requirement==1.0\nvalid-package==1.13.0'] | Literal['package-FR==11.0\npackage-JP==13.0'] | Literal[''] | Literal['# Comment 1\n# Comment 2'] | Literal['    \n\t\n'], expected: List[str], pathTempTesting: pathlib.Path):
+def test_makeListRequirementsFromRequirementsFile(description, content, expected: List[str], pathTempTesting: pathlib.Path):
     """Test requirements file parsing with various inputs."""
     pathRequirementsFile = pathTempTesting / "requirements.txt"
     pathRequirementsFile.write_text(content)
@@ -25,7 +25,7 @@ def test_makeListRequirementsFromRequirementsFile(description: Literal['Basic re
     ("Multiple files with unique entries", [ ('requirements1.txt', 'package-NE==11.0\npackage-NW==13.0'), ('requirements2.txt', 'package-SW==17.0\npackage-SE==19.0') ], ['package-NE==11.0', 'package-NW==13.0', 'package-SE==19.0', 'package-SW==17.0'] ),
     ("Multiple files with duplicates", [ ('requirements1.txt', 'package-FR==11.0\npackage-common==13.0'), ('requirements2.txt', 'package-JP==17.0\npackage-common==13.0') ], ['package-FR==11.0', 'package-JP==17.0', 'package-common==13.0'] ),
 ])
-def test_multiple_requirements_files(description, paths, expected, pathTempTesting):
+def test_multiple_requirements_files(description, paths, expected, pathTempTesting: pathlib.Path):
     """Test processing multiple requirements files."""
     pathFilenames = []
     for filename, content in paths:
@@ -35,7 +35,7 @@ def test_multiple_requirements_files(description, paths, expected, pathTempTesti
 
     standardComparison(expected, makeListRequirementsFromRequirementsFile, *pathFilenames)
 
-def test_nonexistent_requirements_file(pathTempTesting):
+def test_nonexistent_requirements_file(pathTempTesting: pathlib.Path):
     """Test handling of non-existent requirements file."""
     pathFilenameNonexistent = pathTempTesting / 'nonexistent.txt'
     standardComparison([], makeListRequirementsFromRequirementsFile, pathFilenameNonexistent)
@@ -51,7 +51,7 @@ def test_make_setupDOTpy(description, relativePathPackage, listRequirements, exp
         assert expected in setup_content
 
 @pytest.mark.usefixtures("redirectPipAnything")
-def test_installPackageTarget(mocker, pathTempTesting):
+def test_installPackageTarget(mocker, pathTempTesting: pathlib.Path):
     """Test package installation process."""
     # Setup test package structure
     pathPackageDir = pathTempTesting / 'test-package-NE'

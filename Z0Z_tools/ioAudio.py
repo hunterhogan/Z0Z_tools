@@ -1,8 +1,9 @@
 """
 Provides utilities for reading, writing, and resampling audio waveforms.
 """
+import numpy.typing
 from numpy.typing import NDArray
-from typing import Any, BinaryIO, Dict, List, Sequence, Tuple, Union
+from typing import Any, BinaryIO, Dict, Literal, List, Sequence, Tuple, Union
 import io
 import numpy
 import os
@@ -70,7 +71,8 @@ def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[s
 
     return arrayWaveforms
 
-def readAudioFile(pathFilename: Union[str, os.PathLike[Any], BinaryIO], sampleRate: int = 44100) -> NDArray[numpy.float32]:
+def readAudioFile(pathFilename: Union[str, os.PathLike[Any], BinaryIO], sampleRate: int = 44100
+                    ) -> numpy.ndarray[Tuple[Literal[2], int], numpy.dtype[numpy.float32]]:
     """
     Reads an audio file and returns its data as a NumPy array. Mono is always converted to stereo.
 
