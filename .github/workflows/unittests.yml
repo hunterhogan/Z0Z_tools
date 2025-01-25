@@ -5,32 +5,32 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       python-versions: ${{ steps.get-python-versions.outputs.versions }}
+
     steps:
       - uses: actions/checkout@v4
-      - name: Install toml parser
-        run: pip install tomli packaging
+      - name: Install Python packages
+        run: pip install packaging requests tomli
       - id: get-python-versions
         run: |
           set -e
           VERSIONS=$(python -c "
-          import tomli, json
-          import packaging.specifiers
-          import packaging.version
+          from packaging.specifiers import SpecifierSet
+          from packaging.version import Version
+          from pathlib import Path
+          import itertools, json, requests, tomli
 
-          with open('pyproject.toml', 'rb') as readStreamBinaryMode:
-            specifierPython = packaging.specifiers.SpecifierSet(tomli.load(readStreamBinaryMode)['project']['requires-python'])
+          specifications = SpecifierSet(tomli.loads(Path('pyproject.toml').read_text())['project']['requires-python'])
 
-          listCandidateVersionsInSpecifier = []
-          for majorVersion in range(2, 12):
-            for minorVersion in range(0, 40):
-              versionCandidate = packaging.version.Version(f'{majorVersion}.{minorVersion}')
-              if versionCandidate in specifierPython:
-                listCandidateVersionsInSpecifier.append(f'{majorVersion}.{minorVersion}')
+          listPythonVersions = [str(max(group)) for _key, group in itertools.groupby(
+            specifications.filter(Version(item['version']) for item in requests.get(
+              'https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json').json())
+            , lambda V: V.release[0:-1])]
 
-          print(json.dumps(listCandidateVersionsInSpecifier))
+          print(json.dumps(listPythonVersions))
           ")
           echo "versions=$(echo $VERSIONS | jq -c .)" >> "$GITHUB_OUTPUT"
-  build:
+
+  make-testbeds:
     needs: get-python-versions
     runs-on: ubuntu-latest
     strategy:
@@ -39,15 +39,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Install Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install dependencies
+      - name: Install package
         run: |
           python -m pip install --upgrade pip
           pip install ".[testing]"
 
-      - name: Run tests with coverage
+      - name: Run Python tests
         run: pytest
