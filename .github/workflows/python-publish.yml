@@ -35,6 +35,7 @@ jobs:
       - name: Check PyPI version
         id: check
         run: |
+          set -e
           pip install requests
           version="${{ steps.version.outputs.version }}"
           package_name=$(python -c "import toml; print(toml.load('pyproject.toml')['project']['name'])")
@@ -46,6 +47,7 @@ jobs:
           else
             echo "New version - should publish"
             echo "should_publish=true" >> "$GITHUB_OUTPUT"
+          fi
 
   release-build:
     needs: check-version
