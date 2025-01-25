@@ -6,11 +6,11 @@ This package provides several modules with distinct functionality:
 Audio Processing (ioAudio):
     - loadWaveforms: Load multiple audio files into a single array
     - readAudioFile: Read a single audio file with automatic stereo conversion
-    - writeWav: Write audio data to WAV files
+    - writeWAV: Write audio data to WAV files
     Example:
-        from Z0Z_tools import readAudioFile, writeWav
+        from Z0Z_tools import readAudioFile, writeWAV
         waveform = readAudioFile('input.wav', sampleRate=44100)
-        writeWav('output.wav', waveform)
+        writeWAV('output.wav', waveform)
 
 Parameter Validation (parseParameters):
     - defineConcurrencyLimit: Smart CPU count management
@@ -54,12 +54,13 @@ try:
 except (ImportError, ModuleNotFoundError):
     from Z0Z_tools.optionalPyTorchAlternative import def_asTensor
 
+from Z0Z_tools.windowingFunctions import halfsine, tukey, cosineWings, equalPower
+
 from Z0Z_tools.clippingArrays import applyHardLimit, applyHardLimitComplexValued
 from Z0Z_tools.dataStructures import stringItUp, updateExtendPolishDictionaryLists
-from Z0Z_tools.ioAudio import writeWav, readAudioFile, loadWaveforms
+from Z0Z_tools.ioAudio import writeWAV, readAudioFile, loadWaveforms, loadSpectrograms, stft
 from Z0Z_tools.parseParameters import defineConcurrencyLimit, oopsieKwargsie, intInnit
 from Z0Z_tools.pipAnything import installPackageTarget, makeListRequirementsFromRequirementsFile
-from Z0Z_tools.windowingFunctions import halfsine, tukey, cosineWings, equalPower
 from Z0Z_tools.Z0Z_io import dataTabularTOpathFilenameDelimited, findRelativePath
 
 __all__ += [
@@ -73,12 +74,14 @@ __all__ += [
     'halfsine',
     'installPackageTarget',
     'intInnit',
+    'loadSpectrograms',
     'loadWaveforms',
     'makeListRequirementsFromRequirementsFile',
     'oopsieKwargsie',
     'readAudioFile',
+    'stft',
     'stringItUp',
     'tukey',
     'updateExtendPolishDictionaryLists',
-    'writeWav',
+    'writeWAV',
 ]

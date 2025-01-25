@@ -1,15 +1,60 @@
 """
 Provides utilities for reading, writing, and resampling audio waveforms.
 """
-import numpy.typing
+from Z0Z_tools import halfsine
 from numpy.typing import NDArray
-from typing import Any, BinaryIO, Dict, Literal, List, Sequence, Tuple, Union
+from scipy.signal import ShortTimeFFT
+from typing import Any, BinaryIO, Dict, List, Literal, Optional, Sequence, Tuple, Union, overload
+import collections
 import io
+import math
 import numpy
+import numpy.typing
 import os
 import pathlib
 import resampy
 import soundfile
+
+# TODO consider changing all sample rates to float
+# convert loadSpectrograms to stft
+
+def loadSpectrograms(listPathFilenames: Sequence[str] | Sequence[os.PathLike[Any]], sampleRateTarget: int = 44100, binsFFT: int = 2048, hopLength: int = 512) -> Tuple[NDArray[numpy.complex64], List[Dict[str, int]]]:
+    """
+    Load spectrograms from audio files.
+
+    Parameters:
+        listPathFilenames: A list of file paths.
+        sampleRateTarget (44100): The target sample rate. Defaults to 44100.
+        binsFFT (2048): The number of FFT bins. Defaults to 2048.
+        hopLength (1024): The hop length for the STFT. Defaults to 1024.
+
+    Returns:
+        tupleSpectrogramsCOUNTsamples: A tuple containing the array of spectrograms and a list of metadata dictionaries for each spectrogram.
+    """
+    dictionaryMetadata = collections.defaultdict(dict)
+    for pathFilename in listPathFilenames:
+        waveform = readAudioFile(pathFilename, sampleRateTarget)
+        COUNTsamples = waveform.shape[-1]
+        COUNTchannels = 1 if len(waveform.shape) == 1 else waveform.shape[0]
+        dictionaryMetadata[pathFilename] = {
+            'COUNTchannels': COUNTchannels,
+            'COUNTsamples': COUNTsamples,
+            'samplesLeading': 0,
+            'samplesTrailing': 0,
+            'samplesTotal': COUNTsamples
+        }
+
+    samplesTotal = max(entry['samplesTotal'] for entry in dictionaryMetadata.values())
+
+    COUNTchannels = max(entry['COUNTchannels'] for entry in dictionaryMetadata.values())
+    spectrogramArchetype = stft(numpy.zeros(shape=(COUNTchannels, samplesTotal), dtype=numpy.float32), binsFFT=binsFFT, hopLength=hopLength)
+    arraySpectrograms = numpy.zeros(shape=(*spectrogramArchetype.shape, len(dictionaryMetadata)), dtype=numpy.complex64)
+
+    for index, (pathFilename, entry) in enumerate(dictionaryMetadata.items()):
+        waveform = readAudioFile(pathFilename, sampleRateTarget)
+        arraySpectrograms[..., index] = stft(waveform, binsFFT=binsFFT, hopLength=hopLength)
+
+    return arraySpectrograms, [{'COUNTsamples': entry['COUNTsamples'], 'samplesLeading': entry['samplesLeading'], 'samplesTrailing': entry['samplesTrailing']} for entry in dictionaryMetadata.values()]
 
 def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]], sampleRate: int = 44100) -> NDArray[numpy.float32]:
     """
@@ -116,7 +161,74 @@ def resampleWaveform(waveform: NDArray[numpy.float32], sampleRateDesired: int, s
     else:
         return waveform
 
-def writeWav(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: NDArray[Any], sampleRate: int = 44100) -> None:
+@overload
+def stft(arrayTarget: NDArray[numpy.floating[Any]], *, sampleRate: float = 44100.0,
+        hopLength: int = 512, window: Optional[NDArray[numpy.floating[Any]]] = None,
+        lengthWindow: Optional[int] = None, binsFFT: Optional[int] = None,
+        inverse: Literal[False] = False, lengthWaveform: None = None,
+        indexingAxis: Optional[int] = None) -> NDArray[numpy.complexfloating[Any, Any]]: ...
+
+@overload
+def stft(arrayTarget: NDArray[numpy.complexfloating[Any, Any]], *, sampleRate: float = 44100.0,
+        hopLength: int = 512, window: Optional[NDArray[numpy.floating[Any]]] = None,
+        lengthWindow: Optional[int] = None, binsFFT: Optional[int] = None,
+        inverse: Literal[True], lengthWaveform: int,
+        indexingAxis: Optional[int] = None) -> NDArray[numpy.floating[Any]]: ...
+
+def stft(arrayTarget: NDArray[numpy.floating[Any] | numpy.complexfloating[Any, Any]], *,
+        sampleRate: float = 44100.0, hopLength: int = 512,
+        window: Optional[NDArray[numpy.floating[Any]]] = None,
+        lengthWindow: Optional[int] = None, binsFFT: Optional[int] = None,
+        inverse: bool = False, lengthWaveform: Optional[int] = None,
+        indexingAxis: Optional[int] = None) -> NDArray[numpy.floating[Any] | numpy.complexfloating[Any, Any]]:
+    """
+    Short-Time Fourier Transform with unified interface for forward and inverse transforms.
+
+    Parameters:
+        arrayTarget: Input array for transformation.
+        sampleRate (44100): Sample rate of the signal.
+        hopLength (512): Number of samples between successive frames.
+        window (halfsine*): Window function array. Defaults to halfsine if None.
+        lengthWindow (1024*): Length of the window. Used if window is None.
+        binsFFT: Number of FFT bins. Defaults to next power of 2 >= lengthWindow.
+        inverse (False*): Whether to perform inverse transform.
+        lengthWaveform: Required output length for inverse transform.
+        indexingAxis (None): Axis containing multiple signals to transform.
+
+    Returns:
+        arrayTransformed: The transformed signal(s).
+    """
+    if lengthWindow is None:
+        lengthWindow = 1024
+
+    if window is None:
+        window = halfsine(lengthWindow)
+
+    if binsFFT is None:
+        binsFFT = 2 ** math.ceil(math.log2(lengthWindow))
+
+    if inverse and lengthWaveform is None:
+        raise ValueError("lengthWaveform must be specified for inverse transform")
+
+    STFTmanager = ShortTimeFFT(win=window, hop=hopLength, fs=sampleRate, fft_mode='onesided', mfft=binsFFT)
+
+    def applyTransform(arrayInput: NDArray) -> NDArray:
+        if inverse:
+            return STFTmanager.istft(S=arrayInput, k1=lengthWaveform)
+        return STFTmanager.stft(x=arrayInput, padding='even')
+
+    if indexingAxis is None:
+        return applyTransform(arrayTarget)
+
+    arrayTARGET = numpy.moveaxis(arrayTarget, indexingAxis, -1)
+    arrayTransformed = numpy.tile(applyTransform(arrayTARGET[..., 0])[..., numpy.newaxis], arrayTARGET.shape[-1])
+
+    for index in range(1, arrayTARGET.shape[-1]):
+        arrayTransformed[..., index] = applyTransform(arrayTARGET[..., index])
+
+    return numpy.moveaxis(arrayTransformed, -1, indexingAxis)
+
+def writeWAV(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: NDArray[Any], sampleRate: int = 44100) -> None:
     """
     Writes a waveform to a WAV file.
 
