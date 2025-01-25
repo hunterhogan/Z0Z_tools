@@ -20,6 +20,7 @@ jobs:
     outputs:
       should_publish: ${{ steps.check.outputs.should_publish }}
       version: ${{ steps.version.outputs.version }}
+      package_name: ${{ steps.check.outputs.package_name }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,6 +38,7 @@ jobs:
           pip install requests
           version="${{ steps.version.outputs.version }}"
           package_name=$(python -c "import toml; print(toml.load('pyproject.toml')['project']['name'])")
+          echo "package_name=$package_name" >> "$GITHUB_OUTPUT"
           echo "Checking version $version for package $package_name"
           if python -c "import requests, sys; package_name=sys.argv[1]; version=sys.argv[2]; exit(0 if version in requests.get(f'https://pypi.org/pypi/{package_name}/json').json()['releases'] else 1)" "$package_name" "$version"; then
             echo "Version already on PyPI"
@@ -70,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/${{ steps.package.outputs.name }}/${{ needs.check-version.outputs.version }}
+      url: https://pypi.org/project/${{ needs.check-version.outputs.package_name }}/${{ needs.check-version.outputs.version }}
     permissions:
       id-token: write
     steps:
