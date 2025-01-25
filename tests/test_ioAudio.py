@@ -1,10 +1,10 @@
-import pytest
-import numpy
-import soundfile
-import io
-from pathlib import Path
 from numpy.typing import NDArray
-from Z0Z_tools.ioAudio import readAudioFile, loadWaveforms, writeWAV, resampleWaveform
+from pathlib import Path
+from tests.conftest import *
+import io
+import numpy
+import pytest
+import soundfile
 
 # Test data paths
 DATA_DIR = Path("tests/dataSamples")
@@ -31,11 +31,6 @@ def waveform_data():
             'sample_rate': stereo_sr
         }
     }
-
-@pytest.fixture
-def temp_wav_file(tmp_path):
-    """Fixture providing a temporary WAV file path."""
-    return tmp_path / "test_output.wav"
 
 # readAudioFile tests
 class TestReadAudioFile:
@@ -134,14 +129,14 @@ class TestWriteWav:
             'expected_shape': (1000, 2)  # Stereo should be 2D array (samples, channels)
         }
     ])
-    def test_write_and_verify(self, temp_wav_file, test_case):
+    def test_write_and_verify(self, pathFilenameTmpTesting, test_case):
         """Test writing WAV files and verifying their contents."""
         # Input waveform shape: (channels, samples)
         waveform = numpy.random.rand(test_case['channels'], test_case['samples']).astype(numpy.float32)
-        writeWAV(temp_wav_file, waveform)
+        writeWAV(pathFilenameTmpTesting, waveform)
 
         # soundfile.read returns shape (samples,) for mono or (samples, channels) for stereo
-        read_waveform, sr = soundfile.read(temp_wav_file)
+        read_waveform, sr = soundfile.read(pathFilenameTmpTesting)
 
         assert sr == 44100  # Default sample rate
         assert read_waveform.shape == test_case['expected_shape'], \
@@ -154,22 +149,22 @@ class TestWriteWav:
         else:
             assert numpy.allclose(read_waveform, waveform.T)
 
-    def test_directory_creation(self, tmp_path):
+    def test_directory_creation(self, pathTmpTesting):
         """Test automatic directory creation."""
-        nested_path = tmp_path / "nested" / "dirs" / "test.wav"
+        nested_path = pathTmpTesting / "nested" / "dirs" / "test.wav"
         waveform = numpy.random.rand(2, 1000).astype(numpy.float32)
         writeWAV(nested_path, waveform)
         assert nested_path.exists()
 
-    def test_file_overwrite(self, temp_wav_file):
+    def test_file_overwrite(self, pathFilenameTmpTesting):
         """Test overwriting existing files."""
         waveform1 = numpy.ones((2, 1000), dtype=numpy.float32)
         waveform2 = numpy.zeros((2, 1000), dtype=numpy.float32)
 
-        writeWAV(temp_wav_file, waveform1)
-        writeWAV(temp_wav_file, waveform2)
+        writeWAV(pathFilenameTmpTesting, waveform1)
+        writeWAV(pathFilenameTmpTesting, waveform2)
 
-        read_waveform, _ = soundfile.read(temp_wav_file)
+        read_waveform, _ = soundfile.read(pathFilenameTmpTesting)
         assert numpy.allclose(read_waveform.T, waveform2)
 
     def test_binary_stream(self):

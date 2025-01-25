@@ -5,14 +5,13 @@
 - Temporary files and directories should be created and cleaned up here.
 - Prefer to make predictable data and use the test data in the tests/dataSamples directory over generating random data or artificial data."""
 
-from Z0Z_tools import halfsine, tukey, cosineWings, equalPower
-from Z0Z_tools import halfsineTensor, tukeyTensor, cosineWingsTensor, equalPowerTensor  # type: ignore
-from Z0Z_tools import stringItUp, updateExtendPolishDictionaryLists
-from Z0Z_tools.pipAnything import everyone_knows_what___main___is, installPackageTarget, main, makeListRequirementsFromRequirementsFile, make_setupDOTpy, readability_counts
 from numpy.typing import ArrayLike, NDArray
 from typing import Generator, Set, Any, Type, Union, Sequence, Callable
 from unittest.mock import patch
+from Z0Z_tools import *
+from Z0Z_tools.pytestForYourUse import *
 import numpy
+import pandas
 import pathlib
 import pytest
 import scipy.signal.windows as SciPy
@@ -20,39 +19,20 @@ import shutil
 import torch
 import uuid
 
-all = [
-    'cosineWings',
-    'cosineWingsTensor',
-    'equalPower',
-    'equalPowerTensor',
-    'everyone_knows_what___main___is',
-    'halfsine',
-    'halfsineTensor',
-    'installPackageTarget',
-    'main',
-    'makeListRequirementsFromRequirementsFile',
-    'make_setupDOTpy',
-    'readability_counts',
-    'stringItUp',
-    'tukey',
-    'tukeyTensor',
-    'updateExtendPolishDictionaryLists',
-]
-
-# SSOT for test data paths
+# SSOT for test data paths and filenames
 pathDataSamples = pathlib.Path("tests/dataSamples")
-pathTempRoot = pathDataSamples / "tmp"
+# NOTE `tmp` is not a diminutive form of temporary: it signals a technical term
+pathTmpRoot = pathDataSamples / "tmp"
 
-# The registrar maintains the register of temp files
-registrarTempFiles: Set[pathlib.Path] = set()
+registerOfTemporaryFilesystemObjects: Set[pathlib.Path] = set()
 
-def addTempFileToRegister(path: pathlib.Path) -> None:
+def registrarRecordsTmpObject(path: pathlib.Path) -> None:
     """The registrar adds a temp file to the register."""
-    registrarTempFiles.add(path)
+    registerOfTemporaryFilesystemObjects.add(path)
 
-def cleanupTempFileRegister() -> None:
+def registrarDeletesTmpObjects() -> None:
     """The registrar cleans up temp files in the register."""
-    for pathTemp in sorted(registrarTempFiles, reverse=True):
+    for pathTemp in sorted(registerOfTemporaryFilesystemObjects, reverse=True):
         try:
             if pathTemp.is_file():
                 pathTemp.unlink(missing_ok=True)
@@ -60,97 +40,76 @@ def cleanupTempFileRegister() -> None:
                 shutil.rmtree(pathTemp, ignore_errors=True)
         except Exception as ERRORmessage:
             print(f"Warning: Failed to clean up {pathTemp}: {ERRORmessage}")
-    registrarTempFiles.clear()
+    registerOfTemporaryFilesystemObjects.clear()
 
 @pytest.fixture(scope="session", autouse=True)
-def setupTeardownTestData() -> Generator[None, None, None]:
+def setupTeardownTmpObjects() -> Generator[None, None, None]:
     """Auto-fixture to setup test data directories and cleanup after."""
     pathDataSamples.mkdir(exist_ok=True)
-    pathTempRoot.mkdir(exist_ok=True)
+    pathTmpRoot.mkdir(exist_ok=True)
     yield
-    cleanupTempFileRegister()
+    registrarDeletesTmpObjects()
 
 @pytest.fixture
-def pathTempTesting(request: pytest.FixtureRequest) -> pathlib.Path:
-    """Create a unique temp directory for each test function."""
-    # Sanitize test name for filesystem compatibility
-    # sanitizedName = request.node.name.replace('[', '_').replace(']', '_').replace('/', '_')
-    uniqueDirectory = f"thatwasnotsanitized_{uuid.uuid4()}"
-    pathTemp = pathTempRoot / uniqueDirectory
-    pathTemp.mkdir(parents=True)
+def pathTmpTesting(request: pytest.FixtureRequest) -> pathlib.Path:
+    pathTmp = pathTmpRoot / str(uuid.uuid4().hex)
+    pathTmp.mkdir(parents=True, exist_ok=False)
 
-    addTempFileToRegister(pathTemp)
-    return pathTemp
+    registrarRecordsTmpObject(pathTmp)
+    return pathTmp
 
 @pytest.fixture
-def redirectPipAnything(monkeypatch: pytest.MonkeyPatch, pathTempTesting: pathlib.Path) -> None:
-    """Redirect pip package operations to test directories."""
-    def mockTempdir(*arguments, **keywordArguments) -> str:
-        pathTemp = pathTempTesting / f"pip_temp_{uuid.uuid4()}"
-        pathTemp.mkdir(parents=True)
-        addTempFileToRegister(pathTemp)
-        return str(pathTemp)
-
-    monkeypatch.setattr('tempfile.mkdtemp', mockTempdir)
-    monkeypatch.setattr('tempfile.gettempdir', lambda: str(pathTempTesting))
-
-"""
-Section: Standardized test structures"""
-
-def expectSystemExit(expected: Union[str, int, Sequence[int]], functionTarget: Callable, *arguments: Any) -> None:
-    """Template for tests expecting SystemExit.
-
-    Parameters
-        expected: Exit code expectation:
-            - "error": any non-zero exit code
-            - "nonError": specifically zero exit code
-            - int: exact exit code match
-            - Sequence[int]: exit code must be one of these values
-        functionTarget: The function to test
-        arguments: Arguments to pass to the function
-    """
-    with pytest.raises(SystemExit) as exitInfo:
-        functionTarget(*arguments)
-
-    exitCode = exitInfo.value.code
-
-    if expected == "error":
-        assert exitCode != 0, \
-            f"Expected error exit (non-zero) but got code {exitCode}"
-    elif expected == "nonError":
-        assert exitCode == 0, \
-            f"Expected non-error exit (0) but got code {exitCode}"
-    elif isinstance(expected, (list, tuple)):
-        assert exitCode in expected, \
-            f"Expected exit code to be one of {expected} but got {exitCode}"
-    else:
-        assert exitCode == expected, \
-            f"Expected exit code {expected} but got {exitCode}"
-
-def formatTestMessage(expected: Any, actual: Any, functionName: str, *arguments: Any, **keywordArguments: Any) -> str:
-    """Format assertion message for any test comparison."""
-    listArgumentComponents = [str(parameter) for parameter in arguments]
-    listKeywordComponents = [f"{key}={value}" for key, value in keywordArguments.items()]
-    joinedArguments = ', '.join(listArgumentComponents + listKeywordComponents)
-
-    return (f"\nTesting: `{functionName}({joinedArguments})`\n"
-            f"Expected: {expected}\n"
-            f"Got: {actual}")
-
-def standardComparison(expected: Any, functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
-    """Template for most tests to compare the actual outcome with the expected outcome, including expected errors."""
-    if type(expected) == Type[Exception]:
-        messageExpected = expected.__name__
-    else:
-        messageExpected = expected
-
+def pathFilenameTmpTesting(request: pytest.FixtureRequest) -> pathlib.Path:
     try:
-        messageActual = actual = functionTarget(*arguments, **keywordArguments)
-    except Exception as actualError:
-        messageActual = type(actualError).__name__
-        actual = type(actualError)
+        extension = request.param
+    except AttributeError:
+        extension = ".txt"
 
-    assert actual == expected, formatTestMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
+    uuidHex = uuid.uuid4().hex
+    subpath = uuidHex[0:-8]
+    filenameStem = uuidHex[-8:None]
+
+    pathFilenameTmp = pathlib.Path(pathTmpRoot, subpath, filenameStem + extension)
+    pathFilenameTmp.parent.mkdir(parents=True, exist_ok=False)
+
+    registrarRecordsTmpObject(pathFilenameTmp)
+    return pathFilenameTmp
+
+@pytest.fixture
+def mockTemporaryFiles(monkeypatch: pytest.MonkeyPatch, pathTmpTesting: pathlib.Path) -> None:
+    """Mock all temporary filesystem operations to use pathTmpTesting."""
+    monkeypatch.setattr('tempfile.mkdtemp', lambda *a, **k: str(pathTmpTesting))
+    monkeypatch.setattr('tempfile.gettempdir', lambda: str(pathTmpTesting))
+    monkeypatch.setattr('tempfile.mkstemp', lambda *a, **k: (0, str(pathTmpTesting)))
+
+# Fixtures
+@pytest.fixture
+def setupDirectoryStructure(pathTmpTesting):
+    """Create a complex directory structure for testing findRelativePath."""
+    baseDirectory = pathTmpTesting / "base"
+    baseDirectory.mkdir()
+
+    # Create nested directories
+    for subdir in ["dir1/subdir1", "dir2/subdir2", "dir3/subdir3"]:
+        (baseDirectory / subdir).mkdir(parents=True)
+
+    # Create some files
+    (baseDirectory / "dir1/file1.txt").touch()
+    (baseDirectory / "dir2/file2.txt").touch()
+
+    return baseDirectory
+
+@pytest.fixture
+def pathFilenameWAV(pathTmpTesting):
+    """Fixture providing a temporary WAV file path."""
+    return pathTmpTesting / "test_output.wav"
+
+@pytest.fixture
+def dataframeSample():
+    return pandas.DataFrame({
+        'columnA': [1, 2, 3],
+        'columnB': ['a', 'b', 'c']
+    })
 
 """
 Section: Windowing function testing utilities"""
@@ -175,3 +134,65 @@ def windowingFunctionsPair():
         (halfsine, halfsineTensor),
         (tukey, tukeyTensor)
     ]
+
+"""
+Section: Standardized assert statements and failure messages"""
+
+def uniformTestFailureMessage(expected: Any, actual: Any, functionName: str, *arguments: Any, **keywordArguments: Any) -> str:
+    """Format assertion message for any test comparison."""
+    listArgumentComponents = [str(parameter) for parameter in arguments]
+    listKeywordComponents = [f"{key}={value}" for key, value in keywordArguments.items()]
+    joinedArguments = ', '.join(listArgumentComponents + listKeywordComponents)
+
+    return (f"\nTesting: `{functionName}({joinedArguments})`\n"
+            f"Expected: {expected}\n"
+            f"Got: {actual}")
+
+def standardizedSystemExit(expected: Union[str, int, Sequence[int]], functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
+    """Template for tests expecting any SystemExit event.
+
+    Parameters
+        expected: Exit code expectation:
+            If testing for a semantic outcome, prefer one of the semantic values for `expected`:
+                - "error": any non-zero exit code.
+                - "nonError": specifically zero exit code.
+            If the specific exit code is in fact meaningful, predictable, and necessary to differentiate between different outcomes, use:
+                - int: exact exit code match.
+                - Sequence[int]: exit code must be one of these values.
+        functionTarget: A callable that generates an outcome, which is often the target of the test.
+        arguments: Arguments to pass to `functionTarget`.
+        keywordArguments: Keyword arguments to pass to `functionTarget`.
+    """
+    with pytest.raises(SystemExit) as exitInfo:
+        functionTarget(*arguments, **keywordArguments)
+
+    exitCode = exitInfo.value.code
+
+    # TODO converge with `uniformTestFailureMessage`
+    if expected == "error":
+        assert exitCode != 0, \
+            f"Expected error exit (non-zero) but got code {exitCode}"
+    elif expected == "nonError":
+        assert exitCode == 0, \
+            f"Expected non-error exit (0) but got code {exitCode}"
+    elif isinstance(expected, (list, tuple)):
+        assert exitCode in expected, \
+            f"Expected exit code to be one of {expected} but got {exitCode}"
+    else:
+        assert exitCode == expected, \
+            f"Expected exit code {expected} but got {exitCode}"
+
+def standardizedEqualTo(expected: Any, functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
+    """Template for most tests to compare the actual outcome with the expected outcome, including expected errors."""
+    if type(expected) == Type[Exception]:
+        messageExpected = expected.__name__
+    else:
+        messageExpected = expected
+
+    try:
+        messageActual = actual = functionTarget(*arguments, **keywordArguments)
+    except Exception as actualError:
+        messageActual = type(actualError).__name__
+        actual = type(actualError)
+
+    assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)

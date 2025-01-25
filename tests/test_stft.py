@@ -1,6 +1,6 @@
+from tests.conftest import *
 import pytest
 import numpy
-from Z0Z_tools import stft
 from numpy.testing import assert_allclose
 
 #Test cases for stft

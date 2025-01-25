@@ -15,30 +15,30 @@ import pytest
     ]
     , ids=lambda x: x if isinstance(x, str) else ""
 )
-def test_makeListRequirementsFromRequirementsFile(description, content, expected: List[str], pathTempTesting: pathlib.Path):
+def test_makeListRequirementsFromRequirementsFile(description, content, expected: List[str], pathTmpTesting: pathlib.Path):
     """Test requirements file parsing with various inputs."""
-    pathRequirementsFile = pathTempTesting / "requirements.txt"
+    pathRequirementsFile = pathTmpTesting / "requirements.txt"
     pathRequirementsFile.write_text(content)
-    standardComparison(expected, makeListRequirementsFromRequirementsFile, pathRequirementsFile)
+    standardizedEqualTo(expected, makeListRequirementsFromRequirementsFile, pathRequirementsFile)
 
 @pytest.mark.parametrize("description,paths,expected", [
     ("Multiple files with unique entries", [ ('requirements1.txt', 'package-NE==11.0\npackage-NW==13.0'), ('requirements2.txt', 'package-SW==17.0\npackage-SE==19.0') ], ['package-NE==11.0', 'package-NW==13.0', 'package-SE==19.0', 'package-SW==17.0'] ),
     ("Multiple files with duplicates", [ ('requirements1.txt', 'package-FR==11.0\npackage-common==13.0'), ('requirements2.txt', 'package-JP==17.0\npackage-common==13.0') ], ['package-FR==11.0', 'package-JP==17.0', 'package-common==13.0'] ),
 ])
-def test_multiple_requirements_files(description, paths, expected, pathTempTesting: pathlib.Path):
+def test_multiple_requirements_files(description, paths, expected, pathTmpTesting: pathlib.Path):
     """Test processing multiple requirements files."""
     pathFilenames = []
     for filename, content in paths:
-        pathFile = pathTempTesting / filename
+        pathFile = pathTmpTesting / filename
         pathFile.write_text(content)
         pathFilenames.append(pathFile)
 
-    standardComparison(expected, makeListRequirementsFromRequirementsFile, *pathFilenames)
+    standardizedEqualTo(expected, makeListRequirementsFromRequirementsFile, *pathFilenames)
 
-def test_nonexistent_requirements_file(pathTempTesting: pathlib.Path):
+def test_nonexistent_requirements_file(pathTmpTesting: pathlib.Path):
     """Test handling of non-existent requirements file."""
-    pathFilenameNonexistent = pathTempTesting / 'nonexistent.txt'
-    standardComparison([], makeListRequirementsFromRequirementsFile, pathFilenameNonexistent)
+    pathFilenameNonexistent = pathTmpTesting / 'nonexistent.txt'
+    standardizedEqualTo([], makeListRequirementsFromRequirementsFile, pathFilenameNonexistent)
 
 @pytest.mark.parametrize("description,relativePathPackage,listRequirements,expected_contains", [
     ("Basic setup", 'package-NE', ['numpy>=11.0', 'pandas>=13.0'], [ "name='package-NE'", "packages=find_packages(where=r'package-NE')", "package_dir={'': r'package-NE'}", "install_requires=['numpy>=11.0', 'pandas>=13.0']", "include_package_data=True" ] ),
@@ -50,11 +50,11 @@ def test_make_setupDOTpy(description, relativePathPackage, listRequirements, exp
     for expected in expected_contains:
         assert expected in setup_content
 
-@pytest.mark.usefixtures("redirectPipAnything")
-def test_installPackageTarget(mocker, pathTempTesting: pathlib.Path):
+@pytest.mark.usefixtures("mockTemporaryFiles")
+def test_installPackageTarget(mocker, pathTmpTesting: pathlib.Path):
     """Test package installation process."""
     # Setup test package structure
-    pathPackageDir = pathTempTesting / 'test-package-NE'
+    pathPackageDir = pathTmpTesting / 'test-package-NE'
     pathPackageDir.mkdir()
     (pathPackageDir / 'requirements.txt').write_text('numpy>=11.0\npandas>=13.0')
     (pathPackageDir / '__init__.py').write_text('')
@@ -84,7 +84,7 @@ def test_installPackageTarget(mocker, pathTempTesting: pathlib.Path):
 #     mocker.patch('sys.argv', argv)
 #     mocker.patch('pathlib.Path.exists', return_value=False)
 #     mocker.patch('pathlib.Path.is_dir', return_value=False)
-#     standardComparison(expected, expectSystemExit, expected, everyone_knows_what___main___is)
+#     standardizedEqualTo(expected, standardizedSystemExit, expected, everyone_knows_what___main___is)
 
 def test_main_function_chain(mocker):
     """Test the main function call chain."""

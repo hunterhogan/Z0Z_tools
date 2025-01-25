@@ -1,9 +1,5 @@
+from tests.conftest import *
 import pytest
-from Z0Z_tools.pytestForYourUse import (
-    PytestFor_defineConcurrencyLimit,
-    PytestFor_intInnit,
-    PytestFor_oopsieKwargsie,
-)
 
 @pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_defineConcurrencyLimit())
 def testConcurrencyLimit(nameOfTest, callablePytest):

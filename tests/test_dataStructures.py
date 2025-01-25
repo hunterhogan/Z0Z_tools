@@ -45,14 +45,14 @@ class CustomIterable:
     ("Custom iterable cardinal", CustomIterable(["NW", "SE", "NE"]), ["NW", "SE", "NE"]),
     ("Custom iterable empty", CustomIterable([]), []),
     # Weird stuff
-    # ("Basic object", object(), []), # does not and should not create an error. Difficult to test with `standardComparison` because the memory address will change.
+    # ("Basic object", object(), []), # does not and should not create an error. Difficult to test with `standardizedEqualTo` because the memory address will change.
     ("Bad __str__", type('BadStr', (), {'__str__': lambda x: None})(), [None]),
     # Error cases
     ("Raising __str__", type('RaisingStr', (), {'__str__': lambda x: 1/0})(), ZeroDivisionError),
 ], ids=lambda x: x if isinstance(x, str) else "")
 def testStringItUp(description, value_scrapPile, expected):
     """Test stringItUp with various inputs."""
-    standardComparison(expected, stringItUp, value_scrapPile)
+    standardizedEqualTo(expected, stringItUp, value_scrapPile)
 
 @pytest.mark.parametrize("description,value_scrapPile,expected", [
     ("Memory view", memoryview(b"DEADBEEF"), ["<memory at 0x"]),  # Special handling for memoryview
@@ -75,8 +75,8 @@ def testStringItUpErrorCases(description, value_scrapPile, expected):
     ("Skip erroneous types", ({'ne': [11, 13], 'sw': [17, 19]}, {'ne': 23, 'nw': 29}), {'killErroneousDataTypes': True}, {'ne': [11, 13], 'sw': [17, 19]} ),
 ], ids=lambda x: x if isinstance(x, str) else "")
 def testUpdateExtendPolishDictionaryLists(description, value_dictionaryLists, keywordArguments, expected):
-    standardComparison(expected, updateExtendPolishDictionaryLists, *value_dictionaryLists, **keywordArguments)
-    # NOTE one line of code with `standardComparison` replaced the following ten lines of code.
+    standardizedEqualTo(expected, updateExtendPolishDictionaryLists, *value_dictionaryLists, **keywordArguments)
+    # NOTE one line of code with `standardizedEqualTo` replaced the following ten lines of code.
     # if isinstance(expected, type) and issubclass(expected, Exception):
     #     with pytest.raises(expected):
     #         updateExtendPolishDictionaryLists(*value_dictionaryLists, **keywordArguments)

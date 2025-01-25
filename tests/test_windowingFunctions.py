@@ -10,7 +10,7 @@ def prototypeArrayComparison(arrayExpected: NDArray | torch.Tensor, functionTarg
     try:
         arrayActual = functionTarget(*arguments, **keywordArguments)
     except Exception as actualError:
-        raise type(actualError)(formatTestMessage(
+        raise type(actualError)(uniformTestFailureMessage(
             arrayExpected, type(actualError).__name__,
             functionTarget.__name__, *arguments, **keywordArguments
         )) from actualError
@@ -18,7 +18,7 @@ def prototypeArrayComparison(arrayExpected: NDArray | torch.Tensor, functionTarg
     compareMethod = torch if isinstance(arrayActual, torch.Tensor) else numpy
 
     assert compareMethod.allclose(arrayActual, arrayExpected, rtol=rtol, atol=atol), \
-        formatTestMessage(arrayExpected, arrayActual, functionTarget.__name__,
+        uniformTestFailureMessage(arrayExpected, arrayActual, functionTarget.__name__,
                          *arguments, **keywordArguments)
 
 def prototypeElephino(arrayTarget: NDArray | torch.Tensor, shapeExpected: tuple[int, ...] | None = None, minValue: float | None = None, maxValue: float | None = None, symmetryAxis: int | None = None) -> None:
@@ -49,7 +49,7 @@ def prototypeElephino(arrayTarget: NDArray | torch.Tensor, shapeExpected: tuple[
             secondHalf = numpy.flip(arrayTarget, axis=symmetryAxis)[tuple(sliceForward)]
 
         assert compareMethod.allclose(firstHalf, secondHalf), \
-            formatTestMessage(firstHalf, secondHalf, "symmetry check",
+            uniformTestFailureMessage(firstHalf, secondHalf, "symmetry check",
                             f"axis={symmetryAxis}")
 
 def test_parameterized_windowing_functions(windowingFunctionsPair, lengthWindow: int, ratioTaper: float, device: str):
@@ -85,7 +85,7 @@ def test_halfsine_edge_value(lengthWindow: int):
     expectedValue = numpy.sin(numpy.pi * 0.5 / lengthWindow)
     windowingFunction = halfsine(lengthWindow)
     assert numpy.allclose(windowingFunction[0], expectedValue), \
-        formatTestMessage(expectedValue, windowingFunction[0], "halfsine edge value")
+        uniformTestFailureMessage(expectedValue, windowingFunction[0], "halfsine edge value")
 
 def test_tukey_backward_compatibility():
     """Verify backward compatibility of tukey's alpha parameter."""
