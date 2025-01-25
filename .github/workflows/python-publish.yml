@@ -1,4 +1,3 @@
-# Upload Python Package to PyPI when a release is created
 # See https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
 
 name: Upload Python Package
@@ -37,14 +36,14 @@ jobs:
         run: |
           pip install requests
           version="${{ steps.version.outputs.version }}"
-          echo "Checking version $version"
-          if python -c "import requests; exit(0 if '$version' in requests.get('https://pypi.org/pypi/Z0Z-tools/json').json()['releases'] else 1)"; then
+          package_name=$(python -c "import toml; print(toml.load('pyproject.toml')['project']['name'])")
+          echo "Checking version $version for package $package_name"
+          if python -c "import requests, sys; package_name=sys.argv[1]; version=sys.argv[2]; exit(0 if version in requests.get(f'https://pypi.org/pypi/{package_name}/json').json()['releases'] else 1)" "$package_name" "$version"; then
             echo "Version already on PyPI"
             echo "should_publish=false" >> "$GITHUB_OUTPUT"
           else
             echo "New version - should publish"
             echo "should_publish=true" >> "$GITHUB_OUTPUT"
-          fi
 
   release-build:
     needs: check-version
@@ -71,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/Z0Z-tools/${{ needs.check-version.outputs.version }}
+      url: https://pypi.org/project/${{ steps.package.outputs.name }}/${{ needs.check-version.outputs.version }}
     permissions:
       id-token: write
     steps:

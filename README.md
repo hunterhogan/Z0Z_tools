@@ -80,5 +80,5 @@ Convert between paths easily with `findRelativePath()`:
 ## Installation
 
 ```sh
-pip install Z0Z-tools
+pip install Z0Z_tools
 ```
