@@ -25,7 +25,14 @@ classifiers = [
     "Topic :: Utilities",
     "Typing :: Typed",
 ]
-dependencies = ["numpy", "resampy", "soundfile", "packaging", "scipy"]
+dependencies = [
+    "charset-normalizer",
+    "numpy",
+    "packaging",
+    "resampy",
+    "scipy",
+    "soundfile",
+]
 description = "Tools for audio/signal processing, data structure, function parameters, and package management."
 keywords = ["Python", "development", "tools"]
 license = { text = "CC-BY-NC-4.0" }
@@ -33,17 +40,17 @@ name = "Z0Z_tools"
 optional-dependencies = { PyTorch = [
     "torch",
 ], testing = [
-    "pytest",
+    "pandas",
     "pytest-cov",
     "pytest-mock",
     "pytest-xdist",
-    "pandas",
+    "pytest",
     "torch",
 ] }
 readme = "README.md"
 requires-python = ">=3.10, <3.14"
 urls = { Homepage = "https://github.com/hunterhogan/mapFolding", Donate = "https://www.patreon.com/integrated" }
-version = "0.8.0"
+version = "0.8.1"
 
 [tool.coverage]
 report = { exclude_lines = [

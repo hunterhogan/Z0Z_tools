@@ -4,12 +4,12 @@ Pytest tests you can use in your package to test some Z0Z_tools functions.
 Each function in this module returns a list of test functions that can be used with `pytest.parametrize`.
 """
 
-from Z0Z_tools import defineConcurrencyLimit, oopsieKwargsie, intInnit
-from typing import Any, Callable, List, Optional, Sequence, Union, Tuple
+from Z0Z_tools import defineConcurrencyLimit, intInnit, oopsieKwargsie
+from typing import Any, Callable, Iterable, List, Optional, Union, Type, Tuple
 from unittest.mock import patch
 import pytest
 
-def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[Any], int] = defineConcurrencyLimit, cpuCount: int = 8) -> List[Tuple[str, Callable[[], None]]]:
+def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[Union[bool, float, int, None]], int] = defineConcurrencyLimit, cpuCount: int = 8) -> List[Tuple[str, Callable[[], None]]]:
     """Returns a list of test functions to validate concurrency limit behavior.
 
     This function provides a comprehensive test suite for validating concurrency limit parsing
@@ -40,15 +40,26 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[Any], int] = defi
     - Invalid string inputs
     - String number parsing
 
-    Example
-    -------
+    Examples
+    --------
+    Run each test on `Z0Z_tools.defineConcurrencyLimit`
     ```
     from Z0Z_tools.pytest_parseParameters import PytestFor_concurrencyLimit
 
-    test_functions = PytestFor_concurrencyLimit(myFunction, cpuCount=4)
-    for nameOfTest, callablePytest in test_functions:
-        callablePytest()  # Runs each test case
+    listOfTests = PytestFor_concurrencyLimit()
+    for nameOfTest, callablePytest in listOfTests:
+        callablePytest()
     ```
+
+    Or, run each test on your function, '`functionLocal`', that has a compatible signature
+    ```
+    from Z0Z_tools.pytest_parseParameters import PytestFor_defineConcurrencyLimit
+    from packageLocal import functionLocal as YOUR_FUNCTION_HERE
+
+    @pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_defineConcurrencyLimit(callableToTest = YOUR_FUNCTION_HERE))
+    def test_functionLocal(nameOfTest, callablePytest):
+        callablePytest()
+
     """
     @patch('multiprocessing.cpu_count', return_value=cpuCount)
     def testDefaults(_mockCpu):
@@ -78,15 +89,15 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[Any], int] = defi
     @patch('multiprocessing.cpu_count', return_value=cpuCount)
     def testBooleanTrue(_mockCpu):
         assert callableToTest(True) == 1
-        assert callableToTest('True') == 1
-        assert callableToTest('TRUE') == 1
-        assert callableToTest(' true ') == 1
+        assert callableToTest('True') == 1 # type: ignore
+        assert callableToTest('TRUE') == 1 # type: ignore
+        assert callableToTest(' true ') == 1 # type: ignore
 
     @patch('multiprocessing.cpu_count', return_value=cpuCount)
     def testInvalidStrings(_mockCpu):
         for stringInput in ["invalid", "True but not quite", "None of the above"]:
             with pytest.raises(ValueError, match="must be a number, True, False, or None"):
-                callableToTest(stringInput)
+                callableToTest(stringInput) # type: ignore
 
     @patch('multiprocessing.cpu_count', return_value=cpuCount)
     def testStringNumbers(_mockCpu):
@@ -98,7 +109,7 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[Any], int] = defi
             ("-0.5", 4),
         ]
         for stringNumber, expectedLimit in testCases:
-            assert callableToTest(stringNumber) == expectedLimit
+            assert callableToTest(stringNumber) == expectedLimit # type: ignore
 
     return [
         ('testDefaults', testDefaults),
@@ -110,108 +121,134 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[Any], int] = defi
         ('testStringNumbers', testStringNumbers)
     ]
 
-def PytestFor_intInnit(callableToTest: Callable[[Sequence, str], List] = intInnit) -> List[Tuple[str, Callable[[], None]]]:
+def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], Optional[str], Optional[Type[Any]]], List[int]] = intInnit) -> List[Tuple[str, Callable[[], None]]]:
     """Returns a list of test functions to validate integer initialization behavior.
 
-    This function provides a comprehensive test suite for validating integer parsing and initialization,
-    checking both valid and invalid input scenarios.
+    This function provides a comprehensive test suite for validating integer parsing
+    and initialization, checking both valid and invalid input scenarios.
 
     Parameters
-    ----------
-    callableToTest (intInnit):
-        The function to test, which should take a sequence and a string parameter and return a list of integers.
-        Defaults to intInnit.
+        callableToTest (intInnit): The function to test. Should accept:
+            - A sequence of integer-compatible values
+            - An optional parameter name string
+            - An optional parameter type
+            Returns a list of validated integers.
 
     Returns
-    -------
-    listOfTestFunctions:
-        A list of tuples, each containing:
-        - A string describing the test case
-        - A callable test function that implements the test case
+        listOfTestFunctions: A list of tuples containing:
+            - A string describing the test case
+            - A callable test function implementing the test case
 
-    Test Cases
-    ----------
-    - Handling of valid integers (including floats and strings representing integers)
-    - Rejection of non-whole numbers
-    - Rejection of boolean values
-    - Rejection of invalid string formats
-    - Rejection of empty lists
-    - Handling of mixed valid types
-    - Handling of single bytes and byte-like objects
-    - Protection against mutable sequence modification during iteration
-    - Handling of complex numbers with zero imaginary parts
-    - Rejection of invalid complex numbers
+    Examples
+        Run tests on `Z0Z_tools.intInnit`:
+        ```python
+        from Z0Z_tools.pytest_parseParameters import PytestFor_intInnit
 
-    Example
-    -------
-    ```
-    from Z0Z_tools.pytest_parseParameters import PytestFor_intInnit
+        listOfTests = PytestFor_intInnit()
+        for nameOfTest, callablePytest in listOfTests:
+            callablePytest()
+        ```
 
-    test_functions = PytestFor_intInnit(Z0Z_tools.intInnit)
-    for nameOfTest, callablePytest in test_functions:
-        callablePytest()  # Runs each test case
-    ```
+        Run tests on your compatible function:
+        ```python
+        from Z0Z_tools.pytest_parseParameters import PytestFor_intInnit
+        from packageLocal import functionLocal as YOUR_FUNCTION_HERE
+
+        @pytest.mark.parametrize("nameOfTest,callablePytest",
+            PytestFor_intInnit(callableToTest=YOUR_FUNCTION_HERE))
+        def test_functionLocal(nameOfTest, callablePytest):
+            callablePytest()
+        ```
     """
     def testHandlesValidIntegers():
-        assert callableToTest([1, 2, 3], 'test') == [1, 2, 3]
-        assert callableToTest([1.0, 2.0, 3.0], 'test') == [1, 2, 3]
-        assert callableToTest(['1', '2', '3'], 'test') == [1, 2, 3]
-        assert callableToTest([' 42 ', '0', '-1'], 'test') == [42, 0, -1]
+        # Using Fibonacci numbers for distinct test values
+        assert callableToTest([2, 3, 5, 8], 'test', None) == [2, 3, 5, 8]
+        assert callableToTest([13.0, 21.0, 34.0], 'test', None) == [13, 21, 34] # type: ignore
+        assert callableToTest(['55', '89', '144'], 'test', None) == [55, 89, 144] # type: ignore
+        assert callableToTest([' 233 ', '377', '-610'], 'test', None) == [233, 377, -610] # type: ignore
 
     def testRejectsNonWholeNumbers():
-        for invalidNumber in [1.5, '1.5', ' 1.5 ', -2.7]:
+        for invalidNumber in [13.7, '21.5', ' 34.8 ', -55.9]:
             with pytest.raises(ValueError):
-                callableToTest([invalidNumber], 'test')
+                callableToTest([invalidNumber], 'test', None)
 
     def testRejectsBooleans():
         with pytest.raises(TypeError):
-            callableToTest([True, False], 'test')
+            callableToTest([True, False], 'test', None)
 
     def testRejectsInvalidStrings():
-        for invalidString in ['abc', '', ' ', '1.2.3']:
+        for invalidString in ['NW', '', ' ', 'SE.SW']:
             with pytest.raises(ValueError):
-                callableToTest([invalidString], 'test')
+                callableToTest([invalidString], 'test', None) # type: ignore
 
     def testRejectsEmptyList():
         with pytest.raises(ValueError):
-            callableToTest([], 'test')
+            callableToTest([], 'test', None)
 
     def testHandlesMixedValidTypes():
-        assert callableToTest([1, '2', 3.0], 'test') == [1, 2, 3]
+        assert callableToTest([13, '21', 34.0], 'test', None) == [13, 21, 34] # type: ignore
 
-    def testHandlesSingleBytes():
-        testCases = [
-            ([b'\x01'], [1]),
-            ([b'\xff'], [255]),
-            ([bytearray(b'\x02')], [2]),
-            ([memoryview(b'\x01')], [1]),
-            ([memoryview(b'\xff')], [255]),
+    def testHandlesBytes():
+        # Test valid byte sequences
+        validCases = [
+            ([b'123'], '123', [123]),  # Added larger numeric string bytes
+            # ([b'\x00\x00\x00\x00\x00\x00\x00\xFF'], '255', [255])
         ]
-        for inputData, expected in testCases:
-            assert callableToTest(inputData, 'test') == expected
-        with pytest.raises(ValueError):
-            callableToTest([b'\x01\x02'], 'test')
+        for inputData, testName, expected in validCases:
+            assert callableToTest(inputData, testName, None) == expected  # type: ignore
+
+        # Added new test for bigger sequences
+        extendedCases = [
+            ([b'123456789'], '123456789', [123456789]),  # Should decode and parse
+            # ([b'999999999999999999'], 'even_bigger', [999999999999999999])  # Even bigger
+        ]
+        for inputData, testName, expected in extendedCases:
+            assert callableToTest(inputData, testName, None) == expected  # type: ignore
+
+        # New invalid case for b'\x00'
+        invalidCases = [[b'\x00']]
+        for inputData in invalidCases:
+            with pytest.raises(ValueError):
+                callableToTest(inputData, 'test', None) # type: ignore
+
+    def testHandlesMemoryview():
+        # Test valid memoryview objects
+        validCases = [
+            ([memoryview(b'123')], '123', [123]),  # Added memoryview numeric string
+            # ([memoryview(b'\x00\x00\x00\x00\x00\x00\x00\xFF')], '255', [255])
+        ]
+        for inputData, testName, expected in validCases:
+            assert callableToTest(inputData, testName, None) == expected # type: ignore
+
+        largeMemoryviewCase = [memoryview(b'9999999999')]
+        assert callableToTest(largeMemoryviewCase, 'test', None) == [9999999999]  # type: ignore
+
+        # New invalid case for memoryview(b'\x00')
+        invalidMemoryviewCases = [[memoryview(b'\x00')]]
+        for inputData in invalidMemoryviewCases:
+            with pytest.raises(ValueError):
+                callableToTest(inputData, 'test', None) # type: ignore
 
     def testRejectsMutableSequence():
         class MutableList(list):
             def __iter__(self):
-                self.append(4)
+                self.append(89)
                 return super().__iter__()
         with pytest.raises(RuntimeError, match=".*modified during iteration.*"):
-            callableToTest(MutableList([1, 2, 3]), 'test')
+            callableToTest(MutableList([13, 21, 34]), 'test', None)
 
     def testHandlesComplexIntegers():
         testCases = [
-            ([1+0j], [1]),
-            ([2+0j, 3+0j], [2, 3])
+            ([13+0j], [13]),
+            ([21+0j, 34+0j], [21, 34])
         ]
-        for inputData, expectedList in testCases:
-            assert callableToTest(inputData, 'test') == expectedList
+        for inputData, expected in testCases:
+            assert callableToTest(inputData, 'test', None) == expected # type: ignore
 
     def testRejectsInvalidComplex():
-        for invalidComplex in [1+1j, 2+0.5j, 3.5+0j]:
+        for invalidComplex in [13+1j, 21+0.5j, 34.5+0j]:
             with pytest.raises(ValueError):
-                callableToTest([invalidComplex], 'test')
+                callableToTest([invalidComplex], 'test', None) # type: ignore
 
     return [
         ('testHandlesValidIntegers', testHandlesValidIntegers),
@@ -220,13 +257,14 @@ def PytestFor_intInnit(callableToTest: Callable[[Sequence, str], List] = intInni
         ('testRejectsInvalidStrings', testRejectsInvalidStrings),
         ('testRejectsEmptyList', testRejectsEmptyList),
         ('testHandlesMixedValidTypes', testHandlesMixedValidTypes),
-        ('testHandlesSingleBytes', testHandlesSingleBytes),
+        ('testHandlesBytes', testHandlesBytes),
+        ('testHandlesMemoryview', testHandlesMemoryview),
         ('testRejectsMutableSequence', testRejectsMutableSequence),
         ('testHandlesComplexIntegers', testHandlesComplexIntegers),
         ('testRejectsInvalidComplex', testRejectsInvalidComplex)
     ]
 
-def PytestFor_oopsieKwargsie(callableToTest: Callable[[str], Optional[Union[bool, str]]] = oopsieKwargsie) -> List[Tuple[str, Callable[[], None]]]:
+def PytestFor_oopsieKwargsie(callableToTest: Callable[[str], Union[bool, None, str]] = oopsieKwargsie) -> List[Tuple[str, Callable[[], None]]]:
     """Returns a list of test functions to validate string-to-boolean/None conversion behavior.
 
     This function provides a comprehensive test suite for validating string parsing and conversion
@@ -255,15 +293,25 @@ def PytestFor_oopsieKwargsie(callableToTest: Callable[[str], Optional[Union[bool
         - Numbers (converted to strings)
         - Objects with failed str() conversion (returned as-is)
 
-    Example
-    -------
+    Examples
+    --------
+    Run each test on `Z0Z_tools.oopsieKwargsie`
     ```
     from Z0Z_tools.pytest_parseParameters import PytestFor_oopsieKwargsie
 
-    test_functions = PytestFor_oopsieKwargsie(myFunction)
-    for nameOfTest, callablePytest in test_functions:
-        callablePytest()  # Runs each test case
+    listOfTests = PytestFor_oopsieKwargsie()
+    for nameOfTest, callablePytest in listOfTests:
+        callablePytest()
     ```
+
+    Or, run each test on your function, '`functionLocal`', that has a compatible signature
+    ```
+    from Z0Z_tools.pytest_parseParameters import PytestFor_oopsieKwargsie
+    from packageLocal import functionLocal as YOUR_FUNCTION_HERE
+
+    @pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_oopsieKwargsie(callableToTest = YOUR_FUNCTION_HERE))
+    def test_functionLocal(nameOfTest, callablePytest):
+        callablePytest()
     """
     def testHandlesTrueVariants():
         for variantTrue in ['True', 'TRUE', ' true ', 'TrUe']:

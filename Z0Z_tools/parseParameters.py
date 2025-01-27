@@ -1,52 +1,52 @@
 """
 Provides parameter and input validation, integer parsing, and concurrency handling utilities.
 """
-import multiprocessing
 from collections.abc import Sized
 from dataclasses import dataclass
 from typing import Any, Iterable, List, Optional, Type, Union
+import charset_normalizer
+import multiprocessing
+
 
 @dataclass
-class MessageContext:
-    value: Any = None
-    valueType: Optional[str] = None
+class ErrorMessageContext:
+    parameterValue: Any = None
+    parameterValueType: Optional[str] = None
     containerType: Optional[str] = None
     isElement: bool = False
 
-def _constructErrorMessage(context: MessageContext, parameterName: str, parameterType: Optional[Type[Any]] = None) -> str:
+def _constructErrorMessage(context: ErrorMessageContext, parameterName: str, parameterType: Optional[Type[Any]]) -> str:
     """Constructs error message from available context using template:
     I received ["value" | a value | None] [of type `type` | None] [as an element in | None] [a `containerType` type | None] but `parameterName` must have integers [in type(s) `parameterType` | None].
+
+    Hypothetically, this is a prototype that can be generalized to other functions. In this package and a few of my other packages, I have developed standardized error messages, but those are quite different from this. I will certainly continue to develop this kind of functionality, and this function will influence things.
     """
     messageParts = ["I received "]
 
-    # Value part
-    if context.value is not None and not isinstance(context.value, (bytes, bytearray, memoryview)):
-        messageParts.append(f'"{context.value}"')
+    if context.parameterValue is not None and not isinstance(context.parameterValue, (bytes, bytearray, memoryview)):
+        messageParts.append(f'"{context.parameterValue}"')
     else:
         messageParts.append("a value")
 
-    # Type part
-    if context.valueType:
-        messageParts.append(f" of type `{context.valueType}`")
+    if context.parameterValueType:
+        messageParts.append(f" of type `{context.parameterValueType}`")
 
-    # Element part
     if context.isElement:
         messageParts.append(" as an element in")
 
-    # Container part
     if context.containerType:
         messageParts.append(f" a `{context.containerType}` type")
 
-    # Required part
     messageParts.append(f" but {parameterName} must have integers")
 
-    # Parameter type part
     if parameterType:
         messageParts.append(f" in type(s) `{parameterType}`")
 
     return "".join(messageParts)
 
-def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
+# NOTE: For the `limit` parameter, the most precise type is `Union[bool, float, int, None]`
+# because `None` is in fact a valid option for the parameter, which is why I'm not using `Optional[Union[int, float, bool]]`.
+def defineConcurrencyLimit(limit: Union[bool, float, int, None]) -> int:
     """
     Determines the concurrency limit based on the provided parameter. This package has Pytest tests you can import and run on this function. `from Z0Z_tools.pytest_parseParameters import makeTestSuiteConcurrencyLimit`
 
@@ -116,24 +116,44 @@ def defineConcurrencyLimit(limit: Optional[Union[int, float, bool]]) -> int:
 
     return max(int(concurrencyLimit), 1)
 
-def intInnit(listInt_Allegedly: Iterable[int], parameterName: str = 'the parameter', parameterType: Optional[Type[Any]] = None) -> List[int]:
+def intInnit(listInt_Allegedly: Iterable[int], parameterName: Optional[str] = None, parameterType: Optional[Type[Any]] = None) -> List[int]:
     """
-    Validates and converts input to a list of integers. This package has Pytest tests you can import and run on this function. `from Z0Z_tools.pytest_parseParameters import makeTestSuiteIntInnit`
+    Validates and converts input values to a list of integers.
 
+    Accepts various numeric types and attempts to convert them into integers while providing descriptive error messages.
 
-    Parameters:
-        listInt_Allegedly: Input that should be a list of integers.
-        parameterName: Name of parameter for error messages.
+    Parameters
+        listInt_Allegedly: The input sequence that should contain integer-compatible values.
+            Accepts integers, strings, floats, complex numbers, and binary data.
+            Rejects boolean values and non-integer numeric values.
 
-    Returns:
-        listValidated: The validated integers.
+        parameterName ('the parameter'): Name of the parameter from your function for which this function is validating the input validated: if there is an error message, it provides context to your user. Defaults to 'the parameter'.
 
-    Raises:
-        Various built-in exceptions with enhanced error messages.
+        parameterType: Expected type(s) of the parameter, used in error messages.
+
+    Returns
+        A list containing validated integers.
+
+    Raises
+        ValueError: When the input is empty or contains non-integer compatible values.
+        TypeError: When an element is a boolean or incompatible type.
+        RuntimeError: If the input sequence length changes during iteration.
+
+    Notes
+        This package includes Pytest tests that can be imported and run:
+        `from Z0Z_tools.pytest_parseParameters import makeTestSuiteIntInnit`
+
+        The function performs strict validation and follows fail-early principles to catch potential issues before they become catastrophic.
     """
+    parameterName = parameterName or 'the parameter'
+    parameterType = parameterType or List
+
     if not listInt_Allegedly:
         raise ValueError(f"I did not receive a value for {parameterName}, but it is required.")
 
+    # Be nice: assume the input container is valid and every element is valid.
+    # Nevertheless, this is a "fail-early" step, so reject ambiguity and try to induce errors now that could be catastrophic later.
+    # And, be helpful: provide a meaningful error message so the user can correct the issue.
     try:
         iter(listInt_Allegedly)
         lengthInitial = None
@@ -143,36 +163,38 @@ def intInnit(listInt_Allegedly: Iterable[int], parameterName: str = 'the paramet
         listValidated = []
 
         for allegedInt in listInt_Allegedly:
-            messageContext = MessageContext(
-                value=allegedInt,
-                valueType=type(allegedInt).__name__,
-                isElement=True
+            errorMessageContext = ErrorMessageContext(
+                parameterValue = allegedInt,
+                parameterValueType = type(allegedInt).__name__,
+                isElement = True
             )
 
+            # Always rejected
             if isinstance(allegedInt, bool):
-                raise TypeError(messageContext)
+                raise TypeError(errorMessageContext)
+
+            # The Python type is not `int`, but maybe the value is clearly an integer.
+            # Through a series of conversions, allow data to cascade down into either an `int` or a meaningful error message.
 
             if isinstance(allegedInt, (bytes, bytearray, memoryview)):
-                if (isinstance(allegedInt, memoryview) and allegedInt.nbytes != 1) or \
-                    (not isinstance(allegedInt, memoryview) and len(allegedInt) != 1):
-                    messageContext.value = None  # Don't include binary data in message
-                    raise ValueError(messageContext)
-                allegedInt = int.from_bytes(
-                    allegedInt if isinstance(allegedInt, (bytes, bytearray))
-                    else allegedInt.tobytes(),
-                    byteorder='big'
-                )
+                errorMessageContext.parameterValue = None  # Don't expose binary data in error messages
+                if isinstance(allegedInt, memoryview):
+                    allegedInt = allegedInt.tobytes()
+                decodedString = charset_normalizer.from_bytes(allegedInt).best()
+                if not decodedString:
+                    raise ValueError(errorMessageContext)
+                allegedInt = errorMessageContext.parameterValue = str(decodedString)
 
             if isinstance(allegedInt, complex):
                 if allegedInt.imag != 0:
-                    raise ValueError(messageContext)
+                    raise ValueError(errorMessageContext)
                 allegedInt = float(allegedInt.real)
             elif isinstance(allegedInt, str):
                 allegedInt = float(allegedInt.strip())
 
             if isinstance(allegedInt, float):
                 if not float(allegedInt).is_integer():
-                    raise ValueError(messageContext)
+                    raise ValueError(errorMessageContext)
                 allegedInt = int(allegedInt)
             else:
                 allegedInt = int(allegedInt)
@@ -186,13 +208,13 @@ def intInnit(listInt_Allegedly: Iterable[int], parameterName: str = 'the paramet
         return listValidated
 
     except (TypeError, ValueError) as ERRORmessage:
-        if isinstance(ERRORmessage.args[0], MessageContext):
+        if isinstance(ERRORmessage.args[0], ErrorMessageContext):
             context = ERRORmessage.args[0]
             if not context.containerType:
                 context.containerType = type(listInt_Allegedly).__name__
             message = _constructErrorMessage(context, parameterName, parameterType)
             raise type(ERRORmessage)(message) from None
-        # If it's not our MessageContext, let it propagate
+        # If it's not our Exception, don't molest it
         raise
 
     except RuntimeError as ERRORruntime:
@@ -202,7 +224,7 @@ def intInnit(listInt_Allegedly: Iterable[int], parameterName: str = 'the paramet
             f"Initial length {lengthInitial}, current length {lengthCurrent}."
         ) from None
 
-def oopsieKwargsie(huh: str) -> None | str | bool:
+def oopsieKwargsie(huh: str) -> Union[bool, None, str]:
     """
     If a calling function passes a `str` to a parameter that shouldn't receive a `str`, `oopsieKwargsie()` might help you avoid an Exception. It tries to interpret the string as `True`, `False`, or `None`. This package has Pytest tests you can import and run on this function. `from Z0Z_tools.pytest_parseParameters import makeTestSuiteOopsieKwargsie`
 
@@ -228,4 +250,9 @@ def oopsieKwargsie(huh: str) -> None | str | bool:
         return huh
 
 if __name__ == '__main__':
+    # Frankly, I cannot remember the precise reason I put this in some modules. It solved the concurrency problem I was having at the time,
+    # but it felt like a hack at the time and it feels even more like a hack now. I suspect I will eventually learn enough so that I can
+    # come full circle: know why I added it, know how I already fixed the real issue, and know that I can safely remove this.
     multiprocessing.set_start_method('spawn')
+
+    # Well, actually, I don't want to be programming for so long that I learn that much. I want to heal and do things in my areas of competency.
