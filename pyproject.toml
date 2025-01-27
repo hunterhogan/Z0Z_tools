@@ -1,52 +1,68 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "Z0Z_tools"
-description = "Solve some common Python development frustrations"
-readme = "README.md"
-requires-python = ">=3.10, <3.13" # numba is part of numpy
-version = "0.7.0"
 authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
 classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Other Audience",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+    "Topic :: Multimedia :: Sound/Audio :: Editors",
+    "Topic :: Multimedia :: Sound/Audio",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development",
+    "Topic :: Text Processing",
+    "Topic :: Utilities",
+    "Typing :: Typed",
 ]
 dependencies = ["numpy", "resampy", "soundfile", "packaging", "scipy"]
+description = "Tools for audio/signal processing, data structure, function parameters, and package management."
+keywords = ["Python", "development", "tools"]
+license = { text = "CC-BY-NC-4.0" }
+name = "Z0Z_tools"
+optional-dependencies = { PyTorch = [
+    "torch",
+], testing = [
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "pytest-xdist",
+    "pandas",
+    "torch",
+] }
+readme = "README.md"
+requires-python = ">=3.10, <3.14"
+urls = { Homepage = "https://github.com/hunterhogan/mapFolding", Donate = "https://www.patreon.com/integrated" }
+version = "0.7.0"
 
-[project.urls]
-homepage = "https://github.com/hunterhogan/Z0Z_tools"
-repository = "https://github.com/hunterhogan/Z0Z_tools.git"
+[tool.coverage]
+report = { exclude_lines = [
+    "if TYPE_CHECKING:",
+    "if __name__ == \"__main__\":",
+], ignore_errors = false }
+run = { branch = true, concurrency = [
+    "multiprocessing",
+    "thread",
+], data_file = "tests/coverage/.coverage", omit = [
+    "tests/*",
+], parallel = true, source = [
+    "Z0Z_tools",
+] }
+xml = { output = "tests/coverage/coverage.xml" }
 
-[project.optional-dependencies]
-PyTorch = ["torch"]
-testing = [ "pytest>=7.0", "pytest-cov", "pytest-mock", "pytest-xdist", "pandas", "torch", ]
-
-[tool.setuptools]
-include-package-data = true
+[tool.pytest.ini_options]
+addopts = ["--color=yes", "-n 4"]
+testpaths = ["tests"]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["*"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-addopts = ["--color=yes", "-n 4"]
-
-[tool.coverage.run]
-branch = true
-source = ["Z0Z_tools"]
-data_file = "tests/coverage/.coverage"
-omit = ["Z0Z_tools/__init__.py", "tests/*"]
-parallel = true
-concurrency = ["multiprocessing", "thread"]
-
-[tool.coverage.report]
-exclude_lines = ["if TYPE_CHECKING:", "if __name__ == \"__main__\":"]
-ignore_errors = false
-
-[tool.coverage.xml]
-output = "tests/coverage/coverage.xml"
