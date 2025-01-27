@@ -60,7 +60,6 @@ from Z0Z_tools.ioAudio import *
 from Z0Z_tools.parseParameters import *
 from Z0Z_tools.pipAnything import *
 from Z0Z_tools.Z0Z_io import *
-from Z0Z_tools.spectrograms import *
 
 try:
     # NOTE `Pytest` is an optional dependency

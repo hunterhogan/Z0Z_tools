@@ -1,5 +1,6 @@
 """
 Provides utilities for reading, writing, and resampling audio waveforms.
+NOTE stft and loadSpectrograms are still in testing
 """
 from Z0Z_tools import halfsine
 from numpy.typing import NDArray

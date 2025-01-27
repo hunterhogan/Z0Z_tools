@@ -1,6 +1,8 @@
+"""NOTE not fully implemented"""
 from numpy.typing import ArrayLike, NDArray
 from typing import Any, Union
 from numpy import absolute, complexfloating, dtype, float64, floating, ndarray, ones_like
+
 
 def applyHardLimit(arrayTarget: NDArray[Any], comparand: ArrayLike = 1.0) -> NDArray[Any]:
     """

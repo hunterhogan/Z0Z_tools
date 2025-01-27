@@ -9,7 +9,7 @@ import numpy
 import numpy.typing
 import scipy.signal.windows as SciPy
 
-def getLengthTaper(lengthWindow: int, ratioTaper: Optional[float]) -> int:
+def _getLengthTaper(lengthWindow: int, ratioTaper: Optional[float]) -> int:
     """
     Calculate the length of the taper section for windowing functions.
 
@@ -40,7 +40,7 @@ def cosineWings(lengthWindow: int, ratioTaper: Optional[float] = None) -> numpy.
     Returns
         windowingFunction: Array of windowing coefficients with cosine tapers.
     """
-    lengthTaper = getLengthTaper(lengthWindow, ratioTaper)
+    lengthTaper = _getLengthTaper(lengthWindow, ratioTaper)
 
     windowingFunction = numpy.ones(shape=lengthWindow)
     if lengthTaper > 0:
@@ -60,7 +60,7 @@ def equalPower(lengthWindow: int, ratioTaper: Optional[float] = None) -> numpy.t
     Returns
         windowingFunction: Array of windowing coefficients with tapers.
     """
-    lengthTaper = getLengthTaper(lengthWindow, ratioTaper)
+    lengthTaper = _getLengthTaper(lengthWindow, ratioTaper)
 
     windowingFunction = numpy.ones(shape=lengthWindow)
     if lengthTaper > 0:
