@@ -5,6 +5,7 @@ and computing a canonical relative path from one location to another.
 
 from typing import Any, Iterable, Union
 import os
+import io
 import pathlib
 
 def dataTabularTOpathFilenameDelimited(pathFilename: Union[str, os.PathLike[Any]], tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
@@ -73,3 +74,10 @@ def findRelativePath(pathSource: Union[str, os.PathLike[Any]], pathDestination: 
         partsDown.append(filenameFinal)
 
     return '/'.join(partsUp + partsDown) if partsUp + partsDown else '.'
+
+def makeDirsSafely(pathFilename):
+    if not isinstance(pathFilename, io.IOBase):
+        try:
+            pathlib.Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
+        except OSError:
+            pass
