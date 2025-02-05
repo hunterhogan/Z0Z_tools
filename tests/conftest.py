@@ -5,7 +5,8 @@
 - Temporary files and directories should be created and cleaned up here.
 - Prefer to make predictable data and use the test data in the tests/dataSamples directory over generating random data or artificial data."""
 
-from typing import Generator, Set, Any, Type, Union, Sequence, Callable
+from numpy._core._exceptions import UFuncTypeError, _UFuncNoLoopError
+from typing import Generator, Set, Any, Type, Union, Sequence, Callable, Optional, Final
 from Z0Z_tools import *
 from Z0Z_tools.pytestForYourUse import *
 import pandas
@@ -15,27 +16,30 @@ import shutil
 import torch
 import uuid
 
+atolDEFAULT: Final[float] = 1e-7
+rtolDEFAULT: Final[float] = 1e-7
+
 # SSOT for test data paths and filenames
 pathDataSamples = pathlib.Path("tests/dataSamples")
-# NOTE `tmp` is not a diminutive form of temporary: it signals a technical term
+# NOTE `tmp` is not a diminutive form of temporary: it signals a technical term. And "temp" is strongly disfavored.
 pathTmpRoot = pathDataSamples / "tmp"
 
 registerOfTemporaryFilesystemObjects: Set[pathlib.Path] = set()
 
 def registrarRecordsTmpObject(path: pathlib.Path) -> None:
-    """The registrar adds a temp file to the register."""
+    """The registrar adds a tmp file to the register."""
     registerOfTemporaryFilesystemObjects.add(path)
 
 def registrarDeletesTmpObjects() -> None:
-    """The registrar cleans up temp files in the register."""
-    for pathTemp in sorted(registerOfTemporaryFilesystemObjects, reverse=True):
+    """The registrar cleans up tmp files in the register."""
+    for pathTmp in sorted(registerOfTemporaryFilesystemObjects, reverse=True):
         try:
-            if pathTemp.is_file():
-                pathTemp.unlink(missing_ok=True)
-            elif pathTemp.is_dir():
-                shutil.rmtree(pathTemp, ignore_errors=True)
+            if pathTmp.is_file():
+                pathTmp.unlink(missing_ok=True)
+            elif pathTmp.is_dir():
+                shutil.rmtree(pathTmp, ignore_errors=True)
         except Exception as ERRORmessage:
-            print(f"Warning: Failed to clean up {pathTemp}: {ERRORmessage}")
+            print(f"Warning: Failed to clean up {pathTmp}: {ERRORmessage}")
     registerOfTemporaryFilesystemObjects.clear()
 
 @pytest.fixture(scope="session", autouse=True)
@@ -108,6 +112,32 @@ def dataframeSample():
     })
 
 """
+Section: Audio file testing utilities"""
+
+dumbassDictionaryPathFilenamesAudioFiles = {
+    'mono': pathDataSamples / "testWooWooMono16kHz32integerClipping9sec.wav",
+    'stereo': pathDataSamples / "testSine2ch5sec.wav",
+    'video': pathDataSamples / "testVideo11sec.mkv",
+    'mono_copies': [pathDataSamples / f"testWooWooMono16kHz32integerClipping9secCopy{i}.wav" for i in range(1, 4)],
+    'stereo_copies': [pathDataSamples / f"testSine2ch5secCopy{i}.wav" for i in range(1, 5)]
+}
+@pytest.fixture
+def waveform_data():
+    """Fixture providing sample waveform data and sample rates."""
+    mono_data, mono_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['mono'], dtype='float32')
+    stereo_data, stereo_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['stereo'], dtype='float32')
+    return {
+        'mono': {
+            'waveform': mono_data.astype(numpy.float32),
+            'sample_rate': mono_sr
+        },
+        'stereo': {
+            'waveform': stereo_data.astype(numpy.float32),
+            'sample_rate': stereo_sr
+        }
+    }
+
+"""
 Section: Windowing function testing utilities"""
 
 @pytest.fixture(params=[256, 1024, 1024 * 8, 44100, 44100 * 11])
@@ -121,15 +151,6 @@ def ratioTaper(request):
 @pytest.fixture(params=['cpu'] + (['cuda'] if torch.cuda.is_available() else []))
 def device(request):
     return request.param
-
-@pytest.fixture
-def windowingFunctionsPair():
-    return [
-        (cosineWings, cosineWingsTensor),
-        (equalPower, equalPowerTensor),
-        (halfsine, halfsineTensor),
-        (tukey, tukeyTensor)
-    ]
 
 """
 Section: Standardized assert statements and failure messages"""
@@ -192,3 +213,31 @@ def standardizedEqualTo(expected: Any, functionTarget: Callable, *arguments: Any
         actual = type(actualError)
 
     assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
+
+def prototype_numpyAllClose(expected: NDArray[Any], atol: Optional[float], rtol: Optional[float], functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
+    """Template for tests using numpy.allclose comparison."""
+    if atol is None:
+        atol = atolDEFAULT
+    if rtol is None:
+        rtol = rtolDEFAULT
+    try:
+        actual = functionTarget(*arguments, **keywordArguments)
+    except Exception as actualError:
+        messageActual = type(actualError).__name__
+        actual = type(actualError)
+        messageExpected = expected if isinstance(expected, type) else "array-like result"
+        assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
+    else:
+        assert numpy.allclose(actual, expected, rtol, atol), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)
+
+def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
+    """Template for tests using numpy.array_equal comparison."""
+    try:
+        actual = functionTarget(*arguments, **keywordArguments)
+    except Exception as actualError:
+        messageActual = type(actualError).__name__
+        actual = type(actualError)
+        messageExpected = expected if isinstance(expected, type) else "array-like result"
+        assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
+    else:
+        assert numpy.array_equal(actual, expected), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)

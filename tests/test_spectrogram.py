@@ -1,3 +1,4 @@
+"""test_waveform or test_spectrogram? if a spectrogram is involved at any point, then test_spectrogram."""
 from tests.conftest import *
 import pytest
 import numpy
@@ -140,15 +141,6 @@ def test_stft_largeDataset():
     arrayTransformed = stft(arrayWaveform)
     assert arrayTransformed.shape[1] > 0
 
-# def test_stft_complexInput():
-#     """Test stft with complex-valued input"""
-#     # This is an error: waveforms are not complex valued
-#     arrayWaveform = numpy.random.rand(44100) + 1j * numpy.random.rand(44100)
-#     arrayTransformed = stft(arrayWaveform)
-#     assert arrayTransformed.dtype == numpy.complex128 or arrayTransformed.dtype == numpy.complex64
-#     arrayReconstructed = stft(arrayTransformed, inverse=True, lengthWaveform=len(arrayWaveform))
-#     assert_allclose(arrayWaveform, arrayReconstructed, atol=1e-2)
-
 def test_stft_nonStandardWindowFunction():
     """Test stft with a custom non-standard window function"""
     arrayWaveform = numpy.random.rand(44100)
@@ -157,3 +149,48 @@ def test_stft_nonStandardWindowFunction():
     arrayTransformed = stft(arrayWaveform, window=arrayWindowFunction, lengthWindow=lengthWindow)
     arrayReconstructed = stft(arrayTransformed, inverse=True, lengthWaveform=len(arrayWaveform), window=arrayWindowFunction)
     assert_allclose(arrayWaveform, arrayReconstructed, atol=1e-2)
+
+class TestStftIstft:
+    def test_identity_transform(self, waveform_data):
+        """Test that passing through identity function preserves waveform."""
+        waveform = waveform_data['stereo']['waveform'].T # (channels, samples)
+
+        @waveformSpectrogramWaveform
+        def identity_transform(spectrogram):
+            return spectrogram
+
+        waveform_reconstructed = identity_transform(waveform)
+        assert numpy.allclose(waveform, waveform_reconstructed, atol=1e-6)
+
+    def test_phase_inversion(self, waveform_data):
+        """Test phase inversion through STFT-ISTFT."""
+        waveform = waveform_data['stereo']['waveform'].T
+
+        @waveformSpectrogramWaveform
+        def invert_phase(spectrogram):
+            return -spectrogram
+
+        waveform_inverted = invert_phase(waveform)
+        assert numpy.allclose(waveform, -waveform_inverted, atol=1e-6)
+
+    def test_zero_transform(self, waveform_data):
+        """Test transform that zeros out the spectrogram."""
+        waveform = waveform_data['stereo']['waveform'].T
+
+        @waveformSpectrogramWaveform
+        def zero_spectrogram(spectrogram):
+            return numpy.zeros_like(spectrogram)
+
+        waveform_zeroed = zero_spectrogram(waveform)
+        assert numpy.allclose(waveform_zeroed, numpy.zeros_like(waveform), atol=1e-6)
+
+    def test_shape_preservation(self, waveform_data):
+        """Test that output shape matches input shape."""
+        waveform = waveform_data['stereo']['waveform'].T
+
+        @waveformSpectrogramWaveform
+        def pass_through(spectrogram):
+            return spectrogram
+
+        waveform_out = pass_through(waveform)
+        assert waveform.shape == waveform_out.shape

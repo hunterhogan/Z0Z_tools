@@ -1,4 +1,3 @@
-from pathlib import Path
 from tests.conftest import *
 import pandas
 import pytest

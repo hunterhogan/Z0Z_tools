@@ -3,30 +3,6 @@ from tests.conftest import *
 import numpy
 import pytest
 
-def prototype_numpyAllClose(expected: NDArray[Any], functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
-    """Template for tests using numpy.allclose comparison."""
-    try:
-        actual = functionTarget(*arguments, **keywordArguments)
-    except Exception as actualError:
-        messageActual = type(actualError).__name__
-        actual = type(actualError)
-        messageExpected = expected if isinstance(expected, type) else "array-like result"
-        assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
-    else:
-        assert numpy.allclose(actual, expected), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)
-
-def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
-    """Template for tests using numpy.array_equal comparison."""
-    try:
-        actual = functionTarget(*arguments, **keywordArguments)
-    except Exception as actualError:
-        messageActual = type(actualError).__name__
-        actual = type(actualError)
-        messageExpected = expected if isinstance(expected, type) else "array-like result"
-        assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
-    else:
-        assert numpy.array_equal(actual, expected), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)
-
 @pytest.mark.parametrize("description,expected,arrayTarget,comparand", [
     ("Simple array under limit", numpy.array([0.5, -0.5]), numpy.array([0.5, -0.5]), 1.0),
     ("Simple array at limit", numpy.array([1.0, -1.0]), numpy.array([1.0, -1.0]), 1.0),
@@ -44,7 +20,7 @@ def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable, 
 ], ids=lambda x: x if isinstance(x, str) else "")
 def testApplyHardLimit(description, expected, arrayTarget, comparand):
     """Test applyHardLimit with various inputs."""
-    prototype_numpyAllClose(expected, applyHardLimit, arrayTarget, comparand)
+    prototype_numpyAllClose(expected, None, None, applyHardLimit, arrayTarget, comparand)
 
 @pytest.mark.parametrize("description,expected,arrayTarget,comparand,penalty", [
     ("Simple complex under limit", numpy.array([1+1j, -1-1j]), numpy.array([1+1j, -1-1j]), numpy.array([2.0, 2.0]), 1.0),
@@ -60,4 +36,4 @@ def testApplyHardLimit(description, expected, arrayTarget, comparand):
 ], ids=lambda x: x if isinstance(x, str) else "")
 def testApplyHardLimitComplexValued(description, expected, arrayTarget, comparand, penalty):
     """Test applyHardLimitComplexValued with various inputs."""
-    prototype_numpyAllClose(expected, applyHardLimitComplexValued, arrayTarget, comparand, penalty)
+    prototype_numpyAllClose(expected, None, None, applyHardLimitComplexValued, arrayTarget, comparand, penalty)

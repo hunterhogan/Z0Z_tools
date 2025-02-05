@@ -2,13 +2,14 @@
 Provides utilities for reading, writing, and resampling audio waveforms.
 NOTE stft and loadSpectrograms are still in testing
 """
-from Z0Z_tools import halfsine, makeDirsSafely
+from numpy import dtype, ndarray
 from numpy.typing import NDArray
 from scipy.signal import ShortTimeFFT
-from typing import Any, BinaryIO, Dict, List, Literal, Optional, Sequence, Tuple, Union, overload
+from typing import Any, BinaryIO, Dict, List, Literal, Optional, overload, Sequence, Tuple, Union
+from Z0Z_tools import halfsine, makeDirsSafely
 import collections
-import io
 import functools
+import io
 import math
 import numpy
 import numpy.typing
@@ -17,7 +18,10 @@ import pathlib
 import resampy
 import soundfile
 
-# TODO change sample rates to float
+# TODO
+# change sample rates to float
+# types
+# docstrings
 # semiotics: WAV means the file format; waveform is a data concept. Don't use "Wav" or "wav" anymore because it is ambiguous.
 
 def loadSpectrograms(listPathFilenames: Sequence[str] | Sequence[os.PathLike[Any]], sampleRateTarget: int = 44100, binsFFT: int = 2048, hopLength: int = 512) -> Tuple[NDArray[numpy.complex64], List[Dict[str, int]]]:
@@ -163,6 +167,23 @@ def resampleWaveform(waveform: NDArray[numpy.float32], sampleRateDesired: int, s
     else:
         return waveform
 
+def spectrogramToWAV(spectrogram: NDArray, pathFilename: Union[str, os.PathLike[Any], io.IOBase], COUNTsamples: int, sampleRate: float = 44100) -> None:
+    """
+    Writes a complex spectrogram to a WAV file.
+
+    Parameters:
+        spectrogram: The complex spectrogram to be written to the file.
+        pathFilename: Location for the file of the waveform output.
+        COUNTsamples: n.b. Not optional: the length of the output waveform in samples.
+        sampleRate (44100): The sample rate of the output waveform file. Defaults to 44100.
+
+    Returns:
+        None:
+    """
+    makeDirsSafely(pathFilename)
+    waveform = stft(spectrogram, inverse=True, lengthWaveform=COUNTsamples)
+    writeWAV(pathFilename, waveform, sampleRate)
+
 @overload
 def stft(arrayTarget: NDArray[numpy.floating[Any]], *, sampleRate: float = 44100.0,
         hopLength: int = 512, window: Optional[NDArray[numpy.floating[Any]]] = None,
@@ -230,6 +251,16 @@ def stft(arrayTarget: NDArray[numpy.floating[Any] | numpy.complexfloating[Any, A
 
     return numpy.moveaxis(arrayTransformed, -1, indexingAxis)
 
+def waveformSpectrogramWaveform(callableNeedsSpectrogram):
+    @functools.wraps(wrapped=callableNeedsSpectrogram)
+    def stft_istft(waveform):
+        axisTime=-1
+        parametersSTFT={}
+        arrayTarget = stft(waveform, inverse=False, indexingAxis=None, **parametersSTFT)
+        spectrogram = callableNeedsSpectrogram(arrayTarget)
+        return stft(spectrogram, inverse=True, indexingAxis=None, lengthWaveform=waveform.shape[axisTime], **parametersSTFT)
+    return stft_istft
+
 def writeWAV(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: NDArray[Any], sampleRate: float = 44100) -> None:
     """
     Writes a waveform to a WAV file.
@@ -248,30 +279,3 @@ def writeWAV(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: ND
     """
     makeDirsSafely(pathFilename)
     soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
-
-def waveformSpectrogramWaveform(callableNeedsSpectrogram):
-    @functools.wraps(wrapped=callableNeedsSpectrogram)
-    def stft_istft(waveform):
-        axisTime=-1
-        parametersSTFT={}
-        arrayTarget = stft(waveform, inverse=False, indexingAxis=None, **parametersSTFT)
-        spectrogram = callableNeedsSpectrogram(arrayTarget)
-        return stft(spectrogram, inverse=True, indexingAxis=None, lengthWaveform=waveform.shape[axisTime], **parametersSTFT)
-    return stft_istft
-
-def spectrogramToWAV(spectrogram: NDArray, pathFilename: Union[str, os.PathLike[Any], io.IOBase], COUNTsamples: int, sampleRate: float = 44100) -> None:
-    """
-    Writes a complex spectrogram to a WAV file.
-
-    Parameters:
-        spectrogram: The complex spectrogram to be written to the file.
-        pathFilename: Location for the file of the waveform output.
-        COUNTsamples: n.b. Not optional: the length of the output waveform in samples.
-        sampleRate (44100): The sample rate of the output waveform file. Defaults to 44100.
-
-    Returns:
-        None:
-    """
-    makeDirsSafely(pathFilename)
-    waveform = stft(spectrogram, inverse=True, lengthWaveform=COUNTsamples)
-    writeWAV(pathFilename, waveform, sampleRate)

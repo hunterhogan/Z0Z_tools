@@ -1,59 +1,31 @@
-from numpy.typing import NDArray
-from pathlib import Path
 from tests.conftest import *
 import io
 import numpy
 import pytest
 import soundfile
 
-# Test data paths
-DATA_DIR = Path("tests/dataSamples")
-PATHS = {
-    'mono': DATA_DIR / "testWooWooMono16kHz32integerClipping9sec.wav",
-    'stereo': DATA_DIR / "testSine2ch5sec.wav",
-    'video': DATA_DIR / "testVideo11sec.mkv",
-    'mono_copies': [DATA_DIR / f"testWooWooMono16kHz32integerClipping9secCopy{i}.wav" for i in range(1, 4)],
-    'stereo_copies': [DATA_DIR / f"testSine2ch5secCopy{i}.wav" for i in range(1, 5)]
-}
-
-@pytest.fixture
-def waveform_data():
-    """Fixture providing sample waveform data and sample rates."""
-    mono_data, mono_sr = soundfile.read(PATHS['mono'], dtype='float32')
-    stereo_data, stereo_sr = soundfile.read(PATHS['stereo'], dtype='float32')
-    return {
-        'mono': {
-            'waveform': mono_data.astype(numpy.float32),
-            'sample_rate': mono_sr
-        },
-        'stereo': {
-            'waveform': stereo_data.astype(numpy.float32),
-            'sample_rate': stereo_sr
-        }
-    }
-
 # readAudioFile tests
 class TestReadAudioFile:
     def test_mono_to_stereo_conversion(self):
         """Test that mono files are properly converted to stereo."""
-        waveform = readAudioFile(PATHS['mono'])
+        waveform = readAudioFile(dumbassDictionaryPathFilenamesAudioFiles['mono'])
         assert waveform.shape[0] == 2  # Should be stereo (2 channels)
 
     def test_stereo_file_reading(self):
         """Test reading a stereo file directly."""
-        waveform = readAudioFile(PATHS['stereo'])
+        waveform = readAudioFile(dumbassDictionaryPathFilenamesAudioFiles['stereo'])
         assert waveform.shape[0] == 2
 
     @pytest.mark.parametrize("sample_rate", [16000, 44100, 48000])
     def test_resampling(self, sample_rate):
         """Test resampling functionality with different sample rates."""
-        waveform = readAudioFile(PATHS['mono'], sampleRate=sample_rate)
+        waveform = readAudioFile(dumbassDictionaryPathFilenamesAudioFiles['mono'], sampleRate=sample_rate)
         expected_length = int(sample_rate * 9)  # 9-second file
         assert waveform.shape[1] == pytest.approx(expected_length, rel=0.1)
 
     @pytest.mark.parametrize("invalid_input", [
         "nonexistent_file.wav",
-        PATHS['video']
+        dumbassDictionaryPathFilenamesAudioFiles['video']
     ])
     def test_invalid_inputs(self, invalid_input):
         """Test handling of invalid inputs."""
@@ -63,8 +35,8 @@ class TestReadAudioFile:
 # loadWaveforms tests
 class TestLoadWaveforms:
     @pytest.mark.parametrize("file_list,expected_shape", [
-        (PATHS['mono_copies'], (2, 396900, 3)),
-        (PATHS['stereo_copies'], (2, 220500, 4))
+        (dumbassDictionaryPathFilenamesAudioFiles['mono_copies'], (2, 396900, 3)),
+        (dumbassDictionaryPathFilenamesAudioFiles['stereo_copies'], (2, 220500, 4))
     ])
     def test_batch_loading(self, file_list, expected_shape):
         """Test loading multiple files of the same type."""
@@ -73,7 +45,7 @@ class TestLoadWaveforms:
 
     def test_mixed_file_types(self):
         """Test loading a mix of mono and stereo files."""
-        mixed_files = [PATHS['mono_copies'][0], PATHS['stereo_copies'][0]]
+        mixed_files = [dumbassDictionaryPathFilenamesAudioFiles['mono_copies'][0], dumbassDictionaryPathFilenamesAudioFiles['stereo_copies'][0]]
         array_waveforms = loadWaveforms(mixed_files)
         assert array_waveforms.shape[0] == 2  # Should be stereo
         assert array_waveforms.shape[2] == 2  # Two files
@@ -173,3 +145,4 @@ class TestWriteWav:
         bio = io.BytesIO()
         writeWAV(bio, waveform)
         assert bio.getvalue()  # Verify that data was written
+
