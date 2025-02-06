@@ -5,8 +5,13 @@
 - Temporary files and directories should be created and cleaned up here.
 - Prefer to make predictable data and use the test data in the tests/dataSamples directory over generating random data or artificial data."""
 
+from typing import Generator
+import pytest
+import soundfile
+from dataclasses import dataclass
+import re
 from numpy._core._exceptions import UFuncTypeError, _UFuncNoLoopError
-from typing import Generator, Set, Any, Type, Union, Sequence, Callable, Optional, Final
+from typing import Generator, Set, Any, Type, Union, Sequence, Callable, Optional, Final, Tuple, Dict
 from Z0Z_tools import *
 from Z0Z_tools.pytestForYourUse import *
 import pandas
@@ -99,10 +104,13 @@ def setupDirectoryStructure(pathTmpTesting):
 
     return baseDirectory
 
+# TODo integrate with `setupDirectoryStructure`
 @pytest.fixture
 def pathFilenameWAV(pathTmpTesting):
     """Fixture providing a temporary WAV file path."""
     return pathTmpTesting / "test_output.wav"
+
+# Fixtures
 
 @pytest.fixture
 def dataframeSample():
@@ -110,32 +118,6 @@ def dataframeSample():
         'columnA': [1, 2, 3],
         'columnB': ['a', 'b', 'c']
     })
-
-"""
-Section: Audio file testing utilities"""
-
-dumbassDictionaryPathFilenamesAudioFiles = {
-    'mono': pathDataSamples / "testWooWooMono16kHz32integerClipping9sec.wav",
-    'stereo': pathDataSamples / "testSine2ch5sec.wav",
-    'video': pathDataSamples / "testVideo11sec.mkv",
-    'mono_copies': [pathDataSamples / f"testWooWooMono16kHz32integerClipping9secCopy{i}.wav" for i in range(1, 4)],
-    'stereo_copies': [pathDataSamples / f"testSine2ch5secCopy{i}.wav" for i in range(1, 5)]
-}
-@pytest.fixture
-def waveform_data():
-    """Fixture providing sample waveform data and sample rates."""
-    mono_data, mono_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['mono'], dtype='float32')
-    stereo_data, stereo_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['stereo'], dtype='float32')
-    return {
-        'mono': {
-            'waveform': mono_data.astype(numpy.float32),
-            'sample_rate': mono_sr
-        },
-        'stereo': {
-            'waveform': stereo_data.astype(numpy.float32),
-            'sample_rate': stereo_sr
-        }
-    }
 
 """
 Section: Windowing function testing utilities"""
@@ -241,3 +223,95 @@ def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable, 
         assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
     else:
         assert numpy.array_equal(actual, expected), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)
+
+"""
+Section: This garbage needs to be replaced with something more similar to the next section."""
+
+dumbassDictionaryPathFilenamesAudioFiles = {
+    'mono': pathDataSamples / "testWooWooMono16kHz32integerClipping9sec.wav",
+    'stereo': pathDataSamples / "testSine2ch5sec.wav",
+    'video': pathDataSamples / "testVideo11sec.mkv",
+    'mono_copies': [pathDataSamples / f"testWooWooMono16kHz32integerClipping9secCopy{i}.wav" for i in range(1, 4)],
+    'stereo_copies': [pathDataSamples / f"testSine2ch5secCopy{i}.wav" for i in range(1, 5)]
+}
+@pytest.fixture
+def waveform_data():
+    """Fixture providing sample waveform data and sample rates."""
+    mono_data, mono_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['mono'], dtype='float32')
+    stereo_data, stereo_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['stereo'], dtype='float32')
+    return {
+        'mono': {
+            'waveform': mono_data.astype(numpy.float32),
+            'sample_rate': mono_sr
+        },
+        'stereo': {
+            'waveform': stereo_data.astype(numpy.float32),
+            'sample_rate': stereo_sr
+        }
+    }
+
+########################################################
+# The following is the starting point to create a prototype.
+@dataclass(frozen=True)
+class TestAudioFile:
+    path: pathlib.Path
+    channels: int
+    sample_rate: int
+    bit_depth: int
+    duration: float
+    features: Tuple[str, ...]
+
+def discover_test_files():
+    audio_files = {}
+    audio_dir = pathDataSamples / "audio"
+
+    pattern = re.compile(
+        r"test_([\w-]+)_(mono|stereo)_(\d+)kHz_(\d+)bit_([\w-]+)_(\d+)s\.wav"
+    )
+
+    for path in audio_dir.glob("*.wav"):
+        match = pattern.match(path.name)
+        if match:
+            groups = match.groups()
+            audio_files[path.stem] = TestAudioFile(
+                path=path,
+                channels=1 if groups[1] == "mono" else 2,
+                sample_rate=int(groups[2]) * 1000,
+                bit_depth=int(groups[3]),
+                duration=int(groups[5]),
+                features=tuple(groups[4].split('-'))
+            )
+
+    return audio_files
+
+test_audio_registry = discover_test_files()
+
+@pytest.fixture(scope="session")
+def audio_sample_registry():
+    """SSOT for all discovered audio test files"""
+    return test_audio_registry
+
+@pytest.fixture
+def audio_samples_by_feature(audio_sample_registry):
+    """Organize samples by their features"""
+    features = {}
+    for sample in audio_sample_registry.values():
+        for feature in sample.features:
+            features.setdefault(feature, []).append(sample)
+    return features
+
+@pytest.fixture(params=test_audio_registry.values(), ids=test_audio_registry.keys()) # type: ignore
+def any_audio_sample(request):
+    """Parametrized fixture for all audio samples"""
+    sample = request.param
+    data, sr = soundfile.read(sample.path, dtype='float32')
+    yield data.T, sr
+
+@pytest.fixture
+def mono_16k_samples(audio_sample_registry):
+    """All mono 16kHz samples"""
+    return [
+        (soundfile.read(p.path)[0].T, p.sample_rate)
+        for p in audio_sample_registry.values()
+        if p.channels == 1 and p.sample_rate == 16000
+    ]

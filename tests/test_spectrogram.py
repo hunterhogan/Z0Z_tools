@@ -34,7 +34,7 @@ def test_stft_custom_window():
     # Test with a custom window function
     signal = numpy.random.rand(44100)
     window = numpy.hanning(1024)
-    stft_result = stft(signal, window=window, lengthWindow=len(window))
+    stft_result = stft(signal, windowingFunction=window, lengthWindowingFunction=len(window))
     assert stft_result.shape[0] > 0 #check if the result is not empty.
     assert isinstance(stft_result[0,0], complex) #check if the result is complex
 
@@ -56,8 +56,8 @@ def test_stft_reconstruction_accuracy():
     windows = [None, numpy.hanning(1024), numpy.hamming(1024)]
 
     for window in windows:
-        spec = stft(signal, window=window)
-        reconstructed = stft(spec, inverse=True, lengthWaveform=len(signal), window=window)
+        spec = stft(signal, windowingFunction=window)
+        reconstructed = stft(spec, inverse=True, lengthWaveform=len(signal), windowingFunction=window)
         assert_allclose(signal, reconstructed, atol=1e-2)
 
 def test_stft_batch_processing():
@@ -108,7 +108,7 @@ def test_stft_extremeHopLengths():
     arrayWaveform = numpy.random.rand(44100)
     listHopLengths = [1, len(arrayWaveform) // 2, len(arrayWaveform)]
     for hopLength in listHopLengths:
-        arrayTransformed = stft(arrayWaveform, hopLength=hopLength)
+        arrayTransformed = stft(arrayWaveform, lengthHop=hopLength)
         assert arrayTransformed.shape[1] > 0
 
 def test_stft_oddLengthSignal():
@@ -144,10 +144,10 @@ def test_stft_largeDataset():
 def test_stft_nonStandardWindowFunction():
     """Test stft with a custom non-standard window function"""
     arrayWaveform = numpy.random.rand(44100)
-    lengthWindow = 1024
-    arrayWindowFunction = numpy.blackman(lengthWindow)
-    arrayTransformed = stft(arrayWaveform, window=arrayWindowFunction, lengthWindow=lengthWindow)
-    arrayReconstructed = stft(arrayTransformed, inverse=True, lengthWaveform=len(arrayWaveform), window=arrayWindowFunction)
+    lengthWindowingFunction = 1024
+    arrayWindowingFunction = numpy.blackman(lengthWindowingFunction)
+    arrayTransformed = stft(arrayWaveform, windowingFunction=arrayWindowingFunction, lengthWindowingFunction=lengthWindowingFunction)
+    arrayReconstructed = stft(arrayTransformed, inverse=True, lengthWaveform=len(arrayWaveform), windowingFunction=arrayWindowingFunction)
     assert_allclose(arrayWaveform, arrayReconstructed, atol=1e-2)
 
 class TestStftIstft:

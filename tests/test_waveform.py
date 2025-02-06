@@ -85,7 +85,6 @@ class TestResampleWaveform:
         with pytest.raises((AttributeError, ValueError)):
             resampleWaveform(*invalid_input)
 
-# writeWav tests
 class TestWriteWav:
     @pytest.mark.parametrize("test_case", [
         {
@@ -145,4 +144,3 @@ class TestWriteWav:
         bio = io.BytesIO()
         writeWAV(bio, waveform)
         assert bio.getvalue()  # Verify that data was written
-
