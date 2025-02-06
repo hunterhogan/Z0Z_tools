@@ -38,10 +38,8 @@ parametersDEFAULT = ParametersUniversal (
 # No, I don't know how to implement this, but I might learn how to do it later.
 # If you know how, you can help. :D
 parametersUniversal = {}
-windowCallableUniversal = None
 
-if not windowCallableUniversal:
-    windowCallableUniversal = windowCallableDEFAULT
+windowCallableUniversal = windowCallableDEFAULT
 if not parametersUniversal:
     parametersUniversal = parametersDEFAULT
 
