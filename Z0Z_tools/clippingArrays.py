@@ -22,10 +22,10 @@ def applyHardLimit(arrayTarget: NDArray[Any], comparand: ArrayLike = 1.0) -> NDA
     return arrayTarget
 
 def applyHardLimitComplexValued(
-    arrayTarget: ndarray[complexfloating[Any, Any], dtype[complexfloating[Any, Any]]],
-    comparand: ndarray[Union[floating[Any], complexfloating[Any, Any]], dtype[Union[floating[Any], complexfloating[Any, Any]]]],
+    arrayTarget: NDArray[complexfloating[Any, Any]],
+    comparand: NDArray[Union[floating[Any], complexfloating[Any, Any]]],
     penalty: float = 1.0
-    ) -> ndarray[complexfloating[Any, Any], dtype[complexfloating[Any, Any]]]:
+    ) -> NDArray[complexfloating[Any, Any]]:
     """
     Applies a hard limit to a complex-valued array based on the magnitude of a comparand array.
 
@@ -55,13 +55,13 @@ def applyHardLimitComplexValued(
     where the scaling is only applied when |arrayTarget| > |comparand|.
     """
 
-    magnitudeArrayTarget: ndarray[float64, dtype[float64]] = absolute(arrayTarget, dtype=float64)
-    magnitudeComparand: ndarray[float64, dtype[float64]] = absolute(comparand, dtype=float64)
+    magnitudeArrayTarget: NDArray[float64] = absolute(arrayTarget, dtype=float64)
+    magnitudeComparand: NDArray[float64] = absolute(comparand, dtype=float64)
 
     maskTrueAboveThreshold = magnitudeComparand - magnitudeArrayTarget < 0.0
 
-    arrayCoefficients_Float64: ndarray[float64, dtype[float64]] = magnitudeComparand[maskTrueAboveThreshold] / magnitudeArrayTarget[maskTrueAboveThreshold]
-    arrayCoefficients_ComplexValued: ndarray[complexfloating[Any, Any], dtype[complexfloating[Any, Any]]] = ones_like(arrayTarget, dtype=arrayTarget.dtype)
+    arrayCoefficients_Float64: NDArray[float64] = magnitudeComparand[maskTrueAboveThreshold] / magnitudeArrayTarget[maskTrueAboveThreshold]
+    arrayCoefficients_ComplexValued: NDArray[complexfloating[Any, Any]] = ones_like(arrayTarget, dtype=arrayTarget.dtype)
     arrayCoefficients_ComplexValued[maskTrueAboveThreshold] = arrayCoefficients_Float64**penalty
 
     return arrayTarget * arrayCoefficients_ComplexValued
