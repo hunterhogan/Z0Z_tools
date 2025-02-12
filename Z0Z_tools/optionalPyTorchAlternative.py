@@ -5,4 +5,4 @@ callableTargetParameters = ParamSpec('callableTargetParameters')
 callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., NDArray])
 
 def def_asTensor(callableTarget: Callable[callableTargetParameters, NDArray]) -> Callable[callableTargetParameters, NDArray]:
-    return callableTarget
+	return callableTarget

@@ -9,52 +9,52 @@ callableTargetParameters = ParamSpec('callableTargetParameters')
 callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., NDArray])
 
 class callableAsTensor(Protocol[callableTargetParameters]):
-    __name__: str
-    __doc__: str | None
-    __module__: str
-    def __call__(self, device: Device = ..., *args: callableTargetParameters.args, **kwargs: callableTargetParameters.kwargs) -> torch.Tensor: ...
+	__name__: str
+	__doc__: str | None
+	__module__: str
+	def __call__(self, device: Device = ..., *args: callableTargetParameters.args, **kwargs: callableTargetParameters.kwargs) -> torch.Tensor: ...
 
 def def_asTensor(callableTarget: Callable[callableTargetParameters, NDArray]) -> Callable[callableTargetParameters, NDArray]:
-    """
-    Decorator that creates a tensor version of a numpy array-returning function.
-    The tensor version will be available with a 'Tensor' suffix.
+	"""
+	Decorator that creates a tensor version of a numpy array-returning function.
+	The tensor version will be available with a 'Tensor' suffix.
 
-    Example:
-        @def_asTensor
-        def window(n: int) -> NDArray: ...
+	Example:
+		@def_asTensor
+		def window(n: int) -> NDArray: ...
 
-        This creates:
-        - window(n: int) -> NDArray
-        - windowTensor(n: int, device: torch.device = torch.device('cpu')) -> torch.Tensor
-    """
-    def convertToTensor(*args: Any, device: Device = torch.device(device='cpu'), **kwargs: Any) -> torch.Tensor:
-        arrayTarget = callableTarget(*args, **kwargs)
-        return torch.tensor(data=arrayTarget, dtype=torch.float32, device=device)
+		This creates:
+		- window(n: int) -> NDArray
+		- windowTensor(n: int, device: torch.device = torch.device('cpu')) -> torch.Tensor
+	"""
+	def convertToTensor(*args: Any, device: Device = torch.device(device='cpu'), **kwargs: Any) -> torch.Tensor:
+		arrayTarget = callableTarget(*args, **kwargs)
+		return torch.tensor(data=arrayTarget, dtype=torch.float32, device=device)
 
-    # Get the module where the decorated function is defined
-    moduleTarget = sys.modules[callableTarget.__module__]
+	# Get the module where the decorated function is defined
+	moduleTarget = sys.modules[callableTarget.__module__]
 
-    # Cast and set the convertToTensor function with proper name
-    callableAsTensorTarget = cast(callableAsTensor[callableTargetParameters], convertToTensor)
-    callableAsTensorTarget.__name__ = callableTarget.__name__ + "Tensor"
-    callableAsTensorTarget.__doc__ = f"""
-    Tensor version of {callableTarget.__name__}.
-    Same parameters as the original function, plus an optional device parameter.
+	# Cast and set the convertToTensor function with proper name
+	callableAsTensorTarget = cast(callableAsTensor[callableTargetParameters], convertToTensor)
+	callableAsTensorTarget.__name__ = callableTarget.__name__ + "Tensor"
+	callableAsTensorTarget.__doc__ = f"""
+	Tensor version of {callableTarget.__name__}.
+	Same parameters as the original function, plus an optional device parameter.
 
-    Additional Parameters:
-        device: torch.device = torch.device('cpu')
-            The device to place the tensor on.
+	Additional Parameters:
+		device: torch.device = torch.device('cpu')
+			The device to place the tensor on.
 
-    Returns:
-        torch.Tensor: The result as a PyTorch tensor.
-    """
-    callableAsTensorTarget.__module__ = callableTarget.__module__
+	Returns:
+		torch.Tensor: The result as a PyTorch tensor.
+	"""
+	callableAsTensorTarget.__module__ = callableTarget.__module__
 
-    # Add to the module's __all__ if it exists
-    if hasattr(moduleTarget, '__all__'):
-        moduleTarget.__all__.append(callableAsTensorTarget.__name__)
+	# Add to the module's __all__ if it exists
+	if hasattr(moduleTarget, '__all__'):
+		moduleTarget.__all__.append(callableAsTensorTarget.__name__)
 
-    # Set in both globals and module dict
-    setattr(moduleTarget, callableAsTensorTarget.__name__, callableAsTensorTarget)
+	# Set in both globals and module dict
+	setattr(moduleTarget, callableAsTensorTarget.__name__, callableAsTensorTarget)
 
-    return callableTarget
+	return callableTarget
