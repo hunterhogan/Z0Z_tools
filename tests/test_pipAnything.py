@@ -1,6 +1,4 @@
-from pytest_mock.plugin import _mocker
 from tests.conftest import *
-from typing import Any, List, LiteralString, Callable, Generator
 import pathlib
 import subprocess
 import sys

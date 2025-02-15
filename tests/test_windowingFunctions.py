@@ -1,14 +1,9 @@
+from tests.conftest import *
 import numpy
-from typing import Callable
 import pytest
 import scipy.signal.windows as SciPy
-from numpy.typing import NDArray
 from Z0Z_tools.windowingFunctions import (
 	cosineWings, equalPower, halfsine, tukey
-)
-from tests.conftest import (
-	prototype_numpyAllClose, prototype_numpyArrayEqual,
-	uniformTestFailureMessage
 )
 
 @pytest.mark.parametrize("ratioTaper", [0.0, 0.1, 0.5, 1.0])

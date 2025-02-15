@@ -1,7 +1,4 @@
-from numpy.typing import NDArray
-from numpy import ndarray, dtype
 from tests.conftest import *
-from typing import Dict, Literal, Tuple, Union
 import io
 import numpy
 import pathlib

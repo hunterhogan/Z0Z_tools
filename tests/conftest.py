@@ -1,7 +1,31 @@
+from types import EllipsisType
+from typing import TYPE_CHECKING
 from numpy import ndarray, dtype
-from numpy._core._exceptions import UFuncTypeError, _UFuncNoLoopError
+from numpy._core._exceptions import UFuncTypeError
 from numpy.typing import NDArray
-from typing import Generator, Set, Any, Type, Union, Sequence, Callable, Optional, Final, Tuple, Dict, List
+if TYPE_CHECKING:
+	from typing import (
+		Any,
+		Callable,
+		Dict,
+		Final,
+		Generator,
+		Iterable,
+		Iterator,
+		List,
+		Literal,
+		LiteralString,
+		Optional,
+		Sequence,
+		Set,
+		Tuple,
+		Type,
+		Type,
+		Union,
+	)
+else:
+	import typing
+	globals().update({ID:object for ID in typing.__all__})
 from Z0Z_tools import *
 from Z0Z_tools.pytestForYourUse import *
 import numpy

@@ -1,6 +1,4 @@
-from typing import Literal
-from numpy._core._exceptions import UFuncTypeError, _UFuncNoLoopError
-from numpy._typing._array_like import NDArray
+from numpy._core._exceptions import _UFuncNoLoopError
 from tests.conftest import *
 import numpy
 import pytest
