@@ -1,9 +1,8 @@
 from types import EllipsisType
-from typing import TYPE_CHECKING
 from numpy import ndarray, dtype
 from numpy._core._exceptions import UFuncTypeError
 from numpy.typing import NDArray
-if TYPE_CHECKING:
+try:
 	from typing import (
 		Any,
 		Callable,
@@ -23,7 +22,7 @@ if TYPE_CHECKING:
 		Type,
 		Union,
 	)
-else:
+except Exception:
 	import typing
 	globals().update({ID:object for ID in typing.__all__})
 from Z0Z_tools import *
