@@ -1,5 +1,6 @@
+from pytest_mock.plugin import _mocker
 from tests.conftest import *
-from typing import Any, List
+from typing import Any, List, LiteralString, Callable, Generator
 import pathlib
 import subprocess
 import sys
@@ -15,7 +16,7 @@ import pytest
 	]
 	, ids=lambda x: x if isinstance(x, str) else ""
 )
-def test_makeListRequirementsFromRequirementsFile(description, content, expected: List[str], pathTmpTesting: pathlib.Path):
+def test_makeListRequirementsFromRequirementsFile(description: Literal['Basic requirements'] | Literal['Invalid requirements'] | Literal['Multiple valid packages'] | Literal['Empty file'] | Literal['Comments only'] | Literal['Whitespace only'], content: LiteralString | Literal['invalid==requirement==1.0\nvalid-package==1.13.0'] | Literal['package-FR==11.0\npackage-JP==13.0'] | Literal[''] | Literal['# Comment 1\n# Comment 2'] | Literal['\t\n\t\n'], expected: List[str], pathTmpTesting: pathlib.Path):
 	"""Test requirements file parsing with various inputs."""
 	pathRequirementsFile = pathTmpTesting / "requirements.txt"
 	pathRequirementsFile.write_text(content)
@@ -25,7 +26,7 @@ def test_makeListRequirementsFromRequirementsFile(description, content, expected
 	("Multiple files with unique entries", [ ('requirements1.txt', 'package-NE==11.0\npackage-NW==13.0'), ('requirements2.txt', 'package-SW==17.0\npackage-SE==19.0') ], ['package-NE==11.0', 'package-NW==13.0', 'package-SE==19.0', 'package-SW==17.0'] ),
 	("Multiple files with duplicates", [ ('requirements1.txt', 'package-FR==11.0\npackage-common==13.0'), ('requirements2.txt', 'package-JP==17.0\npackage-common==13.0') ], ['package-FR==11.0', 'package-JP==17.0', 'package-common==13.0'] ),
 ])
-def test_multiple_requirements_files(description, paths, expected, pathTmpTesting: pathlib.Path):
+def test_multiple_requirements_files(description: Literal['Multiple files with unique entries'] | Literal['Multiple files with duplicates'], paths: List[tuple[str, str]], expected: List[str], pathTmpTesting: pathlib.Path):
 	"""Test processing multiple requirements files."""
 	pathFilenames = []
 	for filename, content in paths:
@@ -44,14 +45,15 @@ def test_nonexistent_requirements_file(pathTmpTesting: pathlib.Path):
 	("Basic setup", 'package-NE', ['numpy>=11.0', 'pandas>=13.0'], [ "name='package-NE'", "packages=find_packages(where=r'package-NE')", "package_dir={'': r'package-NE'}", "install_requires=['numpy>=11.0', 'pandas>=13.0']", "include_package_data=True" ] ),
 	("Empty requirements", 'package-SW', [], [ "name='package-SW'", "install_requires=[]" ] ),
 ])
-def test_make_setupDOTpy(description, relativePathPackage, listRequirements, expected_contains):
+def test_make_setupDOTpy(description: Literal['Basic setup'] | Literal['Empty requirements'], relativePathPackage: Literal['package-NE'] | Literal['package-SW'], listRequirements: List[str], expected_contains: List[str]):
 	"""Test setup.py content generation."""
 	setup_content = make_setupDOTpy(relativePathPackage, listRequirements)
 	for expected in expected_contains:
 		assert expected in setup_content
 
 @pytest.mark.usefixtures("mockTemporaryFiles")
-def test_installPackageTarget(mocker, pathTmpTesting: pathlib.Path):
+def test_installPackageTarget(mocker
+							, pathTmpTesting: pathlib.Path):
 	"""Test package installation process."""
 	# Setup test package structure
 	pathPackageDir = pathTmpTesting / 'test-package-NE'

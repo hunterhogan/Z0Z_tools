@@ -1,4 +1,5 @@
 import numpy
+from typing import Callable
 import pytest
 import scipy.signal.windows as SciPy
 from numpy.typing import NDArray
@@ -89,7 +90,7 @@ def test_tukey_special_cases(lengthWindow: int) -> None:
 	)
 
 @pytest.mark.parametrize("functionWindowingInvalid", [cosineWings, equalPower])
-def test_invalidTaperRatio(functionWindowingInvalid) -> None:
+def test_invalidTaperRatio(functionWindowingInvalid: Callable[..., NDArray]) -> None:
 	"""
 	Verify error handling for invalid taper ratios in cosineWings and equalPower.
 	"""

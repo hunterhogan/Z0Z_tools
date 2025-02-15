@@ -1,8 +1,10 @@
+from pathlib import Path
+from typing import Literal
 from tests.conftest import *
 import pandas
 import pytest
 
-def testDataTabularTOpathFilenameDelimitedBasic(dataframeSample, pathTmpTesting):
+def testDataTabularTOpathFilenameDelimitedBasic(dataframeSample: pandas.DataFrame, pathTmpTesting: Path) -> None:
 	"""Test basic functionality with DataFrame data."""
 	pathOutput = pathTmpTesting / "output.csv"
 
@@ -26,7 +28,7 @@ def testDataTabularTOpathFilenameDelimitedBasic(dataframeSample, pathTmpTesting)
 	('\t', 'tab'),
 	('|', 'pipe')
 ])
-def testDataTabularTOpathFilenameDelimitedDelimiters(dataframeSample, pathTmpTesting, delimiterOutput, filenameInfix):
+def testDataTabularTOpathFilenameDelimitedDelimiters(dataframeSample: pandas.DataFrame, pathTmpTesting: Path, delimiterOutput: Literal[','] | Literal['\t'] | Literal['|'], filenameInfix: Literal['comma'] | Literal['tab'] | Literal['pipe']) -> None:
 	"""Test with different delimiters."""
 	pathOutput = pathTmpTesting / f"output_{filenameInfix}.txt"
 
@@ -41,7 +43,7 @@ def testDataTabularTOpathFilenameDelimitedDelimiters(dataframeSample, pathTmpTes
 	dfRead = pandas.read_csv(pathOutput, sep=delimiterOutput)
 	pandas.testing.assert_frame_equal(dataframeSample, dfRead)
 
-def testDataTabularTOpathFilenameDelimitedNoHeaders(dataframeSample, pathTmpTesting):
+def testDataTabularTOpathFilenameDelimitedNoHeaders(dataframeSample: pandas.DataFrame, pathTmpTesting: Path) -> None:
 	"""Test writing data without column headers."""
 	pathOutput = pathTmpTesting / "no_headers.csv"
 
@@ -57,7 +59,7 @@ def testDataTabularTOpathFilenameDelimitedNoHeaders(dataframeSample, pathTmpTest
 		lines = readStream.readlines()
 		assert len(lines) == len(dataframeSample)
 
-def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting):
+def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: Path) -> None:
 	"""Test writing empty data."""
 	pathOutput = pathTmpTesting / "empty.csv"
 
@@ -80,7 +82,7 @@ def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting):
 	("dir1", "dir1/subdir1", "subdir1"),
 	("dir3/subdir3", "dir1/file1.txt", "../../dir1/file1.txt"),
 ])
-def testFindRelativePath(setupDirectoryStructure, pathStart, pathTarget, expectedResult):
+def testFindRelativePath(setupDirectoryStructure: Any, pathStart: Literal['dir1'] | Literal['dir1/subdir1'] | Literal['dir3/subdir3'], pathTarget: Literal['dir2'] | Literal['dir2/subdir2'] | Literal['dir1/subdir1'] | Literal['dir1/file1.txt'], expectedResult: Literal['../dir2'] | Literal['../../dir2/subdir2'] | Literal['subdir1'] | Literal['../../dir1/file1.txt']) -> None:
 	"""Test findRelativePath with various path combinations."""
 	pathStartFull = setupDirectoryStructure / pathStart
 	pathTargetFull = setupDirectoryStructure / pathTarget
@@ -88,7 +90,7 @@ def testFindRelativePath(setupDirectoryStructure, pathStart, pathTarget, expecte
 	resultPath = findRelativePath(pathStartFull, pathTargetFull)
 	assert resultPath == expectedResult
 
-def testFindRelativePathWithNonexistentPaths(pathTmpTesting):
+def testFindRelativePathWithNonexistentPaths(pathTmpTesting: Path) -> None:
 	"""Test findRelativePath with paths that don't exist."""
 	pathStart = pathTmpTesting / "nonexistent1"
 	pathTarget = pathTmpTesting / "nonexistent2"
@@ -96,7 +98,7 @@ def testFindRelativePathWithNonexistentPaths(pathTmpTesting):
 	resultPath = findRelativePath(pathStart, pathTarget)
 	assert resultPath == "../nonexistent2"
 
-def testFindRelativePathWithSamePath(pathTmpTesting):
+def testFindRelativePathWithSamePath(pathTmpTesting: Path) -> None:
 	"""Test findRelativePath when start and target are the same."""
 	pathTest = pathTmpTesting / "testdir"
 	pathTest.mkdir()

@@ -5,65 +5,69 @@ build-backend = "setuptools.build_meta"
 [project]
 authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Environment :: Console",
-    "Framework :: Pytest",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Education",
-    "Intended Audience :: End Users/Desktop",
-    "Intended Audience :: Other Audience",
-    "Intended Audience :: Science/Research",
-    "Natural Language :: English",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Topic :: Multimedia :: Sound/Audio :: Analysis",
-    "Topic :: Multimedia :: Sound/Audio :: Editors",
-    "Topic :: Multimedia :: Sound/Audio",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Topic :: Software Development",
-    "Topic :: Text Processing",
-    "Topic :: Utilities",
-    "Typing :: Typed",]
+	"Development Status :: 5 - Production/Stable",
+	"Environment :: Console",
+	"Framework :: Pytest",
+	"Intended Audience :: Developers",
+	"Intended Audience :: Education",
+	"Intended Audience :: End Users/Desktop",
+	"Intended Audience :: Other Audience",
+	"Intended Audience :: Science/Research",
+	"Natural Language :: English",
+	"Operating System :: OS Independent",
+	"Programming Language :: Python",
+	"Programming Language :: Python :: 3",
+	"Topic :: Multimedia :: Sound/Audio :: Analysis",
+	"Topic :: Multimedia :: Sound/Audio :: Editors",
+	"Topic :: Multimedia :: Sound/Audio",
+	"Topic :: Scientific/Engineering :: Artificial Intelligence",
+	"Topic :: Software Development",
+	"Topic :: Text Processing",
+	"Topic :: Utilities",
+	"Typing :: Typed",]
 dependencies = [
-    "charset-normalizer",
-    "numpy",
-    "packaging",
-    "resampy",
-    "scipy",
-    "soundfile",]
+	"charset-normalizer",
+	"numpy",
+	"packaging",
+	"resampy",
+	"scipy",
+	"soundfile",]
 description = "Tools for audio/signal processing, data structure, function parameters, and package management."
 keywords = ["Python", "development", "tools"]
 license = { 'text' = "CC-BY-NC-4.0" }
 name = "Z0Z_tools"
 optional-dependencies = { PyTorch = [
-    "torch",
+	"torch",
 ], testing = [
-    "pandas",
-    "pytest-cov",
-    "pytest-mock",
-    "pytest-xdist",
-    "pytest",
-    "torch",] }
+	"pandas",
+	"pytest-cov",
+	"pytest-mock",
+	"pytest-xdist",
+	"pytest",
+	"torch",] }
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
-urls = {Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Repository = "https://github.com/hunterhogan/Z0Z_tools.git"}
+urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Repository = "https://github.com/hunterhogan/Z0Z_tools.git" }
 version = "0.9.2"
 
 [tool.coverage]
 report = { exclude_lines = [
-    "if TYPE_CHECKING:",
-    "if __name__ == \"__main__\":",
+	"if TYPE_CHECKING:",
+	"if __name__ == \"__main__\":",
 ], ignore_errors = false }
 run = { branch = true, concurrency = [
-    "multiprocessing",
-    "thread",
+	"multiprocessing",
 ], data_file = "tests/coverage/.coverage", omit = [
-    "tests/*",
+	"tests/*",
 ], parallel = true, source = [
-    ".",] }
+	".",] }
 xml = { output = "tests/coverage/coverage.xml" }
 
+[tool.mypy]
+disallow_untyped_defs = true
+
 [tool.pytest.ini_options]
+log_auto_indent = ["On"]
 addopts = ["--color=yes", "-n 4"]
 testpaths = ["tests"]
 

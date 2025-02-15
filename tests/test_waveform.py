@@ -1,6 +1,10 @@
+from numpy.typing import NDArray
+from numpy import ndarray, dtype
 from tests.conftest import *
+from typing import Dict, Literal, Tuple, Union
 import io
 import numpy
+import pathlib
 import pytest
 import soundfile
 
@@ -17,7 +21,7 @@ class TestReadAudioFile:
 		assert waveform.shape[0] == 2
 
 	@pytest.mark.parametrize("sample_rate", [16000, 44100, 48000])
-	def test_resampling(self, sample_rate):
+	def test_resampling(self, sample_rate: Literal[16000] | Literal[44100] | Literal[48000]):
 		"""Test resampling functionality with different sample rates."""
 		waveform = readAudioFile(dumbassDictionaryPathFilenamesAudioFiles['mono'], sampleRate=sample_rate)
 		expected_length = int(sample_rate * 9)  # 9-second file
@@ -27,7 +31,7 @@ class TestReadAudioFile:
 		"nonexistent_file.wav",
 		dumbassDictionaryPathFilenamesAudioFiles['video']
 	])
-	def test_invalid_inputs(self, invalid_input):
+	def test_invalid_inputs(self, invalid_input: Any | Literal['nonexistent_file.wav']):
 		"""Test handling of invalid inputs."""
 		with pytest.raises((FileNotFoundError, soundfile.LibsndfileError)):
 			readAudioFile(invalid_input)
@@ -38,7 +42,7 @@ class TestLoadWaveforms:
 		(dumbassDictionaryPathFilenamesAudioFiles['mono_copies'], (2, 396900, 3)),
 		(dumbassDictionaryPathFilenamesAudioFiles['stereo_copies'], (2, 220500, 4))
 	])
-	def test_batch_loading(self, file_list, expected_shape):
+	def test_batch_loading(self, file_list: Any, expected_shape: Tuple[int]):
 		"""Test loading multiple files of the same type."""
 		array_waveforms = loadWaveforms(file_list)
 		assert array_waveforms.shape == expected_shape
@@ -62,14 +66,14 @@ class TestResampleWaveform:
 		(44100, 22050, 0.5),
 		(44100, 44100, 1.0)
 	])
-	def test_resampling_rates(self, waveform_data, source_rate, target_rate, expected_factor):
+	def test_resampling_rates(self, waveform_data: Dict[str, Dict[str, Any]], source_rate: Literal[16000] | Literal[44100], target_rate: Literal[44100] | Literal[22050], expected_factor: float):
 		"""Test resampling with different rate combinations."""
 		waveform = waveform_data['mono']['waveform']
 		resampled = resampleWaveform(waveform, target_rate, source_rate)
 		expected_length = int(waveform.shape[0] * expected_factor)
 		assert resampled.shape[0] == expected_length
 
-	def test_same_rate_no_change(self, waveform_data):
+	def test_same_rate_no_change(self, waveform_data: Dict[str, Dict[str, Any]]):
 		"""Test that no resampling occurs when rates match."""
 		waveform = waveform_data['stereo']['waveform']
 		rate = waveform_data['stereo']['sample_rate']
@@ -80,7 +84,7 @@ class TestResampleWaveform:
 		('not_an_array', 44100, 22050),
 		(numpy.array([1, 2, 3]), -44100, 22050)
 	])
-	def test_invalid_inputs(self, invalid_input):
+	def test_invalid_inputs(self, invalid_input: Any) -> None:
 		"""Test handling of invalid inputs."""
 		with pytest.raises((AttributeError, ValueError)):
 			resampleWaveform(*invalid_input)
@@ -100,7 +104,7 @@ class TestWriteWav:
 			'expected_shape': (1000, 2)  # Stereo should be 2D array (samples, channels)
 		}
 	])
-	def test_write_and_verify(self, pathFilenameTmpTesting, test_case):
+	def test_write_and_verify(self, pathFilenameTmpTesting: pathlib.Path, test_case: Any) -> None:
 		"""Test writing WAV files and verifying their contents."""
 		# Input waveform shape: (channels, samples)
 		waveform = numpy.random.rand(test_case['channels'], test_case['samples']).astype(numpy.float32)
@@ -120,14 +124,14 @@ class TestWriteWav:
 		else:
 			assert numpy.allclose(read_waveform, waveform.T)
 
-	def test_directory_creation(self, pathTmpTesting):
+	def test_directory_creation(self, pathTmpTesting: pathlib.Path) -> None:
 		"""Test automatic directory creation."""
 		nested_path = pathTmpTesting / "nested" / "dirs" / "test.wav"
 		waveform = numpy.random.rand(2, 1000).astype(numpy.float32)
 		writeWAV(nested_path, waveform)
 		assert nested_path.exists()
 
-	def test_file_overwrite(self, pathFilenameTmpTesting):
+	def test_file_overwrite(self, pathFilenameTmpTesting: pathlib.Path) -> None:
 		"""Test overwriting existing files."""
 		waveform1 = numpy.ones((2, 1000), dtype=numpy.float32)
 		waveform2 = numpy.zeros((2, 1000), dtype=numpy.float32)

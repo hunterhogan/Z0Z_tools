@@ -1,4 +1,6 @@
+from typing import Literal
 from numpy._core._exceptions import UFuncTypeError, _UFuncNoLoopError
+from numpy._typing._array_like import NDArray
 from tests.conftest import *
 import numpy
 import pytest
@@ -18,7 +20,7 @@ import pytest
 	("Invalid dtype", _UFuncNoLoopError, numpy.array(['a', 'b']), 1.0),
 	# ("Invalid dtype", UFuncTypeError, numpy.array(['a', 'b']), 1.0),
 ], ids=lambda x: x if isinstance(x, str) else "")
-def testApplyHardLimit(description, expected, arrayTarget, comparand):
+def testApplyHardLimit(description: Literal['Simple array under limit'] | Literal['Simple array at limit'] | Literal['Array comparand under limit'] | Literal['Zero array'] | Literal['2D array under limit'] | Literal['Non-array input'] | Literal['Mismatched shapes'] | Literal['Invalid dtype'], expected: Any, arrayTarget: NDArray[Any] | NDArray[float64] | float, comparand: float | NDArray[Any]) -> None:
 	"""Test applyHardLimit with various inputs."""
 	prototype_numpyAllClose(expected, None, None, applyHardLimit, arrayTarget, comparand)
 
@@ -34,6 +36,6 @@ def testApplyHardLimit(description, expected, arrayTarget, comparand):
 	("Invalid penalty", TypeError, numpy.array([1+1j, 2+2j]), numpy.array([1.0, 1.0]), "invalid"),
 	("Mismatched shapes", IndexError, numpy.array([1+1j, 2+2j]), numpy.array([[1.0]]), 1.0),
 ], ids=lambda x: x if isinstance(x, str) else "")
-def testApplyHardLimitComplexValued(description, expected, arrayTarget, comparand, penalty):
+def testApplyHardLimitComplexValued(description: Literal['Simple complex under limit'] | Literal['Simple complex at limit'] | Literal['Simple complex over limit'] | Literal['2D complex array'] | Literal['Zero complex array'] | Literal['Non-complex array'] | Literal['Invalid penalty'] | Literal['Mismatched shapes'], expected: Any, arrayTarget: NDArray[Any], comparand: NDArray[Any] | NDArray[float64], penalty: float | Literal['invalid']) -> None:
 	"""Test applyHardLimitComplexValued with various inputs."""
 	prototype_numpyAllClose(expected, None, None, applyHardLimitComplexValued, arrayTarget, comparand, penalty)

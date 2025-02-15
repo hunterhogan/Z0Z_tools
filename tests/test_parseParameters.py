@@ -1,14 +1,15 @@
+from typing import Tuple, Callable
 from tests.conftest import PytestFor_defineConcurrencyLimit, PytestFor_intInnit, PytestFor_oopsieKwargsie
 import pytest
 
 @pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_defineConcurrencyLimit())
-def testConcurrencyLimit(nameOfTest, callablePytest):
+def testConcurrencyLimit(nameOfTest: str, callablePytest: Callable) -> None:
 	callablePytest()
 
 @pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_intInnit())
-def testIntInnit(nameOfTest, callablePytest):
+def testIntInnit(nameOfTest: str, callablePytest: Callable) -> None:
 	callablePytest()
 
 @pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_oopsieKwargsie())
-def testOopsieKwargsie(nameOfTest, callablePytest):
+def testOopsieKwargsie(nameOfTest: str, callablePytest: Callable) -> None:
 	callablePytest()

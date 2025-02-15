@@ -1,3 +1,6 @@
+from typing import Literal, Iterable, Any, List, Dict, Generator, Tuple, Iterator, Type
+from types import EllipsisType
+from numpy.typing import NDArray
 from tests.conftest import *
 from decimal import Decimal
 from fractions import Fraction
@@ -6,8 +9,8 @@ import numpy
 import pytest
 
 class CustomIterable:
-	def __init__(self, items): self.items = items
-	def __iter__(self): return iter(self.items)
+	def __init__(self, items) -> None: self.items = items
+	def __iter__(self) -> Iterable: return iter(self.items)
 
 @pytest.mark.parametrize("description,value_scrapPile,expected", [
 	# Basic types and structures
@@ -50,14 +53,14 @@ class CustomIterable:
 	# Error cases
 	("Raising __str__", type('RaisingStr', (), {'__str__': lambda x: 1/0})(), ZeroDivisionError),
 ], ids=lambda x: x if isinstance(x, str) else "")
-def testStringItUp(description, value_scrapPile, expected):
+def testStringItUp(description: Literal['Empty input'] | Literal['Prime numbers'] | Literal['Cardinal directions'] | Literal['Country codes'] | Literal['Boolean values'] | Literal['None value'] | Literal['Fibonacci floats'] | Literal['Complex with primes'] | Literal['Decimal and Fraction'] | Literal['NumPy primes'] | Literal['Historical date'] | Literal['Time zones'] | Literal['Moon landing'] | Literal['Prime bytes'] | Literal['Custom bytearray'] | Literal['Nested dictionary'] | Literal['Mixed nesting'] | Literal['Tuples and lists'] | Literal['Sets and frozensets'] | Literal['NaN and Infinities'] | Literal['Large prime'] | Literal['Simple recursive'] | Literal['Complex recursive'] | Literal['Generator from primes'] | Literal['Iterator from Fibonacci'] | Literal['Custom iterable cardinal'] | Literal['Custom iterable empty'] | Literal['Bad __str__'] | Literal['Raising __str__'], value_scrapPile: List[int] | List[str] | List[bool] | List[None] | List[float] | List[complex] | List[Decimal | Fraction] | NDArray[Any] | List[datetime.date] | List[datetime.time] | List[datetime.datetime] | List[bytes] | List[bytearray] | Dict[str, float] | List[Dict[str, int]] | List[Tuple[int] | List[int]] | List[set[int] | frozenset[int]] | List[List[List[EllipsisType]]] | Dict[str, Dict[str, None]] | Generator[int, None, None] | Iterator[int] | CustomIterable, expected: list[str] | list[None] | type[ZeroDivisionError]) -> None:
 	"""Test stringItUp with various inputs."""
 	standardizedEqualTo(expected, stringItUp, value_scrapPile)
 
 @pytest.mark.parametrize("description,value_scrapPile,expected", [
 	("Memory view", memoryview(b"DEADBEEF"), ["<memory at 0x"]),  # Special handling for memoryview
 ], ids=lambda x: x if isinstance(x, str) else "")
-def testStringItUpErrorCases(description, value_scrapPile, expected):
+def testStringItUpErrorCases(description: Literal['Memory view'], value_scrapPile: memoryview, expected: str) -> None:
 	result = stringItUp(value_scrapPile)
 	assert len(result) == 1
 	assert result[0].startswith(expected[0])
@@ -74,7 +77,7 @@ def testStringItUpErrorCases(description, value_scrapPile, expected):
 	("Non-iterable values", ({'ne': 13, 'sw': 17}, {'ne': 19, 'nw': 23}), {'destroyDuplicates': False, 'reorderLists': False}, TypeError ),
 	("Skip erroneous types", ({'ne': [11, 13], 'sw': [17, 19]}, {'ne': 23, 'nw': 29}), {'killErroneousDataTypes': True}, {'ne': [11, 13], 'sw': [17, 19]} ),
 ], ids=lambda x: x if isinstance(x, str) else "")
-def testUpdateExtendPolishDictionaryLists(description, value_dictionaryLists, keywordArguments, expected):
+def testUpdateExtendPolishDictionaryLists(description: Literal['Empty dictionaries'] | Literal['Mixed value types'] | Literal['Non-string keys'] | Literal['Set values'] | Literal['Tuple values'] | Literal['NumPy arrays'] | Literal['Destroy duplicates'] | Literal['Reorder lists'] | Literal['Non-iterable values'] | Literal['Skip erroneous types'], value_dictionaryLists: tuple[dict, dict] | tuple[dict[str, list], dict[str, list]] | tuple[dict[Any, list[int]], dict[Any, list[int]]] | tuple[dict[str, set[int]], dict[str, set[int]]] | tuple[dict[str, Any], dict[str, Any]] | tuple[dict[str, NDArray[Any]], dict[str, NDArray[Any]]] | tuple[dict[str, list[int]], dict[str, list[int]]] | tuple[dict[str, int], dict[str, int]] | tuple[dict[str, list[int]], dict[str, int]], keywordArguments: dict[str, bool], expected: dict[str, list[int | str | float] | list[bool | str | None]] | dict[str, list[int]] | type[TypeError]) -> None:
 	standardizedEqualTo(expected, updateExtendPolishDictionaryLists, *value_dictionaryLists, **keywordArguments)
 	# NOTE one line of code with `standardizedEqualTo` replaced the following ten lines of code.
 	# if isinstance(expected, type) and issubclass(expected, Exception):
