@@ -1,30 +1,48 @@
-tryAgain = True
-while tryAgain:
-    try:
-        from typing import (
-            Any,
-            Callable,
-            Dict,
-            Final,
-            Generator,
-            Iterable,
-            Iterator,
-            List,
-            Literal,
-            LiteralString,
-            Optional,
-            Sequence,
-            Set,
-            Tuple,
-            Type,
-            Union,
-        )
-        tryAgain = False
-    except ImportError as ERRORmessage:
-		# import inspect
-        failedIdentifier = str(ERRORmessage).split("'")[1]  # Extract name from "cannot import name 'X' from 'typing'"
-        globals()[failedIdentifier] = object
+# failureIsAnOption = True
+# while failureIsAnOption:
+#     try:
+#         from typing import (
+#             Any,
+#             Callable,
+#             Dict,
+#             Final,
+#             Generator,
+#             Iterable,
+#             Iterator,
+#             List,
+#             Literal,
+#             LiteralString,
+#             Optional,
+#             Sequence,
+#             Set,
+#             Tuple,
+#             Type,
+#             Union,
+#         )
+#         failureIsAnOption = False
+#     except ImportError as ERRORmessage:
+# 		# import inspect
+#         failedIdentifier = str(ERRORmessage).split("'")[1]  # Extract name from "cannot import name 'X' from 'typing'"
+#         globals()[failedIdentifier] = object
 
+from typing import (
+	Any,
+	Callable,
+	Dict,
+	Final,
+	Generator,
+	Iterable,
+	Iterator,
+	List,
+	Literal,
+	# LiteralString,
+	Optional,
+	Sequence,
+	Set,
+	Tuple,
+	Type,
+	Union,
+)
 from types import EllipsisType
 from numpy import ndarray, dtype
 from numpy._core._exceptions import UFuncTypeError
@@ -251,7 +269,7 @@ def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable, 
 		assert numpy.array_equal(actual, expected), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)
 
 """
-Section: This garbage needs to be replaced with something more similar to the next section."""
+Section: This garbage needs to be replaced."""
 
 dumbassDictionaryPathFilenamesAudioFiles = {
 	'mono': pathDataSamples / "testWooWooMono16kHz32integerClipping9sec.wav",

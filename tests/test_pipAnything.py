@@ -14,7 +14,7 @@ import pytest
 	]
 	, ids=lambda x: x if isinstance(x, str) else ""
 )
-def test_makeListRequirementsFromRequirementsFile(description: Literal['Basic requirements'] | Literal['Invalid requirements'] | Literal['Multiple valid packages'] | Literal['Empty file'] | Literal['Comments only'] | Literal['Whitespace only'], content: LiteralString | Literal['invalid==requirement==1.0\nvalid-package==1.13.0'] | Literal['package-FR==11.0\npackage-JP==13.0'] | Literal[''] | Literal['# Comment 1\n# Comment 2'] | Literal['\t\n\t\n'], expected: List[str], pathTmpTesting: pathlib.Path):
+def test_makeListRequirementsFromRequirementsFile(description: Literal['Basic requirements'] | Literal['Invalid requirements'] | Literal['Multiple valid packages'] | Literal['Empty file'] | Literal['Comments only'] | Literal['Whitespace only'], content, expected: List[str], pathTmpTesting: pathlib.Path):
 	"""Test requirements file parsing with various inputs."""
 	pathRequirementsFile = pathTmpTesting / "requirements.txt"
 	pathRequirementsFile.write_text(content)
