@@ -16,7 +16,6 @@ import uuid
 
 """SSOT for Pytest. Implementing new ways of structuring tests.
 - Other test modules should not import directly from the package being tested: they should import from here.
-- This module should import from the package being tested.
 - All fixtures should be here.
 - Temporary files and directories should be created and cleaned up here.
 - Prefer to make predictable data and use the test data in the tests/dataSamples directory over generating random data or artificial data."""

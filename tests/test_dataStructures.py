@@ -90,3 +90,26 @@ def testUpdateExtendPolishDictionaryLists(description: Literal['Empty dictionari
 	#			 assert sorted(result[key]) == sorted(expected[key]) # type: ignore
 	#	 else:
 	#		 assert result == expected
+
+@pytest.mark.parametrize("description,value_arrayTarget,expected", [
+	("One range", numpy.array(list(range(50,60))), "[*range(50,60)]"),
+	("Value, range", numpy.array([123]+list(range(71,81))), "[123,*range(71,81)]"),
+	("range, value", numpy.array(list(range(91,97))+[101]), "[*range(91,97),101]"),
+	("Value, range, value", numpy.array([151]+list(range(163,171))+[181]), "[151,*range(163,171),181]"),
+	("Repeat values", numpy.array([191, 191, 191]), "[191]*3"),
+	("Value with repeat", numpy.array([211, 223, 223, 223]), "[211]+[223]*3"),
+	("Range with repeat", numpy.array(list(range(251,257))+[271, 271, 271]), "[*range(251,257)]+[271]*3"),
+	("Value, range, repeat", numpy.array([281]+list(range(291,297))+[307, 307]), "[281,*range(291,297)]+[307]*2"),
+	("repeat, value", numpy.array([313, 313, 313, 331, 331, 349]), "[313]*3+[331]*2+[349]"),
+	("repeat, range", numpy.array([373, 373, 373]+list(range(383,389))), "[373]*3+[*range(383,389)]"),
+	("repeat, range, value", numpy.array(7*[401]+list(range(409,415))+[421]), "[401]*7+[*range(409,415),421]"),
+	("Repeated primes", numpy.array([431, 431, 431, 443, 443, 457]), "[431]*3+[443]*2+[457]"),
+	("Two Ranges", numpy.array(list(range(461,471))+list(range(479,487))), "[*range(461,471),*range(479,487)]"),
+	("2D array primes", numpy.array([[491, 499, 503], [509, 521, 523]]), "[[491,499,503],[509,521,523]]"),
+	("3D array primes", numpy.array([[[541, 547], [557, 563]], [[569, 571], [577, 587]]]), "[[[541,547],[557,563]],[[569,571],[577,587]]]"),
+], ids=lambda x: x if isinstance(x, str) else "")
+def testAutoDecodingRLE(description: Literal['Empty array'] | Literal['Single value'] | Literal['Prime sequence'] | Literal['Repeated primes'] | Literal['Sequential primes'] | Literal['2D array primes'] | Literal['3D array primes'] | Literal['Mixed patterns'],
+					value_arrayTarget: NDArray[numpy.integer[Any]],
+					expected: str) -> None:
+	"""Test autoDecodingRLE with various input arrays."""
+	standardizedEqualTo(expected, autoDecodingRLE, value_arrayTarget)

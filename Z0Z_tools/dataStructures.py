@@ -3,7 +3,74 @@ Provides utilities for string extraction from nested data structures
 and merges multiple dictionaries containing lists into one dictionary.
 """
 
-from typing import Any, Dict, List
+from numpy.typing import NDArray
+from typing import Any, Dict, List, Optional
+import more_itertools
+import numpy
+import re as regex
+import python_minifier
+
+def autoDecodingRLE(arrayTarget: NDArray[numpy.integer[Any]], addSpaces: bool = False, axisOfOperation: Optional[int] = None) -> str:
+	"""Special case, range, start=0"""
+	if axisOfOperation is None:
+		axisOfOperation = 0
+	def sliceNDArrayToNestedLists(arraySlice: NDArray[numpy.integer[Any]], axisOfOperation: int) -> Any:
+		if isinstance(arraySlice, numpy.ndarray) and arraySlice.ndim > 1:
+			if (axisOfOperation >= arraySlice.ndim):
+				axisOfOperation = -1
+			elif abs(axisOfOperation) > arraySlice.ndim:
+				axisOfOperation = 0
+			return [sliceNDArrayToNestedLists(arraySlice[index], axisOfOperation) for index in range(arraySlice.shape[axisOfOperation])]
+		elif isinstance(arraySlice, numpy.ndarray) and arraySlice.ndim == 1:
+			arraySliceAsList = []
+			for seriesGrouped in more_itertools.consecutive_groups(arraySlice.tolist()):
+				ImaSerious = list(seriesGrouped)
+				ImaRange = [range(ImaSerious[0], ImaSerious[-1] + 1)]
+				lengthAsList = addSpaces*(len(ImaSerious)-1) + len(python_minifier.minify(str(ImaSerious))) # brackets are proxies for commas
+				lengthAsRange = addSpaces*1 + len(str('*')) + len(python_minifier.minify(str(ImaRange)))
+				if lengthAsRange < lengthAsList:
+					arraySliceAsList += ImaRange
+				else:
+					arraySliceAsList += ImaSerious
+			COPYarraySliceAsList = arraySliceAsList.copy()
+			arraySliceAsList = []
+			for malkovichGrouped in more_itertools.run_length.encode(COPYarraySliceAsList):
+				lengthMalkovich = malkovichGrouped[-1]
+				malkovichAsList = list(more_itertools.run_length.decode([malkovichGrouped]))
+				lengthAsList = addSpaces*(len(malkovichAsList)-1) + len(python_minifier.minify(str(malkovichAsList))) # brackets are proxies for commas
+				malkovichMalkovich = f"[{malkovichGrouped[0]}]*{lengthMalkovich}"
+				lengthAsMalkovich = len(python_minifier.minify(malkovichMalkovich))
+				if lengthAsMalkovich < lengthAsList:
+					arraySliceAsList.append(malkovichGrouped)
+				else:
+					arraySliceAsList += malkovichAsList
+			return arraySliceAsList
+		return arraySlice
+
+	arrayAsNestedLists = sliceNDArrayToNestedLists(arrayTarget, axisOfOperation)
+
+	arrayAsStr = python_minifier.minify(str(arrayAsNestedLists))
+
+	for insanity in range(2):
+		joinAheadComma = regex.compile("(?<!rang)(?P<joinAhead>,)\\((?P<malkovich>\\d+),(?P<multiple>\\d+)\\)(?P<joinBehind>])")
+		joinAheadCommaReplace = "]+[\\g<malkovich>]*\\g<multiple>"
+		arrayAsStr = joinAheadComma.sub(joinAheadCommaReplace, arrayAsStr)
+
+		joinBehindComma = regex.compile("(?<!rang)(?P<joinAhead>\\[|^.)\\((?P<malkovich>\\d+),(?P<multiple>\\d+)\\)(?P<joinBehind>,)")
+		joinBehindCommaReplace = "[\\g<malkovich>]*\\g<multiple>+["
+		arrayAsStr = joinBehindComma.sub(joinBehindCommaReplace, arrayAsStr)
+
+		joinAheadBracket = regex.compile("(?<!rang)(?P<joinAhead>\\[)\\((?P<malkovich>\\d+),(?P<multiple>\\d+)\\)(?P<joinBehind>])")
+		joinAheadBracketReplace = "[\\g<malkovich>]*\\g<multiple>"
+		arrayAsStr = joinAheadBracket.sub(joinAheadBracketReplace, arrayAsStr)
+
+		joinBothCommas = regex.compile("(?<!rang)(?P<joinAhead>,)\\((?P<malkovich>\\d+),(?P<multiple>\\d+)\\)(?P<joinBehind>,)")
+		joinBothCommasReplace = "]+[\\g<malkovich>]*\\g<multiple>+["
+		arrayAsStr = joinBothCommas.sub(joinBothCommasReplace, arrayAsStr)
+
+	arrayAsStr = arrayAsStr.replace('range', '*range')
+
+	return arrayAsStr
 
 def stringItUp(*scrapPile: Any) -> List[str]:
 	"""
