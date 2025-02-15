@@ -1,30 +1,34 @@
+tryAgain = True
+while tryAgain:
+    try:
+        from typing import (
+            Any,
+            Callable,
+            Dict,
+            Final,
+            Generator,
+            Iterable,
+            Iterator,
+            List,
+            Literal,
+            LiteralString,
+            Optional,
+            Sequence,
+            Set,
+            Tuple,
+            Type,
+            Union,
+        )
+        tryAgain = False
+    except ImportError as ERRORmessage:
+		# import inspect
+        failedIdentifier = str(ERRORmessage).split("'")[1]  # Extract name from "cannot import name 'X' from 'typing'"
+        globals()[failedIdentifier] = object
+
 from types import EllipsisType
 from numpy import ndarray, dtype
 from numpy._core._exceptions import UFuncTypeError
 from numpy.typing import NDArray
-try:
-	from typing import (
-		Any,
-		Callable,
-		Dict,
-		Final,
-		Generator,
-		Iterable,
-		Iterator,
-		List,
-		Literal,
-		LiteralString,
-		Optional,
-		Sequence,
-		Set,
-		Tuple,
-		Type,
-		Type,
-		Union,
-	)
-except Exception:
-	import typing
-	globals().update({ID:object for ID in typing.__all__})
 from Z0Z_tools import *
 from Z0Z_tools.pytestForYourUse import *
 import numpy
