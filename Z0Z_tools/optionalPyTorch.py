@@ -1,12 +1,12 @@
 """If `torch` is installed, this module creates tensor versions of the windowing functions."""
-from numpy.typing import NDArray
+from numpy import ndarray, dtype, float64
 from torch.types import Device
-from typing import Any, Callable, ParamSpec, Protocol, TypeVar, cast
+from typing import Any, Callable, ParamSpec, Protocol, TypeVar, cast, Tuple
 import sys
 import torch
 
 callableTargetParameters = ParamSpec('callableTargetParameters')
-callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., NDArray])
+callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., ndarray[Tuple[int], dtype[float64]]])
 
 class callableAsTensor(Protocol[callableTargetParameters]):
 	__name__: str
@@ -14,17 +14,17 @@ class callableAsTensor(Protocol[callableTargetParameters]):
 	__module__: str
 	def __call__(self, device: Device = ..., *args: callableTargetParameters.args, **kwargs: callableTargetParameters.kwargs) -> torch.Tensor: ...
 
-def def_asTensor(callableTarget: Callable[callableTargetParameters, NDArray]) -> Callable[callableTargetParameters, NDArray]:
+def def_asTensor(callableTarget: Callable[callableTargetParameters, ndarray[Tuple[int], dtype[float64]]]) -> Callable[callableTargetParameters, ndarray[Tuple[int], dtype[float64]]]:
 	"""
 	Decorator that creates a tensor version of a numpy array-returning function.
 	The tensor version will be available with a 'Tensor' suffix.
 
 	Example:
 		@def_asTensor
-		def window(n: int) -> NDArray: ...
+		def window(n: int) -> ndarray[Tuple[int], dtype[float64]]: ...
 
 		This creates:
-		- window(n: int) -> NDArray
+		- window(n: int) -> ndarray[Tuple[int], dtype[float64]]
 		- windowTensor(n: int, device: torch.device = torch.device('cpu')) -> torch.Tensor
 	"""
 	def convertToTensor(*args: Any, device: Device = torch.device(device='cpu'), **kwargs: Any) -> torch.Tensor:

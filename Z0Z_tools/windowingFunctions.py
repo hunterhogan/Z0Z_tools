@@ -3,8 +3,8 @@ Generate various windowing functions used in signal processing.
 """
 
 from Z0Z_tools import def_asTensor
-from numpy import cos, pi, sin
-from typing import Optional
+from numpy import cos, pi, sin, dtype, ndarray, float64
+from typing import Any, Optional, Tuple
 import numpy
 import numpy.typing
 import scipy.signal.windows as SciPy
@@ -29,7 +29,7 @@ def _getLengthTaper(lengthWindow: int, ratioTaper: Optional[float]) -> int:
 	return lengthTaper
 
 @def_asTensor
-def cosineWings(lengthWindow: int, ratioTaper: Optional[float] = None) -> numpy.typing.NDArray[numpy.float64]:
+def cosineWings(lengthWindow: int, ratioTaper: Optional[float] = None) -> ndarray[Tuple[int], dtype[float64]]:
 	"""
 	Generate a cosine-tapered windowing function with flat center and tapered ends.
 
@@ -49,7 +49,7 @@ def cosineWings(lengthWindow: int, ratioTaper: Optional[float] = None) -> numpy.
 	return windowingFunction
 
 @def_asTensor
-def equalPower(lengthWindow: int, ratioTaper: Optional[float] = None) -> numpy.typing.NDArray[numpy.float64]:
+def equalPower(lengthWindow: int, ratioTaper: Optional[float] = None) -> ndarray[Tuple[int], dtype[float64]]:
 	"""
 	Generate a windowing function used for an equal power crossfade.
 
@@ -69,7 +69,7 @@ def equalPower(lengthWindow: int, ratioTaper: Optional[float] = None) -> numpy.t
 	return numpy.absolute(windowingFunction)
 
 @def_asTensor
-def halfsine(lengthWindow: int) -> numpy.typing.NDArray[numpy.float64]:
+def halfsine(lengthWindow: int) -> ndarray[Tuple[int], dtype[float64]]:
 	"""
 	Generate a half-sine windowing function.
 
@@ -82,7 +82,7 @@ def halfsine(lengthWindow: int) -> numpy.typing.NDArray[numpy.float64]:
 	return sin(pi * (numpy.arange(lengthWindow) + 0.5) / lengthWindow)
 
 @def_asTensor
-def tukey(lengthWindow: int, ratioTaper: Optional[float] = None, **keywordArguments: float) -> numpy.typing.NDArray[numpy.float64]:
+def tukey(lengthWindow: int, ratioTaper: Optional[float] = None, **keywordArguments: float) -> ndarray[Tuple[int], dtype[float64]]:
 	"""
 	Create a Tukey windowing-function.
 

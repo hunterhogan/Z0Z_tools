@@ -2,7 +2,7 @@
 Provides utilities for reading, writing, and resampling audio waveforms.
 """
 from random import sample
-from numpy import dtype, ndarray
+from numpy import dtype, floating, ndarray, float32, complexfloating, complex64
 from numpy.typing import NDArray
 from scipy.signal import ShortTimeFFT
 from typing import Any, BinaryIO, Dict, List, Literal, Optional, overload, Sequence, TypedDict, Tuple, Union
@@ -23,7 +23,7 @@ class ParametersUniversal(TypedDict):
 	lengthHop: int
 	lengthWindowingFunction: int
 	sampleRate: float
-	windowingFunction: NDArray[numpy.floating[Any]]
+	windowingFunction: ndarray[Tuple[int], dtype[floating[Any]]]
 
 lengthWindowDEFAULT = 1024
 windowCallableDEFAULT = halfsine
@@ -51,7 +51,7 @@ if not parametersUniversal:
 # semiotics: windowing function is the correct name for the array of numbers. "window" is a diminutive form used by programmers, and it creates ambiguity. (To be fair, the signal processing folks naming it "windowing function" was pretty lame.)
 # semiotics: choose lengthWaveform or COUNTsamples
 
-def readAudioFile(pathFilename: Union[str, os.PathLike[Any], BinaryIO], sampleRate: Optional[float] = None) -> numpy.ndarray[Tuple[Literal[2], int], numpy.dtype[numpy.float32]]:
+def readAudioFile(pathFilename: Union[str, os.PathLike[Any], BinaryIO], sampleRate: Optional[float] = None) -> ndarray[Tuple[Literal[2], int], dtype[float32]]:
 	"""
 	Reads an audio file and returns its data as a NumPy array. Mono is always converted to stereo.
 
@@ -67,7 +67,7 @@ def readAudioFile(pathFilename: Union[str, os.PathLike[Any], BinaryIO], sampleRa
 	try:
 		with soundfile.SoundFile(pathFilename) as readSoundFile:
 			sampleRateSource: int = readSoundFile.samplerate
-			waveform: NDArray[numpy.float32] = readSoundFile.read(dtype='float32', always_2d=True).astype(numpy.float32)
+			waveform: NDArray[float32] = readSoundFile.read(dtype='float32', always_2d=True).astype(float32)
 			waveform = resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource, axisTime=0)
 			# If the audio is mono (1 channel), convert it to stereo by duplicating the channel
 			if waveform.shape[1] == 1:
@@ -79,7 +79,7 @@ def readAudioFile(pathFilename: Union[str, os.PathLike[Any], BinaryIO], sampleRa
 		else:
 			raise
 
-def resampleWaveform(waveform: NDArray[numpy.float32], sampleRateDesired: float, sampleRateSource: float, axisTime: int = -1) -> NDArray[numpy.float32]:
+def resampleWaveform(waveform: NDArray[float32], sampleRateDesired: float, sampleRateSource: float, axisTime: int = -1) -> NDArray[float32]:
 	"""
 	Resamples the waveform to the desired sample rate using resampy.
 
@@ -94,12 +94,12 @@ def resampleWaveform(waveform: NDArray[numpy.float32], sampleRateDesired: float,
 	if sampleRateSource != sampleRateDesired:
 		sampleRateDesired = round(sampleRateDesired)
 		sampleRateSource = round(sampleRateSource)
-		waveformResampled: NDArray[numpy.float32] = resampy.resample(waveform, sampleRateSource, sampleRateDesired, axis=axisTime)
+		waveformResampled: NDArray[float32] = resampy.resample(waveform, sampleRateSource, sampleRateDesired, axis=axisTime)
 		return waveformResampled
 	else:
 		return waveform
 
-def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]], sampleRate: Optional[float] = None) -> NDArray[numpy.float32]:
+def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]], sampleRate: Optional[float] = None) -> ndarray[Tuple[int, int, int], dtype[float32]]:
 	"""
 	Load a list of audio files into a single array.
 
@@ -132,10 +132,10 @@ def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[s
 	for keyName, axisSize in axesSizes.items():
 		axisNormalized: int = (axisOrderMapping[keyName] + COUNTaxes) % COUNTaxes
 		listShapeIndexToSize[axisNormalized] = axisSize
-	tupleShapeArray: Tuple[int, ...] = tuple(listShapeIndexToSize)
+	tupleShapeArray: Tuple[int, int, int] = tuple(listShapeIndexToSize) # type: ignore
 
 	# `numpy.zeros` so that shorter waveforms are safely padded with zeros
-	arrayWaveforms: NDArray[numpy.float32] = numpy.zeros(tupleShapeArray, dtype=numpy.float32)
+	arrayWaveforms: ndarray[Tuple[int, int, int], dtype[float32]] = numpy.zeros(tupleShapeArray, dtype=float32)
 
 	for index in range(COUNTwaveforms):
 		waveform = readAudioFile(listPathFilenames[index], sampleRate)
@@ -165,43 +165,75 @@ def writeWAV(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: ND
 	makeDirsSafely(pathFilename)
 	soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
 
-@overload
-def stft(arrayTarget: NDArray[numpy.floating[Any]]
+@overload #stft, one waveform
+def stft(arrayTarget: ndarray[Tuple[int, int], dtype[floating[Any]]]
 		, *
 		, sampleRate: Optional[float] = None
 		, lengthHop: Optional[int] = None
-		, windowingFunction: Optional[NDArray[numpy.floating[Any]]] = None
+		, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
 		, lengthWindowingFunction: Optional[int] = None
 		, lengthFFT: Optional[int] = None
 		, inverse: Literal[False] = False
 		, lengthWaveform: None = None
-		, indexingAxis: Optional[int] = None
-		) -> NDArray[numpy.complexfloating[Any, Any]]: ...
+		, indexingAxis: Literal[None] = None
+		) -> ndarray[Tuple[int, int, int], dtype[complexfloating[Any, Any]]]: ...
 
-@overload #istft
-def stft(arrayTarget: NDArray[numpy.complexfloating[Any, Any]]
+@overload #stft, array of waveforms
+def stft(arrayTarget: ndarray[Tuple[int, int, int], dtype[floating[Any]]]
 		, *
 		, sampleRate: Optional[float] = None
 		, lengthHop: Optional[int] = None
-		, windowingFunction: Optional[NDArray[numpy.floating[Any]]] = None
+		, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
+		, lengthWindowingFunction: Optional[int] = None
+		, lengthFFT: Optional[int] = None
+		, inverse: Literal[False] = False
+		, lengthWaveform: None = None
+		, indexingAxis: int = -1
+		) -> ndarray[Tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]: ...
+
+@overload #istft, one spectrogram
+def stft(arrayTarget: ndarray[Tuple[int, int, int], dtype[complexfloating[Any, Any]]]
+		, *
+		, sampleRate: Optional[float] = None
+		, lengthHop: Optional[int] = None
+		, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
 		, lengthWindowingFunction: Optional[int] = None
 		, lengthFFT: Optional[int] = None
 		, inverse: Literal[True]
 		, lengthWaveform: int
-		, indexingAxis: Optional[int] = None
-		) -> NDArray[numpy.floating[Any]]: ...
+		, indexingAxis: Literal[None] = None
+		) -> ndarray[Tuple[int, int], dtype[floating[Any]]]: ...
 
-def stft(arrayTarget: NDArray[numpy.floating[Any] | numpy.complexfloating[Any, Any]]
+@overload #istft, array of spectrograms
+def stft(arrayTarget: ndarray[Tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]
 		, *
 		, sampleRate: Optional[float] = None
 		, lengthHop: Optional[int] = None
-		, windowingFunction: Optional[NDArray[numpy.floating[Any]]] = None
+		, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
+		, lengthWindowingFunction: Optional[int] = None
+		, lengthFFT: Optional[int] = None
+		, inverse: Literal[True]
+		, lengthWaveform: int
+		, indexingAxis: int = -1
+		) -> ndarray[Tuple[int, int, int], dtype[floating[Any]]]: ...
+
+def stft(arrayTarget: Union[ndarray[Tuple[int, int], 		   dtype[floating[Any]]]
+						,   ndarray[Tuple[int, int, int], 	   dtype[floating[Any]]]
+						,   ndarray[Tuple[int, int, int], 	   dtype[complexfloating[Any, Any]]]
+						,   ndarray[Tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]]
+		, *
+		, sampleRate: Optional[float] = None
+		, lengthHop: Optional[int] = None
+		, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
 		, lengthWindowingFunction: Optional[int] = None
 		, lengthFFT: Optional[int] = None
 		, inverse: bool = False
 		, lengthWaveform: Optional[int] = None
 		, indexingAxis: Optional[int] = None
-		) -> NDArray[numpy.floating[Any] | numpy.complexfloating[Any, Any]]:
+		) -> Union[ndarray[Tuple[int, int], 		  dtype[floating[Any]]]
+				,  ndarray[Tuple[int, int, int], 	  dtype[floating[Any]]]
+				,  ndarray[Tuple[int, int, int], 	  dtype[complexfloating[Any, Any]]]
+				,  ndarray[Tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]]:
 	"""
 	Short-Time Fourier Transform with unified interface for forward and inverse transforms.
 
@@ -222,7 +254,6 @@ def stft(arrayTarget: NDArray[numpy.floating[Any] | numpy.complexfloating[Any, A
 	if sampleRate is None: sampleRate = parametersUniversal['sampleRate']
 	if lengthHop is None: lengthHop = parametersUniversal['lengthHop']
 
-	#
 	if windowingFunction is None:
 		if lengthWindowingFunction is not None and (PylanceIsConfused := True) and windowCallableUniversal:
 			windowingFunction = windowCallableUniversal(lengthWindowingFunction)
@@ -257,10 +288,10 @@ def stft(arrayTarget: NDArray[numpy.floating[Any] | numpy.complexfloating[Any, A
 def loadSpectrograms(listPathFilenames: Sequence[str] | Sequence[os.PathLike[Any]]
 					, sampleRateTarget: Optional[float] = None
 					, lengthHop: Optional[int] = None
-					, windowingFunction: Optional[NDArray[numpy.floating[Any]]] = None
+					, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
 					, lengthWindowingFunction: Optional[int] = None
 					, lengthFFT: Optional[int] = None
-					) -> Tuple[NDArray[numpy.complex64], List[Dict[str, int]]]:
+					) -> Tuple[ndarray[Tuple[int, int, int, int], dtype[complex64]], List[Dict[str, int]]]:
 	"""
 	Load spectrograms from audio files.
 
@@ -301,7 +332,7 @@ def loadSpectrograms(listPathFilenames: Sequence[str] | Sequence[os.PathLike[Any
 	samplesTotal = max(entry['samplesTotal'] for entry in dictionaryMetadata.values())
 
 	COUNTchannels = 2
-	spectrogramArchetype = stft(numpy.zeros(shape=(COUNTchannels, samplesTotal), dtype=numpy.float32), **parametersSTFT)
+	spectrogramArchetype = stft(numpy.zeros(shape=(COUNTchannels, samplesTotal), dtype=float32), **parametersSTFT)
 	arraySpectrograms = numpy.zeros(shape=(*spectrogramArchetype.shape, len(dictionaryMetadata)), dtype=numpy.complex64)
 
 	for index, (pathFilename, entry) in enumerate(dictionaryMetadata.items()):
@@ -315,7 +346,7 @@ def spectrogramToWAV(spectrogram: NDArray
 					, lengthWaveform: int
 					, sampleRate: Optional[float] = None
 					, lengthHop: Optional[int] = None
-					, windowingFunction: Optional[NDArray[numpy.floating[Any]]] = None
+					, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
 					, lengthWindowingFunction: Optional[int] = None
 					, lengthFFT: Optional[int] = None
 					) -> None:
