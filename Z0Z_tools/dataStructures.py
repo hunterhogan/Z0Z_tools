@@ -4,7 +4,7 @@ and merges multiple dictionaries containing lists into one dictionary.
 """
 
 from numpy.typing import NDArray
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set, Tuple, Union
 import more_itertools
 import numpy
 import re as regex
@@ -117,7 +117,7 @@ def stringItUp(*scrapPile: Any) -> List[str]:
 		listStrungUp.append(repr(scrap))
 	return listStrungUp
 
-def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, List[Any]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
+def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, Union[List[Any], Set[Any], Tuple[Any, ...]]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
 	"""
 	Merges multiple dictionaries containing lists into a single dictionary, with options to handle duplicates,
 	list ordering, and erroneous data types.
@@ -125,16 +125,13 @@ def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, List[Any]], de
 	Parameters:
 		*dictionaryLists: Variable number of dictionaries to be merged. If only one dictionary is passed, it will be processed based on the provided options.
 		destroyDuplicates (False): If True, removes duplicate elements from the lists. Defaults to False.
-		ignoreListOrdering (False): If True, sorts the lists. Defaults to False.
-		killErroneousDataTypes (False): If True, skips lists that cause a TypeError during merging. Defaults to False.
+		reorderLists (False): If True, sorts the lists. Defaults to False.
+		killErroneousDataTypes (False): If True, skips dictionary keys or dictionary values that cause a TypeError during merging. Defaults to False.
 	Returns:
 		ePluribusUnum: A single dictionary with merged lists based on the provided options. If only one dictionary is passed,
 		it will be cleaned up based on the options.
 	Note:
-		The returned value, `ePluribusUnum`, is a so-called primitive dictionary (`typing.Dict`). Furthermore, every dictionary key is a
-		so-called primitive string (cf. `str()`) and every dictionary value is a so-called primitive list (`typing.List`). If `dictionaryLists`
-		has other data types, the data types will not be preserved. That could have unexpected consequences: in some cases, for example, conversion
-		from the original data type to a `typing.List` will not preserve the order even if you want the order preserved.
+		The returned value, `ePluribusUnum`, is a so-called primitive dictionary (`typing.Dict`). Furthermore, every dictionary key is a so-called primitive string (cf. `str()`) and every dictionary value is a so-called primitive list (`typing.List`). If `dictionaryLists` has other data types, the data types will not be preserved. That could have unexpected consequences. Conversion from the original data type to a `typing.List`, for example, may not preserve the order even if you want the order to be preserved.
 	"""
 
 	ePluribusUnum: Dict[str, List[Any]] = {}
