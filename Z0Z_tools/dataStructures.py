@@ -3,11 +3,11 @@ Provides utilities for string extraction from nested data structures
 and merges multiple dictionaries containing lists into one dictionary.
 """
 
-from numpy.typing import NDArray
-from typing import Any, Dict, List, Mapping, Optional, Set, Tuple, Union
+import re as regex
+from typing import Any, Dict, List, Optional, Set, Tuple, Union
 import more_itertools
 import numpy
-import re as regex
+from numpy.typing import NDArray
 import python_minifier
 
 def autoDecodingRLE(arrayTarget: NDArray[numpy.integer[Any]], addSpaces: bool = False, axisOfOperation: Optional[int] = None) -> str:
@@ -117,7 +117,7 @@ def stringItUp(*scrapPile: Any) -> List[str]:
 		listStrungUp.append(repr(scrap))
 	return listStrungUp
 
-def updateExtendPolishDictionaryLists(*dictionaryLists: Mapping[str, Union[List[Any], Set[Any], Tuple[Any, ...]]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
+def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, Union[List[Any], Set[Any], Tuple[Any, ...]]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
 	"""
 	Merges multiple dictionaries containing lists into a single dictionary, with options to handle duplicates,
 	list ordering, and erroneous data types.

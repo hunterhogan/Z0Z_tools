@@ -3,10 +3,9 @@ Provides parameter and input validation, integer parsing, and concurrency handli
 """
 from collections.abc import Sized
 from dataclasses import dataclass
+import multiprocessing
 from typing import Any, Iterable, List, Optional, Type, Union
 import charset_normalizer
-import multiprocessing
-
 
 @dataclass
 class ErrorMessageContext:

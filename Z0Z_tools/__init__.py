@@ -48,7 +48,7 @@ Testing Support:
 """
 try:
 	from Z0Z_tools.optionalPyTorch import def_asTensor
-	# NOTE This is necessary because I can't figure out how to get Pylance to recognize the decorator-created functions
+	# GitHub #2
 	from Z0Z_tools.windowingFunctions import halfsineTensor, tukeyTensor, cosineWingsTensor, equalPowerTensor # type: ignore
 except (ImportError, ModuleNotFoundError):
 	from Z0Z_tools.optionalPyTorchAlternative import def_asTensor
@@ -66,3 +66,10 @@ try:
 	from Z0Z_tools.pytestForYourUse import *
 except (ImportError, ModuleNotFoundError):
 	pass
+
+"""
+Semiotics:
+WAV: is a file format. Don't use ambiguous: "Wav", "wav".
+waveform: is a data concept.
+windowing function: is the correct name for the array of numbers. Don't use ambiguous: "window" (diminutive form).
+"""

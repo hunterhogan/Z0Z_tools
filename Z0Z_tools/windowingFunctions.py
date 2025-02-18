@@ -2,12 +2,12 @@
 Generate various windowing functions used in signal processing.
 """
 
-from Z0Z_tools import def_asTensor
-from numpy import cos, pi, sin, dtype, ndarray, float64
 from typing import Any, Optional, Tuple
 import numpy
+from numpy import cos, dtype, float64, ndarray, pi, sin
 import numpy.typing
 import scipy.signal.windows as SciPy
+from Z0Z_tools import def_asTensor
 
 def _getLengthTaper(lengthWindow: int, ratioTaper: Optional[float]) -> int:
 	"""
@@ -28,6 +28,7 @@ def _getLengthTaper(lengthWindow: int, ratioTaper: Optional[float]) -> int:
 		raise ValueError(f"I received {ratioTaper} for parameter `ratioTaper`. If set, `ratioTaper` must be between 0 and 1, inclusive.")
 	return lengthTaper
 
+# GitHub #2
 @def_asTensor
 def cosineWings(lengthWindow: int, ratioTaper: Optional[float] = None) -> ndarray[Tuple[int], dtype[float64]]:
 	"""
