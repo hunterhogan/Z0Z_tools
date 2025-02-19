@@ -148,12 +148,6 @@ def setupDirectoryStructure(pathTmpTesting: pathlib.Path) -> pathlib.Path:
 
 	return baseDirectory
 
-# TODo integrate with `setupDirectoryStructure`
-@pytest.fixture
-def pathFilenameWAV(pathTmpTesting: pathlib.Path) -> pathlib.Path:
-	"""Fixture providing a temporary WAV file path."""
-	return pathTmpTesting / "test_output.wav"
-
 # Fixtures
 
 @pytest.fixture
