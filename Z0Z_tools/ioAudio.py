@@ -5,8 +5,8 @@ from numpy import complex64, complexfloating, dtype, float32, floating, ndarray,
 from numpy.typing import NDArray
 from scipy.signal import ShortTimeFFT
 from scipy.signal._short_time_fft import PAD_TYPE, FFT_MODE_TYPE
-from typing import Any, BinaryIO, Dict, List, Literal, Optional, Sequence
-from typing import Tuple, TypedDict, Union, cast, overload
+from typing import Any, BinaryIO, Literal, TypedDict, cast, overload
+from collections.abc import Sequence
 from Z0Z_tools import halfsine, makeDirsSafely
 import collections
 import functools
@@ -31,7 +31,7 @@ class ParametersUniversal(TypedDict):
 	lengthHop: int
 	lengthWindowingFunction: int
 	sampleRate: float
-	windowingFunction: ndarray[Tuple[int], dtype[floating[Any]]]
+	windowingFunction: ndarray[tuple[int], dtype[floating[Any]]]
 
 class WaveformMetadata(TypedDict):
 	pathFilename: str
@@ -61,9 +61,9 @@ windowingFunctionCallableUniversal = windowingFunctionCallableDEFAULT
 if not parametersUniversal:
 	parametersUniversal = parametersDEFAULT
 
-def getWaveformMetadata(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]], sampleRate: float) -> Dict[int, WaveformMetadata]:
+def getWaveformMetadata(listPathFilenames: Sequence[str | os.PathLike[str]], sampleRate: float) -> dict[int, WaveformMetadata]:
 	axisTime: int = -1
-	dictionaryWaveformMetadata: Dict[int, WaveformMetadata] = {}
+	dictionaryWaveformMetadata: dict[int, WaveformMetadata] = {}
 	for index, pathFilename in enumerate(listPathFilenames):
 		lengthWaveform = readAudioFile(pathFilename, sampleRate).shape[axisTime]
 		dictionaryWaveformMetadata[index] = WaveformMetadata(
@@ -74,7 +74,7 @@ def getWaveformMetadata(listPathFilenames: Union[Sequence[str], Sequence[os.Path
 		)
 	return dictionaryWaveformMetadata
 
-def readAudioFile(pathFilename: Union[str, os.PathLike[Any], BinaryIO], sampleRate: Optional[float] = None) -> ndarray[Tuple[Literal[2], int], dtype[float32]]:
+def readAudioFile(pathFilename: str | os.PathLike[Any] | BinaryIO, sampleRate: float | None = None) -> ndarray[tuple[Literal[2], int], dtype[float32]]:
 	"""
 	Reads an audio file and returns its data as a NumPy array. Mono is always converted to stereo.
 
@@ -123,7 +123,7 @@ def resampleWaveform(waveform: NDArray[floating[Any]], sampleRateDesired: float,
 	else:
 		return waveform
 
-def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]], sampleRateTarget: Optional[float] = None) -> ndarray[Tuple[int, int, int], dtype[float32]]:
+def loadWaveforms(listPathFilenames: Sequence[str | os.PathLike[str]], sampleRateTarget: float | None = None) -> ndarray[tuple[int, int, int], dtype[float32]]:
 	"""
 	Load a list of audio files into a single array.
 
@@ -137,10 +137,10 @@ def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[s
 		sampleRateTarget = parametersUniversal['sampleRate']
 
 	# GitHub #3 Implement semantic axes for audio data
-	axisOrderMapping: Dict[str, int] = {'indexingAxis': -1, 'axisTime': -2, 'axisChannels': 0}
-	axesSizes: Dict[str, int] = {keyName: 1 for keyName in axisOrderMapping.keys()}
+	axisOrderMapping: dict[str, int] = {'indexingAxis': -1, 'axisTime': -2, 'axisChannels': 0}
+	axesSizes: dict[str, int] = {keyName: 1 for keyName in axisOrderMapping.keys()}
 	countAxes: int = len(axisOrderMapping)
-	listShapeIndexToSize: List[int] = [9001] * countAxes
+	listShapeIndexToSize: list[int] = [9001] * countAxes
 
 	countWaveforms: int = len(listPathFilenames)
 	axesSizes['indexingAxis'] = countWaveforms
@@ -156,10 +156,10 @@ def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[s
 	for keyName, axisSize in axesSizes.items():
 		axisNormalized: int = (axisOrderMapping[keyName] + countAxes) % countAxes
 		listShapeIndexToSize[axisNormalized] = axisSize
-	tupleShapeArray = cast(Tuple[int, int, int], tuple(listShapeIndexToSize))
+	tupleShapeArray = cast(tuple[int, int, int], tuple(listShapeIndexToSize))
 
 	# `numpy.zeros` so that shorter waveforms are safely padded with zeros
-	arrayWaveforms: ndarray[Tuple[int, int, int], dtype[float32]] = numpy.zeros(tupleShapeArray, dtype=float32)
+	arrayWaveforms: ndarray[tuple[int, int, int], dtype[float32]] = numpy.zeros(tupleShapeArray, dtype=float32)
 
 	for index, metadata in dictionaryWaveformMetadata.items():
 		waveform = readAudioFile(metadata['pathFilename'], sampleRateTarget)
@@ -189,7 +189,7 @@ def loadWaveforms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[s
 
 	return arrayWaveforms
 
-def writeWAV(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: ndarray[Tuple[int, ...], dtype[floating[Any] | integer[Any]]], sampleRate: Optional[float] = None) -> None:
+def writeWAV(pathFilename: str | os.PathLike[Any] | io.IOBase, waveform: ndarray[tuple[int, ...], dtype[floating[Any] | integer[Any]]], sampleRate: float | None = None) -> None:
 	"""
 	Writes a waveform to a WAV file.
 
@@ -214,74 +214,74 @@ def writeWAV(pathFilename: Union[str, os.PathLike[Any], io.IOBase], waveform: nd
 	soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
 
 @overload # stft, one waveform
-def stft(arrayTarget: ndarray[Tuple[int, int], dtype[floating[Any] | integer[Any]]]
+def stft(arrayTarget: ndarray[tuple[int, int], dtype[floating[Any] | integer[Any]]]
 		, *
-		, sampleRate: Optional[float] = None
-		, lengthHop: Optional[int] = None
-		, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
-		, lengthWindowingFunction: Optional[int] = None
-		, lengthFFT: Optional[int] = None
+		, sampleRate: float | None = None
+		, lengthHop: int | None = None
+		, windowingFunction: ndarray[tuple[int], dtype[floating[Any]]] | None = None
+		, lengthWindowingFunction: int | None = None
+		, lengthFFT: int | None = None
 		, inverse: Literal[False] = False
 		, lengthWaveform: None = None
 		, indexingAxis: Literal[None] = None
-		) -> ndarray[Tuple[int, int, int], dtype[complexfloating[Any, Any]]]: ...
+		) -> ndarray[tuple[int, int, int], dtype[complexfloating[Any, Any]]]: ...
 
 @overload # stft, array of waveforms
-def stft(arrayTarget: ndarray[Tuple[int, int, int], dtype[floating[Any] | integer[Any]]]
+def stft(arrayTarget: ndarray[tuple[int, int, int], dtype[floating[Any] | integer[Any]]]
 		, *
-		, sampleRate: Optional[float] = None
-		, lengthHop: Optional[int] = None
-		, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
-		, lengthWindowingFunction: Optional[int] = None
-		, lengthFFT: Optional[int] = None
+		, sampleRate: float | None = None
+		, lengthHop: int | None = None
+		, windowingFunction: ndarray[tuple[int], dtype[floating[Any]]] | None = None
+		, lengthWindowingFunction: int | None = None
+		, lengthFFT: int | None = None
 		, inverse: Literal[False] = False
 		, lengthWaveform: None = None
 		, indexingAxis: int = -1
-		) -> ndarray[Tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]: ...
+		) -> ndarray[tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]: ...
 
 @overload # istft, one spectrogram
-def stft(arrayTarget: ndarray[Tuple[int, int, int], dtype[complexfloating[Any, Any] | floating[Any]]]
+def stft(arrayTarget: ndarray[tuple[int, int, int], dtype[complexfloating[Any, Any] | floating[Any]]]
 		, *
-		, sampleRate: Optional[float] = None
-		, lengthHop: Optional[int] = None
-		, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
-		, lengthWindowingFunction: Optional[int] = None
-		, lengthFFT: Optional[int] = None
+		, sampleRate: float | None = None
+		, lengthHop: int | None = None
+		, windowingFunction: ndarray[tuple[int], dtype[floating[Any]]] | None = None
+		, lengthWindowingFunction: int | None = None
+		, lengthFFT: int | None = None
 		, inverse: Literal[True]
 		, lengthWaveform: int
 		, indexingAxis: Literal[None] = None
-		) -> ndarray[Tuple[int, int], dtype[floating[Any]]]: ...
+		) -> ndarray[tuple[int, int], dtype[floating[Any]]]: ...
 
 @overload # istft, array of spectrograms
-def stft(arrayTarget: ndarray[Tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]
+def stft(arrayTarget: ndarray[tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]
 		, *
-		, sampleRate: Optional[float] = None
-		, lengthHop: Optional[int] = None
-		, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
-		, lengthWindowingFunction: Optional[int] = None
-		, lengthFFT: Optional[int] = None
+		, sampleRate: float | None = None
+		, lengthHop: int | None = None
+		, windowingFunction: ndarray[tuple[int], dtype[floating[Any]]] | None = None
+		, lengthWindowingFunction: int | None = None
+		, lengthFFT: int | None = None
 		, inverse: Literal[True]
 		, lengthWaveform: int
 		, indexingAxis: int = -1
-		) -> ndarray[Tuple[int, int, int], dtype[floating[Any]]]: ...
+		) -> ndarray[tuple[int, int, int], dtype[floating[Any]]]: ...
 
-def stft(arrayTarget: Union[ndarray[Tuple[int, int], 		   dtype[floating[Any] | integer[Any]]]
-						,   ndarray[Tuple[int, int, int], 	   dtype[floating[Any] | integer[Any]]]
-						,   ndarray[Tuple[int, int, int], 	   dtype[complexfloating[Any, Any] | floating[Any]]]
-						,   ndarray[Tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]]
+def stft(arrayTarget: (ndarray[tuple[int, int], 		   dtype[floating[Any] | integer[Any]]]
+						 |   ndarray[tuple[int, int, int], 	   dtype[floating[Any] | integer[Any]]]
+						 |   ndarray[tuple[int, int, int], 	   dtype[complexfloating[Any, Any] | floating[Any]]]
+						 |   ndarray[tuple[int, int, int, int], dtype[complexfloating[Any, Any]]])
 		, *
-		, sampleRate: Optional[float] = None
-		, lengthHop: Optional[int] = None
-		, windowingFunction: Optional[ndarray[Tuple[int], dtype[floating[Any]]]] = None
-		, lengthWindowingFunction: Optional[int] = None
-		, lengthFFT: Optional[int] = None
+		, sampleRate: float | None = None
+		, lengthHop: int | None = None
+		, windowingFunction: ndarray[tuple[int], dtype[floating[Any]]] | None = None
+		, lengthWindowingFunction: int | None = None
+		, lengthFFT: int | None = None
 		, inverse: bool = False
-		, lengthWaveform: Optional[int] = None
-		, indexingAxis: Optional[int] = None
-		) -> Union[ndarray[Tuple[int, int], 		  dtype[floating[Any]]]
-				,  ndarray[Tuple[int, int, int], 	  dtype[floating[Any]]]
-				,  ndarray[Tuple[int, int, int], 	  dtype[complexfloating[Any, Any]]]
-				,  ndarray[Tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]]:
+		, lengthWaveform: int | None = None
+		, indexingAxis: int | None = None
+		) -> (ndarray[tuple[int, int], 		  dtype[floating[Any]]]
+				 |  ndarray[tuple[int, int, int], 	  dtype[floating[Any]]]
+				 |  ndarray[tuple[int, int, int], 	  dtype[complexfloating[Any, Any]]]
+				 |  ndarray[tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]):
 	"""
 	Short-Time Fourier Transform with unified interface for forward and inverse transforms.
 
@@ -322,18 +322,18 @@ def stft(arrayTarget: Union[ndarray[Tuple[int, int], 		   dtype[floating[Any] | 
 	stftWorkhorse = ShortTimeFFT(win=windowingFunction, hop=lengthHop, fs=sampleRate, mfft=lengthFFT, **parametersShortTimeFFTUniversal)
 
 	@overload
-	def doTransformation(arrayInput: 	   ndarray[Tuple[int, int, int], 	   dtype[complexfloating[Any, Any] | floating[Any]]]
+	def doTransformation(arrayInput: 	   ndarray[tuple[int, int, int], 	   dtype[complexfloating[Any, Any] | floating[Any]]]
 										, lengthWaveform: int, inverse: Literal[True] = True
-								) -> 	   ndarray[Tuple[int, int], 		   dtype[floating[Any]]]: ...
+								) -> 	   ndarray[tuple[int, int], 		   dtype[floating[Any]]]: ...
 	@overload
-	def doTransformation(arrayInput: 	   ndarray[Tuple[int, int], 		   dtype[floating[Any] | integer[Any]]]
+	def doTransformation(arrayInput: 	   ndarray[tuple[int, int], 		   dtype[floating[Any] | integer[Any]]]
 										, lengthWaveform: Literal[None] = None, inverse: Literal[False] = False
-								) -> 	   ndarray[Tuple[int, int, int],	   dtype[complexfloating[Any, Any]]]: ...
-	def doTransformation(arrayInput: Union[ndarray[Tuple[int, int], 		   dtype[floating[Any] | integer[Any]]]
-										,  ndarray[Tuple[int, int, int], 	   dtype[complexfloating[Any, Any] | floating[Any]]]]
-										, lengthWaveform: Optional[int] = lengthWaveform, inverse: Optional[bool] = inverse
-								) -> Union[ndarray[Tuple[int, int], 		   dtype[floating[Any]]]
-										,  ndarray[Tuple[int, int, int], 	   dtype[complexfloating[Any, Any]]]]:
+								) -> 	   ndarray[tuple[int, int, int],	   dtype[complexfloating[Any, Any]]]: ...
+	def doTransformation(arrayInput: (ndarray[tuple[int, int], 		   dtype[floating[Any] | integer[Any]]]
+										 |  ndarray[tuple[int, int, int], 	   dtype[complexfloating[Any, Any] | floating[Any]]])
+										, lengthWaveform: int | None = lengthWaveform, inverse: bool | None = inverse
+								) -> (ndarray[tuple[int, int], 		   dtype[floating[Any]]]
+										 |  ndarray[tuple[int, int, int], 	   dtype[complexfloating[Any, Any]]]):
 		if inverse:
 			return stftWorkhorse.istft(S=arrayInput, k1=lengthWaveform)
 		return stftWorkhorse.stft(x=arrayInput, **parametersSTFTUniversal)
@@ -352,10 +352,10 @@ def stft(arrayTarget: Union[ndarray[Tuple[int, int], 		   dtype[floating[Any] | 
 
 	return numpy.moveaxis(arrayTransformed, -1, indexingAxis)
 
-def loadSpectrograms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLike[str]]]
-					, sampleRateTarget: Optional[float] = None
+def loadSpectrograms(listPathFilenames: Sequence[str | os.PathLike[str]]
+					, sampleRateTarget: float | None = None
 					, **parametersSTFT: Any
-					) -> Tuple[ndarray[Tuple[int, int, int, int], dtype[complex64]], Dict[int, WaveformMetadata]]:
+					) -> tuple[ndarray[tuple[int, int, int, int], dtype[complex64]], dict[int, WaveformMetadata]]:
 	"""
 	Load spectrograms from audio files.
 
@@ -376,7 +376,7 @@ def loadSpectrograms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLik
 	samplesTotalMaximum = max([entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values()])
 
 	countChannels = 2
-	spectrogramArchetype: ndarray[Tuple[int, int, int], dtype[complex64]] = stft(numpy.zeros(shape=(countChannels, samplesTotalMaximum), dtype=float32), sampleRate=sampleRateTarget, **parametersSTFT)
+	spectrogramArchetype: ndarray[tuple[int, int, int], dtype[complex64]] = stft(numpy.zeros(shape=(countChannels, samplesTotalMaximum), dtype=float32), sampleRate=sampleRateTarget, **parametersSTFT)
 	arraySpectrograms = numpy.zeros(shape=(*spectrogramArchetype.shape, len(dictionaryWaveformMetadata)), dtype=numpy.complex64)
 
 	for index, metadata in dictionaryWaveformMetadata.items():
@@ -386,10 +386,10 @@ def loadSpectrograms(listPathFilenames: Union[Sequence[str], Sequence[os.PathLik
 
 	return arraySpectrograms, dictionaryWaveformMetadata
 
-def spectrogramToWAV( spectrogram: ndarray[Tuple[int, int, int], dtype[complexfloating[Any, Any] | floating[Any]]]
-					, pathFilename: Union[str, os.PathLike[Any], io.IOBase]
+def spectrogramToWAV( spectrogram: ndarray[tuple[int, int, int], dtype[complexfloating[Any, Any] | floating[Any]]]
+					, pathFilename: str | os.PathLike[Any] | io.IOBase
 					, lengthWaveform: int
-					, sampleRate: Optional[float] = None
+					, sampleRate: float | None = None
 					, **parametersSTFT: Any
 					) -> None:
 	"""

@@ -53,7 +53,7 @@ def testDataTabularTOpathFilenameDelimitedNoHeaders(dataframeSample: pandas.Data
 	)
 
 	assert pathOutput.exists()
-	with open(pathOutput, 'r') as readStream:
+	with open(pathOutput) as readStream:
 		lines = readStream.readlines()
 		assert len(lines) == len(dataframeSample)
 
@@ -69,7 +69,7 @@ def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: pathlib.Path
 	)
 
 	assert pathOutput.exists()
-	with open(pathOutput, 'r') as readStream:
+	with open(pathOutput) as readStream:
 		lines = readStream.readlines()
 		assert len(lines) == 1
 		assert lines[0].strip() == 'col1,col2'

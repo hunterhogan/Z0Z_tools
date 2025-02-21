@@ -5,11 +5,13 @@ Each function in this module returns a list of test functions that can be used w
 """
 
 from Z0Z_tools import defineConcurrencyLimit, intInnit, oopsieKwargsie
-from typing import Any, Callable, Iterable, List, Optional, Union, Type, Tuple
+from typing import Any, List, Optional, Union, Type, Tuple
+
+from collections.abc import Callable, Iterable
 from unittest.mock import patch
 import pytest
 
-def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[Union[bool, float, int, None]], int] = defineConcurrencyLimit, cpuCount: int = 8) -> List[Tuple[str, Callable[[], None]]]:
+def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | int | None], int] = defineConcurrencyLimit, cpuCount: int = 8) -> list[tuple[str, Callable[[], None]]]:
 	"""Returns a list of test functions to validate concurrency limit behavior.
 
 	This function provides a comprehensive test suite for validating concurrency limit parsing
@@ -121,7 +123,7 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[Union[bool, float
 		('testStringNumbers', testStringNumbers)
 	]
 
-def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], Optional[str], Optional[Type[Any]]], List[int]] = intInnit) -> List[Tuple[str, Callable[[], None]]]:
+def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type[Any] | None], list[int]] = intInnit) -> list[tuple[str, Callable[[], None]]]:
 	"""Returns a list of test functions to validate integer initialization behavior.
 
 	This function provides a comprehensive test suite for validating integer parsing
@@ -264,7 +266,7 @@ def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], Optional[str], O
 		('testRejectsInvalidComplex', testRejectsInvalidComplex)
 	]
 
-def PytestFor_oopsieKwargsie(callableToTest: Callable[[str], Union[bool, None, str]] = oopsieKwargsie) -> List[Tuple[str, Callable[[], None]]]:
+def PytestFor_oopsieKwargsie(callableToTest: Callable[[str], bool | None | str] = oopsieKwargsie) -> list[tuple[str, Callable[[], None]]]:
 	"""Returns a list of test functions to validate string-to-boolean/None conversion behavior.
 
 	This function provides a comprehensive test suite for validating string parsing and conversion

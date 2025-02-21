@@ -3,12 +3,14 @@ Provides basic file I/O utilities such as writing tabular data to a file
 and computing a canonical relative path from one location to another.
 """
 
-from typing import Any, Iterable, Union
+from typing import Any, Union
+
+from collections.abc import Iterable
 import os
 import io
 import pathlib
 
-def dataTabularTOpathFilenameDelimited(pathFilename: Union[str, os.PathLike[Any]], tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
+def dataTabularTOpathFilenameDelimited(pathFilename: str | os.PathLike[Any], tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
 	"""
 	Writes tabular data to a delimited file. This is a low-quality function: you'd probably be better off with something else.
 
@@ -32,7 +34,7 @@ def dataTabularTOpathFilenameDelimited(pathFilename: Union[str, os.PathLike[Any]
 		for row in tableRows:
 			writeStream.write(delimiterOutput.join(map(str, row)) + '\n')
 
-def findRelativePath(pathSource: Union[str, os.PathLike[Any]], pathDestination: Union[str, os.PathLike[Any]]) -> str:
+def findRelativePath(pathSource: str | os.PathLike[Any], pathDestination: str | os.PathLike[Any]) -> str:
 	"""
 	Find a relative path from source to destination, even if they're on different branches.
 

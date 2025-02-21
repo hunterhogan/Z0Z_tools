@@ -25,24 +25,8 @@
 #         failedIdentifier = str(ERRORmessage).split("'")[1]  # Extract name from "cannot import name 'X' from 'typing'"
 #         globals()[failedIdentifier] = object
 
-from typing import (
-	Any,
-	Callable,
-	Dict,
-	Final,
-	Generator,
-	Iterable,
-	Iterator,
-	List,
-	Literal,
-	# LiteralString,
-	Optional,
-	Sequence,
-	Set,
-	Tuple,
-	Type,
-	Union,
-)
+from typing import Any, Final, Literal
+from collections.abc import Callable, Generator, Sequence, Iterable, Iterator
 from types import EllipsisType
 from numpy import ndarray, dtype
 from numpy._core._exceptions import UFuncTypeError
@@ -92,7 +76,7 @@ def registrarDeletesTmpObjects() -> None:
 	registerOfTemporaryFilesystemObjects.clear()
 
 @pytest.fixture(scope="session", autouse=True)
-def setupTeardownTmpObjects() -> Generator[None, None, None]:
+def setupTeardownTmpObjects() -> Generator[None]:
 	"""Auto-fixture to setup test data directories and cleanup after."""
 	pathDataSamples.mkdir(exist_ok=True)
 	pathTmpRoot.mkdir(exist_ok=True)

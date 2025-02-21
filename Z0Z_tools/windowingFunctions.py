@@ -9,7 +9,7 @@ import numpy.typing
 import scipy.signal.windows as SciPy
 from Z0Z_tools import def_asTensor
 
-def _getLengthTaper(lengthWindow: int, ratioTaper: Optional[float]) -> int:
+def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 	"""
 	Calculate the length of the taper section for windowing functions.
 
@@ -30,7 +30,7 @@ def _getLengthTaper(lengthWindow: int, ratioTaper: Optional[float]) -> int:
 
 # GitHub #2
 @def_asTensor
-def cosineWings(lengthWindow: int, ratioTaper: Optional[float] = None) -> ndarray[Tuple[int], dtype[float64]]:
+def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> ndarray[tuple[int], dtype[float64]]:
 	"""
 	Generate a cosine-tapered windowing function with flat center and tapered ends.
 
@@ -50,7 +50,7 @@ def cosineWings(lengthWindow: int, ratioTaper: Optional[float] = None) -> ndarra
 	return windowingFunction
 
 @def_asTensor
-def equalPower(lengthWindow: int, ratioTaper: Optional[float] = None) -> ndarray[Tuple[int], dtype[float64]]:
+def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> ndarray[tuple[int], dtype[float64]]:
 	"""
 	Generate a windowing function used for an equal power crossfade.
 
@@ -70,7 +70,7 @@ def equalPower(lengthWindow: int, ratioTaper: Optional[float] = None) -> ndarray
 	return numpy.absolute(windowingFunction)
 
 @def_asTensor
-def halfsine(lengthWindow: int) -> ndarray[Tuple[int], dtype[float64]]:
+def halfsine(lengthWindow: int) -> ndarray[tuple[int], dtype[float64]]:
 	"""
 	Generate a half-sine windowing function.
 
@@ -83,7 +83,7 @@ def halfsine(lengthWindow: int) -> ndarray[Tuple[int], dtype[float64]]:
 	return sin(pi * (numpy.arange(lengthWindow) + 0.5) / lengthWindow)
 
 @def_asTensor
-def tukey(lengthWindow: int, ratioTaper: Optional[float] = None, **keywordArguments: float) -> ndarray[Tuple[int], dtype[float64]]:
+def tukey(lengthWindow: int, ratioTaper: float | None = None, **keywordArguments: float) -> ndarray[tuple[int], dtype[float64]]:
 	"""
 	Create a Tukey windowing-function.
 

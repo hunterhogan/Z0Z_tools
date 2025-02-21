@@ -4,17 +4,19 @@ Provides parameter and input validation, integer parsing, and concurrency handli
 from collections.abc import Sized
 from dataclasses import dataclass
 import multiprocessing
-from typing import Any, Iterable, List, Optional, Type, Union
+from typing import Any, List, Optional, Type, Union
+
+from collections.abc import Iterable
 import charset_normalizer
 
 @dataclass
 class ErrorMessageContext:
 	parameterValue: Any = None
-	parameterValueType: Optional[str] = None
-	containerType: Optional[str] = None
+	parameterValueType: str | None = None
+	containerType: str | None = None
 	isElement: bool = False
 
-def _constructErrorMessage(context: ErrorMessageContext, parameterName: str, parameterType: Optional[Type[Any]]) -> str:
+def _constructErrorMessage(context: ErrorMessageContext, parameterName: str, parameterType: type[Any] | None) -> str:
 	"""Constructs error message from available context using template:
 	I received ["value" | a value | None] [of type `type` | None] [as an element in | None] [a `containerType` type | None] but `parameterName` must have integers [in type(s) `parameterType` | None].
 
@@ -45,7 +47,7 @@ def _constructErrorMessage(context: ErrorMessageContext, parameterName: str, par
 
 # NOTE: For the `limit` parameter, the most precise type is `Union[bool, float, int, None]`
 # because `None` is in fact a valid option for the parameter, which is why I'm not using `Optional[Union[int, float, bool]]`.
-def defineConcurrencyLimit(limit: Union[bool, float, int, None]) -> int:
+def defineConcurrencyLimit(limit: bool | float | int | None) -> int:
 	"""
 	Determines the concurrency limit based on the provided parameter. This package has Pytest tests you can import and run on this function. `from Z0Z_tools.pytest_parseParameters import makeTestSuiteConcurrencyLimit`
 
@@ -115,7 +117,7 @@ def defineConcurrencyLimit(limit: Union[bool, float, int, None]) -> int:
 
 	return max(int(concurrencyLimit), 1)
 
-def intInnit(listInt_Allegedly: Iterable[int], parameterName: Optional[str] = None, parameterType: Optional[Type[Any]] = None) -> List[int]:
+def intInnit(listInt_Allegedly: Iterable[int], parameterName: str | None = None, parameterType: type[Any] | None = None) -> list[int]:
 	"""
 	Validates and converts input values to a list of integers.
 
@@ -145,7 +147,7 @@ def intInnit(listInt_Allegedly: Iterable[int], parameterName: Optional[str] = No
 		The function performs strict validation and follows fail-early principles to catch potential issues before they become catastrophic.
 	"""
 	parameterName = parameterName or 'the parameter'
-	parameterType = parameterType or List
+	parameterType = parameterType or list
 
 	if not listInt_Allegedly:
 		raise ValueError(f"I did not receive a value for {parameterName}, but it is required.")
@@ -223,7 +225,7 @@ def intInnit(listInt_Allegedly: Iterable[int], parameterName: Optional[str] = No
 			f"Initial length {lengthInitial}, current length {lengthCurrent}."
 		) from None
 
-def oopsieKwargsie(huh: str) -> Union[bool, None, str]:
+def oopsieKwargsie(huh: str) -> bool | None | str:
 	"""
 	If a calling function passes a `str` to a parameter that shouldn't receive a `str`, `oopsieKwargsie()` might help you avoid an Exception. It tries to interpret the string as `True`, `False`, or `None`. This package has Pytest tests you can import and run on this function. `from Z0Z_tools.pytest_parseParameters import makeTestSuiteOopsieKwargsie`
 

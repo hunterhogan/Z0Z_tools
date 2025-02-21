@@ -23,7 +23,7 @@ def applyHardLimit(arrayTarget: NDArray[Any], comparand: ArrayLike = 1.0) -> NDA
 
 def applyHardLimitComplexValued(
 	arrayTarget: NDArray[complexfloating[Any, Any]],
-	comparand: NDArray[Union[floating[Any], complexfloating[Any, Any]]],
+	comparand: NDArray[floating[Any] | complexfloating[Any, Any]],
 	penalty: float = 1.0
 	) -> NDArray[complexfloating[Any, Any]]:
 	"""

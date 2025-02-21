@@ -39,7 +39,7 @@ class TestLoadWaveforms:
 		(dumbassDictionaryPathFilenamesAudioFiles['mono_copies'], (2, 396900, 3)),
 		(dumbassDictionaryPathFilenamesAudioFiles['stereo_copies'], (2, 220500, 4))
 	])
-	def test_batch_loading(self, file_list: Any, expected_shape: Tuple[int]):
+	def test_batch_loading(self, file_list: Any, expected_shape: tuple[int]):
 		"""Test loading multiple files of the same type."""
 		array_waveforms = loadWaveforms(file_list)
 		assert array_waveforms.shape == expected_shape
@@ -70,7 +70,7 @@ class TestResampleWaveform:
 		expected_length = int(waveform.shape[0] * expected_factor)
 		assert resampled.shape[0] == expected_length
 
-	def test_same_rate_no_change(self, waveform_data: Dict[str, Dict[str, Any]]):
+	def test_same_rate_no_change(self, waveform_data: dict[str, dict[str, Any]]):
 		"""Test that no resampling occurs when rates match."""
 		waveform = waveform_data['stereo']['waveform']
 		rate = waveform_data['stereo']['sample_rate']

@@ -1,12 +1,14 @@
 """If `torch` is installed, this module creates tensor versions of the windowing functions."""
 from numpy import ndarray, dtype, float64
 from torch.types import Device
-from typing import Any, Callable, ParamSpec, Protocol, TypeVar, cast, Tuple
+from typing import Any, ParamSpec, Protocol, TypeVar, cast, Tuple
+
+from collections.abc import Callable
 import sys
 import torch
 
 callableTargetParameters = ParamSpec('callableTargetParameters')
-callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., ndarray[Tuple[int], dtype[float64]]])
+callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., ndarray[tuple[int], dtype[float64]]])
 
 class callableAsTensor(Protocol[callableTargetParameters]):
 	__name__: str
@@ -15,7 +17,7 @@ class callableAsTensor(Protocol[callableTargetParameters]):
 	def __call__(self, device: Device = ..., *args: callableTargetParameters.args, **kwargs: callableTargetParameters.kwargs) -> torch.Tensor: ...
 
 # GitHub #2
-def def_asTensor(callableTarget: Callable[callableTargetParameters, ndarray[Tuple[int], dtype[float64]]]) -> Callable[callableTargetParameters, ndarray[Tuple[int], dtype[float64]]]:
+def def_asTensor(callableTarget: Callable[callableTargetParameters, ndarray[tuple[int], dtype[float64]]]) -> Callable[callableTargetParameters, ndarray[tuple[int], dtype[float64]]]:
 	"""
 	Decorator that creates a tensor version of a numpy array-returning function.
 	The tensor version will be available with a 'Tensor' suffix.

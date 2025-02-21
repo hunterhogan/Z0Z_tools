@@ -19,7 +19,7 @@ import subprocess
 import sys
 import tempfile
 
-def makeListRequirementsFromRequirementsFile(*pathFilenames: Union[str, os.PathLike[str]]) -> List[str]:
+def makeListRequirementsFromRequirementsFile(*pathFilenames: str | os.PathLike[str]) -> list[str]:
 	"""
 	Reads one or more requirements files and extracts valid package requirements.
 
@@ -34,7 +34,7 @@ def makeListRequirementsFromRequirementsFile(*pathFilenames: Union[str, os.PathL
 		readStream = None
 		if pathlib.Path(pathFilename).exists():
 			try:
-				readStream = open(pathFilename, 'r')
+				readStream = open(pathFilename)
 				for commentedLine in readStream:
 					sanitizedLine = commentedLine.split('#')[0].strip()  # Remove comments and trim whitespace
 
@@ -54,7 +54,7 @@ def makeListRequirementsFromRequirementsFile(*pathFilenames: Union[str, os.PathL
 
 	return sorted(set(listRequirements))  # Remove duplicates
 
-def make_setupDOTpy(relativePathPackage: Union[str, os.PathLike[str]], listRequirements: List[str]) -> str:
+def make_setupDOTpy(relativePathPackage: str | os.PathLike[str], listRequirements: list[str]) -> str:
 	"""
 	Generates setup.py file content for installing the package.
 
@@ -79,7 +79,7 @@ setup(
 )
 """
 
-def installPackageTarget(pathPackageTarget: Union[str, os.PathLike[str]]) -> None:
+def installPackageTarget(pathPackageTarget: str | os.PathLike[str]) -> None:
 	"""
 	Installs a package by creating a temporary setup.py and tricking pip into installing it.
 

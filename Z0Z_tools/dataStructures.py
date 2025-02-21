@@ -10,7 +10,7 @@ import numpy
 from numpy.typing import NDArray
 import python_minifier
 
-def autoDecodingRLE(arrayTarget: NDArray[numpy.integer[Any]], addSpaces: bool = False, axisOfOperation: Optional[int] = None) -> str:
+def autoDecodingRLE(arrayTarget: NDArray[numpy.integer[Any]], addSpaces: bool = False, axisOfOperation: int | None = None) -> str:
 	"""Special case, range, start=0"""
 	if axisOfOperation is None:
 		axisOfOperation = 0
@@ -27,7 +27,7 @@ def autoDecodingRLE(arrayTarget: NDArray[numpy.integer[Any]], addSpaces: bool = 
 				ImaSerious = list(seriesGrouped)
 				ImaRange = [range(ImaSerious[0], ImaSerious[-1] + 1)]
 				lengthAsList = addSpaces*(len(ImaSerious)-1) + len(python_minifier.minify(str(ImaSerious))) # brackets are proxies for commas
-				lengthAsRange = addSpaces*1 + len(str('*')) + len(python_minifier.minify(str(ImaRange)))
+				lengthAsRange = addSpaces*1 + len('*') + len(python_minifier.minify(str(ImaRange)))
 				if lengthAsRange < lengthAsList:
 					arraySliceAsList += ImaRange
 				else:
@@ -72,7 +72,7 @@ def autoDecodingRLE(arrayTarget: NDArray[numpy.integer[Any]], addSpaces: bool = 
 
 	return arrayAsStr
 
-def stringItUp(*scrapPile: Any) -> List[str]:
+def stringItUp(*scrapPile: Any) -> list[str]:
 	"""
 	Convert, if possible, every element in the input data structure to a string. Order is not preserved or readily predictable.
 
@@ -117,7 +117,7 @@ def stringItUp(*scrapPile: Any) -> List[str]:
 		listStrungUp.append(repr(scrap))
 	return listStrungUp
 
-def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, Union[List[Any], Set[Any], Tuple[Any, ...]]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> Dict[str, List[Any]]:
+def updateExtendPolishDictionaryLists(*dictionaryLists: dict[str, list[Any] | set[Any] | tuple[Any, ...]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> dict[str, list[Any]]:
 	"""
 	Merges multiple dictionaries containing lists into a single dictionary, with options to handle duplicates,
 	list ordering, and erroneous data types.
@@ -134,7 +134,7 @@ def updateExtendPolishDictionaryLists(*dictionaryLists: Dict[str, Union[List[Any
 		The returned value, `ePluribusUnum`, is a so-called primitive dictionary (`typing.Dict`). Furthermore, every dictionary key is a so-called primitive string (cf. `str()`) and every dictionary value is a so-called primitive list (`typing.List`). If `dictionaryLists` has other data types, the data types will not be preserved. That could have unexpected consequences. Conversion from the original data type to a `typing.List`, for example, may not preserve the order even if you want the order to be preserved.
 	"""
 
-	ePluribusUnum: Dict[str, List[Any]] = {}
+	ePluribusUnum: dict[str, list[Any]] = {}
 
 	for dictionaryListTarget in dictionaryLists:
 		for keyName, keyValue in dictionaryListTarget.items():
