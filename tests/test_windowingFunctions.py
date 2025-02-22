@@ -85,7 +85,7 @@ def test_tukey_special_cases(lengthWindow: int) -> None:
 	)
 
 @pytest.mark.parametrize("functionWindowingInvalid", [cosineWings, equalPower])
-def test_invalidTaperRatio(functionWindowingInvalid: Callable[..., NDArray]) -> None:
+def test_invalidTaperRatio(functionWindowingInvalid: Callable[..., ndarray[tuple[int], dtype[float64]]]) -> None:
 	"""
 	Verify error handling for invalid taper ratios in cosineWings and equalPower.
 	"""

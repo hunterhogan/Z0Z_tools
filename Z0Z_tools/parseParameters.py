@@ -1,13 +1,11 @@
 """
 Provides parameter and input validation, integer parsing, and concurrency handling utilities.
 """
-from collections.abc import Sized
+from collections.abc import Iterable, Sized
 from dataclasses import dataclass
-import multiprocessing
-from typing import Any, List, Optional, Type, Union
-
-from collections.abc import Iterable
+from typing import Any
 import charset_normalizer
+import multiprocessing
 
 @dataclass
 class ErrorMessageContext:
@@ -100,7 +98,8 @@ def defineConcurrencyLimit(limit: bool | float | int | None) -> int:
 				raise ValueError(f"I received '{limitFromString}', but it must be a number, True, False, or None.")
 		else:
 			limit = limitFromString
-
+	if isinstance(limit, float) and abs(limit) >= 1:
+		limit = round(limit)
 	match limit:
 		case None | False | 0:
 			pass
@@ -109,15 +108,16 @@ def defineConcurrencyLimit(limit: bool | float | int | None) -> int:
 		case _ if limit >= 1:
 			concurrencyLimit = int(limit)
 		case _ if 0 < limit < 1:
-			concurrencyLimit = int(limit * cpuTotal)
+			concurrencyLimit = round(limit * cpuTotal)
 		case _ if -1 < limit < 0:
-			concurrencyLimit = cpuTotal - abs(int(limit * cpuTotal))
-		case _ if limit <= 1:
+			concurrencyLimit = cpuTotal - abs(round(limit * cpuTotal))
+		case _ if limit <= -1:
 			concurrencyLimit = cpuTotal - abs(int(limit))
+		case _: pass # To placate Pylance "strict" erroneously saying not all int or float are covered.
 
 	return max(int(concurrencyLimit), 1)
 
-def intInnit(listInt_Allegedly: Iterable[int], parameterName: str | None = None, parameterType: type[Any] | None = None) -> list[int]:
+def intInnit(listInt_Allegedly: Iterable[Any], parameterName: str | None = None, parameterType: type[Any] | None = None) -> list[int]:
 	"""
 	Validates and converts input values to a list of integers.
 
@@ -161,7 +161,7 @@ def intInnit(listInt_Allegedly: Iterable[int], parameterName: str | None = None,
 		if isinstance(listInt_Allegedly, Sized):
 			lengthInitial = len(listInt_Allegedly)
 
-		listValidated = []
+		listValidated: list[int] = []
 
 		for allegedInt in listInt_Allegedly:
 			errorMessageContext = ErrorMessageContext(
@@ -225,7 +225,7 @@ def intInnit(listInt_Allegedly: Iterable[int], parameterName: str | None = None,
 			f"Initial length {lengthInitial}, current length {lengthCurrent}."
 		) from None
 
-def oopsieKwargsie(huh: str) -> bool | None | str:
+def oopsieKwargsie(huh: Any) -> bool | None | str:
 	"""
 	If a calling function passes a `str` to a parameter that shouldn't receive a `str`, `oopsieKwargsie()` might help you avoid an Exception. It tries to interpret the string as `True`, `False`, or `None`. This package has Pytest tests you can import and run on this function. `from Z0Z_tools.pytest_parseParameters import makeTestSuiteOopsieKwargsie`
 

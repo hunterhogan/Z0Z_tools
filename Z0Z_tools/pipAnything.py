@@ -12,11 +12,11 @@ Usage:
 
 from Z0Z_tools.Z0Z_io import findRelativePath
 from packaging.requirements import Requirement
-from typing import List, Union
 import os
 import pathlib
 import subprocess
 import sys
+from io import TextIOWrapper
 import tempfile
 
 def makeListRequirementsFromRequirementsFile(*pathFilenames: str | os.PathLike[str]) -> list[str]:
@@ -28,31 +28,29 @@ def makeListRequirementsFromRequirementsFile(*pathFilenames: str | os.PathLike[s
 	Returns:
 		listRequirements: A list of unique, valid package requirements found in the provided files.
 	"""
-	listRequirements = []
+	listRequirements: list[str] = []
 
 	for pathFilename in pathFilenames:
-		readStream = None
+		readStream: TextIOWrapper | None = None
 		if pathlib.Path(pathFilename).exists():
 			try:
 				readStream = open(pathFilename)
 				for commentedLine in readStream:
-					sanitizedLine = commentedLine.split('#')[0].strip()  # Remove comments and trim whitespace
+					sanitizedLine: str = commentedLine.split('#')[0].strip()  # Remove comments and trim whitespace
 
-					# Skip lines that are empty or contain only whitespace after sanitization
 					if not sanitizedLine:
 						continue
 
-					# Validate if it's a valid requirement
 					try:
 						Requirement(sanitizedLine)
 						listRequirements.append(sanitizedLine)
 					except:
-						pass  # Skip invalid requirement lines
+						pass
 			finally:
 				if readStream:
 					readStream.close()
 
-	return sorted(set(listRequirements))  # Remove duplicates
+	return sorted(set(listRequirements))
 
 def make_setupDOTpy(relativePathPackage: str | os.PathLike[str], listRequirements: list[str]) -> str:
 	"""
@@ -89,24 +87,23 @@ def installPackageTarget(pathPackageTarget: str | os.PathLike[str]) -> None:
 	filenameRequirementsHARDCODED = pathlib.Path('requirements.txt')
 	filenameRequirements = pathlib.Path(filenameRequirementsHARDCODED)
 
-	pathPackage = pathlib.Path(pathPackageTarget).resolve()
+	pathPackage: pathlib.Path = pathlib.Path(pathPackageTarget).resolve()
 	pathSystemTemporary = pathlib.Path(tempfile.mkdtemp())
-	pathFilename_setupDOTpy = pathSystemTemporary / 'setup.py'
+	pathFilename_setupDOTpy: pathlib.Path = pathSystemTemporary / 'setup.py'
 
-	pathFilenameRequirements = pathPackage / filenameRequirements
-	listRequirements = makeListRequirementsFromRequirementsFile(pathFilenameRequirements)
+	pathFilenameRequirements: pathlib.Path = pathPackage / filenameRequirements
+	listRequirements: list[str] = makeListRequirementsFromRequirementsFile(pathFilenameRequirements)
 
 	# Try-finally block for file handling: with-as doesn't always work
-	writeStream = None
+	writeStream: TextIOWrapper | None = None
 	try:
 		writeStream = pathFilename_setupDOTpy.open(mode='w')
-		relativePathPackage = findRelativePath(pathSystemTemporary, pathPackage)
+		relativePathPackage: str = findRelativePath(pathSystemTemporary, pathPackage)
 		writeStream.write(make_setupDOTpy(relativePathPackage, listRequirements))
 	finally:
 		if writeStream:
 			writeStream.close()
 
-	# Run pip to install the package from the temporary directory
 	subprocessPython = subprocess.Popen(
 	# `pip` needs a RELATIVE PATH, not an absolute path, and not a path+filename.
 		args=[sys.executable, '-m', 'pip', 'install', str(pathSystemTemporary)],
@@ -120,7 +117,6 @@ def installPackageTarget(pathPackageTarget: str | os.PathLike[str]) -> None:
 
 	subprocessPython.wait()
 
-	# Clean up by removing setup.py
 	pathFilename_setupDOTpy.unlink()
 
 def everyone_knows_what___main___is() -> None:
@@ -129,8 +125,8 @@ def everyone_knows_what___main___is() -> None:
 	packageTarget = sys.argv[1] if len(sys.argv) > 1 else ''
 	pathPackageTarget = pathlib.Path(packageTarget)
 	if len(sys.argv) != 2 or not pathPackageTarget.exists() or not pathPackageTarget.is_dir() :
-		namespaceModule = pathlib.Path(__file__).stem
-		namespacePackage = pathlib.Path(__file__).parent.stem
+		namespaceModule: str = pathlib.Path(__file__).stem
+		namespacePackage: str = pathlib.Path(__file__).parent.stem
 		print(f"\n{namespaceModule} says, 'That didn't work. Try again?'\n\n"
 				f"Usage:\tpython -m {namespacePackage}.{namespaceModule} <packageTarget>\n"
 				f"\t<packageTarget> is a path to a directory with Python modules\n"
@@ -146,7 +142,6 @@ def readability_counts() -> None:
 	everyone_knows_what___main___is()
 
 def main() -> None:
-	"""Jabs subtly."""
 	readability_counts()
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+from typing import Any, Literal
 from tests.conftest import *
 import io
 import numpy
@@ -9,18 +10,27 @@ import soundfile
 class TestReadAudioFile:
 	def test_mono_to_stereo_conversion(self):
 		"""Test that mono files are properly converted to stereo."""
-		waveform = readAudioFile(dumbassDictionaryPathFilenamesAudioFiles['mono'])
+		pathFilename = dumbassDictionaryPathFilenamesAudioFiles['mono']
+		if isinstance(pathFilename, list):
+			pathFilename = pathFilename[0]
+		waveform = readAudioFile(pathFilename)
 		assert waveform.shape[0] == 2  # Should be stereo (2 channels)
 
 	def test_stereo_file_reading(self):
 		"""Test reading a stereo file directly."""
-		waveform = readAudioFile(dumbassDictionaryPathFilenamesAudioFiles['stereo'])
+		pathFilename = dumbassDictionaryPathFilenamesAudioFiles['stereo']
+		if isinstance(pathFilename, list):
+			pathFilename = pathFilename[0]
+		waveform = readAudioFile(pathFilename)
 		assert waveform.shape[0] == 2
 
 	@pytest.mark.parametrize("sample_rate", [16000, 44100, 48000])
-	def test_resampling(self, sample_rate: Literal[16000] | Literal[44100] | Literal[48000]):
+	def test_resampling(self, sample_rate: float) -> None:
 		"""Test resampling functionality with different sample rates."""
-		waveform = readAudioFile(dumbassDictionaryPathFilenamesAudioFiles['mono'], sampleRate=sample_rate)
+		pathFilename = dumbassDictionaryPathFilenamesAudioFiles['mono']
+		if isinstance(pathFilename, list):
+			pathFilename = pathFilename[0]
+		waveform = readAudioFile(pathFilename, sampleRate=sample_rate)
 		expected_length = int(sample_rate * 9)  # 9-second file
 		assert waveform.shape[1] == pytest.approx(expected_length, rel=0.1)
 
@@ -46,8 +56,11 @@ class TestLoadWaveforms:
 
 	def test_mixed_file_types(self):
 		"""Test loading a mix of mono and stereo files."""
-		mixed_files = [dumbassDictionaryPathFilenamesAudioFiles['mono_copies'][0], dumbassDictionaryPathFilenamesAudioFiles['stereo_copies'][0]]
-		array_waveforms = loadWaveforms(mixed_files)
+		mono_files: pathlib.Path | list[pathlib.Path] = dumbassDictionaryPathFilenamesAudioFiles['mono_copies']
+		stereo_files: pathlib.Path | list[pathlib.Path] = dumbassDictionaryPathFilenamesAudioFiles['stereo_copies']
+		mixed_files: list[pathlib.Path] = [mono_files[0] if isinstance(mono_files, list) else mono_files,
+					stereo_files[0] if isinstance(stereo_files, list) else stereo_files]
+		array_waveforms:ndarray[tuple[int, int, int], dtype[float32]] = loadWaveforms(mixed_files)
 		assert array_waveforms.shape[0] == 2  # Should be stereo
 		assert array_waveforms.shape[2] == 2  # Two files
 
@@ -63,7 +76,7 @@ class TestResampleWaveform:
 		(44100, 22050, 0.5),
 		(44100, 44100, 1.0)
 	])
-	def test_resampling_rates(self, waveform_data: Dict[str, Dict[str, Any]], source_rate: Literal[16000] | Literal[44100], target_rate: Literal[44100] | Literal[22050], expected_factor: float):
+	def test_resampling_rates(self, waveform_data: dict[str, dict[str, Any]], source_rate: Literal[16000] | Literal[44100], target_rate: Literal[44100] | Literal[22050], expected_factor: float):
 		"""Test resampling with different rate combinations."""
 		waveform = waveform_data['mono']['waveform']
 		resampled = resampleWaveform(waveform, target_rate, source_rate)
@@ -123,7 +136,7 @@ class TestWriteWav:
 
 	def test_directory_creation(self, pathTmpTesting: pathlib.Path) -> None:
 		"""Test automatic directory creation."""
-		nested_path = pathTmpTesting / "nested" / "dirs" / "test.wav"
+		nested_path: pathlib.Path = pathTmpTesting / "nested" / "dirs" / "test.wav"
 		waveform = numpy.random.rand(2, 1000).astype(numpy.float32)
 		writeWAV(nested_path, waveform)
 		assert nested_path.exists()

@@ -4,11 +4,10 @@ Pytest tests you can use in your package to test some Z0Z_tools functions.
 Each function in this module returns a list of test functions that can be used with `pytest.parametrize`.
 """
 
+from collections.abc import Callable, Iterable, Iterator
+from typing import Any
+from unittest.mock import patch, Mock
 from Z0Z_tools import defineConcurrencyLimit, intInnit, oopsieKwargsie
-from typing import Any, List, Optional, Union, Type, Tuple
-
-from collections.abc import Callable, Iterable
-from unittest.mock import patch
 import pytest
 
 def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | int | None], int] = defineConcurrencyLimit, cpuCount: int = 8) -> list[tuple[str, Callable[[], None]]]:
@@ -64,18 +63,19 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | in
 
 	"""
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
-	def testDefaults(_mockCpu):
-		for limitParameter in [None, False, 0]:
+	def testDefaults(_mockCpu: Mock) -> None:
+		listOfParameters: list[bool | int | None] = [None, False, 0]
+		for limitParameter in listOfParameters:
 			assert callableToTest(limitParameter) == cpuCount
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
-	def testDirectIntegers(_mockCpu):
+	def testDirectIntegers(_mockCpu: Mock) -> None:
 		for limitParameter in [1, 4, 16]:
 			assert callableToTest(limitParameter) == limitParameter
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
-	def testFractionalFloats(_mockCpu):
-		testCases = {
+	def testFractionalFloats(_mockCpu: Mock) -> None:
+		testCases: dict[float, int] = {
 			0.5: cpuCount // 2,
 			0.25: cpuCount // 4,
 			0.75: int(cpuCount * 0.75)
@@ -84,31 +84,32 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | in
 			assert callableToTest(input) == expected
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
-	def testMinimumOne(_mockCpu):
-		for limitParameter in [-10, -0.99, 0.1]:
+	def testMinimumOne(_mockCpu: Mock) -> None:
+		listOfParameters: list[float | int] = [-10, -0.99, 0.1]
+		for limitParameter in listOfParameters:
 			assert callableToTest(limitParameter) >= 1
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
-	def testBooleanTrue(_mockCpu):
+	def testBooleanTrue(_mockCpu: Mock) -> None:
 		assert callableToTest(True) == 1
 		assert callableToTest('True') == 1 # type: ignore
 		assert callableToTest('TRUE') == 1 # type: ignore
 		assert callableToTest(' true ') == 1 # type: ignore
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
-	def testInvalidStrings(_mockCpu):
+	def testInvalidStrings(_mockCpu: Mock) -> None:
 		for stringInput in ["invalid", "True but not quite", "None of the above"]:
 			with pytest.raises(ValueError, match="must be a number, True, False, or None"):
 				callableToTest(stringInput) # type: ignore
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
-	def testStringNumbers(_mockCpu):
-		testCases = [
-			("1.5", 1),
-			("-2.5", 6),
+	def testStringNumbers(_mockCpu: Mock) -> None:
+		testCases: list[tuple[str, int]] = [
+			("1.51", 2),
+			("-2.51", 5),
 			("4", 4),
 			("0.5", 4),
-			("-0.5", 4),
+			("-0.25", 6),
 		]
 		for stringNumber, expectedLimit in testCases:
 			assert callableToTest(stringNumber) == expectedLimit # type: ignore
@@ -162,28 +163,28 @@ def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type
 			callablePytest()
 		```
 	"""
-	def testHandlesValidIntegers():
-		# Using Fibonacci numbers for distinct test values
+	def testHandlesValidIntegers() -> None:
 		assert callableToTest([2, 3, 5, 8], 'test', None) == [2, 3, 5, 8]
 		assert callableToTest([13.0, 21.0, 34.0], 'test', None) == [13, 21, 34] # type: ignore
 		assert callableToTest(['55', '89', '144'], 'test', None) == [55, 89, 144] # type: ignore
 		assert callableToTest([' 233 ', '377', '-610'], 'test', None) == [233, 377, -610] # type: ignore
 
-	def testRejectsNonWholeNumbers():
-		for invalidNumber in [13.7, '21.5', ' 34.8 ', -55.9]:
+	def testRejectsNonWholeNumbers() -> None:
+		listInvalidNumbers: list[float] = [13.7, 21.5, 34.8, -55.9]
+		for invalidNumber in listInvalidNumbers:
 			with pytest.raises(ValueError):
-				callableToTest([invalidNumber], 'test', None)
+				callableToTest([invalidNumber], 'test', None) # type: ignore
 
-	def testRejectsBooleans():
+	def testRejectsBooleans() -> None:
 		with pytest.raises(TypeError):
 			callableToTest([True, False], 'test', None)
 
-	def testRejectsInvalidStrings():
+	def testRejectsInvalidStrings() -> None:
 		for invalidString in ['NW', '', ' ', 'SE.SW']:
 			with pytest.raises(ValueError):
 				callableToTest([invalidString], 'test', None) # type: ignore
 
-	def testRejectsEmptyList():
+	def testRejectsEmptyList() -> None:
 		with pytest.raises(ValueError):
 			callableToTest([], 'test', None)
 
@@ -191,56 +192,48 @@ def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type
 		assert callableToTest([13, '21', 34.0], 'test', None) == [13, 21, 34] # type: ignore
 
 	def testHandlesBytes():
-		# Test valid byte sequences
-		validCases = [
-			([b'123'], '123', [123]),  # Added larger numeric string bytes
-			# ([b'\x00\x00\x00\x00\x00\x00\x00\xFF'], '255', [255])
+		validCases: list[tuple[list[bytes], str, list[int]]] = [
+			([b'123'], '123', [123]),
 		]
 		for inputData, testName, expected in validCases:
 			assert callableToTest(inputData, testName, None) == expected  # type: ignore
 
-		# Added new test for bigger sequences
-		extendedCases = [
-			([b'123456789'], '123456789', [123456789]),  # Should decode and parse
-			# ([b'999999999999999999'], 'even_bigger', [999999999999999999])  # Even bigger
+		extendedCases: list[tuple[list[bytes], str, list[int]]] = [
+			([b'123456789'], '123456789', [123456789]),
 		]
 		for inputData, testName, expected in extendedCases:
 			assert callableToTest(inputData, testName, None) == expected  # type: ignore
 
-		# New invalid case for b'\x00'
-		invalidCases = [[b'\x00']]
+		invalidCases: list[list[bytes]] = [[b'\x00']]
 		for inputData in invalidCases:
 			with pytest.raises(ValueError):
 				callableToTest(inputData, 'test', None) # type: ignore
 
 	def testHandlesMemoryview():
-		# Test valid memoryview objects
-		validCases = [
-			([memoryview(b'123')], '123', [123]),  # Added memoryview numeric string
-			# ([memoryview(b'\x00\x00\x00\x00\x00\x00\x00\xFF')], '255', [255])
+		validCases: list[tuple[list[memoryview], str, list[int]]] = [
+			([memoryview(b'123')], '123', [123]),
 		]
 		for inputData, testName, expected in validCases:
 			assert callableToTest(inputData, testName, None) == expected # type: ignore
 
-		largeMemoryviewCase = [memoryview(b'9999999999')]
+		largeMemoryviewCase: list[memoryview] = [memoryview(b'9999999999')]
 		assert callableToTest(largeMemoryviewCase, 'test', None) == [9999999999]  # type: ignore
 
-		# New invalid case for memoryview(b'\x00')
-		invalidMemoryviewCases = [[memoryview(b'\x00')]]
+		invalidMemoryviewCases: list[list[memoryview]] = [[memoryview(b'\x00')]]
 		for inputData in invalidMemoryviewCases:
 			with pytest.raises(ValueError):
 				callableToTest(inputData, 'test', None) # type: ignore
 
 	def testRejectsMutableSequence():
-		class MutableList(list):
-			def __iter__(self):
+		class MutableList(list[int]):
+			def __iter__(self) -> Iterator[int]:
 				self.append(89)
 				return super().__iter__()
 		with pytest.raises(RuntimeError, match=".*modified during iteration.*"):
 			callableToTest(MutableList([13, 21, 34]), 'test', None)
 
-	def testHandlesComplexIntegers():
-		testCases = [
+	def testHandlesComplexIntegers() -> None:
+		testCases: list[tuple[list[complex], list[int]]] = [
 			([13+0j], [13]),
 			([21+0j, 34+0j], [21, 34])
 		]
@@ -314,6 +307,7 @@ def PytestFor_oopsieKwargsie(callableToTest: Callable[[str], bool | None | str] 
 	@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_oopsieKwargsie(callableToTest = YOUR_FUNCTION_HERE))
 	def test_functionLocal(nameOfTest, callablePytest):
 		callablePytest()
+	```
 	"""
 	def testHandlesTrueVariants():
 		for variantTrue in ['True', 'TRUE', ' true ', 'TrUe']:
@@ -336,10 +330,8 @@ def PytestFor_oopsieKwargsie(callableToTest: Callable[[str], bool | None | str] 
 			def __str__(self):
 				raise TypeError("Cannot be stringified")
 
-		# This integer should get converted to string
 		assert callableToTest(123) == "123" # type: ignore
 
-		# This custom object should be returned as-is (same object) if str() fails
 		unStringableObject = UnStringable()
 		result = callableToTest(unStringableObject) # type: ignore
 		assert result is unStringableObject

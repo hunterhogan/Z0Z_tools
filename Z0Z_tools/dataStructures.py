@@ -3,12 +3,12 @@ Provides utilities for string extraction from nested data structures
 and merges multiple dictionaries containing lists into one dictionary.
 """
 
-import re as regex
-from typing import Any, Dict, List, Optional, Set, Tuple, Union
+from numpy.typing import NDArray
+from typing import Any
 import more_itertools
 import numpy
-from numpy.typing import NDArray
 import python_minifier
+import re as regex
 
 def autoDecodingRLE(arrayTarget: NDArray[numpy.integer[Any]], addSpaces: bool = False, axisOfOperation: int | None = None) -> str:
 	"""Special case, range, start=0"""
@@ -82,7 +82,7 @@ def stringItUp(*scrapPile: Any) -> list[str]:
 		listStrungUp: A list of string versions of all convertible elements.
 	"""
 	scrap = None
-	listStrungUp = []
+	listStrungUp: list[str] = []
 
 	def drill(KitKat: Any) -> None:
 		if isinstance(KitKat, str):

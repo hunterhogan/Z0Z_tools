@@ -1,63 +1,25 @@
-# failureIsAnOption = True
-# while failureIsAnOption:
-#     try:
-#         from typing import (
-#             Any,
-#             Callable,
-#             Dict,
-#             Final,
-#             Generator,
-#             Iterable,
-#             Iterator,
-#             List,
-#             Literal,
-#             LiteralString,
-#             Optional,
-#             Sequence,
-#             Set,
-#             Tuple,
-#             Type,
-#             Union,
-#         )
-#         failureIsAnOption = False
-#     except ImportError as ERRORmessage:
-# 		# import inspect
-#         failedIdentifier = str(ERRORmessage).split("'")[1]  # Extract name from "cannot import name 'X' from 'typing'"
-#         globals()[failedIdentifier] = object
-
-from typing import Any, Final, Literal
-from collections.abc import Callable, Generator, Sequence, Iterable, Iterator
-from types import EllipsisType
-from numpy import ndarray, dtype
-from numpy._core._exceptions import UFuncTypeError
+from collections.abc import Callable, Generator
 from numpy.typing import NDArray
+from typing import Any, Final
 from Z0Z_tools import *
 from Z0Z_tools.pytestForYourUse import *
 import numpy
 import pandas
 import pathlib
 import pytest
-import re
 import shutil
 import soundfile
 import torch
 import uuid
-
-"""SSOT for Pytest. Implementing new ways of structuring tests.
-- Other test modules should not import directly from the package being tested: they should import from here.
-- All fixtures should be here.
-- Temporary files and directories should be created and cleaned up here.
-- Prefer to make predictable data and use the test data in the tests/dataSamples directory over generating random data or artificial data."""
 
 atolDEFAULT: Final[float] = 1e-7
 rtolDEFAULT: Final[float] = 1e-7
 
 # SSOT for test data paths and filenames
 pathDataSamples = pathlib.Path("tests/dataSamples")
-# NOTE `tmp` is not a diminutive form of temporary: it signals a technical term. And "temp" is strongly disfavored.
-pathTmpRoot = pathDataSamples / "tmp"
+pathTmpRoot: pathlib.Path = pathDataSamples / "tmp"
 
-registerOfTemporaryFilesystemObjects: Set[pathlib.Path] = set()
+registerOfTemporaryFilesystemObjects: set[pathlib.Path] = set()
 
 def registrarRecordsTmpObject(path: pathlib.Path) -> None:
 	"""The registrar adds a tmp file to the register."""
@@ -94,13 +56,13 @@ def pathTmpTesting(request: pytest.FixtureRequest) -> pathlib.Path:
 @pytest.fixture
 def pathFilenameTmpTesting(request: pytest.FixtureRequest) -> pathlib.Path:
 	try:
-		extension = request.param
+		extension: str = request.param
 	except AttributeError:
 		extension = ".txt"
 
-	uuidHex = uuid.uuid4().hex
-	subpath = uuidHex[0:-8]
-	filenameStem = uuidHex[-8:None]
+	uuidHex: str = uuid.uuid4().hex
+	subpath: str = uuidHex[0:-8]
+	filenameStem: str = uuidHex[-8:None]
 
 	pathFilenameTmp = pathlib.Path(pathTmpRoot, subpath, filenameStem + extension)
 	pathFilenameTmp.parent.mkdir(parents=True, exist_ok=False)
@@ -161,64 +123,30 @@ Section: Standardized assert statements and failure messages"""
 
 def uniformTestFailureMessage(expected: Any, actual: Any, functionName: str, *arguments: Any, **keywordArguments: Any) -> str:
 	"""Format assertion message for any test comparison."""
-	listArgumentComponents = [str(parameter) for parameter in arguments]
-	listKeywordComponents = [f"{key}={value}" for key, value in keywordArguments.items()]
-	joinedArguments = ', '.join(listArgumentComponents + listKeywordComponents)
+	listArgumentComponents: list[str] = [str(parameter) for parameter in arguments]
+	listKeywordComponents: list[str] = [f"{key}={value}" for key, value in keywordArguments.items()]
+	joinedArguments: str = ', '.join(listArgumentComponents + listKeywordComponents)
 
 	return (f"\nTesting: `{functionName}({joinedArguments})`\n"
 			f"Expected: {expected}\n"
 			f"Got: {actual}")
 
-def standardizedSystemExit(expected: Union[str, int, Sequence[int]], functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
-	"""Template for tests expecting any SystemExit event.
-
-	Parameters
-		expected: Exit code expectation:
-			If testing for a semantic outcome, prefer one of the semantic values for `expected`:
-				- "error": any non-zero exit code.
-				- "nonError": specifically zero exit code.
-			If the specific exit code is in fact meaningful, predictable, and necessary to differentiate between different outcomes, use:
-				- int: exact exit code match.
-				- Sequence[int]: exit code must be one of these values.
-		functionTarget: A callable that generates an outcome, which is often the target of the test.
-		arguments: Arguments to pass to `functionTarget`.
-		keywordArguments: Keyword arguments to pass to `functionTarget`.
-	"""
-	with pytest.raises(SystemExit) as exitInfo:
-		functionTarget(*arguments, **keywordArguments)
-
-	exitCode = exitInfo.value.code
-
-	# TODO converge with `uniformTestFailureMessage`
-	if expected == "error":
-		assert exitCode != 0, \
-			f"Expected error exit (non-zero) but got code {exitCode}"
-	elif expected == "nonError":
-		assert exitCode == 0, \
-			f"Expected non-error exit (0) but got code {exitCode}"
-	elif isinstance(expected, (list, tuple)):
-		assert exitCode in expected, \
-			f"Expected exit code to be one of {expected} but got {exitCode}"
-	else:
-		assert exitCode == expected, \
-			f"Expected exit code {expected} but got {exitCode}"
-
-def standardizedEqualTo(expected: Any, functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
+def standardizedEqualTo(expected: Any, functionTarget: Callable[..., Any], *arguments: Any, **keywordArguments: Any) -> None:
 	"""Template for most tests to compare the actual outcome with the expected outcome, including expected errors."""
-	if type(expected) == Type[Exception]:
-		messageExpected = expected.__name__
+	if type(expected) == type[Exception]:
+		messageExpected: str = expected.__name__
 	else:
 		messageExpected = expected
 
 	try:
 		messageActual = actual = functionTarget(*arguments, **keywordArguments)
 	except Exception as actualError:
-		messageActual = type(actualError).__name__
+		messageActual: str = type(actualError).__name__
 		actual = type(actualError)
 
 	assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
 
-def prototype_numpyAllClose(expected: NDArray[Any], atol: Optional[float], rtol: Optional[float], functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
+def prototype_numpyAllClose(expected: NDArray[Any], atol: float | None, rtol: float | None, functionTarget: Callable[..., Any], *arguments: Any, **keywordArguments: Any) -> None:
 	"""Template for tests using numpy.allclose comparison."""
 	if atol is None:
 		atol = atolDEFAULT
@@ -227,19 +155,19 @@ def prototype_numpyAllClose(expected: NDArray[Any], atol: Optional[float], rtol:
 	try:
 		actual = functionTarget(*arguments, **keywordArguments)
 	except Exception as actualError:
-		messageActual = type(actualError).__name__
+		messageActual: str = type(actualError).__name__
 		actual = type(actualError)
 		messageExpected = expected if isinstance(expected, type) else "array-like result"
 		assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
 	else:
 		assert numpy.allclose(actual, expected, rtol, atol), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)
 
-def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable, *arguments: Any, **keywordArguments: Any) -> None:
+def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable[..., Any], *arguments: Any, **keywordArguments: Any) -> None:
 	"""Template for tests using numpy.array_equal comparison."""
 	try:
 		actual = functionTarget(*arguments, **keywordArguments)
 	except Exception as actualError:
-		messageActual = type(actualError).__name__
+		messageActual: str = type(actualError).__name__
 		actual = type(actualError)
 		messageExpected = expected if isinstance(expected, type) else "array-like result"
 		assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
@@ -249,7 +177,7 @@ def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable, 
 """
 Section: This garbage needs to be replaced."""
 
-dumbassDictionaryPathFilenamesAudioFiles = {
+dumbassDictionaryPathFilenamesAudioFiles: dict[str, pathlib.Path | list[pathlib.Path]] = {
 	'mono': pathDataSamples / "testWooWooMono16kHz32integerClipping9sec.wav",
 	'stereo': pathDataSamples / "testSine2ch5sec.wav",
 	'video': pathDataSamples / "testVideo11sec.mkv",
@@ -257,7 +185,7 @@ dumbassDictionaryPathFilenamesAudioFiles = {
 	'stereo_copies': [pathDataSamples / f"testSine2ch5secCopy{i}.wav" for i in range(1, 5)]
 }
 @pytest.fixture
-def waveform_data() -> Dict[str, Dict[str, Any]]:
+def waveform_data() -> dict[str, dict[str, Any]]:
 	"""Fixture providing sample waveform data and sample rates."""
 	mono_data, mono_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['mono'], dtype='float32')
 	stereo_data, stereo_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['stereo'], dtype='float32')

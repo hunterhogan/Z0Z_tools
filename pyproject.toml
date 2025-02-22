@@ -49,12 +49,13 @@ optional-dependencies = { PyTorch = [
 	"pytest-xdist",
 	"pytest",
 	"pyupgrade",
+	"scipy-stubs",
 	"torch",
 ] }
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
 urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Repository = "https://github.com/hunterhogan/Z0Z_tools.git" }
-version = "0.9.5"
+version = "0.10.0"
 
 [tool.coverage]
 report = { exclude_lines = [

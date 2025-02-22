@@ -1,10 +1,10 @@
-from numpy.typing import NDArray
+from numpy import ndarray, dtype, float64
 from tests.conftest import prototype_numpyArrayEqual
 from Z0Z_tools.optionalPyTorchAlternative import def_asTensor
 import numpy
 import pytest
 
-def functionReturnsNDArray(arrayTarget: NDArray) -> NDArray:
+def functionReturnsNDArray(arrayTarget: ndarray[tuple[int], dtype[float64]]) -> ndarray[tuple[int], dtype[float64]]:
     """Simple function that returns an NDArray."""
     return arrayTarget * 2
 
@@ -20,6 +20,6 @@ def test_def_asTensor_returns_same_callable():
     (numpy.zeros((3, 3)), numpy.zeros((3, 3))),
     (numpy.ones(5), numpy.full(5, 2)),
 ])
-def test_def_asTensor_preserves_functionality(arrayInput: NDArray, arrayExpected: NDArray):
+def test_def_asTensor_preserves_functionality(arrayInput: ndarray[tuple[int], dtype[float64]], arrayExpected: ndarray[tuple[int], dtype[float64]]):
     """Test that wrapped function maintains original behavior for various inputs."""
     prototype_numpyArrayEqual(arrayExpected, wrappedFunction, arrayInput)

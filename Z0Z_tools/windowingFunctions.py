@@ -2,12 +2,11 @@
 Generate various windowing functions used in signal processing.
 """
 
-from typing import Any, Optional, Tuple
-import numpy
 from numpy import cos, dtype, float64, ndarray, pi, sin
+from Z0Z_tools import def_asTensor
+import numpy
 import numpy.typing
 import scipy.signal.windows as SciPy
-from Z0Z_tools import def_asTensor
 
 def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 	"""

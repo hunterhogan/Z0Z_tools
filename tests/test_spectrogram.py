@@ -69,7 +69,7 @@ def test_stft_batch_processing():
 	result_batch = stft(signals, indexingAxis=0)
 
 	# Process individually
-	results_individual = numpy.stack([stft(sig) for sig in signals], axis=0)
+	results_individual: numpy._ArrayUInt_co[numpy.Any, numpy.dtype[numpy.complexfloating[numpy._64Bit, numpy._64Bit]]] = numpy.stack([stft(sig) for sig in signals], axis=0, dtype=numpy.complex128)
 
 	assert_allclose(result_batch, results_individual, atol=1e-7)
 

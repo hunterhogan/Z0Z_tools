@@ -3,11 +3,10 @@ Provides basic file I/O utilities such as writing tabular data to a file
 and computing a canonical relative path from one location to another.
 """
 
-from typing import Any, Union
-
 from collections.abc import Iterable
-import os
+from typing import Any
 import io
+import os
 import pathlib
 
 def dataTabularTOpathFilenameDelimited(pathFilename: str | os.PathLike[Any], tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
@@ -48,17 +47,16 @@ def findRelativePath(pathSource: str | os.PathLike[Any], pathDestination: str | 
 	pathSource = pathlib.Path(pathSource).resolve()
 	pathDestination = pathlib.Path(pathDestination).resolve()
 
-	# If the source is a file, use its parent directory
 	if pathSource.is_file() or not pathSource.suffix == '':
 		pathSource = pathSource.parent
 
 	# Split destination into parent path and filename if it's a file
-	pathDestinationParent = pathDestination.parent if pathDestination.is_file() or not pathDestination.suffix == '' else pathDestination
-	filenameFinal = pathDestination.name if pathDestination.is_file() or not pathDestination.suffix == '' else ''
+	pathDestinationParent: pathlib.Path = pathDestination.parent if pathDestination.is_file() or not pathDestination.suffix == '' else pathDestination
+	filenameFinal: str = pathDestination.name if pathDestination.is_file() or not pathDestination.suffix == '' else ''
 
 	# Split both paths into parts
-	partsSource = pathSource.parts
-	partsDestination = pathDestinationParent.parts
+	partsSource: tuple[str, ...] = pathSource.parts
+	partsDestination: tuple[str, ...] = pathDestinationParent.parts
 
 	# Find the common prefix
 	indexCommon = 0
@@ -68,7 +66,7 @@ def findRelativePath(pathSource: str | os.PathLike[Any], pathDestination: str | 
 		indexCommon += 1
 
 	# Build the relative path
-	partsUp = ['..'] * (len(partsSource) - indexCommon)
+	partsUp: list[str] = ['..'] * (len(partsSource) - indexCommon)
 	partsDown = list(partsDestination[indexCommon:])
 
 	# Add the filename if present
@@ -77,7 +75,22 @@ def findRelativePath(pathSource: str | os.PathLike[Any], pathDestination: str | 
 
 	return '/'.join(partsUp + partsDown) if partsUp + partsDown else '.'
 
-def makeDirsSafely(pathFilename):
+def makeDirsSafely(pathFilename: Any) -> None:
+	"""
+	Creates parent directories for a given path safely.
+
+	This function attempts to create all necessary parent directories for a given path.
+	If the directory already exists or if there's an OSError during creation, it will
+	silently continue without raising an exception.
+
+	Parameters:
+		pathFilename: A path-like object or file object representing the path
+			for which to create parent directories. If it's an IO stream object,
+			no directories will be created.
+
+	Returns:
+		None:
+	"""
 	if not isinstance(pathFilename, io.IOBase):
 		try:
 			pathlib.Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)

@@ -1,6 +1,6 @@
 """NOTE not fully implemented"""
-from typing import Any, Union
-from numpy import absolute, complexfloating, dtype, float64, floating, ndarray
+from typing import Any
+from numpy import absolute, complexfloating, float64, floating
 from numpy import ones_like
 from numpy.typing import ArrayLike, NDArray
 

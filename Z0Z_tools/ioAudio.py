@@ -8,7 +8,6 @@ from scipy.signal._short_time_fft import PAD_TYPE, FFT_MODE_TYPE
 from typing import Any, BinaryIO, Literal, TypedDict, cast, overload
 from collections.abc import Sequence
 from Z0Z_tools import halfsine, makeDirsSafely
-import collections
 import functools
 import io
 import math

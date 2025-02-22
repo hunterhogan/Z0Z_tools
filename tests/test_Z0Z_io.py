@@ -1,3 +1,4 @@
+from pathlib import Path
 from tests.conftest import *
 import pandas
 import pytest
@@ -8,7 +9,7 @@ def testDataTabularTOpathFilenameDelimitedBasic(dataframeSample: pandas.DataFram
 
 	# Convert DataFrame to rows and columns
 	tableRows = dataframeSample.values.tolist()
-	tableColumns = dataframeSample.columns.tolist()
+	tableColumns: list[str] = dataframeSample.columns.tolist()
 
 	dataTabularTOpathFilenameDelimited(
 		pathFilename=pathOutput,
@@ -18,7 +19,7 @@ def testDataTabularTOpathFilenameDelimitedBasic(dataframeSample: pandas.DataFram
 	)
 
 	assert pathOutput.exists()
-	dfRead = pandas.read_csv(pathOutput)
+	dfRead: pandas.DataFrame = pandas.read_csv(pathOutput)
 	pandas.testing.assert_frame_equal(dataframeSample, dfRead)
 
 @pytest.mark.parametrize("delimiterOutput,filenameInfix", [
@@ -26,9 +27,9 @@ def testDataTabularTOpathFilenameDelimitedBasic(dataframeSample: pandas.DataFram
 	('\t', 'tab'),
 	('|', 'pipe')
 ])
-def testDataTabularTOpathFilenameDelimitedDelimiters(dataframeSample: pandas.DataFrame, pathTmpTesting: pathlib.Path, delimiterOutput: Literal[','] | Literal['\t'] | Literal['|'], filenameInfix: Literal['comma'] | Literal['tab'] | Literal['pipe']) -> None:
+def testDataTabularTOpathFilenameDelimitedDelimiters(dataframeSample: pandas.DataFrame, pathTmpTesting: pathlib.Path, delimiterOutput: str, filenameInfix: str) -> None:
 	"""Test with different delimiters."""
-	pathOutput = pathTmpTesting / f"output_{filenameInfix}.txt"
+	pathOutput: Path = pathTmpTesting / f"output_{filenameInfix}.txt"
 
 	dataTabularTOpathFilenameDelimited(
 		pathFilename=pathOutput,
@@ -54,12 +55,12 @@ def testDataTabularTOpathFilenameDelimitedNoHeaders(dataframeSample: pandas.Data
 
 	assert pathOutput.exists()
 	with open(pathOutput) as readStream:
-		lines = readStream.readlines()
+		lines: list[str] = readStream.readlines()
 		assert len(lines) == len(dataframeSample)
 
 def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: pathlib.Path) -> None:
 	"""Test writing empty data."""
-	pathOutput = pathTmpTesting / "empty.csv"
+	pathOutput: Path = pathTmpTesting / "empty.csv"
 
 	dataTabularTOpathFilenameDelimited(
 		pathFilename=pathOutput,
@@ -70,7 +71,7 @@ def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: pathlib.Path
 
 	assert pathOutput.exists()
 	with open(pathOutput) as readStream:
-		lines = readStream.readlines()
+		lines: list[str] = readStream.readlines()
 		assert len(lines) == 1
 		assert lines[0].strip() == 'col1,col2'
 
@@ -80,28 +81,32 @@ def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: pathlib.Path
 	("dir1", "dir1/subdir1", "subdir1"),
 	("dir3/subdir3", "dir1/file1.txt", "../../dir1/file1.txt"),
 ])
-def testFindRelativePath(setupDirectoryStructure: Any, pathStart: Literal['dir1'] | Literal['dir1/subdir1'] | Literal['dir3/subdir3'], pathTarget: Literal['dir2'] | Literal['dir2/subdir2'] | Literal['dir1/subdir1'] | Literal['dir1/file1.txt'], expectedResult: Literal['../dir2'] | Literal['../../dir2/subdir2'] | Literal['subdir1'] | Literal['../../dir1/file1.txt']) -> None:
+def testFindRelativePath(setupDirectoryStructure: pathlib.Path
+						, pathStart: str
+						, pathTarget: str
+						, expectedResult: str
+						) -> None:
 	"""Test findRelativePath with various path combinations."""
-	pathStartFull = setupDirectoryStructure / pathStart
-	pathTargetFull = setupDirectoryStructure / pathTarget
+	pathStartFull: Path = setupDirectoryStructure / pathStart
+	pathTargetFull: Path = setupDirectoryStructure / pathTarget
 
-	resultPath = findRelativePath(pathStartFull, pathTargetFull)
+	resultPath: str = findRelativePath(pathStartFull, pathTargetFull)
 	assert resultPath == expectedResult
 
 def testFindRelativePathWithNonexistentPaths(pathTmpTesting: pathlib.Path) -> None:
 	"""Test findRelativePath with paths that don't exist."""
-	pathStart = pathTmpTesting / "nonexistent1"
-	pathTarget = pathTmpTesting / "nonexistent2"
+	pathStart: Path = pathTmpTesting / "nonexistent1"
+	pathTarget: Path = pathTmpTesting / "nonexistent2"
 
-	resultPath = findRelativePath(pathStart, pathTarget)
+	resultPath: str = findRelativePath(pathStart, pathTarget)
 	assert resultPath == "../nonexistent2"
 
 def testFindRelativePathWithSamePath(pathTmpTesting: pathlib.Path) -> None:
 	"""Test findRelativePath when start and target are the same."""
-	pathTest = pathTmpTesting / "testdir"
+	pathTest: Path = pathTmpTesting / "testdir"
 	pathTest.mkdir()
 
-	resultPath = findRelativePath(pathTest, pathTest)
+	resultPath: str = findRelativePath(pathTest, pathTest)
 	assert resultPath == "."
 
 # @pytest.mark.parametrize("pathStartStr,pathTargetStr", [
