@@ -4,12 +4,12 @@ and computing a canonical relative path from one location to another.
 """
 
 from collections.abc import Iterable
+from os import PathLike
 from typing import Any
 import io
-import os
 import pathlib
 
-def dataTabularTOpathFilenameDelimited(pathFilename: str | os.PathLike[Any], tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
+def dataTabularTOpathFilenameDelimited(pathFilename: str | PathLike[Any], tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
 	"""
 	Writes tabular data to a delimited file. This is a low-quality function: you'd probably be better off with something else.
 
@@ -33,7 +33,7 @@ def dataTabularTOpathFilenameDelimited(pathFilename: str | os.PathLike[Any], tab
 		for row in tableRows:
 			writeStream.write(delimiterOutput.join(map(str, row)) + '\n')
 
-def findRelativePath(pathSource: str | os.PathLike[Any], pathDestination: str | os.PathLike[Any]) -> str:
+def findRelativePath(pathSource: str | PathLike[Any], pathDestination: str | PathLike[Any]) -> str:
 	"""
 	Find a relative path from source to destination, even if they're on different branches.
 

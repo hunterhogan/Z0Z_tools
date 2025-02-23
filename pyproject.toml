@@ -43,6 +43,7 @@ name = "Z0Z_tools"
 optional-dependencies = { PyTorch = [
 	"torch",
 ], testing = [
+	"mypy",
 	"pandas",
 	"pytest-cov",
 	"pytest-mock",
@@ -55,7 +56,7 @@ optional-dependencies = { PyTorch = [
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
 urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Repository = "https://github.com/hunterhogan/Z0Z_tools.git" }
-version = "0.10.0"
+version = "0.10.1"
 
 [tool.coverage]
 report = { exclude_lines = [
@@ -76,8 +77,13 @@ log_auto_indent = ["On"]
 addopts = ["--color=yes", "-n 4"]
 testpaths = ["tests"]
 
-[tool.setuptools.packages.find]
-where = ["."]
+[tool.setuptools]
+package-dir = {'' = '.'}
+packages = ['Z0Z_tools']
+package-data = {'Z0Z_tools' = ['py.typed', '*.pyi']}
+
+[tool.build]
+pre-build-commands = ["stubgen --verbose --output Z0Z_tools --package Z0Z_tools"]
 
 [tool.updateCitation]
 filenameCitationDOTcff = 'CITATION.cff'

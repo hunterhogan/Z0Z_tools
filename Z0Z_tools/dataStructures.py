@@ -5,6 +5,7 @@ and merges multiple dictionaries containing lists into one dictionary.
 
 from numpy.typing import NDArray
 from typing import Any
+from collections.abc import Mapping, Sequence
 import more_itertools
 import numpy
 import python_minifier
@@ -117,7 +118,7 @@ def stringItUp(*scrapPile: Any) -> list[str]:
 		listStrungUp.append(repr(scrap))
 	return listStrungUp
 
-def updateExtendPolishDictionaryLists(*dictionaryLists: dict[str, list[Any] | set[Any] | tuple[Any, ...]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> dict[str, list[Any]]:
+def updateExtendPolishDictionaryLists(*dictionaryLists: Mapping[str, list[Any] | set[Any] | tuple[Any, ...]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> dict[str, list[Any]]:
 	"""
 	Merges multiple dictionaries containing lists into a single dictionary, with options to handle duplicates,
 	list ordering, and erroneous data types.

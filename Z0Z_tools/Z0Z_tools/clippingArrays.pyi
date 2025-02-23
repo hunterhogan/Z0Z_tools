@@ -1,0 +1,6 @@
+from numpy import complexfloating as complexfloating, floating as floating
+from numpy.typing import ArrayLike as ArrayLike, NDArray as NDArray
+from typing import Any
+
+def applyHardLimit(arrayTarget: NDArray[Any], comparand: ArrayLike = 1.0) -> NDArray[Any]: ...
+def applyHardLimitComplexValued(arrayTarget: NDArray[complexfloating[Any, Any]], comparand: NDArray[floating[Any] | complexfloating[Any, Any]], penalty: float = 1.0) -> NDArray[complexfloating[Any, Any]]: ...

@@ -54,11 +54,11 @@ parametersDEFAULT = ParametersUniversal (
 
 # No, I don't know how to implement this, but I might learn how to do it later.
 # If you know how, you can help. :D
-parametersUniversal = {}
+setParametersUniversal = None
 
 windowingFunctionCallableUniversal = windowingFunctionCallableDEFAULT
-if not parametersUniversal:
-	parametersUniversal = parametersDEFAULT
+if not setParametersUniversal:
+	parametersUniversal: ParametersUniversal = parametersDEFAULT
 
 def getWaveformMetadata(listPathFilenames: Sequence[str | os.PathLike[str]], sampleRate: float) -> dict[int, WaveformMetadata]:
 	axisTime: int = -1
@@ -264,10 +264,10 @@ def stft(arrayTarget: ndarray[tuple[int, int, int, int], dtype[complexfloating[A
 		, indexingAxis: int = -1
 		) -> ndarray[tuple[int, int, int], dtype[floating[Any]]]: ...
 
-def stft(arrayTarget: (ndarray[tuple[int, int], 		   dtype[floating[Any] | integer[Any]]]
-						 |   ndarray[tuple[int, int, int], 	   dtype[floating[Any] | integer[Any]]]
-						 |   ndarray[tuple[int, int, int], 	   dtype[complexfloating[Any, Any] | floating[Any]]]
-						 |   ndarray[tuple[int, int, int, int], dtype[complexfloating[Any, Any]]])
+def stft(arrayTarget: (ndarray[tuple[int, int], 		  dtype[floating[Any] | integer[Any]]]
+					|  ndarray[tuple[int, int, int], 	  dtype[floating[Any] | integer[Any]]]
+					|  ndarray[tuple[int, int, int], 	  dtype[complexfloating[Any, Any] | floating[Any]]]
+					|  ndarray[tuple[int, int, int, int], dtype[complexfloating[Any, Any]]])
 		, *
 		, sampleRate: float | None = None
 		, lengthHop: int | None = None
@@ -277,10 +277,10 @@ def stft(arrayTarget: (ndarray[tuple[int, int], 		   dtype[floating[Any] | integ
 		, inverse: bool = False
 		, lengthWaveform: int | None = None
 		, indexingAxis: int | None = None
-		) -> (ndarray[tuple[int, int], 		  dtype[floating[Any]]]
-				 |  ndarray[tuple[int, int, int], 	  dtype[floating[Any]]]
-				 |  ndarray[tuple[int, int, int], 	  dtype[complexfloating[Any, Any]]]
-				 |  ndarray[tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]):
+		) -> (ndarray[tuple[int, int], 		  	 dtype[floating[Any]]]
+			| ndarray[tuple[int, int, int], 	 dtype[floating[Any]]]
+			| ndarray[tuple[int, int, int], 	 dtype[complexfloating[Any, Any]]]
+			| ndarray[tuple[int, int, int, int], dtype[complexfloating[Any, Any]]]):
 	"""
 	Short-Time Fourier Transform with unified interface for forward and inverse transforms.
 
@@ -329,10 +329,10 @@ def stft(arrayTarget: (ndarray[tuple[int, int], 		   dtype[floating[Any] | integ
 										, lengthWaveform: Literal[None] = None, inverse: Literal[False] = False
 								) -> 	   ndarray[tuple[int, int, int],	   dtype[complexfloating[Any, Any]]]: ...
 	def doTransformation(arrayInput: (ndarray[tuple[int, int], 		   dtype[floating[Any] | integer[Any]]]
-										 |  ndarray[tuple[int, int, int], 	   dtype[complexfloating[Any, Any] | floating[Any]]])
+									| ndarray[tuple[int, int, int], 	   dtype[complexfloating[Any, Any] | floating[Any]]])
 										, lengthWaveform: int | None = lengthWaveform, inverse: bool | None = inverse
-								) -> (ndarray[tuple[int, int], 		   dtype[floating[Any]]]
-										 |  ndarray[tuple[int, int, int], 	   dtype[complexfloating[Any, Any]]]):
+								) -> (ndarray[tuple[int, int], 		   	dtype[floating[Any]]]
+									| ndarray[tuple[int, int, int], 	   dtype[complexfloating[Any, Any]]]):
 		if inverse:
 			return stftWorkhorse.istft(S=arrayInput, k1=lengthWaveform)
 		return stftWorkhorse.stft(x=arrayInput, **parametersSTFTUniversal)
@@ -375,7 +375,7 @@ def loadSpectrograms(listPathFilenames: Sequence[str | os.PathLike[str]]
 	samplesTotalMaximum = max([entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values()])
 
 	countChannels = 2
-	spectrogramArchetype: ndarray[tuple[int, int, int], dtype[complex64]] = stft(numpy.zeros(shape=(countChannels, samplesTotalMaximum), dtype=float32), sampleRate=sampleRateTarget, **parametersSTFT)
+	spectrogramArchetype: ndarray[tuple[int, int, int], dtype[complex64]] = stft(numpy.zeros(shape=(countChannels, samplesTotalMaximum), dtype=float32), sampleRate=sampleRateTarget, inverse=False, indexingAxis=None, **parametersSTFT)
 	arraySpectrograms = numpy.zeros(shape=(*spectrogramArchetype.shape, len(dictionaryWaveformMetadata)), dtype=numpy.complex64)
 
 	for index, metadata in dictionaryWaveformMetadata.items():

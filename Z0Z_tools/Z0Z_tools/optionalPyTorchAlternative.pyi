@@ -1,0 +1,8 @@
+from collections.abc import Callable
+from numpy import dtype, float64, ndarray
+from typing import ParamSpec, TypeVar
+
+callableTargetParameters = ParamSpec('callableTargetParameters')
+callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., ndarray[tuple[int], dtype[float64]]])
+
+def def_asTensor(callableTarget: Callable[callableTargetParameters, ndarray[tuple[int], dtype[float64]]]) -> Callable[callableTargetParameters, ndarray[tuple[int], dtype[float64]]]: ...
