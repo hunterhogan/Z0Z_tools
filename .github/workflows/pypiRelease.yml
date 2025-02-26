@@ -35,8 +35,9 @@ jobs:
           version = dictionaryProject['version']
           name = dictionaryProject['name']
           if version not in requests.get(f'https://pypi.org/pypi/{name}/json').json()['releases']:
-            os.environ['GITHUB_OUTPUT'] = 'should_publish=true'
-            os.environ['GITHUB_OUTPUT'] = f'url=https://pypi.org/project/{name}/{version}'
+            with open(os.environ['GITHUB_OUTPUT'], 'a') as writeStream:
+                writeStream.write('should_publish=true\n')
+                writeStream.write(f'url=https://pypi.org/project/{name}/{version}\n')
           "
 
   release-build:
