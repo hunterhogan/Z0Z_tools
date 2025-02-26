@@ -1,6 +1,6 @@
 # Z0Z_tools
 
-A collection of tools to I use in my Python code. "Z0Z_" means temporary, or in this context, prototype. Hypothetically, one or more functions could move to a more permanent package.
+A collection of tools to I use in my Python code. "Z0Z_" means temporary, or in this context, prototype. Hypothetically, one or more functions could move to a permanent, focused package.
 
 ## Tired of handling string vs boolean parameter confusion?
 

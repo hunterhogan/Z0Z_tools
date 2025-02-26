@@ -51,7 +51,7 @@ def defineConcurrencyLimit(limit: bool | float | int | None) -> int:
 
 	Parameters:
 		limit: Whether and how to limit CPU usage. Accepts True/False, an integer count, or a fraction of total CPUs.
-			   Positive and negative values have different behaviors, see code for details.
+				Positive and negative values have different behaviors, see code for details.
 
 	Returns:
 		concurrencyLimit: The calculated concurrency limit, ensuring it is at least 1.
