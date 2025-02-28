@@ -1,9 +1,9 @@
-import numba.core.registry
-import numba.np.ufunc.gufunc
+from _typeshed import Incomplete
 
-def _resample_loop(x, t_out, interp_win, interp_delta, num_table, scale, y): ...
+def _resample_loop(x, t_out, interp_win, interp_delta, num_table, scale, y) -> None: ...
 
-_resample_loop_p: numba.core.registry.CPUDispatcher
-_resample_loop_s: numba.core.registry.CPUDispatcher
-resample_f_p: numba.np.ufunc.gufunc.GUFunc
-resample_f_s: numba.np.ufunc.gufunc.GUFunc
+_resample_loop_p: Incomplete
+_resample_loop_s: Incomplete
+
+def resample_f_p(x, t_out, interp_win, interp_delta, num_table, scale, y) -> None: ...
+def resample_f_s(x, t_out, interp_win, interp_delta, num_table, scale, y) -> None: ...

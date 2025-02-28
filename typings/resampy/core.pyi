@@ -1,6 +1,6 @@
 __all__ = ['resample', 'resample_nu']
 
-def resample(x, sr_orig, sr_new, axis: int = ..., filter: str = ..., parallel: bool = ..., **kwargs):
+def resample(x, sr_orig, sr_new, axis: int = -1, filter: str = 'kaiser_best', parallel: bool = False, **kwargs):
     """Resample a signal x from sr_orig to sr_new along a given axis.
 
     Parameters
@@ -66,7 +66,7 @@ def resample(x, sr_orig, sr_new, axis: int = ..., filter: str = ..., parallel: b
     >>> # Resample using a Hann-windowed sinc filter
     >>> import scipy.signal
     >>> resampy.resample(x, sr_orig, 22050, filter='sinc_window',
-    ...                  window=scipy.signal.windows.hann)
+    ...                  window=scipy.signal.hann)
     array([ 0.011,  0.123,  0.25 , ..., -0.366, -0.25 , -0.123])
 
     >>> # Generate stereo data
@@ -79,7 +79,7 @@ def resample(x, sr_orig, sr_new, axis: int = ..., filter: str = ..., parallel: b
     >>> y_stereo.shape
     (2, 110250)
     """
-def resample_nu(x, sr_orig, t_out, axis: int = ..., filter: str = ..., parallel: bool = ..., **kwargs):
+def resample_nu(x, sr_orig, t_out, axis: int = -1, filter: str = 'kaiser_best', parallel: bool = False, **kwargs):
     """Interpolate a signal x at specified positions (t_out) along a given axis.
 
     Parameters

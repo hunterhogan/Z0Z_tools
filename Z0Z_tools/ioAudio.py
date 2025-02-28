@@ -2,13 +2,13 @@
 Provides utilities for reading, writing, and resampling audio waveforms.
 """
 from .scipyDOTsignalDOT_short_time_fft import PAD_TYPE, FFT_MODE_TYPE
-from collections.abc import Sequence
+from Z0Z_tools import halfsine, makeDirsSafely
+from collections.abc import Callable, Sequence
 from math import ceil as ceiling, log2 as log_base2
 from numpy import complexfloating, dtype, float32, floating, ndarray, complex64
 from os import PathLike
 from scipy.signal import ShortTimeFFT
 from typing import Any, BinaryIO, Literal, TypedDict, cast, overload, TypeAlias
-from Z0Z_tools import halfsine, makeDirsSafely
 import io
 import numpy
 import resampy
@@ -218,7 +218,7 @@ def writeWAV(pathFilename: str | PathLike[Any] | io.IOBase, waveform: Waveform, 
 	if sampleRate is None:
 		sampleRate = parametersUniversal['sampleRate']
 	makeDirsSafely(pathFilename)
-	soundfile.write(file=pathFilename, data=waveform.T, samplerate=sampleRate, subtype='FLOAT', format='WAV')
+	soundfile.write(file=pathFilename, data=waveform.T, samplerate=int(sampleRate), subtype='FLOAT', format='WAV')
 
 @overload # stft
 def stft(arrayTarget: Waveform, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[False] = False, lengthWaveform: None = None, indexingAxis: None = None) -> Spectrogram: ...
@@ -359,12 +359,10 @@ def spectrogramToWAV(spectrogram: Spectrogram
 	waveform: Waveform = stft(spectrogram, inverse=True, lengthWaveform=lengthWaveform, sampleRate=sampleRate, **parametersSTFT)
 	writeWAV(pathFilename, waveform, sampleRate)
 
-# TODO inspect this for integration
-def waveformSpectrogramWaveform(callableNeedsSpectrogram):
-	def stft_istft(waveform):
+def waveformSpectrogramWaveform(callableNeedsSpectrogram: Callable[[Spectrogram], Spectrogram]) -> Callable[[Waveform], Waveform]:
+	def stft_istft(waveform: Waveform)	-> Waveform:
 		axisTime=-1
-		parametersSTFT={} # uh, I think this will be universal or default settings
-		arrayTarget = stft(waveform, inverse=False, indexingAxis=None, **parametersSTFT)
+		arrayTarget = stft(waveform)
 		spectrogram = callableNeedsSpectrogram(arrayTarget)
-		return stft(spectrogram, inverse=True, indexingAxis=None, lengthWaveform=waveform.shape[axisTime], **parametersSTFT)
+		return stft(spectrogram, inverse=True, indexingAxis=None, lengthWaveform=waveform.shape[axisTime])
 	return stft_istft

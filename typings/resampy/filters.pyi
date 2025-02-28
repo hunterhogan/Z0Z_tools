@@ -1,6 +1,8 @@
+from _typeshed import Incomplete
+
 __all__ = ['get_filter', 'clear_cache', 'sinc_window']
 
-def sinc_window(num_zeros: int = ..., precision: int = ..., window, rolloff: float = ...):
+def sinc_window(num_zeros: int = 64, precision: int = 9, window: Incomplete | None = None, rolloff: float = 0.945):
     """Construct a windowed sinc interpolation filter
 
     Parameters
@@ -39,7 +41,7 @@ def sinc_window(num_zeros: int = ..., precision: int = ..., window, rolloff: flo
     >>> # A filter with 10 zero-crossings, 32 samples per crossing, and a
     >>> # Hann window for tapering.
     >>> halfwin, prec, rolloff = resampy.filters.sinc_window(num_zeros=10, precision=5,
-    ...                                                      window=scipy.signal.windows.hann)
+    ...                                                      window=scipy.signal.hann)
     >>> halfwin
     array([  9.450e-01,   9.436e-01, ...,  -7.455e-07,  -0.000e+00])
     >>> prec
@@ -50,7 +52,7 @@ def sinc_window(num_zeros: int = ..., precision: int = ..., window, rolloff: flo
     >>> # Or using sinc-window filter construction directly in resample
     >>> y = resampy.resample(x, sr_orig, sr_new, filter='sinc_window',
     ...                      num_zeros=10, precision=5,
-    ...                      window=scipy.signal.windows.hann)      # doctest: +SKIP
+    ...                      window=scipy.signal.hann)              # doctest: +SKIP
     """
 def get_filter(name_or_function, **kwargs):
     """Retrieve a window given its name or function handle.
@@ -87,7 +89,7 @@ def get_filter(name_or_function, **kwargs):
     NotImplementedError
         If `name_or_function` cannot be found as a filter.
     """
-def clear_cache():
+def clear_cache() -> None:
     """Clear the filter cache.
 
     Calling this function will ensure that packaged filters are reloaded
