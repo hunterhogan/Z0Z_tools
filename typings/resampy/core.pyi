@@ -143,3 +143,4 @@ def resample_nu(x, sr_orig, t_out, axis: int = -1, filter: str = 'kaiser_best', 
     >>> resampy.resample_nu(x, sr_orig, t_new)
     array([ 0.001,  0.427,  0.76 , ..., -0.3  , -0.372, -0.442])
     """
+    ...

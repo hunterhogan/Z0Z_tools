@@ -3,7 +3,6 @@ from collections.abc import Callable
 from numpy import ndarray, dtype, float64
 from typing import ParamSpec, TypeVar
 
-from collections.abc import Callable
 callableTargetParameters = ParamSpec('callableTargetParameters')
 callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., ndarray[tuple[int], dtype[float64]]])
 

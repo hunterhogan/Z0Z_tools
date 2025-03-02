@@ -2,26 +2,26 @@
 Provides utilities for reading, writing, and resampling audio waveforms.
 """
 from .scipyDOTsignalDOT_short_time_fft import PAD_TYPE, FFT_MODE_TYPE
-from Z0Z_tools import halfsine, makeDirsSafely
 from collections.abc import Callable, Sequence
 from math import ceil as ceiling, log2 as log_base2
 from numpy import complexfloating, dtype, float32, floating, ndarray, complex64
 from os import PathLike
 from scipy.signal import ShortTimeFFT
 from typing import Any, BinaryIO, Literal, TypedDict, cast, overload, TypeAlias
+from Z0Z_tools import halfsine, makeDirsSafely
 import io
 import numpy
 import resampy
 import soundfile
 
 WindowingFunctionDtype: TypeAlias = floating[Any]
-WaveformDtype: 	   		TypeAlias = floating[Any]
-SpectrogramDtype:  		TypeAlias = complexfloating[Any, Any]
+WaveformDtype: TypeAlias = floating[Any]
+SpectrogramDtype: TypeAlias = complexfloating[Any, Any]
 
-WindowingFunction: TypeAlias = ndarray[tuple[int], 				  dtype[WindowingFunctionDtype]]
-Waveform: TypeAlias 		 = ndarray[tuple[int, int], 		  dtype[WaveformDtype]]
-ArrayWaveforms: TypeAlias 	 = ndarray[tuple[int, int, int], 	  dtype[WaveformDtype]]
-Spectrogram: TypeAlias 		 = ndarray[tuple[int, int, int], 	  dtype[SpectrogramDtype]]
+WindowingFunction: TypeAlias = ndarray[tuple[int], dtype[WindowingFunctionDtype]]
+Waveform: TypeAlias = ndarray[tuple[int, int], dtype[WaveformDtype]]
+ArrayWaveforms: TypeAlias	= ndarray[tuple[int, int, int],	dtype[WaveformDtype]]
+Spectrogram: TypeAlias = ndarray[tuple[int, int, int],	dtype[SpectrogramDtype]]
 ArraySpectrograms: TypeAlias = ndarray[tuple[int, int, int, int], dtype[SpectrogramDtype]]
 
 class ParametersSTFT(TypedDict, total=False):
@@ -173,25 +173,7 @@ def loadWaveforms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTa
 		samplesTrailing = metadata['lengthWaveform'] + metadata['samplesLeading'] - samplesTotalMaximum
 		if samplesTrailing == 0:
 			samplesTrailing = None
-		# padding logic, entry['samplesLeading'] + entry['samplesTrailing'], goes here
-		"""TODO padding logic; thoughts about the following statement.
-		If my goal were to reduce the chances of an exception, especially a broadcast exception, in the next statement,
-		then I would slice the insertion like this:
-		`arrayWaveforms[:, metadata['samplesLeading'] : metadata['samplesLeading'] + waveform.shape[axisTime], index] = waveform`
-		That would ensure that the exact length of the waveform that was just loaded would be used as the length of the slice.
-		In rare cases, samplesLeading+lengthWaveform might be too long, which would cause an exception. And if that were to happen,
-		the actual cause of the problem would almost certainly be upstream from here: that would make it harder to troubleshoot. Also,
-		preallocating arrayWaveforms assumes precision; padding multiple waveforms with leading and or trailing requires precision:
-		precision to the exact sample. The following statement doesn't affect precision, but if there is a precision problem,
-		then the following statement could be affected by it and raise an exception: fail early. If the padding logic is implemented,
-		I think the best form of the state will be:
-		`arrayWaveforms[:, metadata['samplesLeading']:-metadata['samplesTrailing'], index] = waveform`
-		If any of the upstream calculations is wrong, then the above statement would likely induce a broadcasting exception: fail early.
-
-		I don't have padding logic right now, but I constructed the tedious `samplesTrailing` logic because it is slightly more likely
-		to fail early than the alternative and because if I were to implement the padding logic, during refactoring, I would be more
-		likely to notice this tedious logic and remember to implement the idea above.
-		"""
+		# GitHub #4 Add padding logic to `loadWaveforms` and `loadSpectrograms`
 		arrayWaveforms[:, metadata['samplesLeading']:samplesTrailing, index] = waveform
 
 	return arrayWaveforms
@@ -318,7 +300,6 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]]
 	if sampleRateTarget is None:
 		sampleRateTarget = parametersUniversal['sampleRate']
 
-	# TODO padding logic
 	dictionaryWaveformMetadata: dict[int, WaveformMetadata] = getWaveformMetadata(listPathFilenames, sampleRateTarget)
 
 	samplesTotalMaximum: int = max([entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values()])
@@ -329,17 +310,12 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]]
 
 	for index, metadata in dictionaryWaveformMetadata.items():
 		waveform: Waveform = readAudioFile(metadata['pathFilename'], sampleRateTarget)
-		# padding logic, entry['samplesLeading'] + entry['samplesTrailing'], goes here
+		# GitHub #4 Add padding logic to `loadWaveforms` and `loadSpectrograms`
 		arraySpectrograms[..., index] = stft(waveform, sampleRate=sampleRateTarget, **parametersSTFT)
 
 	return arraySpectrograms, dictionaryWaveformMetadata
 
-def spectrogramToWAV(spectrogram: Spectrogram
-					, pathFilename: str | PathLike[Any] | io.IOBase
-					, lengthWaveform: int
-					, sampleRate: float | None = None
-					, **parametersSTFT: Any
-					) -> None:
+def spectrogramToWAV(spectrogram: Spectrogram, pathFilename: str | PathLike[Any] | io.IOBase, lengthWaveform: int, sampleRate: float | None = None, **parametersSTFT: Any) -> None:
 	"""
 	Writes a complex spectrogram to a WAV file.
 

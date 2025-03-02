@@ -3,27 +3,28 @@ Provides utilities for string extraction from nested data structures
 and merges multiple dictionaries containing lists into one dictionary.
 """
 
+from collections.abc import Mapping
+from numpy import integer
 from numpy.typing import NDArray
 from typing import Any
-from collections.abc import Mapping, Sequence
 import more_itertools
-import numpy
 import python_minifier
 import re as regex
 
-def autoDecodingRLE(arrayTarget: NDArray[numpy.integer[Any]], addSpaces: bool = False, axisOfOperation: int | None = None) -> str:
-	"""Special case, range, start=0"""
+def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], addSpaces: bool = False, axisOfOperation: int | None = None) -> str:
+	"""Not implemented: Special case, range, start=0
+	Not tested: axisOfOperation"""
 	if axisOfOperation is None:
 		axisOfOperation = 0
-	def sliceNDArrayToNestedLists(arraySlice: NDArray[numpy.integer[Any]], axisOfOperation: int) -> Any:
-		if isinstance(arraySlice, numpy.ndarray) and arraySlice.ndim > 1:
+	def sliceNDArrayToNestedLists(arraySlice: NDArray[integer[Any]], axisOfOperation: int) -> Any:
+		if arraySlice.ndim > 1:
 			if (axisOfOperation >= arraySlice.ndim):
 				axisOfOperation = -1
 			elif abs(axisOfOperation) > arraySlice.ndim:
 				axisOfOperation = 0
 			return [sliceNDArrayToNestedLists(arraySlice[index], axisOfOperation) for index in range(arraySlice.shape[axisOfOperation])]
-		elif isinstance(arraySlice, numpy.ndarray) and arraySlice.ndim == 1:
-			arraySliceAsList = []
+		elif arraySlice.ndim == 1:
+			arraySliceAsList: list[int | range] = []
 			for seriesGrouped in more_itertools.consecutive_groups(arraySlice.tolist()):
 				ImaSerious = list(seriesGrouped)
 				ImaRange = [range(ImaSerious[0], ImaSerious[-1] + 1)]
@@ -33,26 +34,26 @@ def autoDecodingRLE(arrayTarget: NDArray[numpy.integer[Any]], addSpaces: bool = 
 					arraySliceAsList += ImaRange
 				else:
 					arraySliceAsList += ImaSerious
-			COPYarraySliceAsList = arraySliceAsList.copy()
-			arraySliceAsList = []
-			for malkovichGrouped in more_itertools.run_length.encode(COPYarraySliceAsList):
+
+			listRangeAndTuple: list[int | range | tuple[int | range, int]] = []
+			for malkovichGrouped in more_itertools.run_length.encode(arraySliceAsList):
 				lengthMalkovich = malkovichGrouped[-1]
 				malkovichAsList = list(more_itertools.run_length.decode([malkovichGrouped]))
 				lengthAsList = addSpaces*(len(malkovichAsList)-1) + len(python_minifier.minify(str(malkovichAsList))) # brackets are proxies for commas
 				malkovichMalkovich = f"[{malkovichGrouped[0]}]*{lengthMalkovich}"
 				lengthAsMalkovich = len(python_minifier.minify(malkovichMalkovich))
 				if lengthAsMalkovich < lengthAsList:
-					arraySliceAsList.append(malkovichGrouped)
+					listRangeAndTuple.append(malkovichGrouped)
 				else:
-					arraySliceAsList += malkovichAsList
-			return arraySliceAsList
+					listRangeAndTuple += malkovichAsList
+			return listRangeAndTuple
 		return arraySlice
 
 	arrayAsNestedLists = sliceNDArrayToNestedLists(arrayTarget, axisOfOperation)
 
 	arrayAsStr = python_minifier.minify(str(arrayAsNestedLists))
 
-	for insanity in range(2):
+	for _insanity in range(2):
 		joinAheadComma = regex.compile("(?<!rang)(?P<joinAhead>,)\\((?P<malkovich>\\d+),(?P<multiple>\\d+)\\)(?P<joinBehind>])")
 		joinAheadCommaReplace = "]+[\\g<malkovich>]*\\g<multiple>"
 		arrayAsStr = joinAheadComma.sub(joinAheadCommaReplace, arrayAsStr)
