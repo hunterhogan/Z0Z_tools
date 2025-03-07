@@ -1,49 +1,18 @@
 """
 Provides utilities for reading, writing, and resampling audio waveforms.
 """
-from .scipyDOTsignalDOT_short_time_fft import PAD_TYPE, FFT_MODE_TYPE
 from collections.abc import Callable, Sequence
 from math import ceil as ceiling, log2 as log_base2
-from numpy import complexfloating, dtype, float32, floating, ndarray, complex64
+from numpy import dtype, float32, floating, ndarray, complex64
 from os import PathLike
 from scipy.signal import ShortTimeFFT
-from typing import Any, BinaryIO, Literal, TypedDict, cast, overload, TypeAlias
+from typing import Any, BinaryIO, Literal, cast, overload
 from Z0Z_tools import halfsine, makeDirsSafely
+from Z0Z_tools import Waveform, ArrayWaveforms, Spectrogram, ArraySpectrograms, ParametersSTFT, ParametersShortTimeFFT, ParametersUniversal, WaveformMetadata, WindowingFunction
 import io
 import numpy
 import resampy
 import soundfile
-
-WindowingFunctionDtype: TypeAlias = floating[Any]
-WaveformDtype: TypeAlias = floating[Any]
-SpectrogramDtype: TypeAlias = complexfloating[Any, Any]
-
-WindowingFunction: TypeAlias = ndarray[tuple[int], dtype[WindowingFunctionDtype]]
-Waveform: TypeAlias = ndarray[tuple[int, int], dtype[WaveformDtype]]
-ArrayWaveforms: TypeAlias	= ndarray[tuple[int, int, int],	dtype[WaveformDtype]]
-Spectrogram: TypeAlias = ndarray[tuple[int, int, int],	dtype[SpectrogramDtype]]
-ArraySpectrograms: TypeAlias = ndarray[tuple[int, int, int, int], dtype[SpectrogramDtype]]
-
-class ParametersSTFT(TypedDict, total=False):
-	padding: PAD_TYPE
-	axis: int
-
-class ParametersShortTimeFFT(TypedDict, total=False):
-	fft_mode: FFT_MODE_TYPE
-	scale_to: Literal['magnitude', 'psd']
-
-class ParametersUniversal(TypedDict):
-	lengthFFT: int
-	lengthHop: int
-	lengthWindowingFunction: int
-	sampleRate: float
-	windowingFunction: WindowingFunction
-
-class WaveformMetadata(TypedDict):
-	pathFilename: str
-	lengthWaveform: int
-	samplesLeading: int
-	samplesTrailing: int
 
 # TODO how should I handle these?
 universalDtypeWaveform = float32
@@ -266,8 +235,8 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 
 	def doTransformation(arrayInput: Waveform | Spectrogram, lengthWaveform: int | None, inverse: bool) -> Waveform | Spectrogram:
 		if inverse:
-			return stftWorkhorse.istft(S=arrayInput, k1=lengthWaveform)
-		return stftWorkhorse.stft(x=arrayInput, **parametersSTFTUniversal)
+			return cast(Waveform, stftWorkhorse.istft(S=arrayInput, k1=lengthWaveform))
+		return cast(Spectrogram, stftWorkhorse.stft(x=arrayInput, **parametersSTFTUniversal))
 
 	if indexingAxis is None:
 		singleton: Waveform | Spectrogram = cast(Waveform | Spectrogram, arrayTarget)
@@ -282,10 +251,7 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 
 		return cast(ArrayWaveforms | ArraySpectrograms, numpy.moveaxis(arrayTransformed, -1, indexingAxis))
 
-def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]]
-					, sampleRateTarget: float | None = None
-					, **parametersSTFT: Any
-					) -> tuple[ArraySpectrograms, dict[int, WaveformMetadata]]:
+def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTarget: float | None = None, **parametersSTFT: Any) -> tuple[ArraySpectrograms, dict[int, WaveformMetadata]]:
 	"""
 	Load spectrograms from audio files.
 
@@ -303,14 +269,19 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]]
 	dictionaryWaveformMetadata: dict[int, WaveformMetadata] = getWaveformMetadata(listPathFilenames, sampleRateTarget)
 
 	samplesTotalMaximum: int = max([entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values()])
-
 	countChannels = 2
-	spectrogramArchetype: Spectrogram = stft(numpy.zeros(shape=(countChannels, samplesTotalMaximum), dtype=universalDtypeWaveform), sampleRate=sampleRateTarget, inverse=False, indexingAxis=None, **parametersSTFT)
-	arraySpectrograms: ArraySpectrograms = numpy.zeros(shape=(*spectrogramArchetype.shape, len(dictionaryWaveformMetadata)), dtype=universalDtypeSpectrogram)
+	waveformTemplate: Waveform = numpy.zeros(shape=(countChannels, samplesTotalMaximum), dtype=universalDtypeWaveform)
+	spectrogramTemplate: Spectrogram = stft(waveformTemplate, sampleRate=sampleRateTarget, **parametersSTFT)
+
+	arraySpectrograms: ArraySpectrograms = numpy.zeros(shape=(*spectrogramTemplate.shape, len(dictionaryWaveformMetadata)), dtype=universalDtypeSpectrogram)
 
 	for index, metadata in dictionaryWaveformMetadata.items():
-		waveform: Waveform = readAudioFile(metadata['pathFilename'], sampleRateTarget)
+		# All waveforms have the same shape so that all spectrograms have the same shape.
+		waveform = waveformTemplate.copy()
 		# GitHub #4 Add padding logic to `loadWaveforms` and `loadSpectrograms`
+		lengthWaveform = metadata['lengthWaveform'] + metadata['samplesLeading'] + metadata['samplesTrailing']
+		# All shorter waveforms are forced to have trailing zeros.
+		waveform[:, 0:lengthWaveform] = readAudioFile(metadata['pathFilename'], sampleRateTarget)
 		arraySpectrograms[..., index] = stft(waveform, sampleRate=sampleRateTarget, **parametersSTFT)
 
 	return arraySpectrograms, dictionaryWaveformMetadata
@@ -336,8 +307,8 @@ def spectrogramToWAV(spectrogram: Spectrogram, pathFilename: str | PathLike[Any]
 	writeWAV(pathFilename, waveform, sampleRate)
 
 def waveformSpectrogramWaveform(callableNeedsSpectrogram: Callable[[Spectrogram], Spectrogram]) -> Callable[[Waveform], Waveform]:
-	def stft_istft(waveform: Waveform)	-> Waveform:
-		axisTime=-1
+	def stft_istft(waveform: Waveform) -> Waveform:
+		axisTime = -1
 		arrayTarget = stft(waveform)
 		spectrogram = callableNeedsSpectrogram(arrayTarget)
 		return stft(spectrogram, inverse=True, indexingAxis=None, lengthWaveform=waveform.shape[axisTime])

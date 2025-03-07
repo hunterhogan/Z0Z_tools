@@ -14,6 +14,7 @@ import uuid
 
 atolDEFAULT: Final[float] = 1e-7
 rtolDEFAULT: Final[float] = 1e-7
+amplitudeNorm: Final[float] = 1.0
 
 # SSOT for test data paths and filenames
 pathDataSamples = pathlib.Path("tests/dataSamples")

@@ -53,6 +53,12 @@ try:
 except (ImportError, ModuleNotFoundError):
 	from Z0Z_tools.optionalPyTorchAlternative import def_asTensor
 
+from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import PAD_TYPE, FFT_MODE_TYPE
+from Z0Z_tools.theTypes import *
+
+from Z0Z_tools.amplitude import *
+
+from Z0Z_tools.autoRevert import *
 from Z0Z_tools.windowingFunctions import *
 from Z0Z_tools.Z0Z_io import *
 from Z0Z_tools.clippingArrays import *
