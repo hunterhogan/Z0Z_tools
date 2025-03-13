@@ -3,17 +3,17 @@ from typing import ParamSpec, TypeVar
 from tests.conftest import PytestFor_defineConcurrencyLimit, PytestFor_intInnit, PytestFor_oopsieKwargsie
 import pytest
 
-P = ParamSpec('P')
-R = TypeVar('R')
+parameters = ParamSpec('parameters')
+returnType = TypeVar('returnType')
 
-@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_defineConcurrencyLimit())
-def testConcurrencyLimit(nameOfTest: str, callablePytest: Callable[P, R], *arguments: P.args, **keywordArguments: P.kwargs) -> None:
-	callablePytest(*arguments, **keywordArguments)
+@pytest.mark.parametrize("nameOfTest,aPytest", PytestFor_defineConcurrencyLimit())
+def testConcurrencyLimit(nameOfTest: str, aPytest: Callable[parameters, returnType], *arguments: parameters.args, **keywordArguments: parameters.kwargs) -> None:
+	aPytest(*arguments, **keywordArguments)
 
-@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_intInnit())
-def testIntInnit(nameOfTest: str, callablePytest: Callable[P, R], *arguments: P.args, **keywordArguments: P.kwargs) -> None:
-	callablePytest(*arguments, **keywordArguments)
+@pytest.mark.parametrize("nameOfTest,aPytest", PytestFor_intInnit())
+def testIntInnit(nameOfTest: str, aPytest: Callable[parameters, returnType], *arguments: parameters.args, **keywordArguments: parameters.kwargs) -> None:
+	aPytest(*arguments, **keywordArguments)
 
-@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_oopsieKwargsie())
-def testOopsieKwargsie(nameOfTest: str, callablePytest: Callable[P, R], *arguments: P.args, **keywordArguments: P.kwargs) -> None:
-	callablePytest(*arguments, **keywordArguments)
+@pytest.mark.parametrize("nameOfTest,aPytest", PytestFor_oopsieKwargsie())
+def testOopsieKwargsie(nameOfTest: str, aPytest: Callable[parameters, returnType], *arguments: parameters.args, **keywordArguments: parameters.kwargs) -> None:
+	aPytest(*arguments, **keywordArguments)

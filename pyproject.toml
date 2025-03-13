@@ -17,6 +17,10 @@ classifiers = [
 	"Operating System :: OS Independent",
 	"Programming Language :: Python",
 	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Programming Language :: Python :: 3.13",
 	"Topic :: Multimedia :: Sound/Audio :: Analysis",
 	"Topic :: Multimedia :: Sound/Audio :: Editors",
 	"Topic :: Multimedia :: Sound/Audio",
@@ -24,8 +28,7 @@ classifiers = [
 	"Topic :: Software Development",
 	"Topic :: Text Processing",
 	"Topic :: Utilities",
-	"Typing :: Typed",
-]
+	"Typing :: Typed",]
 dependencies = [
 	"charset-normalizer",
 	"more_itertools",
@@ -34,8 +37,7 @@ dependencies = [
 	"python-minifier",
 	"resampy",
 	"scipy",
-	"soundfile",
-]
+	"soundfile",]
 description = "Tools for audio/signal processing, data structure, function parameters, and package management."
 keywords = ["Python", "development", "tools"]
 license = { 'text' = "CC-BY-NC-4.0" }
@@ -51,12 +53,11 @@ optional-dependencies = { PyTorch = [
 	"pytest",
 	"pyupgrade",
 	"scipy-stubs",
-	"torch",
-] }
+	"torch",] }
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
 urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Repository = "https://github.com/hunterhogan/Z0Z_tools.git" }
-version = "0.10.4"
+version = "0.10.5"
 
 [tool.coverage]
 report = { exclude_lines = [
@@ -68,8 +69,7 @@ run = { branch = true, concurrency = [
 ], data_file = "tests/coverage/.coverage", omit = [
 	"tests/*",
 ], parallel = true, source = [
-	".",
-] }
+	".",] }
 xml = { output = "tests/coverage/coverage.xml" }
 
 [tool.pytest.ini_options]
@@ -77,10 +77,8 @@ log_auto_indent = ["On"]
 addopts = ["--color=yes", "-n 4"]
 testpaths = ["tests"]
 
-[tool.setuptools]
-package-dir = {'' = '.'}
-packages = ['Z0Z_tools']
-package-data = {'Z0Z_tools' = ['py.typed', '*.pyi']}
+[tool.setuptools.packages.find]
+where = ["."]
 
 [tool.updateCitation]
 filenameCitationDOTcff = 'CITATION.cff'

@@ -43,15 +43,14 @@ def _constructErrorMessage(context: ErrorMessageContext, parameterName: str, par
 
 	return "".join(messageParts)
 
-# NOTE: For the `limit` parameter, the most precise type is `Union[bool, float, int, None]`
-# because `None` is in fact a valid option for the parameter, which is why I'm not using `Optional[Union[int, float, bool]]`.
-def defineConcurrencyLimit(limit: bool | float | int | None) -> int:
+def defineConcurrencyLimit(limit: bool | float | int | None, cpuTotal: int = multiprocessing.cpu_count()) -> int:
 	"""
 	Determines the concurrency limit based on the provided parameter. This package has Pytest tests you can import and run on this function. `from Z0Z_tools.pytest_parseParameters import makeTestSuiteConcurrencyLimit`
 
 	Parameters:
 		limit: Whether and how to limit CPU usage. Accepts True/False, an integer count, or a fraction of total CPUs.
 				Positive and negative values have different behaviors, see code for details.
+		cpuTotal: The total number of CPUs available in the system. Default is multiprocessing.cpu_count().
 
 	Returns:
 		concurrencyLimit: The calculated concurrency limit, ensuring it is at least 1.
@@ -86,11 +85,10 @@ def defineConcurrencyLimit(limit: bool | float | int | None) -> int:
 		- Decimal value (`float`) between -1 and 0: Fraction of CPUs to *not* use.
 		- Integer `<= -1`: Subtract the absolute value from total CPUs.
 	"""
-	cpuTotal = multiprocessing.cpu_count()
 	concurrencyLimit = cpuTotal
 
 	if isinstance(limit, str):
-		limitFromString = oopsieKwargsie(limit) # type: ignore
+		limitFromString = oopsieKwargsie(limit)
 		if isinstance(limitFromString, str):
 			try:
 				limit = float(limitFromString)
@@ -113,7 +111,7 @@ def defineConcurrencyLimit(limit: bool | float | int | None) -> int:
 			concurrencyLimit = cpuTotal - abs(round(limit * cpuTotal))
 		case _ if limit <= -1:
 			concurrencyLimit = cpuTotal - abs(int(limit))
-		case _: pass # To placate Pylance "strict" erroneously saying not all int or float are covered.
+		case _: pass
 
 	return max(int(concurrencyLimit), 1)
 
@@ -154,7 +152,6 @@ def intInnit(listInt_Allegedly: Iterable[Any], parameterName: str | None = None,
 
 	# Be nice: assume the input container is valid and every element is valid.
 	# Nevertheless, this is a "fail-early" step, so reject ambiguity and try to induce errors now that could be catastrophic later.
-	# And, be helpful: provide a meaningful error message so the user can correct the issue.
 	try:
 		iter(listInt_Allegedly)
 		lengthInitial = None
@@ -170,15 +167,15 @@ def intInnit(listInt_Allegedly: Iterable[Any], parameterName: str | None = None,
 				isElement = True
 			)
 
-			# Always rejected
+			# Always rejected as ambiguous
 			if isinstance(allegedInt, bool):
 				raise TypeError(errorMessageContext)
 
-			# The Python type is not `int`, but maybe the value is clearly an integer.
+			# In this section, we know the Python type is not `int`, but maybe the value is clearly an integer.
 			# Through a series of conversions, allow data to cascade down into either an `int` or a meaningful error message.
 
 			if isinstance(allegedInt, (bytes, bytearray, memoryview)):
-				errorMessageContext.parameterValue = None  # Don't expose binary data in error messages
+				errorMessageContext.parameterValue = None  # Don't expose potentially garbled binary data in error messages
 				if isinstance(allegedInt, memoryview):
 					allegedInt = allegedInt.tobytes()
 				decodedString = charset_normalizer.from_bytes(allegedInt).best()
@@ -251,7 +248,7 @@ def oopsieKwargsie(huh: Any) -> bool | None | str:
 		return huh
 
 if __name__ == '__main__':
-	# Frankly, I cannot remember the precise reason I put this in some modules. It solved the concurrency problem I was having at the time,
+	# Frankly, I cannot remember the precise reason I put this in some modules. It solved a concurrency problem I was having at the time,
 	# but it felt like a hack at the time and it feels even more like a hack now. I suspect I will eventually learn enough so that I can
 	# come full circle: know why I added it, know how I already fixed the real issue, and know that I can safely remove this.
 	multiprocessing.set_start_method('spawn')

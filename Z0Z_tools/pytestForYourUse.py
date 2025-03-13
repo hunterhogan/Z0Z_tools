@@ -10,7 +10,7 @@ from unittest.mock import patch, Mock
 from Z0Z_tools import defineConcurrencyLimit, intInnit, oopsieKwargsie
 import pytest
 
-def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | int | None], int] = defineConcurrencyLimit, cpuCount: int = 8) -> list[tuple[str, Callable[[], None]]]:
+def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | int | None, int], int] = defineConcurrencyLimit, cpuCount: int = 8) -> list[tuple[str, Callable[[], None]]]:
 	"""Returns a list of test functions to validate concurrency limit behavior.
 
 	This function provides a comprehensive test suite for validating concurrency limit parsing
@@ -60,18 +60,17 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | in
 	@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_defineConcurrencyLimit(callableToTest = YOUR_FUNCTION_HERE))
 	def test_functionLocal(nameOfTest, callablePytest):
 		callablePytest()
-
 	"""
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testDefaults(_mockCpu: Mock) -> None:
 		listOfParameters: list[bool | int | None] = [None, False, 0]
 		for limitParameter in listOfParameters:
-			assert callableToTest(limitParameter) == cpuCount
+			assert callableToTest(limitParameter, cpuCount) == cpuCount
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testDirectIntegers(_mockCpu: Mock) -> None:
 		for limitParameter in [1, 4, 16]:
-			assert callableToTest(limitParameter) == limitParameter
+			assert callableToTest(limitParameter, cpuCount) == limitParameter
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testFractionalFloats(_mockCpu: Mock) -> None:
@@ -81,26 +80,26 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | in
 			0.75: int(cpuCount * 0.75)
 		}
 		for input, expected in testCases.items():
-			assert callableToTest(input) == expected
+			assert callableToTest(input, cpuCount) == expected
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testMinimumOne(_mockCpu: Mock) -> None:
 		listOfParameters: list[float | int] = [-10, -0.99, 0.1]
 		for limitParameter in listOfParameters:
-			assert callableToTest(limitParameter) >= 1
+			assert callableToTest(limitParameter, cpuCount) >= 1
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testBooleanTrue(_mockCpu: Mock) -> None:
-		assert callableToTest(True) == 1
-		assert callableToTest('True') == 1 # type: ignore
-		assert callableToTest('TRUE') == 1 # type: ignore
-		assert callableToTest(' true ') == 1 # type: ignore
+		assert callableToTest(True, cpuCount) == 1
+		assert callableToTest('True', cpuCount) == 1 # type: ignore
+		assert callableToTest('TRUE', cpuCount) == 1 # type: ignore
+		assert callableToTest(' true ', cpuCount) == 1 # type: ignore
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testInvalidStrings(_mockCpu: Mock) -> None:
 		for stringInput in ["invalid", "True but not quite", "None of the above"]:
 			with pytest.raises(ValueError, match="must be a number, True, False, or None"):
-				callableToTest(stringInput) # type: ignore
+				callableToTest(stringInput, cpuCount) # type: ignore
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testStringNumbers(_mockCpu: Mock) -> None:
@@ -112,7 +111,7 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | in
 			("-0.25", 6),
 		]
 		for stringNumber, expectedLimit in testCases:
-			assert callableToTest(stringNumber) == expectedLimit # type: ignore
+			assert callableToTest(stringNumber, cpuCount) == expectedLimit # type: ignore
 
 	return [
 		('testDefaults', testDefaults),
