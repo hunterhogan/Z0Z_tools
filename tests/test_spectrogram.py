@@ -153,9 +153,9 @@ def test_stft_nonStandardWindowFunction():
 	assert_allclose(arrayWaveform, arrayReconstructed, atol=1e-2)
 
 class TestStftIstft:
-	def test_identity_transform(self, waveform_data: dict[str, dict[str, NDArray[numpy.float32] | int]]):
+	def test_identity_transform(self, waveform_dataRTFStyleGuide: dict[str, dict[str, NDArray[numpy.float32] | int]]):
 		"""Test that passing through identity function preserves waveform."""
-		waveform = waveform_data['stereo']['waveform'].T # (channels, samples)
+		waveform = waveform_dataRTFStyleGuide['stereo']['waveform'].T # (channels, samples)
 
 		@waveformSpectrogramWaveform
 		def identity_transform(spectrogram):
@@ -164,9 +164,9 @@ class TestStftIstft:
 		waveform_reconstructed = identity_transform(waveform)
 		assert numpy.allclose(waveform, waveform_reconstructed, atol=1e-6)
 
-	def test_phase_inversion(self, waveform_data: dict[str, dict[str, NDArray[numpy.float32] | int]]):
+	def test_phase_inversion(self, waveform_dataRTFStyleGuide: dict[str, dict[str, NDArray[numpy.float32] | int]]):
 		"""Test phase inversion through STFT-ISTFT."""
-		waveform = waveform_data['stereo']['waveform'].T
+		waveform = waveform_dataRTFStyleGuide['stereo']['waveform'].T
 
 		@waveformSpectrogramWaveform
 		def invert_phase(spectrogram):
@@ -175,9 +175,9 @@ class TestStftIstft:
 		waveform_inverted = invert_phase(waveform)
 		assert numpy.allclose(waveform, -waveform_inverted, atol=1e-6)
 
-	def test_zero_transform(self, waveform_data: dict[str, dict[str, NDArray[numpy.float32] | int]]):
+	def test_zero_transform(self, waveform_dataRTFStyleGuide: dict[str, dict[str, NDArray[numpy.float32] | int]]):
 		"""Test transform that zeros out the spectrogram."""
-		waveform = waveform_data['stereo']['waveform'].T
+		waveform = waveform_dataRTFStyleGuide['stereo']['waveform'].T
 
 		@waveformSpectrogramWaveform
 		def zero_spectrogram(spectrogram):
@@ -186,9 +186,9 @@ class TestStftIstft:
 		waveform_zeroed = zero_spectrogram(waveform)
 		assert numpy.allclose(waveform_zeroed, numpy.zeros_like(waveform), atol=1e-6)
 
-	def test_shape_preservation(self, waveform_data: dict[str, dict[str, NDArray[numpy.float32] | int]]):
+	def test_shape_preservation(self, waveform_dataRTFStyleGuide: dict[str, dict[str, NDArray[numpy.float32] | int]]):
 		"""Test that output shape matches input shape."""
-		waveform = waveform_data['stereo']['waveform'].T
+		waveform = waveform_dataRTFStyleGuide['stereo']['waveform'].T
 
 		@waveformSpectrogramWaveform
 		def pass_through(spectrogram):

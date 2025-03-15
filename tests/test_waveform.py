@@ -1,5 +1,5 @@
 from typing import Any, Literal
-from tests.conftest import dumbassDictionaryPathFilenamesAudioFiles, pathFilenameTmpTesting, pathTmpTesting, waveform_data
+from tests.conftest import dumbassDictionaryPathFilenamesAudioFiles, pathFilenameTmpTesting, pathTmpTesting, waveform_dataRTFStyleGuide
 from Z0Z_tools.ioAudio import loadWaveforms, readAudioFile, resampleWaveform, writeWAV
 import io
 import numpy
@@ -77,17 +77,17 @@ class TestResampleWaveform:
 		(44100, 22050, 0.5),
 		(44100, 44100, 1.0)
 	])
-	def test_resampling_rates(self, waveform_data: dict[str, dict[str, Any]], source_rate: Literal[16000] | Literal[44100], target_rate: Literal[44100] | Literal[22050], expected_factor: float):
+	def test_resampling_rates(self, waveform_dataRTFStyleGuide: dict[str, dict[str, Any]], source_rate: Literal[16000] | Literal[44100], target_rate: Literal[44100] | Literal[22050], expected_factor: float):
 		"""Test resampling with different rate combinations."""
-		waveform = waveform_data['mono']['waveform']
+		waveform = waveform_dataRTFStyleGuide['mono']['waveform']
 		resampled = resampleWaveform(waveform, target_rate, source_rate)
 		expected_length = int(waveform.shape[0] * expected_factor)
 		assert resampled.shape[0] == expected_length
 
-	def test_same_rate_no_change(self, waveform_data: dict[str, dict[str, Any]]):
+	def test_same_rate_no_change(self, waveform_dataRTFStyleGuide: dict[str, dict[str, Any]]):
 		"""Test that no resampling occurs when rates match."""
-		waveform = waveform_data['stereo']['waveform']
-		rate = waveform_data['stereo']['sample_rate']
+		waveform = waveform_dataRTFStyleGuide['stereo']['waveform']
+		rate = waveform_dataRTFStyleGuide['stereo']['sample_rate']
 		resampled = resampleWaveform(waveform, rate, rate)
 		assert numpy.array_equal(resampled, waveform)
 

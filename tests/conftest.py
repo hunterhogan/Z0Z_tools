@@ -1,4 +1,5 @@
 from collections.abc import Callable, Generator
+from tests.conftestCoping import sampleData, array44100_ch2_sec5_Sine
 from numpy.typing import NDArray
 from typing import Any, Final
 from Z0Z_tools import *
@@ -74,9 +75,9 @@ def pathFilenameTmpTesting(request: pytest.FixtureRequest) -> pathlib.Path:
 @pytest.fixture
 def mockTemporaryFiles(monkeypatch: pytest.MonkeyPatch, pathTmpTesting: pathlib.Path) -> None:
 	"""Mock all temporary filesystem operations to use pathTmpTesting."""
-	monkeypatch.setattr('tempfile.mkdtemp', lambda *a, **k: str(pathTmpTesting))
+	monkeypatch.setattr('tempfile.mkdtemp', lambda *a, **k: str(pathTmpTesting)) # type: ignore
 	monkeypatch.setattr('tempfile.gettempdir', lambda: str(pathTmpTesting))
-	monkeypatch.setattr('tempfile.mkstemp', lambda *a, **k: (0, str(pathTmpTesting)))
+	monkeypatch.setattr('tempfile.mkstemp', lambda *a, **k: (0, str(pathTmpTesting))) # type: ignore
 
 # Fixtures
 @pytest.fixture
@@ -161,6 +162,8 @@ def prototype_numpyAllClose(expected: NDArray[Any] | type[Exception], atol: floa
 		messageExpected = expected if isinstance(expected, type) else "array-like result"
 		assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
 	else:
+		if isinstance(expected, type):
+			assert False, f"Expected an exception of type {expected.__name__}, but got a result"
 		assert numpy.allclose(actual, expected, rtol, atol), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)
 
 def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable[..., Any], *arguments: Any, **keywordArguments: Any) -> None:
@@ -182,21 +185,21 @@ dumbassDictionaryPathFilenamesAudioFiles: dict[str, pathlib.Path | list[pathlib.
 	'mono': pathDataSamples / "testWooWooMono16kHz32integerClipping9sec.wav",
 	'stereo': pathDataSamples / "testSine2ch5sec.wav",
 	'video': pathDataSamples / "testVideo11sec.mkv",
-	'mono_copies': [pathDataSamples / f"testWooWooMono16kHz32integerClipping9secCopy{i}.wav" for i in range(1, 4)],
-	'stereo_copies': [pathDataSamples / f"testSine2ch5secCopy{i}.wav" for i in range(1, 5)]
+	'mono_copies': [pathDataSamples / f"testWooWooMono16kHz32integerClipping9secCopy{i_isNotPartOf1_2_3_4So_i_isAnIdioticIdentifierIn2025CE}.wav" for i_isNotPartOf1_2_3_4So_i_isAnIdioticIdentifierIn2025CE in range(1, 4)],
+	'stereo_copies': [pathDataSamples / f"testSine2ch5secCopy{i_RTFStyleGuide}.wav" for i_RTFStyleGuide in range(1, 5)]
 }
 @pytest.fixture
-def waveform_data() -> dict[str, dict[str, NDArray[numpy.float32] | int]]:
+def waveform_dataRTFStyleGuide() -> dict[str, dict[str, NDArray[numpy.float32] | int]]:
 	"""Fixture providing sample waveform data and sample rates."""
-	mono_data, mono_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['mono'], dtype='float32')
-	stereo_data, stereo_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['stereo'], dtype='float32')
+	mono_dataRTFStyleGuide, mono_srRTFStyleGuide = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['mono'], dtype='float32')
+	stereo_dataRTFStyleGuide, stereo_srRTFStyleGuide = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['stereo'], dtype='float32')
 	return {
 		'mono': {
-			'waveform': mono_data.astype(numpy.float32),
-			'sample_rate': mono_sr
+			'waveform': mono_dataRTFStyleGuide.astype(numpy.float32),
+			'sample_rate': mono_srRTFStyleGuide
 		},
 		'stereo': {
-			'waveform': stereo_data.astype(numpy.float32),
-			'sample_rate': stereo_sr
+			'waveform': stereo_dataRTFStyleGuide.astype(numpy.float32),
+			'sample_rate': stereo_srRTFStyleGuide
 		}
 	}
