@@ -1,7 +1,9 @@
 """test_waveform or test_spectrogram? if a spectrogram is involved at any point, then test_spectrogram."""
-from tests.conftest import *
+from typing import Any
+from Z0Z_tools.ioAudio import readAudioFile, writeWAV, stft, waveformSpectrogramWaveform
 import pytest
 import numpy
+from numpy.typing import NDArray
 from numpy.testing import assert_allclose
 
 #Test cases for stft
@@ -151,7 +153,7 @@ def test_stft_nonStandardWindowFunction():
 	assert_allclose(arrayWaveform, arrayReconstructed, atol=1e-2)
 
 class TestStftIstft:
-	def test_identity_transform(self, waveform_data):
+	def test_identity_transform(self, waveform_data: dict[str, dict[str, NDArray[numpy.float32] | int]]):
 		"""Test that passing through identity function preserves waveform."""
 		waveform = waveform_data['stereo']['waveform'].T # (channels, samples)
 
@@ -162,7 +164,7 @@ class TestStftIstft:
 		waveform_reconstructed = identity_transform(waveform)
 		assert numpy.allclose(waveform, waveform_reconstructed, atol=1e-6)
 
-	def test_phase_inversion(self, waveform_data):
+	def test_phase_inversion(self, waveform_data: dict[str, dict[str, NDArray[numpy.float32] | int]]):
 		"""Test phase inversion through STFT-ISTFT."""
 		waveform = waveform_data['stereo']['waveform'].T
 
@@ -173,7 +175,7 @@ class TestStftIstft:
 		waveform_inverted = invert_phase(waveform)
 		assert numpy.allclose(waveform, -waveform_inverted, atol=1e-6)
 
-	def test_zero_transform(self, waveform_data):
+	def test_zero_transform(self, waveform_data: dict[str, dict[str, NDArray[numpy.float32] | int]]):
 		"""Test transform that zeros out the spectrogram."""
 		waveform = waveform_data['stereo']['waveform'].T
 
@@ -184,7 +186,7 @@ class TestStftIstft:
 		waveform_zeroed = zero_spectrogram(waveform)
 		assert numpy.allclose(waveform_zeroed, numpy.zeros_like(waveform), atol=1e-6)
 
-	def test_shape_preservation(self, waveform_data):
+	def test_shape_preservation(self, waveform_data: dict[str, dict[str, NDArray[numpy.float32] | int]]):
 		"""Test that output shape matches input shape."""
 		waveform = waveform_data['stereo']['waveform'].T
 

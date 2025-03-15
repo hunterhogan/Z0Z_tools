@@ -73,7 +73,7 @@ run = { branch = true, concurrency = [
 xml = { output = "tests/coverage/coverage.xml" }
 
 [tool.pytest.ini_options]
-log_auto_indent = ["On"]
+log_auto_indent = true
 addopts = ["--color=yes", "-n 4"]
 testpaths = ["tests"]
 

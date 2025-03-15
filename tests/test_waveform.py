@@ -1,5 +1,6 @@
 from typing import Any, Literal
-from tests.conftest import *
+from tests.conftest import dumbassDictionaryPathFilenamesAudioFiles, pathFilenameTmpTesting, pathTmpTesting, waveform_data
+from Z0Z_tools.ioAudio import loadWaveforms, readAudioFile, resampleWaveform, writeWAV
 import io
 import numpy
 import pathlib
@@ -60,7 +61,7 @@ class TestLoadWaveforms:
 		stereo_files: pathlib.Path | list[pathlib.Path] = dumbassDictionaryPathFilenamesAudioFiles['stereo_copies']
 		mixed_files: list[pathlib.Path] = [mono_files[0] if isinstance(mono_files, list) else mono_files,
 					stereo_files[0] if isinstance(stereo_files, list) else stereo_files]
-		array_waveforms:ndarray[tuple[int, int, int], dtype[float32]] = loadWaveforms(mixed_files)
+		array_waveforms:numpy.ndarray[tuple[int, int, int], numpy.dtype[numpy.float32]] = loadWaveforms(mixed_files)
 		assert array_waveforms.shape[0] == 2  # Should be stereo
 		assert array_waveforms.shape[2] == 2  # Two files
 

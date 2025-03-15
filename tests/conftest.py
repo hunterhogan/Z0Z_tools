@@ -147,7 +147,7 @@ def standardizedEqualTo(expected: Any, functionTarget: Callable[..., Any], *argu
 
 	assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
 
-def prototype_numpyAllClose(expected: NDArray[Any], atol: float | None, rtol: float | None, functionTarget: Callable[..., Any], *arguments: Any, **keywordArguments: Any) -> None:
+def prototype_numpyAllClose(expected: NDArray[Any] | type[Exception], atol: float | None, rtol: float | None, functionTarget: Callable[..., Any], *arguments: Any, **keywordArguments: Any) -> None:
 	"""Template for tests using numpy.allclose comparison."""
 	if atol is None:
 		atol = atolDEFAULT
@@ -186,7 +186,7 @@ dumbassDictionaryPathFilenamesAudioFiles: dict[str, pathlib.Path | list[pathlib.
 	'stereo_copies': [pathDataSamples / f"testSine2ch5secCopy{i}.wav" for i in range(1, 5)]
 }
 @pytest.fixture
-def waveform_data() -> dict[str, dict[str, Any]]:
+def waveform_data() -> dict[str, dict[str, NDArray[numpy.float32] | int]]:
 	"""Fixture providing sample waveform data and sample rates."""
 	mono_data, mono_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['mono'], dtype='float32')
 	stereo_data, stereo_sr = soundfile.read(dumbassDictionaryPathFilenamesAudioFiles['stereo'], dtype='float32')

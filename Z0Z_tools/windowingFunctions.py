@@ -27,7 +27,7 @@ def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 		raise ValueError(f"I received {ratioTaper} for parameter `ratioTaper`. If set, `ratioTaper` must be between 0 and 1, inclusive.")
 	return lengthTaper
 
-# GitHub #2
+# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
 def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> ndarray[tuple[int], dtype[float64]]:
 	"""
@@ -48,6 +48,7 @@ def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> ndarray[t
 		windowingFunction[-lengthTaper:None] = 1 + cos(numpy.linspace(start=pi / 2, stop=pi, num=lengthTaper))
 	return windowingFunction
 
+# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
 def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> ndarray[tuple[int], dtype[float64]]:
 	"""
@@ -68,6 +69,7 @@ def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> ndarray[tu
 		windowingFunction[-lengthTaper:None] = numpy.sqrt(numpy.linspace(start=1, stop=0, num=lengthTaper))
 	return numpy.absolute(windowingFunction)
 
+# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
 def halfsine(lengthWindow: int) -> ndarray[tuple[int], dtype[float64]]:
 	"""
@@ -81,6 +83,7 @@ def halfsine(lengthWindow: int) -> ndarray[tuple[int], dtype[float64]]:
 	"""
 	return sin(pi * (numpy.arange(lengthWindow) + 0.5) / lengthWindow)
 
+# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
 def tukey(lengthWindow: int, ratioTaper: float | None = None, **keywordArguments: float) -> ndarray[tuple[int], dtype[float64]]:
 	"""

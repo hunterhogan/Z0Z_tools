@@ -48,7 +48,7 @@ Testing Support:
 """
 try:
 	from Z0Z_tools.optionalPyTorch import def_asTensor
-	# GitHub #2
+	# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 	from Z0Z_tools.windowingFunctions import halfsineTensor, tukeyTensor, cosineWingsTensor, equalPowerTensor # type: ignore
 except (ImportError, ModuleNotFoundError):
 	from Z0Z_tools.optionalPyTorchAlternative import def_asTensor

@@ -1,4 +1,6 @@
-from tests.conftest import *
+from collections.abc import Callable
+from tests.conftest import prototype_numpyAllClose, prototype_numpyArrayEqual, uniformTestFailureMessage
+from numpy.typing import NDArray
 import numpy
 import pytest
 import scipy.signal.windows as SciPy
@@ -85,7 +87,7 @@ def test_tukey_special_cases(lengthWindow: int) -> None:
 	)
 
 @pytest.mark.parametrize("functionWindowingInvalid", [cosineWings, equalPower])
-def test_invalidTaperRatio(functionWindowingInvalid: Callable[..., ndarray[tuple[int], dtype[float64]]]) -> None:
+def test_invalidTaperRatio(functionWindowingInvalid: Callable[..., numpy.ndarray[tuple[int], numpy.dtype[numpy.float64]]]) -> None:
 	"""
 	Verify error handling for invalid taper ratios in cosineWings and equalPower.
 	"""

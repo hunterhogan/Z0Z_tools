@@ -15,7 +15,7 @@ class callableAsTensor(Protocol[callableTargetParameters]):
 	__module__: str
 	def __call__(self, device: Device = ..., *args: callableTargetParameters.args, **kwargs: callableTargetParameters.kwargs) -> torch.Tensor: ...
 
-# GitHub #2
+# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 def def_asTensor(callableTarget: Callable[callableTargetParameters, ndarray[tuple[int], dtype[float64]]]) -> Callable[callableTargetParameters, ndarray[tuple[int], dtype[float64]]]:
 	"""
 	Decorator that creates a tensor version of a numpy array-returning function.

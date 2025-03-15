@@ -1,8 +1,11 @@
+from numpy import float64
 from numpy._core._exceptions import _UFuncNoLoopError, UFuncTypeError
-from tests.conftest import *
+from numpy.typing import NDArray
+from tests.conftest import prototype_numpyAllClose
+from typing import Any
+from Z0Z_tools.clippingArrays import applyHardLimit, applyHardLimitComplexValued
 import numpy
 import pytest
-from typing import Any
 
 @pytest.mark.parametrize("description,expected,arrayTarget,comparand", [
     ("Simple array under limit", numpy.array([0.3, -0.5]), numpy.array([0.3, -0.5]), 0.8),

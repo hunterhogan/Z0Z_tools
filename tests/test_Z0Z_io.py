@@ -1,6 +1,8 @@
 from pathlib import Path
-from tests.conftest import *
+from tests.conftest import findRelativePath
+from Z0Z_tools.Z0Z_io import dataTabularTOpathFilenameDelimited
 import pandas
+import pathlib
 import pytest
 
 def testDataTabularTOpathFilenameDelimitedBasic(dataframeSample: pandas.DataFrame, pathTmpTesting: pathlib.Path) -> None:
