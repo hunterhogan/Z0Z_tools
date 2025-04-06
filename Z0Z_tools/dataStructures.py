@@ -12,8 +12,7 @@ import python_minifier
 import re as regex
 
 def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], addSpaces: bool = False, axisOfOperation: int | None = None) -> str:
-	"""Not implemented: Special case, range, start=0
-	Not tested: axisOfOperation"""
+	"""Not tested: axisOfOperation"""
 	if axisOfOperation is None:
 		axisOfOperation = 0
 	def sliceNDArrayToNestedLists(arraySlice: NDArray[integer[Any]], axisOfOperation: int) -> Any:
@@ -29,7 +28,8 @@ def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], addSpaces: bool = False,
 				ImaSerious = list(seriesGrouped)
 				ImaRange = [range(ImaSerious[0], ImaSerious[-1] + 1)]
 				lengthAsList = addSpaces*(len(ImaSerious)-1) + len(python_minifier.minify(str(ImaSerious))) # brackets are proxies for commas
-				lengthAsRange = addSpaces*1 + len('*') + len(python_minifier.minify(str(ImaRange)))
+				ImaRangeAsStr = python_minifier.minify(str(ImaRange)).replace('range(0,', 'range(')
+				lengthAsRange = addSpaces*ImaRangeAsStr.count(',') + len('*') + len(ImaRangeAsStr)
 				if lengthAsRange < lengthAsList:
 					arraySliceAsList += ImaRange
 				else:
@@ -70,6 +70,7 @@ def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], addSpaces: bool = False,
 		joinBothCommasReplace = "]+[\\g<malkovich>]*\\g<multiple>+["
 		arrayAsStr = joinBothCommas.sub(joinBothCommasReplace, arrayAsStr)
 
+	arrayAsStr = arrayAsStr.replace('range(0,', 'range(')
 	arrayAsStr = arrayAsStr.replace('range', '*range')
 
 	return arrayAsStr
@@ -87,31 +88,33 @@ def stringItUp(*scrapPile: Any) -> list[str]:
 	listStrungUp: list[str] = []
 
 	def drill(KitKat: Any) -> None:
-		if isinstance(KitKat, str):
-			listStrungUp.append(KitKat)
-		elif isinstance(KitKat, (bool, bytearray, bytes, complex, float, int, memoryview, type(None))):
-			listStrungUp.append(str(KitKat))
-		elif isinstance(KitKat, dict):
-			for broken, piece in KitKat.items():
-				drill(broken)
-				drill(piece)
-		elif isinstance(KitKat, (frozenset, list, range, set, tuple)):
-			for kit in KitKat:
-				drill(kit)
-		elif hasattr(KitKat, '__iter__'): # Unpack other iterables
-			for kat in KitKat:
-				drill(kat)
-		else:
-			try:
-				sharingIsCaring = KitKat.__str__()
-				listStrungUp.append(sharingIsCaring)
-			except AttributeError:
-				pass
-			except TypeError: # "The error traceback provided indicates that there is an issue when calling the __str__ method on an object that does not have this method properly defined, leading to a TypeError."
-				pass
-			except:
-				print(f"\nWoah! I received '{repr(KitKat)}'.\nTheir report card says, 'Plays well with others: Needs improvement.'\n")
-				raise
+		match KitKat:
+			case str():
+				listStrungUp.append(KitKat)
+			case bool() | bytearray() | bytes() | complex() | float() | int() | memoryview() | None:
+				listStrungUp.append(str(KitKat))
+			case dict():
+				for broken, piece in KitKat.items():
+					drill(broken)
+					drill(piece)
+			case list() | tuple() | set() | frozenset() | range():
+				for kit in KitKat:
+					drill(kit)
+			case _:
+				if hasattr(KitKat, '__iter__'):  # Unpack other iterables
+					for kat in KitKat:
+						drill(kat)
+				else:
+					try:
+						sharingIsCaring = KitKat.__str__()
+						listStrungUp.append(sharingIsCaring)
+					except AttributeError:
+						pass
+					except TypeError:  # "The error traceback provided indicates that there is an issue when calling the __str__ method on an object that does not have this method properly defined, leading to a TypeError."
+						pass
+					except:
+						print(f"\nWoah! I received '{repr(KitKat)}'.\nTheir report card says, 'Plays well with others: Needs improvement.'\n")
+						raise
 	try:
 		for scrap in scrapPile:
 			drill(scrap)
