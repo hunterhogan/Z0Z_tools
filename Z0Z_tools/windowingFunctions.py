@@ -2,10 +2,9 @@
 Generate various windowing functions used in signal processing.
 """
 
-from numpy import cos, dtype, float64, ndarray, pi, sin
-from Z0Z_tools import def_asTensor
+from numpy import cos, pi, sin
+from Z0Z_tools import def_asTensor, WindowingFunction
 import numpy
-import numpy.typing
 import scipy.signal.windows as SciPy
 
 def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
@@ -29,7 +28,7 @@ def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 
 # `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
-def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> ndarray[tuple[int], dtype[float64]]:
+def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> WindowingFunction:
 	"""
 	Generate a cosine-tapered windowing function with flat center and tapered ends.
 
@@ -50,7 +49,7 @@ def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> ndarray[t
 
 # `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
-def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> ndarray[tuple[int], dtype[float64]]:
+def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> WindowingFunction:
 	"""
 	Generate a windowing function used for an equal power crossfade.
 
@@ -71,7 +70,7 @@ def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> ndarray[tu
 
 # `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
-def halfsine(lengthWindow: int) -> ndarray[tuple[int], dtype[float64]]:
+def halfsine(lengthWindow: int) -> WindowingFunction:
 	"""
 	Generate a half-sine windowing function.
 
@@ -85,7 +84,7 @@ def halfsine(lengthWindow: int) -> ndarray[tuple[int], dtype[float64]]:
 
 # `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
-def tukey(lengthWindow: int, ratioTaper: float | None = None, **keywordArguments: float) -> ndarray[tuple[int], dtype[float64]]:
+def tukey(lengthWindow: int, ratioTaper: float | None = None, **keywordArguments: float) -> WindowingFunction:
 	"""
 	Create a Tukey windowing-function.
 

@@ -1,9 +1,9 @@
 from collections.abc import Callable, Generator
-from tests.conftestCoping import sampleData, array44100_ch2_sec5_Sine
+from tests.conftestCoping import sampleData, array44100_ch2_sec5_Sine, listPathFilenamesArrayWaveforms
 from numpy.typing import NDArray
 from typing import Any, Final
-from Z0Z_tools import *
-from Z0Z_tools.pytestForYourUse import *
+from Z0Z_tools import *  # noqa: F403
+from Z0Z_tools.pytestForYourUse import *  # noqa: F403
 import numpy
 import pandas
 import pathlib
@@ -37,8 +37,7 @@ def registrarDeletesTmpObjects() -> None:
 				shutil.rmtree(pathTmp, ignore_errors=True)
 		except Exception as ERRORmessage:
 			print(f"Warning: Failed to clean up {pathTmp}: {ERRORmessage}")
-	registerOfTemporaryFilesystemObjects.clear()
-
+			registerOfTemporaryFilesystemObjects.clear()
 @pytest.fixture(scope="session", autouse=True)
 def setupTeardownTmpObjects() -> Generator[None]:
 	"""Auto-fixture to setup test data directories and cleanup after."""

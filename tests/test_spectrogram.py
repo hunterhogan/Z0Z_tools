@@ -1,11 +1,180 @@
 """test_waveform or test_spectrogram? if a spectrogram is involved at any point, then test_spectrogram."""
 from typing import Any
-from Z0Z_tools.ioAudio import readAudioFile, writeWAV, stft, waveformSpectrogramWaveform
+from Z0Z_tools.ioAudio import readAudioFile, writeWAV, stft, waveformSpectrogramWaveform, loadSpectrograms
 import pytest
 import numpy
 from numpy.typing import NDArray
 from numpy.testing import assert_allclose
+from tests.conftest import uniformTestFailureMessage, standardizedEqualTo, prototype_numpyAllClose, prototype_numpyArrayEqual
+from pathlib import Path
 
+
+class TestLoadSpectrograms:
+	"""Test suite for loadSpectrograms functionality."""
+
+	def test_loadSpectrograms_returnsCorrectShapes(self, listPathFilenamesArrayWaveforms: list[Path]) -> None:
+		"""Test that loadSpectrograms returns arrays with expected shapes based on the input files."""
+		# Acquire
+		sampleRateTarget = 44100
+
+		# Act
+		arraySpectrograms, dictionaryWaveformMetadata = loadSpectrograms(listPathFilenamesArrayWaveforms, sampleRateTarget)
+
+		# Assert
+		# The spectrogram array should have shape (freq_bins, time_frames, channels, count_files)
+		assert len(arraySpectrograms.shape) == 4
+		assert arraySpectrograms.shape[-1] == len(listPathFilenamesArrayWaveforms)
+		assert len(dictionaryWaveformMetadata) == len(listPathFilenamesArrayWaveforms)
+
+	def test_loadSpectrograms_complexOutputValues(self, listPathFilenamesArrayWaveforms: list[Path]) -> None:
+		"""Test that loadSpectrograms returns complex-valued spectrograms."""
+		# Acquire
+		sampleRateTarget = 44100
+
+		# Act
+		arraySpectrograms, dictionaryWaveformMetadata = loadSpectrograms(listPathFilenamesArrayWaveforms, sampleRateTarget)
+
+		# Assert
+		assert numpy.issubdtype(arraySpectrograms.dtype, numpy.complexfloating)
+		assert not numpy.isnan(arraySpectrograms).any()
+		assert not numpy.isinf(arraySpectrograms).any()
+
+	@pytest.mark.parametrize("lengthWindowingFunction,lengthHop", [
+		(1024, 256),
+		(2048, 512),
+		(4096, 1024)
+	])
+	def test_loadSpectrograms_customParameters(self, listPathFilenamesArrayWaveforms: list[Path], lengthWindowingFunction: int, lengthHop: int) -> None:
+		"""Test that loadSpectrograms correctly applies custom STFT parameters."""
+		# Acquire
+		sampleRateTarget = 44100
+
+		# Act
+		arraySpectrograms, dictionaryWaveformMetadata = loadSpectrograms(
+			listPathFilenamesArrayWaveforms,
+			sampleRateTarget,
+			lengthWindowingFunction=lengthWindowingFunction,
+			lengthHop=lengthHop
+		)
+
+		# Get expected shape by computing a single spectrogram with the same parameters
+		waveform = readAudioFile(listPathFilenamesArrayWaveforms[0], sampleRateTarget)
+		spectrogramExpected = stft(
+			waveform,
+			sampleRate=sampleRateTarget,
+			lengthWindowingFunction=lengthWindowingFunction,
+			lengthHop=lengthHop
+		)
+
+		# Assert: The first dimensions should match the expected spectrogram shape
+		assert arraySpectrograms.shape[:-1] == spectrogramExpected.shape
+
+	def test_loadSpectrograms_singleFile(self, listPathFilenamesArrayWaveforms: list[Path]) -> None:
+		"""Test loading a spectrogram from a single file."""
+		# Acquire
+		sampleRateTarget = 44100
+		pathFilenameSingle = listPathFilenamesArrayWaveforms[0]
+
+		# Act
+		arraySpectrograms, dictionaryWaveformMetadata = loadSpectrograms([pathFilenameSingle], sampleRateTarget)
+
+		# Compute directly for comparison
+		waveform = readAudioFile(pathFilenameSingle, sampleRateTarget)
+		spectrogramExpected = stft(waveform, sampleRate=sampleRateTarget)
+
+		# Assert
+		assert arraySpectrograms.shape[:-1] == spectrogramExpected.shape
+		assert arraySpectrograms.shape[-1] == 1
+		assert len(dictionaryWaveformMetadata) == 1
+		assert pathFilenameSingle.name in dictionaryWaveformMetadata[0]['pathFilename']
+
+	@pytest.mark.parametrize("sampleRateTarget", [22050, 44100, 48000])
+	def test_loadSpectrograms_differentSampleRates(self, listPathFilenamesArrayWaveforms: list[Path], sampleRateTarget: int) -> None:
+		"""Test loading spectrograms with different target sample rates."""
+		# Act
+		arraySpectrograms, dictionaryWaveformMetadata = loadSpectrograms(
+			listPathFilenamesArrayWaveforms,
+			sampleRateTarget
+		)
+
+		# Assert - Sample rate should affect the time dimension
+		waveform = readAudioFile(listPathFilenamesArrayWaveforms[0], sampleRateTarget)
+		spectrogramSingle = stft(waveform, sampleRate=sampleRateTarget)
+
+		assert arraySpectrograms.shape[:-1] == spectrogramSingle.shape
+
+	def test_loadSpectrograms_preservesWaveformSampleRate(self, listPathFilenamesArrayWaveforms: list[Path]) -> None:
+		"""Test that loadSpectrograms correctly resamples and preserves metadata."""
+		# Acquire
+		sampleRateTarget = 44100
+
+		# Act
+		arraySpectrograms, dictionaryWaveformMetadata = loadSpectrograms(
+			listPathFilenamesArrayWaveforms,
+			sampleRateTarget
+		)
+
+		# Assert - Verify that the returned metadata contains the expected length
+		for index, pathFilename in enumerate(listPathFilenamesArrayWaveforms):
+			waveform = readAudioFile(pathFilename, sampleRateTarget)
+			assert dictionaryWaveformMetadata[index]['lengthWaveform'] == waveform.shape[1]
+
+	def test_loadSpectrograms_roundTrip(self, listPathFilenamesArrayWaveforms: list[Path]) -> None:
+		"""Test that loadSpectrograms produces spectrograms that can be inverted back to similar waveforms."""
+		# Acquire
+		sampleRateTarget = 44100
+		indexFile = 0
+
+		# Act
+		arraySpectrograms, dictionaryWaveformMetadata = loadSpectrograms(
+			listPathFilenamesArrayWaveforms,
+			sampleRateTarget
+		)
+
+		# Get original waveform
+		waveformOriginal = readAudioFile(listPathFilenamesArrayWaveforms[indexFile], sampleRateTarget)
+		spectrogramSingle = arraySpectrograms[..., indexFile]
+
+		# Invert the spectrogram back to a waveform
+		waveformReconstructed = stft(
+			spectrogramSingle,
+			inverse=True,
+			lengthWaveform=dictionaryWaveformMetadata[indexFile]['lengthWaveform'],
+			sampleRate=sampleRateTarget
+		)
+
+		# Assert - The reconstructed waveform should be close to the original
+		# Note: Due to STFT-ISTFT transformation loss, we use a higher tolerance
+		assert waveformOriginal.shape == waveformReconstructed.shape
+		assert numpy.allclose(waveformOriginal, waveformReconstructed, atol=1e-2, rtol=1e-2)
+
+	def test_loadSpectrograms_emptyInput(self) -> None:
+		"""Test that loadSpectrograms handles empty input correctly."""
+		# Act & Assert
+		with pytest.raises(ValueError):
+			loadSpectrograms([], 44100)
+
+	def test_loadSpectrograms_metadataConsistency(self, listPathFilenamesArrayWaveforms: list[Path]) -> None:
+		"""Test that the metadata returned by loadSpectrograms is consistent with file properties."""
+		# Acquire
+		sampleRateTarget = 44100
+
+		# Act
+		arraySpectrograms, dictionaryWaveformMetadata = loadSpectrograms(
+			listPathFilenamesArrayWaveforms,
+			sampleRateTarget
+		)
+
+		# Assert - Check that every file has corresponding metadata
+		for index, pathFilename in enumerate(listPathFilenamesArrayWaveforms):
+			metadata = dictionaryWaveformMetadata[index]
+			assert str(pathFilename) == metadata['pathFilename']
+			assert 'lengthWaveform' in metadata
+			assert 'samplesLeading' in metadata
+			assert 'samplesTrailing' in metadata
+			assert isinstance(metadata['lengthWaveform'], int)
+
+# All of the test functions below here are TERRIBLE and obviously do not follow the instructions.
 #Test cases for stft
 def test_stft_forward():
 	# Test with a simple sine wave

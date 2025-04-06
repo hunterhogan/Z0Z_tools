@@ -50,26 +50,57 @@ try:
 	from Z0Z_tools.optionalPyTorch import def_asTensor
 	# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 	from Z0Z_tools.windowingFunctions import halfsineTensor, tukeyTensor, cosineWingsTensor, equalPowerTensor # type: ignore
+	# from Z0Z_tools.optionalPyTorch import halfsineTensor, tukeyTensor, cosineWingsTensor, equalPowerTensor
 except (ImportError, ModuleNotFoundError):
 	from Z0Z_tools.optionalPyTorchAlternative import def_asTensor
 
 from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import PAD_TYPE, FFT_MODE_TYPE
-from Z0Z_tools.theTypes import *
+from Z0Z_tools.theTypes import (
+	ArrayType, WindowingFunctionDtype, WindowingFunction,
+	WaveformDtype, Waveform, ArrayWaveforms,
+	SpectrogramDtype, Spectrogram, ArraySpectrograms,
+	ParametersSTFT, ParametersShortTimeFFT, ParametersUniversal,
+	WaveformMetadata, NormalizationReverter
+)
 
-from Z0Z_tools.amplitude import *
+from Z0Z_tools.amplitude import normalizeWaveform, normalizeArrayWaveforms
 
-from Z0Z_tools.autoRevert import *
-from Z0Z_tools.windowingFunctions import *
-from Z0Z_tools.Z0Z_io import *
-from Z0Z_tools.clippingArrays import *
-from Z0Z_tools.dataStructures import *
-from Z0Z_tools.ioAudio import *
-from Z0Z_tools.parseParameters import *
-from Z0Z_tools.pipAnything import *
+from Z0Z_tools.autoRevert import moveToAxisOfOperation
+
+from Z0Z_tools.windowingFunctions import halfsine, tukey, cosineWings, equalPower
+
+from Z0Z_tools.Z0Z_io import (
+	dataTabularTOpathFilenameDelimited,
+	findRelativePath,
+	makeDirsSafely,
+)
+
+from Z0Z_tools.clippingArrays import applyHardLimit, applyHardLimitComplexValued
+
+from Z0Z_tools.dataStructures import autoDecodingRLE, stringItUp, updateExtendPolishDictionaryLists
+
+from Z0Z_tools.ioAudio import (
+	loadSpectrograms,
+	loadWaveforms,
+	readAudioFile,
+	resampleWaveform,
+	spectrogramToWAV,
+	stft,
+	waveformSpectrogramWaveform,
+	writeWAV,
+	)
+
+from Z0Z_tools.parseParameters import (
+	defineConcurrencyLimit,
+	intInnit,
+	oopsieKwargsie
+)
+
+from Z0Z_tools.pipAnything import installPackageTarget, makeListRequirementsFromRequirementsFile
 
 try:
 	# NOTE `Pytest` is an optional dependency
-	from Z0Z_tools.pytestForYourUse import *
+	from Z0Z_tools.pytestForYourUse import PytestFor_defineConcurrencyLimit, PytestFor_intInnit, PytestFor_oopsieKwargsie
 except (ImportError, ModuleNotFoundError):
 	pass
 

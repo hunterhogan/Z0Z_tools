@@ -2,12 +2,13 @@
 from collections.abc import Callable
 from numpy import ndarray, dtype, float64
 from torch.types import Device
-from typing import Any, ParamSpec, Protocol, TypeVar, cast
+from typing import Any, ParamSpec, Protocol, TypeAlias, TypeVar, cast
 import sys
 import torch
+from Z0Z_tools import WindowingFunction
 
 callableTargetParameters = ParamSpec('callableTargetParameters')
-callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., ndarray[tuple[int], dtype[float64]]])
+callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., WindowingFunction])
 
 class callableAsTensor(Protocol[callableTargetParameters]):
 	__name__: str
@@ -16,7 +17,7 @@ class callableAsTensor(Protocol[callableTargetParameters]):
 	def __call__(self, device: Device = ..., *args: callableTargetParameters.args, **kwargs: callableTargetParameters.kwargs) -> torch.Tensor: ...
 
 # `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
-def def_asTensor(callableTarget: Callable[callableTargetParameters, ndarray[tuple[int], dtype[float64]]]) -> Callable[callableTargetParameters, ndarray[tuple[int], dtype[float64]]]:
+def def_asTensor(callableTarget: Callable[callableTargetParameters, WindowingFunction]) -> Callable[callableTargetParameters, WindowingFunction]:
 	"""
 	Decorator that creates a tensor version of a numpy array-returning function.
 	The tensor version will be available with a 'Tensor' suffix.

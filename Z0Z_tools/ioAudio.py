@@ -2,10 +2,13 @@
 Provides utilities for reading, writing, and resampling audio waveforms.
 """
 from collections.abc import Callable, Sequence
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from math import ceil as ceiling, log2 as log_base2
+from multiprocessing import set_start_method as multiprocessing_set_start_method
 from numpy import dtype, float32, floating, ndarray, complex64
 from os import PathLike
 from scipy.signal import ShortTimeFFT
+from tqdm.auto import tqdm
 from typing import Any, BinaryIO, Literal, cast, overload
 from Z0Z_tools import halfsine, makeDirsSafely
 from Z0Z_tools import Waveform, ArrayWaveforms, Spectrogram, ArraySpectrograms, ParametersSTFT, ParametersShortTimeFFT, ParametersUniversal, WaveformMetadata, WindowingFunction
@@ -13,6 +16,10 @@ import io
 import numpy
 import resampy
 import soundfile
+
+# When to use multiprocessing.set_start_method https://github.com/hunterhogan/mapFolding/issues/6
+if __name__ == '__main__':
+	multiprocessing_set_start_method('spawn')
 
 # TODO how should I handle these?
 universalDtypeWaveform = float32
@@ -39,9 +46,30 @@ if not setParametersUniversal:
 	parametersUniversal: ParametersUniversal = parametersDEFAULT
 
 def getWaveformMetadata(listPathFilenames: Sequence[str | PathLike[str]], sampleRate: float) -> dict[int, WaveformMetadata]:
+	"""
+	Retrieve metadata for a collection of audio waveform files.
+
+	This function reads each audio file, determines its length, and creates a WaveformMetadata
+	object for each file, indexed by its position in the input list.
+
+	Parameters:
+		listPathFilenames (Sequence[str | PathLike[str]]): A sequence of paths to audio files.
+		sampleRate (float): The target sample rate for reading the audio files.
+
+	Returns:
+		dict[int, WaveformMetadata]: A dictionary mapping integer indices to WaveformMetadata objects.
+			Each WaveformMetadata contains:
+			- pathFilename: The string path to the audio file
+			- lengthWaveform: The number of samples in the audio file
+			- samplesLeading: Set to 0 by default
+			- samplesTrailing: Set to 0 by default
+
+	Note:
+		This function uses tqdm to display a progress bar during processing.
+	"""
 	axisTime: int = -1
 	dictionaryWaveformMetadata: dict[int, WaveformMetadata] = {}
-	for index, pathFilename in enumerate(listPathFilenames):
+	for index, pathFilename in enumerate(tqdm(listPathFilenames)):
 		lengthWaveform = readAudioFile(pathFilename, sampleRate).shape[axisTime]
 		dictionaryWaveformMetadata[index] = WaveformMetadata(
 			pathFilename = str(pathFilename),
@@ -69,7 +97,8 @@ def readAudioFile(pathFilename: str | PathLike[Any] | BinaryIO, sampleRate: floa
 			sampleRateSource: int = readSoundFile.samplerate
 			waveform: Waveform = readSoundFile.read(dtype=str(universalDtypeWaveform.__name__), always_2d=True).astype(universalDtypeWaveform)
 			# GitHub #3 Implement semantic axes for audio data
-			axisTime = 0; axisChannels = 1
+			axisTime = 0
+			axisChannels = 1
 			waveform = cast(Waveform, resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource, axisTime=axisTime))
 			if waveform.shape[axisChannels] == 1:
 				waveform = numpy.repeat(waveform, 2, axis=axisChannels)
@@ -126,7 +155,6 @@ def loadWaveforms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTa
 
 	axisTime: int = -1
 	dictionaryWaveformMetadata: dict[int, WaveformMetadata] = getWaveformMetadata(listPathFilenames, sampleRateTarget)
-
 	samplesTotalMaximum = max([entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values()])
 	axesSizes['axisTime'] = samplesTotalMaximum
 
@@ -171,16 +199,16 @@ def writeWAV(pathFilename: str | PathLike[Any] | io.IOBase, waveform: Waveform, 
 	makeDirsSafely(pathFilename)
 	soundfile.write(file=pathFilename, data=waveform.T, samplerate=int(sampleRate), subtype='FLOAT', format='WAV')
 
-@overload # stft
+@overload # stft 1
 def stft(arrayTarget: Waveform, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[False] = False, lengthWaveform: None = None, indexingAxis: None = None) -> Spectrogram: ...
 
-@overload # stft
+@overload # stft many
 def stft(arrayTarget: ArrayWaveforms, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[False] = False, lengthWaveform: None = None, indexingAxis: int = -1) -> ArraySpectrograms: ...
 
-@overload # istft
+@overload # istft 1
 def stft(arrayTarget: Spectrogram, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[True] = True, lengthWaveform: int, indexingAxis: None = None) -> Waveform: ...
 
-@overload # istft
+@overload # istft many
 def stft(arrayTarget: ArraySpectrograms, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[True] = True, lengthWaveform: int, indexingAxis: int = -1) -> ArrayWaveforms: ...
 
 def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrograms
@@ -215,7 +243,7 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 	if lengthHop is None: lengthHop = parametersUniversal['lengthHop']
 
 	if windowingFunction is None:
-		if lengthWindowingFunction is not None and windowingFunctionCallableUniversal:
+		if lengthWindowingFunction is not None and windowingFunctionCallableUniversal: # pyright: ignore[reportUnnecessaryComparison]
 			windowingFunction = windowingFunctionCallableUniversal(lengthWindowingFunction)
 		else:
 			windowingFunction = parametersUniversal['windowingFunction']
@@ -251,6 +279,14 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 
 		return cast(ArrayWaveforms | ArraySpectrograms, numpy.moveaxis(arrayTransformed, -1, indexingAxis))
 
+def _getSpectrogram(waveform: Waveform, metadata: WaveformMetadata, sampleRateTarget: float, **parametersSTFT: Any) -> Spectrogram:
+	# All waveforms have the same shape so that all spectrograms have the same shape.
+	# GitHub #4 Add padding logic to `loadWaveforms` and `loadSpectrograms`
+	lengthWaveform = metadata['lengthWaveform'] + metadata['samplesLeading'] + metadata['samplesTrailing']
+	# All shorter waveforms are forced to have trailing zeros.
+	waveform[:, 0:lengthWaveform] = readAudioFile(metadata['pathFilename'], sampleRateTarget)
+	return stft(waveform, sampleRate=sampleRateTarget, **parametersSTFT)
+
 def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTarget: float | None = None, **parametersSTFT: Any) -> tuple[ArraySpectrograms, dict[int, WaveformMetadata]]:
 	"""
 	Load spectrograms from audio files.
@@ -266,6 +302,9 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRat
 	if sampleRateTarget is None:
 		sampleRateTarget = parametersUniversal['sampleRate']
 
+	max_workersHARDCODED: int = 3
+	max_workers = max_workersHARDCODED
+
 	dictionaryWaveformMetadata: dict[int, WaveformMetadata] = getWaveformMetadata(listPathFilenames, sampleRateTarget)
 
 	samplesTotalMaximum: int = max([entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values()])
@@ -275,14 +314,16 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRat
 
 	arraySpectrograms: ArraySpectrograms = numpy.zeros(shape=(*spectrogramTemplate.shape, len(dictionaryWaveformMetadata)), dtype=universalDtypeSpectrogram)
 
-	for index, metadata in dictionaryWaveformMetadata.items():
-		# All waveforms have the same shape so that all spectrograms have the same shape.
-		waveform = waveformTemplate.copy()
-		# GitHub #4 Add padding logic to `loadWaveforms` and `loadSpectrograms`
-		lengthWaveform = metadata['lengthWaveform'] + metadata['samplesLeading'] + metadata['samplesTrailing']
-		# All shorter waveforms are forced to have trailing zeros.
-		waveform[:, 0:lengthWaveform] = readAudioFile(metadata['pathFilename'], sampleRateTarget)
-		arraySpectrograms[..., index] = stft(waveform, sampleRate=sampleRateTarget, **parametersSTFT)
+	for index, metadata in tqdm(dictionaryWaveformMetadata.items()):
+		arraySpectrograms[..., index] = _getSpectrogram(waveformTemplate.copy(), metadata, sampleRateTarget, **parametersSTFT)
+
+	# with ProcessPoolExecutor(max_workers) as concurrencyManager:
+	# 	dictionaryConcurrency = {concurrencyManager.submit(
+	# 		_getSpectrogram, waveformTemplate.copy(), metadata, sampleRateTarget, **parametersSTFT): index
+	# 			for index, metadata in dictionaryWaveformMetadata.items()}
+
+	# 	for claimTicket in tqdm(as_completed(dictionaryConcurrency), total=len(dictionaryConcurrency)):
+	# 		arraySpectrograms[..., dictionaryConcurrency[claimTicket]] = claimTicket.result()
 
 	return arraySpectrograms, dictionaryWaveformMetadata
 
@@ -307,6 +348,28 @@ def spectrogramToWAV(spectrogram: Spectrogram, pathFilename: str | PathLike[Any]
 	writeWAV(pathFilename, waveform, sampleRate)
 
 def waveformSpectrogramWaveform(callableNeedsSpectrogram: Callable[[Spectrogram], Spectrogram]) -> Callable[[Waveform], Waveform]:
+	"""
+	Creates a function that converts a waveform to a spectrogram, applies a transformation on the spectrogram,
+	and then converts the transformed spectrogram back to a waveform.
+
+	This is a higher-order function that takes a function operating on spectrograms and returns a function
+	that operates on waveforms by applying the Short-Time Fourier Transform (STFT) and its inverse.
+
+	Parameters
+	----------
+	callableNeedsSpectrogram : Callable[[Spectrogram], Spectrogram]
+		A function that takes a spectrogram and returns a transformed spectrogram.
+
+	Returns
+	-------
+	Callable[[Waveform], Waveform]
+		A function that takes a waveform, transforms it into a spectrogram,
+		applies the provided spectrogram transformation, and converts it back to a waveform.
+
+	Notes
+	-----
+	The time axis is assumed to be the last axis (-1) of the waveform array.
+	"""
 	def stft_istft(waveform: Waveform) -> Waveform:
 		axisTime = -1
 		arrayTarget = stft(waveform)

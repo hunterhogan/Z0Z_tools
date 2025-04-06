@@ -21,15 +21,18 @@ listFilenamesSameShape = [
     "WAV_44100_ch2_sec5_Sine_Copy3.wav",]
 
 @pytest.fixture
-def array44100_ch2_sec5_Sine() -> ArrayWaveforms:
+def listPathFilenamesArrayWaveforms() -> list[Path]:
+	return [pathDataSamples / filename for filename in listFilenamesSameShape]
+
+@pytest.fixture
+def array44100_ch2_sec5_Sine(listPathFilenamesArrayWaveforms: list[Path]) -> ArrayWaveforms:
     """
     Load the four WAV files with the same shape into an array.
 
     Returns:
         arrayWaveforms: Array of waveforms with shape (channels, samples, count_of_waveforms)
     """
-    listPathFilenames = [pathDataSamples / filename for filename in listFilenamesSameShape]
-    arrayWaveforms = loadWaveforms(listPathFilenames)
+    arrayWaveforms = loadWaveforms(listPathFilenamesArrayWaveforms)
     return arrayWaveforms
 
 class WaveformAndMetadata:

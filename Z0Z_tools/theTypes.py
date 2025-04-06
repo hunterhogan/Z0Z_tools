@@ -1,7 +1,9 @@
 from collections.abc import Callable
 from numpy import complexfloating, dtype, floating, ndarray
-from typing import Any, Literal, TypedDict, TypeAlias
+from typing import Any, Literal, TypedDict, TypeAlias, TypeVar, Protocol
 from Z0Z_tools import PAD_TYPE, FFT_MODE_TYPE
+
+ArrayType = TypeVar('ArrayType', bound=ndarray[Any, Any], covariant=True)
 
 WindowingFunctionDtype: TypeAlias = floating[Any]
 WindowingFunction: TypeAlias = ndarray[tuple[int], dtype[WindowingFunctionDtype]]
