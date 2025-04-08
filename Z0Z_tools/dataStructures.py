@@ -11,17 +11,55 @@ import more_itertools
 import python_minifier
 import re as regex
 
-def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], addSpaces: bool = False, axisOfOperation: int | None = None) -> str:
-	"""Not tested: axisOfOperation"""
-	if axisOfOperation is None:
-		axisOfOperation = 0
-	def sliceNDArrayToNestedLists(arraySlice: NDArray[integer[Any]], axisOfOperation: int) -> Any:
+def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], addSpaces: bool = False) -> str:
+	"""
+	Transform a NumPy array into a compact, self-decoding run-length encoded string representation.
+
+	This function converts a NumPy array into a string that, when evaluated as Python code,
+	recreates the original array structure. The function employs two compression strategies:
+	1. Python's range syntax for consecutive integer sequences
+	2. Multiplication syntax for repeated elements
+
+	The resulting string representation is designed to be both human-readable and space-efficient,
+	especially for large cartesian mappings with repetitive patterns. When this string is used
+	as a data source, Python will automatically decode it into the original array structure.
+
+	Parameters:
+		arrayTarget: The NumPy array to be encoded.
+		addSpaces (False): Affects internal length comparison during compression decisions.
+			This parameter doesn't directly change output format but influences whether
+			range or multiplication syntax is preferred in certain cases. The parameter
+			exists because the Abstract Syntax Tree (AST) inserts spaces in its string
+			representation.
+
+	Returns:
+		rleString: A string representation of the array using run-length encoding that,
+			when evaluated as Python code, reproduces the original array structure.
+
+	Examples:
+		>>> import numpy as np
+		>>> array1D = np.array([1, 2, 3, 3, 3, 4, 5, 6])
+		>>> print(autoDecodingRLE(array1D))
+		'[1,2,[3]*3,4,5,6]'
+
+		>>> array2D = np.array([[1, 1, 1], [2, 2, 2], [3, 3, 3]])
+		>>> print(autoDecodingRLE(array2D))
+		'[[1]*3,[2]*3,[3]*3]'
+
+	Notes:
+		This function is particularly useful for:
+		- Storing large cartesian mappings efficiently
+		- Creating lookup tables that are both compact and self-decoding
+		- Reducing memory usage for arrays with repeating patterns
+		- Generating code that recreates complex array structures
+
+		The "autoDecoding" feature means that the string representation evaluates directly
+		to the desired data structure without explicit decompression steps.
+	"""
+	def sliceNDArrayToNestedLists(arraySlice: NDArray[integer[Any]]) -> Any:
 		if arraySlice.ndim > 1:
-			if (axisOfOperation >= arraySlice.ndim):
-				axisOfOperation = -1
-			elif abs(axisOfOperation) > arraySlice.ndim:
-				axisOfOperation = 0
-			return [sliceNDArrayToNestedLists(arraySlice[index], axisOfOperation) for index in range(arraySlice.shape[axisOfOperation])]
+			axisOfOperation = 0
+			return [sliceNDArrayToNestedLists(arraySlice[index]) for index in range(arraySlice.shape[axisOfOperation])]
 		elif arraySlice.ndim == 1:
 			arraySliceAsList: list[int | range] = []
 			for seriesGrouped in more_itertools.consecutive_groups(arraySlice.tolist()):
@@ -49,7 +87,7 @@ def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], addSpaces: bool = False,
 			return listRangeAndTuple
 		return arraySlice
 
-	arrayAsNestedLists = sliceNDArrayToNestedLists(arrayTarget, axisOfOperation)
+	arrayAsNestedLists = sliceNDArrayToNestedLists(arrayTarget)
 
 	arrayAsStr = python_minifier.minify(str(arrayAsNestedLists))
 
@@ -92,13 +130,13 @@ def stringItUp(*scrapPile: Any) -> list[str]:
 			case str():
 				listStrungUp.append(KitKat)
 			case bool() | bytearray() | bytes() | complex() | float() | int() | memoryview() | None:
-				listStrungUp.append(str(KitKat))
+				listStrungUp.append(str(KitKat)) # pyright: ignore [reportUnknownArgumentType]
 			case dict():
-				for broken, piece in KitKat.items():
+				for broken, piece in KitKat.items(): # pyright: ignore [reportUnknownVariableType]
 					drill(broken)
 					drill(piece)
 			case list() | tuple() | set() | frozenset() | range():
-				for kit in KitKat:
+				for kit in KitKat: # pyright: ignore [reportUnknownVariableType]
 					drill(kit)
 			case _:
 				if hasattr(KitKat, '__iter__'):  # Unpack other iterables

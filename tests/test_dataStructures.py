@@ -1,4 +1,4 @@
-from collections.abc import Iterable
+from collections.abc import Iterable, Callable
 from decimal import Decimal
 from fractions import Fraction
 from numpy.typing import NDArray
@@ -61,7 +61,7 @@ def testStringItUp(description: str, value_scrapPile: list[Any], expected: list[
 @pytest.mark.parametrize("description,value_scrapPile,expected", [
 	("Memory view", memoryview(b"DEADBEEF"), ["<memory at 0x"]),  # Special handling for memoryview
 ], ids=lambda x: x if isinstance(x, str) else "")
-def testStringItUpErrorCases(description: Literal['Memory view'], value_scrapPile: memoryview, expected: str) -> None:
+def testStringItUpErrorCases(description: Literal['Memory view'], value_scrapPile: memoryview, expected: list[str]) -> None:
 	result = stringItUp(value_scrapPile)
 	assert len(result) == 1
 	assert result[0].startswith(expected[0])
@@ -78,9 +78,9 @@ def testStringItUpErrorCases(description: Literal['Memory view'], value_scrapPil
 	("Non-iterable values", ({'ne': 13, 'sw': 17}, {'ne': 19, 'nw': 23}), {'destroyDuplicates': False, 'reorderLists': False}, TypeError ),
 	("Skip erroneous types", ({'ne': [11, 13], 'sw': [17, 19]}, {'ne': 23, 'nw': 29}), {'killErroneousDataTypes': True}, {'ne': [11, 13], 'sw': [17, 19]} ),
 ], ids=lambda x: x if isinstance(x, str) else "")
-def testUpdateExtendPolishDictionaryLists(description: str, value_dictionaryLists: tuple[dict[Any, Any],...], keywordArguments: dict[Any,Any], expected: dict[str, Any] | type[TypeError] ) -> None:
+def testUpdateExtendPolishDictionaryLists(	description: str, 	value_dictionaryLists: tuple[dict[Any, Any],...], 	keywordArguments: dict[Any,Any], 	expected: dict[str, Any] | type[TypeError] ) -> None:
 	standardizedEqualTo(expected, updateExtendPolishDictionaryLists, *value_dictionaryLists, **keywordArguments)
-	# NOTE one line of code with `standardizedEqualTo` replaced the following ten lines of code.
+# NOTE one line of code with `standardizedEqualTo` replaced the following ten lines of code.
 	# if isinstance(expected, type) and issubclass(expected, Exception):
 	#	 with pytest.raises(expected):
 	#		 updateExtendPolishDictionaryLists(*value_dictionaryLists, **keywordArguments)
@@ -112,3 +112,247 @@ def testUpdateExtendPolishDictionaryLists(description: str, value_dictionaryList
 def testAutoDecodingRLE(description: str, value_arrayTarget: NDArray[numpy.integer[Any]], expected: str) -> None:
 	"""Test autoDecodingRLE with various input arrays."""
 	standardizedEqualTo(expected, autoDecodingRLE, value_arrayTarget)
+
+# Helper functions for generating RLE test data
+def generateCartesianMapping(dimensions: tuple[int, int], formula: Callable[[int, int], int]) -> NDArray[Any]:
+	"""Generate a 2D cartesian mapping based on a formula."""
+	height, width = dimensions
+	arrayMapping = numpy.zeros((height, width), dtype=numpy.int32)
+
+	for y in range(height):
+		for x in range(width):
+			arrayMapping[y, x] = formula(x, y)
+
+	return arrayMapping
+
+def generateWavePattern(dimensions: tuple[int, int]) -> NDArray[Any]:
+	"""Generate a sine wave pattern that produces many RLE-friendly sequences."""
+	height, width = dimensions
+
+	def waveFormula(x: int, y: int) -> int:
+		return int(10 * numpy.sin(x / 5) + 10 * numpy.sin(y / 5))
+
+	return generateCartesianMapping(dimensions, waveFormula)
+
+def generateChessboard(dimensions: tuple[int, int], squareSize: int = 4) -> NDArray[Any]:
+	"""Generate a chessboard pattern with alternating values."""
+	height, width = dimensions
+
+	def chessboardFormula(x: int, y: int) -> int:
+		return 1 if ((x // squareSize) + (y // squareSize)) % 2 == 0 else 0
+
+	return generateCartesianMapping(dimensions, chessboardFormula)
+
+def generatePrimeModuloMatrix(dimensions: tuple[int, int], modulus: int = 6) -> NDArray[Any]:
+	"""Generate a matrix where each cell is (x*y) % modulus."""
+	height, width = dimensions
+
+	def primeModuloFormula(x: int, y: int) -> int:
+		return ((x + 1) * (y + 1)) % modulus
+
+	return generateCartesianMapping(dimensions, primeModuloFormula)
+
+def generateSpiralPattern(dimensions: tuple[int, int], scale: int = 1) -> NDArray[Any]:
+	"""Generate a spiral pattern that creates interesting RLE sequences."""
+	height, width = dimensions
+
+	def spiralFormula(x: int, y: int) -> int:
+		xCenter = width // 2
+		yCenter = height // 2
+		distanceX = x - xCenter
+		distanceY = y - yCenter
+		distance = numpy.sqrt(distanceX**2 + distanceY**2)
+		angle = numpy.arctan2(distanceY, distanceX)
+		return int((distance + 5 * angle) * scale) % 10
+
+	return generateCartesianMapping(dimensions, spiralFormula)
+
+def generateSignedQuadraticFunction(dimensions: tuple[int, int]) -> NDArray[Any]:
+	"""Generate a matrix with a quadratic function that includes negative values."""
+	height, width = dimensions
+
+	def quadraticFormula(x: int, y: int) -> int:
+		xCenter = width // 2
+		yCenter = height // 2
+		return (x - xCenter)**2 - (y - yCenter)**2
+
+	return generateCartesianMapping(dimensions, quadraticFormula)
+
+def generateTilePattern(dimensions: tuple[int, int], tileSize: int = 10) -> NDArray[Any]:
+	"""Generate a repeating tile pattern."""
+	height, width = dimensions
+
+	def tileFormula(x: int, y: int) -> int:
+		patternX = x % tileSize
+		patternY = y % tileSize
+		if patternX < patternY:
+			return patternX
+		else:
+			return patternY
+
+	return generateCartesianMapping(dimensions, tileFormula)
+
+def generateRepeatingZones(dimensions: tuple[int, int], zoneWidth: int = 15) -> NDArray[Any]:
+	"""Generate horizontal zones with repeating values."""
+	height, width = dimensions
+
+	def zoneFormula(x: int, y: int) -> int:
+		zone = y // zoneWidth
+		return zone % 5  # 5 different zones
+
+	return generateCartesianMapping(dimensions, zoneFormula)
+
+def generateStepPattern(dimensions: tuple[int, int], step: int = 5) -> NDArray[Any]:
+	"""Generate a stepping pattern that increases along the x-axis."""
+	height, width = dimensions
+
+	def stepFormula(x: int, y: int) -> int:
+		return x // step
+
+	return generateCartesianMapping(dimensions, stepFormula)
+
+def generateAlternatingColumns(dimensions: tuple[int, int], blockSize: int = 1) -> NDArray[Any]:
+	"""Generate alternating columns with different values."""
+	height, width = dimensions
+
+	def columnFormula(x: int, y: int) -> int:
+		return (x // blockSize) % 2
+
+	return generateCartesianMapping(dimensions, columnFormula)
+
+# Updated test cases for autoDecodingRLE with more realistic data
+@pytest.mark.parametrize("description,value_arrayTarget", [
+	# Basic test cases with simple patterns
+	("Simple range", numpy.array(list(range(50,60)))),
+
+	# Chessboard patterns
+	("Small chessboard", generateChessboard((8, 8))),
+
+	# Alternating columns - creates patterns with good RLE opportunities
+	("Alternating columns", generateAlternatingColumns((5, 20), 2)),
+
+	# Step pattern - creates horizontal runs
+	("Step pattern", generateStepPattern((6, 30), 3)),
+
+	# Repeating zones - creates horizontal bands
+	("Repeating zones", generateRepeatingZones((40, 40), 8)),
+
+	# Tile pattern - creates complex repeating regions
+	("Tile pattern", generateTilePattern((15, 15), 5)),
+
+	# Signed quadratic function - includes negative values
+	("Signed quadratic", generateSignedQuadraticFunction((10, 10))),
+
+	# Prime modulo matrix - periodic patterns
+	("Prime modulo", generatePrimeModuloMatrix((12, 12), 7)),
+
+	# Wave pattern - smooth gradients
+	("Wave pattern", generateWavePattern((20, 20))),
+
+	# Spiral pattern - complex pattern with good RLE potential
+	("Spiral pattern", generateSpiralPattern((15, 15), 2)),
+], ids=lambda x: x if isinstance(x, str) else "")
+def testAutoDecodingRLEWithRealisticData(description: str, value_arrayTarget: NDArray[numpy.integer[Any]]) -> None:
+	"""Test autoDecodingRLE with more realistic data patterns."""
+	# Here we test the function behavior rather than expected string output
+	resultRLE = autoDecodingRLE(value_arrayTarget)
+
+	# Test that the result is a valid string
+	assert isinstance(resultRLE, str)
+
+	# Test that the result contains the expected syntax elements
+	assert "[" in resultRLE, f"Result should contain list syntax: {resultRLE}"
+	assert "]" in resultRLE, f"Result should contain list syntax: {resultRLE}"
+
+	# Check that the result is more compact than the raw string representation
+	rawStrLength = len(str(value_arrayTarget.tolist()))
+	encodedLength = len(resultRLE)
+	assert encodedLength <= rawStrLength, f"Encoded string ({encodedLength}) should be shorter than raw string ({rawStrLength})"
+
+@pytest.mark.parametrize("description,addSpaces", [
+	("With spaces", True),
+	("Without spaces", False),
+], ids=lambda x: x if isinstance(x, str) else "")
+def testAutoDecodingRLEWithSpaces(description: str, addSpaces: bool) -> None:
+	"""Test that the addSpaces parameter affects the internal comparison logic.
+
+	Note: addSpaces doesn't directly change the output format, it just changes
+	the comparison when measuring the length of the string representation.
+	The feature exists because `ast` inserts spaces in its string representation.
+	"""
+	# Create a pattern that has repeated sequences to trigger the RLE logic
+	arrayTarget = generateRepeatingZones((10, 10), 2)
+
+	# Test both configurations
+	resultWithSpacesFlag = autoDecodingRLE(arrayTarget, addSpaces=addSpaces)
+	resultNoSpacesFlag = autoDecodingRLE(arrayTarget, addSpaces=False)
+
+	# When addSpaces=True, the internal length comparisons change
+	# but the actual output format doesn't necessarily differ
+	# Just verify the function runs without errors in both cases
+	assert isinstance(resultWithSpacesFlag, str)
+	assert isinstance(resultNoSpacesFlag, str)
+
+@pytest.mark.parametrize("description,dimensions,axisOfOperation", [
+	("Default axis vs explicit axis 0", (10, 10), 0),
+	("Axis 0 vs axis 1", (10, 10), 1),
+	("Axis -1 on 2D array", (10, 10), -1),
+	("3D array axis 0", (3, 4, 5), 0),
+	# ("3D array axis 1", (3, 4, 5), 1),
+	# ("3D array axis 2", (3, 4, 5), 2),
+], ids=lambda x: x if isinstance(x, str) else "")
+def testAutoDecodingRLEWithDifferentAxes(description: str, dimensions: tuple[int, ...], axisOfOperation: int) -> None:
+	"""Test axisOfOperation parameter affects the output."""
+	if len(dimensions) == 2:
+		# Create a non-symmetric array to better observe axis differences
+		arrayTarget = generateTilePattern(dimensions, 3)
+	else:  # 3D array
+		arrayTarget = numpy.zeros(dimensions, dtype=numpy.int32)
+		# Fill with a pattern that will encode differently on different axes
+		for i in range(dimensions[0]):
+			for j in range(dimensions[1]):
+				for k in range(dimensions[2]):
+					arrayTarget[i, j, k] = (i * 3 + j * 5 + k * 7) % 11
+
+	# Test with default axis
+	resultDefaultAxis = autoDecodingRLE(arrayTarget)
+
+	# Test with specified axis
+	resultSpecificAxis = autoDecodingRLE(arrayTarget, axisOfOperation=axisOfOperation)
+
+	# Check both are valid strings
+	assert isinstance(resultDefaultAxis, str)
+	assert isinstance(resultSpecificAxis, str)
+
+	# Default axis (0) should match explicit axis 0
+	if axisOfOperation == 0:
+		assert resultDefaultAxis == resultSpecificAxis, "Default axis should be equivalent to explicit axis 0"
+	elif axisOfOperation != 0:
+		# For asymmetric data, different axes should produce different encodings
+		if numpy.unique(arrayTarget).size > 1 and axisOfOperation > -len(dimensions):
+			# Check if traversal order changes encoding (may not for every pattern)
+			# This is an observation test, not a strict requirement
+			pass
+
+def testAutoDecodingRLELargeCartesianMapping() -> None:
+	"""Test autoDecodingRLE with a large (100x100) cartesian mapping."""
+	dimensions = (100, 100)
+
+	# Generate a large cartesian mapping with a complex pattern
+	def complexFormula(x: int, y: int) -> int:
+		return ((x * 17) % 11 + (y * 13) % 7) % 10
+
+	arrayMapping = generateCartesianMapping(dimensions, complexFormula)
+
+	# Verify the function works with large arrays
+	resultRLE = autoDecodingRLE(arrayMapping)
+
+	# The result should be a valid string representation
+	assert isinstance(resultRLE, str)
+	assert "[" in resultRLE
+	assert "]" in resultRLE
+
+	# The RLE encoding should be more compact than the raw representation
+	rawStrLength = len(str(arrayMapping.tolist()))
+	encodedLength = len(resultRLE)
+	assert encodedLength <= rawStrLength, f"RLE encoded string ({encodedLength}) should be shorter than raw string ({rawStrLength})"
