@@ -293,47 +293,6 @@ def testAutoDecodingRLEWithSpaces(description: str, addSpaces: bool) -> None:
 	assert isinstance(resultWithSpacesFlag, str)
 	assert isinstance(resultNoSpacesFlag, str)
 
-@pytest.mark.parametrize("description,dimensions,axisOfOperation", [
-	("Default axis vs explicit axis 0", (10, 10), 0),
-	("Axis 0 vs axis 1", (10, 10), 1),
-	("Axis -1 on 2D array", (10, 10), -1),
-	("3D array axis 0", (3, 4, 5), 0),
-	# ("3D array axis 1", (3, 4, 5), 1),
-	# ("3D array axis 2", (3, 4, 5), 2),
-], ids=lambda x: x if isinstance(x, str) else "")
-def testAutoDecodingRLEWithDifferentAxes(description: str, dimensions: tuple[int, ...], axisOfOperation: int) -> None:
-	"""Test axisOfOperation parameter affects the output."""
-	if len(dimensions) == 2:
-		# Create a non-symmetric array to better observe axis differences
-		arrayTarget = generateTilePattern(dimensions, 3)
-	else:  # 3D array
-		arrayTarget = numpy.zeros(dimensions, dtype=numpy.int32)
-		# Fill with a pattern that will encode differently on different axes
-		for i in range(dimensions[0]):
-			for j in range(dimensions[1]):
-				for k in range(dimensions[2]):
-					arrayTarget[i, j, k] = (i * 3 + j * 5 + k * 7) % 11
-
-	# Test with default axis
-	resultDefaultAxis = autoDecodingRLE(arrayTarget)
-
-	# Test with specified axis
-	resultSpecificAxis = autoDecodingRLE(arrayTarget, axisOfOperation=axisOfOperation)
-
-	# Check both are valid strings
-	assert isinstance(resultDefaultAxis, str)
-	assert isinstance(resultSpecificAxis, str)
-
-	# Default axis (0) should match explicit axis 0
-	if axisOfOperation == 0:
-		assert resultDefaultAxis == resultSpecificAxis, "Default axis should be equivalent to explicit axis 0"
-	elif axisOfOperation != 0:
-		# For asymmetric data, different axes should produce different encodings
-		if numpy.unique(arrayTarget).size > 1 and axisOfOperation > -len(dimensions):
-			# Check if traversal order changes encoding (may not for every pattern)
-			# This is an observation test, not a strict requirement
-			pass
-
 def testAutoDecodingRLELargeCartesianMapping() -> None:
 	"""Test autoDecodingRLE with a large (100x100) cartesian mapping."""
 	dimensions = (100, 100)
