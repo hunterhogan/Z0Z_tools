@@ -1,6 +1,6 @@
 from collections.abc import Callable
 from typing import ParamSpec, TypeVar
-from tests.conftest import PytestFor_defineConcurrencyLimit, PytestFor_intInnit, PytestFor_oopsieKwargsie
+from Z0Z_tools import PytestFor_defineConcurrencyLimit, PytestFor_intInnit, PytestFor_oopsieKwargsie
 import pytest
 
 parameters = ParamSpec('parameters')

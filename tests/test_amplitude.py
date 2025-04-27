@@ -1,5 +1,5 @@
-from Z0Z_tools.amplitude import normalizeWaveform, normalizeArrayWaveforms
-from Z0Z_tools.theTypes import Waveform, ArrayWaveforms
+from Z0Z_tools import normalizeWaveform, normalizeArrayWaveforms
+from Z0Z_tools import Waveform, ArrayWaveforms
 from tests.conftest import sampleData, rtolDEFAULT, amplitudeNorm
 import numpy
 import pytest

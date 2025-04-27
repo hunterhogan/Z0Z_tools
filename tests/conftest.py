@@ -2,8 +2,8 @@ from collections.abc import Callable, Generator
 from tests.conftestCoping import sampleData, array44100_ch2_sec5_Sine, listPathFilenamesArrayWaveforms
 from numpy.typing import NDArray
 from typing import Any, Final
-from Z0Z_tools import *  # noqa: F403
-from Z0Z_tools.pytestForYourUse import *  # noqa: F403
+# from Z0Z_tools import *  # noqa: F403
+# from Z0Z_tools.pytestForYourUse import *  # noqa: F403
 import numpy
 import pandas
 import pathlib

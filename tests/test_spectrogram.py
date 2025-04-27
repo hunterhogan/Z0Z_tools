@@ -1,6 +1,6 @@
 """test_waveform or test_spectrogram? if a spectrogram is involved at any point, then test_spectrogram."""
 from typing import Any
-from Z0Z_tools.ioAudio import readAudioFile, writeWAV, stft, waveformSpectrogramWaveform, loadSpectrograms
+from Z0Z_tools import readAudioFile, writeWAV, stft, waveformSpectrogramWaveform, loadSpectrograms
 import pytest
 import numpy
 from numpy.typing import NDArray

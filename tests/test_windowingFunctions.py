@@ -4,7 +4,7 @@ from numpy.typing import NDArray
 import numpy
 import pytest
 import scipy.signal.windows as SciPy
-from Z0Z_tools.windowingFunctions import (
+from Z0Z_tools import (
 	cosineWings, equalPower, halfsine, tukey
 )
 

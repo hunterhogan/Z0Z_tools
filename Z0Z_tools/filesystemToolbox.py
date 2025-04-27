@@ -5,11 +5,11 @@ and computing a canonical relative path from one location to another.
 
 from collections.abc import Iterable
 from os import PathLike
+from pathlib import Path, PurePath
 from typing import Any
 import io
-import pathlib
 
-def dataTabularTOpathFilenameDelimited(pathFilename: str | PathLike[Any], tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
+def dataTabularTOpathFilenameDelimited(pathFilename: PathLike[Any] | PurePath, tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
 	"""
 	Writes tabular data to a delimited file. This is a low-quality function: you'd probably be better off with something else.
 
@@ -33,7 +33,7 @@ def dataTabularTOpathFilenameDelimited(pathFilename: str | PathLike[Any], tableR
 		for row in tableRows:
 			writeStream.write(delimiterOutput.join(map(str, row)) + '\n')
 
-def findRelativePath(pathSource: str | PathLike[Any], pathDestination: str | PathLike[Any]) -> str:
+def findRelativePath(pathSource: PathLike[Any] | PurePath, pathDestination: PathLike[Any] | PurePath) -> str:
 	"""
 	Find a relative path from source to destination, even if they're on different branches.
 
@@ -44,14 +44,14 @@ def findRelativePath(pathSource: str | PathLike[Any], pathDestination: str | Pat
 	Returns:
 		stringRelativePath: A string representation of the relative path from source to destination
 	"""
-	pathSource = pathlib.Path(pathSource).resolve()
-	pathDestination = pathlib.Path(pathDestination).resolve()
+	pathSource = Path(pathSource).resolve()
+	pathDestination = Path(pathDestination).resolve()
 
 	if pathSource.is_file() or not pathSource.suffix == '':
 		pathSource = pathSource.parent
 
 	# Split destination into parent path and filename if it's a file
-	pathDestinationParent: pathlib.Path = pathDestination.parent if pathDestination.is_file() or not pathDestination.suffix == '' else pathDestination
+	pathDestinationParent: Path = pathDestination.parent if pathDestination.is_file() or not pathDestination.suffix == '' else pathDestination
 	filenameFinal: str = pathDestination.name if pathDestination.is_file() or not pathDestination.suffix == '' else ''
 
 	# Split both paths into parts
@@ -93,6 +93,11 @@ def makeDirsSafely(pathFilename: Any) -> None:
 	"""
 	if not isinstance(pathFilename, io.IOBase):
 		try:
-			pathlib.Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
+			Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
 		except OSError:
 			pass
+
+def writeStringToHere(this: str, pathFilename: PathLike[Any] | PurePath) -> None:
+	pathFilename = Path(pathFilename)
+	makeDirsSafely(pathFilename)
+	pathFilename.write_text(str(this))
