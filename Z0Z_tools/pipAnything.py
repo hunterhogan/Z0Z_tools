@@ -10,7 +10,7 @@ Usage:
 	pip will attempt to install requirements.txt, but don't rely on dependencies being installed.
 """
 
-from Z0Z_tools.Z0Z_io import findRelativePath
+from Z0Z_tools.filesystemToolbox import findRelativePath
 from packaging.requirements import Requirement
 import os
 import pathlib
@@ -44,7 +44,7 @@ def makeListRequirementsFromRequirementsFile(*pathFilenames: str | os.PathLike[s
 					try:
 						Requirement(sanitizedLine)
 						listRequirements.append(sanitizedLine)
-					except:
+					except Exception:
 						pass
 			finally:
 				if readStream:

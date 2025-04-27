@@ -10,8 +10,19 @@ from os import PathLike
 from scipy.signal import ShortTimeFFT
 from tqdm.auto import tqdm
 from typing import Any, BinaryIO, Literal, cast, overload
-from Z0Z_tools import halfsine, makeDirsSafely
-from Z0Z_tools import Waveform, ArrayWaveforms, Spectrogram, ArraySpectrograms, ParametersSTFT, ParametersShortTimeFFT, ParametersUniversal, WaveformMetadata, WindowingFunction
+from Z0Z_tools import (
+	ArraySpectrograms,
+	ArrayWaveforms,
+	halfsine,
+	makeDirsSafely,
+	ParametersShortTimeFFT,
+	ParametersSTFT,
+	ParametersUniversal,
+	Spectrogram,
+	Waveform,
+	WaveformMetadata,
+	WindowingFunction,
+)
 import io
 import numpy
 import resampy
@@ -21,7 +32,8 @@ import soundfile
 if __name__ == '__main__':
 	multiprocessing_set_start_method('spawn')
 
-# TODO how should I handle these?
+# Design coordinated, user-overridable universal parameter defaults for audio functions
+# https://github.com/hunterhogan/Z0Z_tools/issues/5
 universalDtypeWaveform = float32
 universalDtypeSpectrogram = complex64
 parametersShortTimeFFTUniversal: ParametersShortTimeFFT = {'fft_mode': 'onesided'}
@@ -37,8 +49,6 @@ parametersDEFAULT = ParametersUniversal (
 	windowingFunction=windowingFunctionCallableDEFAULT(lengthWindowingFunctionDEFAULT),
 )
 
-# No, I don't know how to implement this, but I might learn how to do it later.
-# If you know how, you can help. :D
 setParametersUniversal = None
 
 windowingFunctionCallableUniversal = windowingFunctionCallableDEFAULT
@@ -349,22 +359,22 @@ def spectrogramToWAV(spectrogram: Spectrogram, pathFilename: str | PathLike[Any]
 
 def waveformSpectrogramWaveform(callableNeedsSpectrogram: Callable[[Spectrogram], Spectrogram]) -> Callable[[Waveform], Waveform]:
 	"""
-	Creates a function that converts a waveform to a spectrogram, applies a transformation on the spectrogram,
-	and then converts the transformed spectrogram back to a waveform.
+	Creates a function that converts a waveform to a spectrogram, applies a transformation on the spectrogram, and then
+	converts the transformed spectrogram back to a waveform.
 
-	This is a higher-order function that takes a function operating on spectrograms and returns a function
-	that operates on waveforms by applying the Short-Time Fourier Transform (STFT) and its inverse.
+	This is a higher-order function that takes a function operating on spectrograms and returns a function that operates
+	on waveforms by applying the Short-Time Fourier Transform (STFT) and its inverse.
 
 	Parameters
 	----------
-	callableNeedsSpectrogram : Callable[[Spectrogram], Spectrogram]
+	callableNeedsSpectrogram
 		A function that takes a spectrogram and returns a transformed spectrogram.
 
 	Returns
 	-------
 	Callable[[Waveform], Waveform]
-		A function that takes a waveform, transforms it into a spectrogram,
-		applies the provided spectrogram transformation, and converts it back to a waveform.
+		A function that takes a waveform, transforms it into a spectrogram, applies the provided spectrogram
+		transformation, and converts it back to a waveform.
 
 	Notes
 	-----

@@ -147,7 +147,7 @@ from Z0Z_tools.autoRevert import moveToAxisOfOperation as moveToAxisOfOperation
 
 from Z0Z_tools.windowingFunctions import halfsine as halfsine, tukey as tukey, cosineWings as cosineWings, equalPower as equalPower
 
-from Z0Z_tools.Z0Z_io import (
+from Z0Z_tools.filesystemToolbox import (
 	dataTabularTOpathFilenameDelimited as dataTabularTOpathFilenameDelimited,
 	findRelativePath as findRelativePath,
 	makeDirsSafely as makeDirsSafely,
