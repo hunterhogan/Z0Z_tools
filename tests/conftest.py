@@ -2,8 +2,6 @@ from collections.abc import Callable, Generator
 from tests.conftestCoping import sampleData, array44100_ch2_sec5_Sine, listPathFilenamesArrayWaveforms
 from numpy.typing import NDArray
 from typing import Any, Final
-# from Z0Z_tools import *  # noqa: F403
-# from Z0Z_tools.pytestForYourUse import *  # noqa: F403
 import numpy
 import pandas
 import pathlib
@@ -134,7 +132,7 @@ def uniformTestFailureMessage(expected: Any, actual: Any, functionName: str, *ar
 
 def standardizedEqualTo(expected: Any, functionTarget: Callable[..., Any], *arguments: Any, **keywordArguments: Any) -> None:
 	"""Template for most tests to compare the actual outcome with the expected outcome, including expected errors."""
-	if type(expected) == type[Exception]:
+	if type(expected) == type[Exception]:  # noqa: E721
 		messageExpected: str = expected.__name__
 	else:
 		messageExpected = expected

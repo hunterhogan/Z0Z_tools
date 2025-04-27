@@ -1,16 +1,18 @@
 from pathlib import Path
-from tests.conftest import standardizedEqualTo
+from typing import Any
+from tests.conftest import standardizedEqualTo, uniformTestFailureMessage
 from Z0Z_tools import dataTabularTOpathFilenameDelimited, findRelativePath, makeDirsSafely, writeStringToHere
 import pandas
 import pathlib
 import pytest
+import io
 
 def testDataTabularTOpathFilenameDelimitedBasic(dataframeSample: pandas.DataFrame, pathTmpTesting: pathlib.Path) -> None:
 	"""Test basic functionality with DataFrame data."""
 	pathOutput = pathTmpTesting / "output.csv"
 
 	# Convert DataFrame to rows and columns
-	tableRows = dataframeSample.values.tolist()
+	tableRows: list[list[Any]] = dataframeSample.values.tolist()
 	tableColumns: list[str] = dataframeSample.columns.tolist()
 
 	dataTabularTOpathFilenameDelimited(
@@ -20,7 +22,7 @@ def testDataTabularTOpathFilenameDelimitedBasic(dataframeSample: pandas.DataFram
 		delimiterOutput=','
 	)
 
-	assert pathOutput.exists()
+	assert pathOutput.exists(), uniformTestFailureMessage(True, pathOutput.exists(), "dataTabularTOpathFilenameDelimited", dataframeSample, pathOutput)
 	dfRead: pandas.DataFrame = pandas.read_csv(pathOutput)
 	pandas.testing.assert_frame_equal(dataframeSample, dfRead)
 
@@ -40,8 +42,8 @@ def testDataTabularTOpathFilenameDelimitedDelimiters(dataframeSample: pandas.Dat
 		delimiterOutput=delimiterOutput
 	)
 
-	assert pathOutput.exists()
-	dfRead = pandas.read_csv(pathOutput, sep=delimiterOutput)
+	assert pathOutput.exists(), uniformTestFailureMessage(True, pathOutput.exists(), "dataTabularTOpathFilenameDelimited", dataframeSample, pathOutput)
+	dfRead: pandas.DataFrame = pandas.read_csv(pathOutput, sep=delimiterOutput)
 	pandas.testing.assert_frame_equal(dataframeSample, dfRead)
 
 def testDataTabularTOpathFilenameDelimitedNoHeaders(dataframeSample: pandas.DataFrame, pathTmpTesting: pathlib.Path) -> None:
@@ -55,10 +57,10 @@ def testDataTabularTOpathFilenameDelimitedNoHeaders(dataframeSample: pandas.Data
 		delimiterOutput=','
 	)
 
-	assert pathOutput.exists()
+	assert pathOutput.exists(), uniformTestFailureMessage(True, pathOutput.exists(), "dataTabularTOpathFilenameDelimited", dataframeSample, pathOutput)
 	with open(pathOutput) as readStream:
 		lines: list[str] = readStream.readlines()
-		assert len(lines) == len(dataframeSample)
+		assert len(dataframeSample) == len(lines), uniformTestFailureMessage(len(dataframeSample), len(lines), "dataTabularTOpathFilenameDelimitedNoHeaders", dataframeSample, pathOutput)
 
 def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: pathlib.Path) -> None:
 	"""Test writing empty data."""
@@ -71,11 +73,11 @@ def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: pathlib.Path
 		delimiterOutput=','
 	)
 
-	assert pathOutput.exists()
+	assert pathOutput.exists(), uniformTestFailureMessage(True, pathOutput.exists(), "dataTabularTOpathFilenameDelimited", [], pathOutput)
 	with open(pathOutput) as readStream:
 		lines: list[str] = readStream.readlines()
-		assert len(lines) == 1
-		assert lines[0].strip() == 'col1,col2'
+		assert len(lines) == 1, uniformTestFailureMessage(1, len(lines), "dataTabularTOpathFilenameDelimitedEmptyData", pathOutput)
+		assert lines[0].strip() == 'col1,col2', uniformTestFailureMessage('col1,col2', lines[0].strip(), "dataTabularTOpathFilenameDelimitedEmptyData", pathOutput)
 
 @pytest.mark.parametrize("pathStart,pathTarget,expectedResult", [
 	("dir1", "dir2", "../dir2"),
@@ -83,17 +85,13 @@ def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: pathlib.Path
 	("dir1", "dir1/subdir1", "subdir1"),
 	("dir3/subdir3", "dir1/file1.txt", "../../dir1/file1.txt"),
 ])
-def testFindRelativePath(setupDirectoryStructure: pathlib.Path
-						, pathStart: str
-						, pathTarget: str
-						, expectedResult: str
-						) -> None:
+def testFindRelativePath(setupDirectoryStructure: pathlib.Path, pathStart: str, pathTarget: str, expectedResult: str) -> None:
 	"""Test findRelativePath with various path combinations."""
 	pathStartFull: Path = setupDirectoryStructure / pathStart
 	pathTargetFull: Path = setupDirectoryStructure / pathTarget
 
 	resultPath: str = findRelativePath(pathStartFull, pathTargetFull)
-	assert resultPath == expectedResult
+	assert resultPath == expectedResult, uniformTestFailureMessage(expectedResult, resultPath, "findRelativePath", pathStartFull, pathTargetFull)
 
 def testFindRelativePathWithNonexistentPaths(pathTmpTesting: pathlib.Path) -> None:
 	"""Test findRelativePath with paths that don't exist."""
@@ -101,7 +99,7 @@ def testFindRelativePathWithNonexistentPaths(pathTmpTesting: pathlib.Path) -> No
 	pathTarget: Path = pathTmpTesting / "nonexistent2"
 
 	resultPath: str = findRelativePath(pathStart, pathTarget)
-	assert resultPath == "../nonexistent2"
+	assert resultPath == "../nonexistent2", uniformTestFailureMessage("../nonexistent2", resultPath, "findRelativePath", pathStart, pathTarget)
 
 def testFindRelativePathWithSamePath(pathTmpTesting: pathlib.Path) -> None:
 	"""Test findRelativePath when start and target are the same."""
@@ -109,16 +107,21 @@ def testFindRelativePathWithSamePath(pathTmpTesting: pathlib.Path) -> None:
 	pathTest.mkdir()
 
 	resultPath: str = findRelativePath(pathTest, pathTest)
-	assert resultPath == "."
+	assert resultPath == ".", uniformTestFailureMessage(".", resultPath, "findRelativePath", pathTest, pathTest)
 
-# @pytest.mark.parametrize("pathStartStr,pathTargetStr", [
-#	 ("../outside", "dir1"),
-#	 ("dir1", "../outside"),
-# ])
-# def testFindRelativePathOutsideBase(setupDirectoryStructure, pathStartStr, pathTargetStr):
-#	 """Test findRelativePath with paths outside the base directory."""
-#	 pathStart = setupDirectoryStructure / pathStartStr
-#	 pathTarget = setupDirectoryStructure / pathTargetStr
+def testMakeDirsSafelyCreatesParentDirectories(pathTmpTesting: pathlib.Path) -> None:
+    nestedDirectory = pathTmpTesting / "sub1" / "sub2"
+    filePath = nestedDirectory / "dummy.txt"
+    makeDirsSafely(filePath)
+    assert nestedDirectory.exists() and nestedDirectory.is_dir(), uniformTestFailureMessage(True, nestedDirectory.exists() and nestedDirectory.is_dir(), "testMakeDirsSafelyCreatesParentDirectories", filePath)
 
-#	 with pytest.raises(ValueError):
-#		 findRelativePath(pathStart, pathTarget)
+def testMakeDirsSafelyWithIOBaseDoesNotRaise() -> None:
+    memoryStream = io.StringIO()
+    makeDirsSafely(memoryStream)
+
+def testWriteStringToHereCreatesFileAndWritesContent(pathTmpTesting: pathlib.Path) -> None:
+    nestedDirectory = pathTmpTesting / "a" / "b"
+    filePath = nestedDirectory / "test.txt"
+    writeStringToHere("hello world", filePath)
+    assert filePath.exists(), uniformTestFailureMessage(True, filePath.exists(), "testWriteStringToHereCreatesFileAndWritesContent", filePath)
+    assert filePath.read_text() == "hello world", uniformTestFailureMessage("hello world", filePath.read_text(), "testWriteStringToHereCreatesFileAndWritesContent", filePath)
