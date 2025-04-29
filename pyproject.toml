@@ -22,10 +22,19 @@ classifiers = [
 	"Programming Language :: Python :: 3.12",
 	"Programming Language :: Python :: 3.13",
 	"Topic :: Multimedia :: Sound/Audio :: Analysis",
+	"Topic :: Multimedia :: Sound/Audio :: Conversion",
 	"Topic :: Multimedia :: Sound/Audio :: Editors",
 	"Topic :: Multimedia :: Sound/Audio",
 	"Topic :: Scientific/Engineering :: Artificial Intelligence",
+	"Topic :: Scientific/Engineering :: Information Analysis",
+	"Topic :: Scientific/Engineering :: Mathematics",
+	"Topic :: Scientific/Engineering :: Physics",
+	"Topic :: Scientific/Engineering",
+	"Topic :: Software Development :: Libraries :: Python Modules",
+	"Topic :: Software Development :: Testing :: Unit",
 	"Topic :: Software Development",
+	"Topic :: System :: Filesystems",
+	"Topic :: System :: Installation/Setup",
 	"Topic :: Text Processing",
 	"Topic :: Utilities",
 	"Typing :: Typed",]
@@ -54,11 +63,12 @@ optional-dependencies = { PyTorch = [
 	"pytest",
 	"pyupgrade",
 	"scipy-stubs",
-	"torch",] }
+	"torch",
+	"trove_classifiers",] }
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
 urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Repository = "https://github.com/hunterhogan/Z0Z_tools.git", Issues= "https://github.com/hunterhogan/Z0Z_tools/issues" }
-version = "0.10.12"
+version = "0.10.13"
 
 [tool.coverage]
 report = { exclude_lines = [

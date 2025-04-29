@@ -151,6 +151,8 @@ from Z0Z_tools.windowingFunctions import halfsine as halfsine, tukey as tukey, c
 from Z0Z_tools.filesystemToolkit import (
 	dataTabularTOpathFilenameDelimited as dataTabularTOpathFilenameDelimited,
 	findRelativePath as findRelativePath,
+	importLogicalPath2Callable as importLogicalPath2Callable,
+	importPathFilename2Callable as importPathFilename2Callable,
 	makeDirsSafely as makeDirsSafely,
 	writeStringToHere as writeStringToHere,
 )
@@ -166,7 +168,7 @@ from Z0Z_tools.ioAudio import (
 	stft as stft,
 	waveformSpectrogramWaveform as waveformSpectrogramWaveform,
 	writeWAV as writeWAV,
-	)
+)
 
 from Z0Z_tools.parseParameters import (
 	defineConcurrencyLimit as defineConcurrencyLimit,
@@ -182,7 +184,7 @@ try:
 		PytestFor_defineConcurrencyLimit as PytestFor_defineConcurrencyLimit,
 		PytestFor_intInnit as PytestFor_intInnit,
 		PytestFor_oopsieKwargsie as PytestFor_oopsieKwargsie,
-		)
+	)
 except (ImportError, ModuleNotFoundError):
 	pass
 
