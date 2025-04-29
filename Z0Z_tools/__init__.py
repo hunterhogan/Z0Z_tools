@@ -135,6 +135,7 @@ from Z0Z_tools.theTypes import (
 	ParametersShortTimeFFT,
 	ParametersSTFT,
 	ParametersUniversal,
+	str_nameDOTname as str_nameDOTname,
 	Spectrogram as Spectrogram,
 	Waveform as Waveform,
 	WaveformMetadata,
@@ -147,7 +148,7 @@ from Z0Z_tools.autoRevert import moveToAxisOfOperation as moveToAxisOfOperation
 
 from Z0Z_tools.windowingFunctions import halfsine as halfsine, tukey as tukey, cosineWings as cosineWings, equalPower as equalPower
 
-from Z0Z_tools.filesystemToolbox import (
+from Z0Z_tools.filesystemToolkit import (
 	dataTabularTOpathFilenameDelimited as dataTabularTOpathFilenameDelimited,
 	findRelativePath as findRelativePath,
 	makeDirsSafely as makeDirsSafely,

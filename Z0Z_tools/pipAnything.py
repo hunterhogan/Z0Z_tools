@@ -10,7 +10,7 @@ Usage:
 	pip will attempt to install requirements.txt, but don't rely on dependencies being installed.
 """
 
-from Z0Z_tools.filesystemToolbox import findRelativePath
+from Z0Z_tools.filesystemToolkit import findRelativePath
 from packaging.requirements import Requirement
 import os
 import pathlib

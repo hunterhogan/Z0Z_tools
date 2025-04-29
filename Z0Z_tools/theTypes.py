@@ -38,3 +38,4 @@ class WaveformMetadata(TypedDict):
 	samplesTrailing: int
 
 NormalizationReverter: TypeAlias = Callable[[Waveform], Waveform]
+str_nameDOTname: TypeAlias = str

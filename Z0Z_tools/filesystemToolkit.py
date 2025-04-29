@@ -3,10 +3,14 @@ Provides basic file I/O utilities such as writing tabular data to a file
 and computing a canonical relative path from one location to another.
 """
 
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from os import PathLike
 from pathlib import Path, PurePath
+from types import ModuleType
 from typing import Any
+from Z0Z_tools import str_nameDOTname
+import importlib
+import importlib.util
 import io
 
 def dataTabularTOpathFilenameDelimited(pathFilename: PathLike[Any] | PurePath, tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
@@ -74,6 +78,72 @@ def findRelativePath(pathSource: PathLike[Any] | PurePath, pathDestination: Path
 		partsDown.append(filenameFinal)
 
 	return '/'.join(partsUp + partsDown) if partsUp + partsDown else '.'
+
+def importLogicalPath2Callable(logicalPathModule: str_nameDOTname, identifier: str, packageIdentifierIfRelative: str | None = None) -> Callable[..., Any]:
+	"""
+	Import a callable object (function or class) from a module based on its logical path.
+
+	This function imports a module using `importlib.import_module()` and then retrieves a specific attribute (function,
+	class, or other object) from that module.
+
+	Parameters
+	----------
+	logicalPathModule
+		The logical path to the module, using dot notation (e.g., 'package.subpackage.module').
+	identifier
+		The name of the callable object to retrieve from the module.
+	packageIdentifierIfRelative : None
+		The package name to use as the anchor point if `logicalPathModule` is a relative import. If None, absolute
+		import is assumed.
+
+	Returns
+	-------
+	Callable[..., Any]
+		The callable object (function, class, etc.) retrieved from the module.
+	"""
+	# TODO The return type is not accurate.
+	moduleImported: ModuleType = importlib.import_module(logicalPathModule, packageIdentifierIfRelative)
+	# TODO I want a semantic way, not `getattr`, but there might not be a semantic way.
+	return getattr(moduleImported, identifier)
+
+def importPathFilename2Callable(pathFilename: PathLike[Any] | PurePath, identifier: str, moduleIdentifier: str | None = None) -> Callable[..., Any]:
+	"""
+	Load a callable (function, class, etc.) from a Python file.
+
+	This function imports a specified Python file as a module, extracts a callable object from it by name, and returns
+	that callable.
+
+	Parameters
+	----------
+	pathFilename
+		Path to the Python file to import.
+	identifier
+		Name of the callable to extract from the imported module.
+	moduleIdentifier
+		Name to use for the imported module. If None, the filename stem is used.
+
+	Returns
+	-------
+	Callable[..., Any]
+		The callable object extracted from the imported module.
+
+	Raises
+	------
+	ImportError
+		If the file cannot be imported or the importlib specification is invalid.
+	AttributeError
+		If the identifier does not exist in the imported module.
+	"""
+	# TODO The return type is not accurate.
+	pathFilename = Path(pathFilename)
+
+	importlibSpecification = importlib.util.spec_from_file_location(moduleIdentifier or pathFilename.stem, pathFilename)
+	if importlibSpecification is None or importlibSpecification.loader is None: raise ImportError(f"I received\n\t`{pathFilename = }`,\n\t`{identifier = }`, and\n\t`{moduleIdentifier = }`.\n\tAfter loading, \n\t`importlibSpecification` {'is `None`' if importlibSpecification is None else 'has a value'} and\n\t`importlibSpecification.loader` is unknown.")
+
+	moduleImported_jk_hahaha: ModuleType = importlib.util.module_from_spec(importlibSpecification)
+	importlibSpecification.loader.exec_module(moduleImported_jk_hahaha)
+	# TODO I want a semantic way, not `getattr`, but there might not be a semantic way.
+	return getattr(moduleImported_jk_hahaha, identifier)
 
 def makeDirsSafely(pathFilename: Any) -> None:
 	"""
