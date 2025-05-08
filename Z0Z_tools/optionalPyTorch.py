@@ -1,11 +1,12 @@
 """If `torch` is installed, this module creates tensor versions of the windowing functions."""
 from collections.abc import Callable
-from numpy import ndarray, dtype, float64
 from torch.types import Device
-from typing import Any, ParamSpec, Protocol, TypeAlias, TypeVar, cast
+from typing import Any, ParamSpec, Protocol, TypeVar, cast
 import sys
 import torch
 from Z0Z_tools import WindowingFunction
+
+# TODO use astToolkit to generate normal FunctionDef from the ndarray versions
 
 callableTargetParameters = ParamSpec('callableTargetParameters')
 callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., WindowingFunction])
@@ -16,7 +17,6 @@ class callableAsTensor(Protocol[callableTargetParameters]):
 	__module__: str
 	def __call__(self, device: Device = ..., *args: callableTargetParameters.args, **kwargs: callableTargetParameters.kwargs) -> torch.Tensor: ...
 
-# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 def def_asTensor(callableTarget: Callable[callableTargetParameters, WindowingFunction]) -> Callable[callableTargetParameters, WindowingFunction]:
 	"""
 	Decorator that creates a tensor version of a numpy array-returning function.
@@ -32,7 +32,7 @@ def def_asTensor(callableTarget: Callable[callableTargetParameters, WindowingFun
 	"""
 	def convertToTensor(*args: Any, device: Device = torch.device(device='cpu'), **kwargs: Any) -> torch.Tensor:
 		arrayTarget = callableTarget(*args, **kwargs)
-		return torch.tensor(data=arrayTarget, dtype=torch.float32, device=device)
+		return torch.tensor(data=arrayTarget, dtype=torch.float32, device=device) # type: ignore
 
 	# Get the module where the decorated function is defined
 	moduleTarget = sys.modules[callableTarget.__module__]

@@ -11,11 +11,11 @@ def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 	"""
 	Calculate the length of the taper section for windowing functions.
 
-	Parameters
+	Parameters:
 		lengthWindow: Total length of the windowing function.
 		ratioTaper (0.1): Ratio of taper length to windowing-function length; must be between 0 and 1, inclusive.
 
-	Returns
+	Returns:
 		lengthTaper: Number of samples in one taper section.
 	"""
 	if ratioTaper is None:
@@ -23,77 +23,75 @@ def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 	elif 0 <= ratioTaper <= 1:
 		lengthTaper = int(lengthWindow * ratioTaper / 2)
 	else:
-		raise ValueError(f"I received {ratioTaper} for parameter `ratioTaper`. If set, `ratioTaper` must be between 0 and 1, inclusive.")
+		raise ValueError(f"I received `{ratioTaper = }`. If set, `ratioTaper` must be between 0 and 1, inclusive.")
 	return lengthTaper
 
-# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
 def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> WindowingFunction:
 	"""
 	Generate a cosine-tapered windowing function with flat center and tapered ends.
 
-	Parameters
+	Parameters:
 		lengthWindow: Total length of the windowing function.
 		ratioTaper (0.1): Ratio of taper length to windowing-function length; must be between 0 and 1 inclusive.
 
-	Returns
+	Returns:
 		windowingFunction: Array of windowing coefficients with cosine tapers.
 	"""
 	lengthTaper = _getLengthTaper(lengthWindow, ratioTaper)
 
 	windowingFunction = numpy.ones(shape=lengthWindow)
 	if lengthTaper > 0:
-		windowingFunction[0:lengthTaper] = 1 - cos(numpy.linspace(start=0, stop=pi / 2, num=lengthTaper))
-		windowingFunction[-lengthTaper:None] = 1 + cos(numpy.linspace(start=pi / 2, stop=pi, num=lengthTaper))
+		taper = 1 - cos(numpy.linspace(start=0, stop=pi / 2, num=lengthTaper))
+		windowingFunction[0:lengthTaper] = taper
+		windowingFunction[-lengthTaper:None] = taper[::-1]
 	return windowingFunction
 
-# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
 def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> WindowingFunction:
 	"""
 	Generate a windowing function used for an equal power crossfade.
 
-	Parameters
+	Parameters:
 		lengthWindow: Total length of the windowing function.
 		ratioTaper (0.1): Ratio of taper length to windowing-function length; must be between 0 and 1 inclusive.
 
-	Returns
+	Returns:
 		windowingFunction: Array of windowing coefficients with tapers.
 	"""
 	lengthTaper = _getLengthTaper(lengthWindow, ratioTaper)
 
 	windowingFunction = numpy.ones(shape=lengthWindow)
 	if lengthTaper > 0:
-		windowingFunction[0:lengthTaper] = numpy.sqrt(numpy.linspace(start=0, stop=1, num=lengthTaper))
-		windowingFunction[-lengthTaper:None] = numpy.sqrt(numpy.linspace(start=1, stop=0, num=lengthTaper))
-	return numpy.absolute(windowingFunction)
+		taper = numpy.absolute(numpy.sqrt(numpy.linspace(start=0, stop=1, num=lengthTaper)))
+		windowingFunction[0:lengthTaper] = taper
+		windowingFunction[-lengthTaper:None] = taper[::-1]
+	return windowingFunction
 
-# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
 def halfsine(lengthWindow: int) -> WindowingFunction:
 	"""
 	Generate a half-sine windowing function.
 
-	Parameters
+	Parameters:
 		lengthWindow: Total length of the windowing function.
 
-	Returns
+	Returns:
 		windowingFunction: Array of windowing coefficients following half-sine shape.
 	"""
 	return sin(pi * (numpy.arange(lengthWindow) + 0.5) / lengthWindow)
 
-# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
 @def_asTensor
 def tukey(lengthWindow: int, ratioTaper: float | None = None, **keywordArguments: float) -> WindowingFunction:
 	"""
 	Create a Tukey windowing-function.
 
-	Parameters
+	Parameters:
 		lengthWindow: Total length of the windowing function.
 		ratioTaper (0.1): Ratio of taper length to windowing-function length; must be between 0 and 1 inclusive.
 		**keywordArguments: `alpha: float | None = None` to be nice and for the Tevye cases: "Tradition!"
 
-	Returns
+	Returns:
 		windowingFunction: Array of Tukey windowing function coefficients.
 	"""
 	# Do not add logic that creates `ValueError` for invalid `ratioTaper` values because
