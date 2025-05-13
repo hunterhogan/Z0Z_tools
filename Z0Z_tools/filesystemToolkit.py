@@ -170,4 +170,4 @@ def makeDirsSafely(pathFilename: Any) -> None:
 def writeStringToHere(this: str, pathFilename: PathLike[Any] | PurePath) -> None:
 	pathFilename = Path(pathFilename)
 	makeDirsSafely(pathFilename)
-	pathFilename.write_text(str(this))
+	pathFilename.write_text(str(this), encoding='utf-8')
