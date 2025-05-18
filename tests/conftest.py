@@ -72,9 +72,9 @@ def pathFilenameTmpTesting(request: pytest.FixtureRequest) -> pathlib.Path:
 @pytest.fixture
 def mockTemporaryFiles(monkeypatch: pytest.MonkeyPatch, pathTmpTesting: pathlib.Path) -> None:
 	"""Mock all temporary filesystem operations to use pathTmpTesting."""
-	monkeypatch.setattr('tempfile.mkdtemp', lambda *a, **k: str(pathTmpTesting)) # type: ignore
+	monkeypatch.setattr('tempfile.mkdtemp', lambda *a, **k: str(pathTmpTesting))  # pyright: ignore[reportUnknownLambdaType, reportUnknownArgumentType]
 	monkeypatch.setattr('tempfile.gettempdir', lambda: str(pathTmpTesting))
-	monkeypatch.setattr('tempfile.mkstemp', lambda *a, **k: (0, str(pathTmpTesting))) # type: ignore
+	monkeypatch.setattr('tempfile.mkstemp', lambda *a, **k: (0, str(pathTmpTesting))) # pyright: ignore[reportUnknownLambdaType, reportUnknownArgumentType]
 
 # Fixtures
 @pytest.fixture

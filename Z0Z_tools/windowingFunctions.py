@@ -3,7 +3,7 @@ Generate various windowing functions used in signal processing.
 """
 
 from numpy import cos, pi, sin
-from Z0Z_tools import def_asTensor, WindowingFunction
+from Z0Z_tools import WindowingFunction
 import numpy
 import scipy.signal.windows as SciPy
 
@@ -26,7 +26,6 @@ def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 		raise ValueError(f"I received `{ratioTaper = }`. If set, `ratioTaper` must be between 0 and 1, inclusive.")
 	return lengthTaper
 
-@def_asTensor
 def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> WindowingFunction:
 	"""
 	Generate a cosine-tapered windowing function with flat center and tapered ends.
@@ -47,7 +46,6 @@ def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> Windowing
 		windowingFunction[-lengthTaper:None] = taper[::-1]
 	return windowingFunction
 
-@def_asTensor
 def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> WindowingFunction:
 	"""
 	Generate a windowing function used for an equal power crossfade.
@@ -68,7 +66,6 @@ def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> WindowingF
 		windowingFunction[-lengthTaper:None] = taper[::-1]
 	return windowingFunction
 
-@def_asTensor
 def halfsine(lengthWindow: int) -> WindowingFunction:
 	"""
 	Generate a half-sine windowing function.
@@ -79,9 +76,8 @@ def halfsine(lengthWindow: int) -> WindowingFunction:
 	Returns:
 		windowingFunction: Array of windowing coefficients following half-sine shape.
 	"""
-	return sin(pi * (numpy.arange(lengthWindow) + 0.5) / lengthWindow)
+	return sin(pi * (numpy.arange(lengthWindow) + 0.5) / lengthWindow) # pyright: ignore[reportReturnType]
 
-@def_asTensor
 def tukey(lengthWindow: int, ratioTaper: float | None = None, **keywordArguments: float) -> WindowingFunction:
 	"""
 	Create a Tukey windowing-function.
