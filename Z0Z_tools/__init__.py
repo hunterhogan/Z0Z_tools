@@ -119,14 +119,10 @@ Example:
   def test_function(nameOfTest, callablePytest):
       callablePytest()
 """
-try:
-	from Z0Z_tools.optionalPyTorch import def_asTensor
-	# `@def_asTensor` callables not recognized by Pylance https://github.com/hunterhogan/Z0Z_tools/issues/2
-	from Z0Z_tools.windowingFunctions import halfsineTensor as halfsineTensor, tukeyTensor as tukeyTensor, cosineWingsTensor as cosineWingsTensor, equalPowerTensor as equalPowerTensor # type: ignore
-except (ImportError, ModuleNotFoundError):
-	from Z0Z_tools.optionalPyTorchAlternative import def_asTensor
+from Z0Z_tools.coping import raiseIfNone as raiseIfNone
 
 from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import PAD_TYPE, FFT_MODE_TYPE
+
 from Z0Z_tools.theTypes import (
 	ArraySpectrograms as ArraySpectrograms,
 	ArrayType,
@@ -147,6 +143,15 @@ from Z0Z_tools.amplitude import normalizeWaveform as normalizeWaveform, normaliz
 from Z0Z_tools.autoRevert import moveToAxisOfOperation as moveToAxisOfOperation
 
 from Z0Z_tools.windowingFunctions import halfsine as halfsine, tukey as tukey, cosineWings as cosineWings, equalPower as equalPower
+try:
+	from Z0Z_tools.optionalPyTorch import (
+		cosineWingsTensor as cosineWingsTensor,
+		equalPowerTensor as equalPowerTensor,
+		halfsineTensor as halfsineTensor,
+		tukeyTensor as tukeyTensor,
+		)
+except (ImportError, ModuleNotFoundError):
+	pass
 
 from Z0Z_tools.filesystemToolkit import (
 	dataTabularTOpathFilenameDelimited as dataTabularTOpathFilenameDelimited,
