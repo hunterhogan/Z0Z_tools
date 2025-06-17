@@ -1,6 +1,6 @@
 """If `torch` is not installed, this module prevents errors."""
 from collections.abc import Callable
-from numpy import ndarray, dtype, float64
+from numpy import dtype, float64, ndarray
 from typing import ParamSpec, TypeVar
 
 callableTargetParameters = ParamSpec('callableTargetParameters')

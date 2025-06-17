@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from numpy import complexfloating, dtype, floating, ndarray
-from typing import Any, Literal, TypedDict, TypeAlias, TypeVar
-from Z0Z_tools import PAD_TYPE, FFT_MODE_TYPE
+from typing import Any, Literal, TypeAlias, TypedDict, TypeVar
+from Z0Z_tools import FFT_MODE_TYPE, PAD_TYPE
 
 ArrayType = TypeVar('ArrayType', bound=ndarray[Any, Any], covariant=True)
 

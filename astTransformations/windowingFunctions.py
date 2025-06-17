@@ -1,6 +1,8 @@
-from astToolkit import Be, IngredientsModule, NodeTourist, Make, parseLogicalPath2astModule, Then
+from astToolkit import Be, IngredientsModule, Make, NodeTourist, parseLogicalPath2astModule, Then
 from astToolkit.transformationTools import makeDictionaryFunctionDef, write_astModule
+from collections.abc import Callable
 from pathlib import Path
+from typing import TypeIs
 from Z0Z_tools import raiseIfNone
 import ast
 
@@ -14,7 +16,7 @@ ingredientsModule = IngredientsModule()
 
 ingredientsModule.appendPrologue(statement=Make.Assign([Make.Name('callableReturnsNDArray', ast.Store())]
 			, value=Make.Call(Make.Name('TypeVar')
-				, args=[Make.Constant('callableReturnsNDArray')]
+				, listParameters=[Make.Constant('callableReturnsNDArray')]
 				, list_keyword=[Make.keyword('bound', Make.Subscript(Make.Name('Callable'), Make.Tuple([Make.Constant(...), Make.Name('WindowingFunction')])))])))
 ingredientsModule.imports.addImportFrom_asStr('collections.abc', 'Callable')
 ingredientsModule.imports.addImportFrom_asStr('typing', 'TypeVar')
@@ -27,7 +29,7 @@ ingredientsModule.appendPrologue(statement=Make.FunctionDef('_convertToTensor'
 		, kwarg=Make.arg('keywordArguments', annotation=Make.Name('Any'))
 	)
 	, body=[Make.Assign([Make.Name('arrayTarget', ast.Store())]
-				, value=Make.Call(Make.Name('callableTarget'), args=[Make.Starred(value=Make.Name('arguments'))], list_keyword=[Make.keyword(arg=None, value=Make.Name('keywordArguments'))])
+				, value=Make.Call(Make.Name('callableTarget'), listParameters=[Make.Starred(value=Make.Name('arguments'))], list_keyword=[Make.keyword(None, value=Make.Name('keywordArguments'))])
 			)
 		, Make.Return(Make.Call(Make.Attribute(Make.Name('torch'), 'tensor'), list_keyword=[
 					Make.keyword('data', value=Make.Name('arrayTarget'))
@@ -38,16 +40,17 @@ ingredientsModule.appendPrologue(statement=Make.FunctionDef('_convertToTensor'
 	, returns=Make.Attribute(Make.Name('torch'), 'Tensor')
 ))
 
-dictionaryFunctionDef = makeDictionaryFunctionDef(parseLogicalPath2astModule('.'.join([packageName, moduleSource])))
+dictionaryFunctionDef: dict[str, ast.FunctionDef] = makeDictionaryFunctionDef(parseLogicalPath2astModule('.'.join([packageName, moduleSource])))
 
 for callableIdentifier, astFunctionDef in dictionaryFunctionDef.items():
-	if callableIdentifier.startswith('_'): continue
+	if callableIdentifier.startswith('_'):
+		continue
 
 	ingredientsModule.imports.addImportFrom_asStr(packageName, callableIdentifier)
 
-	findThis = Be.arguments
-	doThat = Then.extractIt
-	argumentSpecification = raiseIfNone(NodeTourist(findThis, doThat).captureLastMatch(astFunctionDef))
+	findThis: Callable[[ast.AST], TypeIs[ast.arguments]] = Be.arguments
+	doThat: Callable[[ast.arguments], ast.arguments] = Then.extractIt
+	argumentSpecification: ast.arguments = raiseIfNone(NodeTourist(findThis, doThat).captureLastMatch(astFunctionDef))
 	args: list[ast.expr] = []
 	for ast_arg in [*argumentSpecification.args, *argumentSpecification.kwonlyargs]:
 		args.append(Make.Name(ast_arg.arg))
@@ -55,14 +58,14 @@ for callableIdentifier, astFunctionDef in dictionaryFunctionDef.items():
 	list_keyword: list[ast.keyword] = [Make.keyword('callableTarget', Make.Name(callableIdentifier))
 									, Make.keyword('device', Make.Name('device'))]
 	if argumentSpecification.kwarg:
-		list_keyword.append(Make.keyword(arg=None, value=Make.Name(argumentSpecification.kwarg.arg)))
+		list_keyword.append(Make.keyword(None, value=Make.Name(argumentSpecification.kwarg.arg)))
 
 	argumentSpecification.args.append(Make.arg('device', annotation=Make.Name('Device')))
 	argumentSpecification.defaults.append(Make.Call(Make.Attribute(Make.Name('torch'), 'device'), list_keyword=[Make.keyword('device', value=Make.Constant('cpu'))]))
 
 	ingredientsModule.appendPrologue(statement=Make.FunctionDef(callableIdentifier + 'Tensor'
-		, args=argumentSpecification
-		, body=[Make.Return(Make.Call(Make.Name('_convertToTensor'), args=args, list_keyword=list_keyword))]
+		, argumentSpecification
+		, body=[Make.Return(Make.Call(Make.Name('_convertToTensor'), listParameters=args, list_keyword=list_keyword))]
 		, returns=Make.Attribute(Make.Name('torch'), 'Tensor')
 	))
 

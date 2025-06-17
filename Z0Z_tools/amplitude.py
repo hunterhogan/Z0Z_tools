@@ -1,5 +1,5 @@
-from Z0Z_tools import ArrayWaveforms, NormalizationReverter, Waveform
 from numpy import finfo as numpy_finfo, max as numpy_max
+from Z0Z_tools import ArrayWaveforms, NormalizationReverter, Waveform
 
 def normalizeWaveform(waveform: Waveform, amplitudeNorm: float = 1.0) -> tuple[Waveform, NormalizationReverter]:
 	"""

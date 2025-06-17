@@ -111,7 +111,8 @@ def defineConcurrencyLimit(limit: bool | float | int | None, cpuTotal: int = mul
 			concurrencyLimit = cpuTotal - abs(round(limit * cpuTotal))
 		case _ if limit <= -1:
 			concurrencyLimit = cpuTotal - abs(int(limit))
-		case _: pass
+		case _:
+			pass
 
 	return max(int(concurrencyLimit), 1)
 

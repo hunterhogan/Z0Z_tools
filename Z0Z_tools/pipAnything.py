@@ -10,13 +10,13 @@ Usage:
 	pip will attempt to install requirements.txt, but don't rely on dependencies being installed.
 """
 
-from Z0Z_tools.filesystemToolkit import findRelativePath
+from io import TextIOWrapper
 from packaging.requirements import Requirement
+from Z0Z_tools.filesystemToolkit import findRelativePath
 import os
 import pathlib
 import subprocess
 import sys
-from io import TextIOWrapper
 import tempfile
 
 def makeListRequirementsFromRequirementsFile(*pathFilenames: str | os.PathLike[str]) -> list[str]:

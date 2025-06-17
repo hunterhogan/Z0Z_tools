@@ -1,8 +1,9 @@
-from Z0Z_tools import WindowingFunction, cosineWings, equalPower, halfsine, tukey
 from collections.abc import Callable
 from torch.types import Device
 from typing import Any, TypeVar
+from Z0Z_tools import cosineWings, equalPower, halfsine, tukey, WindowingFunction
 import torch
+
 callableReturnsNDArray = TypeVar('callableReturnsNDArray', bound=Callable[..., WindowingFunction])
 
 def _convertToTensor(*arguments: Any, callableTarget: callableReturnsNDArray, device: Device, **keywordArguments: Any) -> torch.Tensor:

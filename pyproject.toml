@@ -1,97 +1,103 @@
+[project]
+name = "Z0Z_tools"
+version = "0.10.16"
+description = "Tools for audio/signal processing, data structure, function parameters, and package management."
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.10"
+license = { 'text' = "CC-BY-NC-4.0" }
+authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
+keywords = ["Python", "development", "tools"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Framework :: Pytest",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Education",
+  "Intended Audience :: End Users/Desktop",
+  "Intended Audience :: Other Audience",
+  "Intended Audience :: Science/Research",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Multimedia :: Sound/Audio",
+  "Topic :: Multimedia :: Sound/Audio :: Analysis",
+  "Topic :: Multimedia :: Sound/Audio :: Conversion",
+  "Topic :: Multimedia :: Sound/Audio :: Editors",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Scientific/Engineering :: Mathematics",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Topic :: Software Development",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Software Development :: Testing :: Unit",
+  "Topic :: System :: Filesystems",
+  "Topic :: System :: Installation/Setup",
+  "Topic :: Text Processing",
+  "Topic :: Utilities",
+  "Typing :: Typed",
+]
+urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Issues = "https://github.com/hunterhogan/Z0Z_tools/issues", Repository = "https://github.com/hunterhogan/Z0Z_tools.git" }
+dependencies = [
+  "charset-normalizer",
+  "more_itertools",
+  "numpy",
+  "packaging",
+  "python-minifier",
+  "resampy",
+  "scipy",
+  "soundfile",
+  "tqdm",
+]
+optional-dependencies = { PyTorch = [
+  "torch",
+], testing = [
+  "astToolkit",
+  "mypy",
+  "pandas",
+  "pytest-cov",
+  "pytest-mock",
+  "pytest-xdist",
+  "pytest",
+  "pyupgrade",
+  "scipy-stubs",
+  "setuptools-scm",
+  "torch",
+  "trove_classifiers",
+] }
+
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-[project]
-authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
-classifiers = [
-	"Development Status :: 5 - Production/Stable",
-	"Environment :: Console",
-	"Framework :: Pytest",
-	"Intended Audience :: Developers",
-	"Intended Audience :: Education",
-	"Intended Audience :: End Users/Desktop",
-	"Intended Audience :: Other Audience",
-	"Intended Audience :: Science/Research",
-	"Natural Language :: English",
-	"Operating System :: OS Independent",
-	"Programming Language :: Python",
-	"Programming Language :: Python :: 3",
-	"Programming Language :: Python :: 3.10",
-	"Programming Language :: Python :: 3.11",
-	"Programming Language :: Python :: 3.12",
-	"Programming Language :: Python :: 3.13",
-	"Topic :: Multimedia :: Sound/Audio :: Analysis",
-	"Topic :: Multimedia :: Sound/Audio :: Conversion",
-	"Topic :: Multimedia :: Sound/Audio :: Editors",
-	"Topic :: Multimedia :: Sound/Audio",
-	"Topic :: Scientific/Engineering :: Artificial Intelligence",
-	"Topic :: Scientific/Engineering :: Information Analysis",
-	"Topic :: Scientific/Engineering :: Mathematics",
-	"Topic :: Scientific/Engineering :: Physics",
-	"Topic :: Scientific/Engineering",
-	"Topic :: Software Development :: Libraries :: Python Modules",
-	"Topic :: Software Development :: Testing :: Unit",
-	"Topic :: Software Development",
-	"Topic :: System :: Filesystems",
-	"Topic :: System :: Installation/Setup",
-	"Topic :: Text Processing",
-	"Topic :: Utilities",
-	"Typing :: Typed",]
-dependencies = [
-	"charset-normalizer",
-	"more_itertools",
-	"numpy",
-	"packaging",
-	"python-minifier",
-	"resampy",
-	"scipy",
-	"soundfile",
-	"tqdm",]
-description = "Tools for audio/signal processing, data structure, function parameters, and package management."
-keywords = ["Python", "development", "tools"]
-license = { 'text' = "CC-BY-NC-4.0" }
-name = "Z0Z_tools"
-optional-dependencies = { PyTorch = [
-	"torch",
-], testing = [
-	"mypy",
-	"pandas",
-	"pytest-cov",
-	"pytest-mock",
-	"pytest-xdist",
-	"pytest",
-	"pyupgrade",
-	"scipy-stubs",
-	"torch",
-	"trove_classifiers",] }
-readme = { file = "README.md", content-type = "text/markdown" }
-requires-python = ">=3.10"
-urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Repository = "https://github.com/hunterhogan/Z0Z_tools.git", Issues= "https://github.com/hunterhogan/Z0Z_tools/issues" }
-version = "0.10.16"
-
 [tool.coverage]
 report = { exclude_lines = [
-	"if TYPE_CHECKING:",
-	"if __name__ == \"__main__\":",
+  "if TYPE_CHECKING:",
+  "if __name__ == \"__main__\":",
 ], ignore_errors = false }
 run = { branch = true, concurrency = [
-	"multiprocessing",
+  "multiprocessing",
 ], data_file = "tests/coverage/.coverage", omit = [
-	"tests/*",
+  "tests/*",
 ], parallel = true, source = [
-	".",] }
+  ".",
+] }
 xml = { output = "tests/coverage/coverage.xml" }
 
 [tool.pytest.ini_options]
-log_auto_indent = true
 addopts = ["--color=auto", "-n 4"]
+log_auto_indent = true
 testpaths = ["tests"]
 
 [tool.setuptools]
 package-data = { "*" = ["py.typed"] }
-packages = { find = {} }
+packages = { find = {  } }
 
 [tool.updateCitation]
-filenameCitationDOTcff = 'CITATION.cff'
+filenameCitationDOTcff = "CITATION.cff"
 pathFilenameCitationSSOT = "citations/CITATION.cff"
