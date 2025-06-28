@@ -1,11 +1,3 @@
 __pycache__/
-
 *.egg-info/
-/include/
-/Lib/
-/Library/
-/Scripts/
-/share/
-build/
-
-pyvenv.cfg
+/build/

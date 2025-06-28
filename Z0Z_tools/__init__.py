@@ -1,5 +1,4 @@
-"""
-A comprehensive toolkit for Python development and audio processing with modular, self-documenting solutions.
+"""A comprehensive toolkit for Python development and audio processing with modular, self-documenting solutions.
 
 Z0Z_tools provides well-designed utilities that address common challenges in several domains:
 
@@ -112,13 +111,18 @@ Pre-built test suites for validating function behavior:
 - PytestFor_oopsieKwargsie: Tests for string-to-boolean conversion.
 
 Example:
-  from Z0Z_tools import PytestFor_intInnit
+_______
+```python
+from Z0Z_tools import PytestFor_intInnit
 
-  @pytest.mark.parametrize("nameOfTest,callablePytest",
-                           PytestFor_intInnit(my_custom_function))
-  def test_function(nameOfTest, callablePytest):
-      callablePytest()
+@pytest.mark.parametrize("nameOfTest,callablePytest",
+						PytestFor_intInnit(my_custom_function))
+def test_function(nameOfTest, callablePytest):
+	callablePytest()
+```
+
 """
+# pyright: reportUnusedImport=false
 from Z0Z_tools.coping import raiseIfNone as raiseIfNone
 
 from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import PAD_TYPE, FFT_MODE_TYPE
@@ -131,7 +135,7 @@ from Z0Z_tools.theTypes import (
 	ParametersShortTimeFFT,
 	ParametersSTFT,
 	ParametersUniversal,
-	str_nameDOTname as str_nameDOTname,
+	identifierDotAttribute as identifierDotAttribute,
 	Spectrogram as Spectrogram,
 	Waveform as Waveform,
 	WaveformMetadata,
@@ -143,21 +147,21 @@ from Z0Z_tools.amplitude import normalizeWaveform as normalizeWaveform, normaliz
 from Z0Z_tools.autoRevert import moveToAxisOfOperation as moveToAxisOfOperation
 
 from Z0Z_tools.windowingFunctions import halfsine as halfsine, tukey as tukey, cosineWings as cosineWings, equalPower as equalPower
-try:
+
+import contextlib
+with contextlib.suppress(ImportError, ModuleNotFoundError):
 	from Z0Z_tools.optionalPyTorch import (
 		cosineWingsTensor as cosineWingsTensor,
 		equalPowerTensor as equalPowerTensor,
 		halfsineTensor as halfsineTensor,
 		tukeyTensor as tukeyTensor,
 		)
-except (ImportError, ModuleNotFoundError):
-	pass
 
 from Z0Z_tools.filesystemToolkit import (
 	dataTabularTOpathFilenameDelimited as dataTabularTOpathFilenameDelimited,
 	findRelativePath as findRelativePath,
-	importLogicalPath2Callable as importLogicalPath2Callable,
-	importPathFilename2Callable as importPathFilename2Callable,
+	importLogicalPath2Identifier as importLogicalPath2Identifier,
+	importPathFilename2Identifier as importPathFilename2Identifier,
 	makeDirsSafely as makeDirsSafely,
 	writeStringToHere as writeStringToHere,
 )
@@ -183,15 +187,13 @@ from Z0Z_tools.parseParameters import (
 
 from Z0Z_tools.pipAnything import installPackageTarget as installPackageTarget, makeListRequirementsFromRequirementsFile as makeListRequirementsFromRequirementsFile
 
-try:
-	# NOTE `Pytest` is an optional dependency
+# NOTE `Pytest` is an optional dependency
+with contextlib.suppress(ImportError, ModuleNotFoundError):
 	from Z0Z_tools.pytestForYourUse import (
 		PytestFor_defineConcurrencyLimit as PytestFor_defineConcurrencyLimit,
 		PytestFor_intInnit as PytestFor_intInnit,
 		PytestFor_oopsieKwargsie as PytestFor_oopsieKwargsie,
 	)
-except (ImportError, ModuleNotFoundError):
-	pass
 
 """
 Semiotics:

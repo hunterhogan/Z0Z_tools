@@ -1,20 +1,24 @@
-"""NOTE not fully implemented"""
+"""NOTE not fully implemented."""
 from numpy import absolute, complexfloating, float64, floating, ones_like
 from numpy.typing import ArrayLike, NDArray
 from typing import Any
 
 def applyHardLimit(arrayTarget: NDArray[Any], comparand: ArrayLike = 1.0) -> NDArray[Any]:
-	"""
-	Apply a hard limit to the elements of the target array based on the comparand value.
+	"""Apply a hard limit to the elements of the target array based on the `comparand` value.
 
 	Parameters
-		arrayTarget: The target array to which the hard limit will be applied.
-		comparand (1.0): The value or array to compare against. Defaults to 1.0.
+	----------
+	arrayTarget : NDArray[Any]
+		The target array to which the hard limit will be applied.
+	comparand : ArrayLike = 1.0
+		The value or array to compare against.
 
 	Returns
-		arrayClipped: The modified target array with the hard limit applied.
-	"""
+	-------
+	arrayClipped : NDArray[Any]
+		The modified target array with the hard limit applied.
 
+	"""
 	maskTrueAboveThreshold = absolute(comparand) - absolute(arrayTarget) < 0.0
 	reduction = arrayTarget - (absolute(arrayTarget) - absolute(comparand))
 	arrayTarget[maskTrueAboveThreshold] = reduction[maskTrueAboveThreshold]
@@ -25,35 +29,34 @@ def applyHardLimitComplexValued(
 	comparand: NDArray[floating[Any] | complexfloating[Any, Any]],
 	penalty: float = 1.0
 	) -> NDArray[complexfloating[Any, Any]]:
-	"""
-	Applies a hard limit to a complex-valued array based on the magnitude of a comparand array.
+	"""Apply a hard limit to a complex-valued array based on the magnitude of a `comparand` array.
 
 	This function implements a magnitude-based limiting operation where the magnitude of the target array
-	is constrained by the magnitude of the comparand array. When the magnitude of the target exceeds
-	the comparand, the target is scaled down with an optional penalty factor.
+	is constrained by the magnitude of the `comparand` array. When the magnitude of the target exceeds
+	the `comparand`, the target is scaled down with an optional `penalty` factor.
 
-	Parameters:
+	Parameters
 	----------
-	arrayTarget : ndarray of complex values
+	arrayTarget : NDArray[complexfloating[Any, Any]]
 		The input array to be limited.
-	comparand : ndarray of real or complex values
+	comparand : NDArray[floating[Any] | complexfloating[Any, Any]]
 		The array containing the magnitude threshold values.
-	penalty : float, optional
-		Exponent applied to the scaling factor when limiting is needed. Default is 1.0.
+	penalty : float = 1.0
+		Exponent applied to the scaling factor when limiting is needed.
 		Values greater than 1.0 result in more aggressive limiting.
 
-	Returns:
+	Returns
 	-------
-	ndarray of complex values
-		The limited array with the same shape and dtype as arrayTarget.
+	arrayResult : NDArray[complexfloating[Any, Any]]
+		The limited array with the same shape and dtype as `arrayTarget`.
 
-	Notes:
+	Notes
 	-----
 	The limiting operation is performed element-wise according to the formula:
 		result = arrayTarget * (|comparand|/|arrayTarget|)^penalty
 	where the scaling is only applied when |arrayTarget| > |comparand|.
-	"""
 
+	"""
 	magnitudeArrayTarget: NDArray[float64] = absolute(arrayTarget, dtype=float64)
 	magnitudeComparand: NDArray[float64] = absolute(comparand, dtype=float64)
 

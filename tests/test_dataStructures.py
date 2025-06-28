@@ -284,8 +284,8 @@ def testAutoDecodingRLEWithSpaces(description: str, addSpaces: bool) -> None:
 	arrayTarget = generateRepeatingZones((10, 10), 2)
 
 	# Test both configurations
-	resultWithSpacesFlag = autoDecodingRLE(arrayTarget, addSpaces)
-	resultNoSpacesFlag = autoDecodingRLE(arrayTarget, False)
+	resultWithSpacesFlag = autoDecodingRLE(arrayTarget, assumeAddSpaces=addSpaces)
+	resultNoSpacesFlag = autoDecodingRLE(arrayTarget, assumeAddSpaces=False)
 
 	# When addSpaces=True, the internal length comparisons change
 	# but the actual output format doesn't necessarily differ

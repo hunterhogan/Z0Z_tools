@@ -1,7 +1,4 @@
-"""
-Provides utilities for string extraction from nested data structures
-and merges multiple dictionaries containing lists into one dictionary.
-"""
+"""Provides utilities for string extraction from nested data structures and merges multiple dictionaries containing lists into one dictionary."""
 
 from collections.abc import Iterator, Mapping
 from numpy import integer
@@ -11,45 +8,51 @@ import more_itertools
 import python_minifier
 import re as regex
 
-def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], assumeAddSpaces: bool = False) -> str:
-	"""
-	Transform a NumPy array into a compact, self-decoding run-length encoded string representation.
+def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], *, assumeAddSpaces: bool = False) -> str:  # noqa: C901, PLR0915
+	"""Transform a NumPy array into a compact, self-decoding run-length encoded string representation.
 
 	This function converts a NumPy array into a string that, when evaluated as Python code,
 	recreates the original array structure. The function employs two compression strategies:
-	1. Python's range syntax for consecutive integer sequences
+	1. Python's `range` syntax for consecutive integer sequences
 	2. Multiplication syntax for repeated elements
 
 	The resulting string representation is designed to be both human-readable and space-efficient,
 	especially for large cartesian mappings with repetitive patterns. When this string is used
-	as a data source, Python will automatically decode it into Python lists, which if used as an
+	as a data source, Python will automatically decode it into Python `list`, which if used as an
 	argument to `numpy.array()`, will recreate the original array structure.
 
-	Parameters:
-		arrayTarget: The NumPy array to be encoded.
-		assumeAddSpaces (False): Affects internal length comparison during compression decisions.
-			This parameter doesn't directly change output format but influences whether
-			range or multiplication syntax is preferred in certain cases. The parameter
-			exists because the Abstract Syntax Tree (AST) inserts spaces in its string
-			representation.
+	Parameters
+	----------
+	arrayTarget : NDArray[integer[Any]]
+		(array2target) The NumPy array to be encoded.
+	assumeAddSpaces : bool = False
+		(assume2add2spaces) Affects internal length comparison during compression decisions.
+		This parameter doesn't directly change output format but influences whether
+		`range` or multiplication syntax is preferred in certain cases. The parameter
+		exists because the Abstract Syntax Tree (AST) inserts spaces in its string
+		representation.
 
-	Returns:
-		rleString: A string representation of the array using run-length encoding that,
-			when evaluated as Python code, reproduces the original array structure.
+	Returns
+	-------
+	rleString : str
+		(rle2string) A string representation of the array using run-length encoding that,
+		when evaluated as Python code, reproduces the original array structure.
 
-	Notes:
-		The "autoDecoding" feature means that the string representation evaluates directly
-		to the desired data structure without explicit decompression steps.
+	Notes
+	-----
+	The "autoDecoding" feature means that the string representation evaluates directly
+	to the desired data structure without explicit decompression steps.
+
 	"""
 	def sliceNDArrayToNestedLists(arraySlice: NDArray[integer[Any]]) -> Any:
 		def getLengthOption(optionAsStr: str) -> int:
-			# `assumeAddSpaces` characters: `,` 1; `]*` 2
+			# `assumeAddSpaces` characters: `,` 1; `]*` 2  # noqa: ERA001
 			return assumeAddSpaces * (optionAsStr.count(',') + optionAsStr.count(']*') * 2) + len(optionAsStr)
 
 		if arraySlice.ndim > 1:
 			axisOfOperation = 0
 			return [sliceNDArrayToNestedLists(arraySlice[index]) for index in range(arraySlice.shape[axisOfOperation])]
-		elif arraySlice.ndim == 1:
+		if arraySlice.ndim == 1:
 			arraySliceAsList: list[int | range] = []
 			cache_consecutiveGroup_addMe: dict[Iterator[Any], list[int] | list[range]] = {}
 			for consecutiveGroup in more_itertools.consecutive_groups(arraySlice.tolist()):
@@ -72,7 +75,7 @@ def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], assumeAddSpaces: bool = 
 					option2AsStr = option2AsStr or python_minifier.minify(str(option2))
 					lengthOption2 = getLengthOption(option2AsStr)
 
-					if lengthOption1 < lengthOption2:
+					if lengthOption1 < lengthOption2:  # noqa: SIM108
 						addMe = option1
 					else:
 						addMe = option2
@@ -103,7 +106,7 @@ def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], assumeAddSpaces: bool = 
 					option2AsStr = option2AsStr or python_minifier.minify(str(option2))
 					lengthOption2 = getLengthOption(option2AsStr)
 
-					if lengthOption1 < lengthOption2:
+					if lengthOption1 < lengthOption2:  # noqa: SIM108
 						addMe = option1
 					else:
 						addMe = option2
@@ -121,13 +124,13 @@ def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], assumeAddSpaces: bool = 
 
 	patternRegex = regex.compile(
 		"(?<!rang)(?:"
-		# Pattern 1: Comma ahead, bracket behind
+		# Pattern 1: Comma ahead, bracket behind  # noqa: ERA001
 		"(?P<joinAhead>,)\\((?P<malkovich>\\d+),(?P<multiple>\\d+)\\)(?P<bracketBehind>])|"
-		# Pattern 2: Bracket or start ahead, comma behind
+		# Pattern 2: Bracket or start ahead, comma behind  # noqa: ERA001
 		"(?P<bracketOrStartAhead>\\[|^.)\\((?P<malkovichmalkovich>\\d+),(?P<multiple_fml>\\d+)\\)(?P<joinBehind>,)|"
-		# Pattern 3: Bracket ahead, bracket behind
+		# Pattern 3: Bracket ahead, bracket behind  # noqa: ERA001
 		"(?P<bracketAhead>\\[)\\((?P<malkovichmalkovichmalkovich>\\d+),(?P<multiple_whatever>\\d+)\\)(?P<bracketBehindbracketBehind>])|"
-		# Pattern 4: Comma ahead, comma behind
+		# Pattern 4: Comma ahead, comma behind  # noqa: ERA001
 		"(?P<joinAhead_prayharder>,)\\((?P<malkovichmalkovichmalkovichmalkovich>\\d+),(?P<multiple_prayharder>\\d+)\\)(?P<joinBehind_prayharder>,)"
 		")"
 	)
@@ -149,26 +152,30 @@ def autoDecodingRLE(arrayTarget: NDArray[integer[Any]], assumeAddSpaces: bool = 
 	arrayAsStr = patternRegex.sub(replacementByContext, arrayAsStr)
 	arrayAsStr = patternRegex.sub(replacementByContext, arrayAsStr)
 
-	# Replace `range(0,stop)` syntax with `range(stop)` syntax.
-	arrayAsStr = arrayAsStr.replace('range(0,', 'range(')
+	# Replace `range(0,stop)` syntax with `range(stop)` syntax.  # noqa: ERA001
 	# Add unpack operator `*` for automatic decoding when evaluated.
-	arrayAsStr = arrayAsStr.replace('range', '*range')
+	return arrayAsStr.replace('range(0,', 'range(').replace('range', '*range')
 
-	return arrayAsStr
+def stringItUp(*scrapPile: Any) -> list[str]:  # noqa: C901
+	"""Convert, if possible, every element in the input data structure to a string.
 
-def stringItUp(*scrapPile: Any) -> list[str]:
-	"""
-	Convert, if possible, every element in the input data structure to a string. Order is not preserved or readily predictable.
+	Order is not preserved or readily predictable.
 
-	Parameters:
-		*scrapPile: One or more data structures to unpack and convert to strings.
-	Returns:
-		listStrungUp: A list of string versions of all convertible elements.
+	Parameters
+	----------
+	*scrapPile : Any
+		(scrap2pile) One or more data structures to unpack and convert to strings.
+
+	Returns
+	-------
+	listStrungUp : list[str]
+		(list2strung2up) A `list` of string versions of all convertible elements.
+
 	"""
 	scrap = None
 	listStrungUp: list[str] = []
 
-	def drill(KitKat: Any) -> None:
+	def drill(KitKat: Any) -> None:  # noqa: C901, PLR0912
 		match KitKat:
 			case str():
 				listStrungUp.append(KitKat)
@@ -194,7 +201,7 @@ def stringItUp(*scrapPile: Any) -> list[str]:
 					except TypeError:  # "The error traceback provided indicates that there is an issue when calling the __str__ method on an object that does not have this method properly defined, leading to a TypeError."
 						pass
 					except:
-						print(f"\nWoah! I received '{repr(KitKat)}'.\nTheir report card says, 'Plays well with others: Needs improvement.'\n")
+						print(f"\nWoah! I received '{repr(KitKat)}'.\nTheir report card says, 'Plays well with others: Needs improvement.'\n")  # noqa: RUF010, T201
 						raise
 	try:
 		for scrap in scrapPile:
@@ -204,22 +211,36 @@ def stringItUp(*scrapPile: Any) -> list[str]:
 	return listStrungUp
 
 def updateExtendPolishDictionaryLists(*dictionaryLists: Mapping[str, list[Any] | set[Any] | tuple[Any, ...]], destroyDuplicates: bool = False, reorderLists: bool = False, killErroneousDataTypes: bool = False) -> dict[str, list[Any]]:
-	"""
-	Merges multiple dictionaries containing lists into a single dictionary, with options to handle duplicates,
-	list ordering, and erroneous data types.
+	"""Merge multiple dictionaries containing `list` into a single dictionary.
 
-	Parameters:
-		*dictionaryLists: Variable number of dictionaries to be merged. If only one dictionary is passed, it will be processed based on the provided options.
-		destroyDuplicates (False): If True, removes duplicate elements from the lists. Defaults to False.
-		reorderLists (False): If True, sorts the lists. Defaults to False.
-		killErroneousDataTypes (False): If True, skips dictionary keys or dictionary values that cause a TypeError during merging. Defaults to False.
-	Returns:
-		ePluribusUnum: A single dictionary with merged lists based on the provided options. If only one dictionary is passed,
+	With options to handle duplicates, `list` ordering, and erroneous data types.
+
+	Parameters
+	----------
+	*dictionaryLists : Mapping[str, list[Any] | set[Any] | tuple[Any, ...]]
+		(dictionary2lists) Variable number of dictionaries to be merged. If only one dictionary is passed, it will be processed based on the provided options.
+	destroyDuplicates : bool = False
+		(destroy2duplicates) If `True`, removes duplicate elements from the `list`. Defaults to `False`.
+	reorderLists : bool = False
+		(reorder2lists) If `True`, sorts the `list`. Defaults to `False`.
+	killErroneousDataTypes : bool = False
+		(kill2erroneous2data2types) If `True`, skips dictionary keys or dictionary values that cause a `TypeError` during merging. Defaults to `False`.
+
+	Returns
+	-------
+	ePluribusUnum : dict[str, list[Any]]
+		(e2pluribus2unum) A single dictionary with merged `list` based on the provided options. If only one dictionary is passed,
 		it will be cleaned up based on the options.
-	Note:
-		The returned value, `ePluribusUnum`, is a so-called primitive dictionary (`typing.Dict`). Furthermore, every dictionary key is a so-called primitive string (cf. `str()`) and every dictionary value is a so-called primitive list (`typing.List`). If `dictionaryLists` has other data types, the data types will not be preserved. That could have unexpected consequences. Conversion from the original data type to a `typing.List`, for example, may not preserve the order even if you want the order to be preserved.
-	"""
 
+	Notes
+	-----
+	The returned value, `ePluribusUnum`, is a so-called primitive dictionary (`dict`). Furthermore, every dictionary key is a
+	so-called primitive string (cf. `str()`) and every dictionary value is a so-called primitive `list` (`list`). If
+	`dictionaryLists` has other data types, the data types will not be preserved. That could have unexpected consequences.
+	Conversion from the original data type to a `list`, for example, may not preserve the order even if you want the order to be
+	preserved.
+
+	"""
 	ePluribusUnum: dict[str, list[Any]] = {}
 
 	for dictionaryListTarget in dictionaryLists:
@@ -228,10 +249,10 @@ def updateExtendPolishDictionaryLists(*dictionaryLists: Mapping[str, list[Any] |
 				ImaStr = str(keyName)
 				ImaList = list(keyValue)
 				ePluribusUnum.setdefault(ImaStr, []).extend(ImaList)
-			except TypeError:
+			except TypeError:  # noqa: PERF203
 				if killErroneousDataTypes:
 					continue
-				else:
+				else:  # noqa: RET507
 					raise
 
 	if destroyDuplicates:

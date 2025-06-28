@@ -1,76 +1,66 @@
-"""
-Pytest tests you can use in your package to test some Z0Z_tools functions.
+"""Pytest tests you can use in your package to test some Z0Z_tools functions.
 
 Each function in this module returns a list of test functions that can be used with `pytest.parametrize`.
 """
-
+# ruff: noqa: S101
 from collections.abc import Callable, Iterable, Iterator
-from typing import Any
+from typing import Any, NoReturn
 from unittest.mock import Mock, patch
 from Z0Z_tools import defineConcurrencyLimit, intInnit, oopsieKwargsie
 import pytest
 
-def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | int | None, int], int] = defineConcurrencyLimit, cpuCount: int = 8) -> list[tuple[str, Callable[[], None]]]:
-	"""Returns a list of test functions to validate concurrency limit behavior.
+def PytestFor_defineConcurrencyLimit(callableToTest: Callable[..., int] = defineConcurrencyLimit, cpuCount: int = 8) -> list[tuple[str, Callable[[], None]]]:  # noqa: C901
+	"""Return a list of test functions to validate concurrency limit behavior.
 
 	This function provides a comprehensive test suite for validating concurrency limit parsing
 	and computation, checking both valid and invalid input scenarios.
 
 	Parameters
 	----------
-	callableToTest (defineConcurrencyLimit):
+	callableToTest : Callable[[bool | float | int | None, int], int] = defineConcurrencyLimit
 		The function to test, which should accept various input types and return an integer
-		representing the concurrency limit. Defaults to defineConcurrencyLimit.
-	cpuCount (8):
+		representing the concurrency limit.
+	cpuCount : int = 8
 		The number of CPUs to simulate in the test environment.
 
 	Returns
 	-------
-	listOfTestFunctions:
-		A list of tuples, each containing:
-		- A string describing the test case
-		- A callable test function that implements the test case
-
-	Test Cases
-	----------
-	- Default values (None, False, 0)
-	- Direct integer inputs
-	- Fractional float inputs
-	- Minimum value enforcement
-	- Boolean True variants
-	- Invalid string inputs
-	- String number parsing
+	listOfTestFunctions : list[tuple[str, Callable[[], None]]]
+		A list of tuples, each containing a string describing the test case and a callable
+		test function that implements the test case.
 
 	Examples
 	--------
-	Run each test on `Z0Z_tools.defineConcurrencyLimit`
-	```
-	from Z0Z_tools.pytest_parseParameters import PytestFor_concurrencyLimit
+	Run each test on `Z0Z_tools.defineConcurrencyLimit`:
+	```python
+	from Z0Z_tools.pytestForYourUse import PytestFor_defineConcurrencyLimit
 
-	listOfTests = PytestFor_concurrencyLimit()
+	listOfTests = PytestFor_defineConcurrencyLimit()
 	for nameOfTest, callablePytest in listOfTests:
 		callablePytest()
 	```
 
-	Or, run each test on your function, '`functionLocal`', that has a compatible signature
-	```
-	from Z0Z_tools.pytest_parseParameters import PytestFor_defineConcurrencyLimit
-	from packageLocal import functionLocal as YOUR_FUNCTION_HERE
+	Or, run each test on your function that has a compatible signature:
+	```python
+	from Z0Z_tools.pytestForYourUse import PytestFor_defineConcurrencyLimit
+	from packageLocal import functionLocal
 
-	@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_defineConcurrencyLimit(callableToTest = YOUR_FUNCTION_HERE))
+	@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_defineConcurrencyLimit(callableToTest=functionLocal))
 	def test_functionLocal(nameOfTest, callablePytest):
 		callablePytest()
+	```
+
 	"""
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testDefaults(_mockCpu: Mock) -> None:
 		listOfParameters: list[bool | int | None] = [None, False, 0]
 		for limitParameter in listOfParameters:
-			assert callableToTest(limitParameter, cpuCount) == cpuCount
+			assert callableToTest(limit=limitParameter, cpuTotal=cpuCount) == cpuCount
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testDirectIntegers(_mockCpu: Mock) -> None:
 		for limitParameter in [1, 4, 16]:
-			assert callableToTest(limitParameter, cpuCount) == limitParameter
+			assert callableToTest(limit=limitParameter, cpuTotal=cpuCount) == limitParameter
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testFractionalFloats(_mockCpu: Mock) -> None:
@@ -79,27 +69,27 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | in
 			0.25: cpuCount // 4,
 			0.75: int(cpuCount * 0.75)
 		}
-		for input, expected in testCases.items():
-			assert callableToTest(input, cpuCount) == expected
+		for limit, expected in testCases.items():
+			assert callableToTest(limit=limit, cpuTotal=cpuCount) == expected
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testMinimumOne(_mockCpu: Mock) -> None:
 		listOfParameters: list[float | int] = [-10, -0.99, 0.1]
 		for limitParameter in listOfParameters:
-			assert callableToTest(limitParameter, cpuCount) >= 1
+			assert callableToTest(limit=limitParameter, cpuTotal=cpuCount) >= 1
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testBooleanTrue(_mockCpu: Mock) -> None:
-		assert callableToTest(True, cpuCount) == 1
-		assert callableToTest('True', cpuCount) == 1  # pyright: ignore[reportArgumentType]
-		assert callableToTest('TRUE', cpuCount) == 1 # pyright: ignore[reportArgumentType]
-		assert callableToTest(' true ', cpuCount) == 1 # pyright: ignore[reportArgumentType]
+		assert callableToTest(limit=True, cpuTotal=cpuCount) == 1
+		assert callableToTest(limit='True', cpuTotal=cpuCount) == 1  # pyright: ignore[reportArgumentType]
+		assert callableToTest(limit='TRUE', cpuTotal=cpuCount) == 1 # pyright: ignore[reportArgumentType]
+		assert callableToTest(limit=' true ', cpuTotal=cpuCount) == 1 # pyright: ignore[reportArgumentType]
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testInvalidStrings(_mockCpu: Mock) -> None:
 		for stringInput in ["invalid", "True but not quite", "None of the above"]:
 			with pytest.raises(ValueError, match="must be a number, True, False, or None"):
-				callableToTest(stringInput, cpuCount) # pyright: ignore[reportArgumentType]
+				callableToTest(limit=stringInput, cpuTotal=cpuCount) # pyright: ignore[reportArgumentType]
 
 	@patch('multiprocessing.cpu_count', return_value=cpuCount)
 	def testStringNumbers(_mockCpu: Mock) -> None:
@@ -111,7 +101,7 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | in
 			("-0.25", 6),
 		]
 		for stringNumber, expectedLimit in testCases:
-			assert callableToTest(stringNumber, cpuCount) == expectedLimit # pyright: ignore[reportArgumentType]
+			assert callableToTest(limit=stringNumber, cpuTotal=cpuCount) == expectedLimit # pyright: ignore[reportArgumentType]
 
 	return [
 		('testDefaults', testDefaults),
@@ -123,44 +113,47 @@ def PytestFor_defineConcurrencyLimit(callableToTest: Callable[[bool | float | in
 		('testStringNumbers', testStringNumbers)
 	]
 
-def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type[Any] | None], list[int]] = intInnit) -> list[tuple[str, Callable[[], None]]]:
-	"""Returns a list of test functions to validate integer initialization behavior.
+def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type[Any] | None], list[int]] = intInnit) -> list[tuple[str, Callable[[], None]]]:  # noqa: C901
+	"""Return a list of test functions to validate integer initialization behavior.
 
 	This function provides a comprehensive test suite for validating integer parsing
 	and initialization, checking both valid and invalid input scenarios.
 
 	Parameters
-		callableToTest (intInnit): The function to test. Should accept:
-			- A sequence of integer-compatible values
-			- An optional parameter name string
-			- An optional parameter type
-			Returns a list of validated integers.
+	----------
+	callableToTest : Callable[[Iterable[int], str | None, type[Any] | None], list[int]] = intInnit
+		The function to test. Should accept a sequence of integer-compatible values,
+		an optional parameter name string, and an optional parameter type.
+		Returns a list of validated integers.
 
 	Returns
-		listOfTestFunctions: A list of tuples containing:
-			- A string describing the test case
-			- A callable test function implementing the test case
+	-------
+	listOfTestFunctions : list[tuple[str, Callable[[], None]]]
+		A list of tuples containing a string describing the test case and a callable
+		test function implementing the test case.
 
 	Examples
-		Run tests on `Z0Z_tools.intInnit`:
-		```python
-		from Z0Z_tools.pytest_parseParameters import PytestFor_intInnit
+	--------
+	Run tests on `Z0Z_tools.intInnit`:
+	```python
+	from Z0Z_tools.pytestForYourUse import PytestFor_intInnit
 
-		listOfTests = PytestFor_intInnit()
-		for nameOfTest, callablePytest in listOfTests:
-			callablePytest()
-		```
+	listOfTests = PytestFor_intInnit()
+	for nameOfTest, callablePytest in listOfTests:
+		callablePytest()
+	```
 
-		Run tests on your compatible function:
-		```python
-		from Z0Z_tools.pytest_parseParameters import PytestFor_intInnit
-		from packageLocal import functionLocal as YOUR_FUNCTION_HERE
+	Run tests on your compatible function:
+	```python
+	from Z0Z_tools.pytestForYourUse import PytestFor_intInnit
+	from packageLocal import functionLocal
 
-		@pytest.mark.parametrize("nameOfTest,callablePytest",
-			PytestFor_intInnit(callableToTest=YOUR_FUNCTION_HERE))
-		def test_functionLocal(nameOfTest, callablePytest):
-			callablePytest()
-		```
+	@pytest.mark.parametrize("nameOfTest,callablePytest",
+		PytestFor_intInnit(callableToTest=functionLocal))
+	def test_functionLocal(nameOfTest, callablePytest):
+		callablePytest()
+	```
+
 	"""
 	def testHandlesValidIntegers() -> None:
 		assert callableToTest([2, 3, 5, 8], 'test', None) == [2, 3, 5, 8]
@@ -171,7 +164,7 @@ def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type
 	def testRejectsNonWholeNumbers() -> None:
 		listInvalidNumbers: list[float] = [13.7, 21.5, 34.8, -55.9]
 		for invalidNumber in listInvalidNumbers:
-			with pytest.raises(ValueError):
+			with pytest.raises(ValueError):  # noqa: PT011
 				callableToTest([invalidNumber], 'test', None) # pyright: ignore[reportArgumentType]
 
 	def testRejectsBooleans() -> None:
@@ -180,17 +173,17 @@ def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type
 
 	def testRejectsInvalidStrings() -> None:
 		for invalidString in ['NW', '', ' ', 'SE.SW']:
-			with pytest.raises(ValueError):
+			with pytest.raises(ValueError):  # noqa: PT011
 				callableToTest([invalidString], 'test', None) # pyright: ignore[reportArgumentType]
 
 	def testRejectsEmptyList() -> None:
-		with pytest.raises(ValueError):
+		with pytest.raises(ValueError):  # noqa: PT011
 			callableToTest([], 'test', None)
 
-	def testHandlesMixedValidTypes():
+	def testHandlesMixedValidTypes() -> None:
 		assert callableToTest([13, '21', 34.0], 'test', None) == [13, 21, 34] # pyright: ignore[reportArgumentType]
 
-	def testHandlesBytes():
+	def testHandlesBytes() -> None:
 		validCases: list[tuple[list[bytes], str, list[int]]] = [
 			([b'123'], '123', [123]),
 		]
@@ -205,10 +198,10 @@ def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type
 
 		invalidCases: list[list[bytes]] = [[b'\x00']]
 		for inputData in invalidCases:
-			with pytest.raises(ValueError):
+			with pytest.raises(ValueError):  # noqa: PT011
 				callableToTest(inputData, 'test', None) # pyright: ignore[reportArgumentType]
 
-	def testHandlesMemoryview():
+	def testHandlesMemoryview() -> None:
 		validCases: list[tuple[list[memoryview], str, list[int]]] = [
 			([memoryview(b'123')], '123', [123]),
 		]
@@ -220,10 +213,10 @@ def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type
 
 		invalidMemoryviewCases: list[list[memoryview]] = [[memoryview(b'\x00')]]
 		for inputData in invalidMemoryviewCases:
-			with pytest.raises(ValueError):
+			with pytest.raises(ValueError):  # noqa: PT011
 				callableToTest(inputData, 'test', None) # pyright: ignore[reportArgumentType]
 
-	def testRejectsMutableSequence():
+	def testRejectsMutableSequence() -> None:
 		class MutableList(list[int]):
 			def __iter__(self) -> Iterator[int]:
 				self.append(89)
@@ -239,9 +232,9 @@ def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type
 		for inputData, expected in testCases:
 			assert callableToTest(inputData, 'test', None) == expected # pyright: ignore[reportArgumentType]
 
-	def testRejectsInvalidComplex():
+	def testRejectsInvalidComplex() -> None:
 		for invalidComplex in [13+1j, 21+0.5j, 34.5+0j]:
-			with pytest.raises(ValueError):
+			with pytest.raises(ValueError):  # noqa: PT011
 				callableToTest([invalidComplex], 'test', None) # pyright: ignore[reportArgumentType]
 
 	return [
@@ -258,76 +251,67 @@ def PytestFor_intInnit(callableToTest: Callable[[Iterable[int], str | None, type
 		('testRejectsInvalidComplex', testRejectsInvalidComplex)
 	]
 
-def PytestFor_oopsieKwargsie(callableToTest: Callable[[str], bool | None | str] = oopsieKwargsie) -> list[tuple[str, Callable[[], None]]]:
-	"""Returns a list of test functions to validate string-to-boolean/None conversion behavior.
+def PytestFor_oopsieKwargsie(callableToTest: Callable[[str], bool | None | str] = oopsieKwargsie) -> list[tuple[str, Callable[[], None]]]:  # noqa: C901
+	"""Return a list of test functions to validate string-to-boolean/None conversion behavior.
 
 	This function provides a comprehensive test suite for validating string parsing and conversion
 	to boolean or None values, with fallback to the original string when appropriate.
 
 	Parameters
 	----------
-	callableToTest (oopsieKwargsie):
+	callableToTest : Callable[[str], bool | None | str] = oopsieKwargsie
 		The function to test, which should accept a string and return either a boolean, None,
-		or the original input. Defaults to oopsieKwargsie.
+		or the original input.
 
 	Returns
 	-------
-	listOfTestFunctions:
-		A list of tuples, each containing:
-		- A string describing the test case
-		- A callable test function that implements the test case
-
-	Test Cases
-	----------
-	- True string variants (case-insensitive)
-	- False string variants (case-insensitive)
-	- None string variants (case-insensitive)
-	- Non-convertible strings (returned as-is)
-	- Non-string object handling
-		- Numbers (converted to strings)
-		- Objects with failed str() conversion (returned as-is)
+	listOfTestFunctions : list[tuple[str, Callable[[], None]]]
+		A list of tuples, each containing a string describing the test case and a callable
+		test function that implements the test case.
 
 	Examples
 	--------
-	Run each test on `Z0Z_tools.oopsieKwargsie`
-	```
-	from Z0Z_tools.pytest_parseParameters import PytestFor_oopsieKwargsie
+	Run each test on `Z0Z_tools.oopsieKwargsie`:
+	```python
+	from Z0Z_tools.pytestForYourUse import PytestFor_oopsieKwargsie
 
 	listOfTests = PytestFor_oopsieKwargsie()
 	for nameOfTest, callablePytest in listOfTests:
 		callablePytest()
 	```
 
-	Or, run each test on your function, '`functionLocal`', that has a compatible signature
-	```
-	from Z0Z_tools.pytest_parseParameters import PytestFor_oopsieKwargsie
-	from packageLocal import functionLocal as YOUR_FUNCTION_HERE
+	Or, run each test on your function that has a compatible signature:
+	```python
+	from Z0Z_tools.pytestForYourUse import PytestFor_oopsieKwargsie
+	from packageLocal import functionLocal
 
-	@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_oopsieKwargsie(callableToTest = YOUR_FUNCTION_HERE))
+	@pytest.mark.parametrize("nameOfTest,callablePytest", PytestFor_oopsieKwargsie(callableToTest=functionLocal))
 	def test_functionLocal(nameOfTest, callablePytest):
 		callablePytest()
 	```
+
 	"""
-	def testHandlesTrueVariants():
+	def testHandlesTrueVariants() -> None:
 		for variantTrue in ['True', 'TRUE', ' true ', 'TrUe']:
 			assert callableToTest(variantTrue) is True
 
-	def testHandlesFalseVariants():
+	def testHandlesFalseVariants() -> None:
 		for variantFalse in ['False', 'FALSE', ' false ', 'FaLsE']:
 			assert callableToTest(variantFalse) is False
 
-	def testHandlesNoneVariants():
+	def testHandlesNoneVariants() -> None:
 		for variantNone in ['None', 'NONE', ' none ', 'NoNe']:
 			assert callableToTest(variantNone) is None
 
-	def testReturnsOriginalString():
+	def testReturnsOriginalString() -> None:
 		for stringInput in ['hello', '123', 'True story', 'False alarm']:
 			assert callableToTest(stringInput) == stringInput
 
-	def testHandlesNonStringObjects():
+	def testHandlesNonStringObjects() -> None:
 		class UnStringable:
-			def __str__(self):
-				raise TypeError("Cannot be stringified")
+			def __str__(self) -> NoReturn:
+				message = "Cannot be stringified"
+				raise TypeError(message)
 
 		assert callableToTest(123) == "123" # pyright: ignore[reportArgumentType]
 

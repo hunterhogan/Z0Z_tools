@@ -1,6 +1,7 @@
 # Z0Z_tools
 
-A comprehensive collection of Python utilities for developers and audio processing enthusiasts. "Z0Z_" indicates a prototype package where individual components may eventually evolve into focused standalone packages.
+A comprehensive collection of Python utilities for developers and audio processing enthusiasts. "Z0Z_" indicates a prototype package where individual components may eventually evolve into focused standalone packages or move to existing
+packages. Please suggest a good home for the audio processing tools or any of the other functions.
 
 ## Why Choose Z0Z_tools?
 
