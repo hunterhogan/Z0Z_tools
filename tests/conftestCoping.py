@@ -3,7 +3,7 @@ from numpy import dtype, float32, ndarray
 from numpy.typing import NDArray
 from pathlib import Path
 from typing import Any, Final
-from Z0Z_tools import loadWaveforms, readAudioFile, ArrayWaveforms, Waveform
+from Z0Z_tools import ArrayWaveforms, loadWaveforms, readAudioFile, Waveform
 import pytest
 import soundfile
 

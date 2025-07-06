@@ -1,6 +1,6 @@
 from collections.abc import Callable, Generator
-from tests.conftestCoping import sampleData, array44100_ch2_sec5_Sine, listPathFilenamesArrayWaveforms
 from numpy.typing import NDArray
+from tests.conftestCoping import array44100_ch2_sec5_Sine, listPathFilenamesArrayWaveforms, sampleData
 from typing import Any, Final
 import numpy
 import pandas

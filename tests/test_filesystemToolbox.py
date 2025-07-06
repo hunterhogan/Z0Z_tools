@@ -1,11 +1,10 @@
 from pathlib import Path
+from tests.conftest import uniformTestFailureMessage
 from typing import Any
-from tests.conftest import standardizedEqualTo, uniformTestFailureMessage
-from Z0Z_tools import dataTabularTOpathFilenameDelimited, findRelativePath, makeDirsSafely, writeStringToHere
+from Z0Z_tools import dataTabularTOpathFilenameDelimited, findRelativePath
 import pandas
 import pathlib
 import pytest
-import io
 
 def testDataTabularTOpathFilenameDelimitedBasic(dataframeSample: pandas.DataFrame, pathTmpTesting: pathlib.Path) -> None:
 	"""Test basic functionality with DataFrame data."""
@@ -108,20 +107,3 @@ def testFindRelativePathWithSamePath(pathTmpTesting: pathlib.Path) -> None:
 
 	resultPath: str = findRelativePath(pathTest, pathTest)
 	assert resultPath == ".", uniformTestFailureMessage(".", resultPath, "findRelativePath", pathTest, pathTest)
-
-def testMakeDirsSafelyCreatesParentDirectories(pathTmpTesting: pathlib.Path) -> None:
-    nestedDirectory = pathTmpTesting / "sub1" / "sub2"
-    filePath = nestedDirectory / "dummy.txt"
-    makeDirsSafely(filePath)
-    assert nestedDirectory.exists() and nestedDirectory.is_dir(), uniformTestFailureMessage(True, nestedDirectory.exists() and nestedDirectory.is_dir(), "testMakeDirsSafelyCreatesParentDirectories", filePath)
-
-def testMakeDirsSafelyWithIOBaseDoesNotRaise() -> None:
-    memoryStream = io.StringIO()
-    makeDirsSafely(memoryStream)
-
-def testWriteStringToHereCreatesFileAndWritesContent(pathTmpTesting: pathlib.Path) -> None:
-    nestedDirectory = pathTmpTesting / "a" / "b"
-    filePath = nestedDirectory / "test.txt"
-    writeStringToHere("hello world", filePath)
-    assert filePath.exists(), uniformTestFailureMessage(True, filePath.exists(), "testWriteStringToHereCreatesFileAndWritesContent", filePath)
-    assert filePath.read_text() == "hello world", uniformTestFailureMessage("hello world", filePath.read_text(), "testWriteStringToHereCreatesFileAndWritesContent", filePath)

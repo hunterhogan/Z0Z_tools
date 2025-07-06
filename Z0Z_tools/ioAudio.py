@@ -6,6 +6,7 @@ and Short-Time Fourier Transform operations with consistent data shapes and type
 """
 from collections.abc import Callable, Sequence
 from concurrent.futures import as_completed, ProcessPoolExecutor
+from hunterMakesPy import makeDirsSafely
 from math import ceil as ceiling, log2 as log_base2
 from multiprocessing import set_start_method as multiprocessing_set_start_method
 from numpy import complex64, dtype, float32, floating, ndarray
@@ -15,9 +16,8 @@ from scipy.signal import ShortTimeFFT
 from tqdm.auto import tqdm
 from typing import Any, BinaryIO, cast, Literal, overload
 from Z0Z_tools import (
-	ArraySpectrograms, ArrayWaveforms, halfsine, makeDirsSafely, ParametersShortTimeFFT, ParametersSTFT,
-	ParametersUniversal, Spectrogram, Waveform, WaveformMetadata, WindowingFunction,
-)
+	ArraySpectrograms, ArrayWaveforms, halfsine, ParametersShortTimeFFT, ParametersSTFT, ParametersUniversal, Spectrogram,
+	Waveform, WaveformMetadata, WindowingFunction)
 import io
 import numpy
 import resampy
@@ -120,14 +120,14 @@ def readAudioFile(pathFilename: str | PathLike[Any] | BinaryIO, sampleRate: floa
 	try:
 		with soundfile.SoundFile(pathFilename) as readSoundFile:
 			sampleRateSource: int = readSoundFile.samplerate
-			waveform: Waveform = readSoundFile.read(dtype=str(universalDtypeWaveform.__name__), always_2d=True).astype(universalDtypeWaveform)
+			waveform: Waveform = readSoundFile.read(dtype='float32', always_2d=True).astype(universalDtypeWaveform)
 			# GitHub #3 Implement semantic axes for audio data
 			axisTime = 0
 			axisChannels = 1
 			waveform = cast("Waveform", resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource, axisTime=axisTime))
 			if waveform.shape[axisChannels] == 1:
-				waveform = numpy.repeat(waveform, 2, axis=axisChannels)
-			return numpy.transpose(waveform, axes=(axisChannels, axisTime))
+				waveform = cast("Waveform", numpy.repeat(waveform, 2, axis=axisChannels))
+			return cast("Waveform", numpy.transpose(waveform, axes=(axisChannels, axisTime)))
 	except soundfile.LibsndfileError as ERRORmessage:
 		if 'System error' in str(ERRORmessage):
 			message = f"File not found: {pathFilename}"
@@ -260,7 +260,7 @@ def stft(arrayTarget: Spectrogram, *, sampleRate: float | None = None, lengthHop
 @overload # istft many ndarray
 def stft(arrayTarget: ArraySpectrograms, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[True] = True, lengthWaveform: int, indexingAxis: int = -1) -> ArrayWaveforms: ...  # noqa: E501
 
-def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrograms  # noqa: C901, PLR0913
+def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrograms  # noqa: C901
 		, *
 		, sampleRate: float | None = None
 		, lengthHop: int | None = None
@@ -311,7 +311,7 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 		lengthHop = parametersUniversal['lengthHop']
 
 	if windowingFunction is None:
-		if lengthWindowingFunction is not None and windowingFunctionCallableUniversal: # pyright: ignore[reportUnnecessaryComparison]  # noqa: SIM108
+		if lengthWindowingFunction is not None and windowingFunctionCallableUniversal: # pyright: ignore[reportUnnecessaryComparison]
 			windowingFunction = windowingFunctionCallableUniversal(lengthWindowingFunction)
 		else:
 			windowingFunction = parametersUniversal['windowingFunction']
@@ -338,7 +338,7 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 	if indexingAxis is None:
 		singleton: Waveform | Spectrogram = cast('Waveform | Spectrogram', arrayTarget)
 		return doTransformation(singleton, lengthWaveform=lengthWaveform, inverse=inverse)
-	else:  # noqa: RET505
+	else:
 		arrayTARGET: ArrayWaveforms | ArraySpectrograms = cast('ArrayWaveforms | ArraySpectrograms', numpy.moveaxis(arrayTarget, indexingAxis, -1))
 		index = 0
 		arrayTransformed: ArrayWaveforms | ArraySpectrograms = cast('ArrayWaveforms | ArraySpectrograms', numpy.tile(doTransformation(cast('Waveform | Spectrogram', arrayTARGET[..., index]), lengthWaveform, inverse)[..., numpy.newaxis], arrayTARGET.shape[-1]))

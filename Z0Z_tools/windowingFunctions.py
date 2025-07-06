@@ -2,7 +2,7 @@
 from numpy import cos, pi, sin
 from Z0Z_tools import WindowingFunction
 import numpy
-import scipy.signal.windows as SciPy  # noqa: N812
+import scipy.signal.windows as SciPy
 
 def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 	"""Calculate the length of the taper section for windowing functions.

@@ -1,9 +1,7 @@
-abstract: Z0Z_tools is an innovative collection of tools for Python development 
-  and audio file processing through modular, self-documenting solutions. The 
-  package streamlines common tasks such as managing function parameters, working
-  with data structures, and managing the file system. Z0Z_tools simplifies audio
-  file processing and working with spectrograms. The tools are designed to be 
-  easy to use and to help you write better code faster.
+abstract: Z0Z_tools is an innovative collection of tools for Python development
+  and audio file processing through modular, self-documenting solutions. Z0Z_tools
+  simplifies audio file processing and working with spectrograms. The tools are
+  designed to be easy to use and to help you write better code faster.
 authors:
 - given-names: Hunter
   family-names: Hogan

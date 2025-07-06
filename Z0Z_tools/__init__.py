@@ -43,43 +43,12 @@ Standard signal processing window functions for audio analysis:
 - cosineWings: Creates a windowing function with cosine-tapered ends and flat center.
 - equalPower: Creates an equal-power windowing function for crossfades.
 
-Parameter Validation and Type Handling
--------------------------------------
-Robust functions for validating and converting parameter types:
-
-- defineConcurrencyLimit: Intelligently determines CPU count for parallel processing.
-  Example: cpuCount = defineConcurrencyLimit(0.5)  # Use 50% of available CPUs
-           cpuCount = defineConcurrencyLimit(-2)   # Use all CPUs except 2
-           cpuCount = defineConcurrencyLimit(8)    # Use exactly 8 CPUs
-
-- intInnit: Rigorously validates and converts values to integers.
-  Example: integers = intInnit(['1', '2.0', 3], 'my_parameter')
-
-- oopsieKwargsie: Converts string representations to proper boolean or None values.
-  Example: trueValue = oopsieKwargsie('True')  # Returns Python's True
-
-Data Structure Utilities
------------------------
-Functions for manipulating complex data structures:
-
-- stringItUp: Extracts string representations from nested data structures.
-  Example: strings = stringItUp([1, {'a': 2}, {3, 4.5}])
-
-- updateExtendPolishDictionaryLists: Merges dictionaries containing lists.
-  Example: mergedDict = updateExtendPolishDictionaryLists(dict1, dict2, destroyDuplicates=True)
-
-- autoDecodingRLE: Creates compact, self-decoding run-length encoded representations.
-  Example: encoded = autoDecodingRLE(largeArray)
-
 File System Operations
 ---------------------
 Utilities for working with files and paths:
 
 - findRelativePath: Computes platform-independent relative paths between locations.
   Example: relativePath = findRelativePath(sourceDir, targetDir)
-
-- makeDirsSafely: Creates directory structures without raising errors.
-  Example: makeDirsSafely('/path/to/new/directory')
 
 - dataTabularTOpathFilenameDelimited: Writes tabular data to delimited files.
   Example: dataTabularTOpathFilenameDelimited(data, 'output.csv', ',')
@@ -102,29 +71,8 @@ Utilities for working with arrays:
   Example: with moveToAxisOfOperation(array, 0, -1) as arrayModified:
                # Work with last axis as the operation axis
 
-Testing Support
---------------
-Pre-built test suites for validating function behavior:
-
-- PytestFor_defineConcurrencyLimit: Tests for concurrency limit calculation.
-- PytestFor_intInnit: Tests for integer validation and conversion.
-- PytestFor_oopsieKwargsie: Tests for string-to-boolean conversion.
-
-Example:
-_______
-```python
-from Z0Z_tools import PytestFor_intInnit
-
-@pytest.mark.parametrize("nameOfTest,callablePytest",
-						PytestFor_intInnit(my_custom_function))
-def test_function(nameOfTest, callablePytest):
-	callablePytest()
-```
-
 """
 # pyright: reportUnusedImport=false
-from Z0Z_tools.coping import raiseIfNone as raiseIfNone
-
 from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import PAD_TYPE, FFT_MODE_TYPE
 
 from Z0Z_tools.theTypes import (
@@ -160,13 +108,7 @@ with contextlib.suppress(ImportError, ModuleNotFoundError):
 from Z0Z_tools.filesystemToolkit import (
 	dataTabularTOpathFilenameDelimited as dataTabularTOpathFilenameDelimited,
 	findRelativePath as findRelativePath,
-	importLogicalPath2Identifier as importLogicalPath2Identifier,
-	importPathFilename2Identifier as importPathFilename2Identifier,
-	makeDirsSafely as makeDirsSafely,
-	writeStringToHere as writeStringToHere,
 )
-
-from Z0Z_tools.dataStructures import autoDecodingRLE as autoDecodingRLE, stringItUp as stringItUp, updateExtendPolishDictionaryLists as updateExtendPolishDictionaryLists
 
 from Z0Z_tools.ioAudio import (
 	loadSpectrograms as loadSpectrograms,
@@ -179,21 +121,7 @@ from Z0Z_tools.ioAudio import (
 	writeWAV as writeWAV,
 )
 
-from Z0Z_tools.parseParameters import (
-	defineConcurrencyLimit as defineConcurrencyLimit,
-	intInnit as intInnit,
-	oopsieKwargsie as oopsieKwargsie
-)
-
 from Z0Z_tools.pipAnything import installPackageTarget as installPackageTarget, makeListRequirementsFromRequirementsFile as makeListRequirementsFromRequirementsFile
-
-# NOTE `Pytest` is an optional dependency
-with contextlib.suppress(ImportError, ModuleNotFoundError):
-	from Z0Z_tools.pytestForYourUse import (
-		PytestFor_defineConcurrencyLimit as PytestFor_defineConcurrencyLimit,
-		PytestFor_intInnit as PytestFor_intInnit,
-		PytestFor_oopsieKwargsie as PytestFor_oopsieKwargsie,
-	)
 
 """
 Semiotics:

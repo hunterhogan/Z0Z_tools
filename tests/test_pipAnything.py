@@ -1,11 +1,14 @@
+from tests.conftest import standardizedEqualTo
+from typing import TYPE_CHECKING
 from Z0Z_tools.pipAnything import installPackageTarget, main, make_setupDOTpy, makeListRequirementsFromRequirementsFile
-from tests.conftest import standardizedEqualTo, prototype_numpyAllClose, prototype_numpyArrayEqual
-from unittest.mock import AsyncMock, MagicMock, NonCallableMagicMock
 import pathlib
 import pytest
 import pytest_mock
 import subprocess
 import sys
+
+if TYPE_CHECKING:
+	from unittest.mock import AsyncMock, MagicMock, NonCallableMagicMock
 
 @pytest.mark.parametrize("description,content,expected", [
 	("Basic requirements", "# This is a comment\n package-NE==1.13.0\n package-SW>=4.17.0,<=7.23.0\n package_NW\n analyzeAudio@git+https://github.com/hunterhogan/analyzeAudio.git ", [ 'analyzeAudio@git+https://github.com/hunterhogan/analyzeAudio.git', 'package-NE==1.13.0', 'package-SW>=4.17.0,<=7.23.0', 'package_NW' ] ),
@@ -71,8 +74,8 @@ def test_installPackageTarget(mocker: pytest_mock.MockFixture, pathTmpTesting: p
 	installPackageTarget(pathPackageDir)
 
 	# Verify Popen was called correctly
-	subprocess.Popen.assert_called_once() # type: ignore
-	call_args = subprocess.Popen.call_args[1]['args'] # type: ignore
+	subprocess.Popen.assert_called_once()
+	call_args = subprocess.Popen.call_args[1]['args']
 	assert call_args[0] == sys.executable
 	assert call_args[1:4] == ['-m', 'pip', 'install']
 

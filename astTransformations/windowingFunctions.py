@@ -7,10 +7,8 @@ This module programmatically creates PyTorch tensor versions of windowing functi
 """
 from astToolkit import Be, IngredientsModule, Make, NodeTourist, parseLogicalPath2astModule, Then
 from astToolkit.transformationTools import makeDictionaryFunctionDef, write_astModule
-from collections.abc import Callable
+from hunterMakesPy import raiseIfNone
 from pathlib import Path
-from typing import TypeIs
-from Z0Z_tools import raiseIfNone
 import ast
 
 packageName = 'Z0Z_tools'

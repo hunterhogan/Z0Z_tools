@@ -1,7 +1,7 @@
 [project]
 name = "Z0Z_tools"
-version = "0.11.0"
-description = "Tools for audio/signal processing, data structure, function parameters, and package management."
+version = "1.0.0"
+description = "Tools for audio/signal processing and package management."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { 'text' = "CC-BY-NC-4.0" }
@@ -33,9 +33,6 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Information Analysis",
   "Topic :: Scientific/Engineering :: Mathematics",
   "Topic :: Scientific/Engineering :: Physics",
-  "Topic :: Software Development",
-  "Topic :: Software Development :: Libraries :: Python Modules",
-  "Topic :: Software Development :: Testing :: Unit",
   "Topic :: System :: Filesystems",
   "Topic :: System :: Installation/Setup",
   "Topic :: Text Processing",
@@ -44,11 +41,9 @@ classifiers = [
 ]
 urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Issues = "https://github.com/hunterhogan/Z0Z_tools/issues", Repository = "https://github.com/hunterhogan/Z0Z_tools.git" }
 dependencies = [
-  "charset-normalizer",
-  "more_itertools",
+  "hunterMakesPy",
   "numpy",
   "packaging",
-  "python-minifier",
   "resampy",
   "scipy",
   "soundfile",

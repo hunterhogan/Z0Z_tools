@@ -1,13 +1,13 @@
 """test_waveform or test_spectrogram? if a spectrogram is involved at any point, then test_spectrogram."""
-from typing import Any
-from Z0Z_tools import readAudioFile, writeWAV, stft, waveformSpectrogramWaveform, loadSpectrograms
-import pytest
-import numpy
-from numpy.typing import NDArray
 from numpy.testing import assert_allclose
-from tests.conftest import uniformTestFailureMessage, standardizedEqualTo, prototype_numpyAllClose, prototype_numpyArrayEqual
+from numpy.typing import NDArray
 from pathlib import Path
-
+from tests.conftest import (
+	prototype_numpyAllClose, prototype_numpyArrayEqual, standardizedEqualTo, uniformTestFailureMessage)
+from typing import Any
+from Z0Z_tools import loadSpectrograms, readAudioFile, stft, waveformSpectrogramWaveform, writeWAV
+import numpy
+import pytest
 
 class TestLoadSpectrograms:
 	"""Test suite for loadSpectrograms functionality."""
@@ -199,7 +199,7 @@ def test_stft_multichannel():
 
 def test_stft_invalid_input():
 	with pytest.raises(AttributeError):
-		stft("invalid input") # type: ignore
+		stft("invalid input")
 
 def test_stft_custom_window():
 	# Test with a custom window function
@@ -258,7 +258,7 @@ def test_stft_inverse_without_length():
 	signal = numpy.random.rand(44100)
 	spec = stft(signal)
 	with pytest.raises(ValueError):
-		stft(spec, inverse=True)  # lengthWaveform is required for inverse # type: ignore
+		stft(spec, inverse=True)  # lengthWaveform is required for inverse
 
 def test_stft_withNaNvalues():
 	"""Test stft with input containing NaN values"""

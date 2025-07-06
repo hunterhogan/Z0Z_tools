@@ -17,14 +17,14 @@ WindowingFunctionDtype: TypeAlias = floating[Any]
 WindowingFunction: TypeAlias = ndarray[tuple[int], dtype[WindowingFunctionDtype]]
 WaveformDtype: TypeAlias = floating[Any]
 Waveform: TypeAlias = ndarray[tuple[int, int], dtype[WaveformDtype]]
-"""Two-dimensional NumPy `ndarray` representing audio waveforms.
+"""Two-axes NumPy `ndarray` representing audio waveforms.
 
 A NumPy `ndarray` of audio waveform data with shape (channels, samples). For mono audio, `channels` = 1.
 
 """
 
 ArrayWaveforms: TypeAlias = ndarray[tuple[int, int, int], dtype[WaveformDtype]]
-"""Three-dimensional NumPy `ndarray` representing multiple waveforms.
+"""Three-axes NumPy `ndarray` representing multiple waveforms.
 
 A NumPy `ndarray` containing `ndarray` of type `Waveform` indexed on the last axis: shape is (channels, samples, `Waveform`).
 
@@ -32,14 +32,14 @@ A NumPy `ndarray` containing `ndarray` of type `Waveform` indexed on the last ax
 
 SpectrogramDtype: TypeAlias = complexfloating[Any, Any]
 Spectrogram: TypeAlias = ndarray[tuple[int, int, int], dtype[SpectrogramDtype]]
-"""Three-dimensional `ndarray` representing a spectrogram.
+"""Three-axes `ndarray` representing a spectrogram.
 
 A NumPy `ndarray` of spectrogram data with shape (channels, frequency_bins, time_frames). For mono audio, `channels` = 1.
 
 """
 
 ArraySpectrograms: TypeAlias = ndarray[tuple[int, int, int, int], dtype[SpectrogramDtype]]
-"""Four-dimensional NumPy `ndarray` representing multiple spectrograms.
+"""Four-axes NumPy `ndarray` representing multiple spectrograms.
 
 A NumPy `ndarray` containing `ndarray` of type `Spectrogram` indexed on the last axis: shape is (channels, frequency_bins, time_frames, `Spectrogram`).
 
