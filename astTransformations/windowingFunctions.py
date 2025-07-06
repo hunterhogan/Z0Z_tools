@@ -87,5 +87,5 @@ ingredientsModule.imports.addImport_asStr('torch')
 write_astModule(ingredientsModule, pathFilenameDestination, packageName)
 
 docstringModule = '"""Create PyTorch tensor windowing functions."""\n'
-pathFilenameDestination.write_text(docstringModule + pathFilenameDestination.read_text())
+pathFilenameDestination.write_text(docstringModule + pathFilenameDestination.read_text(encoding="utf-8"))
 

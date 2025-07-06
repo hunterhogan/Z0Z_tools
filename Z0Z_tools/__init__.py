@@ -72,6 +72,21 @@ Utilities for working with arrays:
                # Work with last axis as the operation axis
 
 """
+
+from hunterMakesPy import (
+	autoDecodingRLE as autoDecodingRLE,
+	defineConcurrencyLimit as defineConcurrencyLimit,
+	identifierDotAttribute as identifierDotAttribute,
+	importLogicalPath2Identifier as importLogicalPath2Identifier,
+	importPathFilename2Identifier as importPathFilename2Identifier,
+	intInnit as intInnit,
+	makeDirsSafely as makeDirsSafely,
+	oopsieKwargsie as oopsieKwargsie,
+	raiseIfNone as raiseIfNone,
+	stringItUp as stringItUp,
+	updateExtendPolishDictionaryLists as updateExtendPolishDictionaryLists,
+	writeStringToHere as writeStringToHere,
+)
 # pyright: reportUnusedImport=false
 from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import PAD_TYPE, FFT_MODE_TYPE
 
@@ -83,7 +98,6 @@ from Z0Z_tools.theTypes import (
 	ParametersShortTimeFFT,
 	ParametersSTFT,
 	ParametersUniversal,
-	identifierDotAttribute as identifierDotAttribute,
 	Spectrogram as Spectrogram,
 	Waveform as Waveform,
 	WaveformMetadata,
@@ -129,3 +143,4 @@ WAV: is a file format. Don't use ambiguous: "Wav", "wav".
 waveform: is a data concept.
 windowing function: is the correct name for the array of numbers. Don't use ambiguous: "window" (diminutive form).
 """
+

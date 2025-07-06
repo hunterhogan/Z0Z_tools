@@ -111,11 +111,3 @@ Type alias for callable objects that accept a normalized waveform and
 return the waveform restored to its original amplitude scale.
 
 """
-
-identifierDotAttribute: TypeAlias = str
-"""String representing a dotted attribute identifier.
-
-Type alias for strings containing object attribute paths using dot notation,
-such as 'scipy.signal.windows' for dynamic attribute access.
-
-"""
