@@ -12,7 +12,7 @@ def test_normalize_peak_amplitude(ID: str, waveform: Waveform, sampleRate: float
     assert numpy.isclose(peakAbsolute, amplitudeNorm, rtol=1e-5), f"Peak amplitude {peakAbsolute} should equal {amplitudeNorm} for {ID}"
 
 @pytest.mark.parametrize("ID, waveform, sampleRate, LUFS, channelsTotal", [(dataSample.ID, dataSample.waveform, dataSample.sampleRate, dataSample.LUFS, dataSample.channelsTotal) for dataSample in sampleData()])
-def test_normalize_reversion(ID: str, waveform: Waveform, sampleRate: float, LUFS: float, channelsTotal: int):
+def test_normalize_reversion(ID: str, waveform: Waveform, sampleRate: float, LUFS: float, channelsTotal: int) -> None:
     """Test that normalize() returns a reversion function that restores the original waveform."""
     waveformNormalized, revertNormalization = normalizeWaveform(waveform.copy())
 
@@ -21,7 +21,7 @@ def test_normalize_reversion(ID: str, waveform: Waveform, sampleRate: float, LUF
     assert numpy.allclose(waveformReverted, waveform, rtol=1e-5), f"Reverted waveform should match original for {ID}"
 
 @pytest.mark.parametrize("ID, waveform, sampleRate, LUFS, channelsTotal", [(dataSample.ID, dataSample.waveform, dataSample.sampleRate, dataSample.LUFS, dataSample.channelsTotal) for dataSample in sampleData()])
-def test_normalize_preserves_relative_amplitudes(ID: str, waveform: Waveform, sampleRate: float, LUFS: float, channelsTotal: int):
+def test_normalize_preserves_relative_amplitudes(ID: str, waveform: Waveform, sampleRate: float, LUFS: float, channelsTotal: int) -> None:
     """Test that normalize() preserves relative amplitudes between samples."""
     # Create reference points to compare
     indexReference1, indexReference2 = 1000, 2000
@@ -37,7 +37,7 @@ def test_normalize_preserves_relative_amplitudes(ID: str, waveform: Waveform, sa
 
         assert numpy.isclose(ratioOriginal, ratioNormalized, rtol=1e-5), f"Relative amplitudes should be preserved for {ID}"
 
-def test_normalize_edge_cases():
+def test_normalize_edge_cases() -> None:
     """Test normalize() with edge cases."""
     # Test with zero waveform
     shapeWaveform = (2, 1000)  # Sample stereo shape
@@ -49,13 +49,13 @@ def test_normalize_edge_cases():
         waveformNormalized, _revertNormalization = normalizeWaveform(waveformZeros)
         # If it doesn't raise an error, the result should be zeros
         assert numpy.allclose(waveformNormalized, waveformZeros), \
-            f"Zero waveform should normalize to zeros"
+            "Zero waveform should normalize to zeros"
     except Exception as ERRORmessage:
         # If it raises an error, it should be a specific error about division by zero
         assert "division" in str(ERRORmessage).lower() or "zero" in str(ERRORmessage).lower(), \
             f"Expected division by zero error, got: {ERRORmessage}"
 
-def test_normalizeArrayWaveforms(array44100_ch2_sec5_Sine: ArrayWaveforms):
+def test_normalizeArrayWaveforms(array44100_ch2_sec5_Sine: ArrayWaveforms) -> None:
     """Test that normalizeArrayWaveforms scales multiple waveforms to have peak amplitude equal to amplitudeNorm."""
     # Save a copy of the original array for comparison after reversion
     arrayOriginal = array44100_ch2_sec5_Sine.copy()

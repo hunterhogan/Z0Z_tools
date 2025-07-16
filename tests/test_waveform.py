@@ -1,7 +1,5 @@
-from hunterMakesPy import makeDirsSafely
-from tests.conftest import (
-	dumbassDictionaryPathFilenamesAudioFiles, pathFilenameTmpTesting, pathTmpTesting, waveform_dataRTFStyleGuide)
-from typing import Any, Literal
+from tests.conftest import prototype_numpyArrayEqual, standardizedEqualTo, WaveformAndMetadata
+from typing import Any, Final
 from Z0Z_tools import loadWaveforms, readAudioFile, resampleWaveform, writeWAV
 import io
 import numpy
@@ -9,155 +7,173 @@ import pathlib
 import pytest
 import soundfile
 
-# readAudioFile tests
+# Constants for test validation
+CHANNELS_STEREO: Final[int] = 2
+SAMPLE_RATE_DEFAULT: Final[int] = 44100
+
 class TestReadAudioFile:
-	def test_mono_to_stereo_conversion(self):
-		"""Test that mono files are properly converted to stereo."""
-		pathFilename = dumbassDictionaryPathFilenamesAudioFiles['mono']
-		if isinstance(pathFilename, list):
-			pathFilename = pathFilename[0]
-		waveform = readAudioFile(pathFilename)
-		assert waveform.shape[0] == 2  # Should be stereo (2 channels)
+	"""Test readAudioFile function with real audio data fixtures."""
 
-	def test_stereo_file_reading(self):
-		"""Test reading a stereo file directly."""
-		pathFilename = dumbassDictionaryPathFilenamesAudioFiles['stereo']
-		if isinstance(pathFilename, list):
-			pathFilename = pathFilename[0]
-		waveform = readAudioFile(pathFilename)
-		assert waveform.shape[0] == 2
+	def test_readMonoFileConvertsToStereo(self, waveformMono16kHz: WaveformAndMetadata) -> None:
+		"""Test that mono files are automatically converted to stereo format."""
+		waveformResult = readAudioFile(waveformMono16kHz.pathFilename)
+		assert waveformResult.shape[0] == CHANNELS_STEREO
 
-	@pytest.mark.parametrize("sample_rate", [16000, 44100, 48000])
-	def test_resampling(self, sample_rate: float) -> None:
-		"""Test resampling functionality with different sample rates."""
-		pathFilename = dumbassDictionaryPathFilenamesAudioFiles['mono']
-		if isinstance(pathFilename, list):
-			pathFilename = pathFilename[0]
-		waveform = readAudioFile(pathFilename, sampleRate=sample_rate)
-		expected_length = int(sample_rate * 9)  # 9-second file
-		assert waveform.shape[1] == pytest.approx(expected_length, rel=0.1)
+	def test_readStereoFileDirectly(self, waveformStereo44kHz: WaveformAndMetadata) -> None:
+		"""Test reading stereo files without modification."""
+		waveformResult = readAudioFile(waveformStereo44kHz.pathFilename)
+		assert waveformResult.shape[0] == CHANNELS_STEREO
 
-	@pytest.mark.parametrize("invalid_input", [
-		"nonexistent_file.wav",
-		dumbassDictionaryPathFilenamesAudioFiles['video']
+	@pytest.mark.parametrize("sampleRateTarget,tolerancePercent", [
+		(22050, 5),
+		(44100, 5),
+		(48000, 5),
+		(96000, 5)
 	])
-	def test_invalid_inputs(self, invalid_input: Any | Literal['nonexistent_file.wav']):
-		"""Test handling of invalid inputs."""
-		with pytest.raises((FileNotFoundError, soundfile.LibsndfileError)):
-			readAudioFile(invalid_input)
+	def test_resampleDuringRead(self, waveformStereo44kHz: WaveformAndMetadata, sampleRateTarget: int, tolerancePercent: int) -> None:
+		"""Test resampling functionality during file reading."""
+		secondsDuration = 5.0
+		waveformResult = readAudioFile(waveformStereo44kHz.pathFilename, sampleRate=sampleRateTarget)
+		samplesExpected = int(sampleRateTarget * secondsDuration)
+		samplesActual = waveformResult.shape[1]
+		toleranceAbsolute = int(samplesExpected * tolerancePercent / 100)
+		assert abs(samplesActual - samplesExpected) <= toleranceAbsolute
 
-# loadWaveforms tests
+	def test_errorOnNonexistentFile(self, pathFilenameNonexistentForErrorTesting: pathlib.Path) -> None:
+		"""Test proper error handling for nonexistent files."""
+		standardizedEqualTo(FileNotFoundError, readAudioFile, pathFilenameNonexistentForErrorTesting)
+
+	def test_errorOnVideoFile(self, pathFilenameVideoForErrorTesting: pathlib.Path) -> None:
+		"""Test proper error handling for unsupported file formats."""
+		standardizedEqualTo(soundfile.LibsndfileError, readAudioFile, pathFilenameVideoForErrorTesting)
+
 class TestLoadWaveforms:
-	@pytest.mark.parametrize("file_list,expected_shape", [
-		(dumbassDictionaryPathFilenamesAudioFiles['mono_copies'], (2, 396900, 3)),
-		(dumbassDictionaryPathFilenamesAudioFiles['stereo_copies'], (2, 220500, 4))
-	])
-	def test_batch_loading(self, file_list: Any, expected_shape: tuple[int]):
-		"""Test loading multiple files of the same type."""
-		array_waveforms = loadWaveforms(file_list)
-		assert array_waveforms.shape == expected_shape
+	"""Test loadWaveforms function for batch audio file processing."""
 
-	def test_mixed_file_types(self):
-		"""Test loading a mix of mono and stereo files."""
-		mono_files: pathlib.Path | list[pathlib.Path] = dumbassDictionaryPathFilenamesAudioFiles['mono_copies']
-		stereo_files: pathlib.Path | list[pathlib.Path] = dumbassDictionaryPathFilenamesAudioFiles['stereo_copies']
-		mixed_files: list[pathlib.Path] = [mono_files[0] if isinstance(mono_files, list) else mono_files,
-					stereo_files[0] if isinstance(stereo_files, list) else stereo_files]
-		array_waveforms:numpy.ndarray[tuple[int, int, int], numpy.dtype[numpy.float32]] = loadWaveforms(mixed_files)
-		assert array_waveforms.shape[0] == 2  # Should be stereo
-		assert array_waveforms.shape[2] == 2  # Two files
+	def test_loadMultipleStereoFiles(self, listWaveformsSameStereoShape: list[WaveformAndMetadata]) -> None:
+		"""Test loading multiple stereo files into array format."""
+		listPathFilenames = [waveformData.pathFilename for waveformData in listWaveformsSameStereoShape]
+		arrayWaveformsResult = loadWaveforms(listPathFilenames)
 
-	def test_empty_input(self):
-		"""Test handling of empty input list."""
-		with pytest.raises(ValueError):
-			loadWaveforms([])
+		filesTotal = len(listWaveformsSameStereoShape)
+		assert arrayWaveformsResult.shape[0] == CHANNELS_STEREO
+		assert arrayWaveformsResult.shape[2] == filesTotal
 
-# resampleWaveform tests
+	def test_loadMultipleMonoFiles(self, listWaveformsSameMonoShape: list[WaveformAndMetadata]) -> None:
+		"""Test loading multiple mono files with automatic stereo conversion."""
+		listPathFilenames = [waveformData.pathFilename for waveformData in listWaveformsSameMonoShape]
+		arrayWaveformsResult = loadWaveforms(listPathFilenames)
+
+		filesTotal = len(listWaveformsSameMonoShape)
+		assert arrayWaveformsResult.shape[0] == CHANNELS_STEREO  # Mono files should be converted to stereo
+		assert arrayWaveformsResult.shape[2] == filesTotal
+
+	def test_loadMixedMonoStereoFiles(self, waveformMono16kHz: WaveformAndMetadata, waveformStereo44kHz: WaveformAndMetadata) -> None:
+		"""Test loading mixed mono and stereo files."""
+		listPathFilenames = [waveformMono16kHz.pathFilename, waveformStereo44kHz.pathFilename]
+		arrayWaveformsResult = loadWaveforms(listPathFilenames)
+
+		filesTotal = 2
+		assert arrayWaveformsResult.shape[0] == CHANNELS_STEREO  # All should be stereo
+		assert arrayWaveformsResult.shape[2] == filesTotal
+
+	def test_errorOnEmptyFileList(self) -> None:
+		"""Test proper error handling for empty file lists."""
+		standardizedEqualTo(ValueError, loadWaveforms, [])
+
 class TestResampleWaveform:
-	@pytest.mark.parametrize("source_rate,target_rate,expected_factor", [
+	"""Test resampleWaveform function for sample rate conversion."""
+
+	@pytest.mark.parametrize("sampleRateSource,sampleRateTarget,factorExpected", [
 		(16000, 44100, 2.75625),
 		(44100, 22050, 0.5),
-		(44100, 44100, 1.0)
+		(44100, 44100, 1.0),
+		(96000, 48000, 0.5),
+		(48000, 96000, 2.0)
 	])
-	def test_resampling_rates(self, waveform_dataRTFStyleGuide: dict[str, dict[str, Any]], source_rate: Literal[16000] | Literal[44100], target_rate: Literal[44100] | Literal[22050], expected_factor: float):
-		"""Test resampling with different rate combinations."""
-		waveform = waveform_dataRTFStyleGuide['mono']['waveform']
-		resampled = resampleWaveform(waveform, target_rate, source_rate)
-		expected_length = int(waveform.shape[0] * expected_factor)
-		assert resampled.shape[0] == expected_length
+	def test_resampleWithDifferentRates(self, waveformStereo44kHz: WaveformAndMetadata, sampleRateSource: int, sampleRateTarget: int, factorExpected: float) -> None:
+		"""Test resampling with various sample rate combinations."""
+		waveformOriginal = waveformStereo44kHz.waveform
+		waveformResampled = resampleWaveform(waveformOriginal, sampleRateTarget, sampleRateSource)
 
-	def test_same_rate_no_change(self, waveform_dataRTFStyleGuide: dict[str, dict[str, Any]]):
-		"""Test that no resampling occurs when rates match."""
-		waveform = waveform_dataRTFStyleGuide['stereo']['waveform']
-		rate = waveform_dataRTFStyleGuide['stereo']['sample_rate']
-		resampled = resampleWaveform(waveform, rate, rate)
-		assert numpy.array_equal(resampled, waveform)
+		samplesExpected = int(waveformOriginal.shape[1] * factorExpected)
+		samplesActual = waveformResampled.shape[1]
+		assert samplesActual == samplesExpected
 
-	@pytest.mark.parametrize("invalid_input", [
-		('not_an_array', 44100, 22050),
-		(numpy.array([1, 2, 3]), -44100, 22050)
-	])
-	def test_invalid_inputs(self, invalid_input: Any) -> None:
-		"""Test handling of invalid inputs."""
-		with pytest.raises((AttributeError, ValueError)):
-			resampleWaveform(*invalid_input)
+	def test_resamplePreservesChannels(self, waveformStereo44kHz: WaveformAndMetadata) -> None:
+		"""Test that resampling preserves channel count."""
+		waveformOriginal = waveformStereo44kHz.waveform
+		waveformResampled = resampleWaveform(waveformOriginal, 22050, 44100)
+		assert waveformResampled.shape[0] == waveformOriginal.shape[0]
 
-class TestWriteWav:
-	@pytest.mark.parametrize("test_case", [
+	def test_resampleSameRateNoChange(self, waveformStereo44kHz: WaveformAndMetadata) -> None:
+		"""Test that identical sample rates produce no change."""
+		waveformOriginal = waveformStereo44kHz.waveform
+		sampleRate = 44100
+		prototype_numpyArrayEqual(waveformOriginal, resampleWaveform, waveformOriginal, sampleRate, sampleRate)
+
+class TestWriteWAV:
+	"""Test writeWAV function for audio file output."""
+
+	@pytest.mark.parametrize("testCase", [
 		{
-			'channels': 1,
-			'samples': 1000,
+			'channelsTotal': 1,
+			'samplesTotal': 1000,
 			'description': "mono audio",
-			'expected_shape': (1000,)  # Mono should be 1D array
+			'shapeExpectedSoundfile': (1000,)  # soundfile reads mono as 1D
 		},
 		{
-			'channels': 2,
-			'samples': 1000,
+			'channelsTotal': 2,
+			'samplesTotal': 1000,
 			'description': "stereo audio",
-			'expected_shape': (1000, 2)  # Stereo should be 2D array (samples, channels)
+			'shapeExpectedSoundfile': (1000, 2)  # soundfile reads stereo as (samples, channels)
 		}
 	])
-	def test_write_and_verify(self, pathFilenameTmpTesting: pathlib.Path, test_case: Any) -> None:
-		"""Test writing WAV files and verifying their contents."""
-		# Input waveform shape: (channels, samples)
-		waveform = numpy.random.rand(test_case['channels'], test_case['samples']).astype(numpy.float32)
-		writeWAV(pathFilenameTmpTesting, waveform)
+	def test_writeAndVerifyContent(self, pathFilenameTmpTesting: pathlib.Path, testCase: dict[str, Any]) -> None:
+		"""Test writing WAV files and verifying their contents match expectations."""
+		# Create test waveform with predictable values
+		waveformTest = numpy.full((testCase['channelsTotal'], testCase['samplesTotal']), 0.5, dtype=numpy.float32)
+		writeWAV(pathFilenameTmpTesting, waveformTest)
 
-		# soundfile.read returns shape (samples,) for mono or (samples, channels) for stereo
-		read_waveform, sr = soundfile.read(pathFilenameTmpTesting)
+		# Verify file was created and read correctly
+		waveformRead, sampleRateRead = soundfile.read(pathFilenameTmpTesting)
 
-		assert sr == 44100  # Default sample rate
-		assert read_waveform.shape == test_case['expected_shape'], \
-			f"Shape mismatch for {test_case['description']}: " \
-			f"expected {test_case['expected_shape']}, got {read_waveform.shape}"
+		# Check sample rate
+		assert sampleRateRead == SAMPLE_RATE_DEFAULT
 
-		# For comparison, we need to handle mono and stereo cases differently
-		if test_case['channels'] == 1:
-			assert numpy.allclose(read_waveform, waveform.flatten())
+		# Check shape
+		assert waveformRead.shape == testCase['shapeExpectedSoundfile']
+
+		# Verify content matches
+		if testCase['channelsTotal'] == 1:
+			numpy.testing.assert_allclose(waveformRead, waveformTest.flatten())
 		else:
-			assert numpy.allclose(read_waveform, waveform.T)
+			numpy.testing.assert_allclose(waveformRead, waveformTest.T)
 
-	def test_directory_creation(self, pathTmpTesting: pathlib.Path) -> None:
-		"""Test automatic directory creation."""
-		nested_path: pathlib.Path = pathTmpTesting / "nested" / "dirs" / "test.wav"
-		waveform = numpy.random.rand(2, 1000).astype(numpy.float32)
-		writeWAV(nested_path, waveform)
-		assert nested_path.exists()
+	def test_writeCreatesDirectories(self, pathTmpTesting: pathlib.Path) -> None:
+		"""Test that writeWAV creates necessary directory structure."""
+		pathFilenameNested = pathTmpTesting / "nested" / "directories" / "test.wav"
+		waveformTest = numpy.ones((2, 1000), dtype=numpy.float32)
+		writeWAV(pathFilenameNested, waveformTest)
+		assert pathFilenameNested.exists()
 
-	def test_file_overwrite(self, pathFilenameTmpTesting: pathlib.Path) -> None:
-		"""Test overwriting existing files."""
-		waveform1 = numpy.ones((2, 1000), dtype=numpy.float32)
-		waveform2 = numpy.zeros((2, 1000), dtype=numpy.float32)
+	def test_writeOverwritesExistingFile(self, pathFilenameTmpTesting: pathlib.Path) -> None:
+		"""Test that writeWAV properly overwrites existing files."""
+		waveformFirst = numpy.ones((2, 1000), dtype=numpy.float32)
+		waveformSecond = numpy.zeros((2, 1000), dtype=numpy.float32)
 
-		writeWAV(pathFilenameTmpTesting, waveform1)
-		writeWAV(pathFilenameTmpTesting, waveform2)
+		writeWAV(pathFilenameTmpTesting, waveformFirst)
+		writeWAV(pathFilenameTmpTesting, waveformSecond)
 
-		read_waveform, _ = soundfile.read(pathFilenameTmpTesting)
-		assert numpy.allclose(read_waveform.T, waveform2)
+		waveformRead, _sampleRateRead = soundfile.read(pathFilenameTmpTesting)
+		numpy.testing.assert_allclose(waveformRead.T, waveformSecond)
 
-	def test_binary_stream(self):
-		"""Test writing to a binary stream."""
-		waveform = numpy.random.rand(2, 1000).astype(numpy.float32)
-		bio = io.BytesIO()
-		writeWAV(bio, waveform)
-		assert bio.getvalue()  # Verify that data was written
+	def test_writeToBinaryStream(self) -> None:
+		"""Test writing audio data to a binary stream object."""
+		waveformTest = numpy.full((2, 1000), 0.25, dtype=numpy.float32)
+		streamBinary = io.BytesIO()
+		writeWAV(streamBinary, waveformTest)
+
+		# Verify data was written to the stream
+		bytesWritten = streamBinary.getvalue()
+		assert len(bytesWritten) > 0

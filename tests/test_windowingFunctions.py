@@ -72,7 +72,7 @@ def test_invalidTaperRatio(functionWindowingInvalid: Callable[..., numpy.ndarray
 Section: Tests for PyTorch tensor variants of windowing functions
 """
 
-def prototype_tensorEquivalent(functionNdarrayOriginal: Callable[..., numpy.ndarray], functionTensorTarget: Callable[..., torch.Tensor], device: str, *arguments: Any, **keywordArguments: Any) -> None:
+def prototype_tensorEquivalent(functionNdarrayOriginal: Callable[..., numpy.ndarray[tuple[int], numpy.dtype[numpy.float64]]], functionTensorTarget: Callable[..., torch.Tensor], device: str, *arguments: Any, **keywordArguments: Any) -> None:
 	"""
 	Template for tests that verify tensor-based functions produce the same results as their numpy counterparts.
 	"""
@@ -111,12 +111,10 @@ def test_tensor_special_cases(device: str) -> None:
 	"""
 	Verify special cases in tensor-based windowing functions.
 	"""
-	# Test zero taper for cosineWingsTensor (should be all ones)
 	cosineWingsTensorResult = cosineWingsTensor(256, ratioTaper=0.0, device=torch.device(device))
 	assert torch.allclose(cosineWingsTensorResult, torch.ones(256, device=torch.device(device), dtype=torch.float32)), \
 		"cosineWingsTensor with ratioTaper=0.0 should produce all ones"
 
-	# Test tukeyTensor with alpha parameter (backward compatibility)
 	tukeyNormal = tukeyTensor(256, ratioTaper=0.5, device=torch.device(device))
 	tukeyAlpha = tukeyTensor(256, alpha=0.5, device=torch.device(device))
 	assert torch.allclose(tukeyNormal, tukeyAlpha), \

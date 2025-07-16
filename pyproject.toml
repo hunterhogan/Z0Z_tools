@@ -51,19 +51,18 @@ dependencies = [
 ]
 optional-dependencies = { PyTorch = [
   "torch",
-], testing = [
+], development = [
   "astToolkit",
   "mypy",
   "pandas",
+  "pyupgrade",
+  "scipy-stubs",
+  "setuptools-scm",
+], testing = [
   "pytest-cov",
   "pytest-mock",
   "pytest-xdist",
   "pytest",
-  "pyupgrade",
-  "scipy-stubs",
-  "setuptools-scm",
-  "torch",
-  "trove_classifiers",
 ] }
 
 [build-system]
