@@ -260,7 +260,7 @@ def stft(arrayTarget: Spectrogram, *, sampleRate: float | None = None, lengthHop
 @overload # istft many ndarray
 def stft(arrayTarget: ArraySpectrograms, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[True] = True, lengthWaveform: int, indexingAxis: int = -1) -> ArrayWaveforms: ...  # noqa: E501
 
-def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrograms  # noqa: C901
+def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrograms
 		, *
 		, sampleRate: float | None = None
 		, lengthHop: int | None = None

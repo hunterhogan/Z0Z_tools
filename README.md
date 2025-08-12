@@ -1,11 +1,8 @@
 # Z0Z_tools
 
-A comprehensive collection of Python utilities for developers and audio processing enthusiasts. "Z0Z_" indicates a prototype package where individual components may eventually evolve into focused standalone packages or move to existing
-packages. Please suggest a good home for the audio processing tools or any of the other functions.
-
-## Why Choose Z0Z_tools?
-
-Z0Z_tools solves common development challenges with clean, well-documented functions that emphasize self-explanatory code and robust error handling.
+A comprehensive collection of Python utilities for developers and audio processing enthusiasts. "Z0Z_" indicates a prototype
+package where individual components may eventually evolve into focused standalone packages or move to existing packages. Please
+suggest a good home for the audio processing tools or any of the other functions.
 
 ## Audio Processing Made Simple
 
@@ -100,4 +97,4 @@ Coding One Step at a Time:
 2. Write good code.
 3. When revising, write better code.
 
-[![CC-BY-NC-4.0](https://github.com/hunterhogan/Z0Z_tools/blob/main/CC-BY-NC-4.0.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![CC-BY-NC-4.0](https://github.com/hunterhogan/Z0Z_tools/blob/main/CC-BY-NC-4.0.png)](https://creativecommons.org/licenses/by-nc/4.0/)
