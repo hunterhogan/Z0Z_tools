@@ -212,11 +212,13 @@ def loadWaveforms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTa
 
 	for index, metadata in dictionaryWaveformMetadata.items():
 		waveform: Waveform = readAudioFile(metadata['pathFilename'], sampleRateTarget)
-		samplesTrailing = metadata['lengthWaveform'] + metadata['samplesLeading'] - samplesTotalMaximum
-		if samplesTrailing == 0:
-			samplesTrailing = None
 		# GitHub #4 Add padding logic to `loadWaveforms` and `loadSpectrograms`
-		arrayWaveforms[:, metadata['samplesLeading']:samplesTrailing, index] = waveform
+		axisTime: int = -1
+		endIndex = metadata['samplesLeading'] + waveform.shape[axisTime]
+		if metadata['samplesTrailing'] == 0:
+			arrayWaveforms[:, metadata['samplesLeading']:endIndex, index] = waveform
+		else:
+			arrayWaveforms[:, metadata['samplesLeading']:-metadata['samplesTrailing'], index] = waveform
 
 	return arrayWaveforms
 
@@ -351,9 +353,13 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 def _getSpectrogram(waveform: Waveform, metadata: WaveformMetadata, sampleRateTarget: float, **parametersSTFT: Any) -> Spectrogram:
 	# All waveforms have the same shape so that all spectrograms have the same shape.
 	# GitHub #4 Add padding logic to `loadWaveforms` and `loadSpectrograms`
-	lengthWaveform = metadata['lengthWaveform'] + metadata['samplesLeading'] + metadata['samplesTrailing']
-	# All shorter waveforms are forced to have trailing zeros.
-	waveform[:, 0:lengthWaveform] = readAudioFile(metadata['pathFilename'], sampleRateTarget)
+	waveformData: Waveform = readAudioFile(metadata['pathFilename'], sampleRateTarget)
+	axisTime: int = -1
+	endIndex = metadata['samplesLeading'] + waveformData.shape[axisTime]
+	if metadata['samplesTrailing'] == 0:
+		waveform[:, metadata['samplesLeading']:endIndex] = waveformData
+	else:
+		waveform[:, metadata['samplesLeading']:-metadata['samplesTrailing']] = waveformData
 	return stft(waveform, sampleRate=sampleRateTarget, **parametersSTFT)
 
 def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTarget: float | None = None, **parametersSTFT: Any) -> tuple[ArraySpectrograms, dict[int, WaveformMetadata]]:
