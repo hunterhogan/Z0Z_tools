@@ -41,7 +41,7 @@ def moveToAxisOfOperation(arrayTarget: ArrayType, axisSource: int, axisOfOperati
 	The original axis positions are restored when exiting the context.
 
 	"""
-	arrayStandardized = cast("ArrayType", moveaxis(arrayTarget, axisSource, axisOfOperation))
+	arrayStandardized = cast(ArrayType, moveaxis(arrayTarget, axisSource, axisOfOperation))
 	try:
 		yield arrayStandardized
 	finally:

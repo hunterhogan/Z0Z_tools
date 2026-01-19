@@ -97,4 +97,4 @@ Coding One Step at a Time:
 2. Write good code.
 3. When revising, write better code.
 
-[![CC-BY-NC-4.0](https://github.com/hunterhogan/Z0Z_tools/blob/main/CC-BY-NC-4.0.png)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![CC-BY-NC-4.0](https://raw.githubusercontent.com/hunterhogan/Z0Z_tools/refs/heads/main/.github/CC-BY-NC-4.0.png)](https://creativecommons.org/licenses/by-nc/4.0/)

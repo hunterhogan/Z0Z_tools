@@ -6,7 +6,7 @@ and Short-Time Fourier Transform operations with consistent data shapes and type
 """
 from collections.abc import Callable, Sequence
 from concurrent.futures import as_completed, ProcessPoolExecutor
-from hunterMakesPy import makeDirsSafely
+from hunterMakesPy.filesystemToolkit import makeDirsSafely
 from math import ceil as ceiling, log2 as log_base2
 from multiprocessing import set_start_method as multiprocessing_set_start_method
 from numpy import complex64, dtype, float32, floating, ndarray
@@ -118,16 +118,16 @@ def readAudioFile(pathFilename: str | PathLike[Any] | BinaryIO, sampleRate: floa
 	if sampleRate is None:
 		sampleRate = parametersUniversal['sampleRate']
 	try:
-		with soundfile.SoundFile(pathFilename) as readSoundFile:
+		with soundfile.SoundFile(str(pathFilename)) as readSoundFile:
 			sampleRateSource: int = readSoundFile.samplerate
 			waveform: Waveform = readSoundFile.read(dtype='float32', always_2d=True).astype(universalDtypeWaveform)
 			# GitHub #3 Implement semantic axes for audio data
 			axisTime = 0
 			axisChannels = 1
-			waveform = cast("Waveform", resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource, axisTime=axisTime))
+			waveform = cast(Waveform, resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource, axisTime=axisTime))
 			if waveform.shape[axisChannels] == 1:
-				waveform = cast("Waveform", numpy.repeat(waveform, 2, axis=axisChannels))
-			return cast("Waveform", numpy.transpose(waveform, axes=(axisChannels, axisTime)))
+				waveform = cast(Waveform, numpy.repeat(waveform, 2, axis=axisChannels))
+			return cast(Waveform, numpy.transpose(waveform, axes=(axisChannels, axisTime)))
 	except soundfile.LibsndfileError as ERRORmessage:
 		if 'System error' in str(ERRORmessage):
 			message = f"File not found: {pathFilename}"
@@ -246,19 +246,19 @@ def writeWAV(pathFilename: str | PathLike[Any] | io.IOBase, waveform: Waveform, 
 	if sampleRate is None:
 		sampleRate = parametersUniversal['sampleRate']
 	makeDirsSafely(pathFilename)
-	soundfile.write(file=pathFilename, data=waveform.T, samplerate=int(sampleRate), subtype='FLOAT', format='WAV')
+	soundfile.write(file=str(pathFilename), data=waveform.T, samplerate=int(sampleRate), subtype='FLOAT', format='WAV')
 
 @overload # stft 1 ndarray
-def stft(arrayTarget: Waveform, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[False] = False, lengthWaveform: None = None, indexingAxis: None = None) -> Spectrogram: ...  # noqa: E501
+def stft(arrayTarget: Waveform, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[False] = False, lengthWaveform: None = None, indexingAxis: None = None) -> Spectrogram: ...
 
 @overload # stft many ndarray
-def stft(arrayTarget: ArrayWaveforms, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[False] = False, lengthWaveform: None = None, indexingAxis: int = -1) -> ArraySpectrograms: ...  # noqa: E501
+def stft(arrayTarget: ArrayWaveforms, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[False] = False, lengthWaveform: None = None, indexingAxis: int = -1) -> ArraySpectrograms: ...
 
 @overload # istft 1 ndarray
-def stft(arrayTarget: Spectrogram, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[True] = True, lengthWaveform: int, indexingAxis: None = None) -> Waveform: ...  # noqa: E501
+def stft(arrayTarget: Spectrogram, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[True] = True, lengthWaveform: int, indexingAxis: None = None) -> Waveform: ...
 
 @overload # istft many ndarray
-def stft(arrayTarget: ArraySpectrograms, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[True] = True, lengthWaveform: int, indexingAxis: int = -1) -> ArrayWaveforms: ...  # noqa: E501
+def stft(arrayTarget: ArraySpectrograms, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[True] = True, lengthWaveform: int, indexingAxis: int = -1) -> ArrayWaveforms: ...
 
 def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrograms
 		, *
@@ -332,8 +332,8 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 
 	def doTransformation(arrayInput: Waveform | Spectrogram, lengthWaveform: int | None, inverse: bool) -> Waveform | Spectrogram:  # noqa: FBT001
 		if inverse:
-			return cast('Waveform', stftWorkhorse.istft(S=arrayInput, k1=lengthWaveform))
-		return cast('Spectrogram', stftWorkhorse.stft(x=arrayInput, **parametersSTFTUniversal))
+			return cast(Waveform, stftWorkhorse.istft(S=arrayInput, k1=lengthWaveform))
+		return cast(Spectrogram, stftWorkhorse.stft(x=arrayInput, **parametersSTFTUniversal))
 
 	if indexingAxis is None:
 		singleton: Waveform | Spectrogram = cast('Waveform | Spectrogram', arrayTarget)

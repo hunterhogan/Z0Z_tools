@@ -73,69 +73,44 @@ Utilities for working with arrays:
 
 """
 
-from hunterMakesPy import (
-	autoDecodingRLE as autoDecodingRLE,
-	defineConcurrencyLimit as defineConcurrencyLimit,
-	identifierDotAttribute as identifierDotAttribute,
-	importLogicalPath2Identifier as importLogicalPath2Identifier,
-	importPathFilename2Identifier as importPathFilename2Identifier,
-	intInnit as intInnit,
-	makeDirsSafely as makeDirsSafely,
-	oopsieKwargsie as oopsieKwargsie,
-	raiseIfNone as raiseIfNone,
-	stringItUp as stringItUp,
-	updateExtendPolishDictionaryLists as updateExtendPolishDictionaryLists,
-	writeStringToHere as writeStringToHere,
-)
 # pyright: reportUnusedImport=false
-from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import PAD_TYPE, FFT_MODE_TYPE
+# isort: split
+from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import FFT_MODE_TYPE, PAD_TYPE
 
+# isort: split
 from Z0Z_tools.theTypes import (
-	ArraySpectrograms as ArraySpectrograms,
-	ArrayType,
-	ArrayWaveforms as ArrayWaveforms,
-	NormalizationReverter as NormalizationReverter,
-	ParametersShortTimeFFT,
-	ParametersSTFT,
-	ParametersUniversal,
-	Spectrogram as Spectrogram,
-	Waveform as Waveform,
-	WaveformMetadata,
-	WindowingFunction as WindowingFunction,
-)
+	ArraySpectrograms as ArraySpectrograms, ArrayType, ArrayWaveforms as ArrayWaveforms,
+	NormalizationReverter as NormalizationReverter, ParametersShortTimeFFT, ParametersSTFT, ParametersUniversal,
+	Spectrogram as Spectrogram, Waveform as Waveform, WaveformMetadata, WindowingFunction as WindowingFunction)
 
-from Z0Z_tools.amplitude import normalizeWaveform as normalizeWaveform, normalizeArrayWaveforms as normalizeArrayWaveforms
+# isort: split
+from Z0Z_tools.amplitude import (
+	normalizeArrayWaveforms as normalizeArrayWaveforms, normalizeWaveform as normalizeWaveform)
 
+# isort: split
 from Z0Z_tools.autoRevert import moveToAxisOfOperation as moveToAxisOfOperation
 
-from Z0Z_tools.windowingFunctions import halfsine as halfsine, tukey as tukey, cosineWings as cosineWings, equalPower as equalPower
+# isort: split
+from Z0Z_tools.windowingFunctions import (
+	cosineWings as cosineWings, equalPower as equalPower, halfsine as halfsine, tukey as tukey)
 
+# isort: split
 import contextlib
+
 with contextlib.suppress(ImportError, ModuleNotFoundError):
 	from Z0Z_tools.optionalPyTorch import (
-		cosineWingsTensor as cosineWingsTensor,
-		equalPowerTensor as equalPowerTensor,
-		halfsineTensor as halfsineTensor,
-		tukeyTensor as tukeyTensor,
-		)
+		cosineWingsTensor as cosineWingsTensor, equalPowerTensor as equalPowerTensor, halfsineTensor as halfsineTensor,
+		tukeyTensor as tukeyTensor)
 
+# isort: split
 from Z0Z_tools.filesystemToolkit import (
-	dataTabularTOpathFilenameDelimited as dataTabularTOpathFilenameDelimited,
-	findRelativePath as findRelativePath,
-)
+	dataTabularTOpathFilenameDelimited as dataTabularTOpathFilenameDelimited, findRelativePath as findRelativePath)
 
+# isort: split
 from Z0Z_tools.ioAudio import (
-	loadSpectrograms as loadSpectrograms,
-	loadWaveforms as loadWaveforms,
-	readAudioFile as readAudioFile,
-	resampleWaveform as resampleWaveform,
-	spectrogramToWAV as spectrogramToWAV,
-	stft as stft,
-	waveformSpectrogramWaveform as waveformSpectrogramWaveform,
-	writeWAV as writeWAV,
-)
-
-from Z0Z_tools.pipAnything import installPackageTarget as installPackageTarget, makeListRequirementsFromRequirementsFile as makeListRequirementsFromRequirementsFile
+	loadSpectrograms as loadSpectrograms, loadWaveforms as loadWaveforms, readAudioFile as readAudioFile,
+	resampleWaveform as resampleWaveform, spectrogramToWAV as spectrogramToWAV, stft as stft,
+	waveformSpectrogramWaveform as waveformSpectrogramWaveform, writeWAV as writeWAV)
 
 """
 Semiotics:

@@ -63,9 +63,9 @@ def normalizeWaveform(waveform: Waveform, amplitudeNorm: float = 1.0) -> tuple[W
 	else:
 		amplitudeAdjustment = amplitudeNorm / peakAbsolute
 
-	waveformNormalized = cast("Waveform", waveform * amplitudeAdjustment)
+	waveformNormalized = cast(Waveform, waveform * amplitudeAdjustment)
 	def revertNormalization(waveformDescendant: Waveform) -> Waveform:
-		return cast("Waveform", waveformDescendant / amplitudeAdjustment)
+		return cast(Waveform, waveformDescendant / amplitudeAdjustment)
 	return waveformNormalized, revertNormalization
 
 def normalizeArrayWaveforms(arrayWaveforms: ArrayWaveforms, amplitudeNorm: float = 1.0) -> tuple[ArrayWaveforms, list[NormalizationReverter]]:
@@ -95,5 +95,5 @@ def normalizeArrayWaveforms(arrayWaveforms: ArrayWaveforms, amplitudeNorm: float
 	"""
 	listRevertNormalization: list[NormalizationReverter] = [lambda makeTypeCheckerHappy: makeTypeCheckerHappy] * arrayWaveforms.shape[-1]
 	for index in range(arrayWaveforms.shape[-1]):
-		arrayWaveforms[..., index], listRevertNormalization[index] = normalizeWaveform(cast("Waveform", arrayWaveforms[..., index]), amplitudeNorm)
+		arrayWaveforms[..., index], listRevertNormalization[index] = normalizeWaveform(cast(Waveform, arrayWaveforms[..., index]), amplitudeNorm)
 	return arrayWaveforms, listRevertNormalization
