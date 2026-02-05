@@ -54,7 +54,6 @@ optional-dependencies = { PyTorch = [
   "astToolkit",
   "pandas",
   "scipy-stubs",
-  "setuptools-scm",
 ], testing = [
   "pytest-cov",
   "pytest-mock",
@@ -64,7 +63,7 @@ optional-dependencies = { PyTorch = [
 ] }
 
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [tool.coverage]
