@@ -60,6 +60,7 @@ optional-dependencies = { PyTorch = [
   "pytest-mock",
   "pytest-xdist",
   "pytest",
+  "torch",
 ] }
 
 [build-system]
