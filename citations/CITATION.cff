@@ -7,12 +7,12 @@ authors:
   family-names: Hogan
   email: HunterHogan@pm.me
 cff-version: 1.2.0
-commit: ac5bd3bad9294be825a70e1c4673686a7bf07ba0
-date-released: '2025-07-06'
+commit: 51d557d77f51efa351fdae5e1832053efb1e86db
+date-released: '2026-02-05'
 identifiers:
 - type: url
-  value: https://github.com/hunterhogan/Z0Z_tools/releases/tag/1.0.1
-  description: The URL for Z0Z_tools 1.0.1.
+  value: https://github.com/hunterhogan/Z0Z_tools/releases/tag/1.0.2
+  description: The URL for Z0Z_tools 1.0.2.
 keywords:
 - Python
 - development
@@ -20,8 +20,8 @@ keywords:
 license: CC-BY-NC-4.0
 message: Cite this software with the metadata in this file.
 repository: https://github.com/hunterhogan/Z0Z_tools.git
-repository-artifact: https://pypi.org/project/z0z-tools/1.0.1/
-repository-code: https://github.com/hunterhogan/Z0Z_tools/releases/tag/1.0.1
+repository-artifact: https://pypi.org/project/z0z-tools/1.0.2/
+repository-code: https://github.com/hunterhogan/Z0Z_tools/releases/tag/1.0.2
 title: Z0Z_tools
 url: https://github.com/hunterhogan/Z0Z_tools
-version: 1.0.1
+version: 1.0.2
