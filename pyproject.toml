@@ -1,9 +1,9 @@
 [project]
 name = "Z0Z_tools"
-version = "1.0.1"
+version = "1.0.2"
 description = "Tools for audio/signal processing and package management."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { 'text' = "CC-BY-NC-4.0" }
 authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
 keywords = ["Python", "development", "tools"]
@@ -20,7 +20,6 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
@@ -53,9 +52,7 @@ optional-dependencies = { PyTorch = [
   "torch",
 ], development = [
   "astToolkit",
-  "mypy",
   "pandas",
-  "pyupgrade",
   "scipy-stubs",
   "setuptools-scm",
 ], testing = [
