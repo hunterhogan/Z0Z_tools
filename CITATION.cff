@@ -7,7 +7,7 @@ authors:
   family-names: Hogan
   email: HunterHogan@pm.me
 cff-version: 1.2.0
-commit: e3d76aca5bcb74e2b12cddfb3f051aceeadb3f1d
+commit: 23e3ec99664a3e90944f6be848ac3319d991e5e4
 date-released: '2026-02-05'
 identifiers:
 - type: url
