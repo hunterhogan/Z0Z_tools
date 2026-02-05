@@ -246,7 +246,7 @@ def writeWAV(pathFilename: str | PathLike[Any] | io.IOBase, waveform: Waveform, 
 	if sampleRate is None:
 		sampleRate = parametersUniversal['sampleRate']
 	makeDirsSafely(pathFilename)
-	soundfile.write(file=str(pathFilename), data=waveform.T, samplerate=int(sampleRate), subtype='FLOAT', format='WAV')
+	soundfile.write(file=pathFilename, data=waveform.T, samplerate=int(sampleRate), subtype='FLOAT', format='WAV')
 
 @overload # stft 1 ndarray
 def stft(arrayTarget: Waveform, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[False] = False, lengthWaveform: None = None, indexingAxis: None = None) -> Spectrogram: ...
