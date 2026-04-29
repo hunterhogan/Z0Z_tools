@@ -19,10 +19,7 @@ classifiers = [
   "Natural Language :: English",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
   "Topic :: Multimedia :: Sound/Audio",
   "Topic :: Multimedia :: Sound/Audio :: Analysis",
@@ -34,7 +31,6 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Mathematics",
   "Topic :: Scientific/Engineering :: Physics",
   "Topic :: System :: Filesystems",
-  "Topic :: System :: Installation/Setup",
   "Topic :: Text Processing",
   "Topic :: Utilities",
   "Typing :: Typed",
@@ -52,10 +48,10 @@ optional-dependencies = { PyTorch = [
   "torch",
 ], development = [
   "astToolkit",
-  "pandas",
   "scipy-stubs",
-], testing = [
+  "types-resampy",
   "pytest-cov",
+], testing = [
   "pytest-mock",
   "pytest-xdist",
   "pytest",
@@ -63,7 +59,7 @@ optional-dependencies = { PyTorch = [
 ] }
 
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.coverage]
@@ -87,7 +83,7 @@ testpaths = ["tests"]
 
 [tool.setuptools]
 package-data = { "*" = ["py.typed"] }
-packages = { find = {  } }
+packages = { find = {} }
 
 [tool.updateCitation]
 filenameCitationDOTcff = "CITATION.cff"

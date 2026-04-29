@@ -53,7 +53,7 @@ select = ["ALL"]
 task-tags = ["DEVELOPMENT", "NOTE", "SEMIOTICS", "TODO"]
 
 [lint.flake8-import-conventions]
-banned-aliases = { numpy = ["np"], pandas = ["pd"], regex=["re"] }
+banned-aliases = { numpy = ["np"], pandas = ["pd"], regex = ["re"] }
 
 [lint.flake8-import-conventions.aliases]
 "accelerate.utils.dataclasses" = "accelerate_dataclasses"
@@ -63,6 +63,9 @@ banned-aliases = { numpy = ["np"], pandas = ["pd"], regex=["re"] }
 numpy = "numpy"
 pandas = "pandas"
 regex = "regex"
+
+[lint.flake8-quotes]
+inline-quotes = "single"
 
 [lint.per-file-ignores]
 "__init__.py" = ["PLC0414"]

@@ -79,20 +79,18 @@ from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import FFT_MODE_TYPE, PAD_TYPE
 
 # isort: split
 from Z0Z_tools.theTypes import (
-	ArraySpectrograms as ArraySpectrograms, ArrayType, ArrayWaveforms as ArrayWaveforms,
-	NormalizationReverter as NormalizationReverter, ParametersShortTimeFFT, ParametersSTFT, ParametersUniversal,
-	Spectrogram as Spectrogram, Waveform as Waveform, WaveformMetadata, WindowingFunction as WindowingFunction)
+	ArraySpectrograms as ArraySpectrograms, ArrayType, ArrayWaveforms as ArrayWaveforms, NormalizationReverter as NormalizationReverter,
+	ParametersShortTimeFFT, ParametersSTFT, ParametersUniversal, Spectrogram as Spectrogram, Waveform as Waveform, WaveformMetadata,
+	WindowingFunction as WindowingFunction)
 
 # isort: split
-from Z0Z_tools.amplitude import (
-	normalizeArrayWaveforms as normalizeArrayWaveforms, normalizeWaveform as normalizeWaveform)
+from Z0Z_tools.amplitude import normalizeArrayWaveforms as normalizeArrayWaveforms, normalizeWaveform as normalizeWaveform
 
 # isort: split
 from Z0Z_tools.autoRevert import moveToAxisOfOperation as moveToAxisOfOperation
 
 # isort: split
-from Z0Z_tools.windowingFunctions import (
-	cosineWings as cosineWings, equalPower as equalPower, halfsine as halfsine, tukey as tukey)
+from Z0Z_tools.windowingFunctions import cosineWings as cosineWings, equalPower as equalPower, halfsine as halfsine, tukey as tukey
 
 # isort: split
 import contextlib
@@ -108,9 +106,8 @@ from Z0Z_tools.filesystemToolkit import (
 
 # isort: split
 from Z0Z_tools.ioAudio import (
-	loadSpectrograms as loadSpectrograms, loadWaveforms as loadWaveforms, readAudioFile as readAudioFile,
-	resampleWaveform as resampleWaveform, spectrogramToWAV as spectrogramToWAV, stft as stft,
-	waveformSpectrogramWaveform as waveformSpectrogramWaveform, writeWAV as writeWAV)
+	loadSpectrograms as loadSpectrograms, loadWaveforms as loadWaveforms, readAudioFile as readAudioFile, resampleWaveform as resampleWaveform,
+	spectrogramToWAV as spectrogramToWAV, stft as stft, waveformSpectrogramWaveform as waveformSpectrogramWaveform, writeWAV as writeWAV)
 
 """
 Semiotics:

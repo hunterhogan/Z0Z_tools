@@ -56,6 +56,5 @@ jobs:
           cache: pip
           cache-dependency-path: pyproject.toml
 
-      - run: pip install uv
-      - run: uv sync
+      - run: pip install -e .[testing]
       - run: pytest

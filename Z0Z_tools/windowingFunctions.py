@@ -25,7 +25,7 @@ def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 	elif 0 <= ratioTaper <= 1:
 		lengthTaper = int(lengthWindow * ratioTaper / 2)
 	else:
-		message = f"I received `{ratioTaper = }`. If set, `ratioTaper` must be between 0 and 1, inclusive."
+		message: str = f"I received `{ratioTaper = }`. If set, `ratioTaper` must be between 0 and 1, inclusive."
 		raise ValueError(message)
 	return lengthTaper
 
@@ -45,11 +45,11 @@ def cosineWings(lengthWindow: int, ratioTaper: float | None = None) -> Windowing
 		Array of windowing coefficients with cosine tapers.
 
 	"""
-	lengthTaper = _getLengthTaper(lengthWindow, ratioTaper)
+	lengthTaper: int = _getLengthTaper(lengthWindow, ratioTaper)
 
-	windowingFunction = numpy.ones(shape=lengthWindow)
+	windowingFunction: WindowingFunction = numpy.ones(shape=lengthWindow)
 	if lengthTaper > 0:
-		taper = 1 - cos(numpy.linspace(start=0, stop=pi / 2, num=lengthTaper))
+		taper = 1 - cos(numpy.linspace(start=0, stop=pi / 2, num=lengthTaper, dtype=windowingFunction.dtype))
 		windowingFunction[0:lengthTaper] = taper
 		windowingFunction[-lengthTaper:None] = taper[::-1]
 	return windowingFunction
@@ -70,11 +70,11 @@ def equalPower(lengthWindow: int, ratioTaper: float | None = None) -> WindowingF
 		Array of windowing coefficients with tapers.
 
 	"""
-	lengthTaper = _getLengthTaper(lengthWindow, ratioTaper)
+	lengthTaper: int = _getLengthTaper(lengthWindow, ratioTaper)
 
-	windowingFunction = numpy.ones(shape=lengthWindow)
+	windowingFunction: WindowingFunction = numpy.ones(shape=lengthWindow)
 	if lengthTaper > 0:
-		taper = numpy.absolute(numpy.sqrt(numpy.linspace(start=0, stop=1, num=lengthTaper)))
+		taper = numpy.sqrt(numpy.linspace(start=0, stop=1, num=lengthTaper, dtype=windowingFunction.dtype))
 		windowingFunction[0:lengthTaper] = taper
 		windowingFunction[-lengthTaper:None] = taper[::-1]
 	return windowingFunction
@@ -93,7 +93,7 @@ def halfsine(lengthWindow: int) -> WindowingFunction:
 		Array of windowing coefficients following half-sine shape.
 
 	"""
-	return sin(pi * (numpy.arange(lengthWindow) + 0.5) / lengthWindow) # pyright: ignore[reportReturnType]
+	return sin(pi * (numpy.arange(lengthWindow) + 0.5) / lengthWindow, dtype=numpy.float64)
 
 def tukey(lengthWindow: int, ratioTaper: float | None = None, **keywordArguments: float) -> WindowingFunction:
 	"""Create a Tukey windowing-function.
@@ -115,7 +115,7 @@ def tukey(lengthWindow: int, ratioTaper: float | None = None, **keywordArguments
 	"""
 	# Do not add logic that creates `ValueError` for invalid `ratioTaper` values because
 	# the SciPy developers are much better at coding than you are at coding: they will handle invalid values.  # noqa: ERA001
-	alpha = keywordArguments.get('alpha', ratioTaper) # Are you tempted to use `or 0.1`? Don't be: it will override the user's value for `ratioTaper=0`.
+	alpha: float | None = keywordArguments.get('alpha', ratioTaper) # Are you tempted to use `or 0.1`? Don't be: it will override the user's value for `ratioTaper=0`.
 	if alpha is None:
 		alpha = 0.1
 	return SciPy.tukey(lengthWindow, alpha)

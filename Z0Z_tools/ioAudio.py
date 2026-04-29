@@ -16,8 +16,8 @@ from scipy.signal import ShortTimeFFT
 from tqdm.auto import tqdm
 from typing import Any, BinaryIO, cast, Literal, overload
 from Z0Z_tools import (
-	ArraySpectrograms, ArrayWaveforms, halfsine, ParametersShortTimeFFT, ParametersSTFT, ParametersUniversal, Spectrogram,
-	Waveform, WaveformMetadata, WindowingFunction)
+	ArraySpectrograms, ArrayWaveforms, halfsine, ParametersShortTimeFFT, ParametersSTFT, ParametersUniversal, Spectrogram, Waveform,
+	WaveformMetadata, WindowingFunction)
 import io
 import numpy
 import resampy
@@ -220,12 +220,12 @@ def loadWaveforms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTa
 
 	return arrayWaveforms
 
-def writeWAV(pathFilename: str | PathLike[Any] | io.IOBase, waveform: Waveform, sampleRate: float | None = None) -> None:
+def writeWAV(pathFilename: str | PathLike[Any] | BinaryIO, waveform: Waveform, sampleRate: float | None = None) -> None:
 	"""Write a waveform to a WAV file.
 
 	Parameters
 	----------
-	pathFilename : str | PathLike[Any] | io.IOBase
+	pathFilename : str | PathLike[Any] | BinaryIO
 		The path and filename where the WAV file will be saved.
 	waveform : Waveform
 		The waveform data to be written to the WAV file. The waveform should be in the shape (channels, samples) or (samples,).
@@ -346,7 +346,7 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 		for index in range(1, arrayTARGET.shape[-1]):
 			arrayTransformed[..., index] = doTransformation(cast('Waveform | Spectrogram', arrayTARGET[..., index]), lengthWaveform, inverse)
 
-		return cast('ArrayWaveforms | ArraySpectrograms', numpy.moveaxis(arrayTransformed, -1, indexingAxis))
+		return numpy.moveaxis(arrayTransformed, -1, indexingAxis)
 
 def _getSpectrogram(waveform: Waveform, metadata: WaveformMetadata, sampleRateTarget: float, **parametersSTFT: Any) -> Spectrogram:
 	# All waveforms have the same shape so that all spectrograms have the same shape.
@@ -402,14 +402,14 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRat
 
 	return arraySpectrograms, dictionaryWaveformMetadata
 
-def spectrogramToWAV(spectrogram: Spectrogram, pathFilename: str | PathLike[Any] | io.IOBase, lengthWaveform: int, sampleRate: float | None = None, **parametersSTFT: Any) -> None:
+def spectrogramToWAV(spectrogram: Spectrogram, pathFilename: str | PathLike[Any] | BinaryIO, lengthWaveform: int, sampleRate: float | None = None, **parametersSTFT: Any) -> None:
 	"""Write a complex spectrogram to a WAV file.
 
 	Parameters
 	----------
 	spectrogram : Spectrogram
 		The complex spectrogram to be written to the file.
-	pathFilename : str | PathLike[Any] | io.IOBase
+	pathFilename : str | PathLike[Any] | BinaryIO
 		Location for the file of the waveform output.
 	lengthWaveform : int
 		The length of the output waveform in samples. This parameter is not optional.
