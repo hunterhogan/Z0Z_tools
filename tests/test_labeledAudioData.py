@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from tests.conftest import sampleData, sampleData44100, sampleData48000, WaveformAndMetadata
 from typing import Final
 from Z0Z_tools import readAudioFile

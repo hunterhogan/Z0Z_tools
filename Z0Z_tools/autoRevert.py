@@ -4,10 +4,15 @@ This module provides context managers for temporarily manipulating array axes wi
 restoration of the original configuration when exiting the context.
 
 """
-from collections.abc import Generator
+from __future__ import annotations
+
 from contextlib import contextmanager
 from numpy import moveaxis
-from Z0Z_tools import ArrayType
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	from collections.abc import Generator
+	from Z0Z_tools import ArrayType
 
 @contextmanager
 def moveToAxisOfOperation(arrayTarget: ArrayType, axisSource: int, axisOfOperation: int = -1) -> Generator[ArrayType, None, None]:

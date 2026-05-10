@@ -1,8 +1,13 @@
 """Create windowing functions used in signal processing."""
+from __future__ import annotations
+
 from numpy import cos, pi, sin
-from Z0Z_tools import WindowingFunction
+from typing import TYPE_CHECKING
 import numpy
 import scipy.signal.windows as SciPy
+
+if TYPE_CHECKING:
+	from Z0Z_tools import WindowingFunction
 
 def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 	"""Calculate the length of the taper section for windowing functions.

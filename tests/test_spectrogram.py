@@ -1,10 +1,14 @@
 """test_waveform or test_spectrogram? if a spectrogram is involved at any point, then test_spectrogram."""
-from pathlib import Path
+from __future__ import annotations
+
 from tests.conftest import prototype_numpyAllClose, standardizedEqualTo, uniformTestFailureMessage, WaveformAndMetadata
-from typing import Any, Final
+from typing import Any, Final, TYPE_CHECKING
 from Z0Z_tools import loadSpectrograms, readAudioFile, stft, waveformSpectrogramWaveform
 import numpy
 import pytest
+
+if TYPE_CHECKING:
+	from pathlib import Path
 
 expectedSpectrogramDimensions: Final[int] = 4
 

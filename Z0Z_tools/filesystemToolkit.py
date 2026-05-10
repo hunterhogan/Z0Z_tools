@@ -5,10 +5,14 @@ callables from modules, and safely creating directories.
 
 """
 
-from collections.abc import Iterable
-from os import PathLike
+from __future__ import annotations
+
 from pathlib import Path, PurePath
-from typing import Any, TypeVar
+from typing import Any, TYPE_CHECKING, TypeVar
+
+if TYPE_CHECKING:
+	from collections.abc import Iterable
+	from os import PathLike
 
 归个 = TypeVar('归个')
 

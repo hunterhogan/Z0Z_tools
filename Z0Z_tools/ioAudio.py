@@ -4,24 +4,25 @@ Comprehensive audio processing module offering functions for file I/O, resamplin
 and Short-Time Fourier Transform operations with consistent data shapes and types.
 
 """
-from collections.abc import Callable, Sequence
-from concurrent.futures import as_completed, ProcessPoolExecutor
+from __future__ import annotations
+
 from hunterMakesPy.filesystemToolkit import makeDirsSafely
 from math import ceil as ceiling, log2 as log_base2
 from multiprocessing import set_start_method as multiprocessing_set_start_method
 from numpy import complex64, dtype, float32, floating, ndarray
-from os import PathLike
-from pathlib import Path
 from scipy.signal import ShortTimeFFT
 from tqdm.auto import tqdm
-from typing import Any, BinaryIO, cast, Literal, overload
+from typing import Any, BinaryIO, cast, Literal, overload, TYPE_CHECKING
 from Z0Z_tools import (
 	ArraySpectrograms, ArrayWaveforms, halfsine, ParametersShortTimeFFT, ParametersSTFT, ParametersUniversal, Spectrogram, Waveform,
 	WaveformMetadata, WindowingFunction)
-import io
 import numpy
 import resampy
 import soundfile
+
+if TYPE_CHECKING:
+	from collections.abc import Callable, Sequence
+	from os import PathLike
 
 # When to use multiprocessing.set_start_method https://github.com/hunterhogan/mapFolding/issues/6
 if __name__ == '__main__':
@@ -124,10 +125,10 @@ def readAudioFile(pathFilename: str | PathLike[Any] | BinaryIO, sampleRate: floa
 			# GitHub #3 Implement semantic axes for audio data
 			axisTime = 0
 			axisChannels = 1
-			waveform = cast(Waveform, resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource, axisTime=axisTime))
+			waveform = cast('Waveform', resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource, axisTime=axisTime))
 			if waveform.shape[axisChannels] == 1:
-				waveform = cast(Waveform, numpy.repeat(waveform, 2, axis=axisChannels))
-			return cast(Waveform, numpy.transpose(waveform, axes=(axisChannels, axisTime)))
+				waveform = cast('Waveform', numpy.repeat(waveform, 2, axis=axisChannels))
+			return cast('Waveform', numpy.transpose(waveform, axes=(axisChannels, axisTime)))
 	except soundfile.LibsndfileError as ERRORmessage:
 		if 'System error' in str(ERRORmessage):
 			message = f"File not found: {pathFilename}"
@@ -198,7 +199,7 @@ def loadWaveforms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTa
 	countChannels: int = 2
 	axesSizes['axisChannels'] = countChannels
 
-	axisTime: int = -1
+	axisTime: int = -1  # pyright: ignore[reportUnusedVariable] # noqa: F841
 	dictionaryWaveformMetadata: dict[int, WaveformMetadata] = getWaveformMetadata(listPathFilenames, sampleRateTarget)
 	samplesTotalMaximum = max([entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values()])
 	axesSizes['axisTime'] = samplesTotalMaximum
@@ -332,8 +333,8 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 
 	def doTransformation(arrayInput: Waveform | Spectrogram, lengthWaveform: int | None, inverse: bool) -> Waveform | Spectrogram:  # noqa: FBT001
 		if inverse:
-			return cast(Waveform, stftWorkhorse.istft(S=arrayInput, k1=lengthWaveform))
-		return cast(Spectrogram, stftWorkhorse.stft(x=arrayInput, **parametersSTFTUniversal))
+			return cast('Waveform', stftWorkhorse.istft(S=arrayInput, k1=lengthWaveform))
+		return cast('Spectrogram', stftWorkhorse.stft(x=arrayInput, **parametersSTFTUniversal))
 
 	if indexingAxis is None:
 		singleton: Waveform | Spectrogram = cast('Waveform | Spectrogram', arrayTarget)
@@ -378,7 +379,7 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRat
 		sampleRateTarget = parametersUniversal['sampleRate']
 
 	max_workersHARDCODED: int = 3
-	max_workers = max_workersHARDCODED
+	max_workers = max_workersHARDCODED  # pyright: ignore[reportUnusedVariable] # noqa: F841
 
 	dictionaryWaveformMetadata: dict[int, WaveformMetadata] = getWaveformMetadata(listPathFilenames, sampleRateTarget)
 
@@ -392,13 +393,13 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRat
 	for index, metadata in tqdm(dictionaryWaveformMetadata.items()):
 		arraySpectrograms[..., index] = _getSpectrogram(waveformTemplate.copy(), metadata, sampleRateTarget, **parametersSTFT)
 
-	# with ProcessPoolExecutor(max_workers) as concurrencyManager:
-	# 	dictionaryConcurrency = {concurrencyManager.submit(
-	# 		_getSpectrogram, waveformTemplate.copy(), metadata, sampleRateTarget, **parametersSTFT): index
-	# 			for index, metadata in dictionaryWaveformMetadata.items()}
+	# with ProcessPoolExecutor(max_workers) as concurrencyManager:  # noqa: ERA001
+	# 	dictionaryConcurrency = {concurrencyManager.submit(  # noqa: ERA001
+	# 		_getSpectrogram, waveformTemplate.copy(), metadata, sampleRateTarget, **parametersSTFT): index  # noqa: ERA001
+	# 			for index, metadata in dictionaryWaveformMetadata.items()}  # noqa: ERA001
 
-	# 	for claimTicket in tqdm(as_completed(dictionaryConcurrency), total=len(dictionaryConcurrency)):
-	# 		arraySpectrograms[..., dictionaryConcurrency[claimTicket]] = claimTicket.result()
+	# 	for claimTicket in tqdm(as_completed(dictionaryConcurrency), total=len(dictionaryConcurrency)):  # noqa: ERA001
+	# 		arraySpectrograms[..., dictionaryConcurrency[claimTicket]] = claimTicket.result()  # noqa: ERA001
 
 	return arraySpectrograms, dictionaryWaveformMetadata
 

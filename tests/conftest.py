@@ -1,8 +1,8 @@
-from collections.abc import Callable, Generator
+from __future__ import annotations
+
 from numpy import dtype, float32, ndarray
-from numpy.typing import NDArray
 from pathlib import Path
-from typing import Any, ClassVar, Final
+from typing import Any, ClassVar, Final, TYPE_CHECKING
 from Z0Z_tools import ArrayWaveforms, loadWaveforms, readAudioFile, Waveform
 import numpy
 import pathlib
@@ -11,6 +11,10 @@ import shutil
 import soundfile
 import torch
 import uuid
+
+if TYPE_CHECKING:
+	from collections.abc import Callable, Generator
+	from numpy.typing import NDArray
 
 atolDEFAULT: Final[float] = 1e-7
 rtolDEFAULT: Final[float] = 1e-7
@@ -34,7 +38,7 @@ def registrarDeletesTmpObjects() -> None:
 				pathTmp.unlink(missing_ok=True)
 			elif pathTmp.is_dir():
 				shutil.rmtree(pathTmp, ignore_errors=True)
-		except Exception as ERRORmessage:  # noqa: PERF203
+		except Exception as ERRORmessage:
 			print(f"Warning: Failed to clean up {pathTmp}: {ERRORmessage}")  # noqa: T201
 			registerOfTemporaryFilesystemObjects.clear()
 @pytest.fixture(scope="session", autouse=True)
@@ -221,7 +225,7 @@ def standardizedEqualTo(expected: Any, functionTarget: Callable[..., Any], *argu
 		messageActual: str = type(actualError).__name__
 		actual = type(actualError)
 
-	assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
+	assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)  # ty:ignore[unresolved-attribute]
 
 def prototype_numpyAllClose(expected: NDArray[Any] | type[Exception], atol: float | None, rtol: float | None, functionTarget: Callable[..., Any], *arguments: Any, **keywordArguments: Any) -> None:
 	"""Template for tests using numpy.allclose comparison."""
@@ -235,12 +239,12 @@ def prototype_numpyAllClose(expected: NDArray[Any] | type[Exception], atol: floa
 		messageActual: str = type(actualError).__name__
 		actual = type(actualError)
 		messageExpected = expected if isinstance(expected, type) else "array-like result"
-		assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
+		assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)  # ty:ignore[unresolved-attribute]
 	else:
 		if isinstance(expected, type):
 			message = f"Expected an exception of type {expected.__name__}, but got a result"
 			raise AssertionError(message)
-		assert numpy.allclose(actual, expected, rtol, atol), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)
+		assert numpy.allclose(actual, expected, rtol, atol), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)  # ty:ignore[unresolved-attribute]
 
 def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable[..., Any], *arguments: Any, **keywordArguments: Any) -> None:
 	"""Template for tests using numpy.array_equal comparison."""
@@ -250,9 +254,9 @@ def prototype_numpyArrayEqual(expected: NDArray[Any], functionTarget: Callable[.
 		messageActual: str = type(actualError).__name__
 		actual = type(actualError)
 		messageExpected = expected if isinstance(expected, type) else "array-like result"
-		assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)
+		assert actual == expected, uniformTestFailureMessage(messageExpected, messageActual, functionTarget.__name__, *arguments, **keywordArguments)  # ty:ignore[unresolved-attribute]
 	else:
-		assert numpy.array_equal(actual, expected), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)
+		assert numpy.array_equal(actual, expected), uniformTestFailureMessage(expected, actual, functionTarget.__name__, *arguments, **keywordArguments)  # ty:ignore[unresolved-attribute]
 
 """Section: Audio file fixtures for testing readAudioFile, writeWAV, and related functions"""
 

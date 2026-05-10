@@ -7,6 +7,8 @@ waveforms, spectrograms, and parameter structures used throughout the audio
 signal processing library.
 
 """
+from __future__ import annotations
+
 from collections.abc import Callable
 from numpy import complexfloating, dtype, floating, ndarray
 from typing import Any, Literal, TypeAlias, TypedDict, TypeVar

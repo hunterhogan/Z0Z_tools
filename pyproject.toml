@@ -1,6 +1,6 @@
 [project]
 name = "Z0Z_tools"
-version = "1.0.2"
+version = "1.0.3"
 description = "Tools for audio/signal processing and package management."
 readme = "README.md"
 requires-python = ">=3.11"

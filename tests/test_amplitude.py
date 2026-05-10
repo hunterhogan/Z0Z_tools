@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from tests.conftest import amplitudeNorm, rtolDEFAULT, sampleData
 from Z0Z_tools import ArrayWaveforms, normalizeArrayWaveforms, normalizeWaveform, Waveform
 import numpy

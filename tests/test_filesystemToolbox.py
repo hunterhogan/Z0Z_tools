@@ -1,10 +1,14 @@
-from pathlib import Path
+from __future__ import annotations
+
 from tests.conftest import uniformTestFailureMessage
+from typing import TYPE_CHECKING
 from Z0Z_tools import dataTabularTOpathFilenameDelimited, findRelativePath
-import pathlib
 import pytest
 
-def testDataTabularTOpathFilenameDelimitedBasic(tableSample: tuple[list[list[int | str]], list[str]], pathTmpTesting: pathlib.Path) -> None:
+if TYPE_CHECKING:
+	from pathlib import Path
+
+def testDataTabularTOpathFilenameDelimitedBasic(tableSample: tuple[list[list[int | str]], list[str]], pathTmpTesting: Path) -> None:
 	"""Test basic functionality with table data."""
 	tableRows, tableColumns = tableSample
 	pathOutput = pathTmpTesting / "output.csv"
@@ -29,7 +33,7 @@ def testDataTabularTOpathFilenameDelimitedBasic(tableSample: tuple[list[list[int
 	('\t', 'tab'),
 	('|', 'pipe')
 ])
-def testDataTabularTOpathFilenameDelimitedDelimiters(tableSample: tuple[list[list[int | str]], list[str]], pathTmpTesting: pathlib.Path, delimiterOutput: str, filenameInfix: str) -> None:
+def testDataTabularTOpathFilenameDelimitedDelimiters(tableSample: tuple[list[list[int | str]], list[str]], pathTmpTesting: Path, delimiterOutput: str, filenameInfix: str) -> None:
 	"""Test with different delimiters."""
 	tableRows, tableColumns = tableSample
 	pathOutput: Path = pathTmpTesting / f"output_{filenameInfix}.txt"
@@ -49,7 +53,7 @@ def testDataTabularTOpathFilenameDelimitedDelimiters(tableSample: tuple[list[lis
 		expectedRow = delimiterOutput.join(str(value) for value in row)
 		assert lines[index + 1] == expectedRow, uniformTestFailureMessage(expectedRow, lines[index + 1], "dataTabularTOpathFilenameDelimited", tableRows, pathOutput)
 
-def testDataTabularTOpathFilenameDelimitedNoHeaders(tableSample: tuple[list[list[int | str]], list[str]], pathTmpTesting: pathlib.Path) -> None:
+def testDataTabularTOpathFilenameDelimitedNoHeaders(tableSample: tuple[list[list[int | str]], list[str]], pathTmpTesting: Path) -> None:
 	"""Test writing data without column headers."""
 	tableRows, _ = tableSample
 	pathOutput = pathTmpTesting / "no_headers.csv"
@@ -66,7 +70,7 @@ def testDataTabularTOpathFilenameDelimitedNoHeaders(tableSample: tuple[list[list
 		lines: list[str] = [line.rstrip('\n') for line in readStream]
 	assert len(tableRows) == len(lines), uniformTestFailureMessage(len(tableRows), len(lines), "dataTabularTOpathFilenameDelimitedNoHeaders", tableRows, pathOutput)
 
-def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: pathlib.Path) -> None:
+def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: Path) -> None:
 	"""Test writing empty data."""
 	pathOutput: Path = pathTmpTesting / "empty.csv"
 	tableColumns = ['col1', 'col2']
@@ -90,7 +94,7 @@ def testDataTabularTOpathFilenameDelimitedEmptyData(pathTmpTesting: pathlib.Path
 	("dir1", "dir1/subdir1", "subdir1"),
 	("dir3/subdir3", "dir1/file1.txt", "../../dir1/file1.txt"),
 ])
-def testFindRelativePath(setupDirectoryStructure: pathlib.Path, pathStart: str, pathTarget: str, expectedResult: str) -> None:
+def testFindRelativePath(setupDirectoryStructure: Path, pathStart: str, pathTarget: str, expectedResult: str) -> None:
 	"""Test findRelativePath with various path combinations."""
 	pathStartFull: Path = setupDirectoryStructure / pathStart
 	pathTargetFull: Path = setupDirectoryStructure / pathTarget
@@ -98,7 +102,7 @@ def testFindRelativePath(setupDirectoryStructure: pathlib.Path, pathStart: str, 
 	resultPath: str = findRelativePath(pathStartFull, pathTargetFull)
 	assert resultPath == expectedResult, uniformTestFailureMessage(expectedResult, resultPath, "findRelativePath", pathStartFull, pathTargetFull)
 
-def testFindRelativePathWithNonexistentPaths(pathTmpTesting: pathlib.Path) -> None:
+def testFindRelativePathWithNonexistentPaths(pathTmpTesting: Path) -> None:
 	"""Test findRelativePath with paths that don't exist."""
 	pathStart: Path = pathTmpTesting / "nonexistent1"
 	pathTarget: Path = pathTmpTesting / "nonexistent2"
@@ -106,7 +110,7 @@ def testFindRelativePathWithNonexistentPaths(pathTmpTesting: pathlib.Path) -> No
 	resultPath: str = findRelativePath(pathStart, pathTarget)
 	assert resultPath == "../nonexistent2", uniformTestFailureMessage("../nonexistent2", resultPath, "findRelativePath", pathStart, pathTarget)
 
-def testFindRelativePathWithSamePath(pathTmpTesting: pathlib.Path) -> None:
+def testFindRelativePathWithSamePath(pathTmpTesting: Path) -> None:
 	"""Test findRelativePath when start and target are the same."""
 	pathTest: Path = pathTmpTesting / "testdir"
 	pathTest.mkdir()

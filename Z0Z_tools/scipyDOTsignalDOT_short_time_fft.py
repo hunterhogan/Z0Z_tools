@@ -8,6 +8,8 @@ type safety when interfacing with scipy.signal.ShortTimeFFT methods.
 
 """
 
+from __future__ import annotations
+
 from typing import Literal
 
 PAD_TYPE = Literal['zeros', 'edge', 'even', 'odd']

@@ -7,10 +7,14 @@ It handles both individual waveforms and arrays of multiple waveforms, with supp
 for reverting normalization operations on derived waveforms.
 
 """
+from __future__ import annotations
+
 from numpy import finfo as numpy_finfo, max as numpy_max
-from typing import cast
-from Z0Z_tools import ArrayWaveforms, NormalizationReverter, Waveform
+from typing import cast, TYPE_CHECKING
 import warnings
+
+if TYPE_CHECKING:
+	from Z0Z_tools import ArrayWaveforms, NormalizationReverter, Waveform
 
 def normalizeWaveform(waveform: Waveform, amplitudeNorm: float = 1.0) -> tuple[Waveform, NormalizationReverter]:
 	"""Normalize a waveform to have a specified peak amplitude.
@@ -63,9 +67,9 @@ def normalizeWaveform(waveform: Waveform, amplitudeNorm: float = 1.0) -> tuple[W
 	else:
 		amplitudeAdjustment = amplitudeNorm / peakAbsolute
 
-	waveformNormalized = cast(Waveform, waveform * amplitudeAdjustment)
+	waveformNormalized = cast("Waveform", waveform * amplitudeAdjustment)
 	def revertNormalization(waveformDescendant: Waveform) -> Waveform:
-		return cast(Waveform, waveformDescendant / amplitudeAdjustment)
+		return cast("Waveform", waveformDescendant / amplitudeAdjustment)
 	return waveformNormalized, revertNormalization
 
 def normalizeArrayWaveforms(arrayWaveforms: ArrayWaveforms, amplitudeNorm: float = 1.0) -> tuple[ArrayWaveforms, list[NormalizationReverter]]:
@@ -95,5 +99,5 @@ def normalizeArrayWaveforms(arrayWaveforms: ArrayWaveforms, amplitudeNorm: float
 	"""
 	listRevertNormalization: list[NormalizationReverter] = [lambda makeTypeCheckerHappy: makeTypeCheckerHappy] * arrayWaveforms.shape[-1]
 	for index in range(arrayWaveforms.shape[-1]):
-		arrayWaveforms[..., index], listRevertNormalization[index] = normalizeWaveform(cast(Waveform, arrayWaveforms[..., index]), amplitudeNorm)
+		arrayWaveforms[..., index], listRevertNormalization[index] = normalizeWaveform(cast("Waveform", arrayWaveforms[..., index]), amplitudeNorm)
 	return arrayWaveforms, listRevertNormalization

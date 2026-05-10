@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 from tests.conftest import prototype_numpyArrayEqual, standardizedEqualTo, WaveformAndMetadata
-from typing import Any, Final
+from typing import Any, Final, TYPE_CHECKING
 from Z0Z_tools import loadWaveforms, readAudioFile, resampleWaveform, writeWAV
 import io
 import numpy
-import pathlib
 import pytest
 import soundfile
+
+if TYPE_CHECKING:
+	from pathlib import Path
 
 # Constants for test validation
 CHANNELS_STEREO: Final[int] = 2
@@ -39,11 +43,11 @@ class TestReadAudioFile:
 		toleranceAbsolute = int(samplesExpected * tolerancePercent / 100)
 		assert abs(samplesActual - samplesExpected) <= toleranceAbsolute
 
-	def test_errorOnNonexistentFile(self, pathFilenameNonexistentForErrorTesting: pathlib.Path) -> None:
+	def test_errorOnNonexistentFile(self, pathFilenameNonexistentForErrorTesting: Path) -> None:
 		"""Test proper error handling for nonexistent files."""
 		standardizedEqualTo(FileNotFoundError, readAudioFile, pathFilenameNonexistentForErrorTesting)
 
-	def test_errorOnVideoFile(self, pathFilenameVideoForErrorTesting: pathlib.Path) -> None:
+	def test_errorOnVideoFile(self, pathFilenameVideoForErrorTesting: Path) -> None:
 		"""Test proper error handling for unsupported file formats."""
 		standardizedEqualTo(soundfile.LibsndfileError, readAudioFile, pathFilenameVideoForErrorTesting)
 
@@ -129,7 +133,7 @@ class TestWriteWAV:
 			'shapeExpectedSoundfile': (1000, 2)  # soundfile reads stereo as (samples, channels)
 		}
 	])
-	def test_writeAndVerifyContent(self, pathFilenameTmpTesting: pathlib.Path, testCase: dict[str, Any]) -> None:
+	def test_writeAndVerifyContent(self, pathFilenameTmpTesting: Path, testCase: dict[str, Any]) -> None:
 		"""Test writing WAV files and verifying their contents match expectations."""
 		# Create test waveform with predictable values
 		waveformTest = numpy.full((testCase['channelsTotal'], testCase['samplesTotal']), 0.5, dtype=numpy.float32)
@@ -150,14 +154,14 @@ class TestWriteWAV:
 		else:
 			numpy.testing.assert_allclose(waveformRead, waveformTest.T)
 
-	def test_writeCreatesDirectories(self, pathTmpTesting: pathlib.Path) -> None:
+	def test_writeCreatesDirectories(self, pathTmpTesting: Path) -> None:
 		"""Test that writeWAV creates necessary directory structure."""
 		pathFilenameNested = pathTmpTesting / "nested" / "directories" / "test.wav"
 		waveformTest = numpy.ones((2, 1000), dtype=numpy.float32)
 		writeWAV(pathFilenameNested, waveformTest)
 		assert pathFilenameNested.exists()
 
-	def test_writeOverwritesExistingFile(self, pathFilenameTmpTesting: pathlib.Path) -> None:
+	def test_writeOverwritesExistingFile(self, pathFilenameTmpTesting: Path) -> None:
 		"""Test that writeWAV properly overwrites existing files."""
 		waveformFirst = numpy.ones((2, 1000), dtype=numpy.float32)
 		waveformSecond = numpy.zeros((2, 1000), dtype=numpy.float32)

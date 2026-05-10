@@ -1,7 +1,11 @@
 """NOTE not fully implemented."""
+from __future__ import annotations
+
 from numpy import absolute, complexfloating, float64, floating, ones_like
-from numpy.typing import ArrayLike, NDArray
-from typing import Any
+from typing import Any, TYPE_CHECKING
+
+if TYPE_CHECKING:
+	from numpy.typing import ArrayLike, NDArray
 
 def applyHardLimit(arrayTarget: NDArray[Any], comparand: ArrayLike = 1.0) -> NDArray[Any]:
 	"""Apply a hard limit to the elements of the target array based on the `comparand` value.

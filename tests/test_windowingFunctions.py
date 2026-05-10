@@ -80,16 +80,16 @@ def prototype_tensorEquivalent(functionNdarrayOriginal: Callable[..., numpy.ndar
 	tensor = functionTensorTarget(*arguments, device=torch.device(device), **keywordArguments)
 
 	assert tensor.device.type == device, \
-		uniformTestFailureMessage(device, tensor.device.type, f"{functionTensorTarget.__name__} device check")
+		uniformTestFailureMessage(device, tensor.device.type, f"{functionTensorTarget.__name__} device check")  # ty:ignore[unresolved-attribute]
 	assert tensor.dtype == torch.float32, \
-		uniformTestFailureMessage(torch.float32, tensor.dtype, f"{functionTensorTarget.__name__} dtype check")
+		uniformTestFailureMessage(torch.float32, tensor.dtype, f"{functionTensorTarget.__name__} dtype check")  # ty:ignore[unresolved-attribute]
 	assert tensor.shape == torch.Size([ndarray.shape[0]]), \
-		uniformTestFailureMessage(ndarray.shape, tensor.shape, f"{functionTensorTarget.__name__} shape check")
+		uniformTestFailureMessage(ndarray.shape, tensor.shape, f"{functionTensorTarget.__name__} shape check")  # ty:ignore[unresolved-attribute]
 
 	# Convert tensor to numpy for comparison with original array
 	tensorAsNumpy = tensor.cpu().numpy()
 	assert numpy.allclose(ndarray, tensorAsNumpy), \
-		uniformTestFailureMessage("Arrays to match", "Arrays don't match", f"{functionTensorTarget.__name__} vs {functionNdarrayOriginal.__name__}")
+		uniformTestFailureMessage("Arrays to match", "Arrays don't match", f"{functionTensorTarget.__name__} vs {functionNdarrayOriginal.__name__}")  # ty:ignore[unresolved-attribute]
 
 def test_windowing_tensors_equivalence(device: str, lengthWindow: int) -> None:
 	"""

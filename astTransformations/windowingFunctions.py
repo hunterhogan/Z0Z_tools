@@ -5,8 +5,11 @@
 This module programmatically creates PyTorch tensor versions of windowing functions by transforming existing functions from the `windowingFunctions` module. It generates functions that return PyTorch tensors instead of NumPy arrays.
 
 """
-from astToolkit import Be, IngredientsModule, Make, NodeTourist, parseLogicalPath2astModule, Then
-from astToolkit.transformationTools import makeDictionaryFunctionDef, write_astModule
+from __future__ import annotations
+
+from astToolkit import Be, Make, NodeTourist, parseLogicalPath2astModule, Then
+from astToolkit.containers import IngredientsModule
+from astToolkit.transformationTools import makeDictionaryFunctionDef
 from hunterMakesPy import raiseIfNone
 from pathlib import Path
 import ast
@@ -45,7 +48,7 @@ ingredientsModule.appendPrologue(statement=Make.FunctionDef('_convertToTensor'
 	, returns=Make.Attribute(Make.Name('torch'), 'Tensor')
 ))
 
-dictionaryFunctionDef: dict[str, ast.FunctionDef] = makeDictionaryFunctionDef(parseLogicalPath2astModule('.'.join([packageName, moduleSource])))  # noqa: FLY002
+dictionaryFunctionDef: dict[str, ast.FunctionDef] = makeDictionaryFunctionDef(parseLogicalPath2astModule('.'.join([packageName, moduleSource])))
 
 for callableIdentifier, astFunctionDef in dictionaryFunctionDef.items():
 	if callableIdentifier.startswith('_'):
@@ -84,7 +87,7 @@ ingredientsModule.imports.addImportFrom_asStr('torch.types', 'Device')
 ingredientsModule.imports.addImportFrom_asStr('typing', 'Any')
 ingredientsModule.imports.addImport_asStr('torch')
 
-write_astModule(ingredientsModule, pathFilenameDestination, packageName)
+ingredientsModule.write_astModule(pathFilenameDestination, packageName)
 
 docstringModule = '"""Create PyTorch tensor windowing functions."""\n'
 pathFilenameDestination.write_text(docstringModule + pathFilenameDestination.read_text(encoding="utf-8"))

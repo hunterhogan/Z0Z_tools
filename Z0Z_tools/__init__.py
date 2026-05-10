@@ -73,6 +73,8 @@ Utilities for working with arrays:
 
 """
 
+from __future__ import annotations
+
 # pyright: reportUnusedImport=false
 # isort: split
 from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import FFT_MODE_TYPE, PAD_TYPE
