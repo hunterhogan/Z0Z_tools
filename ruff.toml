@@ -3,7 +3,23 @@ extend = "pyproject.toml"
 line-length = 140
 
 [lint]
-allowed-confusables = ["σ", "×", "−", "ℝ", "′", "γ", "⊗", "ρ", "ℓ", "∪", "α"]
+preview = true
+allowed-confusables = [
+  "′",
+  "×",
+  "−",
+  "∨",
+  "∪",
+  "⊗",
+  "ℓ",
+  "–",
+  "ℒ",
+  "ℝ",
+  "α",
+  "γ",
+  "ρ",
+  "σ",
+]
 ignore = [
   "ANN401",
   "C901",
@@ -44,6 +60,17 @@ ignore = [
   "TD",
   "W191",
   "W292",
+  # preview rules
+  "CPY001",
+  "D420",
+  "DOC102",
+  "E265",
+  "E302",
+  "E303",
+  "E305",
+  "PLR0914",
+  "PLR0917",
+  "S403",
 ]
 select = ["ALL"]
 task-tags = ["DEVELOPMENT", "NOTE", "SEMIOTICS", "TODO"]
@@ -53,6 +80,8 @@ banned-aliases = { numpy = ["np"], pandas = ["pd"], regex = ["re"] }
 
 [lint.flake8-import-conventions.aliases]
 "accelerate.utils.dataclasses" = "accelerate_dataclasses"
+"fs.path" = "fs_path"
+"itertools.product" = "CartesianProduct"
 "torch.autograd.grad" = "torch_grad"
 "torch.nn.functional" = "F"
 "torch.nn.parallel.DistributedDataParallel" = "DDP"
