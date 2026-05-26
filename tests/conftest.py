@@ -110,6 +110,11 @@ def tableSample() -> tuple[list[list[int | str]], list[str]]:
 	]
 	return tableRows, tableColumns
 
+@pytest.fixture
+def arrayAxisOperation() -> NDArray[numpy.int64]:
+	"""You can use this fixture to test axis movement with deterministic integer data."""
+	return ((numpy.arange(2 * 3 * 5 * 7, dtype=numpy.int64) + 5) * 3).reshape((2, 3, 5, 7))
+
 """Section: Windowing function testing utilities"""
 
 @pytest.fixture(params=[256, 1024, 1024 * 8, 44100, 44100 * 11])
