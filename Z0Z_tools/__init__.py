@@ -77,9 +77,6 @@ from __future__ import annotations
 
 # pyright: reportUnusedImport=false
 # isort: split
-from Z0Z_tools.scipyDOTsignalDOT_short_time_fft import FFT_MODE_TYPE, PAD_TYPE
-
-# isort: split
 from Z0Z_tools.theTypes import (
 	ArraySpectrograms as ArraySpectrograms, ArrayType, ArrayWaveforms as ArrayWaveforms, NormalizationReverter as NormalizationReverter,
 	ParametersShortTimeFFT, ParametersSTFT, ParametersUniversal, Spectrogram as Spectrogram, Waveform as Waveform, WaveformMetadata,

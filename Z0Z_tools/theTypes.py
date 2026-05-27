@@ -11,10 +11,10 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from numpy import complexfloating, dtype, floating, ndarray
-from typing import Any, Literal, TYPE_CHECKING, TypeAlias, TypedDict, TypeVar
+from typing import Any, TYPE_CHECKING, TypeAlias, TypedDict, TypeVar
 
 if TYPE_CHECKING:
-	from Z0Z_tools import FFT_MODE_TYPE, PAD_TYPE
+	from scipy.signal._short_time_fft import _FFTMode, _PadType, _ScaleTo
 
 ArrayType = TypeVar('ArrayType', bound=ndarray[Any, Any], covariant=True)
 WindowingFunctionDtype: TypeAlias = floating[Any]
@@ -59,7 +59,7 @@ class ParametersSTFT(TypedDict, total=False):
 
 	"""
 
-	padding: PAD_TYPE
+	padding: _PadType
 	axis: int
 
 class ParametersShortTimeFFT(TypedDict, total=False):
@@ -72,8 +72,8 @@ class ParametersShortTimeFFT(TypedDict, total=False):
 
 	"""
 
-	fft_mode: FFT_MODE_TYPE
-	scale_to: Literal['magnitude', 'psd']
+	fft_mode: _FFTMode
+	scale_to: _ScaleTo
 
 class ParametersUniversal(TypedDict):
 	"""Required parameters for universal audio processing operations.

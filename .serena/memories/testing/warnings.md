@@ -1,0 +1,2 @@
+- When a warning is the intended behavior in pytest, assert it with `pytest.warns(...)` instead of letting it surface in the warnings summary.
+- For `normalizeWaveform`, a silent all-zero waveform should emit `UserWarning` and still return zeros/reversible output.
