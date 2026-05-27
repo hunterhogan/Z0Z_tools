@@ -68,6 +68,7 @@ def normalizeWaveform(waveform: Waveform, amplitudeNorm: float = 1.0) -> tuple[W
 		amplitudeAdjustment = amplitudeNorm / peakAbsolute
 
 	waveformNormalized = cast("Waveform", waveform * amplitudeAdjustment)
+
 	def revertNormalization(waveformDescendant: Waveform) -> Waveform:
 		return cast("Waveform", waveformDescendant / amplitudeAdjustment)
 	return waveformNormalized, revertNormalization

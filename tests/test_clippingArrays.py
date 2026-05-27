@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from numpy import float64
-from numpy._core._exceptions import _UFuncNoLoopError
+from numpy._core._exceptions import _UFuncNoLoopError  # noqa: PLC2701
 from tests.conftest import prototype_numpyAllClose
 from typing import Any, TYPE_CHECKING
 from Z0Z_tools.clippingArrays import applyHardLimit, applyHardLimitComplexValued
@@ -28,11 +28,11 @@ def testApplyHardLimit(description: str, expected: NDArray[Any] | type[Exception
     prototype_numpyAllClose(expected, None, None, applyHardLimit, arrayTarget, comparand)
 
 @pytest.mark.parametrize("description,expected,arrayTarget,comparand,penalty", [
-    ("Simple complex under limit", numpy.array([0.3+0.5j, -0.8-1.3j]), numpy.array([0.3+0.5j, -0.8-1.3j]), numpy.array([2.1, 3.4]), 0.5),
-    ("Simple complex at limit", numpy.array([0.8+1.3j, -2.1-3.4j]), numpy.array([0.8+1.3j, -2.1-3.4j]), numpy.array([3.4, 5.5]), 0.8),
-    ("Invalid penalty", TypeError, numpy.array([0.5+0.8j, 1.3+2.1j]), numpy.array([3.4, 5.5]), "invalid"),
-    ("Zero complex array", numpy.zeros(3, dtype=complex), numpy.zeros(3, dtype=complex), numpy.array([0.3, 0.5, 0.8])*1.3, 3.4),
-    ("Mismatched shapes", IndexError, numpy.array([0.3+0.5j, 0.8+1.3j]), numpy.array([[2.1]]), 5.5),
+    ("Simple complex under limit", numpy.array([0.3 + 0.5j, -0.8 - 1.3j]), numpy.array([0.3 + 0.5j, -0.8 - 1.3j]), numpy.array([2.1, 3.4]), 0.5),
+    ("Simple complex at limit", numpy.array([0.8 + 1.3j, -2.1 - 3.4j]), numpy.array([0.8 + 1.3j, -2.1 - 3.4j]), numpy.array([3.4, 5.5]), 0.8),
+    ("Invalid penalty", TypeError, numpy.array([0.5 + 0.8j, 1.3 + 2.1j]), numpy.array([3.4, 5.5]), "invalid"),
+    ("Zero complex array", numpy.zeros(3, dtype=complex), numpy.zeros(3, dtype=complex), numpy.array([0.3, 0.5, 0.8]) * 1.3, 3.4),
+    ("Mismatched shapes", IndexError, numpy.array([0.3 + 0.5j, 0.8 + 1.3j]), numpy.array([[2.1]]), 5.5),
 ], ids=lambda x: x if isinstance(x, str) else "")
 def testApplyHardLimitComplexValued(description: str
 , expected: Any

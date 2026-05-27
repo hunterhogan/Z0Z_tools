@@ -97,8 +97,8 @@ class TestReadAudioFileWithLabeledData:
 		# Test that the sample rate information is reasonable
 		# We can't directly test sample rate from the waveform alone,
 		# but we can test that the parsed metadata is sensible
-		assert waveformData.sampleRate in [44100, 48000]
-		assert waveformData.channelsTotal in [1, 2]
+		assert waveformData.sampleRate in {44100, 48000}
+		assert waveformData.channelsTotal in {1, 2}
 		assert waveformData.LUFS < 0  # LUFS should be negative (below digital full scale)
 		assert waveformData.LUFS > LUFS_LOWER_BOUND
 

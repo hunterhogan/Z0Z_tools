@@ -79,7 +79,7 @@ def mockTemporaryFiles(monkeypatch: pytest.MonkeyPatch, pathTmpTesting: pathlib.
 	"""Mock all temporary filesystem operations to use pathTmpTesting."""
 	monkeypatch.setattr('tempfile.mkdtemp', lambda *a, **k: str(pathTmpTesting))  # pyright: ignore[reportUnknownLambdaType, reportUnknownArgumentType]
 	monkeypatch.setattr('tempfile.gettempdir', lambda: str(pathTmpTesting))
-	monkeypatch.setattr('tempfile.mkstemp', lambda *a, **k: (0, str(pathTmpTesting))) # pyright: ignore[reportUnknownLambdaType, reportUnknownArgumentType]
+	monkeypatch.setattr('tempfile.mkstemp', lambda *a, **k: (0, str(pathTmpTesting)))  # pyright: ignore[reportUnknownLambdaType, reportUnknownArgumentType]
 
 # Fixtures
 @pytest.fixture
@@ -159,6 +159,7 @@ def array44100_ch2_sec5_Sine(listPathFilenamesArrayWaveforms: list[Path]) -> Arr
 
 class WaveformAndMetadata:
 	_cacheWaveforms: ClassVar[dict[Path, Waveform]] = {}
+
 	def __init__(self, pathFilename: Path, LUFS: float, sampleRate: float, channelsTotal: int, ID: str) -> None:
 		self.pathFilename: Path = pathFilename
 		self.LUFS: float = LUFS

@@ -37,7 +37,7 @@ parametersSTFTUniversal: ParametersSTFT = {'padding': 'even', 'axis': -1}
 
 lengthWindowingFunctionDEFAULT = 1024
 windowingFunctionCallableDEFAULT = halfsine
-parametersDEFAULT = ParametersUniversal (
+parametersDEFAULT = ParametersUniversal(
 	lengthFFT=2048,
 	lengthHop=512,
 	lengthWindowingFunction=lengthWindowingFunctionDEFAULT,
@@ -84,10 +84,10 @@ def getWaveformMetadata(listPathFilenames: Sequence[str | PathLike[str]], sample
 	for index, pathFilename in enumerate(tqdm(listPathFilenames)):
 		lengthWaveform = readAudioFile(pathFilename, sampleRate).shape[axisTime]
 		dictionaryWaveformMetadata[index] = WaveformMetadata(
-			pathFilename = str(pathFilename),
-			lengthWaveform = lengthWaveform,
-			samplesLeading = 0,
-			samplesTrailing = 0,
+			pathFilename=str(pathFilename),
+			lengthWaveform=lengthWaveform,
+			samplesLeading=0,
+			samplesTrailing=0,
 		)
 	return dictionaryWaveformMetadata
 
@@ -122,19 +122,19 @@ def readAudioFile(pathFilename: str | PathLike[Any] | BinaryIO, sampleRate: floa
 		with soundfile.SoundFile(str(pathFilename)) as readSoundFile:
 			sampleRateSource: int = readSoundFile.samplerate
 			waveform: Waveform = readSoundFile.read(dtype='float32', always_2d=True).astype(universalDtypeWaveform)
-			# GitHub #3 Implement semantic axes for audio data
-			axisTime = 0
-			axisChannels = 1
-			waveform = cast('Waveform', resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource, axisTime=axisTime))
-			if waveform.shape[axisChannels] == 1:
-				waveform = cast('Waveform', numpy.repeat(waveform, 2, axis=axisChannels))
-			return cast('Waveform', numpy.transpose(waveform, axes=(axisChannels, axisTime)))
 	except soundfile.LibsndfileError as ERRORmessage:
 		if 'System error' in str(ERRORmessage):
 			message = f"File not found: {pathFilename}"
 			raise FileNotFoundError(message) from ERRORmessage
 		else:  # noqa: RET506
 			raise
+	# GitHub #3 Implement semantic axes for audio data
+	axisTime = 0
+	axisChannels = 1
+	waveform = cast('Waveform', resampleWaveform(waveform, sampleRateDesired=sampleRate, sampleRateSource=sampleRateSource, axisTime=axisTime))
+	if waveform.shape[axisChannels] == 1:
+		waveform = cast('Waveform', numpy.repeat(waveform, 2, axis=axisChannels))
+	return cast('Waveform', numpy.transpose(waveform, axes=(axisChannels, axisTime)))
 
 def resampleWaveform(waveform: ndarray[tuple[int, ...], dtype[floating[Any]]], sampleRateDesired: float, sampleRateSource: float, axisTime: int = -1) -> ndarray[tuple[int, ...], dtype[floating[Any]]]:
 	"""Resample the waveform to the desired sample rate using resampy.
@@ -178,12 +178,6 @@ def loadWaveforms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTa
 	-------
 	arrayWaveforms : ArrayWaveforms
 		A single NumPy array of shape (countChannels, lengthWaveformMaximum, countWaveforms).
-
-	Raises
-	------
-	ValueError
-		When the list of path filenames is empty.
-
 	"""
 	if sampleRateTarget is None:
 		sampleRateTarget = parametersUniversal['sampleRate']
@@ -201,7 +195,7 @@ def loadWaveforms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTa
 
 	axisTime: int = -1  # pyright: ignore[reportUnusedVariable] # noqa: F841
 	dictionaryWaveformMetadata: dict[int, WaveformMetadata] = getWaveformMetadata(listPathFilenames, sampleRateTarget)
-	samplesTotalMaximum = max([entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values()])
+	samplesTotalMaximum = max(entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values())
 	axesSizes['axisTime'] = samplesTotalMaximum
 
 	for keyName, axisSize in axesSizes.items():
@@ -233,10 +227,6 @@ def writeWAV(pathFilename: str | PathLike[Any] | BinaryIO, waveform: Waveform, s
 	sampleRate : float | None = None
 		The sample rate of the waveform. Defaults to 44100 Hz if `None`.
 
-	Returns
-	-------
-	None
-
 	Notes
 	-----
 	The function overwrites existing files without prompting or informing the user.
@@ -249,16 +239,16 @@ def writeWAV(pathFilename: str | PathLike[Any] | BinaryIO, waveform: Waveform, s
 	makeDirsSafely(pathFilename)
 	soundfile.write(file=pathFilename, data=waveform.T, samplerate=int(sampleRate), subtype='FLOAT', format='WAV')
 
-@overload # stft 1 ndarray
+@overload  # stft 1 ndarray
 def stft(arrayTarget: Waveform, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[False] = False, lengthWaveform: None = None, indexingAxis: None = None) -> Spectrogram: ...
 
-@overload # stft many ndarray
+@overload  # stft many ndarray
 def stft(arrayTarget: ArrayWaveforms, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[False] = False, lengthWaveform: None = None, indexingAxis: int = -1) -> ArraySpectrograms: ...
 
-@overload # istft 1 ndarray
+@overload  # istft 1 ndarray
 def stft(arrayTarget: Spectrogram, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[True] = True, lengthWaveform: int, indexingAxis: None = None) -> Waveform: ...
 
-@overload # istft many ndarray
+@overload  # istft many ndarray
 def stft(arrayTarget: ArraySpectrograms, *, sampleRate: float | None = None, lengthHop: int | None = None, windowingFunction: WindowingFunction | None = None, lengthWindowingFunction: int | None = None, lengthFFT: int | None = None, inverse: Literal[True] = True, lengthWaveform: int, indexingAxis: int = -1) -> ArrayWaveforms: ...
 
 def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrograms
@@ -312,7 +302,7 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 		lengthHop = parametersUniversal['lengthHop']
 
 	if windowingFunction is None:
-		if lengthWindowingFunction is not None and windowingFunctionCallableUniversal: # pyright: ignore[reportUnnecessaryComparison]
+		if lengthWindowingFunction is not None and windowingFunctionCallableUniversal:  # pyright: ignore[reportUnnecessaryComparison]
 			windowingFunction = windowingFunctionCallableUniversal(lengthWindowingFunction)
 		else:
 			windowingFunction = parametersUniversal['windowingFunction']
@@ -383,7 +373,7 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRat
 
 	dictionaryWaveformMetadata: dict[int, WaveformMetadata] = getWaveformMetadata(listPathFilenames, sampleRateTarget)
 
-	samplesTotalMaximum: int = max([entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values()])
+	samplesTotalMaximum: int = max(entry['lengthWaveform'] + entry['samplesLeading'] + entry['samplesTrailing'] for entry in dictionaryWaveformMetadata.values())
 	countChannels = 2
 	waveformTemplate: Waveform = numpy.zeros(shape=(countChannels, samplesTotalMaximum), dtype=universalDtypeWaveform)
 	spectrogramTemplate: Spectrogram = stft(waveformTemplate, sampleRate=sampleRateTarget, **parametersSTFT)
@@ -393,12 +383,12 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRat
 	for index, metadata in tqdm(dictionaryWaveformMetadata.items()):
 		arraySpectrograms[..., index] = _getSpectrogram(waveformTemplate.copy(), metadata, sampleRateTarget, **parametersSTFT)
 
-	# with ProcessPoolExecutor(max_workers) as concurrencyManager:  # noqa: ERA001
-	# 	dictionaryConcurrency = {concurrencyManager.submit(  # noqa: ERA001
-	# 		_getSpectrogram, waveformTemplate.copy(), metadata, sampleRateTarget, **parametersSTFT): index  # noqa: ERA001
-	# 			for index, metadata in dictionaryWaveformMetadata.items()}  # noqa: ERA001
+	# with ProcessPoolExecutor(max_workers) as concurrencyManager:
+	# 	dictionaryConcurrency = {concurrencyManager.submit(
+	# 		_getSpectrogram, waveformTemplate.copy(), metadata, sampleRateTarget, **parametersSTFT): index
+	# 			for index, metadata in dictionaryWaveformMetadata.items()}
 
-	# 	for claimTicket in tqdm(as_completed(dictionaryConcurrency), total=len(dictionaryConcurrency)):  # noqa: ERA001
+	# 	for claimTicket in tqdm(as_completed(dictionaryConcurrency), total=len(dictionaryConcurrency)):
 	# 		arraySpectrograms[..., dictionaryConcurrency[claimTicket]] = claimTicket.result()  # noqa: ERA001
 
 	return arraySpectrograms, dictionaryWaveformMetadata
@@ -418,10 +408,6 @@ def spectrogramToWAV(spectrogram: Spectrogram, pathFilename: str | PathLike[Any]
 		The sample rate of the output waveform file. Defaults to 44100 if `None`.
 	**parametersSTFT : Any
 		Keyword parameters for the inverse Short-Time Fourier Transform, see `stft`.
-
-	Returns
-	-------
-	None
 
 	Notes
 	-----

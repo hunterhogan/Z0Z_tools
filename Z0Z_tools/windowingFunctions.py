@@ -23,8 +23,7 @@ def _getLengthTaper(lengthWindow: int, ratioTaper: float | None) -> int:
 	-------
 	lengthTaper : int
 		Number of samples in one taper section.
-
-	"""
+	"""  # noqa: DOC501
 	if ratioTaper is None:
 		lengthTaper = int(lengthWindow * 0.1 / 2)
 	elif 0 <= ratioTaper <= 1:
@@ -119,8 +118,8 @@ def tukey(lengthWindow: int, ratioTaper: float | None = None, **keywordArguments
 
 	"""
 	# Do not add logic that creates `ValueError` for invalid `ratioTaper` values because
-	# the SciPy developers are much better at coding than you are at coding: they will handle invalid values.  # noqa: ERA001
-	alpha: float | None = keywordArguments.get('alpha', ratioTaper) # Are you tempted to use `or 0.1`? Don't be: it will override the user's value for `ratioTaper=0`.
+	# the SciPy developers are much better at coding than you are at coding: they will handle invalid values.
+	alpha: float | None = keywordArguments.get('alpha', ratioTaper)  # Are you tempted to use `or 0.1`? Don't be: it will override the user's value for `ratioTaper=0`.
 	if alpha is None:
 		alpha = 0.1
 	return SciPy.tukey(lengthWindow, alpha)

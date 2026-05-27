@@ -11,8 +11,10 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from numpy import complexfloating, dtype, floating, ndarray
-from typing import Any, Literal, TypeAlias, TypedDict, TypeVar
-from Z0Z_tools import FFT_MODE_TYPE, PAD_TYPE
+from typing import Any, Literal, TYPE_CHECKING, TypeAlias, TypedDict, TypeVar
+
+if TYPE_CHECKING:
+	from Z0Z_tools import FFT_MODE_TYPE, PAD_TYPE
 
 ArrayType = TypeVar('ArrayType', bound=ndarray[Any, Any], covariant=True)
 WindowingFunctionDtype: TypeAlias = floating[Any]

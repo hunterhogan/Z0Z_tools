@@ -1,4 +1,6 @@
 """Create PyTorch tensor windowing functions."""
+from __future__ import annotations
+
 from collections.abc import Callable
 from torch.types import Device
 from typing import Any, TypeVar

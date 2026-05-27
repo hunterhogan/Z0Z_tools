@@ -22,6 +22,8 @@ pathFilenameDestination = Path(packageName, moduleDestination + '.py')
 
 ingredientsModule = IngredientsModule()
 
+ingredientsModule.imports.addImportFrom_asStr('__future__', 'annotations')
+
 ingredientsModule.appendPrologue(statement=Make.Assign([Make.Name('callableReturnsNDArray', ast.Store())]
 			, value=Make.Call(Make.Name('TypeVar')
 				, listParameters=[Make.Constant('callableReturnsNDArray')]
@@ -90,5 +92,4 @@ ingredientsModule.imports.addImport_asStr('torch')
 ingredientsModule.write_astModule(pathFilenameDestination, packageName)
 
 docstringModule = '"""Create PyTorch tensor windowing functions."""\n'
-pathFilenameDestination.write_text(docstringModule + pathFilenameDestination.read_text(encoding="utf-8"))
-
+pathFilenameDestination.write_text(docstringModule + pathFilenameDestination.read_text(encoding="utf-8"), encoding='utf-8')

@@ -1,13 +1,15 @@
-from collections.abc import Callable
-from tests.conftest import (
-	prototype_numpyAllClose, prototype_numpyArrayEqual, standardizedEqualTo, uniformTestFailureMessage)
-from typing import Any
-from Z0Z_tools import (
-	cosineWings, cosineWingsTensor, equalPower, equalPowerTensor, halfsine, halfsineTensor, tukey, tukeyTensor)
+from __future__ import annotations
+
+from tests.conftest import prototype_numpyAllClose, prototype_numpyArrayEqual, uniformTestFailureMessage
+from typing import Any, TYPE_CHECKING
+from Z0Z_tools import cosineWings, cosineWingsTensor, equalPower, equalPowerTensor, halfsine, halfsineTensor, tukey, tukeyTensor
 import numpy
 import pytest
 import scipy.signal.windows as SciPy
 import torch
+
+if TYPE_CHECKING:
+	from collections.abc import Callable
 
 @pytest.mark.parametrize("ratioTaper", [0.0, 0.1, 0.5, 1.0])
 def test_cosineWingsArray(ratioTaper: float, lengthWindow: int) -> None:

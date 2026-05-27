@@ -65,12 +65,12 @@ def findRelativePath(pathSource: PathLike[Any] | PurePath, pathDestination: Path
 	pathSource = Path(pathSource).resolve()
 	pathDestination = Path(pathDestination).resolve()
 
-	if pathSource.is_file() or pathSource.suffix != '':
+	if pathSource.is_file() or pathSource.suffix:
 		pathSource = pathSource.parent
 
 	# Split destination into parent path and filename if it's a file
-	pathDestinationParent: Path = pathDestination.parent if pathDestination.is_file() or pathDestination.suffix != '' else pathDestination
-	filenameFinal: str = pathDestination.name if pathDestination.is_file() or pathDestination.suffix != '' else ''
+	pathDestinationParent: Path = pathDestination.parent if (pathDestination.is_file() or pathDestination.suffix) else pathDestination
+	filenameFinal: str = pathDestination.name if (pathDestination.is_file() or pathDestination.suffix) else ''
 
 	# Split both paths into parts
 	partsSource: tuple[str, ...] = pathSource.parts
