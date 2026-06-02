@@ -21,19 +21,42 @@ jobs:
           python-version: '>=3.13'
       - name: Ensure GitHub Release exists
         env:
+          CONTEXT7_API_KEY: ${{ secrets.CONTEXT7_API_KEY }}
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          python -c "
-          import json, os, pathlib, tomllib, urllib.error, urllib.request
-          tag=tomllib.loads(pathlib.Path('pyproject.toml').read_text())['project']['version']
-          repo=os.environ['GITHUB_REPOSITORY']
-          token=os.environ['GITHUB_TOKEN']
-          url=f'https://api.github.com/repos/{repo}/releases'
-          headers={'Authorization': f'Bearer {token}', 'X-GitHub-Api-Version': '2026-03-10'}
+          python - <<'PY'
+          import json
+          import os
+          import pathlib
+          import tomllib
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+
+          tag = tomllib.loads(pathlib.Path('pyproject.toml').read_text())['project']['version']
+          repo = os.environ['GITHUB_REPOSITORY']
+          token = os.environ['GITHUB_TOKEN']
+          url = f'https://api.github.com/repos/{repo}/releases'
+          headers = {'Authorization': f'Bearer {token}', 'X-GitHub-Api-Version': '2026-03-10'}
+          created_release = False
           try:
             urllib.request.urlopen(urllib.request.Request(f'{url}/tags/{tag}', headers=headers))
           except urllib.error.HTTPError as thisIsAStupidSystem:
             if thisIsAStupidSystem.code != 404:
               raise
-            urllib.request.urlopen(urllib.request.Request(url,json.dumps({'tag_name': tag, 'name': tag}).encode(),headers, method='POST'))
-          "
+            urllib.request.urlopen(urllib.request.Request(url, json.dumps({'tag_name': tag, 'name': tag}).encode(), headers, method='POST'))
+            created_release = True
+
+          context7_config = pathlib.Path('context7.json')
+          if created_release and context7_config.is_file():
+            context7_token = os.environ.get('CONTEXT7_API_KEY')
+            if not context7_token:
+              raise SystemExit('context7.json exists, but the CONTEXT7_API_KEY secret is not set.')
+            context7_url = json.loads(context7_config.read_text())['url']
+            library_name = '/' + urllib.parse.urlparse(context7_url).path.strip('/')
+            if library_name == '/':
+              raise SystemExit(f'Could not derive a Context7 library name from {context7_url!r}.')
+            body = json.dumps({'libraryName': library_name}).encode()
+            refresh_headers = {'Authorization': f'Bearer {context7_token}', 'Content-Type': 'application/json'}
+            urllib.request.urlopen(urllib.request.Request('https://context7.com/api/v1/refresh', body, refresh_headers, method='POST'))
+          PY

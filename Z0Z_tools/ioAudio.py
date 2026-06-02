@@ -1,7 +1,32 @@
-"""Provides utilities for reading, writing, and resampling audio waveforms.
+"""Read, write, resample, and transform audio waveforms between time and frequency domains.
 
-Comprehensive audio processing module offering functions for file I/O, resampling,
-and Short-Time Fourier Transform operations with consistent data shapes and types.
+You can use this module to load audio files into NumPy arrays, resample waveforms, convert
+between waveforms and spectrograms using the Short-Time Fourier Transform, and write
+waveforms back to WAV files. All audio is normalized to stereo, 32-bit float `Waveform`
+arrays shaped `(channels, samples)`. All spectrograms are complex 64-bit float
+`Spectrogram` arrays shaped `(channels, frequencies, frames)`.
+
+Contents
+--------
+Functions
+    getWaveformMetadata
+        Retrieve metadata for a collection of audio waveform files.
+    loadSpectrograms
+        Load spectrograms from a list of audio files.
+    loadWaveforms
+        Load a list of audio files into a single stacked NumPy array.
+    readAudioFile
+        Read an audio file and return stereo waveform data as a NumPy array.
+    resampleWaveform
+        Resample a waveform array to a target sample rate.
+    spectrogramToWAV
+        Write a complex spectrogram to a WAV file.
+    stft
+        Perform Short-Time Fourier Transform or its inverse on waveform or spectrogram data.
+    waveformSpectrogramWaveform
+        Decorate a spectrogram-processing callable to accept and return waveforms.
+    writeWAV
+        Write a waveform array to a WAV file.
 
 """
 from __future__ import annotations
@@ -31,12 +56,18 @@ if __name__ == '__main__':
 # Design coordinated, user-overridable universal parameter defaults for audio functions
 # https://github.com/hunterhogan/Z0Z_tools/issues/5
 universalDtypeWaveform = float32
+"""Module-wide NumPy dtype for waveform arrays; controls memory layout and numeric precision."""
 universalDtypeSpectrogram = complex64
+"""Module-wide NumPy dtype for spectrogram arrays; complex 64-bit float balances precision and memory."""
 parametersShortTimeFFTUniversal: ParametersShortTimeFFT = {'fft_mode': 'onesided'}
+"""Module-wide keyword parameters passed to `scipy.signal.ShortTimeFFT` on construction."""
 parametersSTFTUniversal: ParametersSTFT = {'padding': 'even', 'axis': -1}
+"""Module-wide keyword parameters passed to `ShortTimeFFT.stft` and `ShortTimeFFT.istft` on each call."""
 
 lengthWindowingFunctionDEFAULT = 1024
+"""Default length in samples of the windowing function used when no override is provided."""
 windowingFunctionCallableDEFAULT = halfsine
+"""Default callable that constructs a `WindowingFunction` array from a length in samples."""
 parametersDEFAULT = ParametersUniversal(
 	lengthFFT=2048,
 	lengthHop=512,
@@ -44,39 +75,53 @@ parametersDEFAULT = ParametersUniversal(
 	sampleRate=44100,
 	windowingFunction=windowingFunctionCallableDEFAULT(lengthWindowingFunctionDEFAULT),
 )
+"""Factory `ParametersUniversal` applied when `setParametersUniversal` is `None`."""
 
 setParametersUniversal = None
+"""Override `ParametersUniversal` for all module functions; when `None`, `parametersDEFAULT` is used."""
 
 windowingFunctionCallableUniversal = windowingFunctionCallableDEFAULT
+"""Active callable for constructing windowing functions; overridable at module level."""
 if not setParametersUniversal:
 	parametersUniversal: ParametersUniversal = parametersDEFAULT
+	"""Active `ParametersUniversal` used by all functions when no per-call override is provided."""
 
 def getWaveformMetadata(listPathFilenames: Sequence[str | PathLike[str]], sampleRate: float) -> dict[int, WaveformMetadata]:
 	"""Retrieve metadata for a collection of audio waveform files.
 
-	Reads each audio file, determines its length, and creates a `WaveformMetadata`
-	object for each file, indexed by its position in the input list.
+	You can use this function to inspect the length of each audio file before loading
+	waveforms into memory. `getWaveformMetadata` reads each file at `sampleRate`, measures
+	the sample count, and returns one `WaveformMetadata` [1] record per file indexed by
+	position in `listPathFilenames`. Each record's `samplesLeading` and `samplesTrailing`
+	fields are initialized to `0`; callers may adjust them before passing the result to
+	downstream loaders such as `loadWaveforms` or `loadSpectrograms`.
 
 	Parameters
 	----------
 	listPathFilenames : Sequence[str | PathLike[str]]
-		A sequence of paths to audio files.
+		Sequence of paths to audio files.
 	sampleRate : float
-		The target sample rate for reading the audio files.
+		Target sample rate used when reading each file to measure its length in samples.
 
 	Returns
 	-------
 	dictionaryWaveformMetadata : dict[int, WaveformMetadata]
-		Dictionary mapping integer indices to
-		`WaveformMetadata` objects. Each `WaveformMetadata` contains:
-		- pathFilename: The string path to the audio file
-		- lengthWaveform: The number of samples in the audio file
-		- samplesLeading: Set to 0 by default
-		- samplesTrailing: Set to 0 by default
+		Dictionary mapping each integer index to a `WaveformMetadata` [1] record. Each
+		record contains `pathFilename` (string path), `lengthWaveform` (sample count at
+		`sampleRate`), `samplesLeading` (initialized to `0`), and `samplesTrailing`
+		(initialized to `0`).
 
-	Notes
-	-----
-	This function uses `tqdm` to display a progress bar during processing.
+	File Reading Progress
+	---------------------
+	`tqdm` [2] displays a progress bar in the terminal while `getWaveformMetadata` reads
+	each file in `listPathFilenames`.
+
+	References
+	----------
+	[1] `WaveformMetadata`
+
+	[2] tqdm — fast, extensible progress bar for Python and CLI
+		https://tqdm.github.io/
 
 	"""
 	axisTime: int = -1
@@ -92,28 +137,40 @@ def getWaveformMetadata(listPathFilenames: Sequence[str | PathLike[str]], sample
 	return dictionaryWaveformMetadata
 
 def readAudioFile(pathFilename: str | PathLike[Any] | BinaryIO, sampleRate: float | None = None) -> Waveform:
-	"""Read an audio file and return its data as a NumPy array.
+	"""Read an audio file and return stereo waveform data as a NumPy array.
 
-	Mono audio is always converted to stereo for consistent output shape.
+	You can use this function to load any audio file that `soundfile` [1] supports. The
+	returned `Waveform` [2] is always shaped `(channels, samples)` where `channels` is `2`.
+	When the source file is mono, `readAudioFile` duplicates the single channel to produce
+	a stereo array. When `sampleRate` differs from the file's native sample rate,
+	`readAudioFile` resamples using `resampleWaveform`.
 
 	Parameters
 	----------
 	pathFilename : str | PathLike[Any] | BinaryIO
-		The path to the audio file or binary stream.
+		Path to the audio file or a binary stream compatible with `soundfile` [1].
 	sampleRate : float | None = None
-		The sample rate of the returned waveform. Defaults to 44100 if `None`.
+		Target sample rate of the returned `Waveform` [2] in Hz. Defaults to `44100`
+		when `None`.
 
 	Returns
 	-------
 	waveform : Waveform
-		The audio data in an array shaped (channels, samples).
+		Stereo audio data shaped `(2, samples)` as `float32`.
 
 	Raises
 	------
 	FileNotFoundError
-		When the audio file cannot be found.
+		When `pathFilename` does not exist on the filesystem.
 	soundfile.LibsndfileError
-		When the file format is unsupported or corrupted.
+		When `pathFilename` is an unsupported or corrupted audio format.
+
+	References
+	----------
+	[1] soundfile — audio library based on libsndfile
+		https://python-soundfile.readthedocs.io/en/0.12.1/
+
+	[2] `Waveform`
 
 	"""
 	if sampleRate is None:
@@ -137,23 +194,42 @@ def readAudioFile(pathFilename: str | PathLike[Any] | BinaryIO, sampleRate: floa
 	return cast('Waveform', numpy.transpose(waveform, axes=(axisChannels, axisTime)))
 
 def resampleWaveform(waveform: ndarray[tuple[int, ...], dtype[floating[Any]]], sampleRateDesired: float, sampleRateSource: float, axisTime: int = -1) -> ndarray[tuple[int, ...], dtype[floating[Any]]]:
-	"""Resample the waveform to the desired sample rate using resampy.
+	"""Resample a waveform array to a target sample rate using `resampy` [1].
+
+	You can use this function to change the sample rate of any floating-point NumPy array [2].
+	`resampleWaveform` passes `waveform` to `resampy.resample` [1] along the `axisTime` axis.
+	When `sampleRateSource` equals `sampleRateDesired`, `resampleWaveform` returns `waveform`
+	unchanged without invoking `resampy`.
 
 	Parameters
 	----------
 	waveform : ndarray[tuple[int, ...], dtype[floating[Any]]]
-		The input audio data.
+		Input audio data as any floating-point NumPy array [2].
 	sampleRateDesired : float
-		The desired sample rate.
+		Target sample rate in Hz.
 	sampleRateSource : float
-		The original sample rate of the waveform.
+		Original sample rate of `waveform` in Hz.
 	axisTime : int = -1
-		The time axis along which to perform resampling.
+		Axis along which resampling is performed. Negative values index from the last axis.
 
 	Returns
 	-------
 	waveformResampled : ndarray[tuple[int, ...], dtype[floating[Any]]]
-		The resampled waveform.
+		Waveform resampled to `sampleRateDesired`. Returns `waveform` unchanged when
+		`sampleRateSource` equals `sampleRateDesired`.
+
+	Sample Rate Rounding
+	--------------------
+	Both `sampleRateDesired` and `sampleRateSource` are rounded to the nearest integer
+	before passing to `resampy.resample` [1]. `resampy` expects integer sample rates.
+
+	References
+	----------
+	[1] resampy — efficient signal resampling
+		https://resampy.readthedocs.io/en/stable/
+
+	[2] numpy.ndarray
+		https://numpy.org/doc/stable/reference/index.html
 
 	"""
 	if sampleRateSource != sampleRateDesired:
@@ -164,20 +240,38 @@ def resampleWaveform(waveform: ndarray[tuple[int, ...], dtype[floating[Any]]], s
 	return waveform
 
 def loadWaveforms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTarget: float | None = None) -> ArrayWaveforms:
-	"""Load a list of audio files into a single array.
+	"""Load a list of audio files into a single stacked NumPy array.
+
+	You can use this function to batch-load multiple audio files into one `ArrayWaveforms` [1]
+	array. All waveforms are resampled to `sampleRateTarget`, converted to stereo when
+	necessary, and zero-padded on the trailing edge to match the length of the longest
+	waveform. The resulting array is shaped `(channels, lengthWaveformMaximum, countFiles)`.
 
 	Parameters
 	----------
-	listPathFilenames : Sequence[str | PathLike[str] | Path]
-		List of file paths to the audio files.
+	listPathFilenames : Sequence[str | PathLike[str]]
+		List of paths to audio files.
 	sampleRateTarget : float | None = None
-		Target sample rate for the waveforms; the
-		function will resample if necessary. Defaults to 44100 if `None`.
+		Target sample rate in Hz. Defaults to `44100` when `None`.
 
 	Returns
 	-------
 	arrayWaveforms : ArrayWaveforms
-		A single NumPy array of shape (countChannels, lengthWaveformMaximum, countWaveforms).
+		Stacked waveform data shaped `(2, lengthWaveformMaximum, countFiles)` as `float32`,
+		where `lengthWaveformMaximum` is the maximum sample count across all files at
+		`sampleRateTarget`.
+
+	Zero-Padding
+	------------
+	Waveforms shorter than `lengthWaveformMaximum` are zero-padded on the trailing edge.
+	Leading padding is applied when `WaveformMetadata.samplesLeading` [2] is non-zero;
+	`getWaveformMetadata` initializes `samplesLeading` to `0` by default.
+
+	References
+	----------
+	[1] `ArrayWaveforms`
+
+	[2] `WaveformMetadata`
 	"""
 	if sampleRateTarget is None:
 		sampleRateTarget = parametersUniversal['sampleRate']
@@ -216,22 +310,35 @@ def loadWaveforms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTa
 	return arrayWaveforms
 
 def writeWAV(pathFilename: str | PathLike[Any] | BinaryIO, waveform: Waveform, sampleRate: float | None = None) -> None:
-	"""Write a waveform to a WAV file.
+	"""Write a waveform array to a WAV file.
+
+	You can use this function to save a `Waveform` [1] or any compatible NumPy array to a
+	32-bit float WAV file. `writeWAV` creates any missing parent directories before writing
+	using `makeDirsSafely` from `hunterMakesPy` [2].
 
 	Parameters
 	----------
 	pathFilename : str | PathLike[Any] | BinaryIO
-		The path and filename where the WAV file will be saved.
+		Destination path for the WAV file, or a binary stream.
 	waveform : Waveform
-		The waveform data to be written to the WAV file. The waveform should be in the shape (channels, samples) or (samples,).
+		Audio data shaped `(channels, samples)` or `(samples,)`.
 	sampleRate : float | None = None
-		The sample rate of the waveform. Defaults to 44100 Hz if `None`.
+		Sample rate of `waveform` in Hz. Defaults to `44100` when `None`.
 
-	Notes
-	-----
-	The function overwrites existing files without prompting or informing the user.
-	All files are saved as 32-bit float.
-	The function will attempt to create the directory structure, if applicable.
+	File Overwrite and Format
+	-------------------------
+	`writeWAV` overwrites any existing file at `pathFilename` without prompting. All files
+	are written as 32-bit float WAV using `soundfile.write` [3].
+
+	References
+	----------
+	[1] `Waveform`
+
+	[2] hunterMakesPy — makeDirsSafely
+		https://context7.com/hunterhogan/huntermakespy
+
+	[3] soundfile — audio library based on libsndfile
+		https://python-soundfile.readthedocs.io/en/0.12.1/
 
 	"""
 	if sampleRate is None:
@@ -262,38 +369,69 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 		, lengthWaveform: int | None = None
 		, indexingAxis: int | None = None
 		) -> Waveform | ArrayWaveforms | Spectrogram | ArraySpectrograms:
-	"""Perform Short-Time Fourier Transform with unified interface for forward and inverse transforms.
+	"""Perform Short-Time Fourier Transform or its inverse on waveform or spectrogram data.
+
+	You can use this function to convert a `Waveform` [1] to a `Spectrogram` [2] or reverse
+	the transformation with `inverse=True`. Pass `ArrayWaveforms` [3] or
+	`ArraySpectrograms` [4] with an `indexingAxis` to transform a batch of signals at once.
+	All transform behavior is governed by `scipy.signal.ShortTimeFFT` [5].
+
+	Four overloads determine the return type from `arrayTarget` and `inverse`:
+	- `Waveform` [1] → `Spectrogram` [2] (single forward transform)
+	- `ArrayWaveforms` [3] → `ArraySpectrograms` [4] (batch forward transform)
+	- `Spectrogram` [2] → `Waveform` [1] (single inverse transform)
+	- `ArraySpectrograms` [4] → `ArrayWaveforms` [3] (batch inverse transform)
 
 	Parameters
 	----------
 	arrayTarget : Waveform | ArrayWaveforms | Spectrogram | ArraySpectrograms
 		Input array for transformation.
 	sampleRate : float | None = None
-		Sample rate of the signal. Defaults to 44100 if `None`.
+		Sample rate of the signal in Hz. Defaults to `44100` when `None`.
 	lengthHop : int | None = None
-		Number of samples between successive frames. Defaults to 512 if `None`.
+		Number of samples between successive analysis frames. Defaults to `512` when `None`.
 	windowingFunction : WindowingFunction | None = None
-		Windowing function array. Defaults to halfsine if `None`.
+		Windowing function array [6]. When `None`, `windowingFunctionCallableUniversal` is
+		called with `lengthWindowingFunction`, or the universal default is used.
 	lengthWindowingFunction : int | None = None
-		Length of the windowing function. Used if `windowingFunction` is `None`. Defaults to 1024 if `None`.
+		Length of the windowing function in samples. Used only when `windowingFunction` is
+		`None`. Defaults to `1024` when `None`.
 	lengthFFT : int | None = None
-		Length of the FFT. Defaults to 2048 or the next power of 2 >= `lengthWindowingFunction`.
+		Length of the FFT in samples. Defaults to `2048` or the next power of two ≥
+		`lengthWindowingFunction` when `None`.
 	inverse : bool = False
-		Whether to perform inverse transform.
+		When `True`, perform inverse STFT. When `False`, perform forward STFT.
 	lengthWaveform : int | None = None
-		Required output length for inverse transform.
+		Required output length in samples for inverse transform. Must be provided when
+		`inverse` is `True`.
 	indexingAxis : int | None = None
-		Axis containing multiple signals to transform. Use `None` for single signals.
+		Axis along which multiple signals are stacked. Use `None` for single-signal input.
 
 	Returns
 	-------
 	arrayTransformed : Waveform | ArrayWaveforms | Spectrogram | ArraySpectrograms
-		The transformed signal(s).
+		Transformed signal or batch of signals. Return type mirrors `arrayTarget` with
+		forward and inverse swapped.
 
 	Raises
 	------
 	ValueError
-		When `lengthWaveform` is not specified for inverse transform.
+		When `inverse` is `True` and `lengthWaveform` is not provided.
+
+	References
+	----------
+	[1] `Waveform`
+
+	[2] `Spectrogram`
+
+	[3] `ArrayWaveforms`
+
+	[4] `ArraySpectrograms`
+
+	[5] scipy.signal.ShortTimeFFT
+		https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.ShortTimeFFT.html
+
+	[6] `WindowingFunction`
 
 	"""
 	if sampleRate is None:
@@ -340,6 +478,36 @@ def stft(arrayTarget: Waveform | ArrayWaveforms | Spectrogram | ArraySpectrogram
 		return numpy.moveaxis(arrayTransformed, -1, indexingAxis)
 
 def _getSpectrogram(waveform: Waveform, metadata: WaveformMetadata, sampleRateTarget: float, **parametersSTFT: Any) -> Spectrogram:
+	"""I use this to load a single audio file into a pre-allocated waveform buffer and compute its spectrogram.
+
+	(AI generated docstring)
+
+	I use this shared subroutine inside `loadSpectrograms` to avoid reallocating a waveform
+	buffer for each file. `_getSpectrogram` copies audio data from `metadata['pathFilename']`
+	into the caller-provided `waveform` buffer at the position described by `metadata`, then
+	computes `stft` with `sampleRateTarget` and any additional `parametersSTFT`. The caller
+	must pass a fresh copy of the buffer for each iteration.
+
+	Parameters
+	----------
+	waveform : Waveform
+		Pre-allocated buffer into which audio data is copied before the STFT. The caller
+		must pass a separate copy for each file to prevent data from accumulating across
+		iterations.
+	metadata : WaveformMetadata
+		Record describing `pathFilename`, `lengthWaveform`, `samplesLeading`, and
+		`samplesTrailing` for the audio file being loaded.
+	sampleRateTarget : float
+		Target sample rate passed to `readAudioFile`.
+	**parametersSTFT : Any
+		Keyword parameters forwarded to `stft`.
+
+	Returns
+	-------
+	spectrogram : Spectrogram
+		Complex spectrogram of `waveform` after copying the audio file into the buffer.
+
+	"""
 	# All waveforms have the same shape so that all spectrograms have the same shape.
 	# GitHub #4 Add padding logic to `loadWaveforms` and `loadSpectrograms`
 	lengthWaveform = metadata['lengthWaveform'] + metadata['samplesLeading'] + metadata['samplesTrailing']
@@ -348,21 +516,44 @@ def _getSpectrogram(waveform: Waveform, metadata: WaveformMetadata, sampleRateTa
 	return stft(waveform, sampleRate=sampleRateTarget, **parametersSTFT)
 
 def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRateTarget: float | None = None, **parametersSTFT: Any) -> tuple[ArraySpectrograms, dict[int, WaveformMetadata]]:
-	"""Load spectrograms from audio files.
+	"""Load spectrograms from a list of audio files.
+
+	You can use this function to batch-convert audio files to spectrograms in a single call.
+	`loadSpectrograms` reads each file, pads all waveforms to the same length, computes the
+	Short-Time Fourier Transform for each, and stacks the results into one
+	`ArraySpectrograms` [1] array. The function also returns a `WaveformMetadata` [2]
+	dictionary that describes each file's original length and padding.
 
 	Parameters
 	----------
 	listPathFilenames : Sequence[str | PathLike[str]]
-		A list of WAV path and filenames.
+		List of paths to audio files.
 	sampleRateTarget : float | None = None
-		The target sample rate. If necessary, a file will be resampled to the target sample rate. Defaults to 44100 if `None`.
+		Target sample rate in Hz. Defaults to `44100` when `None`.
 	**parametersSTFT : Any
-		Keyword parameters for the Short-Time Fourier Transform, see `stft`.
+		Keyword parameters forwarded to `stft`, such as `lengthWindowingFunction` and
+		`lengthHop`.
 
 	Returns
 	-------
 	tupleSpectrogramsMetadata : tuple[ArraySpectrograms, dict[int, WaveformMetadata]]
-		A tuple containing the array of spectrograms and a dictionary of metadata for each spectrogram.
+		A two-element `tuple`. The first element is `ArraySpectrograms` [1] shaped
+		`(channels, frequencies, frames, countFiles)` as `complex64`. The second element
+		is a `dict` mapping integer file indices to `WaveformMetadata` [2] records.
+
+	File Reading Progress
+	---------------------
+	`tqdm` [3] displays a progress bar in the terminal during the spectrogram computation
+	loop.
+
+	References
+	----------
+	[1] `ArraySpectrograms`
+
+	[2] `WaveformMetadata`
+
+	[3] tqdm — fast, extensible progress bar for Python and CLI
+		https://tqdm.github.io/
 
 	"""
 	if sampleRateTarget is None:
@@ -394,24 +585,36 @@ def loadSpectrograms(listPathFilenames: Sequence[str | PathLike[str]], sampleRat
 	return arraySpectrograms, dictionaryWaveformMetadata
 
 def spectrogramToWAV(spectrogram: Spectrogram, pathFilename: str | PathLike[Any] | BinaryIO, lengthWaveform: int, sampleRate: float | None = None, **parametersSTFT: Any) -> None:
-	"""Write a complex spectrogram to a WAV file.
+	"""Write a complex spectrogram to a WAV file by computing the inverse STFT.
+
+	You can use this function to reconstruct a waveform from a `Spectrogram` [1] and save
+	it directly to a WAV file. `spectrogramToWAV` calls `stft` with `inverse=True` to
+	obtain the reconstructed `Waveform` [2], then passes it to `writeWAV`.
 
 	Parameters
 	----------
 	spectrogram : Spectrogram
-		The complex spectrogram to be written to the file.
+		Complex spectrogram to convert back to a waveform.
 	pathFilename : str | PathLike[Any] | BinaryIO
-		Location for the file of the waveform output.
+		Destination path for the WAV file, or a binary stream.
 	lengthWaveform : int
-		The length of the output waveform in samples. This parameter is not optional.
+		Number of samples in the output waveform. The inverse STFT cannot recover the
+		original length from the spectrogram alone, so `lengthWaveform` is required.
 	sampleRate : float | None = None
-		The sample rate of the output waveform file. Defaults to 44100 if `None`.
+		Sample rate for the output WAV file in Hz. Defaults to `44100` when `None`.
 	**parametersSTFT : Any
-		Keyword parameters for the inverse Short-Time Fourier Transform, see `stft`.
+		Keyword parameters forwarded to `stft`, such as `lengthWindowingFunction` and
+		`lengthHop`.
 
-	Notes
-	-----
-	See `writeWAV` for additional notes and caveats.
+	File Overwrite and Format
+	-------------------------
+	See `writeWAV` for file overwrite behavior and output format details.
+
+	References
+	----------
+	[1] `Spectrogram`
+
+	[2] `Waveform`
 
 	"""
 	if sampleRate is None:
@@ -421,25 +624,36 @@ def spectrogramToWAV(spectrogram: Spectrogram, pathFilename: str | PathLike[Any]
 	writeWAV(pathFilename, waveform, sampleRate)
 
 def waveformSpectrogramWaveform(callableNeedsSpectrogram: Callable[[Spectrogram], Spectrogram]) -> Callable[[Waveform], Waveform]:
-	"""Decorate a function to convert a waveform to a spectrogram, applies a transformation on the spectrogram, and converts the transformed spectrogram back to a waveform.
+	"""Decorate a spectrogram-processing callable to accept and return waveforms.
 
-	This is a higher-order function that takes a function operating on spectrograms
-	and returns a function that operates on waveforms by applying the Short-Time
-	Fourier Transform and its inverse.
+	You can use this function as a decorator when you have a function that transforms
+	`Spectrogram` [1] data and you want a version that operates directly on `Waveform` [2]
+	data. The returned function applies `stft` to convert the input `Waveform` [2] to a
+	`Spectrogram` [1], calls `callableNeedsSpectrogram`, then applies inverse `stft` to
+	convert the result back to a `Waveform` [2] of the original length.
 
 	Parameters
 	----------
 	callableNeedsSpectrogram : Callable[[Spectrogram], Spectrogram]
-		A function that takes a spectrogram and returns a transformed spectrogram.
+		A function that accepts and returns a `Spectrogram` [1].
 
 	Returns
 	-------
 	stft_istft : Callable[[Waveform], Waveform]
-		A function that takes a waveform, transforms it into a spectrogram, applies the provided spectrogram transformation, and converts it back to a waveform.
+		A function that accepts a `Waveform` [2], converts it to a `Spectrogram` [1],
+		applies `callableNeedsSpectrogram`, and returns the reconstructed `Waveform` [2]
+		at the original length.
 
-	Notes
-	-----
-	The time axis is assumed to be the last axis (-1) of the waveform array.
+	Time Axis Assumption
+	--------------------
+	The inner function `stft_istft` assumes the time axis of the input `Waveform` [2] is
+	the last axis (`-1`). This matches the `(channels, samples)` shape convention.
+
+	References
+	----------
+	[1] `Spectrogram`
+
+	[2] `Waveform`
 
 	"""
 	def stft_istft(waveform: Waveform) -> Waveform:

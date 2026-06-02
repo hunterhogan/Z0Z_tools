@@ -1,7 +1,10 @@
-"""Array axis manipulation utilities with automatic reversion.
+"""Temporarily reposition array axes and restore the original axis order on context exit.
 
-This module provides context managers for temporarily manipulating array axes with automatic
-restoration of the original configuration when exiting the context.
+Contents
+--------
+Functions
+	moveToAxisOfOperation
+		Move an array axis to an operation position, then automatically restore the original axis order on exit.
 
 """
 from __future__ import annotations
@@ -16,31 +19,46 @@ if TYPE_CHECKING:
 
 @contextmanager
 def moveToAxisOfOperation(arrayTarget: ArrayType, axisSource: int, axisOfOperation: int = -1) -> Generator[ArrayType, None, None]:
-	"""Temporarily move an axis of an array to a target position with automatic reversion.
+	"""Move an array axis to an operation position, then automatically restore the original axis order on exit.
 
-	Moves an axis of an array to a specified position, typically to the last axis for easier operation.
-	Yields the modified array and automatically reverts the axis position when exiting the context.
+	You can use `moveToAxisOfOperation` as a context manager to temporarily rearrange the axes of
+	`arrayTarget`. The context yields `arrayStandardized`, a `numpy.moveaxis` [1] view of `arrayTarget`
+	with `axisSource` moved to `axisOfOperation`. Because `arrayStandardized` shares memory with
+	`arrayTarget`, modifications to `arrayStandardized` inside the context are reflected in `arrayTarget`.
+	When the context exits, `arrayTarget` retains its original axis order.
 
 	Parameters
 	----------
 	arrayTarget : ArrayType
-		The input array to modify.
+		The array whose axis to move.
 	axisSource : int
-		The current position of the axis to move.
+		The source axis position to move. Negative values count from the last axis.
 	axisOfOperation : int = -1
-		The target position for the axis.
+		The destination axis position for `axisSource`. Negative values count from the last axis.
 
 	Yields
 	------
 	arrayStandardized : ArrayType
-		The array with the axis moved to the specified position.
+		A view of `arrayTarget` with `axisSource` at position `axisOfOperation`.
 
-	Example
-	-------
-	```python
-	with moveToAxisOfOperation(arrayWaveforms, axes['time']):
-		arrayWaveforms = arrayWaveforms[..., COUNTsamplesPadding : -COUNTsamplesPadding]
-	```
+	Examples
+	--------
+	Move axis 0 to the last position and modify values inside the context:
+
+		```python
+		import numpy
+		from Z0Z_tools import moveToAxisOfOperation
+
+		arrayAxisOperation = numpy.arange(24).reshape(2, 3, 4)
+		with moveToAxisOfOperation(arrayAxisOperation, axisSource=0, axisOfOperation=-1) as arrayStandardized:
+			arrayStandardized += 10
+		```
+
+	References
+	----------
+	[1] numpy.moveaxis
+		https://numpy.org/doc/stable/reference/generated/numpy.moveaxis.html
+
 	"""
 	arrayStandardized: ArrayType = moveaxis(arrayTarget, axisSource, axisOfOperation)
 	try:
