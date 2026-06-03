@@ -1,27 +1,27 @@
-abstract: Z0Z_tools is an innovative collection of tools for Python development 
-  and audio file processing through modular, self-documenting solutions. 
-  Z0Z_tools simplifies audio file processing and working with spectrograms. The 
-  tools are designed to be easy to use and to help you write better code faster.
+abstract: Z0Z_tools is typing, documenting, and improving toolz and cytoolz.
 authors:
 - given-names: Hunter
   family-names: Hogan
   email: HunterHogan@pm.me
 cff-version: 1.2.0
 commit: 64b931e0f14e6307a001c9488cd47515cd73b47e
-date-released: '2026-05-10'
+date-released: '2026-06-03'
 identifiers:
 - type: url
-  value: https://github.com/hunterhogan/Z0Z_tools/releases/tag/1.0.3
-  description: The URL for Z0Z_tools 1.0.3.
+  value: https://github.com/hunterhogan/Z0Z_tools/releases/tag/2.0.0
+  description: The URL for Z0Z_tools 2.0.0.
 keywords:
 - Python
-- development
+- cytoolz
+- filesystem
+- functional programming
 - tools
+- toolz
 license: CC-BY-NC-4.0
 message: Cite this software with the metadata in this file.
 repository: https://github.com/hunterhogan/Z0Z_tools.git
-repository-artifact: https://pypi.org/project/z0z-tools/1.0.3/
-repository-code: https://github.com/hunterhogan/Z0Z_tools/releases/tag/1.0.3
+repository-artifact: https://pypi.org/project/z0z-tools/2.0.0/
+repository-code: https://github.com/hunterhogan/Z0Z_tools/releases/tag/2.0.0
 title: Z0Z_tools
 url: https://github.com/hunterhogan/Z0Z_tools
-version: 1.0.3
+version: 2.0.0
