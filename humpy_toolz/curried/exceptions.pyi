@@ -1,0 +1,91 @@
+from collections.abc import Callable, Mapping, MutableMapping
+from typing import overload
+
+__all__ = ["merge", "merge_with"]
+
+@overload
+def merge_with[K, V]() -> Callable[
+	..., dict[K, V] | MutableMapping[K, V]
+]: ...
+@overload
+def merge_with[K, V](
+	func: Callable[[list[V]], V], /
+) -> Callable[..., dict[K, V] | MutableMapping[K, V]]: ...
+@overload
+def merge_with[K, V](
+	func: Callable[[list[V]], V],
+	d: Mapping[K, V],
+	/,
+) -> dict[K, V]: ...
+@overload
+def merge_with[K, V](
+	func: Callable[[list[V]], V],
+	d: Mapping[K, V],
+	d2: Mapping[K, V],
+	/,
+	*dicts: Mapping[K, V],
+) -> dict[K, V]: ...
+@overload
+def merge_with[K, V](
+	func: Callable[[list[V]], V],
+	d: Mapping[K, V],
+	d2: Mapping[K, V],
+	/,
+	*dicts: Mapping[K, V],
+	factory: Callable[[], MutableMapping[K, V]],
+) -> MutableMapping[K, V]: ...
+@overload
+def merge_with[K, V](
+	func: Callable[[list[V]], V],
+	/,
+	*,
+	factory: Callable[[], MutableMapping[K, V]],
+) -> Callable[..., MutableMapping[K, V]]: ...
+def merge_with[K, V](
+	func: Callable[[list[V]], V] = ...,
+	d: Mapping[K, V] = ...,
+	*dicts: Mapping[K, V],
+	factory: Callable[[], MutableMapping[K, V]] = ...,
+) -> (
+	dict[K, V]
+	| MutableMapping[K, V]
+	| Callable[..., dict[K, V] | MutableMapping[K, V]]
+):
+	...
+
+@overload
+def merge[K, V]() -> Callable[
+	..., dict[K, V] | MutableMapping[K, V]
+]: ...
+@overload
+def merge[K, V](d: Mapping[K, V], /) -> dict[K, V]: ...
+@overload
+def merge[K, V](
+	d: Mapping[K, V],
+	d2: Mapping[K, V],
+	/,
+	*dicts: Mapping[K, V],
+) -> dict[K, V]: ...
+@overload
+def merge[K, V](
+	d: Mapping[K, V],
+	d2: Mapping[K, V],
+	/,
+	*dicts: Mapping[K, V],
+	factory: Callable[[], MutableMapping[K, V]],
+) -> MutableMapping[K, V]: ...
+@overload
+def merge[K, V](
+	*,
+	factory: Callable[[], MutableMapping[K, V]],
+) -> Callable[..., MutableMapping[K, V]]: ...
+def merge[K, V](
+	d: Mapping[K, V] = ...,
+	*dicts: Mapping[K, V],
+	factory: Callable[[], MutableMapping[K, V]] = ...,
+) -> (
+	dict[K, V]
+	| MutableMapping[K, V]
+	| Callable[..., dict[K, V] | MutableMapping[K, V]]
+):
+	...

@@ -1,69 +1,48 @@
 # Z0Z_tools
 
-A comprehensive collection of Python utilities for developers and audio processing enthusiasts. "Z0Z_" indicates a prototype
-package where individual components may eventually evolve into focused standalone packages or move to existing packages. Please
-suggest a good home for the audio processing tools or any of the other functions.
+Filesystem helpers plus the `humpy_toolz`, `humpy_cytoolz`, and `humpy_tlz` packages.
+The audio processing modules previously in this repository now live in
+[`hunterHearsPy`](https://github.com/hunterhogan/hunterHearsPy).
 
-## Audio Processing Made Simple
-
-### Load and Save Audio Files
-
-Read audio files with automatic stereo conversion and sample rate control:
+## Filesystem Helpers
 
 ```python
-from Z0Z_tools import readAudioFile, writeWAV
+from Z0Z_tools import dataTabularTOpathFilenameDelimited, findRelativePath
 
-# Load audio with sample rate conversion
-waveform = readAudioFile('input.wav', sampleRate=44100)
-
-# Save in WAV format (always 32-bit float)
-writeWAV('output.wav', waveform)
+relative = findRelativePath("src/package", "docs/index.md")
+dataTabularTOpathFilenameDelimited("table.tsv", [[1, "a"]], ["id", "value"])
 ```
 
-### Process Multiple Audio Files at Once
+## humpy_toolz
 
-Load and process batches of audio files:
+`humpy_toolz` is a typed fork of [`toolz`](https://github.com/pytoolz/toolz). It provides
+composable functions for iterators, dictionaries, and function composition with type stubs.
 
 ```python
-from Z0Z_tools import loadWaveforms
+from humpy_toolz import compose_left, curry, merge, pipe
 
-# Load multiple files with consistent formatting
-array_waveforms = loadWaveforms(['file1.wav', 'file2.wav', 'file3.wav'])
-
-# The result is a unified array with shape (channels, samples, file_count)
+merged = merge({"a": 1}, {"b": 2})
+transform = compose_left(lambda x: x + 1, lambda x: x * 2)
+result = pipe(3, transform)
 ```
 
-### Work with Spectrograms
+## humpy_cytoolz
 
-Convert between waveforms and spectrograms:
+`humpy_cytoolz` is the Cython-accelerated companion package. The core modules
+`dicttoolz`, `functoolz`, `itertoolz`, `recipes`, and `utils` are built as extension
+modules.
 
 ```python
-from Z0Z_tools import stft, halfsine
-
-# Create a spectrogram with a half-sine window
-spectrogram = stft(waveform, windowingFunction=halfsine(1024))
-
-# Convert back to a waveform
-reconstructed = stft(spectrogram, inverse=True, lengthWaveform=original_length)
+from humpy_cytoolz import curry, groupby, merge
 ```
 
-### Process Audio in the Frequency Domain
+## humpy_tlz
 
-Create functions that operate on spectrograms:
+`humpy_tlz` mirrors the `humpy_toolz` API and imports from `humpy_cytoolz` when available,
+falling back to `humpy_toolz` otherwise.
 
 ```python
-from Z0Z_tools import waveformSpectrogramWaveform
-
-def boost_low_frequencies(spectrogram):
-    # Boost frequencies below 500 Hz
-    spectrogram[:, :10, :] *= 2.0
-    return spectrogram
-
-# Create a processor that handles the STFT/ISTFT automatically
-processor = waveformSpectrogramWaveform(boost_low_frequencies)
-
-# Apply the processor to a waveform
-processed_waveform = processor(original_waveform)
+from humpy_tlz import curry, groupby, pipe
 ```
 
 ## Installation

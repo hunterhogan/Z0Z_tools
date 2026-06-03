@@ -1,12 +1,19 @@
 [project]
 name = "Z0Z_tools"
-version = "1.0.3"
-description = "Tools for audio/signal processing and package management."
+version = "2.0.0"
+description = "Typing, documenting, and improving toolz and cytoolz."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 license = "CC-BY-NC-4.0"
 authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
-keywords = ["Python", "development", "tools"]
+keywords = [
+  "Python",
+  "cytoolz",
+  "filesystem",
+  "functional programming",
+  "tools",
+  "toolz"
+]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Console",
@@ -19,47 +26,24 @@ classifiers = [
   "Natural Language :: English",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
-  "Topic :: Multimedia :: Sound/Audio",
-  "Topic :: Multimedia :: Sound/Audio :: Analysis",
-  "Topic :: Multimedia :: Sound/Audio :: Conversion",
-  "Topic :: Multimedia :: Sound/Audio :: Editors",
-  "Topic :: Scientific/Engineering",
-  "Topic :: Scientific/Engineering :: Artificial Intelligence",
-  "Topic :: Scientific/Engineering :: Information Analysis",
-  "Topic :: Scientific/Engineering :: Mathematics",
-  "Topic :: Scientific/Engineering :: Physics",
   "Topic :: System :: Filesystems",
   "Topic :: Text Processing",
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
 urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Issues = "https://github.com/hunterhogan/Z0Z_tools/issues", Repository = "https://github.com/hunterhogan/Z0Z_tools.git" }
-dependencies = [
-  "hunterMakesPy",
-  "numpy",
-  "resampy",
-  "scipy",
-  "soundfile",
-  "tqdm",
-]
-optional-dependencies = { PyTorch = [
-  "torch",
-], development = [
+dependencies = ["hunterHearsPy","typing_extensions>=4.10.0"]
+optional-dependencies = { development = [
   "astToolkit",
-  "scipy-stubs",
-  "types-resampy",
-  "pytest-cov",
-], testing = [
-  "pytest-mock",
-  "pytest-xdist",
-  "pytest",
-  "torch",
-] }
+  "hunterMakesPy",
+  "pytest-cov"
+], testing = ["cython", "pytest"] }
 
 [build-system]
-requires = ["setuptools"]
+requires = ["cython", "setuptools>=62.3"]
 build-backend = "setuptools.build_meta"
 
 [tool.coverage]
@@ -67,23 +51,45 @@ report = { exclude_lines = [
   "if TYPE_CHECKING:",
   "if __name__ == \"__main__\":",
 ], ignore_errors = false }
-run = { branch = true, concurrency = [
-  "multiprocessing",
-], data_file = "tests/coverage/.coverage", omit = [
-  "tests/*",
-], parallel = true, source = [
+run = { branch = true, data_file = "tests/coverage/.coverage", omit = [
+  "**/tests/*"
+], source = [
   ".",
 ] }
-xml = { output = "tests/coverage/coverage.xml" }
 
 [tool.pytest]
-addopts = ["--color=auto", "-n 4"]
+addopts = ["--color=auto"]
 log_auto_indent = "On"
-testpaths = ["tests"]
+testpaths = ["**/tests"]
 
 [tool.setuptools]
-package-data = { "*" = ["py.typed"] }
-packages = { find = {} }
+ext-modules = [
+  { name = "humpy_cytoolz.dicttoolz", sources = ["humpy_cytoolz/dicttoolz.pyx"] },
+  { name = "humpy_cytoolz.functoolz", sources = ["humpy_cytoolz/functoolz.pyx"] },
+  { name = "humpy_cytoolz.itertoolz", sources = ["humpy_cytoolz/itertoolz.pyx"] },
+  { name = "humpy_cytoolz.recipes", sources = ["humpy_cytoolz/recipes.pyx"] },
+  { name = "humpy_cytoolz.utils", sources = ["humpy_cytoolz/utils.pyx"] },
+]
+package-data = { "*" = [
+  "*.c",
+  "*.pxd",
+  "*.pyi",
+  "*.pyx",
+  "py.typed",
+  "Notice_of_Copyright.txt",
+] }
+packages = [
+  "humpy_cytoolz.curried",
+  "humpy_cytoolz.tests",
+  "humpy_cytoolz",
+  "humpy_tlz",
+  "humpy_toolz",
+  "humpy_toolz.curried",
+  "humpy_toolz.sandbox.tests",
+  "humpy_toolz.sandbox",
+  "humpy_toolz.tests",
+  "Z0Z_tools",
+]
 
 [tool.updateCitation]
 filenameCitationDOTcff = "CITATION.cff"

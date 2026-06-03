@@ -8,13 +8,20 @@ callables from modules, and safely creating directories.
 from __future__ import annotations
 
 from pathlib import Path, PurePath
-from typing import Any, TYPE_CHECKING, TypeVar
+from typing import Any, TYPE_CHECKING
+import contextlib
+import io
 
 if TYPE_CHECKING:
 	from collections.abc import Iterable
 	from os import PathLike
 
-归个 = TypeVar('归个')
+def makeDirectorySafely(pathFilename: Any) -> None:
+	"""Create the parent directory for a filesystem path if possible."""
+	if not isinstance(pathFilename, io.IOBase):
+		with contextlib.suppress(OSError):
+			Path(pathFilename).parent.mkdir(parents=True, exist_ok=True)
+makeDirsSafely = makeDirectorySafely  # Alias for backward compatibility
 
 def dataTabularTOpathFilenameDelimited(pathFilename: PathLike[Any] | PurePath, tableRows: Iterable[Iterable[Any]], tableColumns: Iterable[Any], delimiterOutput: str = '\t') -> None:
 	r"""Write tabular data to a delimited file.
