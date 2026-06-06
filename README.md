@@ -4,15 +4,6 @@ Filesystem helpers plus the `humpy_toolz`, `humpy_cytoolz`, and `humpy_tlz` pack
 The audio processing modules previously in this repository now live in
 [`hunterHearsPy`](https://github.com/hunterhogan/hunterHearsPy).
 
-## Filesystem Helpers
-
-```python
-from Z0Z_tools import dataTabularTOpathFilenameDelimited, findRelativePath
-
-relative = findRelativePath("src/package", "docs/index.md")
-dataTabularTOpathFilenameDelimited("table.tsv", [[1, "a"]], ["id", "value"])
-```
-
 ## humpy_toolz
 
 `humpy_toolz` is a typed fork of [`toolz`](https://github.com/pytoolz/toolz). It provides

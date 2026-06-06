@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+from typing import Any, TYPE_CHECKING
 import pathlib
 import pytest
 import shutil
-from typing import Any, TYPE_CHECKING
 import uuid
 
 if TYPE_CHECKING:

@@ -6,9 +6,6 @@ packages.
 
 from __future__ import annotations
 
-from Z0Z_tools.filesystemToolkit import (
-	dataTabularTOpathFilenameDelimited, findRelativePath as findRelativePath, makeDirectorySafely as makeDirectorySafely, makeDirsSafely)
-
 # pyright: reportUnusedImport=false
 # isort: split
 from hunterHearsPy import *  # pyright: ignore[reportWildcardImportFromLibrary]
