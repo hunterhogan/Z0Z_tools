@@ -1,6 +1,6 @@
 [project]
 name = "Z0Z_tools"
-version = "2.0.0"
+version = "2.0.1"
 description = "Typing, documenting, and improving toolz and cytoolz."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -53,13 +53,7 @@ skip = ["*-musllinux_*", "*-win32", "*-manylinux_i686", "pp*"]
 
 test-requires = ["pytest"]
 
-test-sources = [
-  "humpy_cytoolz/tests",
-  "humpy_toolz/tests",
-  "humpy_toolz/sandbox/tests"
-]
-
-test-command = "pytest humpy_cytoolz/tests humpy_toolz/tests humpy_toolz/sandbox/tests"
+test-command = "pytest --pyargs humpy_cytoolz.tests humpy_toolz.tests humpy_toolz.sandbox.tests"
 
 [tool.coverage]
 report = { exclude_lines = ["if TYPE_CHECKING:", "if __name__ == \"__main__\":"], ignore_errors = false }

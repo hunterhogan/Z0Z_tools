@@ -40,7 +40,7 @@ jobs:
           "
 
   pypi-publish:
-    needs: check-version
+    needs: [check-version, build-wheels, build-sdist]
     if: needs.check-version.outputs.should_publish == 'true'
     runs-on: ubuntu-latest
     environment:
@@ -49,13 +49,49 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
+      - uses: actions/download-artifact@v6
         with:
-          python-version: '>=3.13'
-      - run: pipx run build -sdist
+          pattern: distributions-*
+          path: dist
+          merge-multiple: true
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b #v1.14.0
         with:
           attestations: false
           packages-dir: dist/
+
+  build-wheels:
+    needs: check-version
+    if: needs.check-version.outputs.should_publish == 'true'
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-15-intel, macos-latest]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pypa/cibuildwheel@v3.4.1
+        with:
+          output-dir: wheelhouse
+      - uses: actions/upload-artifact@v6
+        with:
+          name: distributions-${{ matrix.os }}
+          path: wheelhouse/*.whl
+          if-no-files-found: error
+
+  build-sdist:
+    needs: check-version
+    if: needs.check-version.outputs.should_publish == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '>=3.13'
+      - run: pipx run build --sdist
+      - uses: actions/upload-artifact@v6
+        with:
+          name: distributions-sdist
+          path: dist/*.tar.gz
+          if-no-files-found: error
