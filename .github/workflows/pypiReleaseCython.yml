@@ -5,7 +5,6 @@ name: Make PyPI Release
 on:
   push:
     branches: [main]
-    paths: [pyproject.toml]
 
 permissions:
   contents: read
