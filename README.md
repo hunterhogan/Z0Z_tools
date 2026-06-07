@@ -4,6 +4,10 @@ Filesystem helpers plus the `humpy_toolz`, `humpy_cytoolz`, and `humpy_tlz` pack
 The audio processing modules previously in this repository now live in
 [`hunterHearsPy`](https://github.com/hunterhogan/hunterHearsPy).
 
+## Wishlist
+
+- [ ] Build wheels in "pypiReleaseCython.yml" workflow.
+
 ## humpy_toolz
 
 `humpy_toolz` is a typed fork of [`toolz`](https://github.com/pytoolz/toolz). It provides
