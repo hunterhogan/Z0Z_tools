@@ -3,7 +3,6 @@
 name: Make PyPI Release
 
 on:
-  workflow_dispatch:
   push:
     branches: [main]
     paths: [pyproject.toml]
