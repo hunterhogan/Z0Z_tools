@@ -3,9 +3,9 @@
 name: Make PyPI Release
 
 on:
-  workflow_dispatch:
-  release:
-    types: [published, released]
+  push:
+    branches: [main]
+    paths: [pyproject.toml]
 
 permissions:
   contents: read
