@@ -3,12 +3,17 @@
 name: Make PyPI Release
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths: [pyproject.toml]
 
 permissions:
   contents: read
+
+concurrency:
+  group: pypi-release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   check-version:
@@ -50,6 +55,8 @@ jobs:
           pattern: distributions-*
           path: dist
           merge-multiple: true
+      - name: Check distribution metadata
+        run: pipx run twine check dist/*
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b #v1.14.0
         with:
