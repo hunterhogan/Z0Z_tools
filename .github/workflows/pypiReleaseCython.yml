@@ -48,6 +48,7 @@ jobs:
       name: pypi
       url: ${{ needs.check-version.outputs.url }}
     permissions:
+      actions: read
       id-token: write
     steps:
       - uses: actions/download-artifact@v6
