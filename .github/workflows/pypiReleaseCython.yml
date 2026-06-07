@@ -3,9 +3,6 @@
 name: Make PyPI Release
 
 on:
-  workflow_run:
-    workflows: ["Python Tests"]
-    types: [completed]
   workflow_dispatch:
   release:
     types: [published, released]
@@ -15,7 +12,6 @@ permissions:
 
 jobs:
   check-version:
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' || github.event_name == 'release' }}
     runs-on: ubuntu-latest
     outputs:
       should_publish: ${{ steps.check.outputs.should_publish }}
