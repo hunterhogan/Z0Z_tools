@@ -1,7 +1,9 @@
 from collections.abc import Callable, Iterable
-from typing import Literal
+from typing import Literal, TypeAlias, TypeVar
+T = TypeVar('T')
 
-type _MapFunction[T] = Callable[
+
+_MapFunction: TypeAlias = Callable[
 	[
 		Callable[[Iterable[T]], T],
 		Iterable[Iterable[T]],
@@ -9,7 +11,7 @@ type _MapFunction[T] = Callable[
 	Iterable[T],
 ]
 
-def fold[T](
+def fold(
 	binop: Callable[[T, T], T],
 	seq: Iterable[T],
 	default: Literal[__no__default__] | T = "__no_default__",

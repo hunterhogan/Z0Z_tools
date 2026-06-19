@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 from collections import defaultdict as _defaultdict
 from collections.abc import Callable, ItemsView, Iterator, KeysView, Mapping, MutableMapping, ValuesView
 from humpy_toolz.dicttoolz import (
 	assoc, assoc_in, dissoc, get_in, itemfilter, itemmap, keyfilter, keymap, merge, merge_with, update_in, valfilter, valmap)
 from humpy_toolz.functoolz import identity
 from humpy_toolz.utils import raises
-from typing import Any, ClassVar
+from typing import Any, ClassVar, TypeVar
 import os
 import pytest
 
@@ -770,7 +772,7 @@ class TestDict:
 		sourceMapping: Any = mappingFactory(sourceMappingDefinition)
 		expectedMapping: Any = mappingFactory(expectedMappingDefinition)
 
-		resultMapping: Any = update_in(sourceMapping, keysPath, funcToApply, defaultValue, **factoryKeywordArguments) # pyright: ignore[reportUnknownVariableType]
+		resultMapping: Any = update_in(sourceMapping, keysPath, funcToApply, defaultValue, **factoryKeywordArguments)  # pyright: ignore[reportUnknownVariableType]
 
 		assert resultMapping == expectedMapping, (
 			f'update_in returned {resultMapping}, expected {expectedMapping} '
@@ -791,7 +793,10 @@ class TestDict:
 		assert not merge(defaultdict(int, D({1: 2})), D({2: 3}), factory=lambda: defaultdict(int)) == {1: 2, 2: 3}
 		assert raises(TypeError, lambda: merge(D({1: 2}), D({2: 3}), factoryy=dict))  # pyright: ignore[reportCallIssue, reportUnknownLambdaType]  # ty:ignore[no-matching-overload]
 
-class defaultdict[KeyType, ValueType](_defaultdict[KeyType, ValueType]):
+KeyType = TypeVar('KeyType')
+ValueType = TypeVar('ValueType')
+
+class defaultdict(_defaultdict[KeyType, ValueType]):
 
 	__hash__ = None  # pyright: ignore[reportAssignmentType]
 

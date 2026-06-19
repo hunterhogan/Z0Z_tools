@@ -1,10 +1,12 @@
 """Ingest external packages and files."""
+from __future__ import annotations
+
 from astToolkit import Be, Grab, IfThis, Make, NodeChanger, parsePathFilename2astModule, Then
 from astToolkit.transformationTools import write_astModule
-from functools import partial
 from astTransformations._theSSOT import (
-	allTransformeePackages, cythonDirectives, getOtherName, pathRoot_tools_stubs, regexChangeImports, settingsFor, settingsWrite_astModule,
+	allTransformeePackages, cythonDirectives, getOtherName, pathRoot_toolz_stubs, regexChangeImports, settingsFor, settingsWrite_astModule,
 	subModules, transformALLdot_pyHere)
+from functools import partial
 from hunterMakesPy.filesystemToolkit import writeStringToHere
 from itertools import product as CartesianProduct
 from operator import contains, eq as equalTo
@@ -58,19 +60,19 @@ def transformPackages() -> None:  # noqa: D103
 			for pathFilename in pathTransformee.glob('*.pyx'):
 				writeStringToHere(cythonDirectives + regexChangeImports(pathFilename.read_text().replace(identifierTransformee, getOtherName[identifierTransformee])), settingsFor[humpyPackage].pathPackage / pathFilename.relative_to(pathTransformee))
 
-def copy_tools_stubs() -> None:  # noqa: D103
-	copytree(pathRoot_tools_stubs, settingsFor['humpy_toolz'].pathPackage, dirs_exist_ok=True)
+def copy_toolz_stubs() -> None:  # noqa: D103
+	copytree(pathRoot_toolz_stubs, settingsFor['humpy_toolz'].pathPackage, dirs_exist_ok=True)
 
 if __name__ == '__main__':
 	transformPackages()
-	copy_tools_stubs()
+	copy_toolz_stubs()
 
 r"""WTF
 (.venv) C:\apps\hunterMakesPy>py assimilate/chopShop.py
 Traceback (most recent call last):
   File "C:\apps\hunterMakesPy\assimilate\chopShop.py", line 2, in <module>
 	from assimilate import (
-		allTransformeePackages, cythonDirectives, getOtherName, pathRoot_tools_stubs, regexChangeImports, settingsFor, settingsWrite_astModule,
+		allTransformeePackages, cythonDirectives, getOtherName, pathRoot_toolz_stubs, regexChangeImports, settingsFor, settingsWrite_astModule,
 		subModules, transformALLdot_pyHere)
 ModuleNotFoundError: No module named 'assimilate'
 
@@ -78,8 +80,8 @@ ModuleNotFoundError: No module named 'assimilate'
 Python 3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)] on win32
 Type "help", "copyright", "credits" or "license" for more information.
 Ctrl click to launch VS Code Native REPL
->>> from assimilate.chopShop import transformPackages, copy_tools_stubs
+>>> from assimilate.chopShop import transformPackages, copy_toolz_stubs
 >>> transformPackages()
->>> copy_tools_stubs()
+>>> copy_toolz_stubs()
 >>>
 """

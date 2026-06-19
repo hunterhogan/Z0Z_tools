@@ -1,7 +1,24 @@
+from __future__ import annotations
+
 from collections.abc import Callable, Iterable, Mapping
-from typing import Any, Literal, overload, override, TypeVar
+from typing import Any, Generic, Literal, overload, ParamSpec, TypeAlias, TypeVar
+from typing_extensions import override
 import functools
 import inspect
+
+P = ParamSpec('P')
+Instance = TypeVar('Instance')
+R = TypeVar('R')
+T = TypeVar('T')
+T0 = TypeVar('T0')
+T1 = TypeVar('T1')
+T2 = TypeVar('T2')
+T3 = TypeVar('T3')
+T4 = TypeVar('T4')
+T5 = TypeVar('T5')
+T6 = TypeVar('T6')
+U = TypeVar('U')
+
 
 __all__ = (
 	"apply",
@@ -24,10 +41,10 @@ PYPY = bool
 ### Internal type stubs
 _T = TypeVar("_T")
 _Instance = TypeVar("_Instance")
-type _Getter[_Instance, _T] = Callable[[_Instance], _T]
-type _Setter[_Instance, _T] = Callable[[_Instance, _T], None]
-type _Deleter[_Instance] = Callable[[_Instance], None]
-type _InstancePropertyState[_Instance, _T] = tuple[
+_Getter: TypeAlias = Callable[[_Instance], _T]
+_Setter: TypeAlias = Callable[[_Instance, _T], None]
+_Deleter: TypeAlias = Callable[[_Instance], None]
+_InstancePropertyState: TypeAlias = tuple[
 	_Getter[_Instance, _T] | None,
 	_Setter[_Instance, _T] | None,
 	_Deleter[_Instance] | None,
@@ -37,23 +54,23 @@ type _InstancePropertyState[_Instance, _T] = tuple[
 
 ### Toolz
 
-def identity[T](x: T) -> T:
+def identity(x: T) -> T:
 	...
 
-def apply[**P, T](func: Callable[P, T], *args: P.args, **kwargs: P.kwargs) -> T:
+def apply(func: Callable[P, T], *args: P.args, **kwargs: P.kwargs) -> T:
 	...
 
-def thread_first[T, R](
+def thread_first(
 	val: T, *forms: Callable[[T], R] | tuple[Callable[..., R], Any]
 ) -> R:
 	...
 
-def thread_last[T, U](
+def thread_last(
 	val: T, *forms: Callable[[T], U] | tuple[Callable[..., U]]
 ) -> U:
 	...
 
-class InstanceProperty[Instance, T](property):
+class InstanceProperty(property, Generic[Instance, T]):
 	def __init__(
 		self,
 		fget: _Getter[_Instance, _T] | None = None,
@@ -105,7 +122,7 @@ def instanceproperty(
 
 _CurryState = tuple
 
-class curry[**P, T]:
+class curry(Generic[P, T]):
 	def __init__(
 		self,
 		func: curry[P, T] | functools.partial[T] | Callable[P, T],
@@ -144,7 +161,7 @@ class curry[**P, T]:
 	) -> tuple[Callable[..., T], _CurryState]: ...
 
 @curry
-def memoize[T](
+def memoize(
 	func: Callable[..., T],
 	cache: dict[Any, T] | None = None,
 	key: Callable[
@@ -155,26 +172,26 @@ def memoize[T](
 	...
 
 @overload
-def compose[**P, T](fn_0: Callable[P, T]) -> Callable[P, T]: ...
+def compose(fn_0: Callable[P, T]) -> Callable[P, T]: ...
 @overload
-def compose[**P, T0, T1](
+def compose(
 	fn_0: Callable[[T0], T1], fn_1: Callable[P, T0]
 ) -> Callable[P, T1]: ...
 @overload
-def compose[**P, T0, T1, T2](
+def compose(
 	fn_0: Callable[[T1], T2],
 	fn_1: Callable[[T0], T1],
 	fn_2: Callable[P, T0],
 ) -> Callable[P, T2]: ...
 @overload
-def compose[**P, T0, T1, T2, T3](
+def compose(
 	fn_0: Callable[[T2], T3],
 	fn_1: Callable[[T1], T2],
 	fn_2: Callable[[T0], T1],
 	fn_3: Callable[P, T0],
 ) -> Callable[P, T3]: ...
 @overload
-def compose[**P, T0, T1, T2, T3, T4](
+def compose(
 	fn_0: Callable[[T3], T4],
 	fn_1: Callable[[T2], T3],
 	fn_2: Callable[[T1], T2],
@@ -182,7 +199,7 @@ def compose[**P, T0, T1, T2, T3, T4](
 	fn_4: Callable[P, T0],
 ) -> Callable[P, T4]: ...
 @overload
-def compose[**P, T0, T1, T2, T3, T4, T5](
+def compose(
 	fn_0: Callable[[T4], T5],
 	fn_1: Callable[[T3], T4],
 	fn_2: Callable[[T2], T3],
@@ -200,26 +217,26 @@ def compose(
 	...
 
 @overload
-def compose_left[**P, T](fn_0: Callable[P, T]) -> Callable[P, T]: ...
+def compose_left(fn_0: Callable[P, T]) -> Callable[P, T]: ...
 @overload
-def compose_left[**P, T0, T1](
+def compose_left(
 	fn_0: Callable[P, T0], fn_1: Callable[[T0], T1]
 ) -> Callable[P, T1]: ...
 @overload
-def compose_left[**P, T0, T1, T2](
+def compose_left(
 	fn_0: Callable[P, T0],
 	fn_1: Callable[[T0], T1],
 	fn_2: Callable[[T1], T2],
 ) -> Callable[P, T2]: ...
 @overload
-def compose_left[**P, T0, T1, T2, T3](
+def compose_left(
 	fn_0: Callable[P, T0],
 	fn_1: Callable[[T0], T1],
 	fn_2: Callable[[T1], T2],
 	fn_3: Callable[[T2], T3],
 ) -> Callable[P, T3]: ...
 @overload
-def compose_left[**P, T0, T1, T2, T3, T4](
+def compose_left(
 	fn_0: Callable[P, T0],
 	fn_1: Callable[[T0], T1],
 	fn_2: Callable[[T1], T2],
@@ -227,7 +244,7 @@ def compose_left[**P, T0, T1, T2, T3, T4](
 	fn_4: Callable[[T3], T4],
 ) -> Callable[P, T4]: ...
 @overload
-def compose_left[**P, T0, T1, T2, T3, T4, T5](
+def compose_left(
 	fn_0: Callable[P, T0],
 	fn_1: Callable[[T0], T1],
 	fn_2: Callable[[T1], T2],
@@ -245,25 +262,25 @@ def compose_left(
 	...
 
 @overload
-def pipe[T0, T1](
+def pipe(
 	data: T0,
 	fn_0: Callable[[T0], T1],
 ) -> T1: ...
 @overload
-def pipe[T0, T1, T2](
+def pipe(
 	data: T0,
 	fn_0: Callable[[T0], T1],
 	fn_1: Callable[[T1], T2],
 ) -> T2: ...
 @overload
-def pipe[T0, T1, T2, T3](
+def pipe(
 	data: T0,
 	fn_0: Callable[[T0], T1],
 	fn_1: Callable[[T1], T2],
 	fn_2: Callable[[T2], T3],
 ) -> T3: ...
 @overload
-def pipe[T0, T1, T2, T3, T4](
+def pipe(
 	data: T0,
 	fn_0: Callable[[T0], T1],
 	fn_1: Callable[[T1], T2],
@@ -271,7 +288,7 @@ def pipe[T0, T1, T2, T3, T4](
 	fn_3: Callable[[T3], T4],
 ) -> T4: ...
 @overload
-def pipe[T0, T1, T2, T3, T4, T5](
+def pipe(
 	data: T0,
 	fn_0: Callable[[T0], T1],
 	fn_1: Callable[[T1], T2],
@@ -280,7 +297,7 @@ def pipe[T0, T1, T2, T3, T4, T5](
 	fn_4: Callable[[T4], T5],
 ) -> T5: ...
 @overload
-def pipe[T0, T1, T2, T3, T4, T5, T6](
+def pipe(
 	data: T0,
 	fn_0: Callable[[T0], T1],
 	fn_1: Callable[[T1], T2],
@@ -294,35 +311,35 @@ def pipe(data: Any, *funcs: Callable[..., Any]) -> Any: ...
 def pipe(data: Any, *funcs: Callable[..., Any]) -> Any:
 	...
 
-def complement[**P](func: Callable[P, bool]) -> Callable[P, bool]:
+def complement(func: Callable[P, bool]) -> Callable[P, bool]:
 	...
 
 @overload
 def juxt() -> Callable[..., tuple[()]]: ...
 @overload
-def juxt[**P, T0](
+def juxt(
 	fn_0: Callable[P, T0],
 ) -> Callable[P, tuple[T0]]: ...
 @overload
-def juxt[**P, T0, T1](
+def juxt(
 	fn_0: Callable[P, T0],
 	fn_1: Callable[P, T1],
 ) -> Callable[P, tuple[T0, T1]]: ...
 @overload
-def juxt[**P, T0, T1, T2](
+def juxt(
 	fn_0: Callable[P, T0],
 	fn_1: Callable[P, T1],
 	fn_2: Callable[P, T2],
 ) -> Callable[P, tuple[T0, T1, T2]]: ...
 @overload
-def juxt[**P, T0, T1, T2, T3](
+def juxt(
 	fn_0: Callable[P, T0],
 	fn_1: Callable[P, T1],
 	fn_2: Callable[P, T2],
 	fn_3: Callable[P, T3],
 ) -> Callable[P, tuple[T0, T1, T2, T3]]: ...
 @overload
-def juxt[**P, T0, T1, T2, T3, T4](
+def juxt(
 	fn_0: Callable[P, T0],
 	fn_1: Callable[P, T1],
 	fn_2: Callable[P, T2],
@@ -330,7 +347,7 @@ def juxt[**P, T0, T1, T2, T3, T4](
 	fn_4: Callable[P, T4],
 ) -> Callable[P, tuple[T0, T1, T2, T3, T4]]: ...
 @overload
-def juxt[**P, T0, T1, T2, T3, T4, T5](
+def juxt(
 	fn_0: Callable[P, T0],
 	fn_1: Callable[P, T1],
 	fn_2: Callable[P, T2],
@@ -339,26 +356,26 @@ def juxt[**P, T0, T1, T2, T3, T4, T5](
 	fn_5: Callable[P, T5],
 ) -> Callable[P, tuple[T0, T1, T2, T3, T4, T5]]: ...
 @overload
-def juxt[**P, T](
+def juxt(
 	funcs: Iterable[Callable[P, T]],
 ) -> Callable[P, tuple[T, ...]]: ...
 @overload
-def juxt[**P, T](
+def juxt(
 	*funcs: Callable[P, T],
 ) -> Callable[P, tuple[T, ...]]: ...
-def juxt[**P, T](
+def juxt(
 	*funcs: Callable[P, T] | Iterable[Callable[P, T]],
 ) -> Callable[P, tuple[T, ...]]:
 	...
 
-def do[T](func: Callable[[T], Any], x: T) -> T:
+def do(func: Callable[[T], Any], x: T) -> T:
 	...
 
 @curry
-def flip[T, U, R](func: Callable[[T, U], R], a: U, b: T) -> R:
+def flip(func: Callable[[T, U], R], a: U, b: T) -> R:
 	...
 
-class excepts[T, **P]:
+class excepts(Generic[T, P]):
 	def __init__(
 		self,
 		exc: type[Exception] | tuple[type[Exception], ...],

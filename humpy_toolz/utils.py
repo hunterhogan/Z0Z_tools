@@ -37,8 +37,12 @@ References
 [1] _typeshed.__init__ - typeshed on GitHub
 	https://github.com/python/typeshed/blob/main/stdlib/_typeshed/__init__.pyi
 """
-from collections.abc import Callable
-from typing import Any, Literal, Protocol, TypeVar
+from __future__ import annotations
+
+from typing import Any, Literal, Protocol, TYPE_CHECKING, TypeAlias, TypeVar
+
+if TYPE_CHECKING:
+	from collections.abc import Callable
 
 def raises(err: type[Exception], lamda: Callable[[], None]) -> bool:
 	"""Check whether calling `lamda` raises `err`.
@@ -170,7 +174,7 @@ class SupportsGetItem(Protocol[_KT_contra, _VT_co]):
 		"""Item access operator."""
 		...
 
-type SupportsRichComparison = SupportsDunderLT[Any] | SupportsDunderGT[Any]
+SupportsRichComparison: TypeAlias = SupportsDunderLT[Any] | SupportsDunderGT[Any]
 """Represent any object that supports rich comparison via `__lt__` or `__gt__`.
 
 (AI generated docstring)

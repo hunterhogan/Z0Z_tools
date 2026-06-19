@@ -1,4 +1,6 @@
 # ruff: noqa: D100
+from __future__ import annotations
+
 from astToolkit import Be, Grab, Make, NodeChanger, parseLogicalPath2astModule, Then
 from astToolkit.transformationTools import write_astModule
 from hunterMakesPy import identifierDotAttribute

@@ -1,4 +1,6 @@
 # ruff: noqa D100, D103
+from __future__ import annotations
+
 from astToolkit import Be, Grab, NodeChanger, parsePathFilename2astModule
 from astToolkit.transformationTools import write_astModule
 from astTransformations._theSSOT import settingsFor, settingsWrite_astModule

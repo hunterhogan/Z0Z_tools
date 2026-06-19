@@ -13,9 +13,29 @@ from . import operator
 from .exceptions import merge, merge_with
 from _typeshed import SupportsRichComparison
 from collections.abc import Callable, Hashable, Iterable, Iterator, Mapping, MutableMapping, Sequence
-from typing import Any, Literal, overload, TypeGuard
+from typing import Any, Literal, overload, TypeGuard, ParamSpec, TypeVar
 from typing_extensions import TypeIs
 import functools
+
+P = ParamSpec('P')
+K = TypeVar('K')
+K0 = TypeVar('K0')
+K1 = TypeVar('K1')
+KT = TypeVar('KT')
+L = TypeVar('L')
+PType = TypeVar('PType')
+R = TypeVar('R')
+S = TypeVar('S')
+T = TypeVar('T')
+T1 = TypeVar('T1')
+T2 = TypeVar('T2')
+T3 = TypeVar('T3')
+T4 = TypeVar('T4')
+T5 = TypeVar('T5')
+U = TypeVar('U')
+V = TypeVar('V')
+V0 = TypeVar('V0')
+V1 = TypeVar('V1')
 
 __all__ = [
 	# Curried functions (defined in this module)
@@ -99,29 +119,29 @@ __all__ = [
 # Curried accumulate with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def accumulate[T]() -> Callable[..., Iterator[T]]: ...
+def accumulate() -> Callable[..., Iterator[T]]: ...
 
 # Stage 1: Just binop - returns callable waiting for seq (and optional initial)
 @overload
-def accumulate[T](
+def accumulate(
 	binop: Callable[[T, T], T], /
 ) -> Callable[..., Iterator[T]]: ...
 
 # Stage 2a: binop + seq (no initial) - executes immediately
 @overload
-def accumulate[T](
+def accumulate(
 	binop: Callable[[T, T], T], seq: Iterable[T], /
 ) -> Iterator[T]: ...
 
 # Stage 2b: binop + seq + initial - executes immediately
 @overload
-def accumulate[T](
+def accumulate(
 	binop: Callable[[T, T], T],
 	seq: Iterable[T],
 	initial: T,
 	/,
 ) -> Iterator[T]: ...
-def accumulate[T](
+def accumulate(
 	binop: Callable[[T, T], T] = ...,
 	seq: Iterable[T] = ...,
 	initial: T = ...,
@@ -129,19 +149,19 @@ def accumulate[T](
 	...
 
 @overload
-def assoc[K, V]() -> Callable[
+def assoc() -> Callable[
 	..., dict[K, V] | MutableMapping[K, V]
 ]: ...
 @overload
-def assoc[K, V](
+def assoc(
 	d: Mapping[K, V], /
 ) -> Callable[..., dict[K, V] | MutableMapping[K, V]]: ...
 @overload
-def assoc[K, V](
+def assoc(
 	d: Mapping[K, V], key: K, /
 ) -> Callable[[V], dict[K, V]]: ...
 @overload
-def assoc[K, V](
+def assoc(
 	d: Mapping[K, V],
 	key: K,
 	/,
@@ -149,11 +169,11 @@ def assoc[K, V](
 	factory: Callable[[], MutableMapping[K, V]],
 ) -> Callable[[V], MutableMapping[K, V]]: ...
 @overload
-def assoc[K, V](
+def assoc(
 	d: Mapping[K, V], key: K, value: V, /
 ) -> dict[K, V]: ...
 @overload
-def assoc[K, V](
+def assoc(
 	d: Mapping[K, V],
 	key: K,
 	value: V,
@@ -161,7 +181,7 @@ def assoc[K, V](
 	*,
 	factory: Callable[[], MutableMapping[K, V]],
 ) -> MutableMapping[K, V]: ...
-def assoc[K, V](
+def assoc(
 	d: Mapping[K, V] = ...,
 	key: K = ...,
 	value: V = ...,
@@ -179,20 +199,20 @@ assoc_in = curry(_dicttoolz.assoc_in)
 # Curried cons with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def cons[T]() -> Callable[..., Iterator[T]]: ...
+def cons() -> Callable[..., Iterator[T]]: ...
 
 # Stage 1: Just el - returns callable waiting for seq
 @overload
-def cons[T](
+def cons(
 	el: T, /
 ) -> Callable[[Iterable[T]], Iterator[T]]: ...
 
 # Stage 2: Full application - executes immediately
 @overload
-def cons[T](
+def cons(
 	el: T, seq: Iterable[T], /
 ) -> Iterator[T]: ...
-def cons[T](
+def cons(
 	el: T = ..., seq: Iterable[T] = ...
 ) -> (
 	Iterator[T]
@@ -207,31 +227,31 @@ dissoc = curry(_dicttoolz.dissoc)
 # Curried do with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def do[T]() -> Callable[..., T]: ...
+def do() -> Callable[..., T]: ...
 
 # Stage 1: Just func - returns callable waiting for x
 @overload
-def do[T](func: Callable[[T], Any], /) -> Callable[[T], T]: ...
+def do(func: Callable[[T], Any], /) -> Callable[[T], T]: ...
 
 # Stage 2: Full application - executes immediately
 @overload
-def do[T](func: Callable[[T], Any], x: T, /) -> T: ...
-def do[T](
+def do(func: Callable[[T], Any], x: T, /) -> T: ...
+def do(
 	func: Callable[[T], Any] = ..., x: T = ...
 ) -> T | Callable[[T], T] | Callable[..., T]:
 	...
 
 @overload
-def drop[T]() -> Callable[..., Iterator[T]]: ...
+def drop() -> Callable[..., Iterator[T]]: ...
 @overload
-def drop[T](
+def drop(
 	n: int, /
 ) -> Callable[[Iterable[T]], Iterator[T]]: ...
 @overload
-def drop[T](
+def drop(
 	n: int, seq: Iterable[T], /
 ) -> Iterator[T]: ...
-def drop[T](
+def drop(
 	n: int = ..., seq: Iterable[T] = ...
 ) -> (
 	Iterator[T]
@@ -241,9 +261,9 @@ def drop[T](
 	...
 
 @overload
-def excepts[T, **P]() -> Callable[..., _excepts_class[T, P]]: ...
+def excepts() -> Callable[..., _excepts_class[T, P]]: ...
 @overload
-def excepts[T, **P](
+def excepts(
 	exc: type[Exception] | tuple[type[Exception], ...], /
 ) -> (
 	Callable[[Callable[P, T]], _excepts_class[T, P]]
@@ -253,19 +273,19 @@ def excepts[T, **P](
 	]
 ): ...
 @overload
-def excepts[T, **P](
+def excepts(
 	exc: type[Exception] | tuple[type[Exception], ...],
 	func: Callable[P, T],
 	/,
 ) -> _excepts_class[T, P]: ...
 @overload
-def excepts[T, **P](
+def excepts(
 	exc: type[Exception] | tuple[type[Exception], ...],
 	func: Callable[P, T],
 	handler: Callable[[Exception], T],
 	/,
 ) -> _excepts_class[T, P]: ...
-def excepts[T, **P](
+def excepts(
 	exc: type[Exception] | tuple[type[Exception], ...] = ...,
 	func: Callable[P, T] = ...,
 	handler: Callable[[Exception], T] | None = ...,
@@ -273,50 +293,50 @@ def excepts[T, **P](
 	...
 
 @overload
-def filter[T]() -> Callable[  # noqa: A001
+def filter() -> Callable[  # noqa: A001
 	..., Iterator[T] | Callable[..., Iterator[T]]
 ]: ...
 @overload
-def filter[T](  # noqa: A001
+def filter(  # noqa: A001
 	function: None, /
 ) -> Callable[
 	[Iterable[T | None]], Iterator[T]
 ]: ...
 @overload
-def filter[S, T](
+def filter(
 	function: Callable[[S], TypeGuard[T]], /
 ) -> Callable[[Iterable[S]], Iterator[T]]: ...
 @overload
-def filter[S, T](
+def filter(
 	function: Callable[[S], TypeIs[T]], /
 ) -> Callable[[Iterable[S]], Iterator[T]]: ...
 @overload
-def filter[T](
+def filter(
 	function: Callable[[T], Any], /
 ) -> Callable[[Iterable[T]], Iterator[T]]: ...
 @overload
-def filter[T](
+def filter(
 	function: None, iterable: Iterable[T | None], /
 ) -> Iterator[T]: ...
 @overload
-def filter[S, T](
+def filter(
 	function: Callable[[S], TypeGuard[T]],
 	iterable: Iterable[S],
 	/,
 ) -> Iterator[T]: ...
 @overload
-def filter[S, T](
+def filter(
 	function: Callable[[S], TypeIs[T]],
 	iterable: Iterable[S],
 	/,
 ) -> Iterator[T]: ...
 @overload
-def filter[T](
+def filter(
 	function: Callable[[T], Any],
 	iterable: Iterable[T],
 	/,
 ) -> Iterator[T]: ...
-def filter[T](
+def filter(
 	function: Callable[[T], Any] | None = ...,
 	iterable: Iterable[T] = ...,
 ) -> (
@@ -330,9 +350,9 @@ def filter[T](
 	...
 
 @overload
-def get[T]() -> Callable[..., T | tuple[T, ...]]: ...
+def get() -> Callable[..., T | tuple[T, ...]]: ...
 @overload
-def get[T](
+def get(
 	ind: Sequence[Any], /
 ) -> (
 	Callable[
@@ -345,7 +365,7 @@ def get[T](
 	]
 ): ...
 @overload
-def get[T](
+def get(
 	ind: Any, /
 ) -> (
 	Callable[
@@ -356,32 +376,32 @@ def get[T](
 	]
 ): ...
 @overload
-def get[T](
+def get(
 	ind: Sequence[Any],
 	seq: Sequence[T] | Mapping[Any, T],
 	/,
 ) -> tuple[T, ...]: ...
 @overload
-def get[T](
+def get(
 	ind: Any,
 	seq: Sequence[T] | Mapping[Any, T],
 	/,
 ) -> T: ...
 @overload
-def get[T](
+def get(
 	ind: Sequence[Any],
 	seq: Sequence[T] | Mapping[Any, T],
 	default: T,
 	/,
 ) -> tuple[T, ...]: ...
 @overload
-def get[T](
+def get(
 	ind: Any,
 	seq: Sequence[T] | Mapping[Any, T],
 	default: T,
 	/,
 ) -> T: ...
-def get[T](
+def get(
 	ind: Any | Sequence[Any] = ...,
 	seq: Sequence[T] | Mapping[Any, T] = ...,
 	default: T = ...,
@@ -391,24 +411,24 @@ def get[T](
 get_in = curry(_dicttoolz.get_in)
 
 @overload
-def groupby[KT, T]() -> Callable[..., dict[KT, list[T]]]: ...
+def groupby() -> Callable[..., dict[KT, list[T]]]: ...
 @overload
-def groupby[KT, T](
+def groupby(
 	key: Callable[[T], KT], /
 ) -> Callable[[Iterable[T]], dict[KT, list[T]]]: ...
 @overload
-def groupby[T](
+def groupby(
 	key: Any, /
 ) -> Callable[[Iterable[T]], dict[Any, list[T]]]: ...
 @overload
-def groupby[KT, T](
+def groupby(
 	key: Callable[[T], KT], seq: Iterable[T], /
 ) -> dict[KT, list[T]]: ...
 @overload
-def groupby[T](
+def groupby(
 	key: Any, seq: Iterable[T], /
 ) -> dict[Any, list[T]]: ...
-def groupby[KT, T](
+def groupby(
 	key: Callable[[T], KT] | Any = ...,
 	seq: Iterable[T] = ...,
 ) -> (
@@ -421,20 +441,20 @@ def groupby[KT, T](
 # Curried interpose with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def interpose[T]() -> Callable[..., Iterator[T]]: ...
+def interpose() -> Callable[..., Iterator[T]]: ...
 
 # Stage 1: Just el - returns callable waiting for seq
 @overload
-def interpose[T](
+def interpose(
 	el: T, /
 ) -> Callable[[Iterable[T]], Iterator[T]]: ...
 
 # Stage 2: Full application - executes immediately
 @overload
-def interpose[T](
+def interpose(
 	el: T, seq: Iterable[T], /
 ) -> Iterator[T]: ...
-def interpose[T](
+def interpose(
 	el: T = ..., seq: Iterable[T] = ...
 ) -> (
 	Iterator[T]
@@ -444,19 +464,19 @@ def interpose[T](
 	...
 
 @overload
-def itemfilter[K, V]() -> Callable[
+def itemfilter() -> Callable[
 	..., dict[K, V] | MutableMapping[K, V]
 ]: ...
 
 # Stage 1a: Just predicate (no factory) - returns callable waiting for dict
 @overload
-def itemfilter[K, V](
+def itemfilter(
 	predicate: Callable[[tuple[K, V]], bool], /
 ) -> Callable[[Mapping[K, V]], dict[K, V]]: ...
 
 # Stage 1b: Predicate with factory - returns callable waiting for dict
 @overload
-def itemfilter[K, V](
+def itemfilter(
 	predicate: Callable[[tuple[K, V]], bool],
 	/,
 	*,
@@ -467,7 +487,7 @@ def itemfilter[K, V](
 
 # Stage 2a: Full application (no factory) - executes immediately
 @overload
-def itemfilter[K, V](
+def itemfilter(
 	predicate: Callable[[tuple[K, V]], bool],
 	d: Mapping[K, V],
 	/,
@@ -475,14 +495,14 @@ def itemfilter[K, V](
 
 # Stage 2b: Full application (with factory) - executes immediately
 @overload
-def itemfilter[K, V](
+def itemfilter(
 	predicate: Callable[[tuple[K, V]], bool],
 	d: Mapping[K, V],
 	/,
 	*,
 	factory: Callable[[], MutableMapping[K, V]],
 ) -> MutableMapping[K, V]: ...
-def itemfilter[K, V](
+def itemfilter(
 	predicate: Callable[[tuple[K, V]], bool] = ...,
 	d: Mapping[K, V] = ...,
 	*,
@@ -495,19 +515,19 @@ def itemfilter[K, V](
 	...
 
 @overload
-def itemmap[K0, V0, K1, V1]() -> Callable[
+def itemmap() -> Callable[
 	..., dict[K1, V1] | MutableMapping[K1, V1]
 ]: ...
 
 # Stage 1a: Just func (no factory) - returns callable waiting for dict
 @overload
-def itemmap[K0, V0, K1, V1](
+def itemmap(
 	func: Callable[[tuple[K0, V0]], tuple[K1, V1]], /
 ) -> Callable[[Mapping[K0, V0]], dict[K1, V1]]: ...
 
 # Stage 1b: Func with factory - returns callable waiting for dict
 @overload
-def itemmap[K0, V0, K1, V1](
+def itemmap(
 	func: Callable[[tuple[K0, V0]], tuple[K1, V1]],
 	/,
 	*,
@@ -518,7 +538,7 @@ def itemmap[K0, V0, K1, V1](
 
 # Stage 2a: Full application (no factory) - executes immediately
 @overload
-def itemmap[K0, V0, K1, V1](
+def itemmap(
 	func: Callable[[tuple[K0, V0]], tuple[K1, V1]],
 	d: Mapping[K0, V0],
 	/,
@@ -526,14 +546,14 @@ def itemmap[K0, V0, K1, V1](
 
 # Stage 2b: Full application (with factory) - executes immediately
 @overload
-def itemmap[K0, V0, K1, V1](
+def itemmap(
 	func: Callable[[tuple[K0, V0]], tuple[K1, V1]],
 	d: Mapping[K0, V0],
 	/,
 	*,
 	factory: Callable[[], MutableMapping[K1, V1]],
 ) -> MutableMapping[K1, V1]: ...
-def itemmap[K0, V0, K1, V1](
+def itemmap(
 	func: Callable[[tuple[K0, V0]], tuple[K1, V1]] = ...,
 	d: Mapping[K0, V0] = ...,
 	*,
@@ -548,20 +568,20 @@ def itemmap[K0, V0, K1, V1](
 # Curried iterate with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def iterate[T]() -> Callable[..., Iterator[T]]: ...
+def iterate() -> Callable[..., Iterator[T]]: ...
 
 # Stage 1: Just func - returns callable waiting for x
 @overload
-def iterate[T](
+def iterate(
 	func: Callable[[T], T], /
 ) -> Callable[[T], Iterator[T]]: ...
 
 # Stage 2: Full application - executes immediately
 @overload
-def iterate[T](
+def iterate(
 	func: Callable[[T], T], x: T, /
 ) -> Iterator[T]: ...
-def iterate[T](
+def iterate(
 	func: Callable[[T], T] = ..., x: T = ...
 ) -> (
 	Iterator[T]
@@ -573,17 +593,17 @@ def iterate[T](
 # Curried join with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def join[T, U]() -> Callable[..., Iterator[tuple[T, U]]]: ...
+def join() -> Callable[..., Iterator[tuple[T, U]]]: ...
 
 # Stage 1: Just leftkey - returns a callable
 @overload
-def join[T, U](
+def join(
 	leftkey: Callable[[T], Hashable], /
 ) -> Callable[..., Iterator[tuple[T, U]]]: ...
 
 # Stage 2: leftkey + leftseq - returns a callable
 @overload
-def join[T, U](
+def join(
 	leftkey: Callable[[T], Hashable],
 	leftseq: Iterable[T],
 	/,
@@ -594,7 +614,7 @@ def join[T, U](
 # Note: We use Any for U because U can't be inferred until rightseq is provided.
 # The callable will properly infer types when called with rightseq.
 @overload
-def join[T](
+def join(
 	leftkey: Callable[[T], Hashable],
 	leftseq: Iterable[T],
 	rightkey: Callable[..., Hashable],
@@ -606,7 +626,7 @@ def join[T](
 
 # Stage 4a: Full application (inner join) - executes immediately
 @overload
-def join[T, U](
+def join(
 	leftkey: Callable[[T], Hashable],
 	leftseq: Iterable[T],
 	rightkey: Callable[[U], Hashable],
@@ -616,7 +636,7 @@ def join[T, U](
 
 # Stage 4b: Full application with left_default only (right outer join)
 @overload
-def join[T, U, L](
+def join(
 	leftkey: Callable[[T], Hashable],
 	leftseq: Iterable[T],
 	rightkey: Callable[[U], Hashable],
@@ -627,7 +647,7 @@ def join[T, U, L](
 
 # Stage 4c: Full application with right_default only (left outer join)
 @overload
-def join[T, U, R](
+def join(
 	leftkey: Callable[[T], Hashable],
 	leftseq: Iterable[T],
 	rightkey: Callable[[U], Hashable],
@@ -639,7 +659,7 @@ def join[T, U, R](
 
 # Stage 4d: Full application with both defaults (full outer join)
 @overload
-def join[T, U, L, R](
+def join(
 	leftkey: Callable[[T], Hashable],
 	leftseq: Iterable[T],
 	rightkey: Callable[[U], Hashable],
@@ -651,7 +671,7 @@ def join[T, U, L, R](
 
 # Stage 3 with defaults: leftkey + leftseq + rightkey + defaults - returns callable
 @overload
-def join[T, U, L, R](
+def join(
 	leftkey: Callable[[T], Hashable],
 	leftseq: Iterable[T],
 	rightkey: Callable[[U], Hashable],
@@ -663,7 +683,7 @@ def join[T, U, L, R](
 ]: ...
 
 # Implementation signature
-def join[T, U, L, R](
+def join(
 	leftkey: Callable[[T], Hashable] | Hashable = ...,
 	leftseq: Iterable[T] = ...,
 	rightkey: Callable[[U], Hashable] | Hashable = ...,
@@ -679,19 +699,19 @@ def join[T, U, L, R](
 # Curried keyfilter with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def keyfilter[K, V]() -> Callable[
+def keyfilter() -> Callable[
 	..., dict[K, V] | MutableMapping[K, V]
 ]: ...
 
 # Stage 1a: Just predicate (no factory) - returns callable waiting for dict
 @overload
-def keyfilter[K, V](
+def keyfilter(
 	predicate: Callable[[K], bool], /
 ) -> Callable[[Mapping[K, V]], dict[K, V]]: ...
 
 # Stage 1b: Predicate with factory - returns callable waiting for dict
 @overload
-def keyfilter[K, V](
+def keyfilter(
 	predicate: Callable[[K], bool],
 	/,
 	*,
@@ -702,7 +722,7 @@ def keyfilter[K, V](
 
 # Stage 2a: Full application (no factory) - executes immediately
 @overload
-def keyfilter[K, V](
+def keyfilter(
 	predicate: Callable[[K], bool],
 	d: Mapping[K, V],
 	/,
@@ -710,14 +730,14 @@ def keyfilter[K, V](
 
 # Stage 2b: Full application (with factory) - executes immediately
 @overload
-def keyfilter[K, V](
+def keyfilter(
 	predicate: Callable[[K], bool],
 	d: Mapping[K, V],
 	/,
 	*,
 	factory: Callable[[], MutableMapping[K, V]],
 ) -> MutableMapping[K, V]: ...
-def keyfilter[K, V](
+def keyfilter(
 	predicate: Callable[[K], bool] = ...,
 	d: Mapping[K, V] = ...,
 	*,
@@ -730,19 +750,19 @@ def keyfilter[K, V](
 	...
 
 @overload
-def keymap[K0, K1, V]() -> Callable[
+def keymap() -> Callable[
 	..., dict[K1, V] | MutableMapping[K1, V]
 ]: ...
 
 # Stage 1a: Just func (no factory) - returns callable waiting for dict
 @overload
-def keymap[K0, K1, V](
+def keymap(
 	func: Callable[[K0], K1], /
 ) -> Callable[[Mapping[K0, V]], dict[K1, V]]: ...
 
 # Stage 1b: Func with factory - returns callable waiting for dict
 @overload
-def keymap[K0, K1, V](
+def keymap(
 	func: Callable[[K0], K1],
 	/,
 	*,
@@ -753,7 +773,7 @@ def keymap[K0, K1, V](
 
 # Stage 2a: Full application (no factory) - executes immediately
 @overload
-def keymap[K0, K1, V](
+def keymap(
 	func: Callable[[K0], K1],
 	d: Mapping[K0, V],
 	/,
@@ -761,14 +781,14 @@ def keymap[K0, K1, V](
 
 # Stage 2b: Full application (with factory) - executes immediately
 @overload
-def keymap[K0, K1, V](
+def keymap(
 	func: Callable[[K0], K1],
 	d: Mapping[K0, V],
 	/,
 	*,
 	factory: Callable[[], MutableMapping[K1, V]],
 ) -> MutableMapping[K1, V]: ...
-def keymap[K0, K1, V](
+def keymap(
 	func: Callable[[K0], K1] = ...,
 	d: Mapping[K0, V] = ...,
 	*,
@@ -781,22 +801,22 @@ def keymap[K0, K1, V](
 	...
 
 @overload
-def map[T1, S]() -> Callable[
+def map() -> Callable[
 	..., Iterator[S] | Callable[..., Iterator[S]]
 ]: ...
 @overload
-def map[T1, S](
+def map(
 	func: Callable[[T1], S], /
 ) -> Callable[[Iterable[T1]], Iterator[S]]: ...
 @overload
-def map[T1, T2, S](
+def map(
 	func: Callable[[T1, T2], S], /
 ) -> Callable[
 	[Iterable[T1], Iterable[T2]],
 	Iterator[S],
 ]: ...
 @overload
-def map[T1, T2, T3, S](
+def map(
 	func: Callable[[T1, T2, T3], S], /
 ) -> Callable[
 	[
@@ -807,7 +827,7 @@ def map[T1, T2, T3, S](
 	Iterator[S],
 ]: ...
 @overload
-def map[T1, T2, T3, T4, S](
+def map(
 	func: Callable[[T1, T2, T3, T4], S], /
 ) -> Callable[
 	[
@@ -819,7 +839,7 @@ def map[T1, T2, T3, T4, S](
 	Iterator[S],
 ]: ...
 @overload
-def map[T1, T2, T3, T4, T5, S](
+def map(
 	func: Callable[[T1, T2, T3, T4, T5], S], /
 ) -> Callable[
 	[
@@ -832,18 +852,18 @@ def map[T1, T2, T3, T4, T5, S](
 	Iterator[S],
 ]: ...
 @overload
-def map[T1, S](
+def map(
 	func: Callable[[T1], S], iterable: Iterable[T1], /
 ) -> Iterator[S]: ...
 @overload
-def map[T1, T2, S](
+def map(
 	func: Callable[[T1, T2], S],
 	iterable: Iterable[T1],
 	iter2: Iterable[T2],
 	/,
 ) -> Iterator[S]: ...
 @overload
-def map[T1, T2, T3, S](
+def map(
 	func: Callable[[T1, T2, T3], S],
 	iterable: Iterable[T1],
 	iter2: Iterable[T2],
@@ -851,7 +871,7 @@ def map[T1, T2, T3, S](
 	/,
 ) -> Iterator[S]: ...
 @overload
-def map[T1, T2, T3, T4, S](
+def map(
 	func: Callable[[T1, T2, T3, T4], S],
 	iterable: Iterable[T1],
 	iter2: Iterable[T2],
@@ -860,7 +880,7 @@ def map[T1, T2, T3, T4, S](
 	/,
 ) -> Iterator[S]: ...
 @overload
-def map[T1, T2, T3, T4, T5, S](
+def map(
 	func: Callable[[T1, T2, T3, T4, T5], S],
 	iterable: Iterable[T1],
 	iter2: Iterable[T2],
@@ -870,7 +890,7 @@ def map[T1, T2, T3, T4, T5, S](
 	/,
 ) -> Iterator[S]: ...
 @overload
-def map[S](
+def map(
 	func: Callable[..., S],
 	iterable: Iterable[Any],
 	iter2: Iterable[Any],
@@ -881,7 +901,7 @@ def map[S](
 	/,
 	*iterables: Iterable[Any],
 ) -> Iterator[S]: ...
-def map[S](
+def map(
 	func: Callable[..., S] = ...,
 	*iterables: Iterable[Any],
 ) -> (
@@ -895,20 +915,20 @@ def map[S](
 	...
 
 @overload
-def mapcat[T, R]() -> Callable[
+def mapcat() -> Callable[
 	..., Iterator[R] | Callable[..., Iterator[R]]
 ]: ...
 @overload
-def mapcat[T, R](
+def mapcat(
 	func: Callable[[T], Iterable[R]], /
 ) -> Callable[[Iterable[T]], Iterator[R]]: ...
 @overload
-def mapcat[T, R](
+def mapcat(
 	func: Callable[[T], Iterable[R]],
 	seqs: Iterable[T],
 	/,
 ) -> Iterator[R]: ...
-def mapcat[T, R](
+def mapcat(
 	func: Callable[[T], Iterable[R]] = ...,
 	seqs: Iterable[T] = ...,
 ) -> (
@@ -924,16 +944,16 @@ def mapcat[T, R](
 # Curried nth with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def nth[T]() -> Callable[..., T]: ...
+def nth() -> Callable[..., T]: ...
 
 # Stage 1: Just n - returns callable waiting for seq
 @overload
-def nth[T](n: int, /) -> Callable[[Iterable[T]], T]: ...
+def nth(n: int, /) -> Callable[[Iterable[T]], T]: ...
 
 # Stage 2: Full application - executes immediately
 @overload
-def nth[T](n: int, seq: Iterable[T], /) -> T: ...
-def nth[T](
+def nth(n: int, seq: Iterable[T], /) -> T: ...
+def nth(
 	n: int = ..., seq: Iterable[T] = ...
 ) -> T | Callable[[Iterable[T]], T] | Callable[..., T]:
 	...
@@ -941,57 +961,57 @@ def nth[T](
 partial = curry(functools.partial)
 
 @overload
-def partition[T]() -> Callable[..., Iterator[tuple[T, ...]]]: ...
+def partition() -> Callable[..., Iterator[tuple[T, ...]]]: ...
 @overload
-def partition[T](
+def partition(
 	n: int, /
 ) -> Callable[..., Iterator[tuple[T, ...]]]: ...
 @overload
-def partition[T](
+def partition(
 	n: Literal[1], seq: Iterable[T], /
 ) -> Iterator[tuple[T]]: ...
 @overload
-def partition[T](
+def partition(
 	n: int, seq: Iterable[T], /
 ) -> Iterator[tuple[T, ...]]: ...
 @overload
-def partition[T](
+def partition(
 	n: Literal[1], seq: Iterable[T], pad: Any, /
 ) -> Iterator[tuple[T]]:
 	# Note: With n=1, tuples always have exactly 1 element, so pad is never used
 	...
 
 @overload
-def partition[T, P](
-	n: int, seq: Iterable[T], pad: P, /
-) -> Iterator[tuple[T | P, ...]]: ...
-def partition[T, P](
+def partition(
+	n: int, seq: Iterable[T], pad: PType, /
+) -> Iterator[tuple[T | PType, ...]]: ...
+def partition(
 	n: int = ...,
 	seq: Iterable[T] = ...,
-	pad: P = ...,
+	pad: PType = ...,
 ) -> (
 	Iterator[tuple[T, ...]]
-	| Iterator[tuple[T | P, ...]]
-	| Callable[..., Iterator[tuple[T | P, ...]]]
+	| Iterator[tuple[T | PType, ...]]
+	| Callable[..., Iterator[tuple[T | PType, ...]]]
 ):
 	...
 
 # Curried partition_all with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def partition_all[T]() -> Callable[
+def partition_all() -> Callable[
 	..., Iterator[tuple[T, ...]]
 ]: ...
 
 # Stage 1: Just n - returns callable waiting for seq
 @overload
-def partition_all[T](
+def partition_all(
 	n: Literal[1], /
 ) -> Callable[
 	[Iterable[T]], Iterator[tuple[T]]
 ]: ...
 @overload
-def partition_all[T](
+def partition_all(
 	n: int, /
 ) -> Callable[
 	[Iterable[T]], Iterator[tuple[T, ...]]
@@ -999,14 +1019,14 @@ def partition_all[T](
 
 # Stage 2: Full application - executes immediately
 @overload
-def partition_all[T](
+def partition_all(
 	n: Literal[1], seq: Iterable[T], /
 ) -> Iterator[tuple[T]]: ...
 @overload
-def partition_all[T](
+def partition_all(
 	n: int, seq: Iterable[T], /
 ) -> Iterator[tuple[T, ...]]: ...
-def partition_all[T](
+def partition_all(
 	n: int = ..., seq: Iterable[T] = ...
 ) -> (
 	Iterator[tuple[T, ...]]
@@ -1022,11 +1042,11 @@ partitionby = curry(_recipes.partitionby)
 peekn = curry(_itertoolz.peekn)
 
 @overload
-def pluck[T]() -> Callable[
+def pluck() -> Callable[
 	..., Iterator[T] | Iterator[tuple[T, ...]]
 ]: ...
 @overload
-def pluck[T](
+def pluck(
 	ind: Sequence[Any], /
 ) -> (
 	Callable[
@@ -1048,7 +1068,7 @@ def pluck[T](
 	]
 ): ...
 @overload
-def pluck[T](
+def pluck(
 	ind: Any, /
 ) -> (
 	Callable[
@@ -1070,7 +1090,7 @@ def pluck[T](
 	]
 ): ...
 @overload
-def pluck[T](
+def pluck(
 	ind: Sequence[Any],
 	seqs: Iterable[
 		Sequence[T] | Mapping[Any, T]
@@ -1078,7 +1098,7 @@ def pluck[T](
 	/,
 ) -> Iterator[tuple[T, ...]]: ...
 @overload
-def pluck[T](
+def pluck(
 	ind: Any,
 	seqs: Iterable[
 		Sequence[T] | Mapping[Any, T]
@@ -1086,7 +1106,7 @@ def pluck[T](
 	/,
 ) -> Iterator[T]: ...
 @overload
-def pluck[T](
+def pluck(
 	ind: Sequence[Any],
 	seqs: Iterable[
 		Sequence[T] | Mapping[Any, T]
@@ -1095,7 +1115,7 @@ def pluck[T](
 	/,
 ) -> Iterator[tuple[T, ...]]: ...
 @overload
-def pluck[T](
+def pluck(
 	ind: Any,
 	seqs: Iterable[
 		Sequence[T] | Mapping[Any, T]
@@ -1103,7 +1123,7 @@ def pluck[T](
 	default: T,
 	/,
 ) -> Iterator[T]: ...
-def pluck[T](
+def pluck(
 	ind: Any | Sequence[Any] = ...,
 	seqs: Iterable[
 		Sequence[T] | Mapping[Any, T]
@@ -1121,29 +1141,29 @@ def pluck[T](
 random_sample = curry(_itertoolz.random_sample)
 
 @overload
-def reduce[T]() -> Callable[..., T]: ...
+def reduce() -> Callable[..., T]: ...
 @overload
-def reduce[T](
+def reduce(
 	function: Callable[[T, T], T], /
 ) -> Callable[[Iterable[T]], T]: ...
 @overload
-def reduce[T, S](
+def reduce(
 	function: Callable[[T, S], T], /
 ) -> Callable[..., T]: ...
 @overload
-def reduce[T](
+def reduce(
 	function: Callable[[T, T], T],
 	iterable: Iterable[T],
 	/,
 ) -> T: ...
 @overload
-def reduce[T, S](
+def reduce(
 	function: Callable[[T, S], T],
 	iterable: Iterable[S],
 	initial: T,
 	/,
 ) -> T: ...
-def reduce[T, S](
+def reduce(
 	function: Callable[[T, S], T] = ...,
 	iterable: Iterable[S] = ...,
 	initial: T = ...,
@@ -1155,20 +1175,20 @@ reduceby = curry(_itertoolz.reduceby)
 # Curried remove with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def remove[T]() -> Callable[..., Iterable[T]]: ...
+def remove() -> Callable[..., Iterable[T]]: ...
 
 # Stage 1: Just predicate - returns callable waiting for seq
 @overload
-def remove[T](
+def remove(
 	predicate: Callable[[T], bool], /
 ) -> Callable[[Iterable[T]], Iterable[T]]: ...
 
 # Stage 2: Full application - executes immediately
 @overload
-def remove[T](
+def remove(
 	predicate: Callable[[T], bool], seq: Iterable[T], /
 ) -> Iterable[T]: ...
-def remove[T](
+def remove(
 	predicate: Callable[[T], bool] = ..., seq: Iterable[T] = ...
 ) -> (
 	Iterable[T]
@@ -1180,13 +1200,13 @@ def remove[T](
 # Curried sliding_window with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def sliding_window[T]() -> Callable[
+def sliding_window() -> Callable[
 	..., Iterator[tuple[T, ...]]
 ]: ...
 
 # Stage 1a: Just n=1 - returns callable waiting for seq
 @overload
-def sliding_window[T](
+def sliding_window(
 	n: Literal[1], /
 ) -> Callable[
 	[Iterable[T]], Iterator[tuple[T]]
@@ -1194,7 +1214,7 @@ def sliding_window[T](
 
 # Stage 1b: Just n=2 - returns callable waiting for seq
 @overload
-def sliding_window[T](
+def sliding_window(
 	n: Literal[2], /
 ) -> Callable[
 	[Iterable[T]], Iterator[tuple[T, T]]
@@ -1202,7 +1222,7 @@ def sliding_window[T](
 
 # Stage 1c: Just n=3 - returns callable waiting for seq
 @overload
-def sliding_window[T](
+def sliding_window(
 	n: Literal[3], /
 ) -> Callable[
 	[Iterable[T]], Iterator[tuple[T, T, T]]
@@ -1210,7 +1230,7 @@ def sliding_window[T](
 
 # Stage 1d: Just n (general) - returns callable waiting for seq
 @overload
-def sliding_window[T](
+def sliding_window(
 	n: int, /
 ) -> Callable[
 	[Iterable[T]], Iterator[tuple[T, ...]]
@@ -1218,28 +1238,28 @@ def sliding_window[T](
 
 # Stage 2a: Full application with n=1 - executes immediately
 @overload
-def sliding_window[T](
+def sliding_window(
 	n: Literal[1], seq: Iterable[T], /
 ) -> Iterator[tuple[T]]: ...
 
 # Stage 2b: Full application with n=2 - executes immediately
 @overload
-def sliding_window[T](
+def sliding_window(
 	n: Literal[2], seq: Iterable[T], /
 ) -> Iterator[tuple[T, T]]: ...
 
 # Stage 2c: Full application with n=3 - executes immediately
 @overload
-def sliding_window[T](
+def sliding_window(
 	n: Literal[3], seq: Iterable[T], /
 ) -> Iterator[tuple[T, T, T]]: ...
 
 # Stage 2d: Full application (general) - executes immediately
 @overload
-def sliding_window[T](
+def sliding_window(
 	n: int, seq: Iterable[T], /
 ) -> Iterator[tuple[T, ...]]: ...
-def sliding_window[T](
+def sliding_window(
 	n: int = ..., seq: Iterable[T] = ...
 ) -> (
 	Iterator[tuple[T, ...]]
@@ -1254,11 +1274,11 @@ def sliding_window[T](
 # Note: key and reverse are keyword-only parameters in builtin sorted
 # Stage 0: No arguments - returns a callable
 @overload
-def sorted[T]() -> Callable[..., list[T]]: ...
+def sorted() -> Callable[..., list[T]]: ...
 
 # Stage 1a: Partial application with keyword args only (no key) - returns callable
 @overload
-def sorted[T](
+def sorted(
 	*,
 	key: None = None,
 	reverse: bool = False,
@@ -1266,7 +1286,7 @@ def sorted[T](
 
 # Stage 1b: Partial application with keyword args only (with key) - returns callable
 @overload
-def sorted[T](
+def sorted(
 	*,
 	key: Callable[[T], SupportsRichComparison],
 	reverse: bool = False,
@@ -1274,7 +1294,7 @@ def sorted[T](
 
 # Stage 2a: Full application (no key) - executes immediately
 @overload
-def sorted[T](
+def sorted(
 	iterable: Iterable[T],
 	/,
 	*,
@@ -1284,7 +1304,7 @@ def sorted[T](
 
 # Stage 2b: Full application (with key function) - executes immediately
 @overload
-def sorted[T](
+def sorted(
 	iterable: Iterable[T],
 	/,
 	*,
@@ -1293,7 +1313,7 @@ def sorted[T](
 ) -> list[T]: ...
 
 # Implementation signature (catch-all)
-def sorted[T](
+def sorted(
 	iterable: Iterable[T] = ...,
 	/,
 	*,
@@ -1305,20 +1325,20 @@ def sorted[T](
 # Curried tail with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def tail[T]() -> Callable[..., Iterator[T]]: ...
+def tail() -> Callable[..., Iterator[T]]: ...
 
 # Stage 1: Just n - returns callable waiting for seq
 @overload
-def tail[T](
+def tail(
 	n: int, /
 ) -> Callable[[Iterable[T]], Iterator[T]]: ...
 
 # Stage 2: Full application - executes immediately
 @overload
-def tail[T](
+def tail(
 	n: int, seq: Iterable[T], /
 ) -> Iterator[T]: ...
-def tail[T](
+def tail(
 	n: int = ..., seq: Iterable[T] = ...
 ) -> (
 	Iterator[T]
@@ -1328,16 +1348,16 @@ def tail[T](
 	...
 
 @overload
-def take[T]() -> Callable[..., Iterator[T]]: ...
+def take() -> Callable[..., Iterator[T]]: ...
 @overload
-def take[T](
+def take(
 	n: int, /
 ) -> Callable[[Iterable[T]], Iterator[T]]: ...
 @overload
-def take[T](
+def take(
 	n: int, seq: Iterable[T], /
 ) -> Iterator[T]: ...
-def take[T](
+def take(
 	n: int = ..., seq: Iterable[T] = ...
 ) -> (
 	Iterator[T]
@@ -1349,20 +1369,20 @@ def take[T](
 # Curried take_nth with explicit overloads for type safety
 # Stage 0: No arguments - returns a callable
 @overload
-def take_nth[T]() -> Callable[..., Iterator[T]]: ...
+def take_nth() -> Callable[..., Iterator[T]]: ...
 
 # Stage 1: Just n - returns callable waiting for seq
 @overload
-def take_nth[T](
+def take_nth(
 	n: int, /
 ) -> Callable[[Iterable[T]], Iterator[T]]: ...
 
 # Stage 2: Full application - executes immediately
 @overload
-def take_nth[T](
+def take_nth(
 	n: int, seq: Iterable[T], /
 ) -> Iterator[T]: ...
-def take_nth[T](
+def take_nth(
 	n: int = ..., seq: Iterable[T] = ...
 ) -> (
 	Iterator[T]
@@ -1376,19 +1396,19 @@ unique = curry(_itertoolz.unique)
 update_in = curry(_dicttoolz.update_in)
 
 @overload
-def valfilter[K, V]() -> Callable[
+def valfilter() -> Callable[
 	..., dict[K, V] | MutableMapping[K, V]
 ]: ...
 
 # Stage 1a: Just predicate (no factory) - returns callable waiting for dict
 @overload
-def valfilter[K, V](
+def valfilter(
 	predicate: Callable[[V], bool], /
 ) -> Callable[[Mapping[K, V]], dict[K, V]]: ...
 
 # Stage 1b: Predicate with factory - returns callable waiting for dict
 @overload
-def valfilter[K, V](
+def valfilter(
 	predicate: Callable[[V], bool],
 	/,
 	*,
@@ -1399,7 +1419,7 @@ def valfilter[K, V](
 
 # Stage 2a: Full application (no factory) - executes immediately
 @overload
-def valfilter[K, V](
+def valfilter(
 	predicate: Callable[[V], bool],
 	d: Mapping[K, V],
 	/,
@@ -1407,14 +1427,14 @@ def valfilter[K, V](
 
 # Stage 2b: Full application (with factory) - executes immediately
 @overload
-def valfilter[K, V](
+def valfilter(
 	predicate: Callable[[V], bool],
 	d: Mapping[K, V],
 	/,
 	*,
 	factory: Callable[[], MutableMapping[K, V]],
 ) -> MutableMapping[K, V]: ...
-def valfilter[K, V](
+def valfilter(
 	predicate: Callable[[V], bool] = ...,
 	d: Mapping[K, V] = ...,
 	*,
@@ -1427,19 +1447,19 @@ def valfilter[K, V](
 	...
 
 @overload
-def valmap[K, V0, V1]() -> Callable[
+def valmap() -> Callable[
 	..., dict[K, V1] | MutableMapping[K, V1]
 ]: ...
 
 # Stage 1a: Just func (no factory) - returns callable waiting for dict
 @overload
-def valmap[K, V0, V1](
+def valmap(
 	func: Callable[[V0], V1], /
 ) -> Callable[[Mapping[K, V0]], dict[K, V1]]: ...
 
 # Stage 1b: Func with factory - returns callable waiting for dict
 @overload
-def valmap[K, V0, V1](
+def valmap(
 	func: Callable[[V0], V1],
 	/,
 	*,
@@ -1450,7 +1470,7 @@ def valmap[K, V0, V1](
 
 # Stage 2a: Full application (no factory) - executes immediately
 @overload
-def valmap[K, V0, V1](
+def valmap(
 	func: Callable[[V0], V1],
 	d: Mapping[K, V0],
 	/,
@@ -1458,14 +1478,14 @@ def valmap[K, V0, V1](
 
 # Stage 2b: Full application (with factory) - executes immediately
 @overload
-def valmap[K, V0, V1](
+def valmap(
 	func: Callable[[V0], V1],
 	d: Mapping[K, V0],
 	/,
 	*,
 	factory: Callable[[], MutableMapping[K, V1]],
 ) -> MutableMapping[K, V1]: ...
-def valmap[K, V0, V1](
+def valmap(
 	func: Callable[[V0], V1] = ...,
 	d: Mapping[K, V0] = ...,
 	*,

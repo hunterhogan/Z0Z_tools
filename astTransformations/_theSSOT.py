@@ -43,8 +43,8 @@ cythonDirectives: str = """# cython: embedsignature=True
 # cython: language_level=3
 """
 noticeCopyrightHeader: str = textwrap.fill("Some of the original or derivative works in this directory and its subdirectories may be protected by the following copyright.", width=80) + "\n___\n\n"
-pathRoot_tools_stubs = Path("/clones/toolz-stubs/src/toolz-stubs")
-regexChangeImports: partial[str] = partial(regex.sub, "(from |import )(.?.?toolz)", "\\1humpy_\\2")  # ty:ignore[invalid-assignment] https://github.com/astral-sh/ty/issues/2799
+pathRoot_toolz_stubs = Path("/clones/toolz-stubs/src/toolz-stubs")
+regexChangeImports: partial[str] = partial(regex.sub, "(from |import )(.?.?toolz)", "\\1humpy_\\2")
 subModules: frozenset[identifierDotAttribute] = subModulesHARDCODED
 
 #============ Put settings in the containers. ============

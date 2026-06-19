@@ -19,8 +19,9 @@ Users should try to not use this module directly.
 from __future__ import annotations
 
 from .functoolz import has_keywords, has_varargs, is_arity, is_partial_args, num_required_args
+from collections.abc import Callable
 from importlib import import_module
-from typing import Any, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING, TypeAlias
 import builtins
 import functools
 import inspect
@@ -28,11 +29,10 @@ import itertools
 import operator
 
 if TYPE_CHECKING:
-	from collections.abc import Callable
 	from types import ModuleType
 
-type SignatureSpecification = tuple[int, Callable[..., Any], tuple[str, ...], inspect.Signature | None]
-type SignatureInput = Callable[..., Any] | tuple[int, Callable[..., Any]] | tuple[int, Callable[..., Any], tuple[str, ...]]
+SignatureSpecification: TypeAlias = tuple[int, Callable[..., Any], tuple[str, ...], inspect.Signature | None]
+SignatureInput: TypeAlias = Callable[..., Any] | tuple[int, Callable[..., Any]] | tuple[int, Callable[..., Any], tuple[str, ...]]
 
 module_info: dict[ModuleType, dict[str, list[SignatureInput]]] = {}
 module_info[builtins] = {
@@ -368,7 +368,7 @@ def check_valid(sig: SignatureSpecification, args, kwargs) -> builtins.bool:
 	except TypeError:
 		return False
 
-def _is_valid_args(func: Callable[..., Any], args, kwargs) -> None | builtins.bool:
+def _is_valid_args(func: Callable[..., Any], args, kwargs) -> builtins.bool | None:
 	"""Like ``is_valid_args`` for builtins in our ``signatures`` registry"""
 	if func not in signatures:
 		return None
@@ -387,7 +387,7 @@ def check_partial(sig: SignatureSpecification, args, kwargs) -> builtins.bool | 
 			kwargs.pop(item, None)
 	return is_partial_args(func, args, kwargs, sigspec)
 
-def _is_partial_args(func: Callable[..., Any], args, kwargs) -> None | builtins.bool:
+def _is_partial_args(func: Callable[..., Any], args, kwargs) -> builtins.bool | None:
 	"""Like ``is_partial_args`` for builtins in our ``signatures`` registry"""
 	if func not in signatures:
 		return None
@@ -400,7 +400,7 @@ def check_arity(n: builtins.int, sig: SignatureSpecification) -> builtins.bool |
 		return False
 	return is_arity(n, func, sigspec)
 
-def _is_arity(n: builtins.int, func: Callable[..., Any]) -> None | builtins.bool:
+def _is_arity(n: builtins.int, func: Callable[..., Any]) -> builtins.bool | None:
 	if func not in signatures:
 		return None
 	sigs: builtins.tuple[SignatureSpecification, ...] = signatures[func]
@@ -415,7 +415,7 @@ def check_varargs(sig: SignatureSpecification) -> builtins.bool | None:
 	_num_pos_only, func, _keyword_exclude, sigspec = sig
 	return has_varargs(func, sigspec)
 
-def _has_varargs(func: Callable[..., Any]) -> None | builtins.bool:
+def _has_varargs(func: Callable[..., Any]) -> builtins.bool | None:
 	if func not in signatures:
 		return None
 	sigs: builtins.tuple[SignatureSpecification, ...] = signatures[func]
@@ -432,7 +432,7 @@ def check_keywords(sig: SignatureSpecification) -> builtins.bool | None:
 		return True
 	return has_keywords(func, sigspec)
 
-def _has_keywords(func: Callable[..., Any]) -> None | builtins.bool:
+def _has_keywords(func: Callable[..., Any]) -> builtins.bool | None:
 	if func not in signatures:
 		return None
 	sigs: builtins.tuple[SignatureSpecification, ...] = signatures[func]
@@ -447,7 +447,7 @@ def check_required_args(sig: SignatureSpecification) -> builtins.int | None:
 	_num_pos_only, func, _keyword_exclude, sigspec = sig
 	return num_required_args(func, sigspec)
 
-def _num_required_args(func: Callable[..., Any]) -> None | builtins.int:
+def _num_required_args(func: Callable[..., Any]) -> builtins.int | None:
 	if func not in signatures:
 		return None
 	sigs: builtins.tuple[SignatureSpecification, ...] = signatures[func]

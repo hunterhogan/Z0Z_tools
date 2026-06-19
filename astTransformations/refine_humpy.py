@@ -1,4 +1,6 @@
 """#======== Post-transformation: act on the new packages. ========"""
+from __future__ import annotations
+
 from astToolkit import Grab, IfThis, NodeChanger, NodeTourist, parsePathFilename2astModule, Then
 from astToolkit.transformationTools import write_astModule
 from astTransformations._theSSOT import regexChangeImports, settingsFor, settingsWrite_astModule
