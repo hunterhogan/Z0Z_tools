@@ -5,7 +5,3 @@ packages.
 """
 
 from __future__ import annotations
-
-# pyright: reportUnusedImport=false
-# isort: split
-from hunterHearsPy import *  # pyright: ignore[reportWildcardImportFromLibrary]

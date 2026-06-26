@@ -1,12 +1,8 @@
 # Z0Z_tools
 
-Filesystem helpers plus the `humpy_toolz`, `humpy_cytoolz`, and `humpy_tlz` packages.
+Temporary home for `humpy_toolz`, `humpy_cytoolz`, and `humpy_tlz` packages while improving them.
 The audio processing modules previously in this repository now live in
 [`hunterHearsPy`](https://github.com/hunterhogan/hunterHearsPy).
-
-## Wishlist
-
-- [ ] Build wheels in "pypiReleaseCython.yml" workflow.
 
 ## humpy_toolz
 

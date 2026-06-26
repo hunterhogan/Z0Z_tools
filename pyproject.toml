@@ -1,6 +1,6 @@
 [project]
 name = "Z0Z_tools"
-version = "2.1.0"
+version = "2.2.0"
 description = "Typing, documenting, and improving toolz and cytoolz."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -37,7 +37,7 @@ classifiers = [
   "Typing :: Typed",
 ]
 urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Issues = "https://github.com/hunterhogan/Z0Z_tools/issues", Repository = "https://github.com/hunterhogan/Z0Z_tools.git" }
-dependencies = ["hunterHearsPy", "typing_extensions>=4.10.0"]
+dependencies = ["typing_extensions>=4.10.0"]
 optional-dependencies = { development = [
   "astToolkit",
   "hunterMakesPy",
@@ -64,7 +64,7 @@ run = { branch = true, data_file = "tests/coverage/.coverage", omit = [
 ], source = ["."] }
 
 [tool.pytest]
-addopts = ["--color=auto"]
+addopts = ["--color=on"]
 log_auto_indent = "On"
 testpaths = ["**/tests"]
 

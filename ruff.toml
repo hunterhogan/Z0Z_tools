@@ -106,11 +106,12 @@ inline-quotes = "single"
   "ARG",
   "BLE",
   "D",
+  "DTZ",
   "FBT",
   "PT",
   "S101",
   "TRY",
-  "DTZ",
+  "DOC201",
 ]
 
 [lint.pydocstyle]
