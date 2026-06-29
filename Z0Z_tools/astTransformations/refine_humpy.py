@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from astToolkit import Grab, IfThis, NodeChanger, NodeTourist, parsePathFilename2astModule, Then
 from astToolkit.transformationTools import write_astModule
-from astTransformations._theSSOT import regexChangeImports, settingsFor, settingsWrite_astModule
+from Z0Z_tools.astTransformations._theSSOT import regexChangeImports, settingsFor, settingsWrite_astModule
 from hunterMakesPy import raiseIfNone
 from hunterMakesPy.filesystemToolkit import writeStringToHere
 from typing import TYPE_CHECKING

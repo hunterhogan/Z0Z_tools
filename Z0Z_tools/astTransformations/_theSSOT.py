@@ -52,7 +52,7 @@ subModules: frozenset[identifierDotAttribute] = subModulesHARDCODED
 settingsWrite_astModule['autoflake']['remove_all_unused_imports'] = False
 settingsWrite_astModule['autoflake']['expand_star_imports'] = False
 settingsWrite_astModule['autoflake']['ignore_init_module_imports'] = True
-pathPackageRoot: Path = Path(__file__).resolve().parent.parent
+pathPackageRoot: Path = Path(__file__).resolve().parent.parent.parent
 
 for identifierTransformee in allTransformeePackages:
 	humpyPackage: str = f"humpy_{identifierTransformee}"

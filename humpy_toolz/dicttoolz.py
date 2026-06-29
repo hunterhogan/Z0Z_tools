@@ -56,27 +56,10 @@ import contextlib
 import operator
 
 if TYPE_CHECKING:
-	from collections.abc import Callable, Hashable, MutableMapping, Sequence
-	from typing import Any, Literal, TypeGuard, TypeVar
+	from collections.abc import Callable, MutableMapping, Sequence
+	from humpy_toolz._theTypes import K, K0Hashable, K1, K1Hashable, K2, K3, KHashable, SupportsGetItem, V, V0, V1, V2, V3
+	from typing import Any, Literal, TypeGuard
 	from typing_extensions import TypeIs
-
-	K = TypeVar('K')
-	KHashable = TypeVar('KHashable', bound=Hashable)
-
-	K0Hashable = TypeVar('K0Hashable', bound=Hashable)
-
-	K1 = TypeVar('K1')
-	K1Hashable = TypeVar('K1Hashable', bound=Hashable)
-
-	K2 = TypeVar('K2')
-	K3 = TypeVar('K3')
-
-	V = TypeVar('V')
-	V0 = TypeVar('V0')
-	V1 = TypeVar('V1')
-	V2 = TypeVar('V2')
-	V3 = TypeVar('V3')
-	from humpy_toolz.utils import SupportsGetItem
 
 __all__ = ('assoc', 'assoc_in', 'dissoc', 'get_in', 'itemfilter', 'itemmap', 'keyfilter', 'keymap', 'merge', 'merge_with', 'update_in', 'valfilter', 'valmap')
 

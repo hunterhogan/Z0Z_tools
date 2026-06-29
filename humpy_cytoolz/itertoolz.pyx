@@ -535,7 +535,7 @@ cpdef object tail(Py_ssize_t n, object seq):
         take
     """
     if PySequence_Check(seq):
-        return seq[-n:]
+        return seq[len(seq) - n: None]
     return tuple(deque(seq, n))
 
 

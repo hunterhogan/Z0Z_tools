@@ -1,4 +1,5 @@
-from collections.abc import Callable, Iterable, Iterator
+from __future__ import annotations
+
 from functools import partial
 from humpy_toolz.itertoolz import (
 	accumulate, concat, concatv, cons, count, diff, drop, first, frequencies, get, getter, groupby, interleave, interpose, isdistinct,
@@ -9,8 +10,13 @@ from itertools import starmap
 from operator import add, mul
 from pickle import dumps, loads
 from random import Random
-from typing import Any, NoReturn
+from typing import TYPE_CHECKING
 import itertools
+import pytest
+
+if TYPE_CHECKING:
+	from collections.abc import Callable, Iterable, Iterator
+	from typing import Any, NoReturn
 
 no_default2 = loads(dumps('__no__default__'))
 
@@ -138,10 +144,83 @@ def test_take() -> None:
     assert list(take(3, 'ABCDE')) == list('ABC')
     assert list(take(2, (3, 2, 1))) == list((3, 2))
 
-def test_tail() -> None:
-    assert list(tail(3, 'ABCDE')) == list('CDE')
-    assert list(tail(3, iter('ABCDE'))) == list('CDE')
-    assert list(tail(2, (3, 2, 1))) == list((2, 1))
+@pytest.mark.parametrize(
+    ('n', 'seq', 'expected'),
+    [
+        pytest.param(2, [11, 22, 33, 44], [33, 44], id='sequence_list_n2'),
+        pytest.param(10, [11, 22, 33, 44], [11, 22, 33, 44], id='sequence_list_n_gt_len'),
+        pytest.param(2, (11, 22, 33, 44), (33, 44), id='sequence_tuple_n2'),
+        pytest.param(10, (11, 22, 33, 44), (11, 22, 33, 44), id='sequence_tuple_n_gt_len'),
+        pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}, ('gamma', 'delta'), id='mapping_n2'),
+        pytest.param(10, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}, ('alpha', 'beta', 'gamma', 'delta'), id='mapping_n_gt_len'),
+        pytest.param(
+            2,
+            {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.items(),
+            (('gamma', 33), ('delta', 44)),
+            id='itemsview_n2',
+        ),
+        pytest.param(
+            10,
+            {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.items(),
+            (('alpha', 11), ('beta', 22), ('gamma', 33), ('delta', 44)),
+            id='itemsview_n_gt_len',
+        ),
+        pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.keys(), ('gamma', 'delta'), id='keysview_n2'),
+        pytest.param(
+            10,
+            {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.keys(),
+            ('alpha', 'beta', 'gamma', 'delta'),
+            id='keysview_n_gt_len',
+        ),
+        pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.values(), (33, 44), id='valuesview_n2'),
+        pytest.param(10, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.values(), (11, 22, 33, 44), id='valuesview_n_gt_len'),
+    ],
+)
+def test_tail(n: int, seq: object, expected: object) -> None:
+    assert tail(n, seq) == expected
+
+
+@pytest.mark.parametrize(
+    ('n', 'seq', 'expected', 'incorrect_full_result'),
+    [
+        pytest.param(0, [11, 22, 33, 44], [], [11, 22, 33, 44], id='sequence_list_n0_issue626'),
+        pytest.param(0, (11, 22, 33, 44), (), (11, 22, 33, 44), id='sequence_tuple_n0_issue626'),
+        pytest.param(0, 'ABCD', '', 'ABCD', id='sequence_str_n0_issue626'),
+        pytest.param(
+            0,
+            {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44},
+            (),
+            ('alpha', 'beta', 'gamma', 'delta'),
+            id='mapping_n0_issue626',
+        ),
+        pytest.param(
+            0,
+            {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.items(),
+            (),
+            (('alpha', 11), ('beta', 22), ('gamma', 33), ('delta', 44)),
+            id='itemsview_n0_issue626',
+        ),
+        pytest.param(
+            0,
+            {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.keys(),
+            (),
+            ('alpha', 'beta', 'gamma', 'delta'),
+            id='keysview_n0_issue626',
+        ),
+        pytest.param(
+            0,
+            {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.values(),
+            (),
+            (11, 22, 33, 44),
+            id='valuesview_n0_issue626',
+        ),
+    ],
+)
+def test_tail_issue626_zero(n: int, seq: object, expected: object, incorrect_full_result: object) -> None:
+    result = tail(n, seq)
+    assert result == expected
+    assert len(result) == 0
+    assert result != incorrect_full_result
 
 def test_drop() -> None:
     assert list(drop(3, 'ABCDE')) == list('DE')

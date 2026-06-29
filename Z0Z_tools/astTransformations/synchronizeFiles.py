@@ -3,11 +3,11 @@ from __future__ import annotations
 
 from astToolkit import Be, Grab, NodeChanger, parsePathFilename2astModule
 from astToolkit.transformationTools import write_astModule
-from astTransformations._theSSOT import settingsFor, settingsWrite_astModule
 from collections.abc import Callable, Iterable
 from hunterMakesPy import PackageSettings, raiseIfNone
 from pathlib import Path
 from typing_extensions import TypeIs
+from Z0Z_tools.astTransformations._theSSOT import settingsFor, settingsWrite_astModule
 import ast
 
 def strStartsWith(identifierPackage: str) -> Callable[[str | None], TypeIs[str]]:
@@ -27,5 +27,5 @@ def synchronizeFiles(settingsPackageSource: PackageSettings, settingsPackageDupl
 		write_astModule(astModule, settingsPackageDuplicate.pathPackage / relativePathTests / filename, settingsWrite_astModule)
 
 if __name__ == '__main__':
-	listFilenames: Iterable[str] = frozenset(('test_dicttoolz.py',))
+	listFilenames: Iterable[str] = frozenset(('test_dicttoolz.py','test_itertoolz.py',))
 	synchronizeFiles(settingsFor['humpy_toolz'], settingsFor['humpy_cytoolz'], listFilenames)

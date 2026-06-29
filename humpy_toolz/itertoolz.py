@@ -1,29 +1,46 @@
-# ruff: noqa: D100
+# pyright: reportArgumentType=false
+# pyright: reportAssignmentType=false
+# pyright: reportAttributeAccessIssue=false
+# pyright: reportCallIssue=false
+# pyright: reportIndexIssue=false
+# pyright: reportMissingParameterType=false
+# pyright: reportOptionalMemberAccess=false
+# pyright: reportOverlappingOverload=false
+# pyright: reportPossiblyUnboundVariable=false
+# pyright: reportReturnType=false
+# pyright: reportUnknownArgumentType=false
+# pyright: reportUnknownLambdaType=false
+# pyright: reportUnknownMemberType=false
+# pyright: reportUnknownParameterType=false
+# pyright: reportUnknownVariableType=false
+# pyright: reportUnnecessaryComparison=false
+# ruff: noqa: D100, DOC201, ANN001, ANN202, TRY300, PERF203, DOC402, S311, PLC0415, B905, PLR0911, ERA001, E101 E731 RUF052 DOC501
+# ty:ignore[call-non-callable]
+# ty:ignore[call-top-callable]
+# ty:ignore[invalid-argument-type]
+# ty:ignore[invalid-assignment]
+# ty:ignore[invalid-return-type]
+# ty:ignore[invalid-yield]
+# ty:ignore[no-matching-overload]
+# ty:ignore[not-subscriptable]
 from __future__ import annotations
 
-from collections import defaultdict
-from collections.abc import Callable, Collection, Hashable, Iterable, Iterator, Mapping, Sequence
+from collections import defaultdict, deque
+from collections.abc import Sequence
 from functools import partial
-from humpy_toolz.utils import no_default, SupportsGetItem, SupportsRichComparison
+from humpy_toolz.utils import no_default
 from itertools import filterfalse, zip_longest
-from typing import Any, Literal, overload, Protocol, TypeVar
-from typing_extensions import TypeIs
-import collections
+from typing import overload, TYPE_CHECKING
 import heapq
 import itertools
 import operator
 
-K = TypeVar('K')
-KHashable = TypeVar('KHashable', bound=Hashable)
-L = TypeVar('L')
-P = TypeVar('P')
-R = TypeVar('R')
-S = TypeVar('S')
-SSequence = TypeVar('SSequence', bound=Sequence[Any])
-T = TypeVar('T')
-TIterable = TypeVar('TIterable', bound=Iterable[Any])
-TSupportsRichComparison = TypeVar('TSupportsRichComparison', bound=SupportsRichComparison)
-U = TypeVar('U')
+if TYPE_CHECKING:
+	from collections.abc import Callable, Collection, Hashable, ItemsView, Iterable, Iterator, KeysView, Mapping, ValuesView
+	from humpy_toolz._theTypes import (
+		K, KHashable, L, P, R, Randomable, S, SSequence, SupportsGetItem, T, TIterable, TSupportsRichComparison, U)
+	from typing import Any, Literal
+	from typing_extensions import TypeIs
 
 
 __all__ = ('accumulate', 'concat', 'concatv', 'cons', 'count', 'diff', 'drop', 'first', 'frequencies', 'get', 'groupby', 'interleave', 'interpose', 'isdistinct', 'isiterable', 'iterate', 'join', 'last', 'mapcat', 'merge_sorted', 'nth', 'partition', 'partition_all', 'peek', 'peekn', 'pluck', 'random_sample', 'reduceby', 'remove', 'second', 'sliding_window', 'tail', 'take', 'take_nth', 'topk', 'unique')
@@ -137,7 +154,7 @@ def groupby(key: Callable[[T], KHashable] | KHashable, seq: Iterable[T]) -> dict
 	See Also
 	--------
 		countby
-	"""  # noqa: E101
+	"""
 	if not callable(key):
 		predicate = getter(key)
 	else:
@@ -267,9 +284,9 @@ def interleave(seqs: Iterable[Iterable[T]]) -> Iterator[T]:
 		try:
 			for itr in iters:
 				yield next(itr)
-			return  # noqa: TRY300
+			return
 		except StopIteration:
-			predicate = partial(operator.is_not, itr)  # pyright: ignore[reportPossiblyUnboundVariable]
+			predicate = partial(operator.is_not, itr)
 			iters = itertools.cycle(itertools.takewhile(predicate, iters))
 
 def unique(seq: Iterable[T], key: Callable[[T], Any] | None = None) -> Iterator[T]:
@@ -315,7 +332,7 @@ def isiterable(x: Any) -> bool:
 	"""
 	try:
 		iter(x)
-		return True  # noqa: TRY300
+		return True
 	except TypeError:
 		return False
 
@@ -332,7 +349,7 @@ def isdistinct(seq: Collection[Any]) -> bool:
 	>>> isdistinct("World")
 	True
 	"""
-	if iter(seq) is seq:  # pyright: ignore[reportUnnecessaryComparison]
+	if iter(seq) is seq:
 		seen: set[Any] = set()
 		seen_add: Callable[[Any], None] = seen.add
 		for item in seq:
@@ -359,8 +376,14 @@ def take(n: int, seq: Iterable[T]) -> Iterator[T]:
 @overload
 def tail(n: int, seq: SSequence) -> SSequence: ...
 @overload
-def tail(n: int, seq: Iterable[T]) -> tuple[T, ...]: ...
-def tail(n: int, seq: Iterable[T]) -> Sequence[T] | tuple[T, ...]:
+def tail(n: int, seq: Mapping[KHashable, Any]) -> tuple[KHashable, ...]: ...
+@overload
+def tail(n: int, seq: ItemsView[KHashable, T]) -> tuple[tuple[KHashable, T], ...]: ...
+@overload
+def tail(n: int, seq: KeysView[KHashable]) -> tuple[KHashable, ...]: ...
+@overload
+def tail(n: int, seq: ValuesView[T]) -> tuple[T, ...]: ...
+def tail(n: int, seq: SSequence | Mapping[KHashable, Any] | ItemsView[KHashable, T] | KeysView[KHashable] | ValuesView[T]) -> SSequence | tuple[KHashable, ...] | tuple[tuple[KHashable, T], ...] | tuple[T, ...]:
 	"""The last n elements of a sequence
 
 	>>> tail(2, [10, 20, 30, 40, 50])
@@ -372,9 +395,9 @@ def tail(n: int, seq: Iterable[T]) -> Sequence[T] | tuple[T, ...]:
 		take
 	"""
 	try:
-		return seq[-n:]  # pyright: ignore[reportIndexIssue, reportUnknownVariableType] # ty:ignore[not-subscriptable]
+		return seq[len(seq) - n: None]
 	except (TypeError, KeyError):
-		return tuple(collections.deque(seq, n))
+		return tuple(deque(seq, n))
 
 def drop(n: int, seq: Iterable[T]) -> Iterator[T]:
 	"""The sequence following the first n elements
@@ -422,7 +445,7 @@ def nth(n: int, seq: Iterable[T]) -> T:
 	'B'
 	"""
 	if isinstance(seq, (tuple, list, Sequence)):
-		return seq[n]  # ty:ignore[invalid-return-type]
+		return seq[n]
 	else:
 		return next(itertools.islice(seq, n, None))
 
@@ -434,7 +457,7 @@ def last(seq: Iterable[T]) -> T:
 	"""
 	return tail(1, seq)[0]
 
-# def rest[T](seq: Iterable[T]) -> Iterable[T]: ...  # noqa: ERA001
+# def rest[T](seq: Iterable[T]) -> Iterable[T]: ...
 rest = partial(drop, 1)
 
 def _get(ind: K, seq: SupportsGetItem[K, T], default: T) -> T:
@@ -454,7 +477,7 @@ def _get(ind: K, seq: SupportsGetItem[K, T], default: T) -> T:
 def get(ind: Sequence[K], seq: SupportsGetItem[K, T], default: T | Literal['__no__default__'] = no_default) -> tuple[T, ...]: ...
 @overload
 def get(ind: K, seq: SupportsGetItem[K, T], default: T | Literal['__no__default__'] = no_default) -> T: ...
-def get(ind: K | Sequence[K], seq: SupportsGetItem[K, T], default: T | Literal['__no__default__'] = no_default) -> T | tuple[T, ...]:  # noqa: PLR0911
+def get(ind: K | Sequence[K], seq: SupportsGetItem[K, T], default: T | Literal['__no__default__'] = no_default) -> T | tuple[T, ...]:
 	"""Get element in a sequence or dict
 
 	Provides standard indexing
@@ -489,19 +512,19 @@ def get(ind: K | Sequence[K], seq: SupportsGetItem[K, T], default: T | Literal['
 		pluck
 	"""
 	try:
-		return seq[ind]  # pyright: ignore[reportArgumentType] # ty:ignore[invalid-argument-type]
+		return seq[ind]
 	except TypeError:
 		if isinstance(ind, Sequence) and not isinstance(ind, str):
 			if default == no_default:
 				# TODO I think len == 1 and len > 1 can have the same logic.
-				if len(ind) > 1:  # pyright: ignore[reportUnknownArgumentType]
-					return operator.itemgetter(*ind)(seq)  # pyright: ignore[reportUnknownArgumentType]
+				if len(ind) > 1:
+					return operator.itemgetter(*ind)(seq)
 				elif ind:
-					return (seq[ind[0]],)  # ty:ignore[invalid-argument-type]
+					return (seq[ind[0]],)
 				else:
 					return ()
 			else:
-				return tuple(_get(i, seq, default) for i in ind)  # pyright: ignore[reportUnknownArgumentType, reportUnknownVariableType]  # ty:ignore[invalid-argument-type]
+				return tuple(_get(i, seq, default) for i in ind)
 		elif default != no_default:
 			return default
 		else:
@@ -661,7 +684,7 @@ def reduceby(key: Callable[[T], K] | Any, binop: Callable[[T, T], T], seq: Itera
 	>>> reduceby(iseven, set_add, [1, 2, 3, 4, 1, 2, 3], set)  # doctest: +SKIP
 	{True:  set([2, 4]),
 	 False: set([1, 3])}
-	"""  # noqa: E101
+	"""
 	is_no_default = init == no_default
 	if not is_no_default and (not callable(init)):
 		_init = init
@@ -734,7 +757,7 @@ def sliding_window(n: int, seq: Iterable[Any]) -> Iterator[tuple[Any, ...]]:
 	>>> list(map(mean, sliding_window(2, [1, 2, 3, 4])))
 	[1.5, 2.5, 3.5]
 	"""
-	return zip(*(collections.deque(itertools.islice(it, i), 0) or it for i, it in enumerate(itertools.tee(seq, n))))  # noqa: B905
+	return zip(*(deque(itertools.islice(it, i), 0) or it for i, it in enumerate(itertools.tee(seq, n))))
 
 def partition(n: int, seq: Iterable[T], pad: P | Literal['__no__pad__'] = no_pad) -> Iterator[tuple[T, ...]] | Iterator[tuple[T | P, ...]]:
 	"""Partition sequence into tuples of length n
@@ -759,7 +782,7 @@ def partition(n: int, seq: Iterable[T], pad: P | Literal['__no__pad__'] = no_pad
 	if pad == no_pad:
 		return zip(*args, strict=False)
 	else:
-		fillvalue: P = pad  # pyright: ignore[reportAssignmentType]
+		fillvalue: P = pad
 		return zip_longest(*args, fillvalue=fillvalue)
 
 def partition_all(n: int, seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
@@ -817,7 +840,7 @@ def count(seq: Iterable[Any]) -> int:
 		len
 	"""
 	if hasattr(seq, '__len__'):
-		return len(seq)  # pyright: ignore[reportArgumentType] # ty:ignore[invalid-argument-type]
+		return len(seq)
 	return sum(1 for _i in seq)
 
 @overload
@@ -1155,10 +1178,7 @@ def peekn(n: int, seq: Iterable[T]) -> tuple[tuple[T, ...], Iterator[T]]:
 	peeked = tuple(take(n, iterator))
 	return (peeked, itertools.chain(iter(peeked), iterator))
 
-class _Randomable(Protocol):
-	def random(self) -> float: ...
-
-def random_sample(prob: float, seq: Iterable[T], random_state: int | _Randomable | None = None) -> Iterator[T]:
+def random_sample(prob: float, seq: Iterable[T], random_state: int | Randomable | None = None) -> Iterator[T]:
 	"""Return elements from a sequence with probability of prob
 
 	Returns a lazy iterator of random items from seq.
@@ -1191,6 +1211,6 @@ def random_sample(prob: float, seq: Iterable[T], random_state: int | _Randomable
 	[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]
 	"""
 	if not hasattr(random_state, 'random'):
-		from random import Random  # noqa: PLC0415
-		random_state = Random(random_state)  # noqa: S311
+		from random import Random
+		random_state = Random(random_state)
 	return filter(lambda _: random_state.random() < prob, seq)

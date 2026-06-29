@@ -1,11 +1,13 @@
-from typing import Protocol
+from typing import Generic, Protocol, TypeAlias, TypeVar
 import types
 
-class _AnyCallable[ReturnT](Protocol):
-	def __call__(self, *args: object, **kwargs: object) -> ReturnT: ...
+_ReturnT = TypeVar('_ReturnT')
 
-type Signature = _AnyCallable[object]
-type SignatureInfo = dict[str, list[Signature]]
+class _AnyCallable(Protocol, Generic[_ReturnT]):
+	def __call__(self, *args: object, **kwargs: object) -> _ReturnT: ...
+
+Signature: TypeAlias = _AnyCallable[object]
+SignatureInfo: TypeAlias = dict[str, list[Signature]]
 
 cytoolz_info: dict[str, SignatureInfo]
 module_info: dict[types.ModuleType | str, SignatureInfo]

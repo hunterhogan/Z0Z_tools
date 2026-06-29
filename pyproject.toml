@@ -41,6 +41,7 @@ dependencies = ["typing_extensions>=4.10.0"]
 optional-dependencies = { development = [
   "astToolkit",
   "hunterMakesPy",
+  "optype",
   "pytest-cov"
 ], testing = ["cython", "pytest"] }
 
@@ -50,11 +51,8 @@ build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
 build = "cp310-* cp311-* cp312-* cp313-* cp314-*"
-
 skip = ["*-musllinux_*", "*-win32", "*-manylinux_i686", "pp*"]
-
 test-requires = ["pytest"]
-
 test-command = "pytest --pyargs humpy_cytoolz.tests humpy_toolz.tests humpy_toolz.sandbox.tests"
 
 [tool.coverage]
@@ -64,7 +62,7 @@ run = { branch = true, data_file = "tests/coverage/.coverage", omit = [
 ], source = ["."] }
 
 [tool.pytest]
-addopts = ["--color=on"]
+addopts = ["--color=yes"]
 log_auto_indent = "On"
 testpaths = ["**/tests"]
 

@@ -1,15 +1,17 @@
+
+from ._theTypes import K, T, V
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
-from typing import Any, overload
+from typing import Any, Generic, overload
 
 __all__ = ("countby", "partitionby")
 
 @overload
-def countby[T, K](key: Callable[[T], K], seq: Iterable[T]) -> dict[K, int]: ...
+def countby(key: Callable[[T], K], seq: Iterable[T]) -> dict[K, int]: ...
 @overload
-def countby[V](key: Any, seq: Iterable[Sequence[V] | Mapping[Any, V]]) -> dict[V, int]: ...
-def countby[T, K, V]( key: Callable[[T], K] | Any, seq: Iterable[T] | Iterable[Sequence[V] | Mapping[Any, V]] ) -> dict[K, int] | dict[V, int]: ...
+def countby(key: Any, seq: Iterable[Sequence[V] | Mapping[Any, V]]) -> dict[V, int]: ...
+def countby(key: Callable[[T], K] | Any, seq: Iterable[T] | Iterable[Sequence[V] | Mapping[Any, V]]) -> dict[K, int] | dict[V, int]: ...
 
-class partitionby[T](Iterator[tuple[T, ...]]):
+class partitionby(Iterator[tuple[T, ...]], Generic[T]):
 	"""Partition a sequence according to a function
 
 	Partition `s` into a sequence of lists such that, when traversing

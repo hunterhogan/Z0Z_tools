@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from astToolkit import Be, Grab, IfThis, Make, NodeChanger, parsePathFilename2astModule, Then
 from astToolkit.transformationTools import write_astModule
-from astTransformations._theSSOT import (
+from Z0Z_tools.astTransformations._theSSOT import (
 	allTransformeePackages, cythonDirectives, getOtherName, pathRoot_toolz_stubs, regexChangeImports, settingsFor, settingsWrite_astModule,
 	subModules, transformALLdot_pyHere)
 from functools import partial

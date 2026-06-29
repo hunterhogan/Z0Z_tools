@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from collections import defaultdict as _defaultdict
 from collections.abc import Callable, ItemsView, Iterator, KeysView, Mapping, MutableMapping, ValuesView
-from humpy_toolz.dicttoolz import (
+from humpy_cytoolz.dicttoolz import (
 	assoc, assoc_in, dissoc, get_in, itemfilter, itemmap, keyfilter, keymap, merge, merge_with, update_in, valfilter, valmap)
-from humpy_toolz.functoolz import identity
-from humpy_toolz.utils import raises
+from humpy_cytoolz.functoolz import identity
+from humpy_cytoolz.utils import raises
 from typing import Any, ClassVar, TypeVar
 import os
 import pytest
@@ -37,12 +37,12 @@ def itemHasEvenKeyAndOddValue(item: tuple[int, int]) -> bool:
 def itemHasLargeKeyAndLargeValue(item: tuple[int, int]) -> bool:
     return item[0] > 300 and item[1] > 300
 
-def makeDefaultDictFactory(itemIterable: ItemsView[Any, Any] | Iterator[tuple[Any, Any]] | None = None) -> 'defaultdict[Any, Any]':
+def makeDefaultDictFactory(itemIterable: ItemsView[Any, Any] | Iterator[tuple[Any, Any]] | None=None) -> 'defaultdict[Any, Any]':
     if itemIterable is None:
         return defaultdict(int)
     return defaultdict(int, itemIterable)
 
-def makeCustomMappingFactory(itemIterable: ItemsView[Any, Any] | Iterator[tuple[Any, Any]] | None = None) -> 'CustomMapping':
+def makeCustomMappingFactory(itemIterable: ItemsView[Any, Any] | Iterator[tuple[Any, Any]] | None=None) -> 'CustomMapping':
     if itemIterable is None:
         return CustomMapping()
     return CustomMapping(itemIterable)
@@ -303,7 +303,6 @@ class TestDict:
         assert merge(defaultdict(int, D({1: 2})), D({2: 3}), factory=lambda: defaultdict(int)) == defaultdict(int, D({1: 2, 2: 3}))
         assert not merge(defaultdict(int, D({1: 2})), D({2: 3}), factory=lambda: defaultdict(int)) == {1: 2, 2: 3}
         assert raises(TypeError, lambda: merge(D({1: 2}), D({2: 3}), factoryy=dict))
-
 KeyType = TypeVar('KeyType')
 ValueType = TypeVar('ValueType')
 
