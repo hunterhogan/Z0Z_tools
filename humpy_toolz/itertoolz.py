@@ -42,10 +42,6 @@ __all__ = ('accumulate', 'concat', 'concatv', 'cons', 'count', 'diff', 'drop', '
 
 no_pad: Literal['__no__pad__'] = '__no__pad__'
 
-@overload
-def _getter(index: Sequence[K]) -> Callable[[SupportsGetItem[K, T]], tuple[T, ...]]: ...
-@overload
-def _getter(index: K) -> Callable[[SupportsGetItem[K, T]], T]: ...
 def _getter(index: K | Sequence[K]) -> Callable[[SupportsGetItem[K, T]], T | tuple[T, ...]]:
 	if isinstance(index, Sequence) and not isinstance(index, str):
 		if len(index) == 1:
