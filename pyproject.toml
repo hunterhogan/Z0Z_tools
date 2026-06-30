@@ -41,7 +41,6 @@ dependencies = ["typing_extensions>=4.10.0"]
 optional-dependencies = { development = [
   "astToolkit",
   "hunterMakesPy",
-  "optype",
   "pytest-cov"
 ], testing = ["cython", "pytest"] }
 
