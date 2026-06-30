@@ -81,7 +81,7 @@ def accumulate(binop: Callable[[T, S], T], seq: Iterable[S], initial: T | Litera
 	seq = iter(seq)
 	if initial == no_default:
 		try:
-			result = next(seq)
+			result: S = next(seq)
 		except StopIteration:
 			return
 	else:
@@ -167,7 +167,7 @@ def diff(*seqs: Iterable[T], default: U | Literal['__no__default__'] = no_defaul
 	>>> list(diff(['apples', 'bananas'], ['Apples', 'Oranges'], key=str.lower))
 	[('bananas', 'Oranges')]
 	"""
-	N = len(seqs)
+	N: int = len(seqs)
 	if N == 1 and isinstance(seqs[0], list):
 		seqs = seqs[0]
 		N = len(seqs)
@@ -175,7 +175,7 @@ def diff(*seqs: Iterable[T], default: U | Literal['__no__default__'] = no_defaul
 		message = 'Too few sequences given (min 2 required)'
 		raise TypeError(message)
 	if default == no_default:
-		iters = zip(*seqs, strict=False)
+		iters: Iterator[tuple[T, ...]] = zip(*seqs, strict=False)
 	else:
 		iters = zip_longest(*seqs, fillvalue=default)
 	if key is None:
@@ -184,7 +184,7 @@ def diff(*seqs: Iterable[T], default: U | Literal['__no__default__'] = no_defaul
 				yield items
 	else:
 		for items in iters:
-			vals = tuple(map(key, items))
+			vals: tuple[Any, ...] = tuple(map(key, items))
 			if vals.count(vals[0]) != N:
 				yield items
 
@@ -236,7 +236,7 @@ def getter(index: K | Sequence[K]) -> Callable[[SupportsGetItem[K, T]], T | tupl
 
 			def one_tuple(x: SupportsGetItem[K, T]) -> tuple[T]:
 				return (x[element],)
-			callableGetter = one_tuple
+			callableGetter: Callable[[SupportsGetItem[K, T]], tuple[T]] = one_tuple
 		elif index:
 			callableGetter = itemgetter(*index)
 		else:
@@ -351,7 +351,7 @@ def groupby(key: Callable[[T], KHashable] | KHashable, seq: Iterable[T]) -> dict
 		countby
 	"""
 	if not callable(key):
-		predicate = getter(key)
+		predicate: Callable[[SupportsGetItem[KHashable, T]], tuple[T]] = getter(key)
 	else:
 		predicate = key
 	d: defaultdict[KHashable, list[T]] = defaultdict(list)
@@ -372,14 +372,14 @@ def interleave(seqs: Iterable[Iterable[T]]) -> Iterator[T]:
 
 	Returns a lazy iterator
 	"""
-	iters = itertools.cycle(map(iter, seqs))
+	iters: Iterator[Iterator[T]] = itertools.cycle(map(iter, seqs))
 	while True:
 		try:
 			for itr in iters:
 				yield next(itr)
 			return
 		except StopIteration:
-			predicate = partial(is_not, itr)
+			predicate: Callable[[Iterator[T]], bool] = partial(is_not, itr)
 			iters = itertools.cycle(itertools.takewhile(predicate, iters))
 
 def interpose(el: T, seq: Iterable[T]) -> Iterator[T]:
@@ -388,7 +388,7 @@ def interpose(el: T, seq: Iterable[T]) -> Iterator[T]:
 	>>> list(interpose("a", [1, 2, 3]))
 	[1, 'a', 2, 'a', 3]
 	"""
-	interposed = concat(zip(itertools.repeat(el), seq))
+	interposed: Iterator[T] = concat(zip(itertools.repeat(el), seq))
 	next(interposed)
 	return interposed
 
@@ -609,7 +609,7 @@ def join(
 		leftkey = getter(leftkey)
 	if not callable(rightkey):
 		rightkey = getter(rightkey)
-	d = groupby(leftkey, leftseq)
+	d: dict[Hashable, list[T]] = groupby(leftkey, leftseq)
 	if left_default == no_default and right_default == no_default:
 		for item in rightseq:
 			key = rightkey(item)
@@ -625,11 +625,11 @@ def join(
 			else:
 				yield (left_default, item)
 	elif right_default != no_default:
-		seen_keys = set()
-		seen = seen_keys.add
+		seen_keys: set[Hashable] = set()
+		seen: Callable[[Hashable], None] = seen_keys.add
 		if left_default == no_default:
 			for item in rightseq:
-				key = rightkey(item)
+				key: Hashable = rightkey(item)
 				seen(key)
 				if key in d:
 					for left_match in d[key]:
@@ -666,19 +666,19 @@ def mapcat(func: Callable[[T], Iterable[R]], seqs: Iterable[T]) -> Iterator[R]:
 	return concat(map(func, seqs))
 
 def _merge_sorted_binary(seqs: Sequence[Iterable[SupportsDunderLT[Any]]]) -> Iterator[SupportsDunderLT[Any]]:
-	mid = len(seqs) // 2
-	L1 = seqs[:mid]
+	mid: int = len(seqs) // 2
+	L1: Sequence[Iterable[SupportsDunderLT[Any]]] = seqs[:mid]
 	if len(L1) == 1:
-		seq1 = iter(L1[0])
+		seq1: Iterator[SupportsDunderLT[Any]] = iter(L1[0])
 	else:
 		seq1 = _merge_sorted_binary(L1)
-	L2 = seqs[mid:]
+	L2: Sequence[Iterable[SupportsDunderLT[Any]]] = seqs[mid:]
 	if len(L2) == 1:
-		seq2 = iter(L2[0])
+		seq2: Iterator[SupportsDunderLT[Any]] = iter(L2[0])
 	else:
 		seq2 = _merge_sorted_binary(L2)
 	try:
-		val2 = next(seq2)
+		val2: SupportsDunderLT[Any] = next(seq2)
 	except StopIteration:
 		yield from seq1
 		return
@@ -703,25 +703,25 @@ def _merge_sorted_binary(seqs: Sequence[Iterable[SupportsDunderLT[Any]]]) -> Ite
 	yield from seq1
 
 def _merge_sorted_binary_key(seqs: Sequence[Iterable[T]], key: Callable[[T], SupportsDunderLT[Any]]) -> Iterator[T]:
-	mid = len(seqs) // 2
-	L1 = seqs[:mid]
+	mid: int = len(seqs) // 2
+	L1: Sequence[Iterable[T]] = seqs[:mid]
 	if len(L1) == 1:
-		seq1 = iter(L1[0])
+		seq1: Iterator[T] = iter(L1[0])
 	else:
 		seq1 = _merge_sorted_binary_key(L1, key)
-	L2 = seqs[mid:]
+	L2: Sequence[Iterable[T]] = seqs[mid:]
 	if len(L2) == 1:
-		seq2 = iter(L2[0])
+		seq2: Iterator[T] = iter(L2[0])
 	else:
 		seq2 = _merge_sorted_binary_key(L2, key)
 	try:
-		val2 = next(seq2)
+		val2: T = next(seq2)
 	except StopIteration:
 		yield from seq1
 		return
-	key2 = key(val2)
+	key2: SupportsDunderLT[Any] = key(val2)
 	for val1 in seq1:
-		key1 = key(val1)
+		key1: SupportsDunderLT[Any] = key(val1)
 		if key2 < key1:
 			yield val2
 			for val2 in seq2:
@@ -823,10 +823,10 @@ def partition_all(n: int, seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
 	--------
 		partition
 	"""
-	args = [iter(seq)] * n
-	it = zip_longest(*args, fillvalue=no_pad)
+	args: list[Iterator[T]] = [iter(seq)] * n
+	it: Iterator[tuple[T, ...]] = zip_longest(*args, fillvalue=no_pad)
 	try:
-		prev = next(it)
+		prev: tuple[T, ...] = next(it)
 	except StopIteration:
 		return
 	for item in it:
@@ -834,7 +834,7 @@ def partition_all(n: int, seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
 		prev = item
 	if prev[-1] is no_pad:
 		try:
-			end = len(seq) % n
+			end: int = len(seq) % n
 			if prev[end - 1] is no_pad or prev[end] is not no_pad:
 				message = 'The sequence passed to `partition_all` has invalid length'
 				raise LookupError(message)
@@ -842,11 +842,11 @@ def partition_all(n: int, seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
 		except TypeError:
 			lo, hi = (0, n)
 			while lo < hi:
-				mid = (lo + hi) // 2
+				mid: int = (lo + hi) // 2
 				if prev[mid] is no_pad:
-					hi = mid
+					hi: int = mid
 				else:
-					lo = mid + 1
+					lo: int = mid + 1
 			yield prev[:lo]
 	else:
 		yield prev
@@ -864,8 +864,8 @@ def peek(seq: Iterable[T]) -> tuple[T, Iterator[T]]:
 	>>> list(seq)
 	[0, 1, 2, 3, 4]
 	"""
-	iterator = iter(seq)
-	item = next(iterator)
+	iterator: Iterator[T] = iter(seq)
+	item: T = next(iterator)
 	return (item, itertools.chain((item,), iterator))
 
 def peekn(n: int, seq: Iterable[T]) -> tuple[tuple[T, ...], Iterator[T]]:
@@ -881,8 +881,8 @@ def peekn(n: int, seq: Iterable[T]) -> tuple[tuple[T, ...], Iterator[T]]:
 	>>> list(seq)
 	[0, 1, 2, 3, 4]
 	"""
-	iterator = iter(seq)
-	peeked = tuple(take(n, iterator))
+	iterator: Iterator[T] = iter(seq)
+	peeked: tuple[T, ...] = tuple(take(n, iterator))
 	return (peeked, itertools.chain(iter(peeked), iterator))
 
 @overload
@@ -914,7 +914,7 @@ def pluck(ind: Any | list[Any], seqs: Iterable[Sequence[T] | Mapping[Any, T]], d
 		map
 	"""
 	if default == no_default:
-		get = getter(ind)
+		get: Callable[[SupportsGetItem[Any, T]], tuple[T, ...]] = getter(ind)
 		return map(get, seqs)
 	elif isinstance(ind, list):
 		return (tuple(_get(item, seq, default) for item in ind) for seq in seqs)
@@ -1035,15 +1035,15 @@ def reduceby(key: Callable[[T], K] | Any, binop: Callable[[T, T], T], seq: Itera
 	{True:  set([2, 4]),
 	 False: set([1, 3])}
 	"""
-	is_no_default = init == no_default
+	is_no_default: bool = init == no_default
 	if not is_no_default and (not callable(init)):
-		_init = init
+		_init: T = init
 		init = lambda: _init
 	if not callable(key):
 		key = getter(key)
-	d = {}
+	d: dict[K, T] = {}
 	for item in seq:
-		k = key(item)
+		k: K = key(item)
 		if k not in d:
 			if is_no_default:
 				d[k] = item
@@ -1205,7 +1205,7 @@ def unique(seq: Iterable[T], key: Callable[[T], Any] | None = None) -> Iterator[
 				yield item
 	else:
 		for item in seq:
-			val = key(item)
+			val: T = key(item)
 			if val not in seen:
 				seen_add(val)
 				yield item
