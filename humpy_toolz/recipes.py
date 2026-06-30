@@ -15,8 +15,7 @@ def countby(key, seq):
     >>> countby(iseven, [1, 2, 3])  # doctest:+SKIP
     {True: 1, False: 2}
 
-    See Also
-    --------
+    See Also:
         groupby
     """
     if not callable(key):
@@ -38,8 +37,7 @@ def partitionby(func, seq):
     >>> list(partitionby(is_large, [1, 2, 1, 99, 88, 33, 99, -1, 5]))
     [(1, 2, 1), (99, 88, 33, 99), (-1, 5)]
 
-    See Also
-    --------
+    See also:
         partition
         groupby
         itertools.groupby
