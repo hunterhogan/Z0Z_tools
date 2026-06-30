@@ -2,7 +2,6 @@
 # pyright: reportAssignmentType=false
 # pyright: reportCallIssue=false
 # pyright: reportIndexIssue=false
-# pyright: reportPossiblyUnboundVariable=false
 # pyright: reportReturnType=false
 # pyright: reportUnknownArgumentType=false
 # pyright: reportUnknownLambdaType=false
@@ -10,7 +9,7 @@
 # pyright: reportUnknownParameterType=false
 # pyright: reportUnknownVariableType=false
 # pyright: reportUnnecessaryComparison=false
-# ruff: noqa: D100, DOC201, TRY300, PERF203, DOC402, S311, PLC0415, B905, PLR0911, ERA001, E101, E731, RUF052, DOC501
+# ruff: noqa: D100, DOC201, TRY300, DOC402, S311, PLC0415, B905, PLR0911, ERA001, E101, E731, RUF052, DOC501
 # ty:ignore[call-non-callable]
 # ty:ignore[call-top-callable]
 # ty:ignore[invalid-argument-type]
@@ -364,15 +363,20 @@ def interleave(seqs: Iterable[Iterable[T]]) -> Iterator[T]:
 
 	Returns a lazy iterator
 	"""
-	iters: Iterator[Iterator[T]] = itertools.cycle(map(iter, seqs))
-	while True:
+	lazy: Iterator[Iterator[T]] = itertools.cycle(map(iter, seqs))
+	keepGoing: bool = True
+	while keepGoing:
+		anIterator: Iterator[T] | None = None
 		try:
-			for itr in iters:
-				yield next(itr)
-			return
+			for anIterator in lazy:
+				yield next(anIterator)
+			keepGoing = False
 		except StopIteration:
-			predicate: Callable[[Iterator[T]], bool] = partial(is_not, itr)
-			iters = itertools.cycle(itertools.takewhile(predicate, iters))
+			if anIterator is None:
+				keepGoing = False
+			else:
+				predicate: Callable[[Iterator[T]], bool] = partial(is_not, anIterator)
+				lazy = itertools.cycle(itertools.takewhile(predicate, lazy))
 
 def interpose(el: T, seq: Iterable[T]) -> Iterator[T]:
 	"""Introduce element between each pair of elements in seq
