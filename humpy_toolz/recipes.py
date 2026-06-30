@@ -1,10 +1,12 @@
-from .itertoolz import frequencies, getter, pluck
+from __future__ import annotations
+
+from .itertoolz import _getter, frequencies, pluck
 import itertools
 
 __all__ = ('countby', 'partitionby')
 
 def countby(key, seq):
-    """ Count elements of a collection by a key function
+    """Count elements of a collection by a key function
 
     >>> countby(len, ['cat', 'mouse', 'dog'])
     {3: 2, 5: 1}
@@ -13,15 +15,16 @@ def countby(key, seq):
     >>> countby(iseven, [1, 2, 3])  # doctest:+SKIP
     {True: 1, False: 2}
 
-    See Also:
+    See Also
+    --------
         groupby
     """
     if not callable(key):
-        key = getter(key)
+        key = _getter(key)
     return frequencies(map(key, seq))
 
 def partitionby(func, seq):
-    """ Partition a sequence according to a function
+    """Partition a sequence according to a function
 
     Partition `s` into a sequence of lists such that, when traversing
     `s`, every time the output of `func` changes a new list is started
@@ -35,7 +38,8 @@ def partitionby(func, seq):
     >>> list(partitionby(is_large, [1, 2, 1, 99, 88, 33, 99, -1, 5]))
     [(1, 2, 1), (99, 88, 33, 99), (-1, 5)]
 
-    See also:
+    See Also
+    --------
         partition
         groupby
         itertools.groupby

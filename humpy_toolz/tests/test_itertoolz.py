@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from functools import partial
 from humpy_toolz.itertoolz import (
-	accumulate, concat, concatv, cons, count, diff, drop, first, frequencies, get, getter, groupby, interleave, interpose, isdistinct,
+	_getter, accumulate, concat, concatv, cons, count, diff, drop, first, frequencies, get, groupby, interleave, interpose, isdistinct,
 	isiterable, iterate, join, last, mapcat, merge_sorted, nth, partition, partition_all, peek, peekn, pluck, random_sample, reduceby, remove,
 	rest, second, sliding_window, tail, take, take_nth, topk, unique)
 from humpy_toolz.utils import raises
@@ -390,9 +390,9 @@ def test_join() -> None:
     assert result == expected
 
 def test_getter() -> None:
-    assert getter(0)('Alice') == 'A'
-    assert getter([0])('Alice') == ('A',)
-    assert getter([])('Alice') == ()
+    assert _getter(0)('Alice') == 'A'
+    assert _getter([0])('Alice') == ('A',)
+    assert _getter([])('Alice') == ()
 
 def test_key_as_getter() -> None:
     squares: list[tuple[int, int]] = [(i, i ** 2) for i in range(5)]

@@ -1,8 +1,10 @@
-from humpy_toolz.itertoolz import cons, getter, pluck
+from __future__ import annotations
+
+from humpy_toolz.itertoolz import _getter, cons, pluck
 from itertools import starmap, tee
 
 class EqualityHashKey:
-    """ Create a hash key that uses equality comparisons between items.
+    """Create a hash key that uses equality comparisons between items.
 
     This may be used to create hash keys for otherwise unhashable types:
 
@@ -52,7 +54,8 @@ class EqualityHashKey:
     idiom in functional programming, and``EqualityHashKey`` easily allows
     the same idiom to be used by convention rather than strict requirement.
 
-    See Also:
+    See Also
+    --------
         identity
     """
     __slots__ = ['item', 'key']
@@ -62,7 +65,7 @@ class EqualityHashKey:
         if key is None:
             self.key = self._default_hashkey
         elif not callable(key):
-            self.key = getter(key)
+            self.key = _getter(key)
         else:
             self.key = key
         self.item = item
