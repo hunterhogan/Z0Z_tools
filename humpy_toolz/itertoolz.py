@@ -1,6 +1,5 @@
 # pyright: reportArgumentType=false
 # pyright: reportAssignmentType=false
-# pyright: reportAttributeAccessIssue=false
 # pyright: reportCallIssue=false
 # pyright: reportIndexIssue=false
 # pyright: reportMissingParameterType=false
@@ -31,7 +30,7 @@ from functools import partial
 from humpy_toolz.utils import no_default
 from itertools import filterfalse, zip_longest
 from operator import is_not, itemgetter
-from typing import overload, TYPE_CHECKING
+from typing import cast, overload, TYPE_CHECKING
 import heapq
 import itertools
 
@@ -920,7 +919,7 @@ def pluck(ind: Any | list[Any], seqs: Iterable[Sequence[T] | Mapping[Any, T]], d
 		return (tuple(_get(item, seq, default) for item in ind) for seq in seqs)
 	return (_get(ind, seq, default) for seq in seqs)
 
-def random_sample(prob: float, seq: Iterable[T], random_state: int | Randomable | None = None) -> Iterator[T]:
+def random_sample(prob: float, seq: Iterable[T], random_state: Randomable | int | float | str | bytes | bytearray | None = None) -> Iterator[T]:
 	"""Return elements from a sequence with probability of prob
 
 	Returns a lazy iterator of random items from seq.
@@ -952,10 +951,12 @@ def random_sample(prob: float, seq: Iterable[T], random_state: int | Randomable 
 	>>> list(random_sample(0.1, seq, random_state=randobj))
 	[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]
 	"""
-	if not hasattr(random_state, 'random'):
+	if hasattr(random_state, 'random'):
+		getNumber: Randomable = cast('Randomable', random_state)
+	else:
 		from random import Random
-		random_state = Random(random_state)
-	return filter(lambda _: random_state.random() < prob, seq)
+		getNumber = Random(random_state)
+	return filter(lambda _faux_bool: getNumber.random() < prob, seq)
 
 @overload
 def reduceby(key: Callable[[T], K], binop: Callable[[T, T], T], seq: Iterable[T]) -> dict[K, T]: ...
