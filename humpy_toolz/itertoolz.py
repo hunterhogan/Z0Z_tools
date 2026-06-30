@@ -43,6 +43,28 @@ __all__ = ('accumulate', 'concat', 'concatv', 'cons', 'count', 'diff', 'drop', '
 no_pad: Literal['__no__pad__'] = '__no__pad__'
 
 @overload
+def _getter(index: Sequence[K]) -> Callable[[SupportsGetItem[K, T]], tuple[T, ...]]: ...
+@overload
+def _getter(index: K) -> Callable[[SupportsGetItem[K, T]], T]: ...
+def _getter(index: K | Sequence[K]) -> Callable[[SupportsGetItem[K, T]], T | tuple[T, ...]]:
+	if isinstance(index, Sequence) and not isinstance(index, str):
+		if len(index) == 1:
+			element: K = index[0]
+
+			def one_tuple(x: SupportsGetItem[K, T]) -> tuple[T]:
+				return (x[element],)
+			callableGetter: Callable[[SupportsGetItem[K, T]], tuple[T]] = one_tuple
+		elif index:
+			callableGetter = itemgetter(*index)
+		else:
+			def emptyTuple(_x: SupportsGetItem[K, T]) -> tuple[()]:
+				return ()
+			callableGetter = emptyTuple
+	else:
+		callableGetter = itemgetter(index)
+	return callableGetter
+
+@overload
 def accumulate(binop: Callable[[T, T], T], seq: Iterable[T], initial: Literal['__no__default__'] = no_default) -> Iterator[T]: ...
 @overload
 def accumulate(binop: Callable[[T, S], T], seq: Iterable[S], initial: T) -> Iterator[T]: ...
@@ -220,28 +242,6 @@ def frequencies(seq: Iterable[T]) -> dict[T, int]:
 	for item in seq:
 		d[item] += 1
 	return dict(d)
-
-@overload
-def _getter(index: Sequence[K]) -> Callable[[SupportsGetItem[K, T]], tuple[T, ...]]: ...
-@overload
-def _getter(index: K) -> Callable[[SupportsGetItem[K, T]], T]: ...
-def _getter(index: K | Sequence[K]) -> Callable[[SupportsGetItem[K, T]], T | tuple[T, ...]]:
-	if isinstance(index, Sequence) and not isinstance(index, str):
-		if len(index) == 1:
-			element: K = index[0]
-
-			def one_tuple(x: SupportsGetItem[K, T]) -> tuple[T]:
-				return (x[element],)
-			callableGetter: Callable[[SupportsGetItem[K, T]], tuple[T]] = one_tuple
-		elif index:
-			callableGetter = itemgetter(*index)
-		else:
-			def emptyTuple(_x: SupportsGetItem[K, T]) -> tuple[()]:
-				return ()
-			callableGetter = emptyTuple
-	else:
-		callableGetter = itemgetter(index)
-	return callableGetter
 
 def _get(ind: K, seq: SupportsGetItem[K, T], default: T) -> T:
 	try:
