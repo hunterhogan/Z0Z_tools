@@ -5,6 +5,7 @@ description = "Typing, documenting, and improving toolz and cytoolz."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "CC-BY-NC-4.0"
+license-files = ["LICEN[CS]E*"]
 authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
 keywords = [
   "Python",
@@ -79,7 +80,6 @@ package-data = { "*" = [
   "*.pyi",
   "*.pyx",
   "py.typed",
-  "Notice_of_Copyright.txt",
 ] }
 packages = [
   "humpy_cytoolz.curried",
