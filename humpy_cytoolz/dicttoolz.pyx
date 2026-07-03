@@ -121,9 +121,7 @@ cdef get_factory(name, kwargs):
 #======== Public Mapping Operations ========
 
 cpdef object assoc(object d, object key, object value, object factory=dict):
-	"""assoc(d: collections.abc.Mapping[K, V], key: K, value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-
-	Create a new `Mapping`[1] with `key` associated with `value`.
+	"""Create a new `Mapping`[1] with `key` associated with `value`.
 
 	You can use `assoc` (***assoc***iate) to copy `d` (***d***ictionary) to a new `Mapping` created by
 	`factory` and assign `value` to `key`. `assoc` does not change `d`.
@@ -168,9 +166,7 @@ cpdef object assoc(object d, object key, object value, object factory=dict):
 	return rv
 
 cpdef object assoc_in(object d, object keys, object value, object factory=dict):
-	"""assoc_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-
-	Create a new `MutableMapping` from `d` with `value` at the path specified by `keys`.
+	"""Create a new `MutableMapping` from `d` with `value` at the path specified by `keys`.
 
 	(AI generated docstring)
 
@@ -260,9 +256,7 @@ cdef object c_dissoc(object d, object keys, object factory=dict):
 	return rv
 
 def dissoc(d, *keys, **kwargs):
-	"""dissoc(d: collections.abc.Mapping[K, V], *keys: K, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-
-	Create a new `MutableMapping`[1] from `d` with the specified `keys` removed.
+	"""Create a new `MutableMapping`[1] from `d` with the specified `keys` removed.
 
 	(AI generated docstring)
 
@@ -317,9 +311,7 @@ def dissoc(d, *keys, **kwargs):
 cdef tuple _get_in_exceptions = (KeyError, IndexError, TypeError)
 
 cpdef object get_in(object keys, object coll, object default=None, object no_default=False):
-	"""get_in(keys: collections.abc.Sequence[K], coll: humpy_toolz.dicttoolz.SupportsGetItem[K, V], default: Optional[V] = None, no_default: bool = False) -> Optional[V]
-
-	Retrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.
+	"""Retrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.
 
 	You can use `get_in` to navigate into a nested `coll` (***coll***ection) by following a
 	`Sequence` of `keys`. `get_in` applies each key in `keys` sequentially using
@@ -347,15 +339,6 @@ cpdef object get_in(object keys, object coll, object default=None, object no_def
 	-------
 	value : V | None
 		The value at the nested path in `coll`, or `default` if the path does not exist.
-
-	Raises
-	------
-	KeyError
-		When `no_default` is `True` and a key is missing from a mapping.
-	IndexError
-		When `no_default` is `True` and an index is out of range.
-	TypeError
-		When `no_default` is `True` and a key type is incompatible with `coll`.
 
 	See Also
 	--------
@@ -400,9 +383,7 @@ cpdef object get_in(object keys, object coll, object default=None, object no_def
 		return default
 
 cpdef object itemfilter(object predicate, object d, object factory=dict):
-	"""itemfilter(predicate: collections.abc.Callable[[tuple[K, V]], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-
-	Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.
+	"""Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.
 
 	(AI generated docstring)
 
@@ -434,6 +415,8 @@ cpdef object itemfilter(object predicate, object d, object factory=dict):
 	valfilter : Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
 	itemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.
 
+	Examples
+	--------
 	>>> def isvalid(item):
 	...     k, v = item
 	...     return k % 2 == 0 and v < 4
@@ -467,9 +450,7 @@ cpdef object itemfilter(object predicate, object d, object factory=dict):
 	return rv
 
 cpdef object itemmap(object func, object d, object factory=dict):
-	"""itemmap(func: collections.abc.Callable[[tuple[K, V]], tuple[L, W]], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, W]] = dict) -> collections.abc.MutableMapping[L, W]
-
-	Apply `func` to all items of `d` and return a new `Mapping` with the transformed items.
+	"""Apply `func` to all items of `d` and return a new `Mapping` with the transformed items.
 
 	(AI generated docstring)
 
@@ -529,9 +510,7 @@ cpdef object itemmap(object func, object d, object factory=dict):
 	return rv
 
 cpdef object keyfilter(object predicate, object d, object factory=dict):
-	"""keyfilter(predicate: collections.abc.Callable[[K], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-
-	Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.
+	"""Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.
 
 	(AI generated docstring)
 
@@ -562,6 +541,8 @@ cpdef object keyfilter(object predicate, object d, object factory=dict):
 	itemfilter : Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.
 	keymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.
 
+	Examples
+	--------
 	>>> iseven = lambda x: x % 2 == 0
 	>>> d = {1: 2, 2: 3, 3: 4, 4: 5}
 	>>> keyfilter(iseven, d)
@@ -590,9 +571,7 @@ cpdef object keyfilter(object predicate, object d, object factory=dict):
 	return rv
 
 cpdef object keymap(object func, object d, object factory=dict):
-	"""keymap(func: collections.abc.Callable[[K], L], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, V]] = dict) -> collections.abc.MutableMapping[L, V]
-
-	Apply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.
+	"""Apply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.
 
 	(AI generated docstring)
 
@@ -660,52 +639,49 @@ cdef object c_merge(object dicts, object factory=dict):
 	return rv
 
 def merge(*dicts, factory=dict):
-	"""\
-merge(*dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+	"""Merge a collection of dictionaries and return a new `Mapping`.
 
-Merge a collection of dictionaries and return a new `Mapping`.
+	(AI generated docstring)
 
-(AI generated docstring)
+	You can use `merge` to combine two or more `Mapping`[1] objects into a single new `Mapping`.
+	`merge` calls `factory` to create the result, then updates it in order with each `Mapping` in
+	`dicts`. When the same key appears in more than one element, the value from the later element
+	takes precedence. You can also pass a single `Iterable[Mapping[K, V]]` as the sole positional
+	argument instead of multiple `Mapping` arguments.
 
-You can use `merge` to combine two or more `Mapping`[1] objects into a single new `Mapping`.
-`merge` calls `factory` to create the result, then updates it in order with each `Mapping` in
-`dicts`. When the same key appears in more than one element, the value from the later element
-takes precedence. You can also pass a single `Iterable[Mapping[K, V]]` as the sole positional
-argument instead of multiple `Mapping` arguments.
+	Parameters
+	----------
+	*dicts : Mapping[K, V]
+		`Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the
+		sole positional argument.
+	factory : Callable[[], MutableMapping[K, V]] = dict
+		`Callable` that creates the `MutableMapping`[1] to `return`.
 
-Parameters
-----------
-*dicts : Mapping[K, V]
-	`Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the
-	sole positional argument.
-factory : Callable[[], MutableMapping[K, V]] = dict
-	`Callable` that creates the `MutableMapping`[1] to `return`.
+	Returns
+	-------
+	mappingMerged : MutableMapping[K, V]
+		New `MutableMapping` created by `factory` containing all key-value pairs from `dicts`. For
+		duplicate keys, the value from the last `Mapping` in `dicts` that contains the key takes
+		precedence.
 
-Returns
--------
-mappingMerged : MutableMapping[K, V]
-	New `MutableMapping` created by `factory` containing all key-value pairs from `dicts`. For
-	duplicate keys, the value from the last `Mapping` in `dicts` that contains the key takes
-	precedence.
+	See Also
+	--------
+	merge_with : Merge dictionaries and apply a `Callable` to combined values.
 
-See Also
---------
-merge_with : Merge dictionaries and apply a `Callable` to combined values.
+	Examples
+	--------
+	>>> merge({1: 'one'}, {2: 'two'})
+	{1: 'one', 2: 'two'}
 
-Examples
---------
->>> merge({1: 'one'}, {2: 'two'})
-{1: 'one', 2: 'two'}
+	Later dictionaries have precedence
 
-Later dictionaries have precedence
+	>>> merge({1: 2, 3: 4}, {3: 3, 4: 4})
+	{1: 2, 3: 3, 4: 4}
 
->>> merge({1: 2, 3: 4}, {3: 3, 4: 4})
-{1: 2, 3: 3, 4: 4}
-
-References
-----------
-[1] Python `collections.abc` module
-	https://docs.python.org/3/library/collections.abc.html
+	References
+	----------
+	[1] Python `collections.abc` module
+		https://docs.python.org/3/library/collections.abc.html
 	"""
 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
 		dicts = dicts[0]
@@ -747,63 +723,58 @@ cdef object c_merge_with(object func, object dicts, object factory=dict):
 	return rv
 
 def merge_with(func, *dicts, factory=dict):
-	"""\
-merge_with(func: collections.abc.Callable[[list[V]], V], *dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+	"""Merge dictionaries and apply a `Callable` to combined values.
 
-Merge dictionaries and apply a `Callable` to combined values.
+	(AI generated docstring)
 
-(AI generated docstring)
+	You can use `merge_with` to combine two or more `Mapping`[1] objects and resolve key conflicts
+	by applying `func` to a `list` of all values associated with each key. For each key that
+	appears in one or more elements of `dicts`, `merge_with` collects all associated values into a
+	`list` in the order they appear across `dicts`, then calls `func` with that `list` to produce
+	the value in the result. You can also pass a single `Iterable[Mapping[K, V]]` as the sole
+	positional argument after `func`.
 
-You can use `merge_with` to combine two or more `Mapping`[1] objects and resolve key conflicts
-by applying `func` to a `list` of all values associated with each key. For each key that
-appears in one or more elements of `dicts`, `merge_with` collects all associated values into a
-`list` in the order they appear across `dicts`, then calls `func` with that `list` to produce
-the value in the result. You can also pass a single `Iterable[Mapping[K, V]]` as the sole
-positional argument after `func`.
+	Parameters
+	----------
+	func : Callable[[list[V]], V]
+		`Callable` applied to the `list` of values associated with each key across all `Mapping`
+		objects in `dicts`. `func` receives a non-empty `list` and must return the merged value for
+		that key.
+	*dicts : Mapping[K, V]
+		`Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the
+		sole positional argument after `func`.
+	factory : Callable[[], MutableMapping[K, V]] = dict
+		`Callable` that creates the `MutableMapping`[1] to `return`.
 
-Parameters
-----------
-func : Callable[[list[V]], V]
-	`Callable` applied to the `list` of values associated with each key across all `Mapping`
-	objects in `dicts`. `func` receives a non-empty `list` and must return the merged value for
-	that key.
-*dicts : Mapping[K, V]
-	`Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the
-	sole positional argument after `func`.
-factory : Callable[[], MutableMapping[K, V]] = dict
-	`Callable` that creates the `MutableMapping`[1] to `return`.
+	Returns
+	-------
+	mappingMerged : MutableMapping[K, V]
+		New `MutableMapping` created by `factory` where each key maps to the result of calling
+		`func` with all values associated with that key across `dicts`.
 
-Returns
--------
-mappingMerged : MutableMapping[K, V]
-	New `MutableMapping` created by `factory` where each key maps to the result of calling
-	`func` with all values associated with that key across `dicts`.
+	See Also
+	--------
+	merge : Merge a collection of `Mapping` objects into a new `Mapping`.
 
-See Also
---------
-merge : Merge a collection of `Mapping` objects into a new `Mapping`.
+	Examples
+	--------
+	>>> merge_with(sum, {1: 1, 2: 2}, {1: 10, 2: 20})
+	{1: 11, 2: 22}
 
-Examples
---------
->>> merge_with(sum, {1: 1, 2: 2}, {1: 10, 2: 20})
-{1: 11, 2: 22}
+	>>> merge_with(first, {1: 1, 2: 2}, {2: 20, 3: 30})  # doctest: +SKIP
+	{1: 1, 2: 2, 3: 30}
 
->>> merge_with(first, {1: 1, 2: 2}, {2: 20, 3: 30})  # doctest: +SKIP
-{1: 1, 2: 2, 3: 30}
-
-References
-----------
-[1] Python `collections.abc` module
-	https://docs.python.org/3/library/collections.abc.html
+	References
+	----------
+	[1] Python `collections.abc` module
+		https://docs.python.org/3/library/collections.abc.html
 	"""
 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
 		dicts = dicts[0]
 	return c_merge_with(func, dicts, factory)
 
 cpdef object update_in(object d, object keys, object func, object default=None, object factory=dict):
-	"""update_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], func: collections.abc.Callable[[V], V], default: V | None = None, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-
-	Apply a `Callable` to a value at a nested path in a `Mapping`.
+	"""Apply a `Callable` to a value at a nested path in a `Mapping`.
 
 	(AI generated docstring)
 
@@ -890,9 +861,7 @@ cpdef object update_in(object d, object keys, object func, object default=None, 
 	return rv
 
 cpdef object valfilter(object predicate, object d, object factory=dict):
-	"""valfilter(predicate: collections.abc.Callable[[V], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-
-	Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
+	"""Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
 
 	(AI generated docstring)
 
@@ -923,6 +892,8 @@ cpdef object valfilter(object predicate, object d, object factory=dict):
 	itemfilter : Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.
 	valmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.
 
+	Examples
+	--------
 	>>> iseven = lambda x: x % 2 == 0
 	>>> d = {1: 2, 2: 3, 3: 4, 4: 5}
 	>>> valfilter(iseven, d)
@@ -951,9 +922,7 @@ cpdef object valfilter(object predicate, object d, object factory=dict):
 	return rv
 
 cpdef object valmap(object func, object d, object factory=dict):
-	"""valmap(func: collections.abc.Callable[[V], W], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, W]] = dict) -> collections.abc.MutableMapping[K, W]
-
-	Apply `func` to all values of `d` and return a new `Mapping` with the transformed values.
+	"""Apply `func` to all values of `d` and return a new `Mapping` with the transformed values.
 
 	(AI generated docstring)
 

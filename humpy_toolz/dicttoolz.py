@@ -282,15 +282,6 @@ def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], defau
 	value : V | None
 		The value at the nested path in `coll`, or `default` if the path does not exist.
 
-	Raises
-	------
-	KeyError
-		When `no_default` is `True` and a key is missing from a mapping.
-	IndexError
-		When `no_default` is `True` and an index is out of range.
-	TypeError
-		When `no_default` is `True` and a key type is incompatible with `coll`.
-
 	See Also
 	--------
 	itertoolz.get : Retrieve a value or values from a collection.
@@ -330,12 +321,6 @@ def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], defau
 		with contextlib.suppress(KeyError, IndexError, TypeError):
 			v = reduce(operator.getitem, keys, coll)
 		return v
-	try:
-		return reduce(operator.getitem, keys, coll)
-	except (KeyError, IndexError, TypeError):
-		if no_default:
-			raise
-		return default
 
 @overload
 def itemfilter(predicate: Callable[[tuple[K0Hashable, V0]], TypeIs[tuple[K1Hashable, V1]]], d: Mapping[K0Hashable, V0], factory: Callable[[], dict[K1Hashable, V1]] = dict) -> dict[K1Hashable, V1]: ...

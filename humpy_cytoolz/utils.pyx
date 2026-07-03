@@ -16,6 +16,37 @@ except ImportError:
 
 
 def raises(err, lamda):
+    """Check whether calling `lamda` raises `err`.
+
+	(AI generated docstring)
+
+	You can use `raises` in test assertions to verify that a callable raises a specific
+	exception type. `raises` invokes `lamda` inside a `try` block and returns `True` if
+	`lamda` raises `err`, or `False` if `lamda` returns normally.
+
+	Parameters
+	----------
+	err : type[Exception]
+		The exception type to check for.
+	lamda : Callable[[], None]
+		A zero-argument callable to invoke.
+
+	Returns
+	-------
+	didRaise : bool
+		`True` if `lamda` raised `err`, `False` if `lamda` returned without raising.
+
+	Examples
+	--------
+	From `humpy_cytoolz.tests.test_utils`:
+
+		```python
+		from humpy_cytoolz.utils import raises
+
+		assert raises(ZeroDivisionError, lambda: 1 / 0)
+		assert not raises(ZeroDivisionError, lambda: 1)
+		```
+	"""
     try:
         lamda()
         return False

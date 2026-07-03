@@ -51,7 +51,7 @@ __all__ = ['identity', 'thread_first', 'thread_last', 'memoize', 'compose', 'com
 
 
 cpdef object identity(object x):
-    """ Identity function. Return x
+    """Identity function. Return x
 
     >>> identity(3)
     3
@@ -60,8 +60,7 @@ cpdef object identity(object x):
 
 
 def apply(*func_and_args, **kwargs):
-    """
-    Applies a function and returns the results
+    """Applies a function and returns the results
 
     >>> def double(x): return 2*x
     >>> def inc(x):    return x + 1
@@ -91,8 +90,7 @@ cdef object c_thread_first(object val, object forms):
 
 
 def thread_first(val, *forms):
-    """
-    Thread value through a sequence of functions/forms
+    """Thread value through a sequence of functions/forms
 
     >>> def double(x): return 2*x
     >>> def inc(x):    return x + 1
@@ -133,8 +131,7 @@ cdef object c_thread_last(object val, object forms):
 
 
 def thread_last(val, *forms):
-    """
-    Thread value through a sequence of functions/forms
+    """Thread value through a sequence of functions/forms
 
     >>> def double(x): return 2*x
     >>> def inc(x):    return x + 1
@@ -184,9 +181,7 @@ cdef object _empty_kwargs():
 
 
 cdef class curry:
-    """ curry(self, *args, **kwargs)
-
-    Curry a callable function
+    """Curry a callable function
 
     Enables partial application of arguments through calling a function with an
     incomplete set of arguments.
@@ -431,8 +426,7 @@ cpdef object _restore_curry(cls, func, args, kwargs, is_decorated):
 
 
 cpdef object memoize(object func, object cache=None, object key=None):
-    """
-    Cache a function's result for speedy future evaluation
+    """Cache a function's result for speedy future evaluation
 
     Considerations:
         Trades memory for speed.
@@ -526,9 +520,7 @@ cdef class _memoize:
 
 
 cdef class Compose:
-    """ Compose(self, *funcs)
-
-    A composition of functions
+    """A composition of functions
 
     See Also:
         compose
@@ -626,8 +618,7 @@ cdef object c_compose(object funcs):
 
 
 def compose(*funcs):
-    """
-    Compose functions to operate in series.
+    """Compose functions to operate in series.
 
     Returns a function that applies other functions in sequence.
 
@@ -657,8 +648,7 @@ cdef object c_compose_left(object funcs):
 
 
 def compose_left(*funcs):
-    """
-    Compose functions to operate in series.
+    """Compose functions to operate in series.
 
     Returns a function that applies other functions in sequence.
 
@@ -686,8 +676,7 @@ cdef object c_pipe(object data, object funcs):
 
 
 def pipe(data, *funcs):
-    """
-    Pipe a value through a sequence of functions
+    """Pipe a value through a sequence of functions
 
     I.e. ``pipe(data, f, g, h)`` is equivalent to ``h(g(f(data)))``
 
@@ -710,9 +699,7 @@ def pipe(data, *funcs):
 
 
 cdef class complement:
-    """ complement(func)
-
-    Convert a predicate function to its logical complement.
+    """Convert a predicate function to its logical complement.
 
     In other words, return a function that, for inputs that normally
     yield True, yields False, and vice-versa.
@@ -735,9 +722,7 @@ cdef class complement:
 
 
 cdef class juxt:
-    """ juxt(self, *funcs)
-
-    Creates a function that calls several functions with the same arguments
+    """Creates a function that calls several functions with the same arguments
 
     Takes several functions and returns a function that applies its arguments
     to each of those functions then returns a tuple of the results.
@@ -768,8 +753,7 @@ cdef class juxt:
 
 
 cpdef object do(object func, object x):
-    """
-    Runs ``func`` on ``x``, returns ``x``
+    """Runs ``func`` on ``x``, returns ``x``
 
     Because the results of ``func`` are not returned, only the side
     effects of ``func`` are relevant.
@@ -795,8 +779,7 @@ cpdef object do(object func, object x):
 
 
 cpdef object flip(object func, object a, object b):
-    """
-    Call the function call with the arguments flipped
+    """Call the function call with the arguments flipped
 
     This function is curried.
 
@@ -825,16 +808,13 @@ _flip = flip  # uncurried
 
 
 cpdef object return_none(object exc):
-    """
-    Returns None.
+    """Returns None.
     """
     return None
 
 
 cdef class excepts:
-    """ excepts(self, exc, func, handler=return_none)
-
-    A wrapper around a function to catch exceptions and
+    """A wrapper around a function to catch exceptions and
     dispatch to a handler.
 
     This is like a functional try/except block, in the same way that

@@ -53,15 +53,13 @@ cpdef object identity(object x):
 
 
 cdef class remove:
-    """ remove(predicate, seq)
+    """Return those items of sequence for which predicate(item) is False
 
-    Return those items of sequence for which predicate(item) is False
-
-    >>> def iseven(x):
-    ...     return x % 2 == 0
-    >>> list(remove(iseven, [1, 2, 3, 4]))
-    [1, 3]
-    """
+	>>> def iseven(x):
+	...     return x % 2 == 0
+	>>> list(remove(iseven, [1, 2, 3, 4]))
+	[1, 3]
+	"""
     def __cinit__(self, object predicate, object seq):
         self.predicate = predicate
         self.iter_seq = iter(seq)
@@ -78,35 +76,33 @@ cdef class remove:
 
 
 cdef class accumulate:
-    """ accumulate(binop, seq, initial='__no__default__')
+    """Repeatedly apply binary function to a sequence, accumulating results
 
-    Repeatedly apply binary function to a sequence, accumulating results
+	>>> from operator import add, mul
+	>>> list(accumulate(add, [1, 2, 3, 4, 5]))
+	[1, 3, 6, 10, 15]
+	>>> list(accumulate(mul, [1, 2, 3, 4, 5]))
+	[1, 2, 6, 24, 120]
 
-    >>> from operator import add, mul
-    >>> list(accumulate(add, [1, 2, 3, 4, 5]))
-    [1, 3, 6, 10, 15]
-    >>> list(accumulate(mul, [1, 2, 3, 4, 5]))
-    [1, 2, 6, 24, 120]
+	Accumulate is similar to ``reduce`` and is good for making functions like
+	cumulative sum:
 
-    Accumulate is similar to ``reduce`` and is good for making functions like
-    cumulative sum:
+	>>> from functools import partial, reduce
+	>>> sum    = partial(reduce, add)
+	>>> cumsum = partial(accumulate, add)
 
-    >>> from functools import partial, reduce
-    >>> sum    = partial(reduce, add)
-    >>> cumsum = partial(accumulate, add)
+	Accumulate also takes an optional argument that will be used as the first
+	value. This is similar to reduce.
 
-    Accumulate also takes an optional argument that will be used as the first
-    value. This is similar to reduce.
+	>>> list(accumulate(add, [1, 2, 3], -1))
+	[-1, 0, 2, 5]
+	>>> list(accumulate(add, [], 1))
+	[1]
 
-    >>> list(accumulate(add, [1, 2, 3], -1))
-    [-1, 0, 2, 5]
-    >>> list(accumulate(add, [], 1))
-    [1]
-
-    See Also
-    --------
-        itertools.accumulate :  In standard itertools for Python 3.2+
-    """
+	See Also
+	--------
+		itertools.accumulate :  In standard itertools for Python 3.2+
+	"""
     def __cinit__(self, object binop, object seq, object initial='__no__default__'):
         self.binop = binop
         self.iter_seq = iter(seq)
@@ -138,32 +134,31 @@ cdef inline object _groupby_core(dict d, object key, object item):
 
 
 cpdef dict groupby(object key, object seq):
-    """
-    Group a collection by a key function
+    """Group a collection by a key function
 
-    >>> names = ['Alice', 'Bob', 'Charlie', 'Dan', 'Edith', 'Frank']
-    >>> groupby(len, names)  # doctest: +SKIP
-    {3: ['Bob', 'Dan'], 5: ['Alice', 'Edith', 'Frank'], 7: ['Charlie']}
+	>>> names = ['Alice', 'Bob', 'Charlie', 'Dan', 'Edith', 'Frank']
+	>>> groupby(len, names)  # doctest: +SKIP
+	{3: ['Bob', 'Dan'], 5: ['Alice', 'Edith', 'Frank'], 7: ['Charlie']}
 
-    >>> iseven = lambda x: x % 2 == 0
-    >>> groupby(iseven, [1, 2, 3, 4, 5, 6, 7, 8])  # doctest: +SKIP
-    {False: [1, 3, 5, 7], True: [2, 4, 6, 8]}
+	>>> iseven = lambda x: x % 2 == 0
+	>>> groupby(iseven, [1, 2, 3, 4, 5, 6, 7, 8])  # doctest: +SKIP
+	{False: [1, 3, 5, 7], True: [2, 4, 6, 8]}
 
-    Non-callable keys imply grouping on a member.
+	Non-callable keys imply grouping on a member.
 
-    >>> groupby('gender', [{'name': 'Alice', 'gender': 'F'},
-    ...                    {'name': 'Bob', 'gender': 'M'},
-    ...                    {'name': 'Charlie', 'gender': 'M'}]) # doctest:+SKIP
-    {'F': [{'gender': 'F', 'name': 'Alice'}],
-     'M': [{'gender': 'M', 'name': 'Bob'},
-           {'gender': 'M', 'name': 'Charlie'}]}
+	>>> groupby('gender', [{'name': 'Alice', 'gender': 'F'},
+	...                    {'name': 'Bob', 'gender': 'M'},
+	...                    {'name': 'Charlie', 'gender': 'M'}]) # doctest:+SKIP
+	{'F': [{'gender': 'F', 'name': 'Alice'}],
+	 'M': [{'gender': 'M', 'name': 'Bob'},
+		   {'gender': 'M', 'name': 'Charlie'}]}
 
-    Not to be confused with ``itertools.groupby``
+	Not to be confused with ``itertools.groupby``
 
-    See Also
-    --------
-        countby
-    """
+	See Also
+	--------
+		countby
+	"""
     cdef dict d = {}
     cdef object item, keyval
     cdef Py_ssize_t i, N
@@ -316,42 +311,39 @@ cdef object c_merge_sorted(object seqs, object key=None):
 
 
 def merge_sorted(*seqs, **kwargs):
-    """
-    Merge and sort a collection of sorted collections
+    """Merge and sort a collection of sorted collections
 
-    This works lazily and only keeps one value from each iterable in memory.
+	This works lazily and only keeps one value from each iterable in memory.
 
-    >>> list(merge_sorted([1, 3, 5], [2, 4, 6]))
-    [1, 2, 3, 4, 5, 6]
+	>>> list(merge_sorted([1, 3, 5], [2, 4, 6]))
+	[1, 2, 3, 4, 5, 6]
 
-    >>> ''.join(merge_sorted('abc', 'abc', 'abc'))
-    'aaabbbccc'
+	>>> ''.join(merge_sorted('abc', 'abc', 'abc'))
+	'aaabbbccc'
 
-    The "key" function used to sort the input may be passed as a keyword.
+	The "key" function used to sort the input may be passed as a keyword.
 
-    >>> list(merge_sorted([2, 3], [1, 3], key=lambda x: x // 3))
-    [2, 1, 3, 3]
-    """
+	>>> list(merge_sorted([2, 3], [1, 3], key=lambda x: x // 3))
+	[2, 1, 3, 3]
+	"""
     if 'key' in kwargs:
         return c_merge_sorted(seqs, kwargs['key'])
     return c_merge_sorted(seqs)
 
 
 cdef class interleave:
-    """ interleave(seqs)
+    """Interleave a sequence of sequences
 
-    Interleave a sequence of sequences
+	>>> list(interleave([[1, 2], [3, 4]]))
+	[1, 3, 2, 4]
 
-    >>> list(interleave([[1, 2], [3, 4]]))
-    [1, 3, 2, 4]
+	>>> ''.join(interleave(('ABC', 'XY')))
+	'AXBYC'
 
-    >>> ''.join(interleave(('ABC', 'XY')))
-    'AXBYC'
+	Both the individual sequences and the sequence of sequences may be infinite
 
-    Both the individual sequences and the sequence of sequences may be infinite
-
-    Returns a lazy iterator
-    """
+	Returns a lazy iterator
+	"""
     def __cinit__(self, seqs):
         self.iters = [iter(seq) for seq in seqs]
         self.newiters = []
@@ -444,19 +436,18 @@ cdef class _unique_identity:
 
 
 cpdef object unique(object seq, object key=None):
-    """
-    Return only unique elements of a sequence
+    """Return only unique elements of a sequence
 
-    >>> tuple(unique((1, 2, 3)))
-    (1, 2, 3)
-    >>> tuple(unique((1, 2, 1, 3)))
-    (1, 2, 3)
+	>>> tuple(unique((1, 2, 3)))
+	(1, 2, 3)
+	>>> tuple(unique((1, 2, 1, 3)))
+	(1, 2, 3)
 
-    Uniqueness can be defined by key keyword
+	Uniqueness can be defined by key keyword
 
-    >>> tuple(unique(['cat', 'mouse', 'dog', 'hen'], key=len))
-    ('cat', 'mouse')
-    """
+	>>> tuple(unique(['cat', 'mouse', 'dog', 'hen'], key=len))
+	('cat', 'mouse')
+	"""
     if key is None:
         return _unique_identity(seq)
     else:
@@ -464,16 +455,15 @@ cpdef object unique(object seq, object key=None):
 
 
 cpdef object isiterable(object x):
-    """
-    Is x iterable?
+    """Is x iterable?
 
-    >>> isiterable([1, 2, 3])
-    True
-    >>> isiterable('abc')
-    True
-    >>> isiterable(5)
-    False
-    """
+	>>> isiterable([1, 2, 3])
+	True
+	>>> isiterable('abc')
+	True
+	>>> isiterable(5)
+	False
+	"""
     try:
         iter(x)
         return True
@@ -483,19 +473,18 @@ cpdef object isiterable(object x):
 
 
 cpdef object isdistinct(object seq):
-    """
-    All values in sequence are distinct
+    """All values in sequence are distinct
 
-    >>> isdistinct([1, 2, 3])
-    True
-    >>> isdistinct([1, 2, 1])
-    False
+	>>> isdistinct([1, 2, 3])
+	True
+	>>> isdistinct([1, 2, 1])
+	False
 
-    >>> isdistinct("Hello")
-    False
-    >>> isdistinct("World")
-    True
-    """
+	>>> isdistinct("Hello")
+	False
+	>>> isdistinct("World")
+	True
+	"""
     if iter(seq) is seq:
         seen = set()
         for item in seq:
@@ -508,49 +497,46 @@ cpdef object isdistinct(object seq):
 
 
 cpdef object take(Py_ssize_t n, object seq):
-    """
-    The first n elements of a sequence
+    """The first n elements of a sequence
 
-    >>> list(take(2, [10, 20, 30, 40, 50]))
-    [10, 20]
+	>>> list(take(2, [10, 20, 30, 40, 50]))
+	[10, 20]
 
-    See Also
-    --------
-        drop
-        tail
-    """
+	See Also
+	--------
+		drop
+		tail
+	"""
     return islice(seq, n)
 
 
 cpdef object tail(Py_ssize_t n, object seq):
-    """
-    The last n elements of a sequence
+    """The last n elements of a sequence
 
-    >>> tail(2, [10, 20, 30, 40, 50])
-    [40, 50]
+	>>> tail(2, [10, 20, 30, 40, 50])
+	[40, 50]
 
-    See Also
-    --------
-        drop
-        take
-    """
+	See Also
+	--------
+		drop
+		take
+	"""
     if PySequence_Check(seq):
         return seq[len(seq) - n: None]
     return tuple(deque(seq, n))
 
 
 cpdef object drop(Py_ssize_t n, object seq):
-    """
-    The sequence following the first n elements
+    """The sequence following the first n elements
 
-    >>> list(drop(2, [10, 20, 30, 40, 50]))
-    [30, 40, 50]
+	>>> list(drop(2, [10, 20, 30, 40, 50]))
+	[30, 40, 50]
 
-    See Also
-    --------
-        take
-        tail
-    """
+	See Also
+	--------
+		take
+		tail
+	"""
     if n < 0:
         raise ValueError('n argument for drop() must be non-negative')
     cdef Py_ssize_t i
@@ -565,44 +551,40 @@ cpdef object drop(Py_ssize_t n, object seq):
 
 
 cpdef object take_nth(Py_ssize_t n, object seq):
-    """
-    Every nth item in seq
+    """Every nth item in seq
 
-    >>> list(take_nth(2, [10, 20, 30, 40, 50]))
-    [10, 30, 50]
-    """
+	>>> list(take_nth(2, [10, 20, 30, 40, 50]))
+	[10, 30, 50]
+	"""
     return islice(seq, 0, None, n)
 
 
 cpdef object first(object seq):
-    """
-    The first element in a sequence
+    """The first element in a sequence
 
-    >>> first('ABC')
-    'A'
-    """
+	>>> first('ABC')
+	'A'
+	"""
     return next(iter(seq))
 
 
 cpdef object second(object seq):
-    """
-    The second element in a sequence
+    """The second element in a sequence
 
-    >>> second('ABC')
-    'B'
-    """
+	>>> second('ABC')
+	'B'
+	"""
     seq = iter(seq)
     next(seq)
     return next(seq)
 
 
 cpdef object nth(Py_ssize_t n, object seq):
-    """
-    The nth element in a sequence
+    """The nth element in a sequence
 
-    >>> nth(1, 'ABC')
-    'B'
-    """
+	>>> nth(1, 'ABC')
+	'B'
+	"""
     if PySequence_Check(seq):
         return seq[n]
     if n < 0:
@@ -615,12 +597,11 @@ cpdef object nth(Py_ssize_t n, object seq):
 
 
 cpdef object last(object seq):
-    """
-    The last element in a sequence
+    """The last element in a sequence
 
-    >>> last('ABC')
-    'C'
-    """
+	>>> last('ABC')
+	'C'
+	"""
     cdef object val
     if PySequence_Check(seq):
         return seq[-1]
@@ -643,40 +624,39 @@ cdef tuple _get_list_exc = (IndexError, KeyError)
 
 
 cpdef object get(object ind, object seq, object default='__no__default__'):
-    """
-    Get element in a sequence or dict
+    """Get element in a sequence or dict
 
-    Provides standard indexing
+	Provides standard indexing
 
-    >>> get(1, 'ABC')       # Same as 'ABC'[1]
-    'B'
+	>>> get(1, 'ABC')       # Same as 'ABC'[1]
+	'B'
 
-    Pass a list to get multiple values
+	Pass a list to get multiple values
 
-    >>> get([1, 2], 'ABC')  # ('ABC'[1], 'ABC'[2])
-    ('B', 'C')
+	>>> get([1, 2], 'ABC')  # ('ABC'[1], 'ABC'[2])
+	('B', 'C')
 
-    Works on any value that supports indexing/getitem
-    For example here we see that it works with dictionaries
+	Works on any value that supports indexing/getitem
+	For example here we see that it works with dictionaries
 
-    >>> phonebook = {'Alice':  '555-1234',
-    ...              'Bob':    '555-5678',
-    ...              'Charlie':'555-9999'}
-    >>> get('Alice', phonebook)
-    '555-1234'
+	>>> phonebook = {'Alice':  '555-1234',
+	...              'Bob':    '555-5678',
+	...              'Charlie':'555-9999'}
+	>>> get('Alice', phonebook)
+	'555-1234'
 
-    >>> get(['Alice', 'Bob'], phonebook)
-    ('555-1234', '555-5678')
+	>>> get(['Alice', 'Bob'], phonebook)
+	('555-1234', '555-5678')
 
-    Provide a default for missing values
+	Provide a default for missing values
 
-    >>> get(['Alice', 'Dennis'], phonebook, None)
-    ('555-1234', None)
+	>>> get(['Alice', 'Dennis'], phonebook, None)
+	('555-1234', None)
 
-    See Also
-    --------
-        pluck
-    """
+	See Also
+	--------
+		pluck
+	"""
     cdef Py_ssize_t i
     cdef object val
     cdef tuple result
@@ -725,68 +705,62 @@ cdef object _chain_from_iterable = chain.from_iterable
 
 
 cpdef object concat(object seqs):
-    """
-    Concatenate zero or more iterables, any of which may be infinite.
+    """Concatenate zero or more iterables, any of which may be infinite.
 
-    An infinite sequence will prevent the rest of the arguments from
-    being included.
+	An infinite sequence will prevent the rest of the arguments from
+	being included.
 
-    We use chain.from_iterable rather than ``chain(*seqs)`` so that seqs
-    can be a generator.
+	We use chain.from_iterable rather than ``chain(*seqs)`` so that seqs
+	can be a generator.
 
-    >>> list(concat([[], [1], [2, 3]]))
-    [1, 2, 3]
+	>>> list(concat([[], [1], [2, 3]]))
+	[1, 2, 3]
 
-    See Also
-    --------
-        itertools.chain.from_iterable  equivalent
-    """
+	See Also
+	--------
+		itertools.chain.from_iterable  equivalent
+	"""
     return _chain_from_iterable(seqs)
 
 
 def concatv(*seqs):
-    """
-    Variadic version of concat
+    """Variadic version of concat
 
-    >>> list(concatv([], ["a"], ["b", "c"]))
-    ['a', 'b', 'c']
+	>>> list(concatv([], ["a"], ["b", "c"]))
+	['a', 'b', 'c']
 
-    See Also
-    --------
-        itertools.chain
-    """
+	See Also
+	--------
+		itertools.chain
+	"""
     return _chain_from_iterable(seqs)
 
 
 cpdef object mapcat(object func, object seqs):
-    """
-    Apply func to each sequence in seqs, concatenating results.
+    """Apply func to each sequence in seqs, concatenating results.
 
-    >>> list(mapcat(lambda s: [c.upper() for c in s],
-    ...             [["a", "b"], ["c", "d", "e"]]))
-    ['A', 'B', 'C', 'D', 'E']
-    """
+	>>> list(mapcat(lambda s: [c.upper() for c in s],
+	...             [["a", "b"], ["c", "d", "e"]]))
+	['A', 'B', 'C', 'D', 'E']
+	"""
     return concat(map(func, seqs))
 
 
 cpdef object cons(object el, object seq):
-    """
-    Add el to beginning of (possibly infinite) sequence seq.
+    """Add el to beginning of (possibly infinite) sequence seq.
 
-    >>> list(cons(1, [2, 3]))
-    [1, 2, 3]
-    """
+	>>> list(cons(1, [2, 3]))
+	[1, 2, 3]
+	"""
     return chain((el,), seq)
 
 
 cdef class interpose:
-    """ interpose(el, seq)
+    """Introduce element between each pair of elements in seq
 
-    Introduce element between each pair of elements in seq
-
-    >>> list(interpose("a", [1, 2, 3]))
-    [1, 'a', 2, 'a', 3]
-    """
+	>>> list(interpose("a", [1, 2, 3]))
+	[1, 'a', 2, 'a', 3]
+	"""
     def __cinit__(self, object el, object seq):
         self.el = el
         self.iter_seq = iter(seq)
@@ -810,17 +784,16 @@ cdef class interpose:
 
 
 cpdef dict frequencies(object seq):
-    """
-    Find number of occurrences of each value in seq
+    """Find number of occurrences of each value in seq
 
-    >>> frequencies(['cat', 'cat', 'ox', 'pig', 'pig', 'cat'])  #doctest: +SKIP
-    {'cat': 3, 'ox': 1, 'pig': 2}
+	>>> frequencies(['cat', 'cat', 'ox', 'pig', 'pig', 'cat'])  #doctest: +SKIP
+	{'cat': 3, 'ox': 1, 'pig': 2}
 
-    See Also
-    --------
-        countby
-        groupby
-    """
+	See Also
+	--------
+		countby
+		groupby
+	"""
     cdef dict d = {}
     cdef PyObject *obj
     cdef Py_ssize_t val
@@ -848,67 +821,66 @@ cdef inline object _reduceby_core(dict d, object key, object item, object binop,
 
 
 cpdef dict reduceby(object key, object binop, object seq, object init='__no__default__'):
-    """
-    Perform a simultaneous groupby and reduction
+    """Perform a simultaneous groupby and reduction
 
-    The computation:
+	The computation:
 
-    >>> result = reduceby(key, binop, seq, init)      # doctest: +SKIP
+	>>> result = reduceby(key, binop, seq, init)      # doctest: +SKIP
 
-    is equivalent to the following:
+	is equivalent to the following:
 
-    >>> def reduction(group):                           # doctest: +SKIP
-    ...     return reduce(binop, group, init)           # doctest: +SKIP
+	>>> def reduction(group):                           # doctest: +SKIP
+	...     return reduce(binop, group, init)           # doctest: +SKIP
 
-    >>> groups = groupby(key, seq)                    # doctest: +SKIP
-    >>> result = valmap(reduction, groups)              # doctest: +SKIP
+	>>> groups = groupby(key, seq)                    # doctest: +SKIP
+	>>> result = valmap(reduction, groups)              # doctest: +SKIP
 
-    But the former does not build the intermediate groups, allowing it to
-    operate in much less space.  This makes it suitable for larger datasets
-    that do not fit comfortably in memory
+	But the former does not build the intermediate groups, allowing it to
+	operate in much less space.  This makes it suitable for larger datasets
+	that do not fit comfortably in memory
 
-    The ``init`` keyword argument is the default initialization of the
-    reduction.  This can be either a constant value like ``0`` or a callable
-    like ``lambda : 0`` as might be used in ``defaultdict``.
+	The ``init`` keyword argument is the default initialization of the
+	reduction.  This can be either a constant value like ``0`` or a callable
+	like ``lambda : 0`` as might be used in ``defaultdict``.
 
-    Simple Examples
-    ---------------
+	Simple Examples
+	---------------
 
-    >>> from operator import add, mul
-    >>> iseven = lambda x: x % 2 == 0
+	>>> from operator import add, mul
+	>>> iseven = lambda x: x % 2 == 0
 
-    >>> data = [1, 2, 3, 4, 5]
+	>>> data = [1, 2, 3, 4, 5]
 
-    >>> reduceby(iseven, add, data)  # doctest: +SKIP
-    {False: 9, True: 6}
+	>>> reduceby(iseven, add, data)  # doctest: +SKIP
+	{False: 9, True: 6}
 
-    >>> reduceby(iseven, mul, data)  # doctest: +SKIP
-    {False: 15, True: 8}
+	>>> reduceby(iseven, mul, data)  # doctest: +SKIP
+	{False: 15, True: 8}
 
-    Complex Example
-    ---------------
+	Complex Example
+	---------------
 
-    >>> projects = [{'name': 'build roads', 'state': 'CA', 'cost': 1000000},
-    ...             {'name': 'fight crime', 'state': 'IL', 'cost': 100000},
-    ...             {'name': 'help farmers', 'state': 'IL', 'cost': 2000000},
-    ...             {'name': 'help farmers', 'state': 'CA', 'cost': 200000}]
+	>>> projects = [{'name': 'build roads', 'state': 'CA', 'cost': 1000000},
+	...             {'name': 'fight crime', 'state': 'IL', 'cost': 100000},
+	...             {'name': 'help farmers', 'state': 'IL', 'cost': 2000000},
+	...             {'name': 'help farmers', 'state': 'CA', 'cost': 200000}]
 
-    >>> reduceby('state',                        # doctest: +SKIP
-    ...          lambda acc, x: acc + x['cost'],
-    ...          projects, 0)
-    {'CA': 1200000, 'IL': 2100000}
+	>>> reduceby('state',                        # doctest: +SKIP
+	...          lambda acc, x: acc + x['cost'],
+	...          projects, 0)
+	{'CA': 1200000, 'IL': 2100000}
 
-    Example Using ``init``
-    ----------------------
+	Example Using ``init``
+	----------------------
 
-    >>> def set_add(s, i):
-    ...     s.add(i)
-    ...     return s
+	>>> def set_add(s, i):
+	...     s.add(i)
+	...     return s
 
-    >>> reduceby(iseven, set_add, [1, 2, 3, 4, 1, 2, 3], set)  # doctest: +SKIP
-    {True:  set([2, 4]),
-     False: set([1, 3])}
-    """
+	>>> reduceby(iseven, set_add, [1, 2, 3, 4, 1, 2, 3], set)  # doctest: +SKIP
+	{True:  set([2, 4]),
+	 False: set([1, 3])}
+	"""
     cdef dict d = {}
     cdef object item, keyval
     cdef Py_ssize_t i, N
@@ -936,32 +908,30 @@ cpdef dict reduceby(object key, object binop, object seq, object init='__no__def
 
 
 cdef class iterate:
-    """ iterate(func, x)
+    """Repeatedly apply a function func onto an original input
 
-    Repeatedly apply a function func onto an original input
+	Yields x, then func(x), then func(func(x)), then func(func(func(x))), etc..
 
-    Yields x, then func(x), then func(func(x)), then func(func(func(x))), etc..
+	>>> def inc(x):  return x + 1
+	>>> counter = iterate(inc, 0)
+	>>> next(counter)
+	0
+	>>> next(counter)
+	1
+	>>> next(counter)
+	2
 
-    >>> def inc(x):  return x + 1
-    >>> counter = iterate(inc, 0)
-    >>> next(counter)
-    0
-    >>> next(counter)
-    1
-    >>> next(counter)
-    2
-
-    >>> double = lambda x: x * 2
-    >>> powers_of_two = iterate(double, 1)
-    >>> next(powers_of_two)
-    1
-    >>> next(powers_of_two)
-    2
-    >>> next(powers_of_two)
-    4
-    >>> next(powers_of_two)
-    8
-    """
+	>>> double = lambda x: x * 2
+	>>> powers_of_two = iterate(double, 1)
+	>>> next(powers_of_two)
+	1
+	>>> next(powers_of_two)
+	2
+	>>> next(powers_of_two)
+	4
+	>>> next(powers_of_two)
+	8
+	"""
     def __cinit__(self, object func, object x):
         self.func = func
         self.x = x
@@ -979,20 +949,18 @@ cdef class iterate:
 
 
 cdef class sliding_window:
-    """ sliding_window(n, seq)
+    """A sequence of overlapping subsequences
 
-    A sequence of overlapping subsequences
+	>>> list(sliding_window(2, [1, 2, 3, 4]))
+	[(1, 2), (2, 3), (3, 4)]
 
-    >>> list(sliding_window(2, [1, 2, 3, 4]))
-    [(1, 2), (2, 3), (3, 4)]
+	This function creates a sliding window suitable for transformations like
+	sliding means / smoothing
 
-    This function creates a sliding window suitable for transformations like
-    sliding means / smoothing
-
-    >>> mean = lambda seq: float(sum(seq)) / len(seq)
-    >>> list(map(mean, sliding_window(2, [1, 2, 3, 4])))
-    [1.5, 2.5, 3.5]
-    """
+	>>> mean = lambda seq: float(sum(seq)) / len(seq)
+	>>> list(map(mean, sliding_window(2, [1, 2, 3, 4])))
+	[1.5, 2.5, 3.5]
+	"""
     def __cinit__(self, Py_ssize_t n, object seq):
         cdef Py_ssize_t i
         self.iterseq = iter(seq)
@@ -1028,25 +996,24 @@ no_pad = '__no__pad__'
 
 
 cpdef object partition(Py_ssize_t n, object seq, object pad='__no__pad__'):
-    """
-    Partition sequence into tuples of length n
+    """Partition sequence into tuples of length n
 
-    >>> list(partition(2, [1, 2, 3, 4]))
-    [(1, 2), (3, 4)]
+	>>> list(partition(2, [1, 2, 3, 4]))
+	[(1, 2), (3, 4)]
 
-    If the length of ``seq`` is not evenly divisible by ``n``, the final tuple
-    is dropped if ``pad`` is not specified, or filled to length ``n`` by pad:
+	If the length of ``seq`` is not evenly divisible by ``n``, the final tuple
+	is dropped if ``pad`` is not specified, or filled to length ``n`` by pad:
 
-    >>> list(partition(2, [1, 2, 3, 4, 5]))
-    [(1, 2), (3, 4)]
+	>>> list(partition(2, [1, 2, 3, 4, 5]))
+	[(1, 2), (3, 4)]
 
-    >>> list(partition(2, [1, 2, 3, 4, 5], pad=None))
-    [(1, 2), (3, 4), (5, None)]
+	>>> list(partition(2, [1, 2, 3, 4, 5], pad=None))
+	[(1, 2), (3, 4), (5, None)]
 
-    See Also
-    --------
-        partition_all
-    """
+	See Also
+	--------
+		partition_all
+	"""
     args = [iter(seq)] * n
     if pad == '__no__pad__':
         return zip(*args)
@@ -1055,22 +1022,20 @@ cpdef object partition(Py_ssize_t n, object seq, object pad='__no__pad__'):
 
 
 cdef class partition_all:
-    """ partition_all(n, seq)
+    """Partition all elements of sequence into tuples of length at most n
 
-    Partition all elements of sequence into tuples of length at most n
+	The final tuple may be shorter to accommodate extra elements.
 
-    The final tuple may be shorter to accommodate extra elements.
+	>>> list(partition_all(2, [1, 2, 3, 4]))
+	[(1, 2), (3, 4)]
 
-    >>> list(partition_all(2, [1, 2, 3, 4]))
-    [(1, 2), (3, 4)]
+	>>> list(partition_all(2, [1, 2, 3, 4, 5]))
+	[(1, 2), (3, 4), (5,)]
 
-    >>> list(partition_all(2, [1, 2, 3, 4, 5]))
-    [(1, 2), (3, 4), (5,)]
-
-    See Also
-    --------
-        partition
-    """
+	See Also
+	--------
+		partition
+	"""
     def __cinit__(self, Py_ssize_t n, object seq):
         self.n = n
         self.iterseq = iter(seq)
@@ -1113,17 +1078,16 @@ cdef class partition_all:
 
 
 cpdef object count(object seq):
-    """
-    Count the number of items in seq
+    """Count the number of items in seq
 
-    Like the builtin ``len`` but works on lazy sequences.
+	Like the builtin ``len`` but works on lazy sequences.
 
-    Not to be confused with ``itertools.count``
+	Not to be confused with ``itertools.count``
 
-    See Also
-    --------
-        len
-    """
+	See Also
+	--------
+		len
+	"""
     if iter(seq) is not seq and hasattr(seq, '__len__'):
         return len(seq)
     cdef Py_ssize_t i = 0
@@ -1224,30 +1188,29 @@ cdef class _pluck_list_default:
 
 
 cpdef object pluck(object ind, object seqs, object default='__no__default__'):
-    """
-    Plucks an element or several elements from each item in a sequence.
+    """Plucks an element or several elements from each item in a sequence.
 
-    ``pluck`` maps ``itertoolz.get`` over a sequence and returns one or more
-    elements of each item in the sequence.
+	``pluck`` maps ``itertoolz.get`` over a sequence and returns one or more
+	elements of each item in the sequence.
 
-    This is equivalent to running `map(curried.get(ind), seqs)`
+	This is equivalent to running `map(curried.get(ind), seqs)`
 
-    ``ind`` can be either a single string/index or a list of strings/indices.
-    ``seqs`` should be sequence containing sequences or dicts.
+	``ind`` can be either a single string/index or a list of strings/indices.
+	``seqs`` should be sequence containing sequences or dicts.
 
-    e.g.
+	e.g.
 
-    >>> data = [{'id': 1, 'name': 'Cheese'}, {'id': 2, 'name': 'Pies'}]
-    >>> list(pluck('name', data))
-    ['Cheese', 'Pies']
-    >>> list(pluck([0, 1], [[1, 2, 3], [4, 5, 7]]))
-    [(1, 2), (4, 5)]
+	>>> data = [{'id': 1, 'name': 'Cheese'}, {'id': 2, 'name': 'Pies'}]
+	>>> list(pluck('name', data))
+	['Cheese', 'Pies']
+	>>> list(pluck([0, 1], [[1, 2, 3], [4, 5, 7]]))
+	[(1, 2), (4, 5)]
 
-    See Also
-    --------
-        get
-        map
-    """
+	See Also
+	--------
+		get
+		map
+	"""
     if isinstance(ind, list):
         if default != no_default:
             return _pluck_list_default(ind, seqs, default)
@@ -1304,64 +1267,64 @@ cpdef object join(object leftkey, object leftseq,
                   object rightkey, object rightseq,
                   object left_default='__no__default__',
                   object right_default='__no__default__'):
-    """
-    Join two sequences on common attributes
+    """Join two sequences on common attributes
 
-    This is a semi-streaming operation.  The LEFT sequence is fully evaluated
-    and placed into memory.  The RIGHT sequence is evaluated lazily and so can
-    be arbitrarily large.
-    (Note: If right_default is defined, then unique keys of rightseq
-        will also be stored in memory.)
+	This is a semi-streaming operation.  The LEFT sequence is fully evaluated
+	and placed into memory.  The RIGHT sequence is evaluated lazily and so can
+	be arbitrarily large.
 
-    >>> friends = [('Alice', 'Edith'),
-    ...            ('Alice', 'Zhao'),
-    ...            ('Edith', 'Alice'),
-    ...            ('Zhao', 'Alice'),
-    ...            ('Zhao', 'Edith')]
+	(Note: If right_default is defined, then unique keys of rightseq
+		will also be stored in memory.)
 
-    >>> cities = [('Alice', 'NYC'),
-    ...           ('Alice', 'Chicago'),
-    ...           ('Dan', 'Sydney'),
-    ...           ('Edith', 'Paris'),
-    ...           ('Edith', 'Berlin'),
-    ...           ('Zhao', 'Shanghai')]
+	>>> friends = [('Alice', 'Edith'),
+	...            ('Alice', 'Zhao'),
+	...            ('Edith', 'Alice'),
+	...            ('Zhao', 'Alice'),
+	...            ('Zhao', 'Edith')]
 
-    >>> # Vacation opportunities
-    >>> # In what cities do people have friends?
-    >>> result = join(second, friends,
-    ...               first, cities)
-    >>> for ((a, b), (c, d)) in sorted(unique(result)):
-    ...     print((a, d))
-    ('Alice', 'Berlin')
-    ('Alice', 'Paris')
-    ('Alice', 'Shanghai')
-    ('Edith', 'Chicago')
-    ('Edith', 'NYC')
-    ('Zhao', 'Chicago')
-    ('Zhao', 'NYC')
-    ('Zhao', 'Berlin')
-    ('Zhao', 'Paris')
+	>>> cities = [('Alice', 'NYC'),
+	...           ('Alice', 'Chicago'),
+	...           ('Dan', 'Sydney'),
+	...           ('Edith', 'Paris'),
+	...           ('Edith', 'Berlin'),
+	...           ('Zhao', 'Shanghai')]
 
-    Specify outer joins with keyword arguments ``left_default`` and/or
-    ``right_default``.  Here is a full outer join in which unmatched elements
-    are paired with None.
+	>>> # Vacation opportunities
+	>>> # In what cities do people have friends?
+	>>> result = join(second, friends,
+	...               first, cities)
+	>>> for ((a, b), (c, d)) in sorted(unique(result)):
+	...     print((a, d))
+	('Alice', 'Berlin')
+	('Alice', 'Paris')
+	('Alice', 'Shanghai')
+	('Edith', 'Chicago')
+	('Edith', 'NYC')
+	('Zhao', 'Chicago')
+	('Zhao', 'NYC')
+	('Zhao', 'Berlin')
+	('Zhao', 'Paris')
 
-    >>> identity = lambda x: x
-    >>> list(join(identity, [1, 2, 3],
-    ...           identity, [2, 3, 4],
-    ...           left_default=None, right_default=None))
-    [(2, 2), (3, 3), (None, 4), (1, None)]
+	Specify outer joins with keyword arguments ``left_default`` and/or
+	``right_default``.  Here is a full outer join in which unmatched elements
+	are paired with None.
 
-    Usually the key arguments are callables to be applied to the sequences.  If
-    the keys are not obviously callable then it is assumed that indexing was
-    intended, e.g. the following is a legal change.
-    The join is implemented as a hash join and the keys of leftseq must be
-    hashable. Additionally, if right_default is defined, then keys of rightseq
-    must also be hashable.
+	>>> identity = lambda x: x
+	>>> list(join(identity, [1, 2, 3],
+	...           identity, [2, 3, 4],
+	...           left_default=None, right_default=None))
+	[(2, 2), (3, 3), (None, 4), (1, None)]
 
-    >>> # result = join(second, friends, first, cities)
-    >>> result = join(1, friends, 0, cities)  # doctest: +SKIP
-    """
+	Usually the key arguments are callables to be applied to the sequences.  If
+	the keys are not obviously callable then it is assumed that indexing was
+	intended, e.g. the following is a legal change.
+	The join is implemented as a hash join and the keys of leftseq must be
+	hashable. Additionally, if right_default is defined, then keys of rightseq
+	must also be hashable.
+
+	>>> # result = join(second, friends, first, cities)
+	>>> result = join(1, friends, 0, cities)  # doctest: +SKIP
+	"""
     if left_default == no_default and right_default == no_default:
         if callable(rightkey):
             return _inner_join_key(leftkey, leftseq, rightkey, rightseq,
@@ -1674,23 +1637,22 @@ cdef object c_diff(object seqs, object default=no_default, object key=None):
 
 
 def diff(*seqs, **kwargs):
-    """
-    Return those items that differ between sequences
+    """Return those items that differ between sequences
 
-    >>> list(diff([1, 2, 3], [1, 2, 10, 100]))
-    [(3, 10)]
+	>>> list(diff([1, 2, 3], [1, 2, 10, 100]))
+	[(3, 10)]
 
-    Shorter sequences may be padded with a ``default`` value:
+	Shorter sequences may be padded with a ``default`` value:
 
-    >>> list(diff([1, 2, 3], [1, 2, 10, 100], default=None))
-    [(3, 10), (None, 100)]
+	>>> list(diff([1, 2, 3], [1, 2, 10, 100], default=None))
+	[(3, 10), (None, 100)]
 
-    A ``key`` function may also be applied to each item to use during
-    comparisons:
+	A ``key`` function may also be applied to each item to use during
+	comparisons:
 
-    >>> list(diff(['apples', 'bananas'], ['Apples', 'Oranges'], key=str.lower))
-    [('bananas', 'Oranges')]
-    """
+	>>> list(diff(['apples', 'bananas'], ['Apples', 'Oranges'], key=str.lower))
+	[('bananas', 'Oranges')]
+	"""
     N = len(seqs)
     if N == 1 and isinstance(seqs[0], list):
         seqs = seqs[0]
@@ -1700,23 +1662,22 @@ def diff(*seqs, **kwargs):
 
 
 cpdef object topk(Py_ssize_t k, object seq, object key=None):
-    """
-    Find the k largest elements of a sequence
+    """Find the k largest elements of a sequence
 
-    Operates lazily in ``n*log(k)`` time
+	Operates lazily in ``n*log(k)`` time
 
-    >>> topk(2, [1, 100, 10, 1000])
-    (1000, 100)
+	>>> topk(2, [1, 100, 10, 1000])
+	(1000, 100)
 
-    Use a key function to change sorted order
+	Use a key function to change sorted order
 
-    >>> topk(2, ['Alice', 'Bob', 'Charlie', 'Dan'], key=len)
-    ('Charlie', 'Alice')
+	>>> topk(2, ['Alice', 'Bob', 'Charlie', 'Dan'], key=len)
+	('Charlie', 'Alice')
 
-    See Also
-    --------
-        heapq.nlargest
-    """
+	See Also
+	--------
+		heapq.nlargest
+	"""
     cdef object item, val, top
     cdef object it = iter(seq)
     cdef object _heapreplace = heapreplace
@@ -1773,77 +1734,73 @@ cpdef object topk(Py_ssize_t k, object seq, object key=None):
 
 
 cpdef object peek(object seq):
-    """
-    Retrieve the next element of a sequence
+    """Retrieve the next element of a sequence
 
-    Returns the first element and an iterable equivalent to the original
-    sequence, still having the element retrieved.
+	Returns the first element and an iterable equivalent to the original
+	sequence, still having the element retrieved.
 
-    >>> seq = [0, 1, 2, 3, 4]
-    >>> first, seq = peek(seq)
-    >>> first
-    0
-    >>> list(seq)
-    [0, 1, 2, 3, 4]
-    """
+	>>> seq = [0, 1, 2, 3, 4]
+	>>> first, seq = peek(seq)
+	>>> first
+	0
+	>>> list(seq)
+	[0, 1, 2, 3, 4]
+	"""
     iterator = iter(seq)
     item = next(iterator)
     return item, chain((item,), iterator)
 
 
 cpdef object peekn(Py_ssize_t n, object seq):
-    """
-    Retrieve the next n elements of a sequence
+    """Retrieve the next n elements of a sequence
 
-    Returns a tuple of the first n elements and an iterable equivalent
-    to the original, still having the elements retrieved.
+	Returns a tuple of the first n elements and an iterable equivalent
+	to the original, still having the elements retrieved.
 
-    >>> seq = [0, 1, 2, 3, 4]
-    >>> first_two, seq = peekn(2, seq)
-    >>> first_two
-    (0, 1)
-    >>> list(seq)
-    [0, 1, 2, 3, 4]
-    """
+	>>> seq = [0, 1, 2, 3, 4]
+	>>> first_two, seq = peekn(2, seq)
+	>>> first_two
+	(0, 1)
+	>>> list(seq)
+	[0, 1, 2, 3, 4]
+	"""
     iterator = iter(seq)
     peeked = tuple(take(n, iterator))
     return peeked, chain(iter(peeked), iterator)
 
 
 cdef class random_sample:
-    """ random_sample(prob, seq, random_state=None)
+    """Return elements from a sequence with probability of prob
 
-    Return elements from a sequence with probability of prob
+	Returns a lazy iterator of random items from seq.
 
-    Returns a lazy iterator of random items from seq.
+	``random_sample`` considers each item independently and without
+	replacement. See below how the first time it returned 13 items and the
+	next time it returned 6 items.
 
-    ``random_sample`` considers each item independently and without
-    replacement. See below how the first time it returned 13 items and the
-    next time it returned 6 items.
+	>>> seq = list(range(100))
+	>>> list(random_sample(0.1, seq)) # doctest: +SKIP
+	[6, 9, 19, 35, 45, 50, 58, 62, 68, 72, 78, 86, 95]
+	>>> list(random_sample(0.1, seq)) # doctest: +SKIP
+	[6, 44, 54, 61, 69, 94]
 
-    >>> seq = list(range(100))
-    >>> list(random_sample(0.1, seq)) # doctest: +SKIP
-    [6, 9, 19, 35, 45, 50, 58, 62, 68, 72, 78, 86, 95]
-    >>> list(random_sample(0.1, seq)) # doctest: +SKIP
-    [6, 44, 54, 61, 69, 94]
+	Providing an integer seed for ``random_state`` will result in
+	deterministic sampling. Given the same seed it will return the same sample
+	every time.
 
-    Providing an integer seed for ``random_state`` will result in
-    deterministic sampling. Given the same seed it will return the same sample
-    every time.
+	>>> list(random_sample(0.1, seq, random_state=2016))
+	[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]
+	>>> list(random_sample(0.1, seq, random_state=2016))
+	[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]
 
-    >>> list(random_sample(0.1, seq, random_state=2016))
-    [7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]
-    >>> list(random_sample(0.1, seq, random_state=2016))
-    [7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]
+	``random_state`` can also be any object with a method ``random`` that
+	returns floats between 0.0 and 1.0 (exclusive).
 
-    ``random_state`` can also be any object with a method ``random`` that
-    returns floats between 0.0 and 1.0 (exclusive).
-
-    >>> from random import Random
-    >>> randobj = Random(2016)
-    >>> list(random_sample(0.1, seq, random_state=randobj))
-    [7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]
-    """
+	>>> from random import Random
+	>>> randobj = Random(2016)
+	>>> list(random_sample(0.1, seq, random_state=randobj))
+	[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]
+	"""
     def __cinit__(self, object prob, object seq, random_state=None):
         float(prob)
         self.prob = prob

@@ -15,8 +15,7 @@ __all__ = ['countby', 'partitionby']
 
 
 cpdef object countby(object key, object seq):
-    """
-    Count elements of a collection by a key function
+    """Count elements of a collection by a key function
 
     >>> countby(len, ['cat', 'mouse', 'dog'])
     {3: 2, 5: 1}
@@ -34,9 +33,7 @@ cpdef object countby(object key, object seq):
 
 
 cdef class partitionby:
-    """ partitionby(func, seq)
-
-    Partition a sequence according to a function
+    """Partition a sequence according to a function
 
     Partition `s` into a sequence of lists such that, when traversing
     `s`, every time the output of `func` changes a new list is started

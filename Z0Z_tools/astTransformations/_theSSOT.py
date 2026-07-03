@@ -35,7 +35,6 @@ cythonDirectives: str = """# cython: embedsignature=True
 # cython: freethreading_compatible=True
 # cython: language_level=3
 """
-noticeCopyrightHeader: str = textwrap.fill("Some of the original or derivative works in this directory and its subdirectories may be protected by the following copyright.", width=80) + "\n___\n\n"
 pathRoot_toolz_stubs = Path("/clones/toolz-stubs/src/toolz-stubs")
 regexChangeImports: partial[str] = partial(regex.sub, "(from |import )(.?.?toolz)", "\\1humpy_\\2")
 subModules: frozenset[identifierDotAttribute] = subModulesHARDCODED
@@ -55,6 +54,8 @@ for identifierTransformee in allTransformeePackages:
 	pathTransformee: Path = Path(f'/clones/{identifierTransformee}/{identifierTransformee}')
 
 	settingsFor[humpyPackage] = PackageSettings(identifierPackage=humpyPackage, pathPackage=(pathPackageRoot / humpyPackage))
+"""# The original plan, 2026 March 22:
+noticeCopyrightHeader: str = textwrap.fill("Some of the original or derivative works in this directory and its subdirectories may be protected by the following copyright.", width=80) + "\n___\n\n"
 	settingsFor[humpyPackage].pathPackage.mkdir(parents=True, exist_ok=True)
 
 	if identifierTransformee == 'tlz':
@@ -64,7 +65,6 @@ for identifierTransformee in allTransformeePackages:
 
 	transformALLdot_pyHere.append((pathTransformee, identifierTransformee, getOtherName[identifierTransformee]))
 
-"""# The original plan, 2026 March 22:
 My goal is to feed changes back to the original source via a pull request. If the source updates, pull
 the update, and the cycle continues. See, e.g., https://github.com/pytoolz/toolz/issues/622
 
