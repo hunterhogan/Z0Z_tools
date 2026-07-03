@@ -1,50 +1,53 @@
+# pyright: reportArgumentType=false
+# pyright: reportAssignmentType=false
+# pyright: reportInconsistentOverload=false
+# pyright: reportReturnType=false
+# ruff: noqa: FBT001, FBT002
+# ty:ignore[invalid-assignment]
+# ty:ignore[invalid-return-type]
+# ty:ignore[invalid-argument-type]
 """Provide immutable, functional-style operations on `Mapping`[1] objects.
 
-(AI generated docstring)
-
-You can use this module to transform, filter, retrieve from, and merge `Mapping`[1] objects
-without modifying the source mapping. Each function returns a new mapping created by a
-`factory` argument that defaults to `dict`. Functions that navigate nested structures accept
-a `Sequence`[1] of keys to specify the path.
+You can use this module to transform, filter, retrieve from, and merge `Mapping`[1] objects without
+modifying the source mapping. Each function returns a new mapping created by a `factory` argument that
+defaults to `dict`. Functions that navigate nested structures accept a `Sequence`[1] of keys to
+specify the path.
 
 Contents
 --------
-Classes
-	SupportsGetItem
-		Structural type constraint for objects that support item retrieval via `__getitem__`.
-
 Functions
-	assoc
-		Create a new `Mapping` with `key` associated with `value`.
-	assoc_in
-		Create a new `MutableMapping` from `d` with `value` at the path specified by `keys`.
-	dissoc
-		Create a new `MutableMapping` from `d` with the specified `keys` removed.
-	get_in
-		Retrieve a value from a potentially nested collection using a sequence of keys.
-	itemfilter
-		Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.
-	itemmap
-		Apply `func` to all items of `d` and return a new `Mapping` with the transformed items.
-	keyfilter
-		Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.
-	keymap
-		Apply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.
-	merge
-		Merge a collection of `Mapping` objects and return a new `Mapping`.
-	merge_with
-		Merge `Mapping` objects and apply a `Callable` to combined values.
-	update_in
-		Apply a `Callable` to a value at a nested path in a `Mapping`.
-	valfilter
-		Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
-	valmap
-		Apply `func` to all values of `d` and return a new `Mapping` with the transformed values.
+    assoc
+        Create a new `Mapping` with `key` associated with `value`.
+    assoc_in
+        Create a new `MutableMapping` from `d` with `value` at the path specified by `keys`.
+    dissoc
+        Create a new `MutableMapping` from `d` with the specified `keys` removed.
+    get_in
+        Retrieve a value from a potentially nested collection using a sequence of keys.
+    itemfilter
+        Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new
+        `Mapping`.
+    itemmap
+        Apply `func` to all items of `d` and return a new `Mapping` with the transformed items.
+    keyfilter
+        Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.
+    keymap
+        Apply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.
+    merge
+        Merge a collection of `Mapping` objects and return a new `Mapping`.
+    merge_with
+        Merge `Mapping` objects and apply a `Callable` to combined values.
+    update_in
+        Apply a `Callable` to a value at a nested path in a `Mapping`.
+    valfilter
+        Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
+    valmap
+        Apply `func` to all values of `d` and return a new `Mapping` with the transformed values.
 
 References
 ----------
 [1] Python `collections.abc` module
-	https://docs.python.org/3/library/collections.abc.html
+    https://docs.python.org/3/library/collections.abc.html
 """
 from __future__ import annotations
 
@@ -125,7 +128,7 @@ def assoc_in(d: Mapping[K1, Mapping[K2, Mapping[K3, V3] | V2] | V1], keys: tuple
 def assoc_in(d: Mapping[K, V], keys: Sequence[K], value: V) -> dict[K, V]: ...
 @overload
 def assoc_in(d: Mapping[K, V], keys: Sequence[K], value: V, *, factory: Callable[[], MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
-def assoc_in(d: Mapping[K, V], keys: Sequence[K], value: V, *, factory: Callable[[], MutableMapping[K, V]] = dict) -> MutableMapping[K, V]:  # pyright: ignore[reportInconsistentOverload]
+def assoc_in(d: Mapping[K, V], keys: Sequence[K], value: V, *, factory: Callable[[], MutableMapping[K, V]] = dict) -> MutableMapping[K, V]:
 	"""Create a new `MutableMapping` from `d` with `value` at the path specified by `keys`.
 
 	(AI generated docstring)
@@ -246,10 +249,10 @@ def get_in(keys: Sequence[K], coll: Sequence[V] | SupportsGetItem[K, V], default
 @overload
 def get_in(keys: Sequence[K], coll: Sequence[V] | SupportsGetItem[K, V], default: V, no_default: Literal[True]) -> V: ...
 @overload
-def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], default: V1, no_default: bool = False) -> V0 | V1: ...  # noqa: FBT001, FBT002
+def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], default: V1, no_default: bool = False) -> V0 | V1: ...
 @overload
-def get_in(keys: Sequence[K], coll: Sequence[V] | SupportsGetItem[K, V], default: None = None, no_default: bool = False) -> V | None: ...  # noqa: FBT001, FBT002
-def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], default: V1 | None = None, no_default: bool = False) -> V0 | V1 | None:  # noqa: FBT001, FBT002
+def get_in(keys: Sequence[K], coll: Sequence[V] | SupportsGetItem[K, V], default: None = None, no_default: bool = False) -> V | None: ...
+def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], default: V1 | None = None, no_default: bool = False) -> V0 | V1 | None:
 	"""Retrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.
 
 	You can use `get_in` to navigate into a nested `coll` (***coll***ection) by following a
@@ -321,11 +324,11 @@ def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], defau
 		https://docs.python.org/3/library/operator.html#operator.getitem
 	"""
 	if no_default:
-		return reduce(operator.getitem, keys, coll)  # pyright: ignore[reportArgumentType, reportReturnType] # ty:ignore[invalid-return-type]
+		return reduce(operator.getitem, keys, coll)
 	else:
 		v: V1 | None = default
 		with contextlib.suppress(KeyError, IndexError, TypeError):
-			v = reduce(operator.getitem, keys, coll)  # pyright: ignore[reportAssignmentType, reportArgumentType] # ty:ignore[invalid-assignment]
+			v = reduce(operator.getitem, keys, coll)
 		return v
 	try:
 		return reduce(operator.getitem, keys, coll)
@@ -750,8 +753,8 @@ def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V | None], V]
 	while dequeKeys:
 		k: K = dequeKeys.popleft()
 		sherpa = cast('MutableMapping[K, V]', sherpa.get(k, factory()))
-		dATk[k] = dATk = factory(sherpa)  # pyright: ignore[reportArgumentType] # ty:ignore[invalid-assignment]
-	dATk[keyFinal] = func(sherpa.get(keyFinal, default))  # pyright: ignore[reportArgumentType] # ty:ignore[invalid-argument-type]
+		dATk[k] = dATk = factory(sherpa)
+	dATk[keyFinal] = func(sherpa.get(keyFinal, default))
 	return rv
 
 @overload
