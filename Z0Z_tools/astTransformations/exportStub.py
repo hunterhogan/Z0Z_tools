@@ -3,8 +3,11 @@ from __future__ import annotations
 
 from astToolkit import Be, Grab, Make, NodeChanger, parseLogicalPath2astModule, Then
 from astToolkit.transformationTools import write_astModule
-from hunterMakesPy import identifierDotAttribute
+from typing import TYPE_CHECKING
 import ast
+
+if TYPE_CHECKING:
+    from hunterMakesPy import identifierDotAttribute
 
 identifierPackage: str = 'humpy_toolz'
 logicalPath: identifierDotAttribute = f'{identifierPackage}.dicttoolz'

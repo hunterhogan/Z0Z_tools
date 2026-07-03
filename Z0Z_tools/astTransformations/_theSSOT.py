@@ -9,20 +9,13 @@ import re as regex
 import textwrap
 
 """# DEVELOPMENT
-Potentially dynamic sources each have their own git branch.
-	https://github.com/pytoolz/toolz/
-	https://github.com/pytoolz/cytoolz/
-	https://github.com/mgrinshpon/toolz-stubs
-	On their branch, they are processed through the chop shop.
-	Desired changes are moved from the branch to main by a pull request.
-	If the sources do not change, the branch will stay unchanged, but main can improve.
-	My goal is to feed the changes in main back to the original source via a pull request. If the source updates, then the cycle continues.
-
-	https://github.com/getzze/toolz/tree/typed is static.
-	Instead of trying to consolidate all of the changes at one time, I will process the changes per function.
-
-Consolidate settings.
+1. Reconcile logic differences between toolz and cytoolz.
+2. Initiate changes from toolz because I know Python, not Cython.
+3. Use `astToolkit` to automate changes propagating from toolz to cytoolz.
+4. Switch to `optype` to enable sophisticated type annotations.
+5. `optype` Python>=3.12, so switch to Python>=3.12.
 """
+
 #============ Eliminate hardcoding. ===============
 
 subModulesHARDCODED: frozenset[identifierDotAttribute] = frozenset(('', '._signatures', '.compatibility', '.curried', '.curried.exceptions'
@@ -70,3 +63,19 @@ for identifierTransformee in allTransformeePackages:
 		writeStringToHere(noticeCopyrightHeader + (pathTransformee.parent / 'LICENSE.txt').read_text(encoding='utf-8'), settingsFor[humpyPackage].pathPackage / 'Notice_of_Copyright.txt')
 
 	transformALLdot_pyHere.append((pathTransformee, identifierTransformee, getOtherName[identifierTransformee]))
+
+"""# The original plan, 2026 March 22:
+My goal is to feed changes back to the original source via a pull request. If the source updates, pull
+the update, and the cycle continues. See, e.g., https://github.com/pytoolz/toolz/issues/622
+
+2026 July 3: I'm proceeding under the assumption that the original plan is not viable.
+
+Original sources would each have their own git branch.
+- https://github.com/pytoolz/toolz/
+- https://github.com/pytoolz/cytoolz/
+- https://github.com/mgrinshpon/toolz-stubs
+
+On their branch, they are processed through the chop shop. Desired changes are moved from the branch
+to main by a pull request. If the sources do not change, the branch will stay unchanged, but main can
+improve.
+"""
