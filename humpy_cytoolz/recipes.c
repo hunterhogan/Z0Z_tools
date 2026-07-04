@@ -3658,18 +3658,18 @@ static PyObject *__pyx_f_13humpy_cytoolz_7recipes_countby(PyObject *__pyx_v_key,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("countby", 0);
 
-  /* "humpy_cytoolz/recipes.pyx":36
+  /* "humpy_cytoolz/recipes.pyx":37
  * 		groupby
  * 	"""
  *     if not callable(key):             # <<<<<<<<<<<<<<
  *         return frequencies(pluck(key, seq))
  *     return frequencies(map(key, seq))
 */
-  __pyx_t_1 = __Pyx_PyCallable_Check(__pyx_v_key); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyCallable_Check(__pyx_v_key); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 37, __pyx_L1_error)
   __pyx_t_2 = (!__pyx_t_1);
   if (__pyx_t_2) {
 
-    /* "humpy_cytoolz/recipes.pyx":37
+    /* "humpy_cytoolz/recipes.pyx":38
  * 	"""
  *     if not callable(key):
  *         return frequencies(pluck(key, seq))             # <<<<<<<<<<<<<<
@@ -3677,16 +3677,16 @@ static PyObject *__pyx_f_13humpy_cytoolz_7recipes_countby(PyObject *__pyx_v_key,
  * 
 */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __pyx_f_13humpy_cytoolz_9itertoolz_pluck(__pyx_v_key, __pyx_v_seq, 0, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_13humpy_cytoolz_9itertoolz_pluck(__pyx_v_key, __pyx_v_seq, 0, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __pyx_f_13humpy_cytoolz_9itertoolz_frequencies(__pyx_t_3, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_4 = __pyx_f_13humpy_cytoolz_9itertoolz_frequencies(__pyx_t_3, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_r = __pyx_t_4;
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "humpy_cytoolz/recipes.pyx":36
+    /* "humpy_cytoolz/recipes.pyx":37
  * 		groupby
  * 	"""
  *     if not callable(key):             # <<<<<<<<<<<<<<
@@ -3695,7 +3695,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_7recipes_countby(PyObject *__pyx_v_key,
 */
   }
 
-  /* "humpy_cytoolz/recipes.pyx":38
+  /* "humpy_cytoolz/recipes.pyx":39
  *     if not callable(key):
  *         return frequencies(pluck(key, seq))
  *     return frequencies(map(key, seq))             # <<<<<<<<<<<<<<
@@ -3709,10 +3709,10 @@ static PyObject *__pyx_f_13humpy_cytoolz_7recipes_countby(PyObject *__pyx_v_key,
     PyObject *__pyx_callargs[3] = {__pyx_t_3, __pyx_v_key, __pyx_v_seq};
     __pyx_t_4 = __Pyx_PyObject_FastCall((PyObject*)__pyx_builtin_map, __pyx_callargs+__pyx_t_5, (3-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 39, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
   }
-  __pyx_t_3 = __pyx_f_13humpy_cytoolz_9itertoolz_frequencies(__pyx_t_4, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_13humpy_cytoolz_9itertoolz_frequencies(__pyx_t_4, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_r = __pyx_t_3;
@@ -3747,7 +3747,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_7recipes_countby, "countby(key, seq)\n\nCount elements of a collection by a key function.\n\nReturns\n-------\ncountBy : dict[K, int]\n        A dictionary mapping keys to the number of times they occur in `seq`.\n\n>>> countby(len, ['cat', 'mouse', 'dog'])\n{3: 2, 5: 1}\n\n>>> def iseven(x): return x % 2 == 0\n>>> countby(iseven, [1, 2, 3])  # doctest:+SKIP\n{True: 1, False: 2}\n\nSee Also\n--------\n        groupby");
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_7recipes_countby, "countby(key, seq)\n\nCount elements of a collection by a key function.\n\nReturns\n-------\ncountBy : dict[K, int]\n        A dictionary mapping keys to the number of times they occur in `seq`.\n\n>>> countby(len, ['cat', 'mouse', 'dog'])\n{3: 2, 5: 1}\n\n>>> def iseven(x):\n...     return x % 2 == 0\n>>> countby(iseven, [1, 2, 3])  # doctest:+SKIP\n{True: 1, False: 2}\n\nSee Also\n--------\n        groupby");
 static PyMethodDef __pyx_mdef_13humpy_cytoolz_7recipes_1countby = {"countby", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_7recipes_1countby, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_7recipes_countby};
 static PyObject *__pyx_pw_13humpy_cytoolz_7recipes_1countby(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
@@ -3859,7 +3859,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_countby(CYTHON_UNUSED PyObjec
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/recipes.pyx":67
+/* "humpy_cytoolz/recipes.pyx":68
  * 		itertools.groupby
  * 	"""
  *     def __cinit__(self, object func, object seq):             # <<<<<<<<<<<<<<
@@ -3890,39 +3890,39 @@ static int __pyx_pw_13humpy_cytoolz_7recipes_11partitionby_1__cinit__(PyObject *
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_seq,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_VARARGS(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 67, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 68, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_VARARGS(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 67, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 68, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_VARARGS(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 67, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 68, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "__cinit__", 0) < (0)) __PYX_ERR(0, 67, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "__cinit__", 0) < (0)) __PYX_ERR(0, 68, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, i); __PYX_ERR(0, 67, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, i); __PYX_ERR(0, 68, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_VARARGS(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 67, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 68, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_VARARGS(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 67, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 68, __pyx_L3_error)
     }
     __pyx_v_func = values[0];
     __pyx_v_seq = values[1];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 67, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 68, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -3956,7 +3956,7 @@ static int __pyx_pf_13humpy_cytoolz_7recipes_11partitionby___cinit__(struct __py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "humpy_cytoolz/recipes.pyx":68
+  /* "humpy_cytoolz/recipes.pyx":69
  * 	"""
  *     def __cinit__(self, object func, object seq):
  *         self.iter_groupby = groupby(seq, key=func)             # <<<<<<<<<<<<<<
@@ -3980,14 +3980,14 @@ static int __pyx_pf_13humpy_cytoolz_7recipes_11partitionby___cinit__(struct __py
   #endif
   {
     PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_2, __pyx_v_seq};
-    __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_key, __pyx_v_func, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 68, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_key, __pyx_v_func, __pyx_t_5, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 69, __pyx_L1_error)
     __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __Pyx_GIVEREF(__pyx_t_1);
@@ -3996,7 +3996,7 @@ static int __pyx_pf_13humpy_cytoolz_7recipes_11partitionby___cinit__(struct __py
   __pyx_v_self->iter_groupby = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "humpy_cytoolz/recipes.pyx":67
+  /* "humpy_cytoolz/recipes.pyx":68
  * 		itertools.groupby
  * 	"""
  *     def __cinit__(self, object func, object seq):             # <<<<<<<<<<<<<<
@@ -4019,7 +4019,7 @@ static int __pyx_pf_13humpy_cytoolz_7recipes_11partitionby___cinit__(struct __py
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/recipes.pyx":70
+/* "humpy_cytoolz/recipes.pyx":71
  *         self.iter_groupby = groupby(seq, key=func)
  * 
  *     def __iter__(self):             # <<<<<<<<<<<<<<
@@ -4047,7 +4047,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_11partitionby_2__iter__(struc
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__iter__", 0);
 
-  /* "humpy_cytoolz/recipes.pyx":71
+  /* "humpy_cytoolz/recipes.pyx":72
  * 
  *     def __iter__(self):
  *         return self             # <<<<<<<<<<<<<<
@@ -4059,7 +4059,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_11partitionby_2__iter__(struc
   __pyx_r = ((PyObject *)__pyx_v_self);
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/recipes.pyx":70
+  /* "humpy_cytoolz/recipes.pyx":71
  *         self.iter_groupby = groupby(seq, key=func)
  * 
  *     def __iter__(self):             # <<<<<<<<<<<<<<
@@ -4074,7 +4074,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_11partitionby_2__iter__(struc
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/recipes.pyx":73
+/* "humpy_cytoolz/recipes.pyx":74
  *         return self
  * 
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -4112,7 +4112,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_11partitionby_4__next__(struc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__next__", 0);
 
-  /* "humpy_cytoolz/recipes.pyx":75
+  /* "humpy_cytoolz/recipes.pyx":76
  *     def __next__(self):
  *         cdef object key, val
  *         key, val = next(self.iter_groupby)             # <<<<<<<<<<<<<<
@@ -4120,7 +4120,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_11partitionby_4__next__(struc
 */
   __pyx_t_1 = __pyx_v_self->iter_groupby;
   __Pyx_INCREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyIter_Next(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyIter_Next(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if ((likely(PyTuple_CheckExact(__pyx_t_2))) || (PyList_CheckExact(__pyx_t_2))) {
@@ -4129,7 +4129,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_11partitionby_4__next__(struc
     if (unlikely(size != 2)) {
       if (size > 2) __Pyx_RaiseTooManyValuesError(2);
       else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 75, __pyx_L1_error)
+      __PYX_ERR(0, 76, __pyx_L1_error)
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
     if (likely(PyTuple_CheckExact(sequence))) {
@@ -4139,22 +4139,22 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_11partitionby_4__next__(struc
       __Pyx_INCREF(__pyx_t_3);
     } else {
       __pyx_t_1 = __Pyx_PyList_GetItemRefFast(sequence, 0, __Pyx_ReferenceSharing_SharedReference);
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
       __Pyx_XGOTREF(__pyx_t_1);
       __pyx_t_3 = __Pyx_PyList_GetItemRefFast(sequence, 1, __Pyx_ReferenceSharing_SharedReference);
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
       __Pyx_XGOTREF(__pyx_t_3);
     }
     #else
-    __pyx_t_1 = __Pyx_PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __Pyx_PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     #endif
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else {
     Py_ssize_t index = -1;
-    __pyx_t_4 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 75, __pyx_L1_error)
+    __pyx_t_4 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 76, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_5 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_4);
@@ -4162,7 +4162,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_11partitionby_4__next__(struc
     __Pyx_GOTREF(__pyx_t_1);
     index = 1; __pyx_t_3 = __pyx_t_5(__pyx_t_4); if (unlikely(!__pyx_t_3)) goto __pyx_L3_unpacking_failed;
     __Pyx_GOTREF(__pyx_t_3);
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_5(__pyx_t_4), 2) < (0)) __PYX_ERR(0, 75, __pyx_L1_error)
+    if (__Pyx_IternextUnpackEndCheck(__pyx_t_5(__pyx_t_4), 2) < (0)) __PYX_ERR(0, 76, __pyx_L1_error)
     __pyx_t_5 = NULL;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     goto __pyx_L4_unpacking_done;
@@ -4170,7 +4170,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_11partitionby_4__next__(struc
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
     if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 75, __pyx_L1_error)
+    __PYX_ERR(0, 76, __pyx_L1_error)
     __pyx_L4_unpacking_done:;
   }
   __pyx_v_key = __pyx_t_1;
@@ -4178,19 +4178,19 @@ static PyObject *__pyx_pf_13humpy_cytoolz_7recipes_11partitionby_4__next__(struc
   __pyx_v_val = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "humpy_cytoolz/recipes.pyx":76
+  /* "humpy_cytoolz/recipes.pyx":77
  *         cdef object key, val
  *         key, val = next(self.iter_groupby)
  *         return PySequence_Tuple(val)             # <<<<<<<<<<<<<<
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = PySequence_Tuple(__pyx_v_val); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_2 = PySequence_Tuple(__pyx_v_val); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/recipes.pyx":73
+  /* "humpy_cytoolz/recipes.pyx":74
  *         return self
  * 
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -4497,7 +4497,7 @@ static PyMethodDef __pyx_methods_13humpy_cytoolz_7recipes_partitionby[] = {
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_13humpy_cytoolz_7recipes_partitionby_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_13humpy_cytoolz_7recipes_partitionby},
-  {Py_tp_doc, (void *)PyDoc_STR("Partition a sequence according to a function.\n\n\tPartition `s` into a sequence of lists such that, when traversing\n\t`s`, every time the output of `func` changes a new list is started\n\tand that and subsequent items are collected into that list.\n\n\tReturns\n\t-------\n\tpartitionBy : Iterator[tuple[T, ...]]\n\tAn iterator of tuples, each containing a partition of `seq`.\n\n\t>>> is_space = lambda c: c == \" \"\n\t>>> list(partitionby(is_space, \"I have space\"))\n\t[('I',), (' ',), ('h', 'a', 'v', 'e'), (' ',), ('s', 'p', 'a', 'c', 'e')]\n\n\t>>> is_large = lambda x: x > 10\n\t>>> list(partitionby(is_large, [1, 2, 1, 99, 88, 33, 99, -1, 5]))\n\t[(1, 2, 1), (99, 88, 33, 99), (-1, 5)]\n\n\tSee Also\n\t--------\n\t\tpartition\n\t\tgroupby\n\t\titertools.groupby\n\t")},
+  {Py_tp_doc, (void *)PyDoc_STR("Partition a sequence according to a function.\n\n\tPartition `s` into a sequence of lists such that, when traversing\n\t`s`, every time the output of `func` changes a new list is started\n\tand that and subsequent items are collected into that list.\n\n\tReturns\n\t-------\n\tpartitionBy : Iterator[tuple[T, ...]]\n\tAn iterator of tuples, each containing a partition of `seq`.\n\n\t>>> is_space = lambda c: c == ' '\n\t>>> list(partitionby(is_space, 'I have space'))\n\t[('I',), (' ',), ('h', 'a', 'v', 'e'), (' ',), ('s', 'p', 'a', 'c', 'e')]\n\n\t>>> is_large = lambda x: x > 10\n\t>>> list(partitionby(is_large, [1, 2, 1, 99, 88, 33, 99, -1, 5]))\n\t[(1, 2, 1), (99, 88, 33, 99), (-1, 5)]\n\n\tSee Also\n\t--------\n\t\tpartition\n\t\tgroupby\n\t\titertools.groupby\n\t")},
   {Py_tp_traverse, (void *)__pyx_tp_traverse_13humpy_cytoolz_7recipes_partitionby},
   {Py_tp_clear, (void *)__pyx_tp_clear_13humpy_cytoolz_7recipes_partitionby},
   {Py_tp_iter, (void *)__pyx_pw_13humpy_cytoolz_7recipes_11partitionby_3__iter__},
@@ -4536,7 +4536,7 @@ static PyTypeObject __pyx_type_13humpy_cytoolz_7recipes_partitionby = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  PyDoc_STR("Partition a sequence according to a function.\n\n\tPartition `s` into a sequence of lists such that, when traversing\n\t`s`, every time the output of `func` changes a new list is started\n\tand that and subsequent items are collected into that list.\n\n\tReturns\n\t-------\n\tpartitionBy : Iterator[tuple[T, ...]]\n\tAn iterator of tuples, each containing a partition of `seq`.\n\n\t>>> is_space = lambda c: c == \" \"\n\t>>> list(partitionby(is_space, \"I have space\"))\n\t[('I',), (' ',), ('h', 'a', 'v', 'e'), (' ',), ('s', 'p', 'a', 'c', 'e')]\n\n\t>>> is_large = lambda x: x > 10\n\t>>> list(partitionby(is_large, [1, 2, 1, 99, 88, 33, 99, -1, 5]))\n\t[(1, 2, 1), (99, 88, 33, 99), (-1, 5)]\n\n\tSee Also\n\t--------\n\t\tpartition\n\t\tgroupby\n\t\titertools.groupby\n\t"), /*tp_doc*/
+  PyDoc_STR("Partition a sequence according to a function.\n\n\tPartition `s` into a sequence of lists such that, when traversing\n\t`s`, every time the output of `func` changes a new list is started\n\tand that and subsequent items are collected into that list.\n\n\tReturns\n\t-------\n\tpartitionBy : Iterator[tuple[T, ...]]\n\tAn iterator of tuples, each containing a partition of `seq`.\n\n\t>>> is_space = lambda c: c == ' '\n\t>>> list(partitionby(is_space, 'I have space'))\n\t[('I',), (' ',), ('h', 'a', 'v', 'e'), (' ',), ('s', 'p', 'a', 'c', 'e')]\n\n\t>>> is_large = lambda x: x > 10\n\t>>> list(partitionby(is_large, [1, 2, 1, 99, 88, 33, 99, -1, 5]))\n\t[(1, 2, 1), (99, 88, 33, 99), (-1, 5)]\n\n\tSee Also\n\t--------\n\t\tpartition\n\t\tgroupby\n\t\titertools.groupby\n\t"), /*tp_doc*/
   __pyx_tp_traverse_13humpy_cytoolz_7recipes_partitionby, /*tp_traverse*/
   __pyx_tp_clear_13humpy_cytoolz_7recipes_partitionby, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -4671,15 +4671,15 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_13humpy_cytoolz_7recipes_partitionby_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby)) __PYX_ERR(0, 41, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_13humpy_cytoolz_7recipes_partitionby_spec, __pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby) < (0)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_13humpy_cytoolz_7recipes_partitionby_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby)) __PYX_ERR(0, 42, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_13humpy_cytoolz_7recipes_partitionby_spec, __pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby) < (0)) __PYX_ERR(0, 42, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby = &__pyx_type_13humpy_cytoolz_7recipes_partitionby;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby) < (0)) __PYX_ERR(0, 41, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby) < (0)) __PYX_ERR(0, 42, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby);
@@ -4689,8 +4689,8 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_partitionby, (PyObject *) __pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby) < (0)) __PYX_ERR(0, 41, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject *) __pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby) < (0)) __PYX_ERR(0, 41, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_partitionby, (PyObject *) __pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby) < (0)) __PYX_ERR(0, 42, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_mstate->__pyx_ptype_13humpy_cytoolz_7recipes_partitionby) < (0)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5543,7 +5543,7 @@ __Pyx_RefNannySetupContext("PyInit_recipes", 0);
 
 static int __Pyx_InitCachedBuiltins(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
-  __pyx_builtin_map = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_map); if (!__pyx_builtin_map) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_builtin_map = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_map); if (!__pyx_builtin_map) __PYX_ERR(0, 39, __pyx_L1_error)
 
   /* Cached unbound methods */
   __pyx_mstate->__pyx_umethod_PyDict_Type_items.type = (PyObject*)&PyDict_Type;
@@ -5570,33 +5570,33 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 9; } index[] = {{1},{364},{17},{7},{6},{2},{25},{9},{50},{14},{20},{7},{12},{18},{18},{7},{4},{8},{12},{7},{21},{13},{5},{9},{3},{8},{3},{10},{8},{4},{11},{29},{31},{3},{12},{11},{14},{12},{10},{17},{13},{4},{3},{12},{10},{12},{19},{8},{6},{67},{202},{9},{45}};
-    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (716 bytes) */
-const char* const cstring = "(\265/\375`\344\003\025\026\000\206'}6P\217:0\263Dfff\306\205Z7kI\364\371\232L\"\311\226rE&%6m9)A]p>\212\214\337LQY\303\322\036a&vV\343\026\306\232F\244\005j\000q\000d\000#\252\271\275t\3330\266\371\0077'\214M\227\234.\343P(\224br\233\3023r\275\020R\356\254o\361\253g\333\235\354\244g\372lG3r\334\333\270\253/\303\262.\224\237\221\261\217\223\207Qc\020w\032\320\272\030\254\313\316z\337I\254\353\362\314+\342\316K\374\270\313x\322\370\320\245\244\220\037\213(\333\237\276\271t\376y\351\006F\360j^\273\371\345}tj6\242:\316c\235\213\320k\303\212\244\364;\330\035\267]\022\034Mw\231=\033\265\216\304\207}F\311a\353\3522\356\322:\262\250\225\031\354^\342V\276\016\306\374V\023\021\217\217\222\005\320[\177H5>`\356\240@`\037\007\276\270\340\007F`\024W\006uP\234\351'\267\221E\256\265|\030\024\301\330\003\203 X\254\253\203\262\t\017r\324vOJ\362tY\374\3728\337\336ty5\312\315\370\266\356\316K\266\332\315?\266\215\355\261\357\243\356\356\022|\231\303W\277glh}\306\277\264R\350\241\021\316\316\372\277\247svK\371\272EN\362(\007\351\207\221\003\325\211t\207\034\326K\355hZ\213\356\2173\302n\226/\236b}\206I\247_\215\273=\232\227\210\225\301\312\252\236\252\"5\000\000\363^\n^4/\021+\203\025K\212@\000&C\365QM\244\336E  \223\020\243q\031Q-\244.\000\030\215\213\365\010\247_\223WQ&\323\221\n\\\202Wr\024\r\361i;\252\257\237\243\360\326\267\214e:$\370\217\263Qk.\226\370gd\214\243\300\017]%\013\351D\254_\371N\326\277\273MnE\022\345\362]S\366\376\324\035\271X( \2060Sh\036r\031-\024\033\207j\250\322\302\372o\355\317\023\014u\000\303\305La\3779\226.\346\004\303\304\3616\215\376\005\355\006\013\230VU\020.y\020n\274P\031\3358\360#g\276:*\241\207\201\0344\234\206f#6\nx\033\010\014\361-\362\004\014\005\256J\242\005\210B!\341\221\271\240\327x\031\024\224k>\276\022\350\r\013\235xE}Y\244\315\312\020<\357pr\330*3\274\016\206-\231\342\206x\000\305\237\r\207\326]\370\360\242j\266\225\342\360<.\323\363|\226\314\373c\004\217\301\360\013\366i*\"\r\306\270\320\334\321L`\274\336\360\264\364\312pih&\354i\235\264\235""\352\324gS+\375M\252\256#\305\232\2742";
-    PyObject *data = __Pyx_DecompressString(cstring, 716, 3);
+    const struct { const unsigned int length: 9; } index[] = {{1},{373},{17},{7},{6},{2},{25},{9},{50},{14},{20},{7},{12},{18},{18},{7},{4},{8},{12},{7},{21},{13},{5},{9},{3},{8},{3},{10},{8},{4},{11},{29},{31},{3},{12},{11},{14},{12},{10},{17},{13},{4},{3},{12},{10},{12},{19},{8},{6},{67},{202},{9},{45}};
+    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (723 bytes) */
+const char* const cstring = "(\265/\375`\355\003M\026\000\326g~6P\217:0\263Dfff\306\273\\\246{V(\3625\231D\222-\345\212LJl\332rR\202\272\340|\024\031\277\231\242\262\206\245=\3020W\253q\013cM#\322\002l\000s\000f\000'\032\021\325\334^\272i\030\323\374\203\032\023\306\246\313M\2271\010\004B)\271E\341\031\271^\010)w\326\267\370\325\263\355N\366\3213}\266\242\0319\356m\334\325\207aY\327\311\317\310\230\207\311\303\250\361\207\273\014h]\013\326eg\275\357#\326uu\346\rq\347$~\334e<i|\350RR\310\217C\224\355O\337\\:\377\274T\343\"W\363\332\315/\357\243S\263\361\324q\035\353\\\204^\031T$\245\337\301\356\270\355\216\240h\272\313\354\331\250q\"<\3543\312\r[W\227q\227V\221E\255\304`w\022\267\362q0\346\267\226\204tx\220(|\336\372C\252\361\0013\347\344\001\3634\260\205\005;0\002\237\270r\247\323\261\256\017\347\264\231nr\0339\344\032\213\207?\020\2149\360\347a\305\2728\001\334\203\034\265\335\223\216:]\026\277>\316\2677]^\215r3\276\255\273s\222\255v\363\217mcw\354\273\250\273\233\004_\346\360\325\357\031\033Z\237\361/\255\024vh\204\263\263\376\357\351\234\335R\276\356\220\217\374\311?\372a\3348u!\335 \207\365R+\232\266\242\373\343\214\260\233\345\213\246X\177a\322\351W\343n\207\001\231\025\204\312@eS/E\201\032\000py\253\202Uf\005\2412P\255\240\010\004\\0R\236\224\004\352[\004\0020\233\227L\213HJ\001u\001\270dZ\254G8\375\226\274\2060\030\216L`\022\274\222\233\350\007O[Q}\375\034\205\267\276e\014\303\031\301\177\234\215Zs\221\304?#c\233\004~\350)\031H\027b\375\312g\262\376\335]r\033\222'\227\357\226\262\367\246\356\030Y( \2060Sgub)-\023\033\207j\250\322\302\372o\355\317\023\014\177\000#\305L\341\003\222-\235\314\t\206\251\342m\032\375\013\332\215\0260\265\252 \\\362 \334x\241N\272I\340\007\316|;\332\241\247\0079h\330\031\275\214\370(\3401\020\374\304'\310\0310\006\034\226\304\010\260\204\202\n\017\372\005\247qHP,_O\030\214\2447Dh\342\371\365c\321m&C\354yP\t\305V\315\360Q0V\t\017I\250\001\024~\266\021\nv\315\205\027T\363v\213\003\366s\231\226g\265\344\325(T8!\316[\370\217\246&dc\025\205\257\r[\013X\322\231c\206""\362\325}\021/P\314lw\335j\273\251\023\315\336W\362\233\324\\G\2125ye";
+    PyObject *data = __Pyx_DecompressString(cstring, 723, 3);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (807 bytes) */
-const char* const cstring = "BZh91AY&SY\211B\346\006\000\000{\377\362\356x\202\000k\377\372\377\275)\374\n\377\377\377z@@@@@\000\000@@\000@\002\245Y\266\216Z\316\032$i\2412\236S\323S&# \320\036\240\001\352z\200\311\241\243F\203\324zO5A\242\001\251\212z&\251\372hS\323S\000!\241\220\030\215\r\r\0320\203C\312\006\232A\n~\204\236Q\352h\001\240\r\000\0002\000\000\000\017PJ\024i\250OL\243\332MC@\320\000\000\000\000\000\000\000\202)O\022\002\014\212\221@\266*\r\233\320\021@`\031\216\270>=\265R\004_\220\315\255\230\315\321f\273W?o\207g\000Z\343\341\306w\324\200aR%\202\031\\!\363\221H\307)[\2554\233\016\271;\340J=-\215\025\253\t\243\230\217U4\213\307\371\270'\365h\362\225\002\222\256\301\2663q\270\200\303\247\316&\323\006\370x\031y\275\304\013|')\347\213QR!\214\356\230Y\200\263\204\364\202#j\346\014\010W\177;\337\274\335\300W\0248\224\312'\312\346e\267\262m\000}\225z\370\375\341\014\333)O\230\36280k\331\215\020K\210\256\315TAS0\030\020k{\273\344\245\242t\326w-N\374b\205vyF\236\t\377[a\246y\325^hx\022\244\021Z\013U\036^\r\005\021\024\t\225a*=\321\035\212)\256\313\265N\266J\362\254\032\204D\2242\301>\n\310\273\331\240\345\000\t\200m\270\314<\0140\202\226\177\035\326\220H\027\246\0209\207\007_'jk\205\213\275\210\000L\202\213\222\357\211\022\n\030\325bD\312U\002\311#6\341zL\005\241efE%T\223\031\250V\000xT\026\326\275&\024\372Euw\224k\246\014\013\022\326\200fg\034X1@\263\030J(b\321\014\230\214_Y\231e\266\033w#\336\374\317\300\035\224\260\202\251[\335\314y4\033_MYX\030\022ox\006\302,$\240\364\334v\372\312\273o\355\211K8\002ES\214\312\272\317Q\3132\252fpv3\007\315\001hdaA+\243J\370n\306rG\033\347\211\030\"QXi\260+D\017\035m\236\016T\261j[R\271\036*\241]\320\222\222H\353\\a\2412\016z\341\002\241Y\010N<\223\361\204\240\234\324+\224J\312\245\002\2604>x^\026\202$\260L=\253B\315\016*\355k\234\014\355\325\001\030\214f\tCR\001\325\262\2466\230\224\032\024\2310gl\327X\226\013E/b\031\032H\"\032cE\224n\3762\002\302\211\266\365k5G'7\032l\256\363\002\004*&\230(\025z,\225\002\324FJ\262%\264p\262\"\317\013<k4\302z\352\334B""\222\303,QE@\373\211\202\226\220([\361R{$\032\030\364\271P\024\310?U\250V\017\024\005k\344b\245c8\211) #\002A\337\207\023\253\367\372\261Fj\234\302\273\325\274\0262\017U\233R\243\374]\311\024\341BB%\013\230\030";
-    PyObject *data = __Pyx_DecompressString(cstring, 807, 2);
+    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (815 bytes) */
+const char* const cstring = "BZh91AY&SY\362\311\332/\000\000\200\177\362\356x\202\000j\377\372\377\275)\374\n\377\377\377z@@@@@\000\000@@\000@\002\245\032\332:k8hQ\246\210\311=\006I\211\210\323M4\321\243 \323\023F\230\215\r4\321\246&j\014\220\004\310\3225=4\324\236I\352h\364\200\301\000d\000\000\000=\001\246\223SS)\372\230\247\244h\006\215\032i\241\240\000\000\003@4\003L\202Q\0052&\305\037\244\232\031\003F\206\200\003@\000\r\001\202\000~M\303\306\201\014\213k\347\254N\033\203\206\363\340\007\314\0031}\377\254\325\370\232\002g\354\253\2656\031\307\023\246@JZj\252#i\000O\265')\325Z\003\013\260\246\010gp\206\217\205\246[\205>=\336}uG\365X\023\227\321\262\242\265B\r\\\034\252s\014\003'/\213\007?t\330\027\032\276\343xh\3628\2017wp\273D\033\301\320e\352\355\240VB\263\235`\304\241>^\321&\023\246b#\002#\222tB@\3275,8Q\276\025\256\3035\301K%\336Fw\234\364\201\232\022\364<\240\006d\232\305\374\001\3035:\353\330\216sA\221\307\013dA\332\010\252\310D b\026\001\013ZU\250\312\241\235\224\220\244\201_\314 H\264\3121\2637\363N\306i\225^hx\024\322\010\254\013*<\274\032\n\"(\022\252\307t\232R\316\336\275\262\331\215\273LL\2255\302k\022\211H\313\004\360)\242\226\010\034\326\000\274\003m\314A0\201j3\334\341\276\342#\003\343\204\022\260\340\354&\355;\241b\3774@\021\304Qs^\020D\220NF\313\222\223\252*\005\222GoC\014\230\014\361\216\262\242\222\252I\214\325\030\000\016\n#\264\256~d\n}$\272\272jE\322\313\026'\324\200f\207$\2303@\350A\032(f\331\014s \302\324C\267t7\257\213\336\375\017\260;l\345\006\245vv\263\343\261\032\372j\236@\301\032\336\360\021\204\345*\017\217]\333\3536\335\207\362F{\200\t\232\234\210m\2654\271hj\255\022\016\316\202\366\306N9\301\002\233\334\224s_\240\364s\242\231\250\300j\212\301\222\327\215\241\020\372\314x\rCU\363\276m/\010\204E\267;h9\220\324\240\253\254!\257M !\020\"\352\007\207lP4\025\326\241l\344rU8\034\201\241\365\345x\\D\212\301bk\270-\"\222_\270\236\360N\257\004\004b1dS\014\220\021`uW5JJ\r\nL\23134\274\356I\313\014\256YH\260\304H5\006\316\225\033\301\211\003!\2227:\267Z\244\233\233\214u""\257\004\002\004RG\250\221\245\030HU\005\2528\246\264\022\272<Z\010\263O'R\313(\2307\254!P\244\305k[\002+\t\226\230\350\020\\\241Ri\t\331=\232\217T\0054\217\325d\025\201\356\200i\276H!6$\021)D\004\300:\006\034Y#E\237\362\035{79\216*q\362D3\013q\033]\351\376.\344\212p\241!\345\223\264^";
+    PyObject *data = __Pyx_DecompressString(cstring, 815, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (693 bytes) */
-const char* const cstring = "x\332\235SQO\023A\020\206\004\023Z\037|\362}\214\321\266P\252\205\020\265\n\0065&\206D\021|#d\330\356M\333\265{\273\307\355.\351ALx\344\261\217<\362\263\370\031\376\004g\333\243@\224\027/\271\271\271\231\335\357\373vf\366\375G\033\214\007\322\224\222\361\016l\017\004H\2535I\257\254\201n\301\377C*\240\027\314$\322\252V+\273\344Cn\\\265\2622}\252\025\031Q>\024\320\201DI\277\277\335\004e\374A\265R\331\232\004x\237\310\013HE\226)\323\217x\016\274\005? 0!\355R\036y\275J\311\305X\001V\312\2203\004\034:::\214\224\233\233\2330!\351\026uM\246\t\3735)|\255\t\265\324\006G\321Il\277v\320\250VN\327:\260\332\204\365\016\264\177\225;\023\352\201rtL\246>jt \237\350\207\021<\203U\330\330\200\227w\361\247+\231\242\335\214@k\007\r\200\247\220X\351\311\371\316\362\336\366\227\035f\371\221\007b\212&|\026\332\261\267\032\311\366\210`K;;+\r\327\246\322\317m\310\272EY%\256h]+C\320~\325H\224\023]Md\242\355\313AH\263\002e\341\255\325'/r\222*#\327\312\212\021+\232,I\214\215g\021A{@\314)\t\222\020!\t\024\313i\254Y\361\271:VBsV*\243<\342;\307!\323w6\344\2226\021w\212\021\277\237\270)\370\225F~\227z\210Bk\344G\030c\275\360\214(\\a\244\262-iY\272g\261NF\311\250\014\372\\H\352\n9,\017\023\347\002qj\021\373\344\335\024\242<\364\235#\265\312#\241r8\203V\236R\307&\217K\034\217\006b*\230\210m\306\306&AS\2046\"\345\257a\315\231\310\275\2123\325-n\271\255YA\230m`\031\340n\322]K\233\245-\343sqQ\212LE\206\350\227\352\243{\354c\311c\342(\010=\245\277)\372_l\263\000\215\"\231\356\361\350NXK\345\354\225\255\273\245\005\377\241\0131\316\031\342\261\320\201\334N\361\255\373\223/#,\325o\334&\334\366\371\252A\251~\2502\344\241\312\204\227\203\306\\\331\242\377\207h\002OO\220\3279\233y\024y\337a{\355N_\361\315u\377N0\323A\016ai\266!^}=\331\325\230\273G\310\275\372'Xs\275\234\216\002\361<\222;\233\277Z\250\236/\217\277\237\315\377~>\367`\361\314\237\277\036\267\307[W\213\217\316O/\236\\\254_\316_>\276\024W\013\017\317\337\216\305\330MC\177\000\220\365\306?";
-    PyObject *data = __Pyx_DecompressString(cstring, 693, 1);
+    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (698 bytes) */
+const char* const cstring = "x\332\235T\317OSA\020\206D\023Z\017\236\274\2171\246-\224j!D\255R\203\032\023C\242\010\336\010\031\266\373\246\355\332}\273\217\267\273\244\017b\302\221c\217\034\371\263\3703\374\023\234m\037\005\242\\\334\244\333\351\314\233\357\373\346\307\353\373\2176\030\017\244)%\343\035\330>\010\220Vk\222^Y\003\275\202\177\217\250\200~0SO\253Z\255\354\222\017\271q\325\312\352\354T+2\242|(\240\003\211\222~\177\273\t\312\370\203j\245\2625up\236\310\013HE\226)3\210x\016\274\005?$0!\355Q\036y\275J\311E_\001V\312\2203\004\034:::\214\224\335n\027\246$\275\242\256\3114a\277&\205\2575\241\226\332\340(\032\211\035\324\016\032\325\312\351z\007\326\232\260\321\201\366\25723\241>(G\307d\352\343F\247Zi\265Z\020O>-\004\306\360\034\326`s\023^\336%\232\2450W\273\031\021\327\017\032\000\317 \261\322\223\363\235\225\275\355/;L\367#\017\304\\M\370,\264ck-\262\356\021\301\226vv\336#nRe\220\333\220\365\212\262]\334\332\272V\206\240\375\252\221('z\232\310\304{ \207!\315\n\224\205\267V\237\274\310I\252\214\\++\306\254h\372Hbl,J\004\355\0011\247$HB\204$P\354\253\261f\325\347\352X\t\315Q\251\214\362\210\357\034\273\314\300\331\220K\352\"\356\024c\376|\342\351\340W\032\373]\352#\n\255\221\2170\306z\341\031Q\270\302He[\322\262t\317b\235\214\222Q\031\364\271\220\324\023rT\026\023\027\004qv#\016\310\273\031DY\364\235\222ZeI\250\034\316\241\225\247\324\361\225\307G\034\357\010b*\230\210\357\214/\233\004M\021\332\210\224\277\rk\316D\356U\\\256^q\313l\315\033\302lC\313\000w\203\356Z\332<l\031\237\233\213Rd*2D\273T\037\315c\037[\036\003GA\350\031\375M\323\377b\233;h\034\311t\237wx\312Z*g\253\034\335--\370\017]\210q\317\020\217\205\016\344v\212o\275\237\374V\302r\375\306l\302m\233\3379(\325\217T\206\274T\231\360r\330X(G\364\377\020M\340\355\t\362:f3\217\"\0378l\257\337\231+\276\271\236\337\tf:\310\021,\317\023\342\177\200\236f5\026\356\021r\257\376)\326B?\247\243@\274\217\344\316\026\257\036T\317W&\337\317\026\177\327\027\036.\235\371\363\327\223\366d\353j\351\361\371\351\305\323\213\215\313\305\313'\227\342""\352\301\243\363\267\0231q3\327\037\253\366\307^";
+    PyObject *data = __Pyx_DecompressString(cstring, 698, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (1252 bytes) */
-const char* const bytes = "?Count elements of a collection by a key function.\n\n\tReturns\n\t-------\n\tcountBy : dict[K, int]\n\t\tA dictionary mapping keys to the number of times they occur in `seq`.\n\n\t>>> countby(len, ['cat', 'mouse', 'dog'])\n\t{3: 2, 5: 1}\n\n\t>>> def iseven(x): return x % 2 == 0\n\t>>> countby(iseven, [1, 2, 3])  # doctest:+SKIP\n\t{True: 1, False: 2}\n\n\tSee Also\n\t--------\n\t\tgroupby\n\tcountby (line 17)disableenablegchumpy_cytoolz/recipes.pyxisenabledno default __reduce__ due to non-trivial __cinit__<stringsource>__Pyx_PyDict_NextRef__all____annotate__asyncio.coroutinescline_in_tracebackcountbyfunc__func____getstate__groupbyhumpy_cytoolz.recipes_is_coroutineitemsitertoolskey__main__map__module____name__nextpartitionbypartitionby.__reduce_cython__partitionby.__setstate_cython__pop__pyx_capi____pyx_state__pyx_vtable____qualname____reduce____reduce_cython____reduce_ex__selfseq__set_name__setdefault__setstate____setstate_cython____test__valuesPyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch)\000countbyPyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9itertoolz_pluck *__pyx_optional_args)\000PyObject *(PyObject *, int __pyx_skip_dispatch)\000pluck\000frequencies\200\001\330\004\n\210+\220Q\200\001\360&\000\005\010\200t\2108\2201\220A\330\010\017\210{\230!\2305\240\001\240\025\240a\330\004\013\210;\220a\220s\230!\2305\240\001";
+    #else /* compression: none (1261 bytes) */
+const char* const bytes = "?Count elements of a collection by a key function.\n\n\tReturns\n\t-------\n\tcountBy : dict[K, int]\n\t\tA dictionary mapping keys to the number of times they occur in `seq`.\n\n\t>>> countby(len, ['cat', 'mouse', 'dog'])\n\t{3: 2, 5: 1}\n\n\t>>> def iseven(x):\n\t...     return x % 2 == 0\n\t>>> countby(iseven, [1, 2, 3])  # doctest:+SKIP\n\t{True: 1, False: 2}\n\n\tSee Also\n\t--------\n\t\tgroupby\n\tcountby (line 17)disableenablegchumpy_cytoolz/recipes.pyxisenabledno default __reduce__ due to non-trivial __cinit__<stringsource>__Pyx_PyDict_NextRef__all____annotate__asyncio.coroutinescline_in_tracebackcountbyfunc__func____getstate__groupbyhumpy_cytoolz.recipes_is_coroutineitemsitertoolskey__main__map__module____name__nextpartitionbypartitionby.__reduce_cython__partitionby.__setstate_cython__pop__pyx_capi____pyx_state__pyx_vtable____qualname____reduce____reduce_cython____reduce_ex__selfseq__set_name__setdefault__setstate____setstate_cython____test__valuesPyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch)\000countbyPyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9itertoolz_pluck *__pyx_optional_args)\000PyObject *(PyObject *, int __pyx_skip_dispatch)\000pluck\000frequencies\200\001\330\004\n\210+\220Q\200\001\360(\000\005\010\200t\2108\2201\220A\330\010\017\210{\230!\2305\240\001\240\025\240a\330\004\013\210;\220a\220s\230!\2305\240\001";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif

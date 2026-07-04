@@ -6,163 +6,142 @@ from typing import overload, TYPE_CHECKING
 from typing_extensions import override
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Hashable, Iterable, Iterator, Sequence
-    from humpy_toolz._theTypes import T, V0, V1, V2, V3
+	from collections.abc import Callable, Hashable, Iterable, Iterator, Sequence
+	from humpy_toolz._theTypes import T, V0, V1, V2, V3
 
 class EqualityHashKey:
-    """Create a hash key that uses equality comparisons between items.
+	"""Create a hash key that uses equality comparisons between items.
 
-    This may be used to create hash keys for otherwise unhashable types:
+	This may be used to create hash keys for otherwise unhashable types:
 
-    >>> from humpy_toolz import curry
-    >>> EqualityHashDefault = curry(EqualityHashKey, None)
-    >>> set(map(EqualityHashDefault, [[], (), [1], [1]]))  # doctest: +SKIP
-    {=[]=, =()=, =[1]=}
+	>>> from humpy_toolz import curry
+	>>> EqualityHashDefault = curry(EqualityHashKey, None)
+	>>> set(map(EqualityHashDefault, [[], (), [1], [1]]))  # doctest: +SKIP
+	{=[]=, =()=, =[1]=}
 
-    **Caution:** adding N ``EqualityHashKey`` items to a hash container
-    may require O(N**2) operations, not O(N) as for typical hashable types.
-    Therefore, a suitable key function such as ``tuple`` or ``frozenset``
-    is usually preferred over using ``EqualityHashKey`` if possible.
+	**Caution:** adding N ``EqualityHashKey`` items to a hash container
+	may require O(N**2) operations, not O(N) as for typical hashable types.
+	Therefore, a suitable key function such as ``tuple`` or ``frozenset``
+	is usually preferred over using ``EqualityHashKey`` if possible.
 
-    The ``key`` argument to ``EqualityHashKey`` should be a function or
-    index that returns a hashable object that effectively distinguishes
-    unequal items.  This helps avoid the poor scaling that occurs when
-    using the default key.  For example, the above example can be improved
-    by using a key function that distinguishes items by length or type:
+	The ``key`` argument to ``EqualityHashKey`` should be a function or
+	index that returns a hashable object that effectively distinguishes
+	unequal items.  This helps avoid the poor scaling that occurs when
+	using the default key.  For example, the above example can be improved
+	by using a key function that distinguishes items by length or type:
 
-    >>> EqualityHashLen = curry(EqualityHashKey, len)
-    >>> EqualityHashType = curry(EqualityHashKey, type)  # this works too
-    >>> set(map(EqualityHashLen, [[], (), [1], [1]]))  # doctest: +SKIP
-    {=[]=, =()=, =[1]=}
+	>>> EqualityHashLen = curry(EqualityHashKey, len)
+	>>> EqualityHashType = curry(EqualityHashKey, type)  # this works too
+	>>> set(map(EqualityHashLen, [[], (), [1], [1]]))  # doctest: +SKIP
+	{=[]=, =()=, =[1]=}
 
-    ``EqualityHashKey`` is convenient to use when a suitable key function
-    is complicated or unavailable.  For example, the following returns all
-    unique values based on equality:
+	``EqualityHashKey`` is convenient to use when a suitable key function
+	is complicated or unavailable.  For example, the following returns all
+	unique values based on equality:
 
-    >>> from humpy_toolz import unique
-    >>> vals = [[], [], (), [1], [1], [2], {}, {}, {}]
-    >>> list(unique(vals, key=EqualityHashDefault))
-    [[], (), [1], [2], {}]
+	>>> from humpy_toolz import unique
+	>>> vals = [[], [], (), [1], [1], [2], {}, {}, {}]
+	>>> list(unique(vals, key=EqualityHashDefault))
+	[[], (), [1], [2], {}]
 
-    **Warning:** don't change the equality value of an item already in a hash
-    container.  Unhashable types are unhashable for a reason.  For example:
+	**Warning:** don't change the equality value of an item already in a hash
+	container.  Unhashable types are unhashable for a reason.  For example:
 
-    >>> L1 = [1] ; L2 = [2]
-    >>> s = set(map(EqualityHashDefault, [L1, L2]))
-    >>> s  # doctest: +SKIP
-    {=[1]=, =[2]=}
+	>>> L1 = [1]
+	... L2 = [2]
+	>>> s = set(map(EqualityHashDefault, [L1, L2]))
+	>>> s  # doctest: +SKIP
+	{=[1]=, =[2]=}
 
-    >>> L1[0] = 2  # Don't do this!  ``s`` now has duplicate items!
-    >>> s  # doctest: +SKIP
-    {=[2]=, =[2]=}
+	>>> L1[0] = 2  # Don't do this!  ``s`` now has duplicate items!
+	>>> s  # doctest: +SKIP
+	{=[2]=, =[2]=}
 
-    Although this may appear problematic, immutable data types is a common
-    idiom in functional programming, and``EqualityHashKey`` easily allows
-    the same idiom to be used by convention rather than strict requirement.
+	Although this may appear problematic, immutable data types is a common
+	idiom in functional programming, and``EqualityHashKey`` easily allows
+	the same idiom to be used by convention rather than strict requirement.
 
-    See Also
-    --------
-        identity
-    """
-    __slots__: list[str] = ['item', 'key']
-    _default_hashkey: str = '__default__hashkey__'
+	See Also
+	--------
+		identity
+	"""
 
-    def __init__(
-        self,
-        key: Callable[[T], Hashable] | Hashable | Sequence[Hashable] | None,
-        item: T,
-    ) -> None:
-        if key is None:
-            self.key = self._default_hashkey
-        elif not callable(key):
-            self.key = getter(key)
-        else:
-            self.key = key
-        self.item = item
+	__slots__: list[str] = ['item', 'key']
+	_default_hashkey: str = '__default__hashkey__'
 
-    @override
-    def __hash__(self) -> int:
-        if self.key == self._default_hashkey:
-            val = self.key
-        else:
-            val = self.key(self.item)
-        return hash(val)
+	def __init__(self, key: Callable[[T], Hashable] | Hashable | Sequence[Hashable] | None, item: T) -> None:
+		if key is None:
+			self.key = self._default_hashkey
+		elif not callable(key):
+			self.key = getter(key)
+		else:
+			self.key = key
+		self.item = item
 
-    @override
-    def __eq__(self, other: object) -> bool:
-        try:
-            return self._default_hashkey == other._default_hashkey and self.item == other.item
-        except AttributeError:
-            return False
+	@override
+	def __hash__(self) -> int:
+		if self.key == self._default_hashkey:
+			val = self.key
+		else:
+			val = self.key(self.item)
+		return hash(val)
 
-    @override
-    def __ne__(self, other: object) -> bool:
-        return not self.__eq__(other)
+	@override
+	def __eq__(self, other: object) -> bool:
+		try:
+			return self._default_hashkey == other._default_hashkey and self.item == other.item
+		except AttributeError:
+			return False
 
-    def __str__(self) -> str:
-        return '=%s=' % str(self.item)
+	@override
+	def __ne__(self, other: object) -> bool:
+		return not self.__eq__(other)
 
-    def __repr__(self) -> str:
-        return '=%s=' % repr(self.item)
+	def __str__(self) -> str:
+		return '=%s=' % str(self.item)
+
+	def __repr__(self) -> str:
+		return '=%s=' % repr(self.item)
 
 @overload
 def unzip(seq: Iterable[tuple[()]]) -> tuple[()]: ...
 @overload
-def unzip(
-    seq: Iterable[tuple[V0]],
-) -> tuple[Iterator[V0]]: ...
+def unzip(seq: Iterable[tuple[V0]]) -> tuple[Iterator[V0]]: ...
 @overload
-def unzip(
-    seq: Iterable[tuple[V0, V1]],
-) -> tuple[Iterator[V0], Iterator[V1]]: ...
+def unzip(seq: Iterable[tuple[V0, V1]]) -> tuple[Iterator[V0], Iterator[V1]]: ...
 @overload
-def unzip(
-    seq: Iterable[tuple[V0, V1, V2]],
-) -> tuple[
-    Iterator[V0],
-    Iterator[V1],
-    Iterator[V2],
-]: ...
+def unzip(seq: Iterable[tuple[V0, V1, V2]]) -> tuple[Iterator[V0], Iterator[V1], Iterator[V2]]: ...
 @overload
-def unzip(
-    seq: Iterable[tuple[V0, V1, V2, V3]],
-) -> tuple[
-    Iterator[V0],
-    Iterator[V1],
-    Iterator[V2],
-    Iterator[V3],
-]: ...
+def unzip(seq: Iterable[tuple[V0, V1, V2, V3]]) -> tuple[Iterator[V0], Iterator[V1], Iterator[V2], Iterator[V3]]: ...
 @overload
-def unzip(
-    seq: Iterable[tuple[T, ...]],
-) -> tuple[Iterator[T], ...]: ...
+def unzip(seq: Iterable[tuple[T, ...]]) -> tuple[Iterator[T], ...]: ...
 def unzip(seq: Iterable[tuple[T, ...]]) -> tuple[Iterator[T], ...]:
-    """Inverse of ``zip``
+	"""Inverse of ``zip``
 
-    >>> a, b = unzip([('a', 1), ('b', 2)])
-    >>> list(a)
-    ['a', 'b']
-    >>> list(b)
-    [1, 2]
+	>>> a, b = unzip([('a', 1), ('b', 2)])
+	>>> list(a)
+	['a', 'b']
+	>>> list(b)
+	[1, 2]
 
-    Unlike the naive implementation ``def unzip(seq): zip(*seq)`` this
-    implementation can handle an infinite sequence ``seq``.
+	Unlike the naive implementation ``def unzip(seq): zip(*seq)`` this
+	implementation can handle an infinite sequence ``seq``.
 
-    Caveats:
+	Caveats:
 
-    * The implementation uses ``tee``, and so can use a significant amount
-      of auxiliary storage if the resulting iterators are consumed at
-      different times.
+	* The implementation uses ``tee``, and so can use a significant amount
+	  of auxiliary storage if the resulting iterators are consumed at
+	  different times.
 
-    * The inner sequence cannot be infinite. In Python 3 ``zip(*seq)`` can be
-      used if ``seq`` is a finite sequence of infinite sequences.
+	* The inner sequence cannot be infinite. In Python 3 ``zip(*seq)`` can be
+	  used if ``seq`` is a finite sequence of infinite sequences.
 
-    """
-    seq = iter(seq)
-    try:
-        first = tuple(next(seq))
-    except StopIteration:
-        return tuple()
-    niters = len(first)
-    seqs = tee(cons(first, seq), niters)
-    return tuple(starmap(pluck, enumerate(seqs)))
+	"""
+	seq = iter(seq)
+	try:
+		first = tuple(next(seq))
+	except StopIteration:
+		return tuple()
+	niters = len(first)
+	seqs = tee(cons(first, seq), niters)
+	return tuple(starmap(pluck, enumerate(seqs)))

@@ -12,17 +12,9 @@ if TYPE_CHECKING:
 	from typing import Literal
 
 @overload
-def _reduce(
-	func: Callable[[TypeElement, TypeElement], TypeElement],
-	seq: Iterable[TypeElement],
-	initial: None = None,
-) -> TypeElement: ...
+def _reduce(func: Callable[[TypeElement, TypeElement], TypeElement], seq: Iterable[TypeElement], initial: None = None) -> TypeElement: ...
 @overload
-def _reduce(
-	func: Callable[[TypeResult, TypeElement], TypeResult],
-	seq: Iterable[TypeElement],
-	initial: TypeResult,
-) -> TypeResult: ...
+def _reduce(func: Callable[[TypeResult, TypeElement], TypeResult], seq: Iterable[TypeElement], initial: TypeResult) -> TypeResult: ...
 def _reduce(
 	func: Callable[[TypeResult, TypeElement], TypeResult] | Callable[[TypeElement, TypeElement], TypeElement],
 	seq: Iterable[TypeElement],

@@ -88,7 +88,7 @@ cdef class accumulate:
 	cumulative sum:
 
 	>>> from functools import partial, reduce
-	>>> sum    = partial(reduce, add)
+	>>> sum = partial(reduce, add)
 	>>> cumsum = partial(accumulate, add)
 
 	Accumulate also takes an optional argument that will be used as the first
@@ -146,9 +146,9 @@ cpdef dict groupby(object key, object seq):
 
 	Non-callable keys imply grouping on a member.
 
-	>>> groupby('gender', [{'name': 'Alice', 'gender': 'F'},
-	...                    {'name': 'Bob', 'gender': 'M'},
-	...                    {'name': 'Charlie', 'gender': 'M'}]) # doctest:+SKIP
+	>>> groupby(
+	...     'gender', [{'name': 'Alice', 'gender': 'F'}, {'name': 'Bob', 'gender': 'M'}, {'name': 'Charlie', 'gender': 'M'}]
+	... )  # doctest:+SKIP
 	{'F': [{'gender': 'F', 'name': 'Alice'}],
 	 'M': [{'gender': 'M', 'name': 'Bob'},
 		   {'gender': 'M', 'name': 'Charlie'}]}
@@ -480,9 +480,9 @@ cpdef object isdistinct(object seq):
 	>>> isdistinct([1, 2, 1])
 	False
 
-	>>> isdistinct("Hello")
+	>>> isdistinct('Hello')
 	False
-	>>> isdistinct("World")
+	>>> isdistinct('World')
 	True
 	"""
     if iter(seq) is seq:
@@ -628,7 +628,7 @@ cpdef object get(object ind, object seq, object default='__no__default__'):
 
 	Provides standard indexing
 
-	>>> get(1, 'ABC')       # Same as 'ABC'[1]
+	>>> get(1, 'ABC')  # Same as 'ABC'[1]
 	'B'
 
 	Pass a list to get multiple values
@@ -639,9 +639,7 @@ cpdef object get(object ind, object seq, object default='__no__default__'):
 	Works on any value that supports indexing/getitem
 	For example here we see that it works with dictionaries
 
-	>>> phonebook = {'Alice':  '555-1234',
-	...              'Bob':    '555-5678',
-	...              'Charlie':'555-9999'}
+	>>> phonebook = {'Alice': '555-1234', 'Bob': '555-5678', 'Charlie': '555-9999'}
 	>>> get('Alice', phonebook)
 	'555-1234'
 
@@ -726,7 +724,7 @@ cpdef object concat(object seqs):
 def concatv(*seqs):
     """Variadic version of concat
 
-	>>> list(concatv([], ["a"], ["b", "c"]))
+	>>> list(concatv([], ['a'], ['b', 'c']))
 	['a', 'b', 'c']
 
 	See Also
@@ -739,8 +737,7 @@ def concatv(*seqs):
 cpdef object mapcat(object func, object seqs):
     """Apply func to each sequence in seqs, concatenating results.
 
-	>>> list(mapcat(lambda s: [c.upper() for c in s],
-	...             [["a", "b"], ["c", "d", "e"]]))
+	>>> list(mapcat(lambda s: [c.upper() for c in s], [['a', 'b'], ['c', 'd', 'e']]))
 	['A', 'B', 'C', 'D', 'E']
 	"""
     return concat(map(func, seqs))
@@ -758,7 +755,7 @@ cpdef object cons(object el, object seq):
 cdef class interpose:
     """Introduce element between each pair of elements in seq
 
-	>>> list(interpose("a", [1, 2, 3]))
+	>>> list(interpose('a', [1, 2, 3]))
 	[1, 'a', 2, 'a', 3]
 	"""
     def __cinit__(self, object el, object seq):
@@ -786,7 +783,7 @@ cdef class interpose:
 cpdef dict frequencies(object seq):
     """Find number of occurrences of each value in seq
 
-	>>> frequencies(['cat', 'cat', 'ox', 'pig', 'pig', 'cat'])  #doctest: +SKIP
+	>>> frequencies(['cat', 'cat', 'ox', 'pig', 'pig', 'cat'])  # doctest: +SKIP
 	{'cat': 3, 'ox': 1, 'pig': 2}
 
 	See Also
@@ -825,15 +822,15 @@ cpdef dict reduceby(object key, object binop, object seq, object init='__no__def
 
 	The computation:
 
-	>>> result = reduceby(key, binop, seq, init)      # doctest: +SKIP
+	>>> result = reduceby(key, binop, seq, init)  # doctest: +SKIP
 
 	is equivalent to the following:
 
-	>>> def reduction(group):                           # doctest: +SKIP
-	...     return reduce(binop, group, init)           # doctest: +SKIP
+	>>> def reduction(group):  # doctest: +SKIP
+	...     return reduce(binop, group, init)  # doctest: +SKIP
 
-	>>> groups = groupby(key, seq)                    # doctest: +SKIP
-	>>> result = valmap(reduction, groups)              # doctest: +SKIP
+	>>> groups = groupby(key, seq)  # doctest: +SKIP
+	>>> result = valmap(reduction, groups)  # doctest: +SKIP
 
 	But the former does not build the intermediate groups, allowing it to
 	operate in much less space.  This makes it suitable for larger datasets
@@ -860,14 +857,19 @@ cpdef dict reduceby(object key, object binop, object seq, object init='__no__def
 	Complex Example
 	---------------
 
-	>>> projects = [{'name': 'build roads', 'state': 'CA', 'cost': 1000000},
-	...             {'name': 'fight crime', 'state': 'IL', 'cost': 100000},
-	...             {'name': 'help farmers', 'state': 'IL', 'cost': 2000000},
-	...             {'name': 'help farmers', 'state': 'CA', 'cost': 200000}]
+	>>> projects = [
+	...     {'name': 'build roads', 'state': 'CA', 'cost': 1000000},
+	...     {'name': 'fight crime', 'state': 'IL', 'cost': 100000},
+	...     {'name': 'help farmers', 'state': 'IL', 'cost': 2000000},
+	...     {'name': 'help farmers', 'state': 'CA', 'cost': 200000},
+	... ]
 
-	>>> reduceby('state',                        # doctest: +SKIP
-	...          lambda acc, x: acc + x['cost'],
-	...          projects, 0)
+	>>> reduceby(
+	...     'state',  # doctest: +SKIP
+	...     lambda acc, x: acc + x['cost'],
+	...     projects,
+	...     0,
+	... )
 	{'CA': 1200000, 'IL': 2100000}
 
 	Example Using ``init``
@@ -912,7 +914,8 @@ cdef class iterate:
 
 	Yields x, then func(x), then func(func(x)), then func(func(func(x))), etc..
 
-	>>> def inc(x):  return x + 1
+	>>> def inc(x):
+	...     return x + 1
 	>>> counter = iterate(inc, 0)
 	>>> next(counter)
 	0
@@ -1276,24 +1279,14 @@ cpdef object join(object leftkey, object leftseq,
 	(Note: If right_default is defined, then unique keys of rightseq
 		will also be stored in memory.)
 
-	>>> friends = [('Alice', 'Edith'),
-	...            ('Alice', 'Zhao'),
-	...            ('Edith', 'Alice'),
-	...            ('Zhao', 'Alice'),
-	...            ('Zhao', 'Edith')]
+	>>> friends = [('Alice', 'Edith'), ('Alice', 'Zhao'), ('Edith', 'Alice'), ('Zhao', 'Alice'), ('Zhao', 'Edith')]
 
-	>>> cities = [('Alice', 'NYC'),
-	...           ('Alice', 'Chicago'),
-	...           ('Dan', 'Sydney'),
-	...           ('Edith', 'Paris'),
-	...           ('Edith', 'Berlin'),
-	...           ('Zhao', 'Shanghai')]
+	>>> cities = [('Alice', 'NYC'), ('Alice', 'Chicago'), ('Dan', 'Sydney'), ('Edith', 'Paris'), ('Edith', 'Berlin'), ('Zhao', 'Shanghai')]
 
 	>>> # Vacation opportunities
 	>>> # In what cities do people have friends?
-	>>> result = join(second, friends,
-	...               first, cities)
-	>>> for ((a, b), (c, d)) in sorted(unique(result)):
+	>>> result = join(second, friends, first, cities)
+	>>> for (a, b), (c, d) in sorted(unique(result)):
 	...     print((a, d))
 	('Alice', 'Berlin')
 	('Alice', 'Paris')
@@ -1310,9 +1303,7 @@ cpdef object join(object leftkey, object leftseq,
 	are paired with None.
 
 	>>> identity = lambda x: x
-	>>> list(join(identity, [1, 2, 3],
-	...           identity, [2, 3, 4],
-	...           left_default=None, right_default=None))
+	>>> list(join(identity, [1, 2, 3], identity, [2, 3, 4], left_default=None, right_default=None))
 	[(2, 2), (3, 3), (None, 4), (1, None)]
 
 	Usually the key arguments are callables to be applied to the sequences.  If
@@ -1779,9 +1770,9 @@ cdef class random_sample:
 	next time it returned 6 items.
 
 	>>> seq = list(range(100))
-	>>> list(random_sample(0.1, seq)) # doctest: +SKIP
+	>>> list(random_sample(0.1, seq))  # doctest: +SKIP
 	[6, 9, 19, 35, 45, 50, 58, 62, 68, 72, 78, 86, 95]
-	>>> list(random_sample(0.1, seq)) # doctest: +SKIP
+	>>> list(random_sample(0.1, seq))  # doctest: +SKIP
 	[6, 44, 54, 61, 69, 94]
 
 	Providing an integer seed for ``random_state`` will result in

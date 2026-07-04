@@ -298,7 +298,7 @@ def dissoc(d, *keys, **kwargs):
 	{'x': 1}
 	>>> dissoc({'x': 1, 'y': 2}, 'y', 'x')
 	{}
-	>>> dissoc({'x': 1}, 'y') # Ignores missing keys
+	>>> dissoc({'x': 1}, 'y')  # Ignores missing keys
 	{'x': 1}
 
 	References
@@ -349,10 +349,11 @@ cpdef object get_in(object keys, object coll, object default=None, object no_def
 
 	Examples
 	--------
-	>>> transaction = {'name': 'Alice',
-	...                'purchase': {'items': ['Apple', 'Orange'],
-	...                             'costs': [0.50, 1.25]},
-	...                'credit card': '5555-1234-1234-1234'}
+	>>> transaction = {
+	...     'name': 'Alice',
+	...     'purchase': {'items': ['Apple', 'Orange'], 'costs': [0.50, 1.25]},
+	...     'credit card': '5555-1234-1234-1234',
+	... }
 	>>> get_in(['purchase', 'items', 0], transaction)
 	'Apple'
 	>>> get_in(['name'], transaction)
@@ -820,7 +821,7 @@ cpdef object update_in(object d, object keys, object func, object default=None, 
 	>>> update_in({}, ['z'], inc, 0)
 	{'z': 1}
 
-	>>> update_in({}, [1, 2, 3], str, default="bar")
+	>>> update_in({}, [1, 2, 3], str, default='bar')
 	{1: {2: {3: 'bar'}}}
 
 	References

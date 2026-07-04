@@ -468,7 +468,9 @@ def _restore_curry(
 
 @curry
 def memoize(
-	func: Callable[..., T], cache: dict[Any, T] | None = None, key: Callable[[tuple[Any, ...], Mapping[str, Any]], Any] | None = None  # pyright: ignore[]
+	func: Callable[..., T],
+	cache: dict[Any, T] | None = None,
+	key: Callable[[tuple[Any, ...], Mapping[str, Any]], Any] | None = None,  # pyright: ignore[]
 ) -> Callable[..., T]:
 	"""Cache a function's result for speedy future evaluation
 

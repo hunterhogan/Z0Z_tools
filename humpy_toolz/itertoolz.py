@@ -37,7 +37,44 @@ if TYPE_CHECKING:
 	from typing import Any, Literal
 	from typing_extensions import TypeIs
 
-__all__ = ('accumulate', 'concat', 'concatv', 'cons', 'count', 'diff', 'drop', 'first', 'frequencies', 'get', 'groupby', 'interleave', 'interpose', 'isdistinct', 'isiterable', 'iterate', 'join', 'last', 'mapcat', 'merge_sorted', 'nth', 'partition', 'partition_all', 'peek', 'peekn', 'pluck', 'random_sample', 'reduceby', 'remove', 'second', 'sliding_window', 'tail', 'take', 'take_nth', 'topk', 'unique')
+__all__ = (
+	'accumulate',
+	'concat',
+	'concatv',
+	'cons',
+	'count',
+	'diff',
+	'drop',
+	'first',
+	'frequencies',
+	'get',
+	'groupby',
+	'interleave',
+	'interpose',
+	'isdistinct',
+	'isiterable',
+	'iterate',
+	'join',
+	'last',
+	'mapcat',
+	'merge_sorted',
+	'nth',
+	'partition',
+	'partition_all',
+	'peek',
+	'peekn',
+	'pluck',
+	'random_sample',
+	'reduceby',
+	'remove',
+	'second',
+	'sliding_window',
+	'tail',
+	'take',
+	'take_nth',
+	'topk',
+	'unique',
+)
 
 no_pad: Literal['__no__pad__'] = '__no__pad__'
 
@@ -48,12 +85,15 @@ def getter(index: K | Sequence[K]) -> Callable[[SupportsGetItem[K, T]], T | tupl
 
 			def one_tuple(x: SupportsGetItem[K, T]) -> tuple[T]:
 				return (x[element],)
+
 			callableGetter: Callable[[SupportsGetItem[K, T]], tuple[T]] = one_tuple
 		elif index:
 			callableGetter = itemgetter(*index)
 		else:
+
 			def emptyTuple(_x: SupportsGetItem[K, T]) -> tuple[()]:
 				return ()
+
 			callableGetter = emptyTuple
 	else:
 		callableGetter = itemgetter(index)
@@ -76,7 +116,7 @@ def accumulate(binop: Callable[[T, S], T], seq: Iterable[S], initial: T | Litera
 	cumulative sum:
 
 	>>> from functools import partial, reduce
-	>>> sum    = partial(reduce, add)
+	>>> sum = partial(reduce, add)
 	>>> cumsum = partial(accumulate, add)
 
 	Accumulate also takes an optional argument that will be used as the first
@@ -125,7 +165,7 @@ def concat(seqs: Iterable[Iterable[T]]) -> Iterator[T]:
 def concatv(*seqs: Iterable[T]) -> Iterator[T]:
 	"""Variadic version of concat
 
-	>>> list(concatv([], ["a"], ["b", "c"]))
+	>>> list(concatv([], ['a'], ['b', 'c']))
 	['a', 'b', 'c']
 
 	See Also
@@ -158,12 +198,16 @@ def count(seq: Iterable[Any]) -> int:
 	return sum(1 for _i in seq)
 
 @overload
-def diff(*seqs: Iterable[T], default: Literal['__no__default__'] = no_default, key: Callable[[T], Any] | None = None) -> Iterator[tuple[T | None, ...]]: ...
+def diff(
+	*seqs: Iterable[T], default: Literal['__no__default__'] = no_default, key: Callable[[T], Any] | None = None
+) -> Iterator[tuple[T | None, ...]]: ...
 @overload
 def diff(*seqs: Iterable[T], default: U, key: Callable[[T], Any] | None = None) -> Iterator[tuple[T | U, ...]]: ...
 @overload
 def diff(*seqs: Iterable[T], default: T, key: Callable[[T], Any] | None = None) -> Iterator[tuple[T, ...]]: ...
-def diff(*seqs: Iterable[T], default: U | Literal['__no__default__'] = no_default, key: Callable[[T], Any] | None = None) -> Iterator[tuple[T | U | None, ...]]:
+def diff(
+	*seqs: Iterable[T], default: U | Literal['__no__default__'] = no_default, key: Callable[[T], Any] | None = None
+) -> Iterator[tuple[T | U | None, ...]]:
 	"""Return those items that differ between sequences
 
 	>>> list(diff([1, 2, 3], [1, 2, 10, 100]))
@@ -225,7 +269,7 @@ def first(seq: Iterable[T]) -> T:
 def frequencies(seq: Iterable[T]) -> dict[T, int]:
 	"""Find number of occurrences of each value in seq
 
-	>>> frequencies(['cat', 'cat', 'ox', 'pig', 'pig', 'cat'])  #doctest: +SKIP
+	>>> frequencies(['cat', 'cat', 'ox', 'pig', 'pig', 'cat'])  # doctest: +SKIP
 	{'cat': 3, 'ox': 1, 'pig': 2}
 
 	See Also
@@ -243,6 +287,7 @@ def _get(ind: K, seq: SupportsGetItem[K, T], default: T) -> T:
 		return seq[ind]
 	except (KeyError, IndexError):
 		return default
+
 """ # TODO troubleshoot `get` type annotations
 	# NOTE this part is correct.
 	ww: Callable[[fs2Path], DecodedFilename] = compose(librarianDecodesFilename, fs_path.basename)
@@ -250,6 +295,7 @@ def _get(ind: K, seq: SupportsGetItem[K, T], default: T) -> T:
 	# I guess the annotation is returning an item tuple instead of the value.
 	qq: Callable[[fs2Path], tuple[T, ...]] = compose(get('fractionType'), ww)
 """
+
 @overload
 def get(ind: Sequence[K], seq: SupportsGetItem[K, T], default: T | Literal['__no__default__'] = no_default) -> tuple[T, ...]: ...
 @overload
@@ -259,7 +305,7 @@ def get(ind: K | Sequence[K], seq: SupportsGetItem[K, T], default: T | Literal['
 
 	Provides standard indexing
 
-	>>> get(1, 'ABC')       # Same as 'ABC'[1]
+	>>> get(1, 'ABC')  # Same as 'ABC'[1]
 	'B'
 
 	Pass a list to get multiple values
@@ -270,9 +316,7 @@ def get(ind: K | Sequence[K], seq: SupportsGetItem[K, T], default: T | Literal['
 	Works on any value that supports indexing/getitem
 	For example here we see that it works with dictionaries
 
-	>>> phonebook = {'Alice':  '555-1234',
-	...              'Bob':    '555-5678',
-	...              'Charlie':'555-9999'}
+	>>> phonebook = {'Alice': '555-1234', 'Bob': '555-5678', 'Charlie': '555-9999'}
 	>>> get('Alice', phonebook)
 	'555-1234'
 
@@ -328,9 +372,9 @@ def groupby(key: Callable[[T], KHashable] | KHashable, seq: Iterable[T]) -> dict
 
 	Non-callable keys imply grouping on a member.
 
-	>>> groupby('gender', [{'name': 'Alice', 'gender': 'F'},
-	...                    {'name': 'Bob', 'gender': 'M'},
-	...                    {'name': 'Charlie', 'gender': 'M'}]) # doctest:+SKIP
+	>>> groupby(
+	...     'gender', [{'name': 'Alice', 'gender': 'F'}, {'name': 'Bob', 'gender': 'M'}, {'name': 'Charlie', 'gender': 'M'}]
+	... )  # doctest:+SKIP
 	{'F': [{'gender': 'F', 'name': 'Alice'}],
 	 'M': [{'gender': 'M', 'name': 'Bob'},
 		   {'gender': 'M', 'name': 'Charlie'}]}
@@ -381,7 +425,7 @@ def interleave(seqs: Iterable[Iterable[T]]) -> Iterator[T]:
 def interpose(el: T, seq: Iterable[T]) -> Iterator[T]:
 	"""Introduce element between each pair of elements in seq
 
-	>>> list(interpose("a", [1, 2, 3]))
+	>>> list(interpose('a', [1, 2, 3]))
 	[1, 'a', 2, 'a', 3]
 	"""
 	interposed: Iterator[T] = concat(zip(itertools.repeat(el), seq))
@@ -396,9 +440,9 @@ def isdistinct(seq: Collection[Any]) -> bool:
 	>>> isdistinct([1, 2, 1])
 	False
 
-	>>> isdistinct("Hello")
+	>>> isdistinct('Hello')
 	False
-	>>> isdistinct("World")
+	>>> isdistinct('World')
 	True
 	"""
 	if iter(seq) is seq:
@@ -437,7 +481,8 @@ def iterate(func: Callable[[T], T], x: T) -> Iterator[T]:
 
 	Yields x, then func(x), then func(func(x)), then func(func(func(x))), etc..
 
-	>>> def inc(x):  return x + 1
+	>>> def inc(x):
+	...     return x + 1
 	>>> counter = iterate(inc, 0)
 	>>> next(counter)
 	0
@@ -486,9 +531,7 @@ def join(
 
 # === HASHABLE + CALLABLE (4 overloads) ===
 @overload
-def join(
-	leftkey: Hashable, leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U]
-) -> Iterator[tuple[T, U]]: ...
+def join(leftkey: Hashable, leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
 @overload
 def join(
 	leftkey: Hashable, leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U], left_default: L
@@ -504,9 +547,7 @@ def join(
 
 # === CALLABLE + HASHABLE (4 overloads) ===
 @overload
-def join(
-	leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U]
-) -> Iterator[tuple[T, U]]: ...
+def join(leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
 @overload
 def join(
 	leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U], left_default: L
@@ -552,24 +593,14 @@ def join(
 	(Note: If right_default is defined, then unique keys of rightseq
 		will also be stored in memory.)
 
-	>>> friends = [('Alice', 'Edith'),
-	...            ('Alice', 'Zhao'),
-	...            ('Edith', 'Alice'),
-	...            ('Zhao', 'Alice'),
-	...            ('Zhao', 'Edith')]
+	>>> friends = [('Alice', 'Edith'), ('Alice', 'Zhao'), ('Edith', 'Alice'), ('Zhao', 'Alice'), ('Zhao', 'Edith')]
 
-	>>> cities = [('Alice', 'NYC'),
-	...           ('Alice', 'Chicago'),
-	...           ('Dan', 'Sydney'),
-	...           ('Edith', 'Paris'),
-	...           ('Edith', 'Berlin'),
-	...           ('Zhao', 'Shanghai')]
+	>>> cities = [('Alice', 'NYC'), ('Alice', 'Chicago'), ('Dan', 'Sydney'), ('Edith', 'Paris'), ('Edith', 'Berlin'), ('Zhao', 'Shanghai')]
 
 	>>> # Vacation opportunities
 	>>> # In what cities do people have friends?
-	>>> result = join(second, friends,
-	...               first, cities)
-	>>> for ((a, b), (c, d)) in sorted(unique(result)):
+	>>> result = join(second, friends, first, cities)
+	>>> for (a, b), (c, d) in sorted(unique(result)):
 	...     print((a, d))
 	('Alice', 'Berlin')
 	('Alice', 'Paris')
@@ -586,9 +617,7 @@ def join(
 	are paired with None.
 
 	>>> identity = lambda x: x
-	>>> list(join(identity, [1, 2, 3],
-	...           identity, [2, 3, 4],
-	...           left_default=None, right_default=None))
+	>>> list(join(identity, [1, 2, 3], identity, [2, 3, 4], left_default=None, right_default=None))
 	[(2, 2), (3, 3), (None, 4), (1, None)]
 
 	Usually the key arguments are callables to be applied to the sequences.  If
@@ -655,8 +684,7 @@ def last(seq: Iterable[T]) -> T:
 def mapcat(func: Callable[[T], Iterable[R]], seqs: Iterable[T]) -> Iterator[R]:
 	"""Apply func to each sequence in seqs, concatenating results.
 
-	>>> list(mapcat(lambda s: [c.upper() for c in s],
-	...             [["a", "b"], ["c", "d", "e"]]))
+	>>> list(mapcat(lambda s: [c.upper() for c in s], [['a', 'b'], ['c', 'd', 'e']]))
 	['A', 'B', 'C', 'D', 'E']
 	"""
 	return concat(map(func, seqs))
@@ -882,10 +910,14 @@ def peekn(n: int, seq: Iterable[T]) -> tuple[tuple[T, ...], Iterator[T]]:
 	return (peeked, itertools.chain(iter(peeked), iterator))
 
 @overload
-def pluck(ind: list[Any], seqs: Iterable[Sequence[T] | Mapping[Any, T]], default: T | Literal['__no__default__'] = ...) -> Iterator[tuple[T, ...]]: ...
+def pluck(
+	ind: list[Any], seqs: Iterable[Sequence[T] | Mapping[Any, T]], default: T | Literal['__no__default__'] = ...
+) -> Iterator[tuple[T, ...]]: ...
 @overload
 def pluck(ind: Any, seqs: Iterable[Sequence[T] | Mapping[Any, T]], default: T | Literal['__no__default__'] = ...) -> Iterator[T]: ...
-def pluck(ind: Any | list[Any], seqs: Iterable[Sequence[T] | Mapping[Any, T]], default: T | Literal['__no__default__'] = no_default) -> Iterator[T] | Iterator[tuple[T, ...]]:
+def pluck(
+	ind: Any | list[Any], seqs: Iterable[Sequence[T] | Mapping[Any, T]], default: T | Literal['__no__default__'] = no_default
+) -> Iterator[T] | Iterator[tuple[T, ...]]:
 	"""Plucks an element or several elements from each item in a sequence.
 
 	``pluck`` maps ``itertoolz.get`` over a sequence and returns one or more
@@ -916,7 +948,9 @@ def pluck(ind: Any | list[Any], seqs: Iterable[Sequence[T] | Mapping[Any, T]], d
 		return (tuple(_get(item, seq, default) for item in ind) for seq in seqs)
 	return (_get(ind, seq, default) for seq in seqs)
 
-def random_sample(prob: float, seq: Iterable[T], random_state: Randomable | int | float | str | bytes | bytearray | None = None) -> Iterator[T]:
+def random_sample(
+	prob: float, seq: Iterable[T], random_state: Randomable | int | float | str | bytes | bytearray | None = None
+) -> Iterator[T]:
 	"""Return elements from a sequence with probability of prob
 
 	Returns a lazy iterator of random items from seq.
@@ -926,9 +960,9 @@ def random_sample(prob: float, seq: Iterable[T], random_state: Randomable | int 
 	next time it returned 6 items.
 
 	>>> seq = list(range(100))
-	>>> list(random_sample(0.1, seq)) # doctest: +SKIP
+	>>> list(random_sample(0.1, seq))  # doctest: +SKIP
 	[6, 9, 19, 35, 45, 50, 58, 62, 68, 72, 78, 86, 95]
-	>>> list(random_sample(0.1, seq)) # doctest: +SKIP
+	>>> list(random_sample(0.1, seq))  # doctest: +SKIP
 	[6, 44, 54, 61, 69, 94]
 
 	Providing an integer seed for ``random_state`` will result in
@@ -952,6 +986,7 @@ def random_sample(prob: float, seq: Iterable[T], random_state: Randomable | int 
 		getNumber: Randomable = cast('Randomable', random_state)
 	else:
 		from random import Random
+
 		getNumber = Random(random_state)
 	return filter(lambda _faux_bool: getNumber.random() < prob, seq)
 
@@ -972,20 +1007,25 @@ def reduceby(
 	seq: Iterable[T],
 	init: T | Callable[[], T],
 ) -> dict[T, T]: ...
-def reduceby(key: Callable[[T], K] | Any, binop: Callable[[T, T], T], seq: Iterable[T], init: T | Callable[[], T] | Literal['__no__default__'] = no_default) -> dict[K, T]:
+def reduceby(
+	key: Callable[[T], K] | Any,
+	binop: Callable[[T, T], T],
+	seq: Iterable[T],
+	init: T | Callable[[], T] | Literal['__no__default__'] = no_default,
+) -> dict[K, T]:
 	"""Perform a simultaneous groupby and reduction
 
 	The computation:
 
-	>>> result = reduceby(key, binop, seq, init)      # doctest: +SKIP
+	>>> result = reduceby(key, binop, seq, init)  # doctest: +SKIP
 
 	is equivalent to the following:
 
-	>>> def reduction(group):                           # doctest: +SKIP
-	...     return reduce(binop, group, init)           # doctest: +SKIP
+	>>> def reduction(group):  # doctest: +SKIP
+	...     return reduce(binop, group, init)  # doctest: +SKIP
 
-	>>> groups = groupby(key, seq)                    # doctest: +SKIP
-	>>> result = valmap(reduction, groups)              # doctest: +SKIP
+	>>> groups = groupby(key, seq)  # doctest: +SKIP
+	>>> result = valmap(reduction, groups)  # doctest: +SKIP
 
 	But the former does not build the intermediate groups, allowing it to
 	operate in much less space.  This makes it suitable for larger datasets
@@ -1012,14 +1052,19 @@ def reduceby(key: Callable[[T], K] | Any, binop: Callable[[T, T], T], seq: Itera
 	Complex Example
 	---------------
 
-	>>> projects = [{'name': 'build roads', 'state': 'CA', 'cost': 1000000},
-	...             {'name': 'fight crime', 'state': 'IL', 'cost': 100000},
-	...             {'name': 'help farmers', 'state': 'IL', 'cost': 2000000},
-	...             {'name': 'help farmers', 'state': 'CA', 'cost': 200000}]
+	>>> projects = [
+	...     {'name': 'build roads', 'state': 'CA', 'cost': 1000000},
+	...     {'name': 'fight crime', 'state': 'IL', 'cost': 100000},
+	...     {'name': 'help farmers', 'state': 'IL', 'cost': 2000000},
+	...     {'name': 'help farmers', 'state': 'CA', 'cost': 200000},
+	... ]
 
-	>>> reduceby('state',                        # doctest: +SKIP
-	...          lambda acc, x: acc + x['cost'],
-	...          projects, 0)
+	>>> reduceby(
+	...     'state',  # doctest: +SKIP
+	...     lambda acc, x: acc + x['cost'],
+	...     projects,
+	...     0,
+	... )
 	{'CA': 1200000, 'IL': 2100000}
 
 	Example Using ``init``
@@ -1111,7 +1156,9 @@ def tail(n: int, seq: ItemsView[KHashable, T]) -> tuple[tuple[KHashable, T], ...
 def tail(n: int, seq: KeysView[KHashable]) -> tuple[KHashable, ...]: ...
 @overload
 def tail(n: int, seq: ValuesView[T]) -> tuple[T, ...]: ...
-def tail(n: int, seq: SSequence | Mapping[KHashable, Any] | ItemsView[KHashable, T] | KeysView[KHashable] | ValuesView[T]) -> SSequence | tuple[KHashable, ...] | tuple[tuple[KHashable, T], ...] | tuple[T, ...]:
+def tail(
+	n: int, seq: SSequence | Mapping[KHashable, Any] | ItemsView[KHashable, T] | KeysView[KHashable] | ValuesView[T]
+) -> SSequence | tuple[KHashable, ...] | tuple[tuple[KHashable, T], ...] | tuple[T, ...]:
 	"""The last n elements of a sequence
 
 	>>> tail(2, [10, 20, 30, 40, 50])
@@ -1123,7 +1170,7 @@ def tail(n: int, seq: SSequence | Mapping[KHashable, Any] | ItemsView[KHashable,
 		take
 	"""
 	try:
-		return seq[len(seq) - n: None]
+		return seq[len(seq) - n : None]
 	except (TypeError, KeyError):
 		return tuple(deque(seq, n))
 

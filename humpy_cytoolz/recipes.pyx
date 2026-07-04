@@ -25,7 +25,8 @@ cpdef object countby(object key, object seq):
 	>>> countby(len, ['cat', 'mouse', 'dog'])
 	{3: 2, 5: 1}
 
-	>>> def iseven(x): return x % 2 == 0
+	>>> def iseven(x):
+	...     return x % 2 == 0
 	>>> countby(iseven, [1, 2, 3])  # doctest:+SKIP
 	{True: 1, False: 2}
 
@@ -50,8 +51,8 @@ cdef class partitionby:
 	partitionBy : Iterator[tuple[T, ...]]
 	An iterator of tuples, each containing a partition of `seq`.
 
-	>>> is_space = lambda c: c == " "
-	>>> list(partitionby(is_space, "I have space"))
+	>>> is_space = lambda c: c == ' '
+	>>> list(partitionby(is_space, 'I have space'))
 	[('I',), (' ',), ('h', 'a', 'v', 'e'), (' ',), ('s', 'p', 'a', 'c', 'e')]
 
 	>>> is_large = lambda x: x > 10

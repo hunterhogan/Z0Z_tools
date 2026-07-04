@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 	from humpy_toolz._theTypes import K, T
 	from typing import Any
 
-__all__ = ("countby", "partitionby")
+__all__ = ('countby', 'partitionby')
 
 def countby(key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, int]:
 	"""Count elements of a collection by a key function.
@@ -23,7 +23,8 @@ def countby(key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, int]:
 	>>> countby(len, ['cat', 'mouse', 'dog'])
 	{3: 2, 5: 1}
 
-	>>> def iseven(x): return x % 2 == 0
+	>>> def iseven(x):
+	...     return x % 2 == 0
 	>>> countby(iseven, [1, 2, 3])  # doctest:+SKIP
 	{True: 1, False: 2}
 
@@ -47,8 +48,8 @@ def partitionby(func: Callable[[T], Any], seq: Iterable[T]) -> Iterator[tuple[T,
 	partitionBy : Iterator[tuple[T, ...]]
 	An iterator of tuples, each containing a partition of `seq`.
 
-	>>> is_space = lambda c: c == " "
-	>>> list(partitionby(is_space, "I have space"))
+	>>> is_space = lambda c: c == ' '
+	>>> list(partitionby(is_space, 'I have space'))
 	[('I',), (' ',), ('h', 'a', 'v', 'e'), (' ',), ('s', 'p', 'a', 'c', 'e')]
 
 	>>> is_large = lambda x: x > 10

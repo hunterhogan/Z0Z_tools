@@ -295,7 +295,8 @@ module_info['humpy_toolz'] = {
 	'memoize': [(0, lambda func=None, cache=None, key=None: None)],
 }
 module_info['humpy_toolz.functoolz'] = {
-	'Compose': [(0, lambda funcs: None)], 'InstanceProperty': [(0, lambda fget=None, fset=None, fdel=None, doc=None, classval=None: None)]
+	'Compose': [(0, lambda funcs: None)],
+	'InstanceProperty': [(0, lambda fget=None, fset=None, fdel=None, doc=None, classval=None: None)],
 }
 
 def num_pos_args(sigspec: inspect.Signature) -> builtins.int:
@@ -353,7 +354,10 @@ def expand_sig(sig: SignatureInput) -> SignatureSpecification:
 
 signatures: dict[Callable[..., Any], tuple[SignatureSpecification, ...]] = {}
 
-def create_signature_registry(module_info: dict[ModuleType, dict[str, list[SignatureInput]]] = module_info, signatures: dict[Callable[..., Any], tuple[SignatureSpecification, ...]] = signatures):
+def create_signature_registry(
+	module_info: dict[ModuleType, dict[str, list[SignatureInput]]] = module_info,
+	signatures: dict[Callable[..., Any], tuple[SignatureSpecification, ...]] = signatures,
+):
 	for module, info in module_info.items():
 		if isinstance(module, str):
 			module: ModuleType = import_module(module)

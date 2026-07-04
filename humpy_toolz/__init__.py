@@ -32,10 +32,11 @@ __version__: str = '1.1.0'
 functoolz._sigs.create_signature_registry()
 
 def __getattr__(name: str) -> str:
-    if name == '__version__':
-        from importlib.metadata import version
-        rv: str = version('humpy_toolz')
-        globals()[name] = rv
-        return rv
-    message: str = f'module {__name__!r} has no attribute {name!r}'
-    raise AttributeError(message)
+	if name == '__version__':
+		from importlib.metadata import version
+
+		rv: str = version('humpy_toolz')
+		globals()[name] = rv
+		return rv
+	message: str = f'module {__name__!r} has no attribute {name!r}'
+	raise AttributeError(message)
