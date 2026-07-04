@@ -12,8 +12,8 @@ from humpy_cytoolz.functoolz cimport (
 
 
 from humpy_cytoolz.dicttoolz cimport (
-    assoc, c_merge, c_merge_with, c_dissoc, get_in, keyfilter, keymap,
-    itemfilter, itemmap, update_in, valfilter, valmap, assoc_in)
+    assoc, assoc_in, c_dissoc, get_in, itemfilter, itemmap, keyfilter,
+    keymap, c_merge, c_merge_with, update_in, valfilter, valmap)
 
 
 from humpy_cytoolz.recipes cimport countby, partitionby

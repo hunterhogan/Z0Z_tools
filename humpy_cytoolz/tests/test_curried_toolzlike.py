@@ -17,8 +17,8 @@ def test_cytoolz_like_toolz():
         if isinstance(val, humpy_toolz.curry):
             if val.func is humpy_toolz.curry:
                 continue
-            assert hasattr(humpy_cytoolz.curried, key), 'cytoolz.curried.%s does not exist' % key
-            assert isinstance(getattr(humpy_cytoolz.curried, key), humpy_cytoolz.curry), 'cytoolz.curried.%s should be curried' % key
+            assert hasattr(humpy_cytoolz.curried, key), 'humpy_cytoolz.curried.%s does not exist' % key
+            assert isinstance(getattr(humpy_cytoolz.curried, key), humpy_cytoolz.curry), 'humpy_cytoolz.curried.%s should be curried' % key
 
 @dev_skip_test
 def test_toolz_like_cytoolz():
@@ -26,5 +26,5 @@ def test_toolz_like_cytoolz():
     import humpy_toolz.curried
     for key, val in vars(humpy_cytoolz.curried).items():
         if isinstance(val, humpy_cytoolz.curry):
-            assert hasattr(humpy_toolz.curried, key), 'cytoolz.curried.%s should not exist' % key
-            assert isinstance(getattr(humpy_toolz.curried, key), humpy_toolz.curry), 'cytoolz.curried.%s should not be curried' % key
+            assert hasattr(humpy_toolz.curried, key), 'humpy_toolz.curried.%s should not exist' % key
+            assert isinstance(getattr(humpy_toolz.curried, key), humpy_toolz.curry), 'humpy_toolz.curried.%s should not be curried' % key

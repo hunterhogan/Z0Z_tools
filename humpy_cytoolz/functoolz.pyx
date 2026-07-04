@@ -51,26 +51,27 @@ __all__ = ['identity', 'thread_first', 'thread_last', 'memoize', 'compose', 'com
 
 
 cpdef object identity(object x):
-    """ Identity function. Return x
+    """Identity function. Return x
 
-    >>> identity(3)
-    3
-    """
+	>>> identity(3)
+	3
+	"""
     return x
 
 
 def apply(*func_and_args, **kwargs):
-    """
-    Applies a function and returns the results
+    """Applies a function and returns the results
 
-    >>> def double(x): return 2*x
-    >>> def inc(x):    return x + 1
-    >>> apply(double, 5)
-    10
+	>>> def double(x):
+	...     return 2 * x
+	>>> def inc(x):
+	...     return x + 1
+	>>> apply(double, 5)
+	10
 
-    >>> tuple(map(apply, [double, inc, double], [10, 500, 8000]))
-    (20, 501, 16000)
-    """
+	>>> tuple(map(apply, [double, inc, double], [10, 500, 8000]))
+	(20, 501, 16000)
+	"""
     if not func_and_args:
         raise TypeError('func argument is required')
     return func_and_args[0](*func_and_args[1:], **kwargs)
@@ -91,30 +92,34 @@ cdef object c_thread_first(object val, object forms):
 
 
 def thread_first(val, *forms):
-    """
-    Thread value through a sequence of functions/forms
+    """Thread value through a sequence of functions/forms
 
-    >>> def double(x): return 2*x
-    >>> def inc(x):    return x + 1
-    >>> thread_first(1, inc, double)
-    4
+	>>> def double(x):
+	...     return 2 * x
+	>>> def inc(x):
+	...     return x + 1
+	>>> thread_first(1, inc, double)
+	4
 
-    If the function expects more than one input you can specify those inputs
-    in a tuple.  The value is used as the first input.
+	If the function expects more than one input you can specify those inputs
+	in a tuple.  The value is used as the first input.
 
-    >>> def add(x, y): return x + y
-    >>> def pow(x, y): return x**y
-    >>> thread_first(1, (add, 4), (pow, 2))  # pow(add(1, 4), 2)
-    25
+	>>> def add(x, y):
+	...     return x + y
+	>>> def pow(x, y):
+	...     return x**y
+	>>> thread_first(1, (add, 4), (pow, 2))  # pow(add(1, 4), 2)
+	25
 
-    So in general
-        thread_first(x, f, (g, y, z))
-    expands to
-        g(f(x), y, z)
+	So in general
+		thread_first(x, f, (g, y, z))
+	expands to
+		g(f(x), y, z)
 
-    See Also:
-        thread_last
-    """
+	See Also
+	--------
+		thread_last
+	"""
     return c_thread_first(val, forms)
 
 
@@ -133,35 +138,39 @@ cdef object c_thread_last(object val, object forms):
 
 
 def thread_last(val, *forms):
-    """
-    Thread value through a sequence of functions/forms
+    """Thread value through a sequence of functions/forms
 
-    >>> def double(x): return 2*x
-    >>> def inc(x):    return x + 1
-    >>> thread_last(1, inc, double)
-    4
+	>>> def double(x):
+	...     return 2 * x
+	>>> def inc(x):
+	...     return x + 1
+	>>> thread_last(1, inc, double)
+	4
 
-    If the function expects more than one input you can specify those inputs
-    in a tuple.  The value is used as the last input.
+	If the function expects more than one input you can specify those inputs
+	in a tuple.  The value is used as the last input.
 
-    >>> def add(x, y): return x + y
-    >>> def pow(x, y): return x**y
-    >>> thread_last(1, (add, 4), (pow, 2))  # pow(2, add(4, 1))
-    32
+	>>> def add(x, y):
+	...     return x + y
+	>>> def pow(x, y):
+	...     return x**y
+	>>> thread_last(1, (add, 4), (pow, 2))  # pow(2, add(4, 1))
+	32
 
-    So in general
-        thread_last(x, f, (g, y, z))
-    expands to
-        g(y, z, f(x))
+	So in general
+		thread_last(x, f, (g, y, z))
+	expands to
+		g(y, z, f(x))
 
-    >>> def iseven(x):
-    ...     return x % 2 == 0
-    >>> list(thread_last([1, 2, 3], (map, inc), (filter, iseven)))
-    [2, 4]
+	>>> def iseven(x):
+	...     return x % 2 == 0
+	>>> list(thread_last([1, 2, 3], (map, inc), (filter, iseven)))
+	[2, 4]
 
-    See Also:
-        thread_first
-    """
+	See Also
+	--------
+		thread_first
+	"""
     return c_thread_last(val, forms)
 
 
@@ -184,35 +193,34 @@ cdef object _empty_kwargs():
 
 
 cdef class curry:
-    """ curry(self, *args, **kwargs)
+    """Curry a callable function
 
-    Curry a callable function
+	Enables partial application of arguments through calling a function with an
+	incomplete set of arguments.
 
-    Enables partial application of arguments through calling a function with an
-    incomplete set of arguments.
+	>>> def mul(x, y):
+	...     return x * y
+	>>> mul = curry(mul)
 
-    >>> def mul(x, y):
-    ...     return x * y
-    >>> mul = curry(mul)
+	>>> double = mul(2)
+	>>> double(10)
+	20
 
-    >>> double = mul(2)
-    >>> double(10)
-    20
+	Also supports keyword arguments
 
-    Also supports keyword arguments
+	>>> @curry  # Can use curry as a decorator
+	... def f(x, y, a=10):
+	...     return a * (x + y)
 
-    >>> @curry                  # Can use curry as a decorator
-    ... def f(x, y, a=10):
-    ...     return a * (x + y)
+	>>> add = f(a=1)
+	>>> add(2, 3)
+	5
 
-    >>> add = f(a=1)
-    >>> add(2, 3)
-    5
-
-    See Also:
-        humpy_cytoolz.curried - namespace of curried functions
-                        https://toolz.readthedocs.io/en/latest/curry.html
-    """
+	See Also
+	--------
+		humpy_cytoolz.curried - namespace of curried functions
+						https://toolz.readthedocs.io/en/latest/curry.html
+	"""
 
     def __cinit__(self, *args, **kwargs):
         if not args:
@@ -431,42 +439,42 @@ cpdef object _restore_curry(cls, func, args, kwargs, is_decorated):
 
 
 cpdef object memoize(object func, object cache=None, object key=None):
-    """
-    Cache a function's result for speedy future evaluation
+    """Cache a function's result for speedy future evaluation
 
-    Considerations:
-        Trades memory for speed.
-        Only use on pure functions.
+	Considerations:
+		Trades memory for speed.
+		Only use on pure functions.
 
-    >>> def add(x, y):  return x + y
-    >>> add = memoize(add)
+	>>> def add(x, y):
+	...     return x + y
+	>>> add = memoize(add)
 
-    Or use as a decorator
+	Or use as a decorator
 
-    >>> @memoize
-    ... def add(x, y):
-    ...     return x + y
+	>>> @memoize
+	... def add(x, y):
+	...     return x + y
 
-    Use the ``cache`` keyword to provide a dict-like object as an initial cache
+	Use the ``cache`` keyword to provide a dict-like object as an initial cache
 
-    >>> @memoize(cache={(1, 2): 3})
-    ... def add(x, y):
-    ...     return x + y
+	>>> @memoize(cache={(1, 2): 3})
+	... def add(x, y):
+	...     return x + y
 
-    Note that the above works as a decorator because ``memoize`` is curried.
+	Note that the above works as a decorator because ``memoize`` is curried.
 
-    It is also possible to provide a ``key(args, kwargs)`` function that
-    calculates keys used for the cache, which receives an ``args`` tuple and
-    ``kwargs`` dict as input, and must return a hashable value.  However,
-    the default key function should be sufficient most of the time.
+	It is also possible to provide a ``key(args, kwargs)`` function that
+	calculates keys used for the cache, which receives an ``args`` tuple and
+	``kwargs`` dict as input, and must return a hashable value.  However,
+	the default key function should be sufficient most of the time.
 
-    >>> # Use key function that ignores extraneous keyword arguments
-    >>> @memoize(key=lambda args, kwargs: args)
-    ... def add(x, y, verbose=False):
-    ...     if verbose:
-    ...         print('Calculating %s + %s' % (x, y))
-    ...     return x + y
-    """
+	>>> # Use key function that ignores extraneous keyword arguments
+	>>> @memoize(key=lambda args, kwargs: args)
+	... def add(x, y, verbose=False):
+	...     if verbose:
+	...         print('Calculating %s + %s' % (x, y))
+	...     return x + y
+	"""
     return _memoize(func, cache, key)
 
 
@@ -526,13 +534,12 @@ cdef class _memoize:
 
 
 cdef class Compose:
-    """ Compose(self, *funcs)
+    """A composition of functions
 
-    A composition of functions
-
-    See Also:
-        compose
-    """
+	See Also
+	--------
+		compose
+	"""
     # fix for #103, note: we cannot use __name__ at module-scope in cython
     __module__ = 'cytooz.functoolz'
 
@@ -626,24 +633,24 @@ cdef object c_compose(object funcs):
 
 
 def compose(*funcs):
-    """
-    Compose functions to operate in series.
+    """Compose functions to operate in series.
 
-    Returns a function that applies other functions in sequence.
+	Returns a function that applies other functions in sequence.
 
-    Functions are applied from right to left so that
-    ``compose(f, g, h)(x, y)`` is the same as ``f(g(h(x, y)))``.
+	Functions are applied from right to left so that
+	``compose(f, g, h)(x, y)`` is the same as ``f(g(h(x, y)))``.
 
-    If no arguments are provided, the identity function (f(x) = x) is returned.
+	If no arguments are provided, the identity function (f(x) = x) is returned.
 
-    >>> inc = lambda i: i + 1
-    >>> compose(str, inc)(3)
-    '4'
+	>>> inc = lambda i: i + 1
+	>>> compose(str, inc)(3)
+	'4'
 
-    See Also:
-        compose_left
-        pipe
-    """
+	See Also
+	--------
+		compose_left
+		pipe
+	"""
     return c_compose(funcs)
 
 
@@ -657,24 +664,24 @@ cdef object c_compose_left(object funcs):
 
 
 def compose_left(*funcs):
-    """
-    Compose functions to operate in series.
+    """Compose functions to operate in series.
 
-    Returns a function that applies other functions in sequence.
+	Returns a function that applies other functions in sequence.
 
-    Functions are applied from left to right so that
-    ``compose_left(f, g, h)(x, y)`` is the same as ``h(g(f(x, y)))``.
+	Functions are applied from left to right so that
+	``compose_left(f, g, h)(x, y)`` is the same as ``h(g(f(x, y)))``.
 
-    If no arguments are provided, the identity function (f(x) = x) is returned.
+	If no arguments are provided, the identity function (f(x) = x) is returned.
 
-    >>> inc = lambda i: i + 1
-    >>> compose_left(inc, str)(3)
-    '4'
+	>>> inc = lambda i: i + 1
+	>>> compose_left(inc, str)(3)
+	'4'
 
-    See Also:
-        compose
-        pipe
-    """
+	See Also
+	--------
+		compose
+		pipe
+	"""
     return c_compose_left(funcs)
 
 
@@ -686,44 +693,43 @@ cdef object c_pipe(object data, object funcs):
 
 
 def pipe(data, *funcs):
-    """
-    Pipe a value through a sequence of functions
+    """Pipe a value through a sequence of functions
 
-    I.e. ``pipe(data, f, g, h)`` is equivalent to ``h(g(f(data)))``
+	I.e. ``pipe(data, f, g, h)`` is equivalent to ``h(g(f(data)))``
 
-    We think of the value as progressing through a pipe of several
-    transformations, much like pipes in UNIX
+	We think of the value as progressing through a pipe of several
+	transformations, much like pipes in UNIX
 
-    ``$ cat data | f | g | h``
+	``$ cat data | f | g | h``
 
-    >>> double = lambda i: 2 * i
-    >>> pipe(3, double, str)
-    '6'
+	>>> double = lambda i: 2 * i
+	>>> pipe(3, double, str)
+	'6'
 
-    See Also:
-        compose
-        compose_left
-        thread_first
-        thread_last
-    """
+	See Also
+	--------
+		compose
+		compose_left
+		thread_first
+		thread_last
+	"""
     return c_pipe(data, funcs)
 
 
 cdef class complement:
-    """ complement(func)
+    """Convert a predicate function to its logical complement.
 
-    Convert a predicate function to its logical complement.
+	In other words, return a function that, for inputs that normally
+	yield True, yields False, and vice-versa.
 
-    In other words, return a function that, for inputs that normally
-    yield True, yields False, and vice-versa.
-
-    >>> def iseven(n): return n % 2 == 0
-    >>> isodd = complement(iseven)
-    >>> iseven(2)
-    True
-    >>> isodd(2)
-    False
-    """
+	>>> def iseven(n):
+	...     return n % 2 == 0
+	>>> isodd = complement(iseven)
+	>>> iseven(2)
+	True
+	>>> isodd(2)
+	False
+	"""
     def __cinit__(self, func):
         self.func = func
 
@@ -735,9 +741,7 @@ cdef class complement:
 
 
 cdef class juxt:
-    """ juxt(self, *funcs)
-
-    Creates a function that calls several functions with the same arguments
+    """Creates a function that calls several functions with the same arguments
 
     Takes several functions and returns a function that applies its arguments
     to each of those functions then returns a tuple of the results.
@@ -768,56 +772,53 @@ cdef class juxt:
 
 
 cpdef object do(object func, object x):
-    """
-    Runs ``func`` on ``x``, returns ``x``
+    """Runs ``func`` on ``x``, returns ``x``
 
-    Because the results of ``func`` are not returned, only the side
-    effects of ``func`` are relevant.
+	Because the results of ``func`` are not returned, only the side
+	effects of ``func`` are relevant.
 
-    Logging functions can be made by composing ``do`` with a storage function
-    like ``list.append`` or ``file.write``
+	Logging functions can be made by composing ``do`` with a storage function
+	like ``list.append`` or ``file.write``
 
-    >>> from humpy_cytoolz import compose
-    >>> from humpy_cytoolz.curried import do
+	>>> from humpy_cytoolz import compose
+	>>> from humpy_cytoolz.curried import do
 
-    >>> log = []
-    >>> inc = lambda x: x + 1
-    >>> inc = compose(inc, do(log.append))
-    >>> inc(1)
-    2
-    >>> inc(11)
-    12
-    >>> log
-    [1, 11]
-    """
+	>>> log = []
+	>>> inc = lambda x: x + 1
+	>>> inc = compose(inc, do(log.append))
+	>>> inc(1)
+	2
+	>>> inc(11)
+	12
+	>>> log
+	[1, 11]
+	"""
     func(x)
     return x
 
 
 cpdef object flip(object func, object a, object b):
-    """
-    Call the function call with the arguments flipped
+    """Call the function call with the arguments flipped
 
-    This function is curried.
+	This function is curried.
 
-    >>> def div(a, b):
-    ...     return a // b
-    ...
-    >>> flip(div, 2, 6)
-    3
-    >>> div_by_two = flip(div, 2)
-    >>> div_by_two(4)
-    2
+	>>> def div(a, b):
+	...     return a // b
+	>>> flip(div, 2, 6)
+	3
+	>>> div_by_two = flip(div, 2)
+	>>> div_by_two(4)
+	2
 
-    This is particularly useful for built in functions and functions defined
-    in C extensions that accept positional only arguments. For example:
-    isinstance, issubclass.
+	This is particularly useful for built in functions and functions defined
+	in C extensions that accept positional only arguments. For example:
+	isinstance, issubclass.
 
-    >>> data = [1, 'a', 'b', 2, 1.5, object(), 3]
-    >>> only_ints = list(filter(flip(isinstance, int), data))
-    >>> only_ints
-    [1, 2, 3]
-    """
+	>>> data = [1, 'a', 'b', 2, 1.5, object(), 3]
+	>>> only_ints = list(filter(flip(isinstance, int), data))
+	>>> only_ints
+	[1, 2, 3]
+	"""
     return PyObject_CallObject(func, (b, a))
 
 
@@ -825,43 +826,35 @@ _flip = flip  # uncurried
 
 
 cpdef object return_none(object exc):
-    """
-    Returns None.
-    """
+    """Returns None."""
     return None
 
 
 cdef class excepts:
-    """ excepts(self, exc, func, handler=return_none)
+    """A wrapper around a function to catch exceptions and
+	dispatch to a handler.
 
-    A wrapper around a function to catch exceptions and
-    dispatch to a handler.
+	This is like a functional try/except block, in the same way that
+	ifexprs are functional if/else blocks.
 
-    This is like a functional try/except block, in the same way that
-    ifexprs are functional if/else blocks.
+	Examples
+	--------
+	>>> excepting = excepts(ValueError, lambda a: [1, 2].index(a), lambda _: -1)
+	>>> excepting(1)
+	0
+	>>> excepting(3)
+	-1
 
-    Examples
-    --------
-    >>> excepting = excepts(
-    ...     ValueError,
-    ...     lambda a: [1, 2].index(a),
-    ...     lambda _: -1,
-    ... )
-    >>> excepting(1)
-    0
-    >>> excepting(3)
-    -1
+	Multiple exceptions and default except clause.
 
-    Multiple exceptions and default except clause.
-
-    >>> excepting = excepts((IndexError, KeyError), lambda a: a[0])
-    >>> excepting([])
-    >>> excepting([1])
-    1
-    >>> excepting({})
-    >>> excepting({0: 1})
-    1
-    """
+	>>> excepting = excepts((IndexError, KeyError), lambda a: a[0])
+	>>> excepting([])
+	>>> excepting([1])
+	1
+	>>> excepting({})
+	>>> excepting({0: 1})
+	1
+	"""
 
     def __cinit__(self, exc, func, handler=return_none):
         self.exc = exc

@@ -1,18 +1,20 @@
+# pyright: reportArgumentType=false
+# pyright: reportAssignmentType=false
+# pyright: reportInconsistentOverload=false
+# pyright: reportReturnType=false
+# ruff: noqa: FBT001, FBT002
+# ty:ignore[invalid-assignment]
+# ty:ignore[invalid-return-type]
+# ty:ignore[invalid-argument-type]
 """Provide immutable, functional-style operations on `Mapping`[1] objects.
 
-(AI generated docstring)
-
-You can use this module to transform, filter, retrieve from, and merge `Mapping`[1] objects
-without modifying the source mapping. Each function returns a new mapping created by a
-`factory` argument that defaults to `dict`. Functions that navigate nested structures accept
-a `Sequence`[1] of keys to specify the path.
+You can use this module to transform, filter, retrieve from, and merge `Mapping`[1] objects without
+modifying the source mapping. Each function returns a new mapping created by a `factory` argument that
+defaults to `dict`. Functions that navigate nested structures accept a `Sequence`[1] of keys to
+specify the path.
 
 Contents
 --------
-Classes
-	SupportsGetItem
-		Structural type constraint for objects that support item retrieval via `__getitem__`.
-
 Functions
 	assoc
 		Create a new `Mapping` with `key` associated with `value`.
@@ -23,7 +25,8 @@ Functions
 	get_in
 		Retrieve a value from a potentially nested collection using a sequence of keys.
 	itemfilter
-		Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.
+		Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new
+		`Mapping`.
 	itemmap
 		Apply `func` to all items of `d` and return a new `Mapping` with the transformed items.
 	keyfilter
@@ -46,6 +49,7 @@ References
 [1] Python `collections.abc` module
 	https://docs.python.org/3/library/collections.abc.html
 """
+
 from __future__ import annotations
 
 from collections import defaultdict, deque
@@ -61,13 +65,31 @@ if TYPE_CHECKING:
 	from typing import Any, Literal, TypeGuard
 	from typing_extensions import TypeIs
 
-__all__ = ('assoc', 'assoc_in', 'dissoc', 'get_in', 'itemfilter', 'itemmap', 'keyfilter', 'keymap', 'merge', 'merge_with', 'update_in', 'valfilter', 'valmap')
+__all__ = (
+	'assoc',
+	'assoc_in',
+	'dissoc',
+	'get_in',
+	'itemfilter',
+	'itemmap',
+	'keyfilter',
+	'keymap',
+	'merge',
+	'merge_with',
+	'update_in',
+	'valfilter',
+	'valmap',
+)
 
 @overload
 def assoc(d: Mapping[KHashable, V], key: KHashable, value: V, factory: Callable[[], dict[KHashable, V]] = dict) -> dict[KHashable, V]: ...
 @overload
-def assoc(d: Mapping[KHashable, V], key: KHashable, value: V, factory: Callable[[], MutableMapping[KHashable, V]]) -> MutableMapping[KHashable, V]: ...
-def assoc(d: Mapping[KHashable, V], key: KHashable, value: V, factory: Callable[[], MutableMapping[KHashable, V]] = dict) -> MutableMapping[KHashable, V]:
+def assoc(
+	d: Mapping[KHashable, V], key: KHashable, value: V, factory: Callable[[], MutableMapping[KHashable, V]]
+) -> MutableMapping[KHashable, V]: ...
+def assoc(
+	d: Mapping[KHashable, V], key: KHashable, value: V, factory: Callable[[], MutableMapping[KHashable, V]] = dict
+) -> MutableMapping[KHashable, V]:
 	"""Create a new `Mapping`[1] with `key` associated with `value`.
 
 	You can use `assoc` (***assoc***iate) to copy `d` (***d***ictionary) to a new `Mapping` created by
@@ -112,20 +134,30 @@ def assoc(d: Mapping[KHashable, V], key: KHashable, value: V, factory: Callable[
 @overload
 def assoc_in(d: Mapping[K1, Mapping[K2, V2] | V1], keys: tuple[K1, K2], value: V2) -> dict[K1, dict[K2, V2] | V1 | V2]: ...
 @overload
-def assoc_in(d: Mapping[K1, Mapping[K2, V2] | V1], keys: tuple[K1, K2], value: V2, *, factory: Callable[[], MutableMapping[K1, Any]]) -> MutableMapping[K1, Any]: ...
+def assoc_in(
+	d: Mapping[K1, Mapping[K2, V2] | V1], keys: tuple[K1, K2], value: V2, *, factory: Callable[[], MutableMapping[K1, Any]]
+) -> MutableMapping[K1, Any]: ...
 
 # Overloads for nested dictionaries with tuple keys (3-level nesting)
 @overload
-def assoc_in(d: Mapping[K1, Mapping[K2, Mapping[K3, V3] | V2] | V1], keys: tuple[K1, K2, K3], value: V3) -> dict[K1, dict[K2, dict[K3, V3] | V2 | V3] | V1 | V3]: ...
+def assoc_in(
+	d: Mapping[K1, Mapping[K2, Mapping[K3, V3] | V2] | V1], keys: tuple[K1, K2, K3], value: V3
+) -> dict[K1, dict[K2, dict[K3, V3] | V2 | V3] | V1 | V3]: ...
 @overload
-def assoc_in(d: Mapping[K1, Mapping[K2, Mapping[K3, V3] | V2] | V1], keys: tuple[K1, K2, K3], value: V3, *, factory: Callable[[], MutableMapping[K1, Any]]) -> MutableMapping[K1, Any]: ...
+def assoc_in(
+	d: Mapping[K1, Mapping[K2, Mapping[K3, V3] | V2] | V1],
+	keys: tuple[K1, K2, K3],
+	value: V3,
+	*,
+	factory: Callable[[], MutableMapping[K1, Any]],
+) -> MutableMapping[K1, Any]: ...
 
 # General overloads for backwards compatibility
 @overload
 def assoc_in(d: Mapping[K, V], keys: Sequence[K], value: V) -> dict[K, V]: ...
 @overload
 def assoc_in(d: Mapping[K, V], keys: Sequence[K], value: V, *, factory: Callable[[], MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
-def assoc_in(d: Mapping[K, V], keys: Sequence[K], value: V, *, factory: Callable[[], MutableMapping[K, V]] = dict) -> MutableMapping[K, V]:  # pyright: ignore[reportInconsistentOverload]
+def assoc_in(d: Mapping[K, V], keys: Sequence[K], value: V, *, factory: Callable[[], MutableMapping[K, V]] = dict) -> MutableMapping[K, V]:
 	"""Create a new `MutableMapping` from `d` with `value` at the path specified by `keys`.
 
 	(AI generated docstring)
@@ -176,8 +208,12 @@ def assoc_in(d: Mapping[K, V], keys: Sequence[K], value: V, *, factory: Callable
 @overload
 def dissoc(d: Mapping[KHashable, V], *keys: KHashable, factory: Callable[[], dict[KHashable, V]] = dict) -> dict[KHashable, V]: ...
 @overload
-def dissoc(d: Mapping[KHashable, V], *keys: KHashable, factory: Callable[[], MutableMapping[KHashable, V]]) -> MutableMapping[KHashable, V]: ...
-def dissoc(d: Mapping[KHashable, V], *keys: KHashable, factory: Callable[[], MutableMapping[KHashable, V]] = dict) -> MutableMapping[KHashable, V]:
+def dissoc(
+	d: Mapping[KHashable, V], *keys: KHashable, factory: Callable[[], MutableMapping[KHashable, V]]
+) -> MutableMapping[KHashable, V]: ...
+def dissoc(
+	d: Mapping[KHashable, V], *keys: KHashable, factory: Callable[[], MutableMapping[KHashable, V]] = dict
+) -> MutableMapping[KHashable, V]:
 	"""Create a new `MutableMapping`[1] from `d` with the specified `keys` removed.
 
 	(AI generated docstring)
@@ -220,7 +256,7 @@ def dissoc(d: Mapping[KHashable, V], *keys: KHashable, factory: Callable[[], Mut
 	{'x': 1}
 	>>> dissoc({'x': 1, 'y': 2}, 'y', 'x')
 	{}
-	>>> dissoc({'x': 1}, 'y') # Ignores missing keys
+	>>> dissoc({'x': 1}, 'y')  # Ignores missing keys
 	{'x': 1}
 
 	References
@@ -246,10 +282,12 @@ def get_in(keys: Sequence[K], coll: Sequence[V] | SupportsGetItem[K, V], default
 @overload
 def get_in(keys: Sequence[K], coll: Sequence[V] | SupportsGetItem[K, V], default: V, no_default: Literal[True]) -> V: ...
 @overload
-def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], default: V1, no_default: bool = False) -> V0 | V1: ...  # noqa: FBT001, FBT002
+def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], default: V1, no_default: bool = False) -> V0 | V1: ...
 @overload
-def get_in(keys: Sequence[K], coll: Sequence[V] | SupportsGetItem[K, V], default: None = None, no_default: bool = False) -> V | None: ...  # noqa: FBT001, FBT002
-def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], default: V1 | None = None, no_default: bool = False) -> V0 | V1 | None:  # noqa: FBT001, FBT002
+def get_in(keys: Sequence[K], coll: Sequence[V] | SupportsGetItem[K, V], default: None = None, no_default: bool = False) -> V | None: ...
+def get_in(
+	keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], default: V1 | None = None, no_default: bool = False
+) -> V0 | V1 | None:
 	"""Retrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.
 
 	You can use `get_in` to navigate into a nested `coll` (***coll***ection) by following a
@@ -279,15 +317,6 @@ def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], defau
 	value : V | None
 		The value at the nested path in `coll`, or `default` if the path does not exist.
 
-	Raises
-	------
-	KeyError
-		When `no_default` is `True` and a key is missing from a mapping.
-	IndexError
-		When `no_default` is `True` and an index is out of range.
-	TypeError
-		When `no_default` is `True` and a key type is incompatible with `coll`.
-
 	See Also
 	--------
 	itertoolz.get : Retrieve a value or values from a collection.
@@ -297,10 +326,11 @@ def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], defau
 
 	Examples
 	--------
-	>>> transaction = {'name': 'Alice',
-	...                'purchase': {'items': ['Apple', 'Orange'],
-	...                             'costs': [0.50, 1.25]},
-	...                'credit card': '5555-1234-1234-1234'}
+	>>> transaction = {
+	...     'name': 'Alice',
+	...     'purchase': {'items': ['Apple', 'Orange'], 'costs': [0.50, 1.25]},
+	...     'credit card': '5555-1234-1234-1234',
+	... }
 	>>> get_in(['purchase', 'items', 0], transaction)
 	'Apple'
 	>>> get_in(['name'], transaction)
@@ -321,32 +351,52 @@ def get_in(keys: Sequence[K], coll: Sequence[V0] | SupportsGetItem[K, V0], defau
 		https://docs.python.org/3/library/operator.html#operator.getitem
 	"""
 	if no_default:
-		return reduce(operator.getitem, keys, coll)  # pyright: ignore[reportArgumentType, reportReturnType] # ty:ignore[invalid-return-type]
+		return reduce(operator.getitem, keys, coll)
 	else:
 		v: V1 | None = default
 		with contextlib.suppress(KeyError, IndexError, TypeError):
-			v = reduce(operator.getitem, keys, coll)  # pyright: ignore[reportAssignmentType, reportArgumentType] # ty:ignore[invalid-assignment]
+			v = reduce(operator.getitem, keys, coll)
 		return v
-	try:
-		return reduce(operator.getitem, keys, coll)
-	except (KeyError, IndexError, TypeError):
-		if no_default:
-			raise
-		return default
 
 @overload
-def itemfilter(predicate: Callable[[tuple[K0Hashable, V0]], TypeIs[tuple[K1Hashable, V1]]], d: Mapping[K0Hashable, V0], factory: Callable[[], dict[K1Hashable, V1]] = dict) -> dict[K1Hashable, V1]: ...
+def itemfilter(
+	predicate: Callable[[tuple[K0Hashable, V0]], TypeIs[tuple[K1Hashable, V1]]],
+	d: Mapping[K0Hashable, V0],
+	factory: Callable[[], dict[K1Hashable, V1]] = dict,
+) -> dict[K1Hashable, V1]: ...
 @overload
-def itemfilter(predicate: Callable[[tuple[K0Hashable, V0]], TypeGuard[tuple[K1Hashable, V1]]], d: Mapping[K0Hashable, V0], factory: Callable[[], dict[K1Hashable, V1]] = dict) -> dict[K1Hashable, V1]: ...
+def itemfilter(
+	predicate: Callable[[tuple[K0Hashable, V0]], TypeGuard[tuple[K1Hashable, V1]]],
+	d: Mapping[K0Hashable, V0],
+	factory: Callable[[], dict[K1Hashable, V1]] = dict,
+) -> dict[K1Hashable, V1]: ...
 @overload
-def itemfilter(predicate: Callable[[tuple[KHashable, V]], bool], d: Mapping[KHashable, V], factory: Callable[[], dict[KHashable, V]] = dict) -> dict[KHashable, V]: ...
+def itemfilter(
+	predicate: Callable[[tuple[KHashable, V]], bool], d: Mapping[KHashable, V], factory: Callable[[], dict[KHashable, V]] = dict
+) -> dict[KHashable, V]: ...
 @overload
-def itemfilter(predicate: Callable[[tuple[K0Hashable, V0]], TypeIs[tuple[K1Hashable, V1]]], d: Mapping[K0Hashable, V0], factory: Callable[[], MutableMapping[K1Hashable, V1]]) -> MutableMapping[K1Hashable, V1]: ...
+def itemfilter(
+	predicate: Callable[[tuple[K0Hashable, V0]], TypeIs[tuple[K1Hashable, V1]]],
+	d: Mapping[K0Hashable, V0],
+	factory: Callable[[], MutableMapping[K1Hashable, V1]],
+) -> MutableMapping[K1Hashable, V1]: ...
 @overload
-def itemfilter(predicate: Callable[[tuple[K0Hashable, V0]], TypeGuard[tuple[K1Hashable, V1]]], d: Mapping[K0Hashable, V0], factory: Callable[[], MutableMapping[K1Hashable, V1]]) -> MutableMapping[K1Hashable, V1]: ...
+def itemfilter(
+	predicate: Callable[[tuple[K0Hashable, V0]], TypeGuard[tuple[K1Hashable, V1]]],
+	d: Mapping[K0Hashable, V0],
+	factory: Callable[[], MutableMapping[K1Hashable, V1]],
+) -> MutableMapping[K1Hashable, V1]: ...
 @overload
-def itemfilter(predicate: Callable[[tuple[K0Hashable, V0]], bool], d: Mapping[K0Hashable, V0], factory: Callable[[], MutableMapping[K1Hashable, V1]]) -> MutableMapping[K1Hashable, V1]: ...
-def itemfilter(predicate: Callable[[tuple[K0Hashable, V0]], bool] | Callable[[tuple[K0Hashable, V0]], TypeGuard[tuple[K1Hashable, V1]]] | Callable[[tuple[K0Hashable, V0]], TypeIs[tuple[K1Hashable, V1]]], d: Mapping[K0Hashable, V0], factory: Callable[[], MutableMapping[K1Hashable, V1]] = dict) -> MutableMapping[K1Hashable, V1]:
+def itemfilter(
+	predicate: Callable[[tuple[K0Hashable, V0]], bool], d: Mapping[K0Hashable, V0], factory: Callable[[], MutableMapping[K1Hashable, V1]]
+) -> MutableMapping[K1Hashable, V1]: ...
+def itemfilter(
+	predicate: Callable[[tuple[K0Hashable, V0]], bool]
+	| Callable[[tuple[K0Hashable, V0]], TypeGuard[tuple[K1Hashable, V1]]]
+	| Callable[[tuple[K0Hashable, V0]], TypeIs[tuple[K1Hashable, V1]]],
+	d: Mapping[K0Hashable, V0],
+	factory: Callable[[], MutableMapping[K1Hashable, V1]] = dict,
+) -> MutableMapping[K1Hashable, V1]:
 	"""Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.
 
 	(AI generated docstring)
@@ -402,10 +452,22 @@ def itemfilter(predicate: Callable[[tuple[K0Hashable, V0]], bool] | Callable[[tu
 	return rv
 
 @overload
-def itemmap(func: Callable[[tuple[K0Hashable, V0]], tuple[K1Hashable, V1]], d: Mapping[K0Hashable, V0], factory: Callable[..., dict[K1Hashable, V1]] = dict) -> dict[K1Hashable, V1]: ...
+def itemmap(
+	func: Callable[[tuple[K0Hashable, V0]], tuple[K1Hashable, V1]],
+	d: Mapping[K0Hashable, V0],
+	factory: Callable[..., dict[K1Hashable, V1]] = dict,
+) -> dict[K1Hashable, V1]: ...
 @overload
-def itemmap(func: Callable[[tuple[K0Hashable, V0]], tuple[K1Hashable, V1]], d: Mapping[K0Hashable, V0], factory: Callable[..., MutableMapping[K1Hashable, V1]]) -> MutableMapping[K1Hashable, V1]: ...
-def itemmap(func: Callable[[tuple[K0Hashable, V0]], tuple[K1Hashable, V1]], d: Mapping[K0Hashable, V0], factory: Callable[..., MutableMapping[K1Hashable, V1]] = dict) -> MutableMapping[K1Hashable, V1]:
+def itemmap(
+	func: Callable[[tuple[K0Hashable, V0]], tuple[K1Hashable, V1]],
+	d: Mapping[K0Hashable, V0],
+	factory: Callable[..., MutableMapping[K1Hashable, V1]],
+) -> MutableMapping[K1Hashable, V1]: ...
+def itemmap(
+	func: Callable[[tuple[K0Hashable, V0]], tuple[K1Hashable, V1]],
+	d: Mapping[K0Hashable, V0],
+	factory: Callable[..., MutableMapping[K1Hashable, V1]] = dict,
+) -> MutableMapping[K1Hashable, V1]:
 	"""Apply `func` to all items of `d` and return a new `Mapping` with the transformed items.
 
 	(AI generated docstring)
@@ -451,18 +513,36 @@ def itemmap(func: Callable[[tuple[K0Hashable, V0]], tuple[K1Hashable, V1]], d: M
 	return factory(map(func, d.items()))
 
 @overload
-def keyfilter(predicate: Callable[[K0Hashable], TypeIs[K1Hashable]], d: Mapping[K0Hashable, V], factory: Callable[[], dict[K1Hashable, V]] = dict) -> dict[K1Hashable, V]: ...
+def keyfilter(
+	predicate: Callable[[K0Hashable], TypeIs[K1Hashable]], d: Mapping[K0Hashable, V], factory: Callable[[], dict[K1Hashable, V]] = dict
+) -> dict[K1Hashable, V]: ...
 @overload
-def keyfilter(predicate: Callable[[K0Hashable], TypeGuard[K1Hashable]], d: Mapping[K0Hashable, V], factory: Callable[[], dict[K1Hashable, V]] = dict) -> dict[K1Hashable, V]: ...
+def keyfilter(
+	predicate: Callable[[K0Hashable], TypeGuard[K1Hashable]], d: Mapping[K0Hashable, V], factory: Callable[[], dict[K1Hashable, V]] = dict
+) -> dict[K1Hashable, V]: ...
 @overload
-def keyfilter(predicate: Callable[[KHashable], bool], d: Mapping[KHashable, V], factory: Callable[[], dict[KHashable, V]] = dict) -> dict[KHashable, V]: ...
+def keyfilter(
+	predicate: Callable[[KHashable], bool], d: Mapping[KHashable, V], factory: Callable[[], dict[KHashable, V]] = dict
+) -> dict[KHashable, V]: ...
 @overload
-def keyfilter(predicate: Callable[[K0Hashable], TypeIs[K1Hashable]], d: Mapping[K0Hashable, V], factory: Callable[[], MutableMapping[K1Hashable, V]]) -> MutableMapping[K1Hashable, V]: ...
+def keyfilter(
+	predicate: Callable[[K0Hashable], TypeIs[K1Hashable]], d: Mapping[K0Hashable, V], factory: Callable[[], MutableMapping[K1Hashable, V]]
+) -> MutableMapping[K1Hashable, V]: ...
 @overload
-def keyfilter(predicate: Callable[[K0Hashable], TypeGuard[K1Hashable]], d: Mapping[K0Hashable, V], factory: Callable[[], MutableMapping[K1Hashable, V]]) -> MutableMapping[K1Hashable, V]: ...
+def keyfilter(
+	predicate: Callable[[K0Hashable], TypeGuard[K1Hashable]],
+	d: Mapping[K0Hashable, V],
+	factory: Callable[[], MutableMapping[K1Hashable, V]],
+) -> MutableMapping[K1Hashable, V]: ...
 @overload
-def keyfilter(predicate: Callable[[K0Hashable], bool], d: Mapping[K0Hashable, V], factory: Callable[[], MutableMapping[K1Hashable, V]]) -> MutableMapping[K1Hashable, V]: ...
-def keyfilter(predicate: Callable[[K0Hashable], bool] | Callable[[K0Hashable], TypeGuard[K1Hashable]] | Callable[[K0Hashable], TypeIs[K1Hashable]], d: Mapping[K0Hashable, V], factory: Callable[[], MutableMapping[K1Hashable, V]] = dict) -> MutableMapping[K1Hashable, V]:
+def keyfilter(
+	predicate: Callable[[K0Hashable], bool], d: Mapping[K0Hashable, V], factory: Callable[[], MutableMapping[K1Hashable, V]]
+) -> MutableMapping[K1Hashable, V]: ...
+def keyfilter(
+	predicate: Callable[[K0Hashable], bool] | Callable[[K0Hashable], TypeGuard[K1Hashable]] | Callable[[K0Hashable], TypeIs[K1Hashable]],
+	d: Mapping[K0Hashable, V],
+	factory: Callable[[], MutableMapping[K1Hashable, V]] = dict,
+) -> MutableMapping[K1Hashable, V]:
 	"""Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.
 
 	(AI generated docstring)
@@ -513,10 +593,16 @@ def keyfilter(predicate: Callable[[K0Hashable], bool] | Callable[[K0Hashable], T
 	return rv
 
 @overload
-def keymap(func: Callable[[K0Hashable], K1Hashable], d: Mapping[K0Hashable, V], factory: Callable[[], dict[K1Hashable, V]] = dict) -> dict[K1Hashable, V]: ...
+def keymap(
+	func: Callable[[K0Hashable], K1Hashable], d: Mapping[K0Hashable, V], factory: Callable[[], dict[K1Hashable, V]] = dict
+) -> dict[K1Hashable, V]: ...
 @overload
-def keymap(func: Callable[[K0Hashable], K1Hashable], d: Mapping[K0Hashable, V], factory: Callable[[], MutableMapping[K1Hashable, V]]) -> MutableMapping[K1Hashable, V]: ...
-def keymap(func: Callable[[K0Hashable], K1Hashable], d: Mapping[K0Hashable, V], factory: Callable[[], MutableMapping[K1Hashable, V]] = dict) -> MutableMapping[K1Hashable, V]:
+def keymap(
+	func: Callable[[K0Hashable], K1Hashable], d: Mapping[K0Hashable, V], factory: Callable[[], MutableMapping[K1Hashable, V]]
+) -> MutableMapping[K1Hashable, V]: ...
+def keymap(
+	func: Callable[[K0Hashable], K1Hashable], d: Mapping[K0Hashable, V], factory: Callable[[], MutableMapping[K1Hashable, V]] = dict
+) -> MutableMapping[K1Hashable, V]:
 	"""Apply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.
 
 	(AI generated docstring)
@@ -618,10 +704,16 @@ def merge(*dicts: Mapping[KHashable, V], factory: Callable[[], MutableMapping[KH
 	return rv
 
 @overload
-def merge_with(func: Callable[[Sequence[V]], V], *dicts: Mapping[KHashable, V], factory: Callable[[], dict[KHashable, V]] = dict) -> dict[KHashable, V]: ...
+def merge_with(
+	func: Callable[[Sequence[V]], V], *dicts: Mapping[KHashable, V], factory: Callable[[], dict[KHashable, V]] = dict
+) -> dict[KHashable, V]: ...
 @overload
-def merge_with(func: Callable[[Sequence[V]], V], *dicts: Mapping[KHashable, V], factory: Callable[[], MutableMapping[KHashable, V]]) -> MutableMapping[KHashable, V]: ...
-def merge_with(func: Callable[[Sequence[V]], V], *dicts: Mapping[KHashable, V], factory: Callable[[], MutableMapping[KHashable, V]] = dict) -> MutableMapping[KHashable, V]:
+def merge_with(
+	func: Callable[[Sequence[V]], V], *dicts: Mapping[KHashable, V], factory: Callable[[], MutableMapping[KHashable, V]]
+) -> MutableMapping[KHashable, V]: ...
+def merge_with(
+	func: Callable[[Sequence[V]], V], *dicts: Mapping[KHashable, V], factory: Callable[[], MutableMapping[KHashable, V]] = dict
+) -> MutableMapping[KHashable, V]:
 	"""Merge dictionaries and apply a `Callable` to combined values.
 
 	(AI generated docstring)
@@ -681,14 +773,38 @@ def merge_with(func: Callable[[Sequence[V]], V], *dicts: Mapping[KHashable, V], 
 
 # TODO Given `d: dict[str, int | str]`. It does not follow that `func: Callable[[int | str], int | str]`
 @overload
-def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V | None], V], default: None = None, *, factory: Callable[..., MutableMapping[K, V]] = dict) -> dict[K, V]: ...
+def update_in(
+	d: Mapping[K, V],
+	keys: Sequence[K],
+	func: Callable[[V | None], V],
+	default: None = None,
+	*,
+	factory: Callable[..., MutableMapping[K, V]] = dict,
+) -> dict[K, V]: ...
 @overload
-def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V], V], default: V, factory: Callable[..., MutableMapping[K, V]] = dict) -> dict[K, V]: ...
+def update_in(
+	d: Mapping[K, V], keys: Sequence[K], func: Callable[[V], V], default: V, factory: Callable[..., MutableMapping[K, V]] = dict
+) -> dict[K, V]: ...
 @overload
-def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V | None], V], default: None = None, *, factory: Callable[..., MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
+def update_in(
+	d: Mapping[K, V],
+	keys: Sequence[K],
+	func: Callable[[V | None], V],
+	default: None = None,
+	*,
+	factory: Callable[..., MutableMapping[K, V]],
+) -> MutableMapping[K, V]: ...
 @overload
-def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V], V], default: V, factory: Callable[..., MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
-def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V | None], V] | Callable[[V], V], default: V | None = None, factory: Callable[..., MutableMapping[K, V]] = dict) -> MutableMapping[K, V]:
+def update_in(
+	d: Mapping[K, V], keys: Sequence[K], func: Callable[[V], V], default: V, factory: Callable[..., MutableMapping[K, V]]
+) -> MutableMapping[K, V]: ...
+def update_in(
+	d: Mapping[K, V],
+	keys: Sequence[K],
+	func: Callable[[V | None], V] | Callable[[V], V],
+	default: V | None = None,
+	factory: Callable[..., MutableMapping[K, V]] = dict,
+) -> MutableMapping[K, V]:
 	"""Apply a `Callable` to a value at a nested path in a `Mapping`.
 
 	(AI generated docstring)
@@ -735,7 +851,7 @@ def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V | None], V]
 	>>> update_in({}, ['z'], inc, 0)
 	{'z': 1}
 
-	>>> update_in({}, [1, 2, 3], str, default="bar")
+	>>> update_in({}, [1, 2, 3], str, default='bar')
 	{1: {2: {3: 'bar'}}}
 
 	References
@@ -750,24 +866,38 @@ def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V | None], V]
 	while dequeKeys:
 		k: K = dequeKeys.popleft()
 		sherpa = cast('MutableMapping[K, V]', sherpa.get(k, factory()))
-		dATk[k] = dATk = factory(sherpa)  # pyright: ignore[reportArgumentType] # ty:ignore[invalid-assignment]
-	dATk[keyFinal] = func(sherpa.get(keyFinal, default))  # pyright: ignore[reportArgumentType] # ty:ignore[invalid-argument-type]
+		dATk[k] = dATk = factory(sherpa)
+	dATk[keyFinal] = func(sherpa.get(keyFinal, default))
 	return rv
 
 @overload
-def valfilter(predicate: Callable[[V0], TypeIs[V1]], d: Mapping[KHashable, V0], factory: Callable[[], dict[KHashable, V1]] = dict) -> dict[KHashable, V1]: ...
+def valfilter(
+	predicate: Callable[[V0], TypeIs[V1]], d: Mapping[KHashable, V0], factory: Callable[[], dict[KHashable, V1]] = dict
+) -> dict[KHashable, V1]: ...
 @overload
-def valfilter(predicate: Callable[[V0], TypeGuard[V1]], d: Mapping[KHashable, V0], factory: Callable[[], dict[KHashable, V1]] = dict) -> dict[KHashable, V1]: ...
+def valfilter(
+	predicate: Callable[[V0], TypeGuard[V1]], d: Mapping[KHashable, V0], factory: Callable[[], dict[KHashable, V1]] = dict
+) -> dict[KHashable, V1]: ...
 @overload
 def valfilter(predicate: Callable[[V], bool], d: Mapping[KHashable, V]) -> dict[KHashable, V]: ...
 @overload
-def valfilter(predicate: Callable[[V0], TypeIs[V1]], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]]) -> MutableMapping[KHashable, V1]: ...
+def valfilter(
+	predicate: Callable[[V0], TypeIs[V1]], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]]
+) -> MutableMapping[KHashable, V1]: ...
 @overload
-def valfilter(predicate: Callable[[V0], TypeGuard[V1]], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]]) -> MutableMapping[KHashable, V1]: ...
+def valfilter(
+	predicate: Callable[[V0], TypeGuard[V1]], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]]
+) -> MutableMapping[KHashable, V1]: ...
 @overload
-def valfilter(predicate: Callable[[V0], bool], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]]) -> MutableMapping[KHashable, V1]: ...
+def valfilter(
+	predicate: Callable[[V0], bool], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]]
+) -> MutableMapping[KHashable, V1]: ...
 
-def valfilter(predicate: Callable[[V0], bool] | Callable[[V0], TypeGuard[V1]] | Callable[[V0], TypeIs[V1]], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]] = dict) -> MutableMapping[KHashable, V1]:
+def valfilter(
+	predicate: Callable[[V0], bool] | Callable[[V0], TypeGuard[V1]] | Callable[[V0], TypeIs[V1]],
+	d: Mapping[KHashable, V0],
+	factory: Callable[[], MutableMapping[KHashable, V1]] = dict,
+) -> MutableMapping[KHashable, V1]:
 	"""Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
 
 	(AI generated docstring)
@@ -818,10 +948,16 @@ def valfilter(predicate: Callable[[V0], bool] | Callable[[V0], TypeGuard[V1]] | 
 	return rv
 
 @overload
-def valmap(func: Callable[[V0], V1], d: Mapping[KHashable, V0], factory: Callable[[], dict[KHashable, V1]] = dict) -> dict[KHashable, V1]: ...
+def valmap(
+	func: Callable[[V0], V1], d: Mapping[KHashable, V0], factory: Callable[[], dict[KHashable, V1]] = dict
+) -> dict[KHashable, V1]: ...
 @overload
-def valmap(func: Callable[[V0], V1], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]]) -> MutableMapping[KHashable, V1]: ...
-def valmap(func: Callable[[V0], V1], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]] = dict) -> MutableMapping[KHashable, V1]:
+def valmap(
+	func: Callable[[V0], V1], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]]
+) -> MutableMapping[KHashable, V1]: ...
+def valmap(
+	func: Callable[[V0], V1], d: Mapping[KHashable, V0], factory: Callable[[], MutableMapping[KHashable, V1]] = dict
+) -> MutableMapping[KHashable, V1]:
 	"""Apply `func` to all values of `d` and return a new `Mapping` with the transformed values.
 
 	(AI generated docstring)

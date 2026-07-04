@@ -1623,21 +1623,21 @@ static const char* const __pyx_f[] = {
 /*--- Type declarations ---*/
 struct __pyx_obj_13humpy_cytoolz_9dicttoolz__iter_mapping;
 struct __pyx_defaults;
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge;
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with;
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap;
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap;
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap;
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter;
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter;
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter;
 struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc;
 struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc_in;
 struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_dissoc;
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in;
 struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_get_in;
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter;
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap;
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter;
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap;
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge;
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with;
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in;
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter;
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap;
 
-/* "humpy_cytoolz/dicttoolz.pxd":8
+/* "humpy_cytoolz/dicttoolz.pxd":9
  *     cdef object cur
  * 
  * ctypedef int (*f_map_next)(object p, Py_ssize_t *ppos, PyObject* *pkey, PyObject* *pval) except -1             # <<<<<<<<<<<<<<
@@ -1646,104 +1646,8 @@ struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_get_in;
 */
 typedef int (*__pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next)(PyObject *, Py_ssize_t *, PyObject **, PyObject **);
 
-/* "humpy_cytoolz/dicttoolz.pxd":15
- * 
- * 
- * cdef object c_merge(object dicts, object factory=*)             # <<<<<<<<<<<<<<
- * 
- * 
-*/
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge {
-  int __pyx_n;
-  PyObject *factory;
-};
-
 /* "humpy_cytoolz/dicttoolz.pxd":18
- * 
- * 
- * cdef object c_merge_with(object func, object dicts, object factory=*)             # <<<<<<<<<<<<<<
- * 
- * 
-*/
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with {
-  int __pyx_n;
-  PyObject *factory;
-};
-
-/* "humpy_cytoolz/dicttoolz.pxd":21
- * 
- * 
- * cpdef object valmap(object func, object d, object factory=*)             # <<<<<<<<<<<<<<
- * 
- * 
-*/
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap {
-  int __pyx_n;
-  PyObject *factory;
-};
-
-/* "humpy_cytoolz/dicttoolz.pxd":24
- * 
- * 
- * cpdef object keymap(object func, object d, object factory=*)             # <<<<<<<<<<<<<<
- * 
- * 
-*/
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap {
-  int __pyx_n;
-  PyObject *factory;
-};
-
-/* "humpy_cytoolz/dicttoolz.pxd":27
- * 
- * 
- * cpdef object itemmap(object func, object d, object factory=*)             # <<<<<<<<<<<<<<
- * 
- * 
-*/
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap {
-  int __pyx_n;
-  PyObject *factory;
-};
-
-/* "humpy_cytoolz/dicttoolz.pxd":30
- * 
- * 
- * cpdef object valfilter(object predicate, object d, object factory=*)             # <<<<<<<<<<<<<<
- * 
- * 
-*/
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter {
-  int __pyx_n;
-  PyObject *factory;
-};
-
-/* "humpy_cytoolz/dicttoolz.pxd":33
- * 
- * 
- * cpdef object keyfilter(object predicate, object d, object factory=*)             # <<<<<<<<<<<<<<
- * 
- * 
-*/
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter {
-  int __pyx_n;
-  PyObject *factory;
-};
-
-/* "humpy_cytoolz/dicttoolz.pxd":36
- * 
- * 
- * cpdef object itemfilter(object predicate, object d, object factory=*)             # <<<<<<<<<<<<<<
- * 
- * 
-*/
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter {
-  int __pyx_n;
-  PyObject *factory;
-};
-
-/* "humpy_cytoolz/dicttoolz.pxd":39
- * 
+ * #======== Public Mapping Operations ========
  * 
  * cpdef object assoc(object d, object key, object value, object factory=*)             # <<<<<<<<<<<<<<
  * 
@@ -1754,7 +1658,7 @@ struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc {
   PyObject *factory;
 };
 
-/* "humpy_cytoolz/dicttoolz.pxd":42
+/* "humpy_cytoolz/dicttoolz.pxd":21
  * 
  * 
  * cpdef object assoc_in(object d, object keys, object value, object factory=*)             # <<<<<<<<<<<<<<
@@ -1766,7 +1670,7 @@ struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc_in {
   PyObject *factory;
 };
 
-/* "humpy_cytoolz/dicttoolz.pxd":45
+/* "humpy_cytoolz/dicttoolz.pxd":24
  * 
  * 
  * cdef object c_dissoc(object d, object keys, object factory=*)             # <<<<<<<<<<<<<<
@@ -1774,6 +1678,91 @@ struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc_in {
  * 
 */
 struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_dissoc {
+  int __pyx_n;
+  PyObject *factory;
+};
+
+/* "humpy_cytoolz/dicttoolz.pxd":27
+ * 
+ * 
+ * cpdef object get_in(object keys, object coll, object default=*, object no_default=*)             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_get_in {
+  int __pyx_n;
+  PyObject *__pyx_default;
+  PyObject *no_default;
+};
+
+/* "humpy_cytoolz/dicttoolz.pxd":30
+ * 
+ * 
+ * cpdef object itemfilter(object predicate, object d, object factory=*)             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter {
+  int __pyx_n;
+  PyObject *factory;
+};
+
+/* "humpy_cytoolz/dicttoolz.pxd":33
+ * 
+ * 
+ * cpdef object itemmap(object func, object d, object factory=*)             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap {
+  int __pyx_n;
+  PyObject *factory;
+};
+
+/* "humpy_cytoolz/dicttoolz.pxd":36
+ * 
+ * 
+ * cpdef object keyfilter(object predicate, object d, object factory=*)             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter {
+  int __pyx_n;
+  PyObject *factory;
+};
+
+/* "humpy_cytoolz/dicttoolz.pxd":39
+ * 
+ * 
+ * cpdef object keymap(object func, object d, object factory=*)             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap {
+  int __pyx_n;
+  PyObject *factory;
+};
+
+/* "humpy_cytoolz/dicttoolz.pxd":42
+ * 
+ * 
+ * cdef object c_merge(object dicts, object factory=*)             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge {
+  int __pyx_n;
+  PyObject *factory;
+};
+
+/* "humpy_cytoolz/dicttoolz.pxd":45
+ * 
+ * 
+ * cdef object c_merge_with(object func, object dicts, object factory=*)             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with {
   int __pyx_n;
   PyObject *factory;
 };
@@ -1794,17 +1783,28 @@ struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in {
 /* "humpy_cytoolz/dicttoolz.pxd":51
  * 
  * 
- * cpdef object get_in(object keys, object coll, object default=*, object no_default=*)             # <<<<<<<<<<<<<<
+ * cpdef object valfilter(object predicate, object d, object factory=*)             # <<<<<<<<<<<<<<
+ * 
+ * 
 */
-struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_get_in {
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter {
   int __pyx_n;
-  PyObject *__pyx_default;
-  PyObject *no_default;
+  PyObject *factory;
 };
 
-/* "humpy_cytoolz/dicttoolz.pxd":4
+/* "humpy_cytoolz/dicttoolz.pxd":54
  * 
- * # utility functions to perform iteration over dicts or generic mapping
+ * 
+ * cpdef object valmap(object func, object d, object factory=*)             # <<<<<<<<<<<<<<
+*/
+struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap {
+  int __pyx_n;
+  PyObject *factory;
+};
+
+/* "humpy_cytoolz/dicttoolz.pxd":5
+ * #======== Cython Mapping Iteration ========
+ * 
  * cdef class _iter_mapping:             # <<<<<<<<<<<<<<
  *     cdef object it
  *     cdef object cur
@@ -1816,12 +1816,12 @@ struct __pyx_obj_13humpy_cytoolz_9dicttoolz__iter_mapping {
 };
 
 
-/* "humpy_cytoolz/dicttoolz.pyx":98
+/* "humpy_cytoolz/dicttoolz.pyx":642
  * 	return rv
  * 
  * def merge(*dicts, factory=dict):             # <<<<<<<<<<<<<<
- * 	"""\
- * merge(*dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+ * 	"""Merge a collection of dictionaries and return a new `Mapping`.
+ * 
 */
 struct __pyx_defaults {
   PyObject_HEAD
@@ -2209,18 +2209,6 @@ static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i,
 static PyObject *__Pyx_PyObject_FastCallMethod(PyObject *name, PyObject *const *args, size_t nargsf);
 #endif
 
-/* RaiseTooManyValuesToUnpack.proto */
-static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected);
-
-/* RaiseNeedMoreValuesToUnpack.proto */
-static CYTHON_INLINE void __Pyx_RaiseNeedMoreValuesError(Py_ssize_t index);
-
-/* IterFinish.proto */
-static CYTHON_INLINE int __Pyx_IterFinish(void);
-
-/* UnpackItemEndCheck.proto */
-static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected);
-
 /* SliceObject.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_GetSlice(
         PyObject* obj, Py_ssize_t cstart, Py_ssize_t cstop,
@@ -2251,6 +2239,9 @@ static CYTHON_INLINE PyObject* __Pyx_CallUnboundCMethod1(__Pyx_CachedCFunction* 
 #else
 #define __Pyx_CallUnboundCMethod1(cfunc, self, arg)  __Pyx__CallUnboundCMethod1(cfunc, self, arg)
 #endif
+
+/* IterFinish.proto (used by set_iter) */
+static CYTHON_INLINE int __Pyx_IterFinish(void);
 
 /* set_iter.proto */
 static CYTHON_INLINE PyObject* __Pyx_set_iterator(PyObject* iterable, int is_set,
@@ -2283,6 +2274,15 @@ static int __Pyx__GetException(PyThreadState *tstate, PyObject **type, PyObject 
 #else
 static int __Pyx_GetException(PyObject **type, PyObject **value, PyObject **tb);
 #endif
+
+/* RaiseTooManyValuesToUnpack.proto */
+static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected);
+
+/* RaiseNeedMoreValuesToUnpack.proto */
+static CYTHON_INLINE void __Pyx_RaiseNeedMoreValuesError(Py_ssize_t index);
+
+/* UnpackItemEndCheck.proto */
+static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected);
 
 /* AllocateExtensionType.proto */
 static PyObject *__Pyx_AllocateExtensionType(PyTypeObject *t, int is_final);
@@ -2435,9 +2435,6 @@ static CYTHON_INLINE int __Pyx_PyObject_SetAttrStr(PyObject* obj, PyObject* attr
 #define __Pyx_PyObject_DelAttrStr(o,n)   __Pyx_PyObject_DelAttr(o,n)
 #define __Pyx_PyObject_SetAttrStr(o,n,v) PyObject_SetAttr(o,n,v)
 #endif
-
-/* ListPack.proto */
-static PyObject *__Pyx_PyList_Pack(Py_ssize_t n, ...);
 
 /* dict_setdefault.proto (used by FetchCommonType) */
 static CYTHON_INLINE PyObject *__Pyx_PyDict_SetDefault(PyObject *d, PyObject *key, PyObject *default_value);
@@ -2767,19 +2764,19 @@ static PyObject *__pyx_v_13humpy_cytoolz_9dicttoolz_Mapping = 0;
 static PyObject *__pyx_v_13humpy_cytoolz_9dicttoolz__get_in_exceptions = 0;
 static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(PyObject *, PyObject **); /*proto*/
 static int __pyx_f_13humpy_cytoolz_9dicttoolz_PyMapping_Next(PyObject *, Py_ssize_t *, PyObject **, PyObject **); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_merge(PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge *__pyx_optional_args); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_merge_with(PyObject *, PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with *__pyx_optional_args); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_valmap(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap *__pyx_optional_args); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_keymap(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap *__pyx_optional_args); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_itemmap(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap *__pyx_optional_args); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_valfilter(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter *__pyx_optional_args); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_keyfilter(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter *__pyx_optional_args); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_itemfilter(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter *__pyx_optional_args); /*proto*/
 static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc(PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc *__pyx_optional_args); /*proto*/
 static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc_in *__pyx_optional_args); /*proto*/
 static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *, PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_dissoc *__pyx_optional_args); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_update_in(PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in *__pyx_optional_args); /*proto*/
 static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_get_in *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_itemfilter(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_itemmap(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_keyfilter(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_keymap(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_merge(PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_merge_with(PyObject *, PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_update_in(PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_valfilter(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_valmap(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap *__pyx_optional_args); /*proto*/
 static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(PyObject *, PyObject *); /*proto*/
 /* #### Code section: typeinfo ### */
 /* #### Code section: before_global_var ### */
@@ -2790,27 +2787,28 @@ int __pyx_module_is_main_humpy_cytoolz__dicttoolz = 0;
 /* Implementation of "humpy_cytoolz.dicttoolz" */
 /* #### Code section: global_var ### */
 /* #### Code section: string_decls ### */
+static const char __pyx_k_Provide_Cython_implementations_o[] = "Provide Cython implementations of immutable, functional-style operations on `Mapping` objects.\n\nThis module mirrors the public function order of `humpy_toolz.dicttoolz` so the Python and\nCython implementations can be compared function by function. Public functions are ordered by\n`__all__`; C-level implementation objects remain adjacent to the public function they support.\n\nContents\n--------\nPublic functions\n    assoc\n    assoc_in\n    dissoc\n    get_in\n    itemfilter\n    itemmap\n    keyfilter\n    keymap\n    merge\n    merge_with\n    update_in\n    valfilter\n    valmap\n\nC-level implementation objects\n    c_dissoc\n    c_merge\n    c_merge_with\n    get_factory\n    get_map_iter\n    PyMapping_Next\n    _iter_mapping\n";
 /* #### Code section: decls ### */
 static int __pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping___cinit__(struct __pyx_obj_13humpy_cytoolz_9dicttoolz__iter_mapping *__pyx_v_self, PyObject *__pyx_v_it); /* proto */
 static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_2__iter__(struct __pyx_obj_13humpy_cytoolz_9dicttoolz__iter_mapping *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_4__next__(struct __pyx_obj_13humpy_cytoolz_9dicttoolz__iter_mapping *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_13humpy_cytoolz_9dicttoolz__iter_mapping *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_13humpy_cytoolz_9dicttoolz__iter_mapping *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_26__defaults__(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_merge(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_factory, PyObject *__pyx_v_dicts); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_28__defaults__(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_2merge_with(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_factory, PyObject *__pyx_v_dicts); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_4valmap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_6keymap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_8itemmap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_10valfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_assoc(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_key, PyObject *__pyx_v_value, PyObject *__pyx_v_factory); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_2assoc_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_value, PyObject *__pyx_v_factory); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_4dissoc(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_kwargs); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_6get_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_keys, PyObject *__pyx_v_coll, PyObject *__pyx_v_default, PyObject *__pyx_v_no_default); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_8itemfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_10itemmap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
 static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_12keyfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_14itemfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_16assoc(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_key, PyObject *__pyx_v_value, PyObject *__pyx_v_factory); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_18assoc_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_value, PyObject *__pyx_v_factory); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_20dissoc(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_kwargs); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_22update_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_func, PyObject *__pyx_v_default, PyObject *__pyx_v_factory); /* proto */
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_24get_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_keys, PyObject *__pyx_v_coll, PyObject *__pyx_v_default, PyObject *__pyx_v_no_default); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_14keymap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_26__defaults__(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_16merge(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_factory, PyObject *__pyx_v_dicts); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_28__defaults__(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_18merge_with(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_factory, PyObject *__pyx_v_dicts); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_20update_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_func, PyObject *__pyx_v_default, PyObject *__pyx_v_factory); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_22valfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_24valmap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory); /* proto */
 static PyObject *__pyx_tp_new_13humpy_cytoolz_9dicttoolz__iter_mapping(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_13humpy_cytoolz_9dicttoolz___pyx_defaults(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 /* #### Code section: late_includes ### */
@@ -2855,7 +2853,7 @@ typedef struct {
   PyObject *__pyx_k__11;
   PyObject *__pyx_k__12;
   PyObject *__pyx_slice[1];
-  PyObject *__pyx_tuple[1];
+  PyObject *__pyx_tuple[2];
   PyObject *__pyx_codeobj_tab[15];
   PyObject *__pyx_string_tab[115];
   PyObject *__pyx_number_tab[1];
@@ -2905,41 +2903,41 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #endif
 /* #### Code section: constant_name_defines ### */
 #define __pyx_kp_u_0_got_an_unexpected_keyword_arg __pyx_string_tab[0]
-#define __pyx_kp_u__13 __pyx_string_tab[1]
-#define __pyx_kp_u__14 __pyx_string_tab[2]
-#define __pyx_kp_u_assoc_d_collections_abc_Mapping __pyx_string_tab[3]
-#define __pyx_kp_u_assoc_in_d_collections_abc_Mappi __pyx_string_tab[4]
-#define __pyx_kp_u_assoc_in_line_655 __pyx_string_tab[5]
-#define __pyx_kp_u_assoc_line_608 __pyx_string_tab[6]
-#define __pyx_kp_u_disable __pyx_string_tab[7]
-#define __pyx_kp_u_dissoc_d_collections_abc_Mapping __pyx_string_tab[8]
-#define __pyx_kp_u_dissoc_line_747 __pyx_string_tab[9]
-#define __pyx_kp_u_enable __pyx_string_tab[10]
-#define __pyx_kp_u_gc __pyx_string_tab[11]
-#define __pyx_kp_u_get_in_keys_collections_abc_Sequ __pyx_string_tab[12]
-#define __pyx_kp_u_get_in_line_893 __pyx_string_tab[13]
-#define __pyx_kp_u_humpy_cytoolz_dicttoolz_pyx __pyx_string_tab[14]
-#define __pyx_kp_u_isenabled __pyx_string_tab[15]
-#define __pyx_kp_u_itemfilter_line_541 __pyx_string_tab[16]
-#define __pyx_kp_u_itemfilter_predicate_collections __pyx_string_tab[17]
-#define __pyx_kp_u_itemmap_func_collections_abc_Cal __pyx_string_tab[18]
-#define __pyx_kp_u_itemmap_line_357 __pyx_string_tab[19]
-#define __pyx_kp_u_keyfilter_line_480 __pyx_string_tab[20]
-#define __pyx_kp_u_keyfilter_predicate_collections __pyx_string_tab[21]
-#define __pyx_kp_u_keymap_func_collections_abc_Call __pyx_string_tab[22]
-#define __pyx_kp_u_keymap_line_298 __pyx_string_tab[23]
-#define __pyx_kp_u_merge_dicts_collections_abc_Mapp __pyx_string_tab[24]
-#define __pyx_kp_u_merge_line_98 __pyx_string_tab[25]
-#define __pyx_kp_u_merge_with_func_collections_abc __pyx_string_tab[26]
-#define __pyx_kp_u_merge_with_line_185 __pyx_string_tab[27]
-#define __pyx_kp_u_no_default___reduce___due_to_non __pyx_string_tab[28]
-#define __pyx_kp_u_stringsource __pyx_string_tab[29]
-#define __pyx_kp_u_update_in_d_collections_abc_Mapp __pyx_string_tab[30]
-#define __pyx_kp_u_update_in_line_802 __pyx_string_tab[31]
-#define __pyx_kp_u_valfilter_line_419 __pyx_string_tab[32]
-#define __pyx_kp_u_valfilter_predicate_collections __pyx_string_tab[33]
-#define __pyx_kp_u_valmap_func_collections_abc_Call __pyx_string_tab[34]
-#define __pyx_kp_u_valmap_line_239 __pyx_string_tab[35]
+#define __pyx_kp_u_Apply_a_Callable_to_a_value_at_a __pyx_string_tab[1]
+#define __pyx_kp_u_Apply_func_to_all_items_of_d_and __pyx_string_tab[2]
+#define __pyx_kp_u_Apply_func_to_all_keys_of_d_and __pyx_string_tab[3]
+#define __pyx_kp_u_Apply_func_to_all_values_of_d_an __pyx_string_tab[4]
+#define __pyx_kp_u_Create_a_new_Mapping_1_with_key __pyx_string_tab[5]
+#define __pyx_kp_u_Create_a_new_MutableMapping_1_fr __pyx_string_tab[6]
+#define __pyx_kp_u_Create_a_new_MutableMapping_from __pyx_string_tab[7]
+#define __pyx_kp_u_Merge_a_collection_of_dictionari __pyx_string_tab[8]
+#define __pyx_kp_u_Merge_dictionaries_and_apply_a_C __pyx_string_tab[9]
+#define __pyx_kp_u_Retain_only_items_from_d_whose_k __pyx_string_tab[10]
+#define __pyx_kp_u_Retain_only_items_from_d_whose_k_2 __pyx_string_tab[11]
+#define __pyx_kp_u_Retain_only_items_from_d_whose_v __pyx_string_tab[12]
+#define __pyx_kp_u_Retrieve_a_value_from_a_potentia __pyx_string_tab[13]
+#define __pyx_kp_u__13 __pyx_string_tab[14]
+#define __pyx_kp_u__14 __pyx_string_tab[15]
+#define __pyx_kp_u_assoc_in_line_168 __pyx_string_tab[16]
+#define __pyx_kp_u_assoc_line_123 __pyx_string_tab[17]
+#define __pyx_kp_u_disable __pyx_string_tab[18]
+#define __pyx_kp_u_dissoc_line_258 __pyx_string_tab[19]
+#define __pyx_kp_u_enable __pyx_string_tab[20]
+#define __pyx_kp_u_gc __pyx_string_tab[21]
+#define __pyx_kp_u_get_in_line_313 __pyx_string_tab[22]
+#define __pyx_kp_u_humpy_cytoolz_dicttoolz_pyx __pyx_string_tab[23]
+#define __pyx_kp_u_isenabled __pyx_string_tab[24]
+#define __pyx_kp_u_itemfilter_line_386 __pyx_string_tab[25]
+#define __pyx_kp_u_itemmap_line_453 __pyx_string_tab[26]
+#define __pyx_kp_u_keyfilter_line_513 __pyx_string_tab[27]
+#define __pyx_kp_u_keymap_line_574 __pyx_string_tab[28]
+#define __pyx_kp_u_merge_line_642 __pyx_string_tab[29]
+#define __pyx_kp_u_merge_with_line_726 __pyx_string_tab[30]
+#define __pyx_kp_u_no_default___reduce___due_to_non __pyx_string_tab[31]
+#define __pyx_kp_u_stringsource __pyx_string_tab[32]
+#define __pyx_kp_u_update_in_line_777 __pyx_string_tab[33]
+#define __pyx_kp_u_valfilter_line_864 __pyx_string_tab[34]
+#define __pyx_kp_u_valmap_line_925 __pyx_string_tab[35]
 #define __pyx_n_u_Mapping __pyx_string_tab[36]
 #define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[37]
 #define __pyx_n_u_abc __pyx_string_tab[38]
@@ -3006,19 +3004,19 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_n_u_value __pyx_string_tab[99]
 #define __pyx_n_u_values __pyx_string_tab[100]
 #define __pyx_kp_b_PyObject_PyObject_PyObject_PyObj __pyx_string_tab[101]
-#define __pyx_kp_b_iso88591_1f_1_gQ_Qa_XQ_1_q_AU_6_T_RxvXQ __pyx_string_tab[102]
-#define __pyx_kp_b_iso88591_B_d_1_gQ_Qa_XQ_1_q_AU_6_Yaxq_Qh __pyx_string_tab[103]
-#define __pyx_kp_b_iso88591_C1l_1_gQ_Qa_XQ_1_q_AU_6_ha_ha_Y __pyx_string_tab[104]
-#define __pyx_kp_b_iso88591_Cq_s_D_JauAT_q_q_q __pyx_string_tab[105]
-#define __pyx_kp_b_iso88591_FaN_gQ_Qa_q_A_G1A_1G1 __pyx_string_tab[106]
-#define __pyx_kp_b_iso88591_JJ___v_Qd_aq_gQ_Qa_q_A_G1A_WA_X __pyx_string_tab[107]
-#define __pyx_kp_b_iso88591_J_d_Qd_aq_gQ_Qa_q_A_G1A_WA_XS_q __pyx_string_tab[108]
-#define __pyx_kp_b_iso88591_Q __pyx_string_tab[109]
-#define __pyx_kp_b_iso88591_Qd_Cq_s_D_JauAT_q_AV7 __pyx_string_tab[110]
-#define __pyx_kp_b_iso88591_UUVT_ha_aq_Q __pyx_string_tab[111]
-#define __pyx_kp_b_iso88591_b_1_gQ_Qa_XQ_1_q_AU_6_AT_81 __pyx_string_tab[112]
-#define __pyx_kp_b_iso88591_b_1_gQ_Qa_XQ_1_q_AU_6_AXXT __pyx_string_tab[113]
-#define __pyx_kp_b_iso88591_j_F_Qj __pyx_string_tab[114]
+#define __pyx_kp_b_iso88591_1_gQ_Qa_XQ_1_q_AU_6_AT_81 __pyx_string_tab[102]
+#define __pyx_kp_b_iso88591_1_gQ_Qa_XQ_1_q_AU_6_AXXT __pyx_string_tab[103]
+#define __pyx_kp_b_iso88591_1b_1_gQ_Qa_XQ_1_q_AU_6_T_RxvXQ __pyx_string_tab[104]
+#define __pyx_kp_b_iso88591_B_d_1_gQ_Qa_XQ_1_q_AU_6_Yaxq_Qh __pyx_string_tab[105]
+#define __pyx_kp_b_iso88591_C1l_1_gQ_Qa_XQ_1_q_AU_6_ha_ha_Y __pyx_string_tab[106]
+#define __pyx_kp_b_iso88591_FaJ_gQ_Qa_q_A_G1A_1G1 __pyx_string_tab[107]
+#define __pyx_kp_b_iso88591_JJ___r_Qd_aq_gQ_Qa_q_A_G1A_WA_X __pyx_string_tab[108]
+#define __pyx_kp_b_iso88591_J_Qd_aq_gQ_Qa_q_A_G1A_WA_XS_q_7 __pyx_string_tab[109]
+#define __pyx_kp_b_iso88591_Q __pyx_string_tab[110]
+#define __pyx_kp_b_iso88591_Q_Cq_s_D_JauAT_q_AV7 __pyx_string_tab[111]
+#define __pyx_kp_b_iso88591_UUV_ha_aq_Q __pyx_string_tab[112]
+#define __pyx_kp_b_iso88591_Z_Cq_s_D_JauAT_q_q_q __pyx_string_tab[113]
+#define __pyx_kp_b_iso88591_f_F_Qj __pyx_string_tab[114]
 #define __pyx_int_1 __pyx_number_tab[0]
 /* #### Code section: module_state_clear ### */
 #if CYTHON_USE_MODULE_STATE
@@ -3052,7 +3050,7 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_k__11);
   Py_CLEAR(clear_module_state->__pyx_k__12);
   for (int i=0; i<1; ++i) { Py_CLEAR(clear_module_state->__pyx_slice[i]); }
-  for (int i=0; i<1; ++i) { Py_CLEAR(clear_module_state->__pyx_tuple[i]); }
+  for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_tuple[i]); }
   for (int i=0; i<15; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
   for (int i=0; i<115; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
   for (int i=0; i<1; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
@@ -3096,7 +3094,7 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   Py_VISIT(traverse_module_state->__pyx_k__11);
   Py_VISIT(traverse_module_state->__pyx_k__12);
   for (int i=0; i<1; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_slice[i]); }
-  for (int i=0; i<1; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_tuple[i]); }
+  for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_tuple[i]); }
   for (int i=0; i<15; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
   for (int i=0; i<115; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
   for (int i=0; i<1; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
@@ -3113,7 +3111,7 @@ return 0;
 #endif
 /* #### Code section: module_code ### */
 
-/* "humpy_cytoolz/dicttoolz.pyx":27
+/* "humpy_cytoolz/dicttoolz.pyx":61
  * cdef class _iter_mapping:
  * 	""" Keep a handle on the current item to prevent memory clean up too early"""
  * 	def __cinit__(self, object it):             # <<<<<<<<<<<<<<
@@ -3143,32 +3141,32 @@ static int __pyx_pw_13humpy_cytoolz_9dicttoolz_13_iter_mapping_1__cinit__(PyObje
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_it,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_VARARGS(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 27, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 61, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_VARARGS(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 27, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 61, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "__cinit__", 0) < (0)) __PYX_ERR(0, 27, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "__cinit__", 0) < (0)) __PYX_ERR(0, 61, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, i); __PYX_ERR(0, 27, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, i); __PYX_ERR(0, 61, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_VARARGS(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 27, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 61, __pyx_L3_error)
     }
     __pyx_v_it = values[0];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 27, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 61, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -3194,7 +3192,7 @@ static int __pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping___cinit__(struct 
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":28
+  /* "humpy_cytoolz/dicttoolz.pyx":62
  * 	""" Keep a handle on the current item to prevent memory clean up too early"""
  * 	def __cinit__(self, object it):
  * 		self.it = it             # <<<<<<<<<<<<<<
@@ -3207,7 +3205,7 @@ static int __pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping___cinit__(struct 
   __Pyx_DECREF(__pyx_v_self->it);
   __pyx_v_self->it = __pyx_v_it;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":29
+  /* "humpy_cytoolz/dicttoolz.pyx":63
  * 	def __cinit__(self, object it):
  * 		self.it = it
  * 		self.cur = None             # <<<<<<<<<<<<<<
@@ -3220,7 +3218,7 @@ static int __pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping___cinit__(struct 
   __Pyx_DECREF(__pyx_v_self->cur);
   __pyx_v_self->cur = Py_None;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":27
+  /* "humpy_cytoolz/dicttoolz.pyx":61
  * cdef class _iter_mapping:
  * 	""" Keep a handle on the current item to prevent memory clean up too early"""
  * 	def __cinit__(self, object it):             # <<<<<<<<<<<<<<
@@ -3234,7 +3232,7 @@ static int __pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping___cinit__(struct 
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/dicttoolz.pyx":31
+/* "humpy_cytoolz/dicttoolz.pyx":65
  * 		self.cur = None
  * 
  * 	def __iter__(self):             # <<<<<<<<<<<<<<
@@ -3262,7 +3260,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_2__iter__(s
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__iter__", 0);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":32
+  /* "humpy_cytoolz/dicttoolz.pyx":66
  * 
  * 	def __iter__(self):
  * 		return self             # <<<<<<<<<<<<<<
@@ -3274,7 +3272,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_2__iter__(s
   __pyx_r = ((PyObject *)__pyx_v_self);
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":31
+  /* "humpy_cytoolz/dicttoolz.pyx":65
  * 		self.cur = None
  * 
  * 	def __iter__(self):             # <<<<<<<<<<<<<<
@@ -3289,7 +3287,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_2__iter__(s
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/dicttoolz.pyx":34
+/* "humpy_cytoolz/dicttoolz.pyx":68
  * 		return self
  * 
  * 	def __next__(self):             # <<<<<<<<<<<<<<
@@ -3322,7 +3320,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_4__next__(s
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__next__", 0);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":35
+  /* "humpy_cytoolz/dicttoolz.pyx":69
  * 
  * 	def __next__(self):
  * 		self.cur = next(self.it)             # <<<<<<<<<<<<<<
@@ -3331,7 +3329,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_4__next__(s
 */
   __pyx_t_1 = __pyx_v_self->it;
   __Pyx_INCREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyIter_Next(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyIter_Next(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_GIVEREF(__pyx_t_2);
@@ -3340,7 +3338,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_4__next__(s
   __pyx_v_self->cur = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":36
+  /* "humpy_cytoolz/dicttoolz.pyx":70
  * 	def __next__(self):
  * 		self.cur = next(self.it)
  * 		return self.cur             # <<<<<<<<<<<<<<
@@ -3352,7 +3350,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_4__next__(s
   __pyx_r = __pyx_v_self->cur;
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":34
+  /* "humpy_cytoolz/dicttoolz.pyx":68
  * 		return self
  * 
  * 	def __next__(self):             # <<<<<<<<<<<<<<
@@ -3578,7 +3576,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_13_iter_mapping_8__setstate
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/dicttoolz.pyx":38
+/* "humpy_cytoolz/dicttoolz.pyx":72
  * 		return self.cur
  * 
  * cdef int PyMapping_Next(object p, Py_ssize_t *ppos, PyObject* *pkey, PyObject* *pval) except -1:             # <<<<<<<<<<<<<<
@@ -3597,7 +3595,7 @@ static int __pyx_f_13humpy_cytoolz_9dicttoolz_PyMapping_Next(PyObject *__pyx_v_p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyMapping_Next", 0);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":41
+  /* "humpy_cytoolz/dicttoolz.pyx":75
  * 	"""Mimic "PyDict_Next" interface, but for any mapping"""
  * 	cdef PyObject *obj
  * 	obj = PtrIter_Next(p)             # <<<<<<<<<<<<<<
@@ -3606,7 +3604,7 @@ static int __pyx_f_13humpy_cytoolz_9dicttoolz_PyMapping_Next(PyObject *__pyx_v_p
 */
   __pyx_v_obj = PyIter_Next(__pyx_v_p);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":42
+  /* "humpy_cytoolz/dicttoolz.pyx":76
  * 	cdef PyObject *obj
  * 	obj = PtrIter_Next(p)
  * 	if obj is NULL:             # <<<<<<<<<<<<<<
@@ -3616,7 +3614,7 @@ static int __pyx_f_13humpy_cytoolz_9dicttoolz_PyMapping_Next(PyObject *__pyx_v_p
   __pyx_t_1 = (__pyx_v_obj == NULL);
   if (__pyx_t_1) {
 
-    /* "humpy_cytoolz/dicttoolz.pyx":43
+    /* "humpy_cytoolz/dicttoolz.pyx":77
  * 	obj = PtrIter_Next(p)
  * 	if obj is NULL:
  * 		return 0             # <<<<<<<<<<<<<<
@@ -3626,7 +3624,7 @@ static int __pyx_f_13humpy_cytoolz_9dicttoolz_PyMapping_Next(PyObject *__pyx_v_p
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":42
+    /* "humpy_cytoolz/dicttoolz.pyx":76
  * 	cdef PyObject *obj
  * 	obj = PtrIter_Next(p)
  * 	if obj is NULL:             # <<<<<<<<<<<<<<
@@ -3635,31 +3633,31 @@ static int __pyx_f_13humpy_cytoolz_9dicttoolz_PyMapping_Next(PyObject *__pyx_v_p
 */
   }
 
-  /* "humpy_cytoolz/dicttoolz.pyx":44
+  /* "humpy_cytoolz/dicttoolz.pyx":78
  * 	if obj is NULL:
  * 		return 0
  * 	pkey[0] = <PyObject*>(<object>obj)[0]             # <<<<<<<<<<<<<<
  * 	pval[0] = <PyObject*>(<object>obj)[1]
  * 	Py_XDECREF(obj)  # removing this results in memory leak
 */
-  __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_obj), 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_obj), 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   (__pyx_v_pkey[0]) = ((PyObject *)__pyx_t_2);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":45
+  /* "humpy_cytoolz/dicttoolz.pyx":79
  * 		return 0
  * 	pkey[0] = <PyObject*>(<object>obj)[0]
  * 	pval[0] = <PyObject*>(<object>obj)[1]             # <<<<<<<<<<<<<<
  * 	Py_XDECREF(obj)  # removing this results in memory leak
  * 	return 1
 */
-  __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_obj), 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_obj), 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   (__pyx_v_pval[0]) = ((PyObject *)__pyx_t_2);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":46
+  /* "humpy_cytoolz/dicttoolz.pyx":80
  * 	pkey[0] = <PyObject*>(<object>obj)[0]
  * 	pval[0] = <PyObject*>(<object>obj)[1]
  * 	Py_XDECREF(obj)  # removing this results in memory leak             # <<<<<<<<<<<<<<
@@ -3668,7 +3666,7 @@ static int __pyx_f_13humpy_cytoolz_9dicttoolz_PyMapping_Next(PyObject *__pyx_v_p
 */
   Py_XDECREF(__pyx_v_obj);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":47
+  /* "humpy_cytoolz/dicttoolz.pyx":81
  * 	pval[0] = <PyObject*>(<object>obj)[1]
  * 	Py_XDECREF(obj)  # removing this results in memory leak
  * 	return 1             # <<<<<<<<<<<<<<
@@ -3678,7 +3676,7 @@ static int __pyx_f_13humpy_cytoolz_9dicttoolz_PyMapping_Next(PyObject *__pyx_v_p
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":38
+  /* "humpy_cytoolz/dicttoolz.pyx":72
  * 		return self.cur
  * 
  * cdef int PyMapping_Next(object p, Py_ssize_t *ppos, PyObject* *pkey, PyObject* *pval) except -1:             # <<<<<<<<<<<<<<
@@ -3696,7 +3694,7 @@ static int __pyx_f_13humpy_cytoolz_9dicttoolz_PyMapping_Next(PyObject *__pyx_v_p
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/dicttoolz.pyx":49
+/* "humpy_cytoolz/dicttoolz.pyx":83
  * 	return 1
  * 
  * cdef f_map_next get_map_iter(object d, PyObject* *ptr) except NULL:             # <<<<<<<<<<<<<<
@@ -3720,7 +3718,7 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_map_iter", 0);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":70
+  /* "humpy_cytoolz/dicttoolz.pyx":104
  * 	cdef object val
  * 	cdef f_map_next rv
  * 	if PyDict_CheckExact(d):             # <<<<<<<<<<<<<<
@@ -3730,7 +3728,7 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
   __pyx_t_1 = PyDict_CheckExact(__pyx_v_d);
   if (__pyx_t_1) {
 
-    /* "humpy_cytoolz/dicttoolz.pyx":71
+    /* "humpy_cytoolz/dicttoolz.pyx":105
  * 	cdef f_map_next rv
  * 	if PyDict_CheckExact(d):
  * 		val = d             # <<<<<<<<<<<<<<
@@ -3740,7 +3738,7 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
     __Pyx_INCREF(__pyx_v_d);
     __pyx_v_val = __pyx_v_d;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":72
+    /* "humpy_cytoolz/dicttoolz.pyx":106
  * 	if PyDict_CheckExact(d):
  * 		val = d
  * 		rv = &PyDict_Next_Compat             # <<<<<<<<<<<<<<
@@ -3749,7 +3747,7 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
 */
     __pyx_v_rv = (&PyDict_Next);
 
-    /* "humpy_cytoolz/dicttoolz.pyx":70
+    /* "humpy_cytoolz/dicttoolz.pyx":104
  * 	cdef object val
  * 	cdef f_map_next rv
  * 	if PyDict_CheckExact(d):             # <<<<<<<<<<<<<<
@@ -3759,7 +3757,7 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
     goto __pyx_L3;
   }
 
-  /* "humpy_cytoolz/dicttoolz.pyx":74
+  /* "humpy_cytoolz/dicttoolz.pyx":108
  * 		rv = &PyDict_Next_Compat
  * 	else:
  * 		val = _iter_mapping(iter(d.items()))             # <<<<<<<<<<<<<<
@@ -3775,10 +3773,10 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
       PyObject *__pyx_callargs[2] = {__pyx_t_5, NULL};
       __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_items, __pyx_callargs+__pyx_t_6, (1-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 74, __pyx_L1_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
     }
-    __pyx_t_5 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 74, __pyx_L1_error)
+    __pyx_t_5 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 108, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_6 = 1;
@@ -3787,13 +3785,13 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
       __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_mstate_global->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 74, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF((PyObject *)__pyx_t_2);
     }
     __pyx_v_val = ((PyObject *)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":75
+    /* "humpy_cytoolz/dicttoolz.pyx":109
  * 	else:
  * 		val = _iter_mapping(iter(d.items()))
  * 		rv = &PyMapping_Next             # <<<<<<<<<<<<<<
@@ -3804,7 +3802,7 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
   }
   __pyx_L3:;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":76
+  /* "humpy_cytoolz/dicttoolz.pyx":110
  * 		val = _iter_mapping(iter(d.items()))
  * 		rv = &PyMapping_Next
  * 	Py_INCREF(val)             # <<<<<<<<<<<<<<
@@ -3813,7 +3811,7 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
 */
   Py_INCREF(__pyx_v_val);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":77
+  /* "humpy_cytoolz/dicttoolz.pyx":111
  * 		rv = &PyMapping_Next
  * 	Py_INCREF(val)
  * 	ptr[0] = <PyObject*>val             # <<<<<<<<<<<<<<
@@ -3822,7 +3820,7 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
 */
   (__pyx_v_ptr[0]) = ((PyObject *)__pyx_v_val);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":78
+  /* "humpy_cytoolz/dicttoolz.pyx":112
  * 	Py_INCREF(val)
  * 	ptr[0] = <PyObject*>val
  * 	return rv             # <<<<<<<<<<<<<<
@@ -3832,7 +3830,7 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
   __pyx_r = __pyx_v_rv;
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":49
+  /* "humpy_cytoolz/dicttoolz.pyx":83
  * 	return 1
  * 
  * cdef f_map_next get_map_iter(object d, PyObject* *ptr) except NULL:             # <<<<<<<<<<<<<<
@@ -3854,7 +3852,7 @@ static __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_f_13humpy_cytoolz_9di
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/dicttoolz.pyx":80
+/* "humpy_cytoolz/dicttoolz.pyx":114
  * 	return rv
  * 
  * cdef get_factory(name, kwargs):             # <<<<<<<<<<<<<<
@@ -3879,7 +3877,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_factory", 0);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":81
+  /* "humpy_cytoolz/dicttoolz.pyx":115
  * 
  * cdef get_factory(name, kwargs):
  * 	factory = kwargs.pop('factory', dict)             # <<<<<<<<<<<<<<
@@ -3893,23 +3891,23 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(PyObject *__pyx_
     PyObject *__pyx_callargs[3] = {__pyx_t_2, __pyx_mstate_global->__pyx_n_u_factory, ((PyObject *)(&PyDict_Type))};
     __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_pop, __pyx_callargs+__pyx_t_3, (3-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 115, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_v_factory = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":82
+  /* "humpy_cytoolz/dicttoolz.pyx":116
  * cdef get_factory(name, kwargs):
  * 	factory = kwargs.pop('factory', dict)
  * 	if kwargs:             # <<<<<<<<<<<<<<
  * 		raise TypeError("{0}() got an unexpected keyword argument "
  * 						"'{1}'".format(name, kwargs.popitem()[0]))
 */
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_kwargs); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_kwargs); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 116, __pyx_L1_error)
   if (unlikely(__pyx_t_4)) {
 
-    /* "humpy_cytoolz/dicttoolz.pyx":83
+    /* "humpy_cytoolz/dicttoolz.pyx":117
  * 	factory = kwargs.pop('factory', dict)
  * 	if kwargs:
  * 		raise TypeError("{0}() got an unexpected keyword argument "             # <<<<<<<<<<<<<<
@@ -3918,7 +3916,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(PyObject *__pyx_
 */
     __pyx_t_2 = NULL;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":84
+    /* "humpy_cytoolz/dicttoolz.pyx":118
  * 	if kwargs:
  * 		raise TypeError("{0}() got an unexpected keyword argument "
  * 						"'{1}'".format(name, kwargs.popitem()[0]))             # <<<<<<<<<<<<<<
@@ -3934,10 +3932,10 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(PyObject *__pyx_
       PyObject *__pyx_callargs[2] = {__pyx_t_8, NULL};
       __pyx_t_7 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_popitem, __pyx_callargs+__pyx_t_3, (1-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 84, __pyx_L1_error)
+      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 118, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
     }
-    __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 84, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_7, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 118, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_t_3 = 0;
@@ -3946,7 +3944,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(PyObject *__pyx_
       __pyx_t_5 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_format, __pyx_callargs+__pyx_t_3, (3-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 84, __pyx_L1_error)
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
     }
     __pyx_t_3 = 1;
@@ -3955,14 +3953,14 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(PyObject *__pyx_
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_TypeError)), __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 83, __pyx_L1_error)
+    __PYX_ERR(0, 117, __pyx_L1_error)
 
-    /* "humpy_cytoolz/dicttoolz.pyx":82
+    /* "humpy_cytoolz/dicttoolz.pyx":116
  * cdef get_factory(name, kwargs):
  * 	factory = kwargs.pop('factory', dict)
  * 	if kwargs:             # <<<<<<<<<<<<<<
@@ -3971,19 +3969,19 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(PyObject *__pyx_
 */
   }
 
-  /* "humpy_cytoolz/dicttoolz.pyx":85
+  /* "humpy_cytoolz/dicttoolz.pyx":119
  * 		raise TypeError("{0}() got an unexpected keyword argument "
  * 						"'{1}'".format(name, kwargs.popitem()[0]))
  * 	return factory             # <<<<<<<<<<<<<<
  * 
- * cdef object c_merge(object dicts, object factory=dict):
+ * #======== Public Mapping Operations ========
 */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_factory);
   __pyx_r = __pyx_v_factory;
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":80
+  /* "humpy_cytoolz/dicttoolz.pyx":114
  * 	return rv
  * 
  * cdef get_factory(name, kwargs):             # <<<<<<<<<<<<<<
@@ -4008,3358 +4006,15 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/dicttoolz.pyx":87
- * 	return factory
- * 
- * cdef object c_merge(object dicts, object factory=dict):             # <<<<<<<<<<<<<<
- * 	cdef object rv
- * 	rv = factory()
-*/
-
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_merge(PyObject *__pyx_v_dicts, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k_;
-  PyObject *__pyx_v_rv = 0;
-  PyObject *__pyx_v_d = NULL;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  size_t __pyx_t_4;
-  int __pyx_t_5;
-  Py_ssize_t __pyx_t_6;
-  PyObject *(*__pyx_t_7)(PyObject *);
-  int __pyx_t_8;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("c_merge", 0);
-  if (__pyx_optional_args) {
-    if (__pyx_optional_args->__pyx_n > 0) {
-      __pyx_v_factory = __pyx_optional_args->factory;
-    }
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":89
- * cdef object c_merge(object dicts, object factory=dict):
- * 	cdef object rv
- * 	rv = factory()             # <<<<<<<<<<<<<<
- * 	if PyDict_CheckExact(rv):
- * 		for d in dicts:
-*/
-  __pyx_t_2 = NULL;
-  __Pyx_INCREF(__pyx_v_factory);
-  __pyx_t_3 = __pyx_v_factory; 
-  __pyx_t_4 = 1;
-  #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    assert(__pyx_t_2);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_2);
-    __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
-    __pyx_t_4 = 0;
-  }
-  #endif
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
-    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-  }
-  __pyx_v_rv = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":90
- * 	cdef object rv
- * 	rv = factory()
- * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
- * 		for d in dicts:
- * 			PyDict_Update(rv, d)
-*/
-  __pyx_t_5 = PyDict_CheckExact(__pyx_v_rv);
-  if (__pyx_t_5) {
-
-    /* "humpy_cytoolz/dicttoolz.pyx":91
- * 	rv = factory()
- * 	if PyDict_CheckExact(rv):
- * 		for d in dicts:             # <<<<<<<<<<<<<<
- * 			PyDict_Update(rv, d)
- * 	else:
-*/
-    if (likely(PyList_CheckExact(__pyx_v_dicts)) || PyTuple_CheckExact(__pyx_v_dicts)) {
-      __pyx_t_1 = __pyx_v_dicts; __Pyx_INCREF(__pyx_t_1);
-      __pyx_t_6 = 0;
-      __pyx_t_7 = NULL;
-    } else {
-      __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_dicts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 91, __pyx_L1_error)
-    }
-    for (;;) {
-      if (likely(!__pyx_t_7)) {
-        if (likely(PyList_CheckExact(__pyx_t_1))) {
-          {
-            Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
-            #if !CYTHON_ASSUME_SAFE_SIZE
-            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 91, __pyx_L1_error)
-            #endif
-            if (__pyx_t_6 >= __pyx_temp) break;
-          }
-          __pyx_t_3 = __Pyx_PyList_GetItemRefFast(__pyx_t_1, __pyx_t_6, __Pyx_ReferenceSharing_OwnStrongReference);
-          ++__pyx_t_6;
-        } else {
-          {
-            Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
-            #if !CYTHON_ASSUME_SAFE_SIZE
-            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 91, __pyx_L1_error)
-            #endif
-            if (__pyx_t_6 >= __pyx_temp) break;
-          }
-          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_3 = __Pyx_NewRef(PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6));
-          #else
-          __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_6);
-          #endif
-          ++__pyx_t_6;
-        }
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
-      } else {
-        __pyx_t_3 = __pyx_t_7(__pyx_t_1);
-        if (unlikely(!__pyx_t_3)) {
-          PyObject* exc_type = PyErr_Occurred();
-          if (exc_type) {
-            if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 91, __pyx_L1_error)
-            PyErr_Clear();
-          }
-          break;
-        }
-      }
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_XDECREF_SET(__pyx_v_d, __pyx_t_3);
-      __pyx_t_3 = 0;
-
-      /* "humpy_cytoolz/dicttoolz.pyx":92
- * 	if PyDict_CheckExact(rv):
- * 		for d in dicts:
- * 			PyDict_Update(rv, d)             # <<<<<<<<<<<<<<
- * 	else:
- * 		for d in dicts:
-*/
-      __pyx_t_8 = PyDict_Update(__pyx_v_rv, __pyx_v_d); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 92, __pyx_L1_error)
-
-      /* "humpy_cytoolz/dicttoolz.pyx":91
- * 	rv = factory()
- * 	if PyDict_CheckExact(rv):
- * 		for d in dicts:             # <<<<<<<<<<<<<<
- * 			PyDict_Update(rv, d)
- * 	else:
-*/
-    }
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":90
- * 	cdef object rv
- * 	rv = factory()
- * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
- * 		for d in dicts:
- * 			PyDict_Update(rv, d)
-*/
-    goto __pyx_L3;
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":94
- * 			PyDict_Update(rv, d)
- * 	else:
- * 		for d in dicts:             # <<<<<<<<<<<<<<
- * 			rv.update(d)
- * 	return rv
-*/
-  /*else*/ {
-    if (likely(PyList_CheckExact(__pyx_v_dicts)) || PyTuple_CheckExact(__pyx_v_dicts)) {
-      __pyx_t_1 = __pyx_v_dicts; __Pyx_INCREF(__pyx_t_1);
-      __pyx_t_6 = 0;
-      __pyx_t_7 = NULL;
-    } else {
-      __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_dicts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 94, __pyx_L1_error)
-    }
-    for (;;) {
-      if (likely(!__pyx_t_7)) {
-        if (likely(PyList_CheckExact(__pyx_t_1))) {
-          {
-            Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
-            #if !CYTHON_ASSUME_SAFE_SIZE
-            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 94, __pyx_L1_error)
-            #endif
-            if (__pyx_t_6 >= __pyx_temp) break;
-          }
-          __pyx_t_3 = __Pyx_PyList_GetItemRefFast(__pyx_t_1, __pyx_t_6, __Pyx_ReferenceSharing_OwnStrongReference);
-          ++__pyx_t_6;
-        } else {
-          {
-            Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
-            #if !CYTHON_ASSUME_SAFE_SIZE
-            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 94, __pyx_L1_error)
-            #endif
-            if (__pyx_t_6 >= __pyx_temp) break;
-          }
-          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_3 = __Pyx_NewRef(PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6));
-          #else
-          __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_6);
-          #endif
-          ++__pyx_t_6;
-        }
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
-      } else {
-        __pyx_t_3 = __pyx_t_7(__pyx_t_1);
-        if (unlikely(!__pyx_t_3)) {
-          PyObject* exc_type = PyErr_Occurred();
-          if (exc_type) {
-            if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 94, __pyx_L1_error)
-            PyErr_Clear();
-          }
-          break;
-        }
-      }
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_XDECREF_SET(__pyx_v_d, __pyx_t_3);
-      __pyx_t_3 = 0;
-
-      /* "humpy_cytoolz/dicttoolz.pyx":95
- * 	else:
- * 		for d in dicts:
- * 			rv.update(d)             # <<<<<<<<<<<<<<
- * 	return rv
- * 
-*/
-      __pyx_t_2 = __pyx_v_rv;
-      __Pyx_INCREF(__pyx_t_2);
-      __pyx_t_4 = 0;
-      {
-        PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_d};
-        __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_update, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-        __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 95, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_3);
-      }
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-
-      /* "humpy_cytoolz/dicttoolz.pyx":94
- * 			PyDict_Update(rv, d)
- * 	else:
- * 		for d in dicts:             # <<<<<<<<<<<<<<
- * 			rv.update(d)
- * 	return rv
-*/
-    }
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  }
-  __pyx_L3:;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":96
- * 		for d in dicts:
- * 			rv.update(d)
- * 	return rv             # <<<<<<<<<<<<<<
- * 
- * def merge(*dicts, factory=dict):
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rv);
-  __pyx_r = __pyx_v_rv;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":87
- * 	return factory
- * 
- * cdef object c_merge(object dicts, object factory=dict):             # <<<<<<<<<<<<<<
- * 	cdef object rv
- * 	rv = factory()
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.c_merge", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_rv);
-  __Pyx_XDECREF(__pyx_v_d);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":98
- * 	return rv
- * 
- * def merge(*dicts, factory=dict):             # <<<<<<<<<<<<<<
- * 	"""\
- * merge(*dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-*/
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_26__defaults__(CYTHON_UNUSED PyObject *__pyx_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__defaults__", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_factory, __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_self)->arg0) < (0)) __PYX_ERR(0, 98, __pyx_L1_error)
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 98, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(Py_None);
-  __Pyx_GIVEREF(Py_None);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, Py_None) != (0)) __PYX_ERR(0, 98, __pyx_L1_error);
-  __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 98, __pyx_L1_error);
-  __pyx_t_1 = 0;
-  __pyx_r = __pyx_t_2;
-  __pyx_t_2 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.__defaults__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_1merge(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_merge, "merge(*dicts, factory=dict)\n\nmerge(*dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nMerge a collection of dictionaries and return a new `Mapping`.\n\n(AI generated docstring)\n\nYou can use `merge` to combine two or more `Mapping`[1] objects into a single new `Mapping`.\n`merge` calls `factory` to create the result, then updates it in order with each `Mapping` in\n`dicts`. When the same key appears in more than one element, the value from the later element\ntakes precedence. You can also pass a single `Iterable[Mapping[K, V]]` as the sole positional\nargument instead of multiple `Mapping` arguments.\n\nParameters\n----------\n*dicts : Mapping[K, V]\n        `Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the\n        sole positional argument.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingMerged : MutableMapping[K, V]\n        New `MutableMapping` created by `factory` containing all key-value pairs from `dicts`. For\n        duplicate keys, the value from the last `Mapping` in `dicts` that contains the key takes\n        precedence.\n\nSee Also\n--------\nmerge_with : Merge dictionaries and apply a `Callable` to combined values.\n\nExamples\n--------\n>>> merge({1: 'one'}, {2: 'two'})\n{1: 'one', 2: 'two'}\n\nLater dictionaries have precedence\n\n>>> merge({1: 2, 3: 4}, {3: 3, 4: 4})\n{1: 2, 3: 3, 4: 4}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html\n        ");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_1merge = {"merge", (PyCFunction)(void(*)(void))(PyCFunctionWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_1merge, METH_VARARGS|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_merge};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_1merge(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_factory = 0;
-  PyObject *__pyx_v_dicts = 0;
-  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[1] = {0};
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("merge (wrapper)", 0);
-  #if CYTHON_ASSUME_SAFE_SIZE
-  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
-  #else
-  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
-  #endif
-  __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __Pyx_INCREF(__pyx_args);
-  __pyx_v_dicts = __pyx_args;
-  {
-    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_factory,0};
-    struct __pyx_defaults *__pyx_dynamic_args = __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_self);
-    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_VARARGS(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 98, __pyx_L3_error)
-    if (__pyx_kwds_len > 0) {
-      switch (__pyx_nargs) {
-        default:
-        case  0: break;
-      }
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, 0, __pyx_kwds_len, "merge", 0) < (0)) __PYX_ERR(0, 98, __pyx_L3_error)
-      if (!values[0]) values[0] = __Pyx_NewRef(__pyx_dynamic_args->arg0);
-    } else if (unlikely(__pyx_nargs < 0)) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      if (!values[0]) values[0] = __Pyx_NewRef(__pyx_dynamic_args->arg0);
-    }
-    __pyx_v_factory = values[0];
-  }
-  goto __pyx_L6_skip;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("merge", 0, 0, 0, __pyx_nargs); __PYX_ERR(0, 98, __pyx_L3_error)
-  __pyx_L6_skip:;
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_DECREF(__pyx_v_dicts); __pyx_v_dicts = 0;
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.merge", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_merge(__pyx_self, __pyx_v_factory, __pyx_v_dicts);
-
-  /* function exit code */
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_DECREF(__pyx_v_dicts);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_merge(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_factory, PyObject *__pyx_v_dicts) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  Py_ssize_t __pyx_t_2;
-  int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
-  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge __pyx_t_7;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("merge", 0);
-  __Pyx_INCREF(__pyx_v_dicts);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":146
- * 	https://docs.python.org/3/library/collections.abc.html
- * 	"""
- * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):             # <<<<<<<<<<<<<<
- * 		dicts = dicts[0]
- * 	return c_merge(dicts, factory)
-*/
-  __pyx_t_2 = PyObject_Length(__pyx_v_dicts); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 146, __pyx_L1_error)
-  __pyx_t_3 = (__pyx_t_2 == 1);
-  if (__pyx_t_3) {
-  } else {
-    __pyx_t_1 = __pyx_t_3;
-    goto __pyx_L4_bool_binop_done;
-  }
-  __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_dicts, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __pyx_v_13humpy_cytoolz_9dicttoolz_Mapping;
-  __Pyx_INCREF(__pyx_t_5);
-  __pyx_t_3 = PyObject_IsInstance(__pyx_t_4, __pyx_t_5); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_6 = (!__pyx_t_3);
-  __pyx_t_1 = __pyx_t_6;
-  __pyx_L4_bool_binop_done:;
-  if (__pyx_t_1) {
-
-    /* "humpy_cytoolz/dicttoolz.pyx":147
- * 	"""
- * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
- * 		dicts = dicts[0]             # <<<<<<<<<<<<<<
- * 	return c_merge(dicts, factory)
- * 
-*/
-    __pyx_t_5 = __Pyx_GetItemInt_Tuple(__pyx_v_dicts, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 147, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF_SET(__pyx_v_dicts, __pyx_t_5);
-    __pyx_t_5 = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":146
- * 	https://docs.python.org/3/library/collections.abc.html
- * 	"""
- * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):             # <<<<<<<<<<<<<<
- * 		dicts = dicts[0]
- * 	return c_merge(dicts, factory)
-*/
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":148
- * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
- * 		dicts = dicts[0]
- * 	return c_merge(dicts, factory)             # <<<<<<<<<<<<<<
- * 
- * cdef object c_merge_with(object func, object dicts, object factory=dict):
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_7.__pyx_n = 1;
-  __pyx_t_7.factory = __pyx_v_factory;
-  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_c_merge(__pyx_v_dicts, &__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 148, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_r = __pyx_t_5;
-  __pyx_t_5 = 0;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":98
- * 	return rv
- * 
- * def merge(*dicts, factory=dict):             # <<<<<<<<<<<<<<
- * 	"""\
- * merge(*dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.merge", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_dicts);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":150
- * 	return c_merge(dicts, factory)
- * 
- * cdef object c_merge_with(object func, object dicts, object factory=dict):             # <<<<<<<<<<<<<<
- * 	cdef:
- * 		dict result
-*/
-
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_merge_with(PyObject *__pyx_v_func, PyObject *__pyx_v_dicts, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__2;
-  PyObject *__pyx_v_result = 0;
-  PyObject *__pyx_v_rv = 0;
-  PyObject *__pyx_v_d = 0;
-  PyObject *__pyx_v_seq = 0;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
-  PyObject *__pyx_v_obj;
-  PyObject *__pyx_v_pkey;
-  PyObject *__pyx_v_pval;
-  Py_ssize_t __pyx_v_pos;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  size_t __pyx_t_4;
-  Py_ssize_t __pyx_t_5;
-  PyObject *(*__pyx_t_6)(PyObject *);
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_7;
-  int __pyx_t_8;
-  int __pyx_t_9;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("c_merge_with", 0);
-  if (__pyx_optional_args) {
-    if (__pyx_optional_args->__pyx_n > 0) {
-      __pyx_v_factory = __pyx_optional_args->factory;
-    }
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":161
- * 		Py_ssize_t pos
- * 
- * 	result = PyDict_New()             # <<<<<<<<<<<<<<
- * 	rv = factory()
- * 	for d in dicts:
-*/
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 161, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_result = ((PyObject*)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":162
- * 
- * 	result = PyDict_New()
- * 	rv = factory()             # <<<<<<<<<<<<<<
- * 	for d in dicts:
- * 		f = get_map_iter(d, &obj)
-*/
-  __pyx_t_2 = NULL;
-  __Pyx_INCREF(__pyx_v_factory);
-  __pyx_t_3 = __pyx_v_factory; 
-  __pyx_t_4 = 1;
-  #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    assert(__pyx_t_2);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_2);
-    __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
-    __pyx_t_4 = 0;
-  }
-  #endif
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
-    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 162, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-  }
-  __pyx_v_rv = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":163
- * 	result = PyDict_New()
- * 	rv = factory()
- * 	for d in dicts:             # <<<<<<<<<<<<<<
- * 		f = get_map_iter(d, &obj)
- * 		d = <object>obj
-*/
-  if (likely(PyList_CheckExact(__pyx_v_dicts)) || PyTuple_CheckExact(__pyx_v_dicts)) {
-    __pyx_t_1 = __pyx_v_dicts; __Pyx_INCREF(__pyx_t_1);
-    __pyx_t_5 = 0;
-    __pyx_t_6 = NULL;
-  } else {
-    __pyx_t_5 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_dicts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 163, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_6 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 163, __pyx_L1_error)
-  }
-  for (;;) {
-    if (likely(!__pyx_t_6)) {
-      if (likely(PyList_CheckExact(__pyx_t_1))) {
-        {
-          Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
-          #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 163, __pyx_L1_error)
-          #endif
-          if (__pyx_t_5 >= __pyx_temp) break;
-        }
-        __pyx_t_3 = __Pyx_PyList_GetItemRefFast(__pyx_t_1, __pyx_t_5, __Pyx_ReferenceSharing_OwnStrongReference);
-        ++__pyx_t_5;
-      } else {
-        {
-          Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
-          #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 163, __pyx_L1_error)
-          #endif
-          if (__pyx_t_5 >= __pyx_temp) break;
-        }
-        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = __Pyx_NewRef(PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_5));
-        #else
-        __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_5);
-        #endif
-        ++__pyx_t_5;
-      }
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 163, __pyx_L1_error)
-    } else {
-      __pyx_t_3 = __pyx_t_6(__pyx_t_1);
-      if (unlikely(!__pyx_t_3)) {
-        PyObject* exc_type = PyErr_Occurred();
-        if (exc_type) {
-          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 163, __pyx_L1_error)
-          PyErr_Clear();
-        }
-        break;
-      }
-    }
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_XDECREF_SET(__pyx_v_d, __pyx_t_3);
-    __pyx_t_3 = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":164
- * 	rv = factory()
- * 	for d in dicts:
- * 		f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
- * 		d = <object>obj
- * 		Py_DECREF(d)
-*/
-    __pyx_t_7 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_7 == ((void *)NULL))) __PYX_ERR(0, 164, __pyx_L1_error)
-    __pyx_v_f = __pyx_t_7;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":165
- * 	for d in dicts:
- * 		f = get_map_iter(d, &obj)
- * 		d = <object>obj             # <<<<<<<<<<<<<<
- * 		Py_DECREF(d)
- * 		pos = 0
-*/
-    __pyx_t_3 = ((PyObject *)__pyx_v_obj);
-    __Pyx_INCREF(__pyx_t_3);
-    __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_3);
-    __pyx_t_3 = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":166
- * 		f = get_map_iter(d, &obj)
- * 		d = <object>obj
- * 		Py_DECREF(d)             # <<<<<<<<<<<<<<
- * 		pos = 0
- * 		while f(d, &pos, &pkey, &pval):
-*/
-    Py_DECREF(__pyx_v_d);
-
-    /* "humpy_cytoolz/dicttoolz.pyx":167
- * 		d = <object>obj
- * 		Py_DECREF(d)
- * 		pos = 0             # <<<<<<<<<<<<<<
- * 		while f(d, &pos, &pkey, &pval):
- * 			obj = PyDict_GetItem(result, <object>pkey)
-*/
-    __pyx_v_pos = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":168
- * 		Py_DECREF(d)
- * 		pos = 0
- * 		while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
- * 			obj = PyDict_GetItem(result, <object>pkey)
- * 			if obj is NULL:
-*/
-    while (1) {
-      __pyx_t_8 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 168, __pyx_L1_error)
-      __pyx_t_9 = (__pyx_t_8 != 0);
-      if (!__pyx_t_9) break;
-
-      /* "humpy_cytoolz/dicttoolz.pyx":169
- * 		pos = 0
- * 		while f(d, &pos, &pkey, &pval):
- * 			obj = PyDict_GetItem(result, <object>pkey)             # <<<<<<<<<<<<<<
- * 			if obj is NULL:
- * 				seq = PyList_New(0)
-*/
-      __pyx_v_obj = PyDict_GetItem(__pyx_v_result, ((PyObject *)__pyx_v_pkey));
-
-      /* "humpy_cytoolz/dicttoolz.pyx":170
- * 		while f(d, &pos, &pkey, &pval):
- * 			obj = PyDict_GetItem(result, <object>pkey)
- * 			if obj is NULL:             # <<<<<<<<<<<<<<
- * 				seq = PyList_New(0)
- * 				PyList_Append(seq, <object>pval)
-*/
-      __pyx_t_9 = (__pyx_v_obj == NULL);
-      if (__pyx_t_9) {
-
-        /* "humpy_cytoolz/dicttoolz.pyx":171
- * 			obj = PyDict_GetItem(result, <object>pkey)
- * 			if obj is NULL:
- * 				seq = PyList_New(0)             # <<<<<<<<<<<<<<
- * 				PyList_Append(seq, <object>pval)
- * 				PyDict_SetItem(result, <object>pkey, seq)
-*/
-        __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_3);
-        __Pyx_XDECREF_SET(__pyx_v_seq, ((PyObject*)__pyx_t_3));
-        __pyx_t_3 = 0;
-
-        /* "humpy_cytoolz/dicttoolz.pyx":172
- * 			if obj is NULL:
- * 				seq = PyList_New(0)
- * 				PyList_Append(seq, <object>pval)             # <<<<<<<<<<<<<<
- * 				PyDict_SetItem(result, <object>pkey, seq)
- * 			else:
-*/
-        __pyx_t_8 = PyList_Append(__pyx_v_seq, ((PyObject *)__pyx_v_pval)); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 172, __pyx_L1_error)
-
-        /* "humpy_cytoolz/dicttoolz.pyx":173
- * 				seq = PyList_New(0)
- * 				PyList_Append(seq, <object>pval)
- * 				PyDict_SetItem(result, <object>pkey, seq)             # <<<<<<<<<<<<<<
- * 			else:
- * 				PyList_Append(<object>obj, <object>pval)
-*/
-        __pyx_t_8 = PyDict_SetItem(__pyx_v_result, ((PyObject *)__pyx_v_pkey), __pyx_v_seq); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 173, __pyx_L1_error)
-
-        /* "humpy_cytoolz/dicttoolz.pyx":170
- * 		while f(d, &pos, &pkey, &pval):
- * 			obj = PyDict_GetItem(result, <object>pkey)
- * 			if obj is NULL:             # <<<<<<<<<<<<<<
- * 				seq = PyList_New(0)
- * 				PyList_Append(seq, <object>pval)
-*/
-        goto __pyx_L7;
-      }
-
-      /* "humpy_cytoolz/dicttoolz.pyx":175
- * 				PyDict_SetItem(result, <object>pkey, seq)
- * 			else:
- * 				PyList_Append(<object>obj, <object>pval)             # <<<<<<<<<<<<<<
- * 
- * 	f = get_map_iter(result, &obj)
-*/
-      /*else*/ {
-        __pyx_t_8 = PyList_Append(((PyObject *)__pyx_v_obj), ((PyObject *)__pyx_v_pval)); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 175, __pyx_L1_error)
-      }
-      __pyx_L7:;
-    }
-
-    /* "humpy_cytoolz/dicttoolz.pyx":163
- * 	result = PyDict_New()
- * 	rv = factory()
- * 	for d in dicts:             # <<<<<<<<<<<<<<
- * 		f = get_map_iter(d, &obj)
- * 		d = <object>obj
-*/
-  }
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":177
- * 				PyList_Append(<object>obj, <object>pval)
- * 
- * 	f = get_map_iter(result, &obj)             # <<<<<<<<<<<<<<
- * 	d = <object>obj
- * 	Py_DECREF(d)
-*/
-  __pyx_t_7 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_result, (&__pyx_v_obj)); if (unlikely(__pyx_t_7 == ((void *)NULL))) __PYX_ERR(0, 177, __pyx_L1_error)
-  __pyx_v_f = __pyx_t_7;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":178
- * 
- * 	f = get_map_iter(result, &obj)
- * 	d = <object>obj             # <<<<<<<<<<<<<<
- * 	Py_DECREF(d)
- * 	pos = 0
-*/
-  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_XDECREF_SET(__pyx_v_d, __pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":179
- * 	f = get_map_iter(result, &obj)
- * 	d = <object>obj
- * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
- * 	pos = 0
- * 	while f(d, &pos, &pkey, &pval):
-*/
-  Py_DECREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":180
- * 	d = <object>obj
- * 	Py_DECREF(d)
- * 	pos = 0             # <<<<<<<<<<<<<<
- * 	while f(d, &pos, &pkey, &pval):
- * 		PyObject_SetItem(rv, <object>pkey, func(<object>pval))
-*/
-  __pyx_v_pos = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":181
- * 	Py_DECREF(d)
- * 	pos = 0
- * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
- * 		PyObject_SetItem(rv, <object>pkey, func(<object>pval))
- * 	return rv
-*/
-  while (1) {
-    __pyx_t_8 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 181, __pyx_L1_error)
-    __pyx_t_9 = (__pyx_t_8 != 0);
-    if (!__pyx_t_9) break;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":182
- * 	pos = 0
- * 	while f(d, &pos, &pkey, &pval):
- * 		PyObject_SetItem(rv, <object>pkey, func(<object>pval))             # <<<<<<<<<<<<<<
- * 	return rv
- * 
-*/
-    __pyx_t_3 = NULL;
-    __Pyx_INCREF(__pyx_v_func);
-    __pyx_t_2 = __pyx_v_func; 
-    __pyx_t_4 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-      assert(__pyx_t_3);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
-      __pyx_t_4 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_3, ((PyObject *)__pyx_v_pval)};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-    }
-    __pyx_t_8 = PyObject_SetItem(__pyx_v_rv, ((PyObject *)__pyx_v_pkey), __pyx_t_1); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 182, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":183
- * 	while f(d, &pos, &pkey, &pval):
- * 		PyObject_SetItem(rv, <object>pkey, func(<object>pval))
- * 	return rv             # <<<<<<<<<<<<<<
- * 
- * def merge_with(func, *dicts, factory=dict):
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rv);
-  __pyx_r = __pyx_v_rv;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":150
- * 	return c_merge(dicts, factory)
- * 
- * cdef object c_merge_with(object func, object dicts, object factory=dict):             # <<<<<<<<<<<<<<
- * 	cdef:
- * 		dict result
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.c_merge_with", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_result);
-  __Pyx_XDECREF(__pyx_v_rv);
-  __Pyx_XDECREF(__pyx_v_d);
-  __Pyx_XDECREF(__pyx_v_seq);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":185
- * 	return rv
- * 
- * def merge_with(func, *dicts, factory=dict):             # <<<<<<<<<<<<<<
- * 	"""\
- * merge_with(func: collections.abc.Callable[[list[V]], V], *dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-*/
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_28__defaults__(CYTHON_UNUSED PyObject *__pyx_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__defaults__", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_factory, __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_self)->arg0) < (0)) __PYX_ERR(0, 185, __pyx_L1_error)
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(Py_None);
-  __Pyx_GIVEREF(Py_None);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, Py_None) != (0)) __PYX_ERR(0, 185, __pyx_L1_error);
-  __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 185, __pyx_L1_error);
-  __pyx_t_1 = 0;
-  __pyx_r = __pyx_t_2;
-  __pyx_t_2 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.__defaults__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_3merge_with(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_2merge_with, "merge_with(func, *dicts, factory=dict)\n\nmerge_with(func: collections.abc.Callable[[list[V]], V], *dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nMerge dictionaries and apply a `Callable` to combined values.\n\n(AI generated docstring)\n\nYou can use `merge_with` to combine two or more `Mapping`[1] objects and resolve key conflicts\nby applying `func` to a `list` of all values associated with each key. For each key that\nappears in one or more elements of `dicts`, `merge_with` collects all associated values into a\n`list` in the order they appear across `dicts`, then calls `func` with that `list` to produce\nthe value in the result. You can also pass a single `Iterable[Mapping[K, V]]` as the sole\npositional argument after `func`.\n\nParameters\n----------\nfunc : Callable[[list[V]], V]\n        `Callable` applied to the `list` of values associated with each key across all `Mapping`\n        objects in `dicts`. `func` receives a non-empty `list` and must return the merged value for\n        that key.\n*dicts : Mapping[K, V]\n        `Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the\n        sole positional argument after `func`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingMerged : MutableMapping[K, V]\n        New `MutableMapping` created by `factory` where each key maps to the result of calling\n        `func` with all values associated with that key across `dicts`.\n\nSee Also\n--------\nmerge : Merge a collection of `Mapping` objects into a new `Mapping`.\n\nExamples\n--------\n>>> merge_with(sum, {1: 1, 2: 2}, {1: 10, 2: 20})\n{1: 11, 2: 22}\n\n>>> merge_with(first, {1: 1, 2: 2}, {2: 20, 3: 30})  # doctest: +SKIP\n{1: 1, 2: 2, 3: 30}\n\nReferences\n----------\n[1] Python `collections.abc` module\n    ""    https://docs.python.org/3/library/collections.abc.html\n        ");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_3merge_with = {"merge_with", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_3merge_with, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_2merge_with};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_3merge_with(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-) {
-  PyObject *__pyx_v_func = 0;
-  PyObject *__pyx_v_factory = 0;
-  PyObject *__pyx_v_dicts = 0;
-  #if !CYTHON_METH_FASTCALL
-  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
-  #endif
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[2] = {0,0};
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("merge_with (wrapper)", 0);
-  #if !CYTHON_METH_FASTCALL
-  #if CYTHON_ASSUME_SAFE_SIZE
-  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
-  #else
-  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
-  #endif
-  #endif
-  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
-  __pyx_v_dicts = __Pyx_ArgsSlice_FASTCALL(__pyx_args, 1, __pyx_nargs);
-  if (unlikely(!__pyx_v_dicts)) {
-    __Pyx_RefNannyFinishContext();
-    return NULL;
-  }
-  __Pyx_GOTREF(__pyx_v_dicts);
-  {
-    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_factory,0};
-    struct __pyx_defaults *__pyx_dynamic_args = __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_self);
-    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 185, __pyx_L3_error)
-    if (__pyx_kwds_len > 0) {
-      switch (__pyx_nargs) {
-        default:
-        case  1:
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 185, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-      }
-      const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      const Py_ssize_t used_pos_args = (kwd_pos_args < 1) ? kwd_pos_args : 1;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, used_pos_args, __pyx_kwds_len, "merge_with", 0) < (0)) __PYX_ERR(0, 185, __pyx_L3_error)
-      if (!values[1]) values[1] = __Pyx_NewRef(__pyx_dynamic_args->arg0);
-      for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("merge_with", 0, 1, 1, i); __PYX_ERR(0, 185, __pyx_L3_error) }
-      }
-    } else if (unlikely(__pyx_nargs < 1)) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 185, __pyx_L3_error)
-      if (!values[1]) values[1] = __Pyx_NewRef(__pyx_dynamic_args->arg0);
-    }
-    __pyx_v_func = values[0];
-    __pyx_v_factory = values[1];
-  }
-  goto __pyx_L6_skip;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("merge_with", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 185, __pyx_L3_error)
-  __pyx_L6_skip:;
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_DECREF(__pyx_v_dicts); __pyx_v_dicts = 0;
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.merge_with", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_2merge_with(__pyx_self, __pyx_v_func, __pyx_v_factory, __pyx_v_dicts);
-
-  /* function exit code */
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_DECREF(__pyx_v_dicts);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_2merge_with(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_factory, PyObject *__pyx_v_dicts) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  Py_ssize_t __pyx_t_2;
-  int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
-  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with __pyx_t_7;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("merge_with", 0);
-  __Pyx_INCREF(__pyx_v_dicts);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":235
- * 	https://docs.python.org/3/library/collections.abc.html
- * 	"""
- * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):             # <<<<<<<<<<<<<<
- * 		dicts = dicts[0]
- * 	return c_merge_with(func, dicts, factory)
-*/
-  __pyx_t_2 = PyObject_Length(__pyx_v_dicts); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 235, __pyx_L1_error)
-  __pyx_t_3 = (__pyx_t_2 == 1);
-  if (__pyx_t_3) {
-  } else {
-    __pyx_t_1 = __pyx_t_3;
-    goto __pyx_L4_bool_binop_done;
-  }
-  __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_dicts, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __pyx_v_13humpy_cytoolz_9dicttoolz_Mapping;
-  __Pyx_INCREF(__pyx_t_5);
-  __pyx_t_3 = PyObject_IsInstance(__pyx_t_4, __pyx_t_5); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 235, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_6 = (!__pyx_t_3);
-  __pyx_t_1 = __pyx_t_6;
-  __pyx_L4_bool_binop_done:;
-  if (__pyx_t_1) {
-
-    /* "humpy_cytoolz/dicttoolz.pyx":236
- * 	"""
- * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
- * 		dicts = dicts[0]             # <<<<<<<<<<<<<<
- * 	return c_merge_with(func, dicts, factory)
- * 
-*/
-    __pyx_t_5 = __Pyx_GetItemInt_Tuple(__pyx_v_dicts, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 236, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF_SET(__pyx_v_dicts, __pyx_t_5);
-    __pyx_t_5 = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":235
- * 	https://docs.python.org/3/library/collections.abc.html
- * 	"""
- * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):             # <<<<<<<<<<<<<<
- * 		dicts = dicts[0]
- * 	return c_merge_with(func, dicts, factory)
-*/
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":237
- * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
- * 		dicts = dicts[0]
- * 	return c_merge_with(func, dicts, factory)             # <<<<<<<<<<<<<<
- * 
- * cpdef object valmap(object func, object d, object factory=dict):
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_7.__pyx_n = 1;
-  __pyx_t_7.factory = __pyx_v_factory;
-  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_c_merge_with(__pyx_v_func, __pyx_v_dicts, &__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 237, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_r = __pyx_t_5;
-  __pyx_t_5 = 0;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":185
- * 	return rv
- * 
- * def merge_with(func, *dicts, factory=dict):             # <<<<<<<<<<<<<<
- * 	"""\
- * merge_with(func: collections.abc.Callable[[list[V]], V], *dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.merge_with", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_dicts);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":239
- * 	return c_merge_with(func, dicts, factory)
- * 
- * cpdef object valmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""valmap(func: collections.abc.Callable[[V], W], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, W]] = dict) -> collections.abc.MutableMapping[K, W]
- * 
-*/
-
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_5valmap(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_valmap(PyObject *__pyx_v_func, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__3;
-  PyObject *__pyx_v_rv = 0;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
-  PyObject *__pyx_v_obj;
-  PyObject *__pyx_v_pkey;
-  PyObject *__pyx_v_pval;
-  Py_ssize_t __pyx_v_pos;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  size_t __pyx_t_4;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("valmap", 0);
-  if (__pyx_optional_args) {
-    if (__pyx_optional_args->__pyx_n > 0) {
-      __pyx_v_factory = __pyx_optional_args->factory;
-    }
-  }
-  __Pyx_INCREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":288
- * 		PyObject *pkey
- * 		PyObject *pval
- * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
- * 
- * 	rv = factory()
-*/
-  __pyx_v_pos = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":290
- * 		Py_ssize_t pos = 0
- * 
- * 	rv = factory()             # <<<<<<<<<<<<<<
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
-*/
-  __pyx_t_2 = NULL;
-  __Pyx_INCREF(__pyx_v_factory);
-  __pyx_t_3 = __pyx_v_factory; 
-  __pyx_t_4 = 1;
-  #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    assert(__pyx_t_2);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_2);
-    __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
-    __pyx_t_4 = 0;
-  }
-  #endif
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
-    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 290, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-  }
-  __pyx_v_rv = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":291
- * 
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
- * 	d = <object>obj
- * 	Py_DECREF(d)
-*/
-  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 291, __pyx_L1_error)
-  __pyx_v_f = __pyx_t_5;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":292
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj             # <<<<<<<<<<<<<<
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
-*/
-  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":293
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
- * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
- * 	while f(d, &pos, &pkey, &pval):
- * 		rv[<object>pkey] = func(<object>pval)
-*/
-  Py_DECREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":294
- * 	d = <object>obj
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
- * 		rv[<object>pkey] = func(<object>pval)
- * 	return rv
-*/
-  while (1) {
-    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 294, __pyx_L1_error)
-    __pyx_t_7 = (__pyx_t_6 != 0);
-    if (!__pyx_t_7) break;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":295
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
- * 		rv[<object>pkey] = func(<object>pval)             # <<<<<<<<<<<<<<
- * 	return rv
- * 
-*/
-    __pyx_t_3 = NULL;
-    __Pyx_INCREF(__pyx_v_func);
-    __pyx_t_2 = __pyx_v_func; 
-    __pyx_t_4 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-      assert(__pyx_t_3);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
-      __pyx_t_4 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_3, ((PyObject *)__pyx_v_pval)};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 295, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-    }
-    if (unlikely((PyObject_SetItem(__pyx_v_rv, ((PyObject *)__pyx_v_pkey), __pyx_t_1) < 0))) __PYX_ERR(0, 295, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":296
- * 	while f(d, &pos, &pkey, &pval):
- * 		rv[<object>pkey] = func(<object>pval)
- * 	return rv             # <<<<<<<<<<<<<<
- * 
- * cpdef object keymap(object func, object d, object factory=dict):
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rv);
-  __pyx_r = __pyx_v_rv;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":239
- * 	return c_merge_with(func, dicts, factory)
- * 
- * cpdef object valmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""valmap(func: collections.abc.Callable[[V], W], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, W]] = dict) -> collections.abc.MutableMapping[K, W]
- * 
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_rv);
-  __Pyx_XDECREF(__pyx_v_d);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_5valmap(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_4valmap, "valmap(func, d, factory=dict)\n\nvalmap(func: collections.abc.Callable[[V], W], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, W]] = dict) -> collections.abc.MutableMapping[K, W]\n\nApply `func` to all values of `d` and return a new `Mapping` with the transformed values.\n\n(AI generated docstring)\n\nYou can use `valmap` to transform all values in `d` without changing `d`. `valmap` applies\n`func` to each value yielded by `d.values()` and builds a new `MutableMapping`[1] created\nby `factory`, preserving each original key associated with its transformed value.\n\nParameters\n----------\nfunc : Callable[[V], W]\n        `Callable` applied to each value of `d`. Each value of `d` is passed to `func`\n        individually, and `func` returns the corresponding transformed value.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `valmap` reads all values from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[K, W]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingTransformed : MutableMapping[K, W]\n        New `MutableMapping` created by `factory` in which each key from `d` is associated\n        with the result of applying `func` to the corresponding value of `d`.\n\nSee Also\n--------\nkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\nitemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\nExamples\n--------\n>>> bills = {'Alice': [20, 15, 30], 'Bob': [10, 35]}\n>>> valmap(sum, bills)  # doctest: +SKIP\n{'Alice': 65, 'Bob': 45}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_5valmap = {"valmap", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_5valmap, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_4valmap};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_5valmap(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-) {
-  PyObject *__pyx_v_func = 0;
-  PyObject *__pyx_v_d = 0;
-  PyObject *__pyx_v_factory = 0;
-  #if !CYTHON_METH_FASTCALL
-  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
-  #endif
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[3] = {0,0,0};
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("valmap (wrapper)", 0);
-  #if !CYTHON_METH_FASTCALL
-  #if CYTHON_ASSUME_SAFE_SIZE
-  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
-  #else
-  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
-  #endif
-  #endif
-  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
-  {
-    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
-    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 239, __pyx_L3_error)
-    if (__pyx_kwds_len > 0) {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 239, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 239, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  1:
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 239, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "valmap", 0) < (0)) __PYX_ERR(0, 239, __pyx_L3_error)
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__3);
-      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("valmap", 0, 2, 3, i); __PYX_ERR(0, 239, __pyx_L3_error) }
-      }
-    } else {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 239, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 239, __pyx_L3_error)
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 239, __pyx_L3_error)
-        break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__3);
-    }
-    __pyx_v_func = values[0];
-    __pyx_v_d = values[1];
-    __pyx_v_factory = values[2];
-  }
-  goto __pyx_L6_skip;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("valmap", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 239, __pyx_L3_error)
-  __pyx_L6_skip:;
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_4valmap(__pyx_self, __pyx_v_func, __pyx_v_d, __pyx_v_factory);
-
-  /* function exit code */
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_4valmap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap __pyx_t_2;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("valmap", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2.__pyx_n = 1;
-  __pyx_t_2.factory = __pyx_v_factory;
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_valmap(__pyx_v_func, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 239, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":298
- * 	return rv
- * 
- * cpdef object keymap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""keymap(func: collections.abc.Callable[[K], L], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, V]] = dict) -> collections.abc.MutableMapping[L, V]
- * 
-*/
-
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_7keymap(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_keymap(PyObject *__pyx_v_func, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__4;
-  PyObject *__pyx_v_rv = 0;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
-  PyObject *__pyx_v_obj;
-  PyObject *__pyx_v_pkey;
-  PyObject *__pyx_v_pval;
-  Py_ssize_t __pyx_v_pos;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  size_t __pyx_t_4;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("keymap", 0);
-  if (__pyx_optional_args) {
-    if (__pyx_optional_args->__pyx_n > 0) {
-      __pyx_v_factory = __pyx_optional_args->factory;
-    }
-  }
-  __Pyx_INCREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":347
- * 		PyObject *pkey
- * 		PyObject *pval
- * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
- * 
- * 	rv = factory()
-*/
-  __pyx_v_pos = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":349
- * 		Py_ssize_t pos = 0
- * 
- * 	rv = factory()             # <<<<<<<<<<<<<<
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
-*/
-  __pyx_t_2 = NULL;
-  __Pyx_INCREF(__pyx_v_factory);
-  __pyx_t_3 = __pyx_v_factory; 
-  __pyx_t_4 = 1;
-  #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    assert(__pyx_t_2);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_2);
-    __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
-    __pyx_t_4 = 0;
-  }
-  #endif
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
-    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 349, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-  }
-  __pyx_v_rv = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":350
- * 
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
- * 	d = <object>obj
- * 	Py_DECREF(d)
-*/
-  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 350, __pyx_L1_error)
-  __pyx_v_f = __pyx_t_5;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":351
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj             # <<<<<<<<<<<<<<
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
-*/
-  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":352
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
- * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
- * 	while f(d, &pos, &pkey, &pval):
- * 		rv[func(<object>pkey)] = <object>pval
-*/
-  Py_DECREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":353
- * 	d = <object>obj
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
- * 		rv[func(<object>pkey)] = <object>pval
- * 	return rv
-*/
-  while (1) {
-    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 353, __pyx_L1_error)
-    __pyx_t_7 = (__pyx_t_6 != 0);
-    if (!__pyx_t_7) break;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":354
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
- * 		rv[func(<object>pkey)] = <object>pval             # <<<<<<<<<<<<<<
- * 	return rv
- * 
-*/
-    __pyx_t_1 = ((PyObject *)__pyx_v_pval);
-    __Pyx_INCREF(__pyx_t_1);
-    __pyx_t_2 = NULL;
-    __Pyx_INCREF(__pyx_v_func);
-    __pyx_t_8 = __pyx_v_func; 
-    __pyx_t_4 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_8))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_8);
-      assert(__pyx_t_2);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_8);
-      __Pyx_INCREF(__pyx_t_2);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_8, __pyx__function);
-      __pyx_t_4 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_2, ((PyObject *)__pyx_v_pkey)};
-      __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_8, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 354, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-    }
-    if (unlikely((PyObject_SetItem(__pyx_v_rv, __pyx_t_3, __pyx_t_1) < 0))) __PYX_ERR(0, 354, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":355
- * 	while f(d, &pos, &pkey, &pval):
- * 		rv[func(<object>pkey)] = <object>pval
- * 	return rv             # <<<<<<<<<<<<<<
- * 
- * cpdef object itemmap(object func, object d, object factory=dict):
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rv);
-  __pyx_r = __pyx_v_rv;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":298
- * 	return rv
- * 
- * cpdef object keymap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""keymap(func: collections.abc.Callable[[K], L], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, V]] = dict) -> collections.abc.MutableMapping[L, V]
- * 
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keymap", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_rv);
-  __Pyx_XDECREF(__pyx_v_d);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_7keymap(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_6keymap, "keymap(func, d, factory=dict)\n\nkeymap(func: collections.abc.Callable[[K], L], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, V]] = dict) -> collections.abc.MutableMapping[L, V]\n\nApply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.\n\n(AI generated docstring)\n\nYou can use `keymap` to transform all keys in `d` without changing `d`. `keymap` applies\n`func` to each key yielded by `d.keys()` and builds a new `MutableMapping`[1] created by\n`factory`, associating each transformed key with the corresponding original value of `d`.\n\nParameters\n----------\nfunc : Callable[[K], L]\n        `Callable` applied to each key of `d`. Each key of `d` is passed to `func`\n        individually, and `func` returns the corresponding transformed key.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `keymap` reads all keys from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[L, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingTransformed : MutableMapping[L, V]\n        New `MutableMapping` created by `factory` in which each key from `d` is replaced by\n        the result of applying `func` to that key, associated with the original value of `d`.\n\nSee Also\n--------\nvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\nitemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\nExamples\n--------\n>>> bills = {'Alice': [20, 15, 30], 'Bob': [10, 35]}\n>>> keymap(str.lower, bills)  # doctest: +SKIP\n{'alice': [20, 15, 30], 'bob': [10, 35]}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_7keymap = {"keymap", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_7keymap, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_6keymap};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_7keymap(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-) {
-  PyObject *__pyx_v_func = 0;
-  PyObject *__pyx_v_d = 0;
-  PyObject *__pyx_v_factory = 0;
-  #if !CYTHON_METH_FASTCALL
-  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
-  #endif
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[3] = {0,0,0};
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("keymap (wrapper)", 0);
-  #if !CYTHON_METH_FASTCALL
-  #if CYTHON_ASSUME_SAFE_SIZE
-  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
-  #else
-  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
-  #endif
-  #endif
-  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
-  {
-    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
-    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 298, __pyx_L3_error)
-    if (__pyx_kwds_len > 0) {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 298, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 298, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  1:
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 298, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "keymap", 0) < (0)) __PYX_ERR(0, 298, __pyx_L3_error)
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__4);
-      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("keymap", 0, 2, 3, i); __PYX_ERR(0, 298, __pyx_L3_error) }
-      }
-    } else {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 298, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 298, __pyx_L3_error)
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 298, __pyx_L3_error)
-        break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__4);
-    }
-    __pyx_v_func = values[0];
-    __pyx_v_d = values[1];
-    __pyx_v_factory = values[2];
-  }
-  goto __pyx_L6_skip;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("keymap", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 298, __pyx_L3_error)
-  __pyx_L6_skip:;
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keymap", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_6keymap(__pyx_self, __pyx_v_func, __pyx_v_d, __pyx_v_factory);
-
-  /* function exit code */
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_6keymap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap __pyx_t_2;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("keymap", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2.__pyx_n = 1;
-  __pyx_t_2.factory = __pyx_v_factory;
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_keymap(__pyx_v_func, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 298, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keymap", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":357
- * 	return rv
- * 
- * cpdef object itemmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""itemmap(func: collections.abc.Callable[[tuple[K, V]], tuple[L, W]], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, W]] = dict) -> collections.abc.MutableMapping[L, W]
- * 
-*/
-
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_9itemmap(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_itemmap(PyObject *__pyx_v_func, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__5;
-  PyObject *__pyx_v_rv = 0;
-  PyObject *__pyx_v_k = 0;
-  PyObject *__pyx_v_v = 0;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
-  PyObject *__pyx_v_obj;
-  PyObject *__pyx_v_pkey;
-  PyObject *__pyx_v_pval;
-  Py_ssize_t __pyx_v_pos;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  size_t __pyx_t_4;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
-  PyObject *(*__pyx_t_9)(PyObject *);
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("itemmap", 0);
-  if (__pyx_optional_args) {
-    if (__pyx_optional_args->__pyx_n > 0) {
-      __pyx_v_factory = __pyx_optional_args->factory;
-    }
-  }
-  __Pyx_INCREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":408
- * 		PyObject *pkey
- * 		PyObject *pval
- * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
- * 
- * 	rv = factory()
-*/
-  __pyx_v_pos = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":410
- * 		Py_ssize_t pos = 0
- * 
- * 	rv = factory()             # <<<<<<<<<<<<<<
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
-*/
-  __pyx_t_2 = NULL;
-  __Pyx_INCREF(__pyx_v_factory);
-  __pyx_t_3 = __pyx_v_factory; 
-  __pyx_t_4 = 1;
-  #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    assert(__pyx_t_2);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_2);
-    __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
-    __pyx_t_4 = 0;
-  }
-  #endif
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
-    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 410, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-  }
-  __pyx_v_rv = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":411
- * 
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
- * 	d = <object>obj
- * 	Py_DECREF(d)
-*/
-  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 411, __pyx_L1_error)
-  __pyx_v_f = __pyx_t_5;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":412
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj             # <<<<<<<<<<<<<<
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
-*/
-  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":413
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
- * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
- * 	while f(d, &pos, &pkey, &pval):
- * 		k, v = func((<object>pkey, <object>pval))
-*/
-  Py_DECREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":414
- * 	d = <object>obj
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
- * 		k, v = func((<object>pkey, <object>pval))
- * 		rv[k] = v
-*/
-  while (1) {
-    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 414, __pyx_L1_error)
-    __pyx_t_7 = (__pyx_t_6 != 0);
-    if (!__pyx_t_7) break;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":415
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
- * 		k, v = func((<object>pkey, <object>pval))             # <<<<<<<<<<<<<<
- * 		rv[k] = v
- * 	return rv
-*/
-    __pyx_t_3 = NULL;
-    __Pyx_INCREF(__pyx_v_func);
-    __pyx_t_2 = __pyx_v_func; 
-    __pyx_t_8 = PyTuple_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 415, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_INCREF(((PyObject *)__pyx_v_pkey));
-    __Pyx_GIVEREF(((PyObject *)__pyx_v_pkey));
-    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_8, 0, ((PyObject *)__pyx_v_pkey)) != (0)) __PYX_ERR(0, 415, __pyx_L1_error);
-    __Pyx_INCREF(((PyObject *)__pyx_v_pval));
-    __Pyx_GIVEREF(((PyObject *)__pyx_v_pval));
-    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_8, 1, ((PyObject *)__pyx_v_pval)) != (0)) __PYX_ERR(0, 415, __pyx_L1_error);
-    __pyx_t_4 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-      assert(__pyx_t_3);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
-      __pyx_t_4 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_t_8};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 415, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-    }
-    if ((likely(PyTuple_CheckExact(__pyx_t_1))) || (PyList_CheckExact(__pyx_t_1))) {
-      PyObject* sequence = __pyx_t_1;
-      Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
-      if (unlikely(size != 2)) {
-        if (size > 2) __Pyx_RaiseTooManyValuesError(2);
-        else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 415, __pyx_L1_error)
-      }
-      #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-      if (likely(PyTuple_CheckExact(sequence))) {
-        __pyx_t_2 = PyTuple_GET_ITEM(sequence, 0);
-        __Pyx_INCREF(__pyx_t_2);
-        __pyx_t_8 = PyTuple_GET_ITEM(sequence, 1);
-        __Pyx_INCREF(__pyx_t_8);
-      } else {
-        __pyx_t_2 = __Pyx_PyList_GetItemRefFast(sequence, 0, __Pyx_ReferenceSharing_SharedReference);
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 415, __pyx_L1_error)
-        __Pyx_XGOTREF(__pyx_t_2);
-        __pyx_t_8 = __Pyx_PyList_GetItemRefFast(sequence, 1, __Pyx_ReferenceSharing_SharedReference);
-        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 415, __pyx_L1_error)
-        __Pyx_XGOTREF(__pyx_t_8);
-      }
-      #else
-      __pyx_t_2 = __Pyx_PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 415, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_8 = __Pyx_PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 415, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
-      #endif
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    } else {
-      Py_ssize_t index = -1;
-      __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 415, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_9 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_3);
-      index = 0; __pyx_t_2 = __pyx_t_9(__pyx_t_3); if (unlikely(!__pyx_t_2)) goto __pyx_L5_unpacking_failed;
-      __Pyx_GOTREF(__pyx_t_2);
-      index = 1; __pyx_t_8 = __pyx_t_9(__pyx_t_3); if (unlikely(!__pyx_t_8)) goto __pyx_L5_unpacking_failed;
-      __Pyx_GOTREF(__pyx_t_8);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_3), 2) < (0)) __PYX_ERR(0, 415, __pyx_L1_error)
-      __pyx_t_9 = NULL;
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      goto __pyx_L6_unpacking_done;
-      __pyx_L5_unpacking_failed:;
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_9 = NULL;
-      if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 415, __pyx_L1_error)
-      __pyx_L6_unpacking_done:;
-    }
-    __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_2);
-    __pyx_t_2 = 0;
-    __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_8);
-    __pyx_t_8 = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":416
- * 	while f(d, &pos, &pkey, &pval):
- * 		k, v = func((<object>pkey, <object>pval))
- * 		rv[k] = v             # <<<<<<<<<<<<<<
- * 	return rv
- * 
-*/
-    if (unlikely((PyObject_SetItem(__pyx_v_rv, __pyx_v_k, __pyx_v_v) < 0))) __PYX_ERR(0, 416, __pyx_L1_error)
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":417
- * 		k, v = func((<object>pkey, <object>pval))
- * 		rv[k] = v
- * 	return rv             # <<<<<<<<<<<<<<
- * 
- * cpdef object valfilter(object predicate, object d, object factory=dict):
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rv);
-  __pyx_r = __pyx_v_rv;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":357
- * 	return rv
- * 
- * cpdef object itemmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""itemmap(func: collections.abc.Callable[[tuple[K, V]], tuple[L, W]], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, W]] = dict) -> collections.abc.MutableMapping[L, W]
- * 
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_rv);
-  __Pyx_XDECREF(__pyx_v_k);
-  __Pyx_XDECREF(__pyx_v_v);
-  __Pyx_XDECREF(__pyx_v_d);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_9itemmap(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_8itemmap, "itemmap(func, d, factory=dict)\n\nitemmap(func: collections.abc.Callable[[tuple[K, V]], tuple[L, W]], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, W]] = dict) -> collections.abc.MutableMapping[L, W]\n\nApply `func` to all items of `d` and return a new `Mapping` with the transformed items.\n\n(AI generated docstring)\n\nYou can use `itemmap` to transform all keys and values in `d` simultaneously without\nchanging `d`. `itemmap` applies `func` to each item yielded by `d.items()`. Each item\nis passed to `func` as a `tuple[K, V]`, and `func` must return a `tuple[L, W]`. `itemmap`\ninserts each returned `tuple` as a new key-value pair in a `MutableMapping`[1] created\nby `factory`.\n\nParameters\n----------\nfunc : Callable[[tuple[K, V]], tuple[L, W]]\n        `Callable` applied to each item of `d`. Each item of `d` is passed to `func` as a\n        `tuple[K, V]`, and `func` must return a `tuple[L, W]` containing the new key and value.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `itemmap` reads all items from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[L, W]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingTransformed : MutableMapping[L, W]\n        New `MutableMapping` created by `factory` populated with each `tuple[L, W]` returned\n        by `func`.\n\nSee Also\n--------\nkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\nvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\n\nExamples\n--------\n>>> accountids = {'Alice': 10, 'Bob': 20}\n>>> itemmap(reversed, accountids)  # doctest: +SKIP\n{10: 'Alice', 20: 'Bob'}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_9itemmap = {"itemmap", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_9itemmap, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_8itemmap};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_9itemmap(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-) {
-  PyObject *__pyx_v_func = 0;
-  PyObject *__pyx_v_d = 0;
-  PyObject *__pyx_v_factory = 0;
-  #if !CYTHON_METH_FASTCALL
-  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
-  #endif
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[3] = {0,0,0};
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("itemmap (wrapper)", 0);
-  #if !CYTHON_METH_FASTCALL
-  #if CYTHON_ASSUME_SAFE_SIZE
-  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
-  #else
-  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
-  #endif
-  #endif
-  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
-  {
-    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
-    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 357, __pyx_L3_error)
-    if (__pyx_kwds_len > 0) {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 357, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 357, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  1:
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 357, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "itemmap", 0) < (0)) __PYX_ERR(0, 357, __pyx_L3_error)
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__5);
-      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("itemmap", 0, 2, 3, i); __PYX_ERR(0, 357, __pyx_L3_error) }
-      }
-    } else {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 357, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 357, __pyx_L3_error)
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 357, __pyx_L3_error)
-        break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__5);
-    }
-    __pyx_v_func = values[0];
-    __pyx_v_d = values[1];
-    __pyx_v_factory = values[2];
-  }
-  goto __pyx_L6_skip;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("itemmap", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 357, __pyx_L3_error)
-  __pyx_L6_skip:;
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_8itemmap(__pyx_self, __pyx_v_func, __pyx_v_d, __pyx_v_factory);
-
-  /* function exit code */
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_8itemmap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap __pyx_t_2;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("itemmap", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2.__pyx_n = 1;
-  __pyx_t_2.factory = __pyx_v_factory;
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_itemmap(__pyx_v_func, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 357, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":419
- * 	return rv
- * 
- * cpdef object valfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""valfilter(predicate: collections.abc.Callable[[V], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_11valfilter(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_valfilter(PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__6;
-  PyObject *__pyx_v_rv = 0;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
-  PyObject *__pyx_v_obj;
-  PyObject *__pyx_v_pkey;
-  PyObject *__pyx_v_pval;
-  Py_ssize_t __pyx_v_pos;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  size_t __pyx_t_4;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("valfilter", 0);
-  if (__pyx_optional_args) {
-    if (__pyx_optional_args->__pyx_n > 0) {
-      __pyx_v_factory = __pyx_optional_args->factory;
-    }
-  }
-  __Pyx_INCREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":469
- * 		PyObject *pkey
- * 		PyObject *pval
- * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
- * 
- * 	rv = factory()
-*/
-  __pyx_v_pos = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":471
- * 		Py_ssize_t pos = 0
- * 
- * 	rv = factory()             # <<<<<<<<<<<<<<
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
-*/
-  __pyx_t_2 = NULL;
-  __Pyx_INCREF(__pyx_v_factory);
-  __pyx_t_3 = __pyx_v_factory; 
-  __pyx_t_4 = 1;
-  #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    assert(__pyx_t_2);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_2);
-    __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
-    __pyx_t_4 = 0;
-  }
-  #endif
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
-    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 471, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-  }
-  __pyx_v_rv = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":472
- * 
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
- * 	d = <object>obj
- * 	Py_DECREF(d)
-*/
-  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 472, __pyx_L1_error)
-  __pyx_v_f = __pyx_t_5;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":473
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj             # <<<<<<<<<<<<<<
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
-*/
-  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":474
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
- * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
- * 	while f(d, &pos, &pkey, &pval):
- * 		if predicate(<object>pval):
-*/
-  Py_DECREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":475
- * 	d = <object>obj
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
- * 		if predicate(<object>pval):
- * 			rv[<object>pkey] = <object>pval
-*/
-  while (1) {
-    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 475, __pyx_L1_error)
-    __pyx_t_7 = (__pyx_t_6 != 0);
-    if (!__pyx_t_7) break;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":476
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
- * 		if predicate(<object>pval):             # <<<<<<<<<<<<<<
- * 			rv[<object>pkey] = <object>pval
- * 	return rv
-*/
-    __pyx_t_3 = NULL;
-    __Pyx_INCREF(__pyx_v_predicate);
-    __pyx_t_2 = __pyx_v_predicate; 
-    __pyx_t_4 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-      assert(__pyx_t_3);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
-      __pyx_t_4 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_3, ((PyObject *)__pyx_v_pval)};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 476, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-    }
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 476, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (__pyx_t_7) {
-
-      /* "humpy_cytoolz/dicttoolz.pyx":477
- * 	while f(d, &pos, &pkey, &pval):
- * 		if predicate(<object>pval):
- * 			rv[<object>pkey] = <object>pval             # <<<<<<<<<<<<<<
- * 	return rv
- * 
-*/
-      __pyx_t_1 = ((PyObject *)__pyx_v_pval);
-      __Pyx_INCREF(__pyx_t_1);
-      if (unlikely((PyObject_SetItem(__pyx_v_rv, ((PyObject *)__pyx_v_pkey), __pyx_t_1) < 0))) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-      /* "humpy_cytoolz/dicttoolz.pyx":476
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
- * 		if predicate(<object>pval):             # <<<<<<<<<<<<<<
- * 			rv[<object>pkey] = <object>pval
- * 	return rv
-*/
-    }
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":478
- * 		if predicate(<object>pval):
- * 			rv[<object>pkey] = <object>pval
- * 	return rv             # <<<<<<<<<<<<<<
- * 
- * cpdef object keyfilter(object predicate, object d, object factory=dict):
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rv);
-  __pyx_r = __pyx_v_rv;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":419
- * 	return rv
- * 
- * cpdef object valfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""valfilter(predicate: collections.abc.Callable[[V], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_rv);
-  __Pyx_XDECREF(__pyx_v_d);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_11valfilter(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_10valfilter, "valfilter(predicate, d, factory=dict)\n\nvalfilter(predicate: collections.abc.Callable[[V], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nRetain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\n\n(AI generated docstring)\n\nYou can use `valfilter` to select items from `d` (***d***ictionary) by their values. `valfilter`\ncalls `predicate` with each value yielded by `d.values()`. `valfilter` inserts each item whose\nvalue causes `predicate` to return `True` into a new `MutableMapping`[1] created by `factory`.\n`valfilter` does not change `d`.\n\nParameters\n----------\npredicate : Callable[[V], bool]\n        `Callable` applied to each value of `d`. `valfilter` keeps each item for which `predicate`\n        returns `True`.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `valfilter` reads all items from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingFiltered : MutableMapping[K, V]\n        New `MutableMapping` created by `factory` containing only items from `d` whose values\n        cause `predicate` to return `True`.\n\nSee Also\n--------\nkeyfilter : Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\nitemfilter : Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\nvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\n\n>>> iseven = lambda x: x % 2 == 0\n>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n>>> valfilter(iseven, d)\n{1: 2, 3: 4}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_11valfilter = {"valfilter", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_11valfilter, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_10valfilter};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_11valfilter(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-) {
-  PyObject *__pyx_v_predicate = 0;
-  PyObject *__pyx_v_d = 0;
-  PyObject *__pyx_v_factory = 0;
-  #if !CYTHON_METH_FASTCALL
-  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
-  #endif
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[3] = {0,0,0};
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("valfilter (wrapper)", 0);
-  #if !CYTHON_METH_FASTCALL
-  #if CYTHON_ASSUME_SAFE_SIZE
-  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
-  #else
-  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
-  #endif
-  #endif
-  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
-  {
-    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_predicate,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
-    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 419, __pyx_L3_error)
-    if (__pyx_kwds_len > 0) {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 419, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 419, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  1:
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 419, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "valfilter", 0) < (0)) __PYX_ERR(0, 419, __pyx_L3_error)
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__6);
-      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("valfilter", 0, 2, 3, i); __PYX_ERR(0, 419, __pyx_L3_error) }
-      }
-    } else {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 419, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 419, __pyx_L3_error)
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 419, __pyx_L3_error)
-        break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__6);
-    }
-    __pyx_v_predicate = values[0];
-    __pyx_v_d = values[1];
-    __pyx_v_factory = values[2];
-  }
-  goto __pyx_L6_skip;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("valfilter", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 419, __pyx_L3_error)
-  __pyx_L6_skip:;
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_10valfilter(__pyx_self, __pyx_v_predicate, __pyx_v_d, __pyx_v_factory);
-
-  /* function exit code */
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_10valfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter __pyx_t_2;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("valfilter", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2.__pyx_n = 1;
-  __pyx_t_2.factory = __pyx_v_factory;
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_valfilter(__pyx_v_predicate, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 419, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":480
- * 	return rv
- * 
- * cpdef object keyfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""keyfilter(predicate: collections.abc.Callable[[K], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_13keyfilter(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_keyfilter(PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__7;
-  PyObject *__pyx_v_rv = 0;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
-  PyObject *__pyx_v_obj;
-  PyObject *__pyx_v_pkey;
-  PyObject *__pyx_v_pval;
-  Py_ssize_t __pyx_v_pos;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  size_t __pyx_t_4;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("keyfilter", 0);
-  if (__pyx_optional_args) {
-    if (__pyx_optional_args->__pyx_n > 0) {
-      __pyx_v_factory = __pyx_optional_args->factory;
-    }
-  }
-  __Pyx_INCREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":530
- * 		PyObject *pkey
- * 		PyObject *pval
- * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
- * 
- * 	rv = factory()
-*/
-  __pyx_v_pos = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":532
- * 		Py_ssize_t pos = 0
- * 
- * 	rv = factory()             # <<<<<<<<<<<<<<
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
-*/
-  __pyx_t_2 = NULL;
-  __Pyx_INCREF(__pyx_v_factory);
-  __pyx_t_3 = __pyx_v_factory; 
-  __pyx_t_4 = 1;
-  #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    assert(__pyx_t_2);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_2);
-    __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
-    __pyx_t_4 = 0;
-  }
-  #endif
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
-    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 532, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-  }
-  __pyx_v_rv = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":533
- * 
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
- * 	d = <object>obj
- * 	Py_DECREF(d)
-*/
-  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 533, __pyx_L1_error)
-  __pyx_v_f = __pyx_t_5;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":534
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj             # <<<<<<<<<<<<<<
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
-*/
-  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":535
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
- * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
- * 	while f(d, &pos, &pkey, &pval):
- * 		if predicate(<object>pkey):
-*/
-  Py_DECREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":536
- * 	d = <object>obj
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
- * 		if predicate(<object>pkey):
- * 			rv[<object>pkey] = <object>pval
-*/
-  while (1) {
-    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 536, __pyx_L1_error)
-    __pyx_t_7 = (__pyx_t_6 != 0);
-    if (!__pyx_t_7) break;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":537
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
- * 		if predicate(<object>pkey):             # <<<<<<<<<<<<<<
- * 			rv[<object>pkey] = <object>pval
- * 	return rv
-*/
-    __pyx_t_3 = NULL;
-    __Pyx_INCREF(__pyx_v_predicate);
-    __pyx_t_2 = __pyx_v_predicate; 
-    __pyx_t_4 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-      assert(__pyx_t_3);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
-      __pyx_t_4 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_3, ((PyObject *)__pyx_v_pkey)};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 537, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-    }
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 537, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (__pyx_t_7) {
-
-      /* "humpy_cytoolz/dicttoolz.pyx":538
- * 	while f(d, &pos, &pkey, &pval):
- * 		if predicate(<object>pkey):
- * 			rv[<object>pkey] = <object>pval             # <<<<<<<<<<<<<<
- * 	return rv
- * 
-*/
-      __pyx_t_1 = ((PyObject *)__pyx_v_pval);
-      __Pyx_INCREF(__pyx_t_1);
-      if (unlikely((PyObject_SetItem(__pyx_v_rv, ((PyObject *)__pyx_v_pkey), __pyx_t_1) < 0))) __PYX_ERR(0, 538, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-      /* "humpy_cytoolz/dicttoolz.pyx":537
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
- * 		if predicate(<object>pkey):             # <<<<<<<<<<<<<<
- * 			rv[<object>pkey] = <object>pval
- * 	return rv
-*/
-    }
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":539
- * 		if predicate(<object>pkey):
- * 			rv[<object>pkey] = <object>pval
- * 	return rv             # <<<<<<<<<<<<<<
- * 
- * cpdef object itemfilter(object predicate, object d, object factory=dict):
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rv);
-  __pyx_r = __pyx_v_rv;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":480
- * 	return rv
- * 
- * cpdef object keyfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""keyfilter(predicate: collections.abc.Callable[[K], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keyfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_rv);
-  __Pyx_XDECREF(__pyx_v_d);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_13keyfilter(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_12keyfilter, "keyfilter(predicate, d, factory=dict)\n\nkeyfilter(predicate: collections.abc.Callable[[K], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nRetain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\n\n(AI generated docstring)\n\nYou can use `keyfilter` to select items from `d` (***d***ictionary) by their keys. `keyfilter`\ncalls `predicate` with each key yielded by `d.keys()`. `keyfilter` inserts each item whose\nkey causes `predicate` to return `True` into a new `MutableMapping`[1] created by `factory`.\n`keyfilter` does not change `d`.\n\nParameters\n----------\npredicate : Callable[[K], bool]\n        `Callable` applied to each key of `d`. `keyfilter` keeps each item for which `predicate`\n        returns `True`.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `keyfilter` reads all items from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingFiltered : MutableMapping[K, V]\n        New `MutableMapping` created by `factory` containing only items from `d` whose keys\n        cause `predicate` to return `True`.\n\nSee Also\n--------\nvalfilter : Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\nitemfilter : Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\nkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\n\n>>> iseven = lambda x: x % 2 == 0\n>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n>>> keyfilter(iseven, d)\n{2: 3, 4: 5}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_13keyfilter = {"keyfilter", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_13keyfilter, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_12keyfilter};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_13keyfilter(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-) {
-  PyObject *__pyx_v_predicate = 0;
-  PyObject *__pyx_v_d = 0;
-  PyObject *__pyx_v_factory = 0;
-  #if !CYTHON_METH_FASTCALL
-  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
-  #endif
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[3] = {0,0,0};
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("keyfilter (wrapper)", 0);
-  #if !CYTHON_METH_FASTCALL
-  #if CYTHON_ASSUME_SAFE_SIZE
-  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
-  #else
-  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
-  #endif
-  #endif
-  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
-  {
-    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_predicate,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
-    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 480, __pyx_L3_error)
-    if (__pyx_kwds_len > 0) {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 480, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 480, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  1:
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 480, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "keyfilter", 0) < (0)) __PYX_ERR(0, 480, __pyx_L3_error)
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__7);
-      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("keyfilter", 0, 2, 3, i); __PYX_ERR(0, 480, __pyx_L3_error) }
-      }
-    } else {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 480, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 480, __pyx_L3_error)
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 480, __pyx_L3_error)
-        break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__7);
-    }
-    __pyx_v_predicate = values[0];
-    __pyx_v_d = values[1];
-    __pyx_v_factory = values[2];
-  }
-  goto __pyx_L6_skip;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("keyfilter", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 480, __pyx_L3_error)
-  __pyx_L6_skip:;
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keyfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_12keyfilter(__pyx_self, __pyx_v_predicate, __pyx_v_d, __pyx_v_factory);
-
-  /* function exit code */
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_12keyfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter __pyx_t_2;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("keyfilter", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2.__pyx_n = 1;
-  __pyx_t_2.factory = __pyx_v_factory;
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_keyfilter(__pyx_v_predicate, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 480, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keyfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":541
- * 	return rv
- * 
- * cpdef object itemfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""itemfilter(predicate: collections.abc.Callable[[tuple[K, V]], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_15itemfilter(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_itemfilter(PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__8;
-  PyObject *__pyx_v_rv = 0;
-  PyObject *__pyx_v_k = 0;
-  PyObject *__pyx_v_v = 0;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
-  PyObject *__pyx_v_obj;
-  PyObject *__pyx_v_pkey;
-  PyObject *__pyx_v_pval;
-  Py_ssize_t __pyx_v_pos;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  size_t __pyx_t_4;
-  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("itemfilter", 0);
-  if (__pyx_optional_args) {
-    if (__pyx_optional_args->__pyx_n > 0) {
-      __pyx_v_factory = __pyx_optional_args->factory;
-    }
-  }
-  __Pyx_INCREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":595
- * 		PyObject *pkey
- * 		PyObject *pval
- * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
- * 
- * 	rv = factory()
-*/
-  __pyx_v_pos = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":597
- * 		Py_ssize_t pos = 0
- * 
- * 	rv = factory()             # <<<<<<<<<<<<<<
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
-*/
-  __pyx_t_2 = NULL;
-  __Pyx_INCREF(__pyx_v_factory);
-  __pyx_t_3 = __pyx_v_factory; 
-  __pyx_t_4 = 1;
-  #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    assert(__pyx_t_2);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_2);
-    __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
-    __pyx_t_4 = 0;
-  }
-  #endif
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
-    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 597, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-  }
-  __pyx_v_rv = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":598
- * 
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
- * 	d = <object>obj
- * 	Py_DECREF(d)
-*/
-  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 598, __pyx_L1_error)
-  __pyx_v_f = __pyx_t_5;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":599
- * 	rv = factory()
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj             # <<<<<<<<<<<<<<
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
-*/
-  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
-  __Pyx_INCREF(__pyx_t_1);
-  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":600
- * 	f = get_map_iter(d, &obj)
- * 	d = <object>obj
- * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
- * 	while f(d, &pos, &pkey, &pval):
- * 		k = <object>pkey
-*/
-  Py_DECREF(__pyx_v_d);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":601
- * 	d = <object>obj
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
- * 		k = <object>pkey
- * 		v = <object>pval
-*/
-  while (1) {
-    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 601, __pyx_L1_error)
-    __pyx_t_7 = (__pyx_t_6 != 0);
-    if (!__pyx_t_7) break;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":602
- * 	Py_DECREF(d)
- * 	while f(d, &pos, &pkey, &pval):
- * 		k = <object>pkey             # <<<<<<<<<<<<<<
- * 		v = <object>pval
- * 		if predicate((k, v)):
-*/
-    __pyx_t_1 = ((PyObject *)__pyx_v_pkey);
-    __Pyx_INCREF(__pyx_t_1);
-    __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_1);
-    __pyx_t_1 = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":603
- * 	while f(d, &pos, &pkey, &pval):
- * 		k = <object>pkey
- * 		v = <object>pval             # <<<<<<<<<<<<<<
- * 		if predicate((k, v)):
- * 			rv[k] = v
-*/
-    __pyx_t_1 = ((PyObject *)__pyx_v_pval);
-    __Pyx_INCREF(__pyx_t_1);
-    __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_1);
-    __pyx_t_1 = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":604
- * 		k = <object>pkey
- * 		v = <object>pval
- * 		if predicate((k, v)):             # <<<<<<<<<<<<<<
- * 			rv[k] = v
- * 	return rv
-*/
-    __pyx_t_3 = NULL;
-    __Pyx_INCREF(__pyx_v_predicate);
-    __pyx_t_2 = __pyx_v_predicate; 
-    __pyx_t_8 = PyTuple_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 604, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_INCREF(__pyx_v_k);
-    __Pyx_GIVEREF(__pyx_v_k);
-    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 604, __pyx_L1_error);
-    __Pyx_INCREF(__pyx_v_v);
-    __Pyx_GIVEREF(__pyx_v_v);
-    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_v_v) != (0)) __PYX_ERR(0, 604, __pyx_L1_error);
-    __pyx_t_4 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-      assert(__pyx_t_3);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
-      __pyx_t_4 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_t_8};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 604, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-    }
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 604, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (__pyx_t_7) {
-
-      /* "humpy_cytoolz/dicttoolz.pyx":605
- * 		v = <object>pval
- * 		if predicate((k, v)):
- * 			rv[k] = v             # <<<<<<<<<<<<<<
- * 	return rv
- * 
-*/
-      if (unlikely((PyObject_SetItem(__pyx_v_rv, __pyx_v_k, __pyx_v_v) < 0))) __PYX_ERR(0, 605, __pyx_L1_error)
-
-      /* "humpy_cytoolz/dicttoolz.pyx":604
- * 		k = <object>pkey
- * 		v = <object>pval
- * 		if predicate((k, v)):             # <<<<<<<<<<<<<<
- * 			rv[k] = v
- * 	return rv
-*/
-    }
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":606
- * 		if predicate((k, v)):
- * 			rv[k] = v
- * 	return rv             # <<<<<<<<<<<<<<
- * 
- * cpdef object assoc(object d, object key, object value, object factory=dict):
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rv);
-  __pyx_r = __pyx_v_rv;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":541
- * 	return rv
- * 
- * cpdef object itemfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""itemfilter(predicate: collections.abc.Callable[[tuple[K, V]], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_rv);
-  __Pyx_XDECREF(__pyx_v_k);
-  __Pyx_XDECREF(__pyx_v_v);
-  __Pyx_XDECREF(__pyx_v_d);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_15itemfilter(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_14itemfilter, "itemfilter(predicate, d, factory=dict)\n\nitemfilter(predicate: collections.abc.Callable[[tuple[K, V]], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nRetain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\n\n(AI generated docstring)\n\nYou can use `itemfilter` to select items from `d` (***d***ictionary) by both key and value\nsimultaneously. `itemfilter` calls `predicate` with each item yielded by `d.items()`. Each\nitem is passed to `predicate` as a `tuple[K, V]`. `itemfilter` inserts each item for which\n`predicate` returns `True` into a new `MutableMapping`[1] created by `factory`. `itemfilter`\ndoes not change `d`.\n\nParameters\n----------\npredicate : Callable[[tuple[K, V]], bool]\n        `Callable` applied to each item of `d`. Each item is passed to `predicate` as a\n        `tuple[K, V]`, and `predicate` must return `True` for the item to be retained.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `itemfilter` reads all items from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingFiltered : MutableMapping[K, V]\n        New `MutableMapping` created by `factory` containing only items from `d` for which\n        `predicate` returns `True`.\n\nSee Also\n--------\nkeyfilter : Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\nvalfilter : Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\nitemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\n>>> def isvalid(item):\n...     k, v = item\n...     return k % 2 == 0 and v < 4\n\n>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n>>> itemfilter(isvalid, d)\n{2: 3}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        htt""ps://docs.python.org/3/library/collections.abc.html");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_15itemfilter = {"itemfilter", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_15itemfilter, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_14itemfilter};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_15itemfilter(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-) {
-  PyObject *__pyx_v_predicate = 0;
-  PyObject *__pyx_v_d = 0;
-  PyObject *__pyx_v_factory = 0;
-  #if !CYTHON_METH_FASTCALL
-  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
-  #endif
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[3] = {0,0,0};
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("itemfilter (wrapper)", 0);
-  #if !CYTHON_METH_FASTCALL
-  #if CYTHON_ASSUME_SAFE_SIZE
-  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
-  #else
-  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
-  #endif
-  #endif
-  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
-  {
-    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_predicate,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
-    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 541, __pyx_L3_error)
-    if (__pyx_kwds_len > 0) {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 541, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 541, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  1:
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 541, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "itemfilter", 0) < (0)) __PYX_ERR(0, 541, __pyx_L3_error)
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__8);
-      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("itemfilter", 0, 2, 3, i); __PYX_ERR(0, 541, __pyx_L3_error) }
-      }
-    } else {
-      switch (__pyx_nargs) {
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 541, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 541, __pyx_L3_error)
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 541, __pyx_L3_error)
-        break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__8);
-    }
-    __pyx_v_predicate = values[0];
-    __pyx_v_d = values[1];
-    __pyx_v_factory = values[2];
-  }
-  goto __pyx_L6_skip;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("itemfilter", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 541, __pyx_L3_error)
-  __pyx_L6_skip:;
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_14itemfilter(__pyx_self, __pyx_v_predicate, __pyx_v_d, __pyx_v_factory);
-
-  /* function exit code */
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_14itemfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter __pyx_t_2;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("itemfilter", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2.__pyx_n = 1;
-  __pyx_t_2.factory = __pyx_v_factory;
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_itemfilter(__pyx_v_predicate, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 541, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":608
- * 	return rv
+/* "humpy_cytoolz/dicttoolz.pyx":123
+ * #======== Public Mapping Operations ========
  * 
  * cpdef object assoc(object d, object key, object value, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""assoc(d: collections.abc.Mapping[K, V], key: K, value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+ * 	"""Create a new `Mapping`[1] with `key` associated with `value`.
  * 
 */
 
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_17assoc(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_1assoc(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -7367,7 +4022,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
 static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc(PyObject *__pyx_v_d, PyObject *__pyx_v_key, PyObject *__pyx_v_value, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__9;
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k_;
   PyObject *__pyx_v_rv = 0;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -7387,7 +4042,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc(PyObject *__pyx_v_d, P
     }
   }
 
-  /* "humpy_cytoolz/dicttoolz.pyx":647
+  /* "humpy_cytoolz/dicttoolz.pyx":160
  * 	"""
  * 	cdef object rv
  * 	rv = factory()             # <<<<<<<<<<<<<<
@@ -7414,13 +4069,13 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc(PyObject *__pyx_v_d, P
     __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 647, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_v_rv = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":648
+  /* "humpy_cytoolz/dicttoolz.pyx":161
  * 	cdef object rv
  * 	rv = factory()
  * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
@@ -7430,16 +4085,16 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc(PyObject *__pyx_v_d, P
   __pyx_t_5 = PyDict_CheckExact(__pyx_v_rv);
   if (__pyx_t_5) {
 
-    /* "humpy_cytoolz/dicttoolz.pyx":649
+    /* "humpy_cytoolz/dicttoolz.pyx":162
  * 	rv = factory()
  * 	if PyDict_CheckExact(rv):
  * 		PyDict_Update(rv, d)             # <<<<<<<<<<<<<<
  * 	else:
  * 		rv.update(d)
 */
-    __pyx_t_6 = PyDict_Update(__pyx_v_rv, __pyx_v_d); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 649, __pyx_L1_error)
+    __pyx_t_6 = PyDict_Update(__pyx_v_rv, __pyx_v_d); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 162, __pyx_L1_error)
 
-    /* "humpy_cytoolz/dicttoolz.pyx":648
+    /* "humpy_cytoolz/dicttoolz.pyx":161
  * 	cdef object rv
  * 	rv = factory()
  * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
@@ -7449,7 +4104,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc(PyObject *__pyx_v_d, P
     goto __pyx_L3;
   }
 
-  /* "humpy_cytoolz/dicttoolz.pyx":651
+  /* "humpy_cytoolz/dicttoolz.pyx":164
  * 		PyDict_Update(rv, d)
  * 	else:
  * 		rv.update(d)             # <<<<<<<<<<<<<<
@@ -7464,23 +4119,23 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc(PyObject *__pyx_v_d, P
       PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_d};
       __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_update, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 651, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 164, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
   __pyx_L3:;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":652
+  /* "humpy_cytoolz/dicttoolz.pyx":165
  * 	else:
  * 		rv.update(d)
  * 	rv[key] = value             # <<<<<<<<<<<<<<
  * 	return rv
  * 
 */
-  if (unlikely((PyObject_SetItem(__pyx_v_rv, __pyx_v_key, __pyx_v_value) < 0))) __PYX_ERR(0, 652, __pyx_L1_error)
+  if (unlikely((PyObject_SetItem(__pyx_v_rv, __pyx_v_key, __pyx_v_value) < 0))) __PYX_ERR(0, 165, __pyx_L1_error)
 
-  /* "humpy_cytoolz/dicttoolz.pyx":653
+  /* "humpy_cytoolz/dicttoolz.pyx":166
  * 		rv.update(d)
  * 	rv[key] = value
  * 	return rv             # <<<<<<<<<<<<<<
@@ -7492,11 +4147,11 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc(PyObject *__pyx_v_d, P
   __pyx_r = __pyx_v_rv;
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":608
- * 	return rv
+  /* "humpy_cytoolz/dicttoolz.pyx":123
+ * #======== Public Mapping Operations ========
  * 
  * cpdef object assoc(object d, object key, object value, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""assoc(d: collections.abc.Mapping[K, V], key: K, value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+ * 	"""Create a new `Mapping`[1] with `key` associated with `value`.
  * 
 */
 
@@ -7515,16 +4170,16 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc(PyObject *__pyx_v_d, P
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_17assoc(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_1assoc(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_16assoc, "assoc(d, key, value, factory=dict)\n\nassoc(d: collections.abc.Mapping[K, V], key: K, value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nCreate a new `Mapping`[1] with `key` associated with `value`.\n\nYou can use `assoc` (***assoc***iate) to copy `d` (***d***ictionary) to a new `Mapping` created by\n`factory` and assign `value` to `key`. `assoc` does not change `d`.\n\nParameters\n----------\nd : Mapping[K, V]\n        Source `Mapping`.\nkey : K\n        `key` that `assoc` inserts or replaces.\nvalue : V\n        `value` that `assoc` assigns to `key`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingUpdated : MutableMapping[K, V]\n        New `Mapping` with `key` associated to `value`.\n\nExamples\n--------\n>>> assoc({}, 'a', 1)\n{'a': 1}\n>>> assoc({'a': 1}, 'a', 3)\n{'a': 3}\n>>> assoc({'a': 1}, 'b', 3)\n{'a': 1, 'b': 3}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_17assoc = {"assoc", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_17assoc, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_16assoc};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_17assoc(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_assoc, "assoc(d, key, value, factory=dict)\n\nCreate a new `Mapping`[1] with `key` associated with `value`.\n\nYou can use `assoc` (***assoc***iate) to copy `d` (***d***ictionary) to a new `Mapping` created by\n`factory` and assign `value` to `key`. `assoc` does not change `d`.\n\nParameters\n----------\nd : Mapping[K, V]\n        Source `Mapping`.\nkey : K\n        `key` that `assoc` inserts or replaces.\nvalue : V\n        `value` that `assoc` assigns to `key`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingUpdated : MutableMapping[K, V]\n        New `Mapping` with `key` associated to `value`.\n\nExamples\n--------\n>>> assoc({}, 'a', 1)\n{'a': 1}\n>>> assoc({'a': 1}, 'a', 3)\n{'a': 3}\n>>> assoc({'a': 1}, 'b', 3)\n{'a': 1, 'b': 3}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_1assoc = {"assoc", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_1assoc, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_assoc};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_1assoc(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -7557,51 +4212,51 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_key,&__pyx_mstate_global->__pyx_n_u_value,&__pyx_mstate_global->__pyx_n_u_factory,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 608, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 123, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 608, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 123, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 608, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 123, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 608, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 123, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 608, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 123, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "assoc", 0) < (0)) __PYX_ERR(0, 608, __pyx_L3_error)
-      if (!values[3]) values[3] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__9);
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "assoc", 0) < (0)) __PYX_ERR(0, 123, __pyx_L3_error)
+      if (!values[3]) values[3] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k_);
       for (Py_ssize_t i = __pyx_nargs; i < 3; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("assoc", 0, 3, 4, i); __PYX_ERR(0, 608, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("assoc", 0, 3, 4, i); __PYX_ERR(0, 123, __pyx_L3_error) }
       }
     } else {
       switch (__pyx_nargs) {
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 608, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 123, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 608, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 123, __pyx_L3_error)
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 608, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 123, __pyx_L3_error)
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 608, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 123, __pyx_L3_error)
         break;
         default: goto __pyx_L5_argtuple_error;
       }
-      if (!values[3]) values[3] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__9);
+      if (!values[3]) values[3] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k_);
     }
     __pyx_v_d = values[0];
     __pyx_v_key = values[1];
@@ -7610,7 +4265,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("assoc", 0, 3, 4, __pyx_nargs); __PYX_ERR(0, 608, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("assoc", 0, 3, 4, __pyx_nargs); __PYX_ERR(0, 123, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -7621,7 +4276,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_16assoc(__pyx_self, __pyx_v_d, __pyx_v_key, __pyx_v_value, __pyx_v_factory);
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_assoc(__pyx_self, __pyx_v_d, __pyx_v_key, __pyx_v_value, __pyx_v_factory);
 
   /* function exit code */
   for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -7631,7 +4286,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_16assoc(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_key, PyObject *__pyx_v_value, PyObject *__pyx_v_factory) {
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_assoc(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_key, PyObject *__pyx_v_value, PyObject *__pyx_v_factory) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -7643,7 +4298,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_16assoc(CYTHON_UNUSED PyObj
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.factory = __pyx_v_factory;
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_assoc(__pyx_v_d, __pyx_v_key, __pyx_v_value, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 608, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_assoc(__pyx_v_d, __pyx_v_key, __pyx_v_value, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -7660,15 +4315,15 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_16assoc(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/dicttoolz.pyx":655
+/* "humpy_cytoolz/dicttoolz.pyx":168
  * 	return rv
  * 
  * cpdef object assoc_in(object d, object keys, object value, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""assoc_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+ * 	"""Create a new `MutableMapping` from `d` with `value` at the path specified by `keys`.
  * 
 */
 
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_19assoc_in(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_3assoc_in(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -7676,7 +4331,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
 static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_value, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc_in *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__10;
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__2;
   PyObject *__pyx_v_prevkey = 0;
   PyObject *__pyx_v_key = 0;
   PyObject *__pyx_v_rv = 0;
@@ -7705,23 +4360,23 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
   __Pyx_INCREF(__pyx_v_d);
   __Pyx_INCREF(__pyx_v_keys);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":705
+  /* "humpy_cytoolz/dicttoolz.pyx":216
  * 	cdef object prevkey, key
  * 	cdef object rv, inner, dtemp
  * 	prevkey, keys = keys[0], keys[1:]             # <<<<<<<<<<<<<<
  * 	rv = factory()
  * 	if PyDict_CheckExact(rv):
 */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_keys, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 705, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_keys, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_keys, 1, 0, NULL, NULL, &__pyx_mstate_global->__pyx_slice[0], 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 705, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_keys, 1, 0, NULL, NULL, &__pyx_mstate_global->__pyx_slice[0], 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_prevkey = __pyx_t_1;
   __pyx_t_1 = 0;
   __Pyx_DECREF_SET(__pyx_v_keys, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":706
+  /* "humpy_cytoolz/dicttoolz.pyx":217
  * 	cdef object rv, inner, dtemp
  * 	prevkey, keys = keys[0], keys[1:]
  * 	rv = factory()             # <<<<<<<<<<<<<<
@@ -7748,13 +4403,13 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
     __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 706, __pyx_L1_error)
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 217, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
   }
   __pyx_v_rv = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":707
+  /* "humpy_cytoolz/dicttoolz.pyx":218
  * 	prevkey, keys = keys[0], keys[1:]
  * 	rv = factory()
  * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
@@ -7764,16 +4419,16 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
   __pyx_t_5 = PyDict_CheckExact(__pyx_v_rv);
   if (__pyx_t_5) {
 
-    /* "humpy_cytoolz/dicttoolz.pyx":708
+    /* "humpy_cytoolz/dicttoolz.pyx":219
  * 	rv = factory()
  * 	if PyDict_CheckExact(rv):
  * 		PyDict_Update(rv, d)             # <<<<<<<<<<<<<<
  * 	else:
  * 		rv.update(d)
 */
-    __pyx_t_6 = PyDict_Update(__pyx_v_rv, __pyx_v_d); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 708, __pyx_L1_error)
+    __pyx_t_6 = PyDict_Update(__pyx_v_rv, __pyx_v_d); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 219, __pyx_L1_error)
 
-    /* "humpy_cytoolz/dicttoolz.pyx":707
+    /* "humpy_cytoolz/dicttoolz.pyx":218
  * 	prevkey, keys = keys[0], keys[1:]
  * 	rv = factory()
  * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
@@ -7783,7 +4438,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
     goto __pyx_L3;
   }
 
-  /* "humpy_cytoolz/dicttoolz.pyx":710
+  /* "humpy_cytoolz/dicttoolz.pyx":221
  * 		PyDict_Update(rv, d)
  * 	else:
  * 		rv.update(d)             # <<<<<<<<<<<<<<
@@ -7798,14 +4453,14 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
       PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_d};
       __pyx_t_2 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_update, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 710, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 221, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
   __pyx_L3:;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":711
+  /* "humpy_cytoolz/dicttoolz.pyx":222
  * 	else:
  * 		rv.update(d)
  * 	inner = rv             # <<<<<<<<<<<<<<
@@ -7815,7 +4470,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
   __Pyx_INCREF(__pyx_v_rv);
   __pyx_v_inner = __pyx_v_rv;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":713
+  /* "humpy_cytoolz/dicttoolz.pyx":224
  * 	inner = rv
  * 
  * 	for key in keys:             # <<<<<<<<<<<<<<
@@ -7827,9 +4482,9 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
     __pyx_t_7 = 0;
     __pyx_t_8 = NULL;
   } else {
-    __pyx_t_7 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_keys); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 713, __pyx_L1_error)
+    __pyx_t_7 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_keys); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_8 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 713, __pyx_L1_error)
+    __pyx_t_8 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 224, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_8)) {
@@ -7837,7 +4492,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
         {
           Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_2);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 713, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 224, __pyx_L1_error)
           #endif
           if (__pyx_t_7 >= __pyx_temp) break;
         }
@@ -7847,7 +4502,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
         {
           Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_2);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 713, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 224, __pyx_L1_error)
           #endif
           if (__pyx_t_7 >= __pyx_temp) break;
         }
@@ -7858,13 +4513,13 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
         #endif
         ++__pyx_t_7;
       }
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 713, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 224, __pyx_L1_error)
     } else {
       __pyx_t_3 = __pyx_t_8(__pyx_t_2);
       if (unlikely(!__pyx_t_3)) {
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
-          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 713, __pyx_L1_error)
+          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 224, __pyx_L1_error)
           PyErr_Clear();
         }
         break;
@@ -7874,29 +4529,29 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
     __Pyx_XDECREF_SET(__pyx_v_key, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":714
+    /* "humpy_cytoolz/dicttoolz.pyx":225
  * 
  * 	for key in keys:
  * 		if prevkey in d:             # <<<<<<<<<<<<<<
  * 			d = d[prevkey]
  * 			dtemp = factory()
 */
-    __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_prevkey, __pyx_v_d, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 714, __pyx_L1_error)
+    __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_prevkey, __pyx_v_d, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 225, __pyx_L1_error)
     if (__pyx_t_5) {
 
-      /* "humpy_cytoolz/dicttoolz.pyx":715
+      /* "humpy_cytoolz/dicttoolz.pyx":226
  * 	for key in keys:
  * 		if prevkey in d:
  * 			d = d[prevkey]             # <<<<<<<<<<<<<<
  * 			dtemp = factory()
  * 			if PyDict_CheckExact(dtemp):
 */
-      __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_d, __pyx_v_prevkey); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 715, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_d, __pyx_v_prevkey); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 226, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "humpy_cytoolz/dicttoolz.pyx":716
+      /* "humpy_cytoolz/dicttoolz.pyx":227
  * 		if prevkey in d:
  * 			d = d[prevkey]
  * 			dtemp = factory()             # <<<<<<<<<<<<<<
@@ -7923,13 +4578,13 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
         __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_9, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 716, __pyx_L1_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 227, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
       }
       __Pyx_XDECREF_SET(__pyx_v_dtemp, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "humpy_cytoolz/dicttoolz.pyx":717
+      /* "humpy_cytoolz/dicttoolz.pyx":228
  * 			d = d[prevkey]
  * 			dtemp = factory()
  * 			if PyDict_CheckExact(dtemp):             # <<<<<<<<<<<<<<
@@ -7939,16 +4594,16 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
       __pyx_t_5 = PyDict_CheckExact(__pyx_v_dtemp);
       if (__pyx_t_5) {
 
-        /* "humpy_cytoolz/dicttoolz.pyx":718
+        /* "humpy_cytoolz/dicttoolz.pyx":229
  * 			dtemp = factory()
  * 			if PyDict_CheckExact(dtemp):
  * 				PyDict_Update(dtemp, d)             # <<<<<<<<<<<<<<
  * 			else:
  * 				dtemp.update(d)
 */
-        __pyx_t_6 = PyDict_Update(__pyx_v_dtemp, __pyx_v_d); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 718, __pyx_L1_error)
+        __pyx_t_6 = PyDict_Update(__pyx_v_dtemp, __pyx_v_d); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 229, __pyx_L1_error)
 
-        /* "humpy_cytoolz/dicttoolz.pyx":717
+        /* "humpy_cytoolz/dicttoolz.pyx":228
  * 			d = d[prevkey]
  * 			dtemp = factory()
  * 			if PyDict_CheckExact(dtemp):             # <<<<<<<<<<<<<<
@@ -7958,7 +4613,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
         goto __pyx_L7;
       }
 
-      /* "humpy_cytoolz/dicttoolz.pyx":720
+      /* "humpy_cytoolz/dicttoolz.pyx":231
  * 				PyDict_Update(dtemp, d)
  * 			else:
  * 				dtemp.update(d)             # <<<<<<<<<<<<<<
@@ -7973,14 +4628,14 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
           PyObject *__pyx_callargs[2] = {__pyx_t_9, __pyx_v_d};
           __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_update, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
           __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 720, __pyx_L1_error)
+          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 231, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
         }
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       }
       __pyx_L7:;
 
-      /* "humpy_cytoolz/dicttoolz.pyx":714
+      /* "humpy_cytoolz/dicttoolz.pyx":225
  * 
  * 	for key in keys:
  * 		if prevkey in d:             # <<<<<<<<<<<<<<
@@ -7990,7 +4645,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
       goto __pyx_L6;
     }
 
-    /* "humpy_cytoolz/dicttoolz.pyx":722
+    /* "humpy_cytoolz/dicttoolz.pyx":233
  * 				dtemp.update(d)
  * 		else:
  * 			d = factory()             # <<<<<<<<<<<<<<
@@ -8018,13 +4673,13 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
         __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_1, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 722, __pyx_L1_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 233, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
       }
       __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "humpy_cytoolz/dicttoolz.pyx":723
+      /* "humpy_cytoolz/dicttoolz.pyx":234
  * 		else:
  * 			d = factory()
  * 			dtemp = d             # <<<<<<<<<<<<<<
@@ -8036,16 +4691,16 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
     }
     __pyx_L6:;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":724
+    /* "humpy_cytoolz/dicttoolz.pyx":235
  * 			d = factory()
  * 			dtemp = d
  * 		inner[prevkey] = dtemp             # <<<<<<<<<<<<<<
  * 		prevkey = key
  * 		inner = dtemp
 */
-    if (unlikely((PyObject_SetItem(__pyx_v_inner, __pyx_v_prevkey, __pyx_v_dtemp) < 0))) __PYX_ERR(0, 724, __pyx_L1_error)
+    if (unlikely((PyObject_SetItem(__pyx_v_inner, __pyx_v_prevkey, __pyx_v_dtemp) < 0))) __PYX_ERR(0, 235, __pyx_L1_error)
 
-    /* "humpy_cytoolz/dicttoolz.pyx":725
+    /* "humpy_cytoolz/dicttoolz.pyx":236
  * 			dtemp = d
  * 		inner[prevkey] = dtemp
  * 		prevkey = key             # <<<<<<<<<<<<<<
@@ -8055,7 +4710,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
     __Pyx_INCREF(__pyx_v_key);
     __Pyx_DECREF_SET(__pyx_v_prevkey, __pyx_v_key);
 
-    /* "humpy_cytoolz/dicttoolz.pyx":726
+    /* "humpy_cytoolz/dicttoolz.pyx":237
  * 		inner[prevkey] = dtemp
  * 		prevkey = key
  * 		inner = dtemp             # <<<<<<<<<<<<<<
@@ -8065,7 +4720,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
     __Pyx_INCREF(__pyx_v_dtemp);
     __Pyx_DECREF_SET(__pyx_v_inner, __pyx_v_dtemp);
 
-    /* "humpy_cytoolz/dicttoolz.pyx":713
+    /* "humpy_cytoolz/dicttoolz.pyx":224
  * 	inner = rv
  * 
  * 	for key in keys:             # <<<<<<<<<<<<<<
@@ -8075,16 +4730,16 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":728
+  /* "humpy_cytoolz/dicttoolz.pyx":239
  * 		inner = dtemp
  * 
  * 	inner[prevkey] = value             # <<<<<<<<<<<<<<
  * 	return rv
  * 
 */
-  if (unlikely((PyObject_SetItem(__pyx_v_inner, __pyx_v_prevkey, __pyx_v_value) < 0))) __PYX_ERR(0, 728, __pyx_L1_error)
+  if (unlikely((PyObject_SetItem(__pyx_v_inner, __pyx_v_prevkey, __pyx_v_value) < 0))) __PYX_ERR(0, 239, __pyx_L1_error)
 
-  /* "humpy_cytoolz/dicttoolz.pyx":729
+  /* "humpy_cytoolz/dicttoolz.pyx":240
  * 
  * 	inner[prevkey] = value
  * 	return rv             # <<<<<<<<<<<<<<
@@ -8096,11 +4751,11 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
   __pyx_r = __pyx_v_rv;
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":655
+  /* "humpy_cytoolz/dicttoolz.pyx":168
  * 	return rv
  * 
  * cpdef object assoc_in(object d, object keys, object value, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""assoc_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+ * 	"""Create a new `MutableMapping` from `d` with `value` at the path specified by `keys`.
  * 
 */
 
@@ -8126,16 +4781,16 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(PyObject *__pyx_v_d
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_19assoc_in(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_3assoc_in(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_18assoc_in, "assoc_in(d, keys, value, factory=dict)\n\nassoc_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nCreate a new `MutableMapping` from `d` with `value` at the path specified by `keys`.\n\n(AI generated docstring)\n\nYou can use `assoc_in` to produce a copy of `d` with `value` placed at the nested\nlocation given by `keys`. `assoc_in` creates intermediate `MutableMapping` instances\nas needed when a key in `keys` is absent from `d`. `assoc_in` does not mutate `d` or\nany nested `Mapping` within `d`.\n\nParameters\n----------\nd : Mapping[K, V]\n        Source `Mapping`.\nkeys : Iterable[K]\n        Non-empty sequence of keys specifying the nested path to the target location in `d`.\nvalue : V\n        The value to place at the location specified by `keys`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates each new `MutableMapping`[1] in the result.\n\nReturns\n-------\nmappingUpdated : MutableMapping[K, V]\n        New `MutableMapping` based on `d` with `value` at the path specified by `keys`.\n\nSee Also\n--------\nupdate_in : Apply a `Callable` to a value at a nested path in a `Mapping`.\nget_in : Retrieve a value at a nested path in a `Mapping`.\nassoc : Create a new `Mapping` from `d` with one key associated to a value.\n\nExamples\n--------\n>>> assoc_in({'a': 1}, ['a'], 2)\n{'a': 2}\n>>> assoc_in({'a': {'b': 1}}, ['a', 'b'], 2)\n{'a': {'b': 2}}\n>>> assoc_in({}, ['a', 'b'], 1)\n{'a': {'b': 1}}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_19assoc_in = {"assoc_in", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_19assoc_in, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_18assoc_in};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_19assoc_in(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_2assoc_in, "assoc_in(d, keys, value, factory=dict)\n\nCreate a new `MutableMapping` from `d` with `value` at the path specified by `keys`.\n\n(AI generated docstring)\n\nYou can use `assoc_in` to produce a copy of `d` with `value` placed at the nested\nlocation given by `keys`. `assoc_in` creates intermediate `MutableMapping` instances\nas needed when a key in `keys` is absent from `d`. `assoc_in` does not mutate `d` or\nany nested `Mapping` within `d`.\n\nParameters\n----------\nd : Mapping[K, V]\n        Source `Mapping`.\nkeys : Iterable[K]\n        Non-empty sequence of keys specifying the nested path to the target location in `d`.\nvalue : V\n        The value to place at the location specified by `keys`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates each new `MutableMapping`[1] in the result.\n\nReturns\n-------\nmappingUpdated : MutableMapping[K, V]\n        New `MutableMapping` based on `d` with `value` at the path specified by `keys`.\n\nSee Also\n--------\nupdate_in : Apply a `Callable` to a value at a nested path in a `Mapping`.\nget_in : Retrieve a value at a nested path in a `Mapping`.\nassoc : Create a new `Mapping` from `d` with one key associated to a value.\n\nExamples\n--------\n>>> assoc_in({'a': 1}, ['a'], 2)\n{'a': 2}\n>>> assoc_in({'a': {'b': 1}}, ['a', 'b'], 2)\n{'a': {'b': 2}}\n>>> assoc_in({}, ['a', 'b'], 1)\n{'a': {'b': 1}}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_3assoc_in = {"assoc_in", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_3assoc_in, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_2assoc_in};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_3assoc_in(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -8168,51 +4823,51 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_keys,&__pyx_mstate_global->__pyx_n_u_value,&__pyx_mstate_global->__pyx_n_u_factory,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 655, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 168, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 655, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 168, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 655, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 168, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 655, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 168, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 655, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 168, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "assoc_in", 0) < (0)) __PYX_ERR(0, 655, __pyx_L3_error)
-      if (!values[3]) values[3] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__10);
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "assoc_in", 0) < (0)) __PYX_ERR(0, 168, __pyx_L3_error)
+      if (!values[3]) values[3] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__2);
       for (Py_ssize_t i = __pyx_nargs; i < 3; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("assoc_in", 0, 3, 4, i); __PYX_ERR(0, 655, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("assoc_in", 0, 3, 4, i); __PYX_ERR(0, 168, __pyx_L3_error) }
       }
     } else {
       switch (__pyx_nargs) {
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 655, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 168, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 655, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 168, __pyx_L3_error)
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 655, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 168, __pyx_L3_error)
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 655, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 168, __pyx_L3_error)
         break;
         default: goto __pyx_L5_argtuple_error;
       }
-      if (!values[3]) values[3] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__10);
+      if (!values[3]) values[3] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__2);
     }
     __pyx_v_d = values[0];
     __pyx_v_keys = values[1];
@@ -8221,7 +4876,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("assoc_in", 0, 3, 4, __pyx_nargs); __PYX_ERR(0, 655, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("assoc_in", 0, 3, 4, __pyx_nargs); __PYX_ERR(0, 168, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8232,7 +4887,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_18assoc_in(__pyx_self, __pyx_v_d, __pyx_v_keys, __pyx_v_value, __pyx_v_factory);
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_2assoc_in(__pyx_self, __pyx_v_d, __pyx_v_keys, __pyx_v_value, __pyx_v_factory);
 
   /* function exit code */
   for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -8242,7 +4897,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_18assoc_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_value, PyObject *__pyx_v_factory) {
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_2assoc_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_value, PyObject *__pyx_v_factory) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8254,7 +4909,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_18assoc_in(CYTHON_UNUSED Py
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.factory = __pyx_v_factory;
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(__pyx_v_d, __pyx_v_keys, __pyx_v_value, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 655, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_assoc_in(__pyx_v_d, __pyx_v_keys, __pyx_v_value, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8271,7 +4926,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_18assoc_in(CYTHON_UNUSED Py
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/dicttoolz.pyx":731
+/* "humpy_cytoolz/dicttoolz.pyx":242
  * 	return rv
  * 
  * cdef object c_dissoc(object d, object keys, object factory=dict):             # <<<<<<<<<<<<<<
@@ -8280,7 +4935,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_18assoc_in(CYTHON_UNUSED Py
 */
 
 static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d, PyObject *__pyx_v_keys, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_dissoc *__pyx_optional_args) {
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__11;
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__3;
   PyObject *__pyx_v_rv = 0;
   PyObject *__pyx_v_key = NULL;
   PyObject *__pyx_v_remaining = NULL;
@@ -8307,7 +4962,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
     }
   }
 
-  /* "humpy_cytoolz/dicttoolz.pyx":734
+  /* "humpy_cytoolz/dicttoolz.pyx":245
  * 	# implementation copied from humpy_toolz.  Not benchmarked.
  * 	cdef object rv
  * 	rv = factory()             # <<<<<<<<<<<<<<
@@ -8334,25 +4989,25 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
     __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 734, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 245, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_v_rv = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":735
+  /* "humpy_cytoolz/dicttoolz.pyx":246
  * 	cdef object rv
  * 	rv = factory()
  * 	if len(keys) < len(d) * 0.6:             # <<<<<<<<<<<<<<
  * 		rv.update(d)
  * 		for key in keys:
 */
-  __pyx_t_5 = PyObject_Length(__pyx_v_keys); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 735, __pyx_L1_error)
-  __pyx_t_6 = PyObject_Length(__pyx_v_d); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 735, __pyx_L1_error)
+  __pyx_t_5 = PyObject_Length(__pyx_v_keys); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 246, __pyx_L1_error)
+  __pyx_t_6 = PyObject_Length(__pyx_v_d); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 246, __pyx_L1_error)
   __pyx_t_7 = (__pyx_t_5 < (__pyx_t_6 * 0.6));
   if (__pyx_t_7) {
 
-    /* "humpy_cytoolz/dicttoolz.pyx":736
+    /* "humpy_cytoolz/dicttoolz.pyx":247
  * 	rv = factory()
  * 	if len(keys) < len(d) * 0.6:
  * 		rv.update(d)             # <<<<<<<<<<<<<<
@@ -8366,12 +5021,12 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
       PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_d};
       __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_update, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 736, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 247, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":737
+    /* "humpy_cytoolz/dicttoolz.pyx":248
  * 	if len(keys) < len(d) * 0.6:
  * 		rv.update(d)
  * 		for key in keys:             # <<<<<<<<<<<<<<
@@ -8383,9 +5038,9 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
       __pyx_t_6 = 0;
       __pyx_t_8 = NULL;
     } else {
-      __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_keys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 737, __pyx_L1_error)
+      __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_keys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 248, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_8 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 737, __pyx_L1_error)
+      __pyx_t_8 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 248, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_8)) {
@@ -8393,7 +5048,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
           {
             Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
             #if !CYTHON_ASSUME_SAFE_SIZE
-            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 737, __pyx_L1_error)
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 248, __pyx_L1_error)
             #endif
             if (__pyx_t_6 >= __pyx_temp) break;
           }
@@ -8403,7 +5058,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
           {
             Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
             #if !CYTHON_ASSUME_SAFE_SIZE
-            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 737, __pyx_L1_error)
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 248, __pyx_L1_error)
             #endif
             if (__pyx_t_6 >= __pyx_temp) break;
           }
@@ -8414,13 +5069,13 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
           #endif
           ++__pyx_t_6;
         }
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 737, __pyx_L1_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 248, __pyx_L1_error)
       } else {
         __pyx_t_3 = __pyx_t_8(__pyx_t_1);
         if (unlikely(!__pyx_t_3)) {
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
-            if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 737, __pyx_L1_error)
+            if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 248, __pyx_L1_error)
             PyErr_Clear();
           }
           break;
@@ -8430,26 +5085,26 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
       __Pyx_XDECREF_SET(__pyx_v_key, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "humpy_cytoolz/dicttoolz.pyx":738
+      /* "humpy_cytoolz/dicttoolz.pyx":249
  * 		rv.update(d)
  * 		for key in keys:
  * 			if key in rv:             # <<<<<<<<<<<<<<
  * 				del rv[key]
  * 	else:
 */
-      __pyx_t_7 = (__Pyx_PySequence_ContainsTF(__pyx_v_key, __pyx_v_rv, Py_EQ)); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 738, __pyx_L1_error)
+      __pyx_t_7 = (__Pyx_PySequence_ContainsTF(__pyx_v_key, __pyx_v_rv, Py_EQ)); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 249, __pyx_L1_error)
       if (__pyx_t_7) {
 
-        /* "humpy_cytoolz/dicttoolz.pyx":739
+        /* "humpy_cytoolz/dicttoolz.pyx":250
  * 		for key in keys:
  * 			if key in rv:
  * 				del rv[key]             # <<<<<<<<<<<<<<
  * 	else:
  * 		remaining = set(d)
 */
-        if (unlikely((PyObject_DelItem(__pyx_v_rv, __pyx_v_key) < 0))) __PYX_ERR(0, 739, __pyx_L1_error)
+        if (unlikely((PyObject_DelItem(__pyx_v_rv, __pyx_v_key) < 0))) __PYX_ERR(0, 250, __pyx_L1_error)
 
-        /* "humpy_cytoolz/dicttoolz.pyx":738
+        /* "humpy_cytoolz/dicttoolz.pyx":249
  * 		rv.update(d)
  * 		for key in keys:
  * 			if key in rv:             # <<<<<<<<<<<<<<
@@ -8458,7 +5113,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
 */
       }
 
-      /* "humpy_cytoolz/dicttoolz.pyx":737
+      /* "humpy_cytoolz/dicttoolz.pyx":248
  * 	if len(keys) < len(d) * 0.6:
  * 		rv.update(d)
  * 		for key in keys:             # <<<<<<<<<<<<<<
@@ -8468,7 +5123,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":735
+    /* "humpy_cytoolz/dicttoolz.pyx":246
  * 	cdef object rv
  * 	rv = factory()
  * 	if len(keys) < len(d) * 0.6:             # <<<<<<<<<<<<<<
@@ -8478,7 +5133,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
     goto __pyx_L3;
   }
 
-  /* "humpy_cytoolz/dicttoolz.pyx":741
+  /* "humpy_cytoolz/dicttoolz.pyx":252
  * 				del rv[key]
  * 	else:
  * 		remaining = set(d)             # <<<<<<<<<<<<<<
@@ -8486,23 +5141,23 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
  * 		for k in remaining:
 */
   /*else*/ {
-    __pyx_t_1 = PySet_New(__pyx_v_d); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 741, __pyx_L1_error)
+    __pyx_t_1 = PySet_New(__pyx_v_d); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_v_remaining = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":742
+    /* "humpy_cytoolz/dicttoolz.pyx":253
  * 	else:
  * 		remaining = set(d)
  * 		remaining.difference_update(keys)             # <<<<<<<<<<<<<<
  * 		for k in remaining:
  * 			rv[k] = d[k]
 */
-    __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_mstate_global->__pyx_umethod_PySet_Type__difference_update, __pyx_v_remaining, __pyx_v_keys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 742, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_mstate_global->__pyx_umethod_PySet_Type__difference_update, __pyx_v_remaining, __pyx_v_keys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":743
+    /* "humpy_cytoolz/dicttoolz.pyx":254
  * 		remaining = set(d)
  * 		remaining.difference_update(keys)
  * 		for k in remaining:             # <<<<<<<<<<<<<<
@@ -8510,7 +5165,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
  * 	return rv
 */
     __pyx_t_6 = 0;
-    __pyx_t_3 = __Pyx_set_iterator(__pyx_v_remaining, 1, (&__pyx_t_5), (&__pyx_t_9)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 743, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_set_iterator(__pyx_v_remaining, 1, (&__pyx_t_5), (&__pyx_t_9)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_XDECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_3;
@@ -8518,28 +5173,28 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
     while (1) {
       __pyx_t_10 = __Pyx_set_iter_next(__pyx_t_1, __pyx_t_5, &__pyx_t_6, &__pyx_t_3, __pyx_t_9);
       if (unlikely(__pyx_t_10 == 0)) break;
-      if (unlikely(__pyx_t_10 == -1)) __PYX_ERR(0, 743, __pyx_L1_error)
+      if (unlikely(__pyx_t_10 == -1)) __PYX_ERR(0, 254, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "humpy_cytoolz/dicttoolz.pyx":744
+      /* "humpy_cytoolz/dicttoolz.pyx":255
  * 		remaining.difference_update(keys)
  * 		for k in remaining:
  * 			rv[k] = d[k]             # <<<<<<<<<<<<<<
  * 	return rv
  * 
 */
-      __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_d, __pyx_v_k); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 744, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_d, __pyx_v_k); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 255, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      if (unlikely((PyObject_SetItem(__pyx_v_rv, __pyx_v_k, __pyx_t_3) < 0))) __PYX_ERR(0, 744, __pyx_L1_error)
+      if (unlikely((PyObject_SetItem(__pyx_v_rv, __pyx_v_k, __pyx_t_3) < 0))) __PYX_ERR(0, 255, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
   __pyx_L3:;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":745
+  /* "humpy_cytoolz/dicttoolz.pyx":256
  * 		for k in remaining:
  * 			rv[k] = d[k]
  * 	return rv             # <<<<<<<<<<<<<<
@@ -8551,7 +5206,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
   __pyx_r = __pyx_v_rv;
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":731
+  /* "humpy_cytoolz/dicttoolz.pyx":242
  * 	return rv
  * 
  * cdef object c_dissoc(object d, object keys, object factory=dict):             # <<<<<<<<<<<<<<
@@ -8576,25 +5231,25 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(PyObject *__pyx_v_d
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/dicttoolz.pyx":747
+/* "humpy_cytoolz/dicttoolz.pyx":258
  * 	return rv
  * 
  * def dissoc(d, *keys, **kwargs):             # <<<<<<<<<<<<<<
- * 	"""dissoc(d: collections.abc.Mapping[K, V], *keys: K, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+ * 	"""Create a new `MutableMapping`[1] from `d` with the specified `keys` removed.
  * 
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_21dissoc(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_5dissoc(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_20dissoc, "dissoc(d, *keys, **kwargs)\n\ndissoc(d: collections.abc.Mapping[K, V], *keys: K, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nCreate a new `MutableMapping`[1] from `d` with the specified `keys` removed.\n\n(AI generated docstring)\n\nYou can use `dissoc` (***dissoc***iate) to copy `d` (***d***ictionary) to a new `MutableMapping`\ncreated by `factory`, then remove each key in `keys` from the result. `dissoc` does not change\n`d`. Keys in `keys` that are absent from `d` are silently ignored.\n\nParameters\n----------\nd : Mapping[K, V]\n        Source `Mapping`.\n*keys : K\n        Keys to remove from `d` in the returned `MutableMapping`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingReduced : MutableMapping[K, V]\n        New `MutableMapping` containing all items from `d` except those whose keys are in `keys`.\n\nAlgorithm Details\n-----------------\n`dissoc` selects between two strategies based on the ratio of removed keys to total keys.\n\nWhen fewer than 60% of keys are removed, `dissoc` copies all items from `d` and then\ndeletes the specified keys one by one.\n\nWhen 60% or more of keys are removed, `dissoc` computes the set of remaining keys and\ncopies only those items to the result, avoiding unnecessary copy-and-delete operations.\n\nSee Also\n--------\nassoc : Create a new `MutableMapping` from `d` with one key associated to a value.\n\nExamples\n--------\n>>> dissoc({'x': 1, 'y': 2}, 'y')\n{'x': 1}\n>>> dissoc({'x': 1, 'y': 2}, 'y', 'x')\n{}\n>>> dissoc({'x': 1}, 'y') # Ignores missing keys\n{'x': 1}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_21dissoc = {"dissoc", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_21dissoc, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_20dissoc};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_21dissoc(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_4dissoc, "dissoc(d, *keys, **kwargs)\n\nCreate a new `MutableMapping`[1] from `d` with the specified `keys` removed.\n\n(AI generated docstring)\n\nYou can use `dissoc` (***dissoc***iate) to copy `d` (***d***ictionary) to a new `MutableMapping`\ncreated by `factory`, then remove each key in `keys` from the result. `dissoc` does not change\n`d`. Keys in `keys` that are absent from `d` are silently ignored.\n\nParameters\n----------\nd : Mapping[K, V]\n        Source `Mapping`.\n*keys : K\n        Keys to remove from `d` in the returned `MutableMapping`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingReduced : MutableMapping[K, V]\n        New `MutableMapping` containing all items from `d` except those whose keys are in `keys`.\n\nAlgorithm Details\n-----------------\n`dissoc` selects between two strategies based on the ratio of removed keys to total keys.\n\nWhen fewer than 60% of keys are removed, `dissoc` copies all items from `d` and then\ndeletes the specified keys one by one.\n\nWhen 60% or more of keys are removed, `dissoc` computes the set of remaining keys and\ncopies only those items to the result, avoiding unnecessary copy-and-delete operations.\n\nSee Also\n--------\nassoc : Create a new `MutableMapping` from `d` with one key associated to a value.\n\nExamples\n--------\n>>> dissoc({'x': 1, 'y': 2}, 'y')\n{'x': 1}\n>>> dissoc({'x': 1, 'y': 2}, 'y', 'x')\n{}\n>>> dissoc({'x': 1}, 'y')  # Ignores missing keys\n{'x': 1}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_5dissoc = {"dissoc", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_5dissoc, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_4dissoc};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_5dissoc(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -8635,33 +5290,33 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_d,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 747, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 258, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         default:
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 747, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 258, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
       const Py_ssize_t used_pos_args = (kwd_pos_args < 1) ? kwd_pos_args : 1;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, __pyx_v_kwargs, values, used_pos_args, __pyx_kwds_len, "dissoc", 1) < (0)) __PYX_ERR(0, 747, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, __pyx_v_kwargs, values, used_pos_args, __pyx_kwds_len, "dissoc", 1) < (0)) __PYX_ERR(0, 258, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("dissoc", 0, 1, 1, i); __PYX_ERR(0, 747, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("dissoc", 0, 1, 1, i); __PYX_ERR(0, 258, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs < 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 747, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 258, __pyx_L3_error)
     }
     __pyx_v_d = values[0];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("dissoc", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 747, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("dissoc", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 258, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8674,7 +5329,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_20dissoc(__pyx_self, __pyx_v_d, __pyx_v_keys, __pyx_v_kwargs);
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_4dissoc(__pyx_self, __pyx_v_d, __pyx_v_keys, __pyx_v_kwargs);
 
   /* function exit code */
   for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -8686,7 +5341,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_20dissoc(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_kwargs) {
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_4dissoc(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_kwargs) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8697,30 +5352,30 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_20dissoc(CYTHON_UNUSED PyOb
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("dissoc", 0);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":800
+  /* "humpy_cytoolz/dicttoolz.pyx":309
  * 		https://docs.python.org/3/library/collections.abc.html
  * 	"""
  * 	return c_dissoc(d, keys, get_factory('dissoc', kwargs))             # <<<<<<<<<<<<<<
  * 
- * cpdef object update_in(object d, object keys, object func, object default=None, object factory=dict):
+ * cdef tuple _get_in_exceptions = (KeyError, IndexError, TypeError)
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(__pyx_mstate_global->__pyx_n_u_dissoc, __pyx_v_kwargs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 800, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_factory(__pyx_mstate_global->__pyx_n_u_dissoc, __pyx_v_kwargs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.factory = __pyx_t_1;
-  __pyx_t_2 = __pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(__pyx_v_d, __pyx_v_keys, &__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 800, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_13humpy_cytoolz_9dicttoolz_c_dissoc(__pyx_v_d, __pyx_v_keys, &__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 309, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":747
+  /* "humpy_cytoolz/dicttoolz.pyx":258
  * 	return rv
  * 
  * def dissoc(d, *keys, **kwargs):             # <<<<<<<<<<<<<<
- * 	"""dissoc(d: collections.abc.Mapping[K, V], *keys: K, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+ * 	"""Create a new `MutableMapping`[1] from `d` with the specified `keys` removed.
  * 
 */
 
@@ -8736,735 +5391,15 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_20dissoc(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "humpy_cytoolz/dicttoolz.pyx":802
- * 	return c_dissoc(d, keys, get_factory('dissoc', kwargs))
- * 
- * cpdef object update_in(object d, object keys, object func, object default=None, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""update_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], func: collections.abc.Callable[[V], V], default: V | None = None, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_23update_in(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_update_in(PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_func, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in *__pyx_optional_args) {
-  PyObject *__pyx_v_default = ((PyObject *)Py_None);
-  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__12;
-  PyObject *__pyx_v_prevkey = 0;
-  PyObject *__pyx_v_key = 0;
-  PyObject *__pyx_v_rv = 0;
-  PyObject *__pyx_v_inner = 0;
-  PyObject *__pyx_v_dtemp = 0;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  size_t __pyx_t_4;
-  int __pyx_t_5;
-  int __pyx_t_6;
-  Py_ssize_t __pyx_t_7;
-  PyObject *(*__pyx_t_8)(PyObject *);
-  PyObject *__pyx_t_9 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("update_in", 0);
-  if (__pyx_optional_args) {
-    if (__pyx_optional_args->__pyx_n > 0) {
-      __pyx_v_default = __pyx_optional_args->__pyx_default;
-      if (__pyx_optional_args->__pyx_n > 1) {
-        __pyx_v_factory = __pyx_optional_args->factory;
-      }
-    }
-  }
-  __Pyx_INCREF(__pyx_v_d);
-  __Pyx_INCREF(__pyx_v_keys);
-
-  /* "humpy_cytoolz/dicttoolz.pyx":861
- * 	cdef object prevkey, key
- * 	cdef object rv, inner, dtemp
- * 	prevkey, keys = keys[0], keys[1:]             # <<<<<<<<<<<<<<
- * 	rv = factory()
- * 	if PyDict_CheckExact(rv):
-*/
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_keys, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 861, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_keys, 1, 0, NULL, NULL, &__pyx_mstate_global->__pyx_slice[0], 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 861, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_v_prevkey = __pyx_t_1;
-  __pyx_t_1 = 0;
-  __Pyx_DECREF_SET(__pyx_v_keys, __pyx_t_2);
-  __pyx_t_2 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":862
- * 	cdef object rv, inner, dtemp
- * 	prevkey, keys = keys[0], keys[1:]
- * 	rv = factory()             # <<<<<<<<<<<<<<
- * 	if PyDict_CheckExact(rv):
- * 		PyDict_Update(rv, d)
-*/
-  __pyx_t_1 = NULL;
-  __Pyx_INCREF(__pyx_v_factory);
-  __pyx_t_3 = __pyx_v_factory; 
-  __pyx_t_4 = 1;
-  #if CYTHON_UNPACK_METHODS
-  if (unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_3);
-    assert(__pyx_t_1);
-    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
-    __Pyx_INCREF(__pyx_t_1);
-    __Pyx_INCREF(__pyx__function);
-    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
-    __pyx_t_4 = 0;
-  }
-  #endif
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_1, NULL};
-    __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 862, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-  }
-  __pyx_v_rv = __pyx_t_2;
-  __pyx_t_2 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":863
- * 	prevkey, keys = keys[0], keys[1:]
- * 	rv = factory()
- * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
- * 		PyDict_Update(rv, d)
- * 	else:
-*/
-  __pyx_t_5 = PyDict_CheckExact(__pyx_v_rv);
-  if (__pyx_t_5) {
-
-    /* "humpy_cytoolz/dicttoolz.pyx":864
- * 	rv = factory()
- * 	if PyDict_CheckExact(rv):
- * 		PyDict_Update(rv, d)             # <<<<<<<<<<<<<<
- * 	else:
- * 		rv.update(d)
-*/
-    __pyx_t_6 = PyDict_Update(__pyx_v_rv, __pyx_v_d); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 864, __pyx_L1_error)
-
-    /* "humpy_cytoolz/dicttoolz.pyx":863
- * 	prevkey, keys = keys[0], keys[1:]
- * 	rv = factory()
- * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
- * 		PyDict_Update(rv, d)
- * 	else:
-*/
-    goto __pyx_L3;
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":866
- * 		PyDict_Update(rv, d)
- * 	else:
- * 		rv.update(d)             # <<<<<<<<<<<<<<
- * 	inner = rv
- * 
-*/
-  /*else*/ {
-    __pyx_t_3 = __pyx_v_rv;
-    __Pyx_INCREF(__pyx_t_3);
-    __pyx_t_4 = 0;
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_d};
-      __pyx_t_2 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_update, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 866, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-    }
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  }
-  __pyx_L3:;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":867
- * 	else:
- * 		rv.update(d)
- * 	inner = rv             # <<<<<<<<<<<<<<
- * 
- * 	for key in keys:
-*/
-  __Pyx_INCREF(__pyx_v_rv);
-  __pyx_v_inner = __pyx_v_rv;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":869
- * 	inner = rv
- * 
- * 	for key in keys:             # <<<<<<<<<<<<<<
- * 		if prevkey in d:
- * 			d = d[prevkey]
-*/
-  if (likely(PyList_CheckExact(__pyx_v_keys)) || PyTuple_CheckExact(__pyx_v_keys)) {
-    __pyx_t_2 = __pyx_v_keys; __Pyx_INCREF(__pyx_t_2);
-    __pyx_t_7 = 0;
-    __pyx_t_8 = NULL;
-  } else {
-    __pyx_t_7 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_keys); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 869, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_8 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 869, __pyx_L1_error)
-  }
-  for (;;) {
-    if (likely(!__pyx_t_8)) {
-      if (likely(PyList_CheckExact(__pyx_t_2))) {
-        {
-          Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_2);
-          #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 869, __pyx_L1_error)
-          #endif
-          if (__pyx_t_7 >= __pyx_temp) break;
-        }
-        __pyx_t_3 = __Pyx_PyList_GetItemRefFast(__pyx_t_2, __pyx_t_7, __Pyx_ReferenceSharing_OwnStrongReference);
-        ++__pyx_t_7;
-      } else {
-        {
-          Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_2);
-          #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 869, __pyx_L1_error)
-          #endif
-          if (__pyx_t_7 >= __pyx_temp) break;
-        }
-        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = __Pyx_NewRef(PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_7));
-        #else
-        __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_2, __pyx_t_7);
-        #endif
-        ++__pyx_t_7;
-      }
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 869, __pyx_L1_error)
-    } else {
-      __pyx_t_3 = __pyx_t_8(__pyx_t_2);
-      if (unlikely(!__pyx_t_3)) {
-        PyObject* exc_type = PyErr_Occurred();
-        if (exc_type) {
-          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 869, __pyx_L1_error)
-          PyErr_Clear();
-        }
-        break;
-      }
-    }
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_XDECREF_SET(__pyx_v_key, __pyx_t_3);
-    __pyx_t_3 = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":870
- * 
- * 	for key in keys:
- * 		if prevkey in d:             # <<<<<<<<<<<<<<
- * 			d = d[prevkey]
- * 			dtemp = factory()
-*/
-    __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_prevkey, __pyx_v_d, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 870, __pyx_L1_error)
-    if (__pyx_t_5) {
-
-      /* "humpy_cytoolz/dicttoolz.pyx":871
- * 	for key in keys:
- * 		if prevkey in d:
- * 			d = d[prevkey]             # <<<<<<<<<<<<<<
- * 			dtemp = factory()
- * 			if PyDict_CheckExact(dtemp):
-*/
-      __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_d, __pyx_v_prevkey); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 871, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_3);
-      __pyx_t_3 = 0;
-
-      /* "humpy_cytoolz/dicttoolz.pyx":872
- * 		if prevkey in d:
- * 			d = d[prevkey]
- * 			dtemp = factory()             # <<<<<<<<<<<<<<
- * 			if PyDict_CheckExact(dtemp):
- * 				PyDict_Update(dtemp, d)
-*/
-      __pyx_t_1 = NULL;
-      __Pyx_INCREF(__pyx_v_factory);
-      __pyx_t_9 = __pyx_v_factory; 
-      __pyx_t_4 = 1;
-      #if CYTHON_UNPACK_METHODS
-      if (unlikely(PyMethod_Check(__pyx_t_9))) {
-        __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_9);
-        assert(__pyx_t_1);
-        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_9);
-        __Pyx_INCREF(__pyx_t_1);
-        __Pyx_INCREF(__pyx__function);
-        __Pyx_DECREF_SET(__pyx_t_9, __pyx__function);
-        __pyx_t_4 = 0;
-      }
-      #endif
-      {
-        PyObject *__pyx_callargs[2] = {__pyx_t_1, NULL};
-        __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_9, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 872, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_3);
-      }
-      __Pyx_XDECREF_SET(__pyx_v_dtemp, __pyx_t_3);
-      __pyx_t_3 = 0;
-
-      /* "humpy_cytoolz/dicttoolz.pyx":873
- * 			d = d[prevkey]
- * 			dtemp = factory()
- * 			if PyDict_CheckExact(dtemp):             # <<<<<<<<<<<<<<
- * 				PyDict_Update(dtemp, d)
- * 			else:
-*/
-      __pyx_t_5 = PyDict_CheckExact(__pyx_v_dtemp);
-      if (__pyx_t_5) {
-
-        /* "humpy_cytoolz/dicttoolz.pyx":874
- * 			dtemp = factory()
- * 			if PyDict_CheckExact(dtemp):
- * 				PyDict_Update(dtemp, d)             # <<<<<<<<<<<<<<
- * 			else:
- * 				dtemp.update(d)
-*/
-        __pyx_t_6 = PyDict_Update(__pyx_v_dtemp, __pyx_v_d); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 874, __pyx_L1_error)
-
-        /* "humpy_cytoolz/dicttoolz.pyx":873
- * 			d = d[prevkey]
- * 			dtemp = factory()
- * 			if PyDict_CheckExact(dtemp):             # <<<<<<<<<<<<<<
- * 				PyDict_Update(dtemp, d)
- * 			else:
-*/
-        goto __pyx_L7;
-      }
-
-      /* "humpy_cytoolz/dicttoolz.pyx":876
- * 				PyDict_Update(dtemp, d)
- * 			else:
- * 				dtemp.update(d)             # <<<<<<<<<<<<<<
- * 		else:
- * 			d = factory()
-*/
-      /*else*/ {
-        __pyx_t_9 = __pyx_v_dtemp;
-        __Pyx_INCREF(__pyx_t_9);
-        __pyx_t_4 = 0;
-        {
-          PyObject *__pyx_callargs[2] = {__pyx_t_9, __pyx_v_d};
-          __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_update, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 876, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_3);
-        }
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      }
-      __pyx_L7:;
-
-      /* "humpy_cytoolz/dicttoolz.pyx":870
- * 
- * 	for key in keys:
- * 		if prevkey in d:             # <<<<<<<<<<<<<<
- * 			d = d[prevkey]
- * 			dtemp = factory()
-*/
-      goto __pyx_L6;
-    }
-
-    /* "humpy_cytoolz/dicttoolz.pyx":878
- * 				dtemp.update(d)
- * 		else:
- * 			d = factory()             # <<<<<<<<<<<<<<
- * 			dtemp = d
- * 		inner[prevkey] = dtemp
-*/
-    /*else*/ {
-      __pyx_t_9 = NULL;
-      __Pyx_INCREF(__pyx_v_factory);
-      __pyx_t_1 = __pyx_v_factory; 
-      __pyx_t_4 = 1;
-      #if CYTHON_UNPACK_METHODS
-      if (unlikely(PyMethod_Check(__pyx_t_1))) {
-        __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_1);
-        assert(__pyx_t_9);
-        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_1);
-        __Pyx_INCREF(__pyx_t_9);
-        __Pyx_INCREF(__pyx__function);
-        __Pyx_DECREF_SET(__pyx_t_1, __pyx__function);
-        __pyx_t_4 = 0;
-      }
-      #endif
-      {
-        PyObject *__pyx_callargs[2] = {__pyx_t_9, NULL};
-        __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_1, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-        __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 878, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_3);
-      }
-      __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_3);
-      __pyx_t_3 = 0;
-
-      /* "humpy_cytoolz/dicttoolz.pyx":879
- * 		else:
- * 			d = factory()
- * 			dtemp = d             # <<<<<<<<<<<<<<
- * 		inner[prevkey] = dtemp
- * 		prevkey = key
-*/
-      __Pyx_INCREF(__pyx_v_d);
-      __Pyx_XDECREF_SET(__pyx_v_dtemp, __pyx_v_d);
-    }
-    __pyx_L6:;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":880
- * 			d = factory()
- * 			dtemp = d
- * 		inner[prevkey] = dtemp             # <<<<<<<<<<<<<<
- * 		prevkey = key
- * 		inner = dtemp
-*/
-    if (unlikely((PyObject_SetItem(__pyx_v_inner, __pyx_v_prevkey, __pyx_v_dtemp) < 0))) __PYX_ERR(0, 880, __pyx_L1_error)
-
-    /* "humpy_cytoolz/dicttoolz.pyx":881
- * 			dtemp = d
- * 		inner[prevkey] = dtemp
- * 		prevkey = key             # <<<<<<<<<<<<<<
- * 		inner = dtemp
- * 
-*/
-    __Pyx_INCREF(__pyx_v_key);
-    __Pyx_DECREF_SET(__pyx_v_prevkey, __pyx_v_key);
-
-    /* "humpy_cytoolz/dicttoolz.pyx":882
- * 		inner[prevkey] = dtemp
- * 		prevkey = key
- * 		inner = dtemp             # <<<<<<<<<<<<<<
- * 
- * 	if prevkey in d:
-*/
-    __Pyx_INCREF(__pyx_v_dtemp);
-    __Pyx_DECREF_SET(__pyx_v_inner, __pyx_v_dtemp);
-
-    /* "humpy_cytoolz/dicttoolz.pyx":869
- * 	inner = rv
- * 
- * 	for key in keys:             # <<<<<<<<<<<<<<
- * 		if prevkey in d:
- * 			d = d[prevkey]
-*/
-  }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":884
- * 		inner = dtemp
- * 
- * 	if prevkey in d:             # <<<<<<<<<<<<<<
- * 		key = func(d[prevkey])
- * 	else:
-*/
-  __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_prevkey, __pyx_v_d, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 884, __pyx_L1_error)
-  if (__pyx_t_5) {
-
-    /* "humpy_cytoolz/dicttoolz.pyx":885
- * 
- * 	if prevkey in d:
- * 		key = func(d[prevkey])             # <<<<<<<<<<<<<<
- * 	else:
- * 		key = func(default)
-*/
-    __pyx_t_3 = NULL;
-    __Pyx_INCREF(__pyx_v_func);
-    __pyx_t_1 = __pyx_v_func; 
-    __pyx_t_9 = __Pyx_PyObject_GetItem(__pyx_v_d, __pyx_v_prevkey); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 885, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_4 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_1))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_1);
-      assert(__pyx_t_3);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_1);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_1, __pyx__function);
-      __pyx_t_4 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_t_9};
-      __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_1, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 885, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-    }
-    __Pyx_XDECREF_SET(__pyx_v_key, __pyx_t_2);
-    __pyx_t_2 = 0;
-
-    /* "humpy_cytoolz/dicttoolz.pyx":884
- * 		inner = dtemp
- * 
- * 	if prevkey in d:             # <<<<<<<<<<<<<<
- * 		key = func(d[prevkey])
- * 	else:
-*/
-    goto __pyx_L9;
-  }
-
-  /* "humpy_cytoolz/dicttoolz.pyx":887
- * 		key = func(d[prevkey])
- * 	else:
- * 		key = func(default)             # <<<<<<<<<<<<<<
- * 	inner[prevkey] = key
- * 	return rv
-*/
-  /*else*/ {
-    __pyx_t_1 = NULL;
-    __Pyx_INCREF(__pyx_v_func);
-    __pyx_t_9 = __pyx_v_func; 
-    __pyx_t_4 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_9))) {
-      __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_9);
-      assert(__pyx_t_1);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_9);
-      __Pyx_INCREF(__pyx_t_1);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_9, __pyx__function);
-      __pyx_t_4 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_1, __pyx_v_default};
-      __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_9, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 887, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-    }
-    __Pyx_XDECREF_SET(__pyx_v_key, __pyx_t_2);
-    __pyx_t_2 = 0;
-  }
-  __pyx_L9:;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":888
- * 	else:
- * 		key = func(default)
- * 	inner[prevkey] = key             # <<<<<<<<<<<<<<
- * 	return rv
- * 
-*/
-  if (unlikely((PyObject_SetItem(__pyx_v_inner, __pyx_v_prevkey, __pyx_v_key) < 0))) __PYX_ERR(0, 888, __pyx_L1_error)
-
-  /* "humpy_cytoolz/dicttoolz.pyx":889
- * 		key = func(default)
- * 	inner[prevkey] = key
- * 	return rv             # <<<<<<<<<<<<<<
- * 
- * cdef tuple _get_in_exceptions = (KeyError, IndexError, TypeError)
-*/
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rv);
-  __pyx_r = __pyx_v_rv;
-  goto __pyx_L0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":802
- * 	return c_dissoc(d, keys, get_factory('dissoc', kwargs))
- * 
- * cpdef object update_in(object d, object keys, object func, object default=None, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""update_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], func: collections.abc.Callable[[V], V], default: V | None = None, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.update_in", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_prevkey);
-  __Pyx_XDECREF(__pyx_v_key);
-  __Pyx_XDECREF(__pyx_v_rv);
-  __Pyx_XDECREF(__pyx_v_inner);
-  __Pyx_XDECREF(__pyx_v_dtemp);
-  __Pyx_XDECREF(__pyx_v_d);
-  __Pyx_XDECREF(__pyx_v_keys);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_23update_in(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_22update_in, "update_in(d, keys, func, default=None, factory=dict)\n\nupdate_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], func: collections.abc.Callable[[V], V], default: V | None = None, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nApply a `Callable` to a value at a nested path in a `Mapping`.\n\n(AI generated docstring)\n\nYou can use `update_in` to produce a copy of `d` with the value at the nested path\nspecified by `keys` replaced by the result of calling `func` on the current value.\n`update_in` creates intermediate `MutableMapping` instances as needed when a key in\n`keys` is absent from `d`. If the innermost key is absent, `func` receives `default`\ninstead of an existing value. `update_in` does not mutate `d` or any nested `Mapping`\nwithin `d`.\n\nParameters\n----------\nd : Mapping[K, V]\n        Source `Mapping`.\nkeys : Sequence[K]\n        Non-empty sequence of keys specifying the nested path to the value to update in `d`.\nfunc : Callable[[V], V]\n        `Callable` applied to the current value at the path in `keys`. If the innermost\n        key is absent from `d`, `func` receives `default`.\ndefault : V | None = None\n        Value passed to `func` when the innermost key is absent from `d`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates each new `MutableMapping`[1] in the result.\n\nReturns\n-------\nmappingUpdated : MutableMapping[K, V]\n        New `MutableMapping` based on `d` with the value at the path specified by `keys`\n        replaced by the result of `func`.\n\nSee Also\n--------\nassoc_in : Create a new `Mapping` from `d` with a value at a nested path.\nget_in : Retrieve a value at a nested path in a `Mapping`.\nassoc : Create a new `Mapping` from `d` with one key associated to a value.\n\nExamples\n--------\n>>> inc = lambda x: x + 1\n>>> update_in({'a': 0}, ['a'], inc)\n{'a': 1}\n\n>>> update_in({}, ['z']"", inc, 0)\n{'z': 1}\n\n>>> update_in({}, [1, 2, 3], str, default=\"bar\")\n{1: {2: {3: 'bar'}}}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_23update_in = {"update_in", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_23update_in, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_22update_in};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_23update_in(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-) {
-  PyObject *__pyx_v_d = 0;
-  PyObject *__pyx_v_keys = 0;
-  PyObject *__pyx_v_func = 0;
-  PyObject *__pyx_v_default = 0;
-  PyObject *__pyx_v_factory = 0;
-  #if !CYTHON_METH_FASTCALL
-  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
-  #endif
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[5] = {0,0,0,0,0};
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("update_in (wrapper)", 0);
-  #if !CYTHON_METH_FASTCALL
-  #if CYTHON_ASSUME_SAFE_SIZE
-  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
-  #else
-  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
-  #endif
-  #endif
-  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
-  {
-    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_keys,&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_default,&__pyx_mstate_global->__pyx_n_u_factory,0};
-    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 802, __pyx_L3_error)
-    if (__pyx_kwds_len > 0) {
-      switch (__pyx_nargs) {
-        case  5:
-        values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 802, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  4:
-        values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 802, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 802, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  2:
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 802, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  1:
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 802, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "update_in", 0) < (0)) __PYX_ERR(0, 802, __pyx_L3_error)
-      if (!values[3]) values[3] = __Pyx_NewRef(((PyObject *)Py_None));
-      if (!values[4]) values[4] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__12);
-      for (Py_ssize_t i = __pyx_nargs; i < 3; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("update_in", 0, 3, 5, i); __PYX_ERR(0, 802, __pyx_L3_error) }
-      }
-    } else {
-      switch (__pyx_nargs) {
-        case  5:
-        values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 802, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  4:
-        values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 802, __pyx_L3_error)
-        CYTHON_FALLTHROUGH;
-        case  3:
-        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 802, __pyx_L3_error)
-        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 802, __pyx_L3_error)
-        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 802, __pyx_L3_error)
-        break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      if (!values[3]) values[3] = __Pyx_NewRef(((PyObject *)Py_None));
-      if (!values[4]) values[4] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__12);
-    }
-    __pyx_v_d = values[0];
-    __pyx_v_keys = values[1];
-    __pyx_v_func = values[2];
-    __pyx_v_default = values[3];
-    __pyx_v_factory = values[4];
-  }
-  goto __pyx_L6_skip;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("update_in", 0, 3, 5, __pyx_nargs); __PYX_ERR(0, 802, __pyx_L3_error)
-  __pyx_L6_skip:;
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.update_in", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_22update_in(__pyx_self, __pyx_v_d, __pyx_v_keys, __pyx_v_func, __pyx_v_default, __pyx_v_factory);
-
-  /* function exit code */
-  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-    Py_XDECREF(values[__pyx_temp]);
-  }
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_22update_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_func, PyObject *__pyx_v_default, PyObject *__pyx_v_factory) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in __pyx_t_2;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("update_in", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2.__pyx_n = 2;
-  __pyx_t_2.__pyx_default = __pyx_v_default;
-  __pyx_t_2.factory = __pyx_v_factory;
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_update_in(__pyx_v_d, __pyx_v_keys, __pyx_v_func, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 802, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.update_in", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "humpy_cytoolz/dicttoolz.pyx":893
+/* "humpy_cytoolz/dicttoolz.pyx":313
  * cdef tuple _get_in_exceptions = (KeyError, IndexError, TypeError)
  * 
  * cpdef object get_in(object keys, object coll, object default=None, object no_default=False):             # <<<<<<<<<<<<<<
- * 	"""get_in(keys: collections.abc.Sequence[K], coll: humpy_toolz.dicttoolz.SupportsGetItem[K, V], default: Optional[V] = None, no_default: bool = False) -> Optional[V]
+ * 	"""Retrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.
  * 
 */
 
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_25get_in(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_7get_in(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -9501,7 +5436,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
   }
   __Pyx_INCREF(__pyx_v_coll);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":967
+  /* "humpy_cytoolz/dicttoolz.pyx":377
  * 	"""
  * 	cdef object item
  * 	try:             # <<<<<<<<<<<<<<
@@ -9517,7 +5452,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "humpy_cytoolz/dicttoolz.pyx":968
+      /* "humpy_cytoolz/dicttoolz.pyx":378
  * 	cdef object item
  * 	try:
  * 		for item in keys:             # <<<<<<<<<<<<<<
@@ -9529,9 +5464,9 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
         __pyx_t_5 = 0;
         __pyx_t_6 = NULL;
       } else {
-        __pyx_t_5 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_keys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 968, __pyx_L3_error)
+        __pyx_t_5 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_keys); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 378, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_6 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 968, __pyx_L3_error)
+        __pyx_t_6 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 378, __pyx_L3_error)
       }
       for (;;) {
         if (likely(!__pyx_t_6)) {
@@ -9539,7 +5474,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
             {
               Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_4);
               #if !CYTHON_ASSUME_SAFE_SIZE
-              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 968, __pyx_L3_error)
+              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 378, __pyx_L3_error)
               #endif
               if (__pyx_t_5 >= __pyx_temp) break;
             }
@@ -9549,7 +5484,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
             {
               Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_4);
               #if !CYTHON_ASSUME_SAFE_SIZE
-              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 968, __pyx_L3_error)
+              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 378, __pyx_L3_error)
               #endif
               if (__pyx_t_5 >= __pyx_temp) break;
             }
@@ -9560,13 +5495,13 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
             #endif
             ++__pyx_t_5;
           }
-          if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 968, __pyx_L3_error)
+          if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 378, __pyx_L3_error)
         } else {
           __pyx_t_7 = __pyx_t_6(__pyx_t_4);
           if (unlikely(!__pyx_t_7)) {
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
-              if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 968, __pyx_L3_error)
+              if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 378, __pyx_L3_error)
               PyErr_Clear();
             }
             break;
@@ -9576,19 +5511,19 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
         __Pyx_XDECREF_SET(__pyx_v_item, __pyx_t_7);
         __pyx_t_7 = 0;
 
-        /* "humpy_cytoolz/dicttoolz.pyx":969
+        /* "humpy_cytoolz/dicttoolz.pyx":379
  * 	try:
  * 		for item in keys:
  * 			coll = coll[item]             # <<<<<<<<<<<<<<
  * 		return coll
  * 	except _get_in_exceptions:
 */
-        __pyx_t_7 = __Pyx_PyObject_GetItem(__pyx_v_coll, __pyx_v_item); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 969, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyObject_GetItem(__pyx_v_coll, __pyx_v_item); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 379, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF_SET(__pyx_v_coll, __pyx_t_7);
         __pyx_t_7 = 0;
 
-        /* "humpy_cytoolz/dicttoolz.pyx":968
+        /* "humpy_cytoolz/dicttoolz.pyx":378
  * 	cdef object item
  * 	try:
  * 		for item in keys:             # <<<<<<<<<<<<<<
@@ -9598,7 +5533,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
       }
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "humpy_cytoolz/dicttoolz.pyx":970
+      /* "humpy_cytoolz/dicttoolz.pyx":380
  * 		for item in keys:
  * 			coll = coll[item]
  * 		return coll             # <<<<<<<<<<<<<<
@@ -9610,7 +5545,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
       __pyx_r = __pyx_v_coll;
       goto __pyx_L7_try_return;
 
-      /* "humpy_cytoolz/dicttoolz.pyx":967
+      /* "humpy_cytoolz/dicttoolz.pyx":377
  * 	"""
  * 	cdef object item
  * 	try:             # <<<<<<<<<<<<<<
@@ -9622,7 +5557,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":971
+    /* "humpy_cytoolz/dicttoolz.pyx":381
  * 			coll = coll[item]
  * 		return coll
  * 	except _get_in_exceptions:             # <<<<<<<<<<<<<<
@@ -9632,35 +5567,36 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
     __pyx_t_8 = __Pyx_PyErr_ExceptionMatches(__pyx_v_13humpy_cytoolz_9dicttoolz__get_in_exceptions);
     if (__pyx_t_8) {
       __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.get_in", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_7, &__pyx_t_9) < 0) __PYX_ERR(0, 971, __pyx_L5_except_error)
+      if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_7, &__pyx_t_9) < 0) __PYX_ERR(0, 381, __pyx_L5_except_error)
       __Pyx_XGOTREF(__pyx_t_4);
       __Pyx_XGOTREF(__pyx_t_7);
       __Pyx_XGOTREF(__pyx_t_9);
 
-      /* "humpy_cytoolz/dicttoolz.pyx":972
+      /* "humpy_cytoolz/dicttoolz.pyx":382
  * 		return coll
  * 	except _get_in_exceptions:
  * 		if no_default:             # <<<<<<<<<<<<<<
  * 			raise
  * 		return default
 */
-      __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_no_default); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 972, __pyx_L5_except_error)
+      __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_no_default); if (unlikely((__pyx_t_10 < 0))) __PYX_ERR(0, 382, __pyx_L5_except_error)
       if (unlikely(__pyx_t_10)) {
 
-        /* "humpy_cytoolz/dicttoolz.pyx":973
+        /* "humpy_cytoolz/dicttoolz.pyx":383
  * 	except _get_in_exceptions:
  * 		if no_default:
  * 			raise             # <<<<<<<<<<<<<<
  * 		return default
+ * 
 */
         __Pyx_GIVEREF(__pyx_t_4);
         __Pyx_GIVEREF(__pyx_t_7);
         __Pyx_XGIVEREF(__pyx_t_9);
         __Pyx_ErrRestoreWithState(__pyx_t_4, __pyx_t_7, __pyx_t_9);
         __pyx_t_4 = 0;  __pyx_t_7 = 0;  __pyx_t_9 = 0; 
-        __PYX_ERR(0, 973, __pyx_L5_except_error)
+        __PYX_ERR(0, 383, __pyx_L5_except_error)
 
-        /* "humpy_cytoolz/dicttoolz.pyx":972
+        /* "humpy_cytoolz/dicttoolz.pyx":382
  * 		return coll
  * 	except _get_in_exceptions:
  * 		if no_default:             # <<<<<<<<<<<<<<
@@ -9669,10 +5605,12 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
 */
       }
 
-      /* "humpy_cytoolz/dicttoolz.pyx":974
+      /* "humpy_cytoolz/dicttoolz.pyx":384
  * 		if no_default:
  * 			raise
  * 		return default             # <<<<<<<<<<<<<<
+ * 
+ * cpdef object itemfilter(object predicate, object d, object factory=dict):
 */
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_v_default);
@@ -9684,7 +5622,7 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
     }
     goto __pyx_L5_except_error;
 
-    /* "humpy_cytoolz/dicttoolz.pyx":967
+    /* "humpy_cytoolz/dicttoolz.pyx":377
  * 	"""
  * 	cdef object item
  * 	try:             # <<<<<<<<<<<<<<
@@ -9711,11 +5649,11 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
     goto __pyx_L0;
   }
 
-  /* "humpy_cytoolz/dicttoolz.pyx":893
+  /* "humpy_cytoolz/dicttoolz.pyx":313
  * cdef tuple _get_in_exceptions = (KeyError, IndexError, TypeError)
  * 
  * cpdef object get_in(object keys, object coll, object default=None, object no_default=False):             # <<<<<<<<<<<<<<
- * 	"""get_in(keys: collections.abc.Sequence[K], coll: humpy_toolz.dicttoolz.SupportsGetItem[K, V], default: Optional[V] = None, no_default: bool = False) -> Optional[V]
+ * 	"""Retrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.
  * 
 */
 
@@ -9735,16 +5673,16 @@ static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_get_in(PyObject *__pyx_v_key
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_25get_in(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_7get_in(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_24get_in, "get_in(keys, coll, default=None, no_default=False)\n\nget_in(keys: collections.abc.Sequence[K], coll: humpy_toolz.dicttoolz.SupportsGetItem[K, V], default: Optional[V] = None, no_default: bool = False) -> Optional[V]\n\nRetrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.\n\nYou can use `get_in` to navigate into a nested `coll` (***coll***ection) by following a\n`Sequence` of `keys`. `get_in` applies each key in `keys` sequentially using\n`operator.getitem`[1].\n\nIf the desired key does not exist, `get_in` will `raise` an `Exception` or `return` `default`\ndepending on the parameter `no_default`. If `no_default` is `False`, which is the default,\n`get_in` will `return` `default`. If `no_default` is `True`, `get_in` will `raise` an\n`Exception`.\n\nParameters\n----------\nkeys : Sequence[K]\n        `Sequence` of keys that describes the path to traverse in `coll`.\ncoll : SupportsGetItem[K, V]\n        Python `object` to traverse. `get_in` uses `operator.getitem`[1], so the nested objects in\n        `coll` can be nested o any type that works with `operator.getitem`, such as a `dict` or\n        `list`.\ndefault : V | None = None\n        Value to return when the path in `keys` does not exist in `coll`.\nno_default : bool = False\n        When `True`, `raise` `KeyError`, `IndexError`, or `TypeError` instead of returning `default`.\n\nReturns\n-------\nvalue : V | None\n        The value at the nested path in `coll`, or `default` if the path does not exist.\n\nRaises\n------\nKeyError\n        When `no_default` is `True` and a key is missing from a mapping.\nIndexError\n        When `no_default` is `True` and an index is out of range.\nTypeError\n        When `no_default` is `True` and a key type is incompatible with `coll`.\n\nSee Also\n--------\nitertoolz.get : Retrieve a value or values from a collection.\noperator.getitem : Return the value at a given key in a collection.\nassoc_in : Create a new `Mapping` from `d` wi""th a value at a nested path.\nupdate_in : Apply a `Callable` to a value at a nested path in a `Mapping`.\n\nExamples\n--------\n>>> transaction = {'name': 'Alice',\n...                'purchase': {'items': ['Apple', 'Orange'],\n...                             'costs': [0.50, 1.25]},\n...                'credit card': '5555-1234-1234-1234'}\n>>> get_in(['purchase', 'items', 0], transaction)\n'Apple'\n>>> get_in(['name'], transaction)\n'Alice'\n>>> get_in(['purchase', 'total'], transaction)\n>>> get_in(['purchase', 'items', 'apple'], transaction)\n>>> get_in(['purchase', 'items', 10], transaction)\n>>> get_in(['purchase', 'total'], transaction, 0)\n0\n>>> get_in(['y'], {}, no_default=True)\nTraceback (most recent call last):\n        ...\nKeyError: 'y'\n\nReferences\n----------\n[1] Python `operator` module\n        https://docs.python.org/3/library/operator.html#operator.getitem");
-static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_25get_in = {"get_in", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_25get_in, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_24get_in};
-static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_25get_in(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_6get_in, "get_in(keys, coll, default=None, no_default=False)\n\nRetrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.\n\nYou can use `get_in` to navigate into a nested `coll` (***coll***ection) by following a\n`Sequence` of `keys`. `get_in` applies each key in `keys` sequentially using\n`operator.getitem`[1].\n\nIf the desired key does not exist, `get_in` will `raise` an `Exception` or `return` `default`\ndepending on the parameter `no_default`. If `no_default` is `False`, which is the default,\n`get_in` will `return` `default`. If `no_default` is `True`, `get_in` will `raise` an\n`Exception`.\n\nParameters\n----------\nkeys : Sequence[K]\n        `Sequence` of keys that describes the path to traverse in `coll`.\ncoll : SupportsGetItem[K, V]\n        Python `object` to traverse. `get_in` uses `operator.getitem`[1], so the nested objects in\n        `coll` can be nested o any type that works with `operator.getitem`, such as a `dict` or\n        `list`.\ndefault : V | None = None\n        Value to return when the path in `keys` does not exist in `coll`.\nno_default : bool = False\n        When `True`, `raise` `KeyError`, `IndexError`, or `TypeError` instead of returning `default`.\n\nReturns\n-------\nvalue : V | None\n        The value at the nested path in `coll`, or `default` if the path does not exist.\n\nSee Also\n--------\nitertoolz.get : Retrieve a value or values from a collection.\noperator.getitem : Return the value at a given key in a collection.\nassoc_in : Create a new `Mapping` from `d` with a value at a nested path.\nupdate_in : Apply a `Callable` to a value at a nested path in a `Mapping`.\n\nExamples\n--------\n>>> transaction = {\n...     'name': 'Alice',\n...     'purchase': {'items': ['Apple', 'Orange'], 'costs': [0.50, 1.25]},\n...     'credit card': '5555-1234-1234-1234',\n... }\n>>> get_in(['purchase', 'items', 0], transaction)\n'Apple'\n>>> get_in(['name'], transaction)\n'Alice'\n>>> get_in(['purchase', 'total""'], transaction)\n>>> get_in(['purchase', 'items', 'apple'], transaction)\n>>> get_in(['purchase', 'items', 10], transaction)\n>>> get_in(['purchase', 'total'], transaction, 0)\n0\n>>> get_in(['y'], {}, no_default=True)\nTraceback (most recent call last):\n        ...\nKeyError: 'y'\n\nReferences\n----------\n[1] Python `operator` module\n        https://docs.python.org/3/library/operator.html#operator.getitem");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_7get_in = {"get_in", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_7get_in, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_6get_in};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_7get_in(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -9777,50 +5715,50 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_keys,&__pyx_mstate_global->__pyx_n_u_coll,&__pyx_mstate_global->__pyx_n_u_default,&__pyx_mstate_global->__pyx_n_u_no_default,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 893, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 313, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 893, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 313, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 893, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 313, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 893, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 313, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 893, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 313, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "get_in", 0) < (0)) __PYX_ERR(0, 893, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "get_in", 0) < (0)) __PYX_ERR(0, 313, __pyx_L3_error)
       if (!values[2]) values[2] = __Pyx_NewRef(((PyObject *)Py_None));
       if (!values[3]) values[3] = __Pyx_NewRef(((PyObject *)Py_False));
       for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("get_in", 0, 2, 4, i); __PYX_ERR(0, 893, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("get_in", 0, 2, 4, i); __PYX_ERR(0, 313, __pyx_L3_error) }
       }
     } else {
       switch (__pyx_nargs) {
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 893, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 313, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 893, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 313, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 893, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 313, __pyx_L3_error)
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 893, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 313, __pyx_L3_error)
         break;
         default: goto __pyx_L5_argtuple_error;
       }
@@ -9834,7 +5772,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("get_in", 0, 2, 4, __pyx_nargs); __PYX_ERR(0, 893, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("get_in", 0, 2, 4, __pyx_nargs); __PYX_ERR(0, 313, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -9845,7 +5783,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_24get_in(__pyx_self, __pyx_v_keys, __pyx_v_coll, __pyx_v_default, __pyx_v_no_default);
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_6get_in(__pyx_self, __pyx_v_keys, __pyx_v_coll, __pyx_v_default, __pyx_v_no_default);
 
   /* function exit code */
   for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -9855,7 +5793,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_24get_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_keys, PyObject *__pyx_v_coll, PyObject *__pyx_v_default, PyObject *__pyx_v_no_default) {
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_6get_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_keys, PyObject *__pyx_v_coll, PyObject *__pyx_v_default, PyObject *__pyx_v_no_default) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -9868,7 +5806,7 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_24get_in(CYTHON_UNUSED PyOb
   __pyx_t_2.__pyx_n = 2;
   __pyx_t_2.__pyx_default = __pyx_v_default;
   __pyx_t_2.no_default = __pyx_v_no_default;
-  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_in(__pyx_v_keys, __pyx_v_coll, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 893, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_in(__pyx_v_keys, __pyx_v_coll, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -9878,6 +5816,4066 @@ static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_24get_in(CYTHON_UNUSED PyOb
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.get_in", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":386
+ * 		return default
+ * 
+ * cpdef object itemfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.
+ * 
+*/
+
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_9itemfilter(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_itemfilter(PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter *__pyx_optional_args) {
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__4;
+  PyObject *__pyx_v_rv = 0;
+  PyObject *__pyx_v_k = 0;
+  PyObject *__pyx_v_v = 0;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
+  PyObject *__pyx_v_obj;
+  PyObject *__pyx_v_pkey;
+  PyObject *__pyx_v_pval;
+  Py_ssize_t __pyx_v_pos;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  size_t __pyx_t_4;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("itemfilter", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_factory = __pyx_optional_args->factory;
+    }
+  }
+  __Pyx_INCREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":440
+ * 		PyObject *pkey
+ * 		PyObject *pval
+ * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
+ * 
+ * 	rv = factory()
+*/
+  __pyx_v_pos = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":442
+ * 		Py_ssize_t pos = 0
+ * 
+ * 	rv = factory()             # <<<<<<<<<<<<<<
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_INCREF(__pyx_v_factory);
+  __pyx_t_3 = __pyx_v_factory; 
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 442, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_rv = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":443
+ * 
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+*/
+  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 443, __pyx_L1_error)
+  __pyx_v_f = __pyx_t_5;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":444
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj             # <<<<<<<<<<<<<<
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+*/
+  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
+  __Pyx_INCREF(__pyx_t_1);
+  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":445
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+ * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		k = <object>pkey
+*/
+  Py_DECREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":446
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
+ * 		k = <object>pkey
+ * 		v = <object>pval
+*/
+  while (1) {
+    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 446, __pyx_L1_error)
+    __pyx_t_7 = (__pyx_t_6 != 0);
+    if (!__pyx_t_7) break;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":447
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		k = <object>pkey             # <<<<<<<<<<<<<<
+ * 		v = <object>pval
+ * 		if predicate((k, v)):
+*/
+    __pyx_t_1 = ((PyObject *)__pyx_v_pkey);
+    __Pyx_INCREF(__pyx_t_1);
+    __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_1);
+    __pyx_t_1 = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":448
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		k = <object>pkey
+ * 		v = <object>pval             # <<<<<<<<<<<<<<
+ * 		if predicate((k, v)):
+ * 			rv[k] = v
+*/
+    __pyx_t_1 = ((PyObject *)__pyx_v_pval);
+    __Pyx_INCREF(__pyx_t_1);
+    __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_1);
+    __pyx_t_1 = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":449
+ * 		k = <object>pkey
+ * 		v = <object>pval
+ * 		if predicate((k, v)):             # <<<<<<<<<<<<<<
+ * 			rv[k] = v
+ * 	return rv
+*/
+    __pyx_t_3 = NULL;
+    __Pyx_INCREF(__pyx_v_predicate);
+    __pyx_t_2 = __pyx_v_predicate; 
+    __pyx_t_8 = PyTuple_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 449, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __Pyx_INCREF(__pyx_v_k);
+    __Pyx_GIVEREF(__pyx_v_k);
+    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 449, __pyx_L1_error);
+    __Pyx_INCREF(__pyx_v_v);
+    __Pyx_GIVEREF(__pyx_v_v);
+    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_v_v) != (0)) __PYX_ERR(0, 449, __pyx_L1_error);
+    __pyx_t_4 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_2))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+      assert(__pyx_t_3);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
+      __pyx_t_4 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_t_8};
+      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 449, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (__pyx_t_7) {
+
+      /* "humpy_cytoolz/dicttoolz.pyx":450
+ * 		v = <object>pval
+ * 		if predicate((k, v)):
+ * 			rv[k] = v             # <<<<<<<<<<<<<<
+ * 	return rv
+ * 
+*/
+      if (unlikely((PyObject_SetItem(__pyx_v_rv, __pyx_v_k, __pyx_v_v) < 0))) __PYX_ERR(0, 450, __pyx_L1_error)
+
+      /* "humpy_cytoolz/dicttoolz.pyx":449
+ * 		k = <object>pkey
+ * 		v = <object>pval
+ * 		if predicate((k, v)):             # <<<<<<<<<<<<<<
+ * 			rv[k] = v
+ * 	return rv
+*/
+    }
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":451
+ * 		if predicate((k, v)):
+ * 			rv[k] = v
+ * 	return rv             # <<<<<<<<<<<<<<
+ * 
+ * cpdef object itemmap(object func, object d, object factory=dict):
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_rv);
+  __pyx_r = __pyx_v_rv;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":386
+ * 		return default
+ * 
+ * cpdef object itemfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.
+ * 
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_rv);
+  __Pyx_XDECREF(__pyx_v_k);
+  __Pyx_XDECREF(__pyx_v_v);
+  __Pyx_XDECREF(__pyx_v_d);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_9itemfilter(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_8itemfilter, "itemfilter(predicate, d, factory=dict)\n\nRetain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\n\n(AI generated docstring)\n\nYou can use `itemfilter` to select items from `d` (***d***ictionary) by both key and value\nsimultaneously. `itemfilter` calls `predicate` with each item yielded by `d.items()`. Each\nitem is passed to `predicate` as a `tuple[K, V]`. `itemfilter` inserts each item for which\n`predicate` returns `True` into a new `MutableMapping`[1] created by `factory`. `itemfilter`\ndoes not change `d`.\n\nParameters\n----------\npredicate : Callable[[tuple[K, V]], bool]\n        `Callable` applied to each item of `d`. Each item is passed to `predicate` as a\n        `tuple[K, V]`, and `predicate` must return `True` for the item to be retained.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `itemfilter` reads all items from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingFiltered : MutableMapping[K, V]\n        New `MutableMapping` created by `factory` containing only items from `d` for which\n        `predicate` returns `True`.\n\nSee Also\n--------\nkeyfilter : Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\nvalfilter : Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\nitemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\nExamples\n--------\n>>> def isvalid(item):\n...     k, v = item\n...     return k % 2 == 0 and v < 4\n\n>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n>>> itemfilter(isvalid, d)\n{2: 3}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_9itemfilter = {"itemfilter", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_9itemfilter, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_8itemfilter};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_9itemfilter(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_predicate = 0;
+  PyObject *__pyx_v_d = 0;
+  PyObject *__pyx_v_factory = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("itemfilter (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_predicate,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 386, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 386, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 386, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 386, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "itemfilter", 0) < (0)) __PYX_ERR(0, 386, __pyx_L3_error)
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__4);
+      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("itemfilter", 0, 2, 3, i); __PYX_ERR(0, 386, __pyx_L3_error) }
+      }
+    } else {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 386, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 386, __pyx_L3_error)
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 386, __pyx_L3_error)
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__4);
+    }
+    __pyx_v_predicate = values[0];
+    __pyx_v_d = values[1];
+    __pyx_v_factory = values[2];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("itemfilter", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 386, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_8itemfilter(__pyx_self, __pyx_v_predicate, __pyx_v_d, __pyx_v_factory);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_8itemfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("itemfilter", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2.__pyx_n = 1;
+  __pyx_t_2.factory = __pyx_v_factory;
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_itemfilter(__pyx_v_predicate, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 386, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":453
+ * 	return rv
+ * 
+ * cpdef object itemmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply `func` to all items of `d` and return a new `Mapping` with the transformed items.
+ * 
+*/
+
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_11itemmap(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_itemmap(PyObject *__pyx_v_func, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap *__pyx_optional_args) {
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__5;
+  PyObject *__pyx_v_rv = 0;
+  PyObject *__pyx_v_k = 0;
+  PyObject *__pyx_v_v = 0;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
+  PyObject *__pyx_v_obj;
+  PyObject *__pyx_v_pkey;
+  PyObject *__pyx_v_pval;
+  Py_ssize_t __pyx_v_pos;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  size_t __pyx_t_4;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *(*__pyx_t_9)(PyObject *);
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("itemmap", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_factory = __pyx_optional_args->factory;
+    }
+  }
+  __Pyx_INCREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":502
+ * 		PyObject *pkey
+ * 		PyObject *pval
+ * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
+ * 
+ * 	rv = factory()
+*/
+  __pyx_v_pos = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":504
+ * 		Py_ssize_t pos = 0
+ * 
+ * 	rv = factory()             # <<<<<<<<<<<<<<
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_INCREF(__pyx_v_factory);
+  __pyx_t_3 = __pyx_v_factory; 
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 504, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_rv = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":505
+ * 
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+*/
+  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 505, __pyx_L1_error)
+  __pyx_v_f = __pyx_t_5;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":506
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj             # <<<<<<<<<<<<<<
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+*/
+  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
+  __Pyx_INCREF(__pyx_t_1);
+  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":507
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+ * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		k, v = func((<object>pkey, <object>pval))
+*/
+  Py_DECREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":508
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
+ * 		k, v = func((<object>pkey, <object>pval))
+ * 		rv[k] = v
+*/
+  while (1) {
+    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 508, __pyx_L1_error)
+    __pyx_t_7 = (__pyx_t_6 != 0);
+    if (!__pyx_t_7) break;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":509
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		k, v = func((<object>pkey, <object>pval))             # <<<<<<<<<<<<<<
+ * 		rv[k] = v
+ * 	return rv
+*/
+    __pyx_t_3 = NULL;
+    __Pyx_INCREF(__pyx_v_func);
+    __pyx_t_2 = __pyx_v_func; 
+    __pyx_t_8 = PyTuple_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 509, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __Pyx_INCREF(((PyObject *)__pyx_v_pkey));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_pkey));
+    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_8, 0, ((PyObject *)__pyx_v_pkey)) != (0)) __PYX_ERR(0, 509, __pyx_L1_error);
+    __Pyx_INCREF(((PyObject *)__pyx_v_pval));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_pval));
+    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_8, 1, ((PyObject *)__pyx_v_pval)) != (0)) __PYX_ERR(0, 509, __pyx_L1_error);
+    __pyx_t_4 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_2))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+      assert(__pyx_t_3);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
+      __pyx_t_4 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_t_8};
+      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 509, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    if ((likely(PyTuple_CheckExact(__pyx_t_1))) || (PyList_CheckExact(__pyx_t_1))) {
+      PyObject* sequence = __pyx_t_1;
+      Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
+      if (unlikely(size != 2)) {
+        if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+        else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+        __PYX_ERR(0, 509, __pyx_L1_error)
+      }
+      #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+      if (likely(PyTuple_CheckExact(sequence))) {
+        __pyx_t_2 = PyTuple_GET_ITEM(sequence, 0);
+        __Pyx_INCREF(__pyx_t_2);
+        __pyx_t_8 = PyTuple_GET_ITEM(sequence, 1);
+        __Pyx_INCREF(__pyx_t_8);
+      } else {
+        __pyx_t_2 = __Pyx_PyList_GetItemRefFast(sequence, 0, __Pyx_ReferenceSharing_SharedReference);
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 509, __pyx_L1_error)
+        __Pyx_XGOTREF(__pyx_t_2);
+        __pyx_t_8 = __Pyx_PyList_GetItemRefFast(sequence, 1, __Pyx_ReferenceSharing_SharedReference);
+        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 509, __pyx_L1_error)
+        __Pyx_XGOTREF(__pyx_t_8);
+      }
+      #else
+      __pyx_t_2 = __Pyx_PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 509, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __pyx_t_8 = __Pyx_PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 509, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      #endif
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    } else {
+      Py_ssize_t index = -1;
+      __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 509, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_9 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_3);
+      index = 0; __pyx_t_2 = __pyx_t_9(__pyx_t_3); if (unlikely(!__pyx_t_2)) goto __pyx_L5_unpacking_failed;
+      __Pyx_GOTREF(__pyx_t_2);
+      index = 1; __pyx_t_8 = __pyx_t_9(__pyx_t_3); if (unlikely(!__pyx_t_8)) goto __pyx_L5_unpacking_failed;
+      __Pyx_GOTREF(__pyx_t_8);
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_3), 2) < (0)) __PYX_ERR(0, 509, __pyx_L1_error)
+      __pyx_t_9 = NULL;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      goto __pyx_L6_unpacking_done;
+      __pyx_L5_unpacking_failed:;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_9 = NULL;
+      if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
+      __PYX_ERR(0, 509, __pyx_L1_error)
+      __pyx_L6_unpacking_done:;
+    }
+    __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_2);
+    __pyx_t_2 = 0;
+    __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_8);
+    __pyx_t_8 = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":510
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		k, v = func((<object>pkey, <object>pval))
+ * 		rv[k] = v             # <<<<<<<<<<<<<<
+ * 	return rv
+ * 
+*/
+    if (unlikely((PyObject_SetItem(__pyx_v_rv, __pyx_v_k, __pyx_v_v) < 0))) __PYX_ERR(0, 510, __pyx_L1_error)
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":511
+ * 		k, v = func((<object>pkey, <object>pval))
+ * 		rv[k] = v
+ * 	return rv             # <<<<<<<<<<<<<<
+ * 
+ * cpdef object keyfilter(object predicate, object d, object factory=dict):
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_rv);
+  __pyx_r = __pyx_v_rv;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":453
+ * 	return rv
+ * 
+ * cpdef object itemmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply `func` to all items of `d` and return a new `Mapping` with the transformed items.
+ * 
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_rv);
+  __Pyx_XDECREF(__pyx_v_k);
+  __Pyx_XDECREF(__pyx_v_v);
+  __Pyx_XDECREF(__pyx_v_d);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_11itemmap(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_10itemmap, "itemmap(func, d, factory=dict)\n\nApply `func` to all items of `d` and return a new `Mapping` with the transformed items.\n\n(AI generated docstring)\n\nYou can use `itemmap` to transform all keys and values in `d` simultaneously without\nchanging `d`. `itemmap` applies `func` to each item yielded by `d.items()`. Each item\nis passed to `func` as a `tuple[K, V]`, and `func` must return a `tuple[L, W]`. `itemmap`\ninserts each returned `tuple` as a new key-value pair in a `MutableMapping`[1] created\nby `factory`.\n\nParameters\n----------\nfunc : Callable[[tuple[K, V]], tuple[L, W]]\n        `Callable` applied to each item of `d`. Each item of `d` is passed to `func` as a\n        `tuple[K, V]`, and `func` must return a `tuple[L, W]` containing the new key and value.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `itemmap` reads all items from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[L, W]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingTransformed : MutableMapping[L, W]\n        New `MutableMapping` created by `factory` populated with each `tuple[L, W]` returned\n        by `func`.\n\nSee Also\n--------\nkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\nvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\n\nExamples\n--------\n>>> accountids = {'Alice': 10, 'Bob': 20}\n>>> itemmap(reversed, accountids)  # doctest: +SKIP\n{10: 'Alice', 20: 'Bob'}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_11itemmap = {"itemmap", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_11itemmap, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_10itemmap};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_11itemmap(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_func = 0;
+  PyObject *__pyx_v_d = 0;
+  PyObject *__pyx_v_factory = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("itemmap (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 453, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 453, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 453, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 453, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "itemmap", 0) < (0)) __PYX_ERR(0, 453, __pyx_L3_error)
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__5);
+      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("itemmap", 0, 2, 3, i); __PYX_ERR(0, 453, __pyx_L3_error) }
+      }
+    } else {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 453, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 453, __pyx_L3_error)
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 453, __pyx_L3_error)
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__5);
+    }
+    __pyx_v_func = values[0];
+    __pyx_v_d = values[1];
+    __pyx_v_factory = values[2];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("itemmap", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 453, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_10itemmap(__pyx_self, __pyx_v_func, __pyx_v_d, __pyx_v_factory);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_10itemmap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("itemmap", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2.__pyx_n = 1;
+  __pyx_t_2.factory = __pyx_v_factory;
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_itemmap(__pyx_v_func, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 453, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.itemmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":513
+ * 	return rv
+ * 
+ * cpdef object keyfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.
+ * 
+*/
+
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_13keyfilter(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_keyfilter(PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter *__pyx_optional_args) {
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__6;
+  PyObject *__pyx_v_rv = 0;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
+  PyObject *__pyx_v_obj;
+  PyObject *__pyx_v_pkey;
+  PyObject *__pyx_v_pval;
+  Py_ssize_t __pyx_v_pos;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  size_t __pyx_t_4;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("keyfilter", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_factory = __pyx_optional_args->factory;
+    }
+  }
+  __Pyx_INCREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":563
+ * 		PyObject *pkey
+ * 		PyObject *pval
+ * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
+ * 
+ * 	rv = factory()
+*/
+  __pyx_v_pos = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":565
+ * 		Py_ssize_t pos = 0
+ * 
+ * 	rv = factory()             # <<<<<<<<<<<<<<
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_INCREF(__pyx_v_factory);
+  __pyx_t_3 = __pyx_v_factory; 
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 565, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_rv = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":566
+ * 
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+*/
+  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 566, __pyx_L1_error)
+  __pyx_v_f = __pyx_t_5;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":567
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj             # <<<<<<<<<<<<<<
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+*/
+  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
+  __Pyx_INCREF(__pyx_t_1);
+  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":568
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+ * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		if predicate(<object>pkey):
+*/
+  Py_DECREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":569
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
+ * 		if predicate(<object>pkey):
+ * 			rv[<object>pkey] = <object>pval
+*/
+  while (1) {
+    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 569, __pyx_L1_error)
+    __pyx_t_7 = (__pyx_t_6 != 0);
+    if (!__pyx_t_7) break;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":570
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		if predicate(<object>pkey):             # <<<<<<<<<<<<<<
+ * 			rv[<object>pkey] = <object>pval
+ * 	return rv
+*/
+    __pyx_t_3 = NULL;
+    __Pyx_INCREF(__pyx_v_predicate);
+    __pyx_t_2 = __pyx_v_predicate; 
+    __pyx_t_4 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_2))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+      assert(__pyx_t_3);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
+      __pyx_t_4 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_3, ((PyObject *)__pyx_v_pkey)};
+      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 570, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 570, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (__pyx_t_7) {
+
+      /* "humpy_cytoolz/dicttoolz.pyx":571
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		if predicate(<object>pkey):
+ * 			rv[<object>pkey] = <object>pval             # <<<<<<<<<<<<<<
+ * 	return rv
+ * 
+*/
+      __pyx_t_1 = ((PyObject *)__pyx_v_pval);
+      __Pyx_INCREF(__pyx_t_1);
+      if (unlikely((PyObject_SetItem(__pyx_v_rv, ((PyObject *)__pyx_v_pkey), __pyx_t_1) < 0))) __PYX_ERR(0, 571, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "humpy_cytoolz/dicttoolz.pyx":570
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		if predicate(<object>pkey):             # <<<<<<<<<<<<<<
+ * 			rv[<object>pkey] = <object>pval
+ * 	return rv
+*/
+    }
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":572
+ * 		if predicate(<object>pkey):
+ * 			rv[<object>pkey] = <object>pval
+ * 	return rv             # <<<<<<<<<<<<<<
+ * 
+ * cpdef object keymap(object func, object d, object factory=dict):
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_rv);
+  __pyx_r = __pyx_v_rv;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":513
+ * 	return rv
+ * 
+ * cpdef object keyfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.
+ * 
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keyfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_rv);
+  __Pyx_XDECREF(__pyx_v_d);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_13keyfilter(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_12keyfilter, "keyfilter(predicate, d, factory=dict)\n\nRetain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\n\n(AI generated docstring)\n\nYou can use `keyfilter` to select items from `d` (***d***ictionary) by their keys. `keyfilter`\ncalls `predicate` with each key yielded by `d.keys()`. `keyfilter` inserts each item whose\nkey causes `predicate` to return `True` into a new `MutableMapping`[1] created by `factory`.\n`keyfilter` does not change `d`.\n\nParameters\n----------\npredicate : Callable[[K], bool]\n        `Callable` applied to each key of `d`. `keyfilter` keeps each item for which `predicate`\n        returns `True`.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `keyfilter` reads all items from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingFiltered : MutableMapping[K, V]\n        New `MutableMapping` created by `factory` containing only items from `d` whose keys\n        cause `predicate` to return `True`.\n\nSee Also\n--------\nvalfilter : Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\nitemfilter : Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\nkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\n\nExamples\n--------\n>>> iseven = lambda x: x % 2 == 0\n>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n>>> keyfilter(iseven, d)\n{2: 3, 4: 5}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_13keyfilter = {"keyfilter", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_13keyfilter, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_12keyfilter};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_13keyfilter(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_predicate = 0;
+  PyObject *__pyx_v_d = 0;
+  PyObject *__pyx_v_factory = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("keyfilter (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_predicate,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 513, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 513, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 513, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 513, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "keyfilter", 0) < (0)) __PYX_ERR(0, 513, __pyx_L3_error)
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__6);
+      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("keyfilter", 0, 2, 3, i); __PYX_ERR(0, 513, __pyx_L3_error) }
+      }
+    } else {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 513, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 513, __pyx_L3_error)
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 513, __pyx_L3_error)
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__6);
+    }
+    __pyx_v_predicate = values[0];
+    __pyx_v_d = values[1];
+    __pyx_v_factory = values[2];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("keyfilter", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 513, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keyfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_12keyfilter(__pyx_self, __pyx_v_predicate, __pyx_v_d, __pyx_v_factory);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_12keyfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("keyfilter", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2.__pyx_n = 1;
+  __pyx_t_2.factory = __pyx_v_factory;
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_keyfilter(__pyx_v_predicate, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 513, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keyfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":574
+ * 	return rv
+ * 
+ * cpdef object keymap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.
+ * 
+*/
+
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_15keymap(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_keymap(PyObject *__pyx_v_func, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap *__pyx_optional_args) {
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__7;
+  PyObject *__pyx_v_rv = 0;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
+  PyObject *__pyx_v_obj;
+  PyObject *__pyx_v_pkey;
+  PyObject *__pyx_v_pval;
+  Py_ssize_t __pyx_v_pos;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  size_t __pyx_t_4;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("keymap", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_factory = __pyx_optional_args->factory;
+    }
+  }
+  __Pyx_INCREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":621
+ * 		PyObject *pkey
+ * 		PyObject *pval
+ * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
+ * 
+ * 	rv = factory()
+*/
+  __pyx_v_pos = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":623
+ * 		Py_ssize_t pos = 0
+ * 
+ * 	rv = factory()             # <<<<<<<<<<<<<<
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_INCREF(__pyx_v_factory);
+  __pyx_t_3 = __pyx_v_factory; 
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 623, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_rv = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":624
+ * 
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+*/
+  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 624, __pyx_L1_error)
+  __pyx_v_f = __pyx_t_5;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":625
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj             # <<<<<<<<<<<<<<
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+*/
+  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
+  __Pyx_INCREF(__pyx_t_1);
+  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":626
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+ * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		rv[func(<object>pkey)] = <object>pval
+*/
+  Py_DECREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":627
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
+ * 		rv[func(<object>pkey)] = <object>pval
+ * 	return rv
+*/
+  while (1) {
+    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 627, __pyx_L1_error)
+    __pyx_t_7 = (__pyx_t_6 != 0);
+    if (!__pyx_t_7) break;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":628
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		rv[func(<object>pkey)] = <object>pval             # <<<<<<<<<<<<<<
+ * 	return rv
+ * 
+*/
+    __pyx_t_1 = ((PyObject *)__pyx_v_pval);
+    __Pyx_INCREF(__pyx_t_1);
+    __pyx_t_2 = NULL;
+    __Pyx_INCREF(__pyx_v_func);
+    __pyx_t_8 = __pyx_v_func; 
+    __pyx_t_4 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_8))) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_8);
+      assert(__pyx_t_2);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_8);
+      __Pyx_INCREF(__pyx_t_2);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_8, __pyx__function);
+      __pyx_t_4 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_2, ((PyObject *)__pyx_v_pkey)};
+      __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_8, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 628, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+    }
+    if (unlikely((PyObject_SetItem(__pyx_v_rv, __pyx_t_3, __pyx_t_1) < 0))) __PYX_ERR(0, 628, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":629
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		rv[func(<object>pkey)] = <object>pval
+ * 	return rv             # <<<<<<<<<<<<<<
+ * 
+ * cdef object c_merge(object dicts, object factory=dict):
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_rv);
+  __pyx_r = __pyx_v_rv;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":574
+ * 	return rv
+ * 
+ * cpdef object keymap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.
+ * 
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keymap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_rv);
+  __Pyx_XDECREF(__pyx_v_d);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_15keymap(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_14keymap, "keymap(func, d, factory=dict)\n\nApply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.\n\n(AI generated docstring)\n\nYou can use `keymap` to transform all keys in `d` without changing `d`. `keymap` applies\n`func` to each key yielded by `d.keys()` and builds a new `MutableMapping`[1] created by\n`factory`, associating each transformed key with the corresponding original value of `d`.\n\nParameters\n----------\nfunc : Callable[[K], L]\n        `Callable` applied to each key of `d`. Each key of `d` is passed to `func`\n        individually, and `func` returns the corresponding transformed key.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `keymap` reads all keys from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[L, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingTransformed : MutableMapping[L, V]\n        New `MutableMapping` created by `factory` in which each key from `d` is replaced by\n        the result of applying `func` to that key, associated with the original value of `d`.\n\nSee Also\n--------\nvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\nitemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\nExamples\n--------\n>>> bills = {'Alice': [20, 15, 30], 'Bob': [10, 35]}\n>>> keymap(str.lower, bills)  # doctest: +SKIP\n{'alice': [20, 15, 30], 'bob': [10, 35]}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_15keymap = {"keymap", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_15keymap, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_14keymap};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_15keymap(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_func = 0;
+  PyObject *__pyx_v_d = 0;
+  PyObject *__pyx_v_factory = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("keymap (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 574, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 574, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 574, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 574, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "keymap", 0) < (0)) __PYX_ERR(0, 574, __pyx_L3_error)
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__7);
+      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("keymap", 0, 2, 3, i); __PYX_ERR(0, 574, __pyx_L3_error) }
+      }
+    } else {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 574, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 574, __pyx_L3_error)
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 574, __pyx_L3_error)
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__7);
+    }
+    __pyx_v_func = values[0];
+    __pyx_v_d = values[1];
+    __pyx_v_factory = values[2];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("keymap", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 574, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keymap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_14keymap(__pyx_self, __pyx_v_func, __pyx_v_d, __pyx_v_factory);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_14keymap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("keymap", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2.__pyx_n = 1;
+  __pyx_t_2.factory = __pyx_v_factory;
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_keymap(__pyx_v_func, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 574, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.keymap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":631
+ * 	return rv
+ * 
+ * cdef object c_merge(object dicts, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	cdef object rv
+ * 	rv = factory()
+*/
+
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_merge(PyObject *__pyx_v_dicts, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge *__pyx_optional_args) {
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__8;
+  PyObject *__pyx_v_rv = 0;
+  PyObject *__pyx_v_d = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  size_t __pyx_t_4;
+  int __pyx_t_5;
+  Py_ssize_t __pyx_t_6;
+  PyObject *(*__pyx_t_7)(PyObject *);
+  int __pyx_t_8;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("c_merge", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_factory = __pyx_optional_args->factory;
+    }
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":633
+ * cdef object c_merge(object dicts, object factory=dict):
+ * 	cdef object rv
+ * 	rv = factory()             # <<<<<<<<<<<<<<
+ * 	if PyDict_CheckExact(rv):
+ * 		for d in dicts:
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_INCREF(__pyx_v_factory);
+  __pyx_t_3 = __pyx_v_factory; 
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 633, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_rv = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":634
+ * 	cdef object rv
+ * 	rv = factory()
+ * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
+ * 		for d in dicts:
+ * 			PyDict_Update(rv, d)
+*/
+  __pyx_t_5 = PyDict_CheckExact(__pyx_v_rv);
+  if (__pyx_t_5) {
+
+    /* "humpy_cytoolz/dicttoolz.pyx":635
+ * 	rv = factory()
+ * 	if PyDict_CheckExact(rv):
+ * 		for d in dicts:             # <<<<<<<<<<<<<<
+ * 			PyDict_Update(rv, d)
+ * 	else:
+*/
+    if (likely(PyList_CheckExact(__pyx_v_dicts)) || PyTuple_CheckExact(__pyx_v_dicts)) {
+      __pyx_t_1 = __pyx_v_dicts; __Pyx_INCREF(__pyx_t_1);
+      __pyx_t_6 = 0;
+      __pyx_t_7 = NULL;
+    } else {
+      __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_dicts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 635, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_7 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 635, __pyx_L1_error)
+    }
+    for (;;) {
+      if (likely(!__pyx_t_7)) {
+        if (likely(PyList_CheckExact(__pyx_t_1))) {
+          {
+            Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
+            #if !CYTHON_ASSUME_SAFE_SIZE
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 635, __pyx_L1_error)
+            #endif
+            if (__pyx_t_6 >= __pyx_temp) break;
+          }
+          __pyx_t_3 = __Pyx_PyList_GetItemRefFast(__pyx_t_1, __pyx_t_6, __Pyx_ReferenceSharing_OwnStrongReference);
+          ++__pyx_t_6;
+        } else {
+          {
+            Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
+            #if !CYTHON_ASSUME_SAFE_SIZE
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 635, __pyx_L1_error)
+            #endif
+            if (__pyx_t_6 >= __pyx_temp) break;
+          }
+          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+          __pyx_t_3 = __Pyx_NewRef(PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6));
+          #else
+          __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_6);
+          #endif
+          ++__pyx_t_6;
+        }
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 635, __pyx_L1_error)
+      } else {
+        __pyx_t_3 = __pyx_t_7(__pyx_t_1);
+        if (unlikely(!__pyx_t_3)) {
+          PyObject* exc_type = PyErr_Occurred();
+          if (exc_type) {
+            if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 635, __pyx_L1_error)
+            PyErr_Clear();
+          }
+          break;
+        }
+      }
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_XDECREF_SET(__pyx_v_d, __pyx_t_3);
+      __pyx_t_3 = 0;
+
+      /* "humpy_cytoolz/dicttoolz.pyx":636
+ * 	if PyDict_CheckExact(rv):
+ * 		for d in dicts:
+ * 			PyDict_Update(rv, d)             # <<<<<<<<<<<<<<
+ * 	else:
+ * 		for d in dicts:
+*/
+      __pyx_t_8 = PyDict_Update(__pyx_v_rv, __pyx_v_d); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 636, __pyx_L1_error)
+
+      /* "humpy_cytoolz/dicttoolz.pyx":635
+ * 	rv = factory()
+ * 	if PyDict_CheckExact(rv):
+ * 		for d in dicts:             # <<<<<<<<<<<<<<
+ * 			PyDict_Update(rv, d)
+ * 	else:
+*/
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":634
+ * 	cdef object rv
+ * 	rv = factory()
+ * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
+ * 		for d in dicts:
+ * 			PyDict_Update(rv, d)
+*/
+    goto __pyx_L3;
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":638
+ * 			PyDict_Update(rv, d)
+ * 	else:
+ * 		for d in dicts:             # <<<<<<<<<<<<<<
+ * 			rv.update(d)
+ * 	return rv
+*/
+  /*else*/ {
+    if (likely(PyList_CheckExact(__pyx_v_dicts)) || PyTuple_CheckExact(__pyx_v_dicts)) {
+      __pyx_t_1 = __pyx_v_dicts; __Pyx_INCREF(__pyx_t_1);
+      __pyx_t_6 = 0;
+      __pyx_t_7 = NULL;
+    } else {
+      __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_dicts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 638, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_7 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 638, __pyx_L1_error)
+    }
+    for (;;) {
+      if (likely(!__pyx_t_7)) {
+        if (likely(PyList_CheckExact(__pyx_t_1))) {
+          {
+            Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
+            #if !CYTHON_ASSUME_SAFE_SIZE
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 638, __pyx_L1_error)
+            #endif
+            if (__pyx_t_6 >= __pyx_temp) break;
+          }
+          __pyx_t_3 = __Pyx_PyList_GetItemRefFast(__pyx_t_1, __pyx_t_6, __Pyx_ReferenceSharing_OwnStrongReference);
+          ++__pyx_t_6;
+        } else {
+          {
+            Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
+            #if !CYTHON_ASSUME_SAFE_SIZE
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 638, __pyx_L1_error)
+            #endif
+            if (__pyx_t_6 >= __pyx_temp) break;
+          }
+          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+          __pyx_t_3 = __Pyx_NewRef(PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6));
+          #else
+          __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_6);
+          #endif
+          ++__pyx_t_6;
+        }
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 638, __pyx_L1_error)
+      } else {
+        __pyx_t_3 = __pyx_t_7(__pyx_t_1);
+        if (unlikely(!__pyx_t_3)) {
+          PyObject* exc_type = PyErr_Occurred();
+          if (exc_type) {
+            if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 638, __pyx_L1_error)
+            PyErr_Clear();
+          }
+          break;
+        }
+      }
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_XDECREF_SET(__pyx_v_d, __pyx_t_3);
+      __pyx_t_3 = 0;
+
+      /* "humpy_cytoolz/dicttoolz.pyx":639
+ * 	else:
+ * 		for d in dicts:
+ * 			rv.update(d)             # <<<<<<<<<<<<<<
+ * 	return rv
+ * 
+*/
+      __pyx_t_2 = __pyx_v_rv;
+      __Pyx_INCREF(__pyx_t_2);
+      __pyx_t_4 = 0;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_d};
+        __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_update, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 639, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+      }
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+      /* "humpy_cytoolz/dicttoolz.pyx":638
+ * 			PyDict_Update(rv, d)
+ * 	else:
+ * 		for d in dicts:             # <<<<<<<<<<<<<<
+ * 			rv.update(d)
+ * 	return rv
+*/
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  }
+  __pyx_L3:;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":640
+ * 		for d in dicts:
+ * 			rv.update(d)
+ * 	return rv             # <<<<<<<<<<<<<<
+ * 
+ * def merge(*dicts, factory=dict):
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_rv);
+  __pyx_r = __pyx_v_rv;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":631
+ * 	return rv
+ * 
+ * cdef object c_merge(object dicts, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	cdef object rv
+ * 	rv = factory()
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.c_merge", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_rv);
+  __Pyx_XDECREF(__pyx_v_d);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":642
+ * 	return rv
+ * 
+ * def merge(*dicts, factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Merge a collection of dictionaries and return a new `Mapping`.
+ * 
+*/
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_26__defaults__(CYTHON_UNUSED PyObject *__pyx_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__defaults__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 642, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_factory, __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_self)->arg0) < (0)) __PYX_ERR(0, 642, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 642, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(Py_None);
+  __Pyx_GIVEREF(Py_None);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, Py_None) != (0)) __PYX_ERR(0, 642, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_1);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 642, __pyx_L1_error);
+  __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.__defaults__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_17merge(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_16merge, "merge(*dicts, factory=dict)\n\nMerge a collection of dictionaries and return a new `Mapping`.\n\n(AI generated docstring)\n\nYou can use `merge` to combine two or more `Mapping`[1] objects into a single new `Mapping`.\n`merge` calls `factory` to create the result, then updates it in order with each `Mapping` in\n`dicts`. When the same key appears in more than one element, the value from the later element\ntakes precedence. You can also pass a single `Iterable[Mapping[K, V]]` as the sole positional\nargument instead of multiple `Mapping` arguments.\n\nParameters\n----------\n*dicts : Mapping[K, V]\n        `Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the\n        sole positional argument.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingMerged : MutableMapping[K, V]\n        New `MutableMapping` created by `factory` containing all key-value pairs from `dicts`. For\n        duplicate keys, the value from the last `Mapping` in `dicts` that contains the key takes\n        precedence.\n\nSee Also\n--------\nmerge_with : Merge dictionaries and apply a `Callable` to combined values.\n\nExamples\n--------\n>>> merge({1: 'one'}, {2: 'two'})\n{1: 'one', 2: 'two'}\n\nLater dictionaries have precedence\n\n>>> merge({1: 2, 3: 4}, {3: 3, 4: 4})\n{1: 2, 3: 3, 4: 4}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_17merge = {"merge", (PyCFunction)(void(*)(void))(PyCFunctionWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_17merge, METH_VARARGS|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_16merge};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_17merge(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_factory = 0;
+  PyObject *__pyx_v_dicts = 0;
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("merge (wrapper)", 0);
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
+  __Pyx_INCREF(__pyx_args);
+  __pyx_v_dicts = __pyx_args;
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_factory,0};
+    struct __pyx_defaults *__pyx_dynamic_args = __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_self);
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_VARARGS(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 642, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        default:
+        case  0: break;
+      }
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, 0, __pyx_kwds_len, "merge", 0) < (0)) __PYX_ERR(0, 642, __pyx_L3_error)
+      if (!values[0]) values[0] = __Pyx_NewRef(__pyx_dynamic_args->arg0);
+    } else if (unlikely(__pyx_nargs < 0)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      if (!values[0]) values[0] = __Pyx_NewRef(__pyx_dynamic_args->arg0);
+    }
+    __pyx_v_factory = values[0];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("merge", 0, 0, 0, __pyx_nargs); __PYX_ERR(0, 642, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_DECREF(__pyx_v_dicts); __pyx_v_dicts = 0;
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.merge", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_16merge(__pyx_self, __pyx_v_factory, __pyx_v_dicts);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_DECREF(__pyx_v_dicts);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_16merge(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_factory, PyObject *__pyx_v_dicts) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  Py_ssize_t __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_t_6;
+  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge __pyx_t_7;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("merge", 0);
+  __Pyx_INCREF(__pyx_v_dicts);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":687
+ * 		https://docs.python.org/3/library/collections.abc.html
+ * 	"""
+ * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):             # <<<<<<<<<<<<<<
+ * 		dicts = dicts[0]
+ * 	return c_merge(dicts, factory)
+*/
+  __pyx_t_2 = PyObject_Length(__pyx_v_dicts); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 687, __pyx_L1_error)
+  __pyx_t_3 = (__pyx_t_2 == 1);
+  if (__pyx_t_3) {
+  } else {
+    __pyx_t_1 = __pyx_t_3;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_dicts, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 687, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __pyx_v_13humpy_cytoolz_9dicttoolz_Mapping;
+  __Pyx_INCREF(__pyx_t_5);
+  __pyx_t_3 = PyObject_IsInstance(__pyx_t_4, __pyx_t_5); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 687, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_6 = (!__pyx_t_3);
+  __pyx_t_1 = __pyx_t_6;
+  __pyx_L4_bool_binop_done:;
+  if (__pyx_t_1) {
+
+    /* "humpy_cytoolz/dicttoolz.pyx":688
+ * 	"""
+ * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
+ * 		dicts = dicts[0]             # <<<<<<<<<<<<<<
+ * 	return c_merge(dicts, factory)
+ * 
+*/
+    __pyx_t_5 = __Pyx_GetItemInt_Tuple(__pyx_v_dicts, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 688, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF_SET(__pyx_v_dicts, __pyx_t_5);
+    __pyx_t_5 = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":687
+ * 		https://docs.python.org/3/library/collections.abc.html
+ * 	"""
+ * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):             # <<<<<<<<<<<<<<
+ * 		dicts = dicts[0]
+ * 	return c_merge(dicts, factory)
+*/
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":689
+ * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
+ * 		dicts = dicts[0]
+ * 	return c_merge(dicts, factory)             # <<<<<<<<<<<<<<
+ * 
+ * cdef object c_merge_with(object func, object dicts, object factory=dict):
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_7.__pyx_n = 1;
+  __pyx_t_7.factory = __pyx_v_factory;
+  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_c_merge(__pyx_v_dicts, &__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 689, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_r = __pyx_t_5;
+  __pyx_t_5 = 0;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":642
+ * 	return rv
+ * 
+ * def merge(*dicts, factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Merge a collection of dictionaries and return a new `Mapping`.
+ * 
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.merge", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_dicts);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":691
+ * 	return c_merge(dicts, factory)
+ * 
+ * cdef object c_merge_with(object func, object dicts, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	cdef:
+ * 		dict result
+*/
+
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_c_merge_with(PyObject *__pyx_v_func, PyObject *__pyx_v_dicts, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with *__pyx_optional_args) {
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__9;
+  PyObject *__pyx_v_result = 0;
+  PyObject *__pyx_v_rv = 0;
+  PyObject *__pyx_v_d = 0;
+  PyObject *__pyx_v_seq = 0;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
+  PyObject *__pyx_v_obj;
+  PyObject *__pyx_v_pkey;
+  PyObject *__pyx_v_pval;
+  Py_ssize_t __pyx_v_pos;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  size_t __pyx_t_4;
+  Py_ssize_t __pyx_t_5;
+  PyObject *(*__pyx_t_6)(PyObject *);
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("c_merge_with", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_factory = __pyx_optional_args->factory;
+    }
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":702
+ * 		Py_ssize_t pos
+ * 
+ * 	result = PyDict_New()             # <<<<<<<<<<<<<<
+ * 	rv = factory()
+ * 	for d in dicts:
+*/
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 702, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_result = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":703
+ * 
+ * 	result = PyDict_New()
+ * 	rv = factory()             # <<<<<<<<<<<<<<
+ * 	for d in dicts:
+ * 		f = get_map_iter(d, &obj)
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_INCREF(__pyx_v_factory);
+  __pyx_t_3 = __pyx_v_factory; 
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 703, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_rv = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":704
+ * 	result = PyDict_New()
+ * 	rv = factory()
+ * 	for d in dicts:             # <<<<<<<<<<<<<<
+ * 		f = get_map_iter(d, &obj)
+ * 		d = <object>obj
+*/
+  if (likely(PyList_CheckExact(__pyx_v_dicts)) || PyTuple_CheckExact(__pyx_v_dicts)) {
+    __pyx_t_1 = __pyx_v_dicts; __Pyx_INCREF(__pyx_t_1);
+    __pyx_t_5 = 0;
+    __pyx_t_6 = NULL;
+  } else {
+    __pyx_t_5 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_dicts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 704, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_6 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 704, __pyx_L1_error)
+  }
+  for (;;) {
+    if (likely(!__pyx_t_6)) {
+      if (likely(PyList_CheckExact(__pyx_t_1))) {
+        {
+          Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
+          #if !CYTHON_ASSUME_SAFE_SIZE
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 704, __pyx_L1_error)
+          #endif
+          if (__pyx_t_5 >= __pyx_temp) break;
+        }
+        __pyx_t_3 = __Pyx_PyList_GetItemRefFast(__pyx_t_1, __pyx_t_5, __Pyx_ReferenceSharing_OwnStrongReference);
+        ++__pyx_t_5;
+      } else {
+        {
+          Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
+          #if !CYTHON_ASSUME_SAFE_SIZE
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 704, __pyx_L1_error)
+          #endif
+          if (__pyx_t_5 >= __pyx_temp) break;
+        }
+        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+        __pyx_t_3 = __Pyx_NewRef(PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_5));
+        #else
+        __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_5);
+        #endif
+        ++__pyx_t_5;
+      }
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 704, __pyx_L1_error)
+    } else {
+      __pyx_t_3 = __pyx_t_6(__pyx_t_1);
+      if (unlikely(!__pyx_t_3)) {
+        PyObject* exc_type = PyErr_Occurred();
+        if (exc_type) {
+          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 704, __pyx_L1_error)
+          PyErr_Clear();
+        }
+        break;
+      }
+    }
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_XDECREF_SET(__pyx_v_d, __pyx_t_3);
+    __pyx_t_3 = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":705
+ * 	rv = factory()
+ * 	for d in dicts:
+ * 		f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
+ * 		d = <object>obj
+ * 		Py_DECREF(d)
+*/
+    __pyx_t_7 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_7 == ((void *)NULL))) __PYX_ERR(0, 705, __pyx_L1_error)
+    __pyx_v_f = __pyx_t_7;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":706
+ * 	for d in dicts:
+ * 		f = get_map_iter(d, &obj)
+ * 		d = <object>obj             # <<<<<<<<<<<<<<
+ * 		Py_DECREF(d)
+ * 		pos = 0
+*/
+    __pyx_t_3 = ((PyObject *)__pyx_v_obj);
+    __Pyx_INCREF(__pyx_t_3);
+    __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_3);
+    __pyx_t_3 = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":707
+ * 		f = get_map_iter(d, &obj)
+ * 		d = <object>obj
+ * 		Py_DECREF(d)             # <<<<<<<<<<<<<<
+ * 		pos = 0
+ * 		while f(d, &pos, &pkey, &pval):
+*/
+    Py_DECREF(__pyx_v_d);
+
+    /* "humpy_cytoolz/dicttoolz.pyx":708
+ * 		d = <object>obj
+ * 		Py_DECREF(d)
+ * 		pos = 0             # <<<<<<<<<<<<<<
+ * 		while f(d, &pos, &pkey, &pval):
+ * 			obj = PyDict_GetItem(result, <object>pkey)
+*/
+    __pyx_v_pos = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":709
+ * 		Py_DECREF(d)
+ * 		pos = 0
+ * 		while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
+ * 			obj = PyDict_GetItem(result, <object>pkey)
+ * 			if obj is NULL:
+*/
+    while (1) {
+      __pyx_t_8 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 709, __pyx_L1_error)
+      __pyx_t_9 = (__pyx_t_8 != 0);
+      if (!__pyx_t_9) break;
+
+      /* "humpy_cytoolz/dicttoolz.pyx":710
+ * 		pos = 0
+ * 		while f(d, &pos, &pkey, &pval):
+ * 			obj = PyDict_GetItem(result, <object>pkey)             # <<<<<<<<<<<<<<
+ * 			if obj is NULL:
+ * 				seq = PyList_New(0)
+*/
+      __pyx_v_obj = PyDict_GetItem(__pyx_v_result, ((PyObject *)__pyx_v_pkey));
+
+      /* "humpy_cytoolz/dicttoolz.pyx":711
+ * 		while f(d, &pos, &pkey, &pval):
+ * 			obj = PyDict_GetItem(result, <object>pkey)
+ * 			if obj is NULL:             # <<<<<<<<<<<<<<
+ * 				seq = PyList_New(0)
+ * 				PyList_Append(seq, <object>pval)
+*/
+      __pyx_t_9 = (__pyx_v_obj == NULL);
+      if (__pyx_t_9) {
+
+        /* "humpy_cytoolz/dicttoolz.pyx":712
+ * 			obj = PyDict_GetItem(result, <object>pkey)
+ * 			if obj is NULL:
+ * 				seq = PyList_New(0)             # <<<<<<<<<<<<<<
+ * 				PyList_Append(seq, <object>pval)
+ * 				PyDict_SetItem(result, <object>pkey, seq)
+*/
+        __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 712, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_XDECREF_SET(__pyx_v_seq, ((PyObject*)__pyx_t_3));
+        __pyx_t_3 = 0;
+
+        /* "humpy_cytoolz/dicttoolz.pyx":713
+ * 			if obj is NULL:
+ * 				seq = PyList_New(0)
+ * 				PyList_Append(seq, <object>pval)             # <<<<<<<<<<<<<<
+ * 				PyDict_SetItem(result, <object>pkey, seq)
+ * 			else:
+*/
+        __pyx_t_8 = PyList_Append(__pyx_v_seq, ((PyObject *)__pyx_v_pval)); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 713, __pyx_L1_error)
+
+        /* "humpy_cytoolz/dicttoolz.pyx":714
+ * 				seq = PyList_New(0)
+ * 				PyList_Append(seq, <object>pval)
+ * 				PyDict_SetItem(result, <object>pkey, seq)             # <<<<<<<<<<<<<<
+ * 			else:
+ * 				PyList_Append(<object>obj, <object>pval)
+*/
+        __pyx_t_8 = PyDict_SetItem(__pyx_v_result, ((PyObject *)__pyx_v_pkey), __pyx_v_seq); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 714, __pyx_L1_error)
+
+        /* "humpy_cytoolz/dicttoolz.pyx":711
+ * 		while f(d, &pos, &pkey, &pval):
+ * 			obj = PyDict_GetItem(result, <object>pkey)
+ * 			if obj is NULL:             # <<<<<<<<<<<<<<
+ * 				seq = PyList_New(0)
+ * 				PyList_Append(seq, <object>pval)
+*/
+        goto __pyx_L7;
+      }
+
+      /* "humpy_cytoolz/dicttoolz.pyx":716
+ * 				PyDict_SetItem(result, <object>pkey, seq)
+ * 			else:
+ * 				PyList_Append(<object>obj, <object>pval)             # <<<<<<<<<<<<<<
+ * 
+ * 	f = get_map_iter(result, &obj)
+*/
+      /*else*/ {
+        __pyx_t_8 = PyList_Append(((PyObject *)__pyx_v_obj), ((PyObject *)__pyx_v_pval)); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 716, __pyx_L1_error)
+      }
+      __pyx_L7:;
+    }
+
+    /* "humpy_cytoolz/dicttoolz.pyx":704
+ * 	result = PyDict_New()
+ * 	rv = factory()
+ * 	for d in dicts:             # <<<<<<<<<<<<<<
+ * 		f = get_map_iter(d, &obj)
+ * 		d = <object>obj
+*/
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":718
+ * 				PyList_Append(<object>obj, <object>pval)
+ * 
+ * 	f = get_map_iter(result, &obj)             # <<<<<<<<<<<<<<
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+*/
+  __pyx_t_7 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_result, (&__pyx_v_obj)); if (unlikely(__pyx_t_7 == ((void *)NULL))) __PYX_ERR(0, 718, __pyx_L1_error)
+  __pyx_v_f = __pyx_t_7;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":719
+ * 
+ * 	f = get_map_iter(result, &obj)
+ * 	d = <object>obj             # <<<<<<<<<<<<<<
+ * 	Py_DECREF(d)
+ * 	pos = 0
+*/
+  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
+  __Pyx_INCREF(__pyx_t_1);
+  __Pyx_XDECREF_SET(__pyx_v_d, __pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":720
+ * 	f = get_map_iter(result, &obj)
+ * 	d = <object>obj
+ * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
+ * 	pos = 0
+ * 	while f(d, &pos, &pkey, &pval):
+*/
+  Py_DECREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":721
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+ * 	pos = 0             # <<<<<<<<<<<<<<
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		PyObject_SetItem(rv, <object>pkey, func(<object>pval))
+*/
+  __pyx_v_pos = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":722
+ * 	Py_DECREF(d)
+ * 	pos = 0
+ * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
+ * 		PyObject_SetItem(rv, <object>pkey, func(<object>pval))
+ * 	return rv
+*/
+  while (1) {
+    __pyx_t_8 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 722, __pyx_L1_error)
+    __pyx_t_9 = (__pyx_t_8 != 0);
+    if (!__pyx_t_9) break;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":723
+ * 	pos = 0
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		PyObject_SetItem(rv, <object>pkey, func(<object>pval))             # <<<<<<<<<<<<<<
+ * 	return rv
+ * 
+*/
+    __pyx_t_3 = NULL;
+    __Pyx_INCREF(__pyx_v_func);
+    __pyx_t_2 = __pyx_v_func; 
+    __pyx_t_4 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_2))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+      assert(__pyx_t_3);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
+      __pyx_t_4 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_3, ((PyObject *)__pyx_v_pval)};
+      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 723, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __pyx_t_8 = PyObject_SetItem(__pyx_v_rv, ((PyObject *)__pyx_v_pkey), __pyx_t_1); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 723, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":724
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		PyObject_SetItem(rv, <object>pkey, func(<object>pval))
+ * 	return rv             # <<<<<<<<<<<<<<
+ * 
+ * def merge_with(func, *dicts, factory=dict):
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_rv);
+  __pyx_r = __pyx_v_rv;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":691
+ * 	return c_merge(dicts, factory)
+ * 
+ * cdef object c_merge_with(object func, object dicts, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	cdef:
+ * 		dict result
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.c_merge_with", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_result);
+  __Pyx_XDECREF(__pyx_v_rv);
+  __Pyx_XDECREF(__pyx_v_d);
+  __Pyx_XDECREF(__pyx_v_seq);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":726
+ * 	return rv
+ * 
+ * def merge_with(func, *dicts, factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Merge dictionaries and apply a `Callable` to combined values.
+ * 
+*/
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_28__defaults__(CYTHON_UNUSED PyObject *__pyx_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__defaults__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 726, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_factory, __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_self)->arg0) < (0)) __PYX_ERR(0, 726, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 726, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(Py_None);
+  __Pyx_GIVEREF(Py_None);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, Py_None) != (0)) __PYX_ERR(0, 726, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_1);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 726, __pyx_L1_error);
+  __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.__defaults__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_19merge_with(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_18merge_with, "merge_with(func, *dicts, factory=dict)\n\nMerge dictionaries and apply a `Callable` to combined values.\n\n(AI generated docstring)\n\nYou can use `merge_with` to combine two or more `Mapping`[1] objects and resolve key conflicts\nby applying `func` to a `list` of all values associated with each key. For each key that\nappears in one or more elements of `dicts`, `merge_with` collects all associated values into a\n`list` in the order they appear across `dicts`, then calls `func` with that `list` to produce\nthe value in the result. You can also pass a single `Iterable[Mapping[K, V]]` as the sole\npositional argument after `func`.\n\nParameters\n----------\nfunc : Callable[[list[V]], V]\n        `Callable` applied to the `list` of values associated with each key across all `Mapping`\n        objects in `dicts`. `func` receives a non-empty `list` and must return the merged value for\n        that key.\n*dicts : Mapping[K, V]\n        `Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the\n        sole positional argument after `func`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingMerged : MutableMapping[K, V]\n        New `MutableMapping` created by `factory` where each key maps to the result of calling\n        `func` with all values associated with that key across `dicts`.\n\nSee Also\n--------\nmerge : Merge a collection of `Mapping` objects into a new `Mapping`.\n\nExamples\n--------\n>>> merge_with(sum, {1: 1, 2: 2}, {1: 10, 2: 20})\n{1: 11, 2: 22}\n\n>>> merge_with(first, {1: 1, 2: 2}, {2: 20, 3: 30})  # doctest: +SKIP\n{1: 1, 2: 2, 3: 30}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_19merge_with = {"merge_with", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_19merge_with, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_18merge_with};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_19merge_with(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_func = 0;
+  PyObject *__pyx_v_factory = 0;
+  PyObject *__pyx_v_dicts = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[2] = {0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("merge_with (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  __pyx_v_dicts = __Pyx_ArgsSlice_FASTCALL(__pyx_args, 1, __pyx_nargs);
+  if (unlikely(!__pyx_v_dicts)) {
+    __Pyx_RefNannyFinishContext();
+    return NULL;
+  }
+  __Pyx_GOTREF(__pyx_v_dicts);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_factory,0};
+    struct __pyx_defaults *__pyx_dynamic_args = __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_self);
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 726, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        default:
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 726, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      const Py_ssize_t used_pos_args = (kwd_pos_args < 1) ? kwd_pos_args : 1;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, used_pos_args, __pyx_kwds_len, "merge_with", 0) < (0)) __PYX_ERR(0, 726, __pyx_L3_error)
+      if (!values[1]) values[1] = __Pyx_NewRef(__pyx_dynamic_args->arg0);
+      for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("merge_with", 0, 1, 1, i); __PYX_ERR(0, 726, __pyx_L3_error) }
+      }
+    } else if (unlikely(__pyx_nargs < 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 726, __pyx_L3_error)
+      if (!values[1]) values[1] = __Pyx_NewRef(__pyx_dynamic_args->arg0);
+    }
+    __pyx_v_func = values[0];
+    __pyx_v_factory = values[1];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("merge_with", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 726, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_DECREF(__pyx_v_dicts); __pyx_v_dicts = 0;
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.merge_with", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_18merge_with(__pyx_self, __pyx_v_func, __pyx_v_factory, __pyx_v_dicts);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_DECREF(__pyx_v_dicts);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_18merge_with(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_factory, PyObject *__pyx_v_dicts) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  Py_ssize_t __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_t_6;
+  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with __pyx_t_7;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("merge_with", 0);
+  __Pyx_INCREF(__pyx_v_dicts);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":773
+ * 		https://docs.python.org/3/library/collections.abc.html
+ * 	"""
+ * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):             # <<<<<<<<<<<<<<
+ * 		dicts = dicts[0]
+ * 	return c_merge_with(func, dicts, factory)
+*/
+  __pyx_t_2 = PyObject_Length(__pyx_v_dicts); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 773, __pyx_L1_error)
+  __pyx_t_3 = (__pyx_t_2 == 1);
+  if (__pyx_t_3) {
+  } else {
+    __pyx_t_1 = __pyx_t_3;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_dicts, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 773, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __pyx_v_13humpy_cytoolz_9dicttoolz_Mapping;
+  __Pyx_INCREF(__pyx_t_5);
+  __pyx_t_3 = PyObject_IsInstance(__pyx_t_4, __pyx_t_5); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 773, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_6 = (!__pyx_t_3);
+  __pyx_t_1 = __pyx_t_6;
+  __pyx_L4_bool_binop_done:;
+  if (__pyx_t_1) {
+
+    /* "humpy_cytoolz/dicttoolz.pyx":774
+ * 	"""
+ * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
+ * 		dicts = dicts[0]             # <<<<<<<<<<<<<<
+ * 	return c_merge_with(func, dicts, factory)
+ * 
+*/
+    __pyx_t_5 = __Pyx_GetItemInt_Tuple(__pyx_v_dicts, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 774, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF_SET(__pyx_v_dicts, __pyx_t_5);
+    __pyx_t_5 = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":773
+ * 		https://docs.python.org/3/library/collections.abc.html
+ * 	"""
+ * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):             # <<<<<<<<<<<<<<
+ * 		dicts = dicts[0]
+ * 	return c_merge_with(func, dicts, factory)
+*/
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":775
+ * 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
+ * 		dicts = dicts[0]
+ * 	return c_merge_with(func, dicts, factory)             # <<<<<<<<<<<<<<
+ * 
+ * cpdef object update_in(object d, object keys, object func, object default=None, object factory=dict):
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_7.__pyx_n = 1;
+  __pyx_t_7.factory = __pyx_v_factory;
+  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_c_merge_with(__pyx_v_func, __pyx_v_dicts, &__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 775, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_r = __pyx_t_5;
+  __pyx_t_5 = 0;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":726
+ * 	return rv
+ * 
+ * def merge_with(func, *dicts, factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Merge dictionaries and apply a `Callable` to combined values.
+ * 
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.merge_with", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_dicts);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":777
+ * 	return c_merge_with(func, dicts, factory)
+ * 
+ * cpdef object update_in(object d, object keys, object func, object default=None, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply a `Callable` to a value at a nested path in a `Mapping`.
+ * 
+*/
+
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_21update_in(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_update_in(PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_func, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in *__pyx_optional_args) {
+  PyObject *__pyx_v_default = ((PyObject *)Py_None);
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__10;
+  PyObject *__pyx_v_prevkey = 0;
+  PyObject *__pyx_v_key = 0;
+  PyObject *__pyx_v_rv = 0;
+  PyObject *__pyx_v_inner = 0;
+  PyObject *__pyx_v_dtemp = 0;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  size_t __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  Py_ssize_t __pyx_t_7;
+  PyObject *(*__pyx_t_8)(PyObject *);
+  PyObject *__pyx_t_9 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("update_in", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_default = __pyx_optional_args->__pyx_default;
+      if (__pyx_optional_args->__pyx_n > 1) {
+        __pyx_v_factory = __pyx_optional_args->factory;
+      }
+    }
+  }
+  __Pyx_INCREF(__pyx_v_d);
+  __Pyx_INCREF(__pyx_v_keys);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":834
+ * 	cdef object prevkey, key
+ * 	cdef object rv, inner, dtemp
+ * 	prevkey, keys = keys[0], keys[1:]             # <<<<<<<<<<<<<<
+ * 	rv = factory()
+ * 	if PyDict_CheckExact(rv):
+*/
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_keys, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 834, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_keys, 1, 0, NULL, NULL, &__pyx_mstate_global->__pyx_slice[0], 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 834, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_v_prevkey = __pyx_t_1;
+  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(__pyx_v_keys, __pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":835
+ * 	cdef object rv, inner, dtemp
+ * 	prevkey, keys = keys[0], keys[1:]
+ * 	rv = factory()             # <<<<<<<<<<<<<<
+ * 	if PyDict_CheckExact(rv):
+ * 		PyDict_Update(rv, d)
+*/
+  __pyx_t_1 = NULL;
+  __Pyx_INCREF(__pyx_v_factory);
+  __pyx_t_3 = __pyx_v_factory; 
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_1);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_1);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_1, NULL};
+    __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 835, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  }
+  __pyx_v_rv = __pyx_t_2;
+  __pyx_t_2 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":836
+ * 	prevkey, keys = keys[0], keys[1:]
+ * 	rv = factory()
+ * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
+ * 		PyDict_Update(rv, d)
+ * 	else:
+*/
+  __pyx_t_5 = PyDict_CheckExact(__pyx_v_rv);
+  if (__pyx_t_5) {
+
+    /* "humpy_cytoolz/dicttoolz.pyx":837
+ * 	rv = factory()
+ * 	if PyDict_CheckExact(rv):
+ * 		PyDict_Update(rv, d)             # <<<<<<<<<<<<<<
+ * 	else:
+ * 		rv.update(d)
+*/
+    __pyx_t_6 = PyDict_Update(__pyx_v_rv, __pyx_v_d); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 837, __pyx_L1_error)
+
+    /* "humpy_cytoolz/dicttoolz.pyx":836
+ * 	prevkey, keys = keys[0], keys[1:]
+ * 	rv = factory()
+ * 	if PyDict_CheckExact(rv):             # <<<<<<<<<<<<<<
+ * 		PyDict_Update(rv, d)
+ * 	else:
+*/
+    goto __pyx_L3;
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":839
+ * 		PyDict_Update(rv, d)
+ * 	else:
+ * 		rv.update(d)             # <<<<<<<<<<<<<<
+ * 	inner = rv
+ * 
+*/
+  /*else*/ {
+    __pyx_t_3 = __pyx_v_rv;
+    __Pyx_INCREF(__pyx_t_3);
+    __pyx_t_4 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_d};
+      __pyx_t_2 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_update, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 839, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+    }
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __pyx_L3:;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":840
+ * 	else:
+ * 		rv.update(d)
+ * 	inner = rv             # <<<<<<<<<<<<<<
+ * 
+ * 	for key in keys:
+*/
+  __Pyx_INCREF(__pyx_v_rv);
+  __pyx_v_inner = __pyx_v_rv;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":842
+ * 	inner = rv
+ * 
+ * 	for key in keys:             # <<<<<<<<<<<<<<
+ * 		if prevkey in d:
+ * 			d = d[prevkey]
+*/
+  if (likely(PyList_CheckExact(__pyx_v_keys)) || PyTuple_CheckExact(__pyx_v_keys)) {
+    __pyx_t_2 = __pyx_v_keys; __Pyx_INCREF(__pyx_t_2);
+    __pyx_t_7 = 0;
+    __pyx_t_8 = NULL;
+  } else {
+    __pyx_t_7 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_keys); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 842, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_8 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 842, __pyx_L1_error)
+  }
+  for (;;) {
+    if (likely(!__pyx_t_8)) {
+      if (likely(PyList_CheckExact(__pyx_t_2))) {
+        {
+          Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_2);
+          #if !CYTHON_ASSUME_SAFE_SIZE
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 842, __pyx_L1_error)
+          #endif
+          if (__pyx_t_7 >= __pyx_temp) break;
+        }
+        __pyx_t_3 = __Pyx_PyList_GetItemRefFast(__pyx_t_2, __pyx_t_7, __Pyx_ReferenceSharing_OwnStrongReference);
+        ++__pyx_t_7;
+      } else {
+        {
+          Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_2);
+          #if !CYTHON_ASSUME_SAFE_SIZE
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 842, __pyx_L1_error)
+          #endif
+          if (__pyx_t_7 >= __pyx_temp) break;
+        }
+        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+        __pyx_t_3 = __Pyx_NewRef(PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_7));
+        #else
+        __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_2, __pyx_t_7);
+        #endif
+        ++__pyx_t_7;
+      }
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 842, __pyx_L1_error)
+    } else {
+      __pyx_t_3 = __pyx_t_8(__pyx_t_2);
+      if (unlikely(!__pyx_t_3)) {
+        PyObject* exc_type = PyErr_Occurred();
+        if (exc_type) {
+          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 842, __pyx_L1_error)
+          PyErr_Clear();
+        }
+        break;
+      }
+    }
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_XDECREF_SET(__pyx_v_key, __pyx_t_3);
+    __pyx_t_3 = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":843
+ * 
+ * 	for key in keys:
+ * 		if prevkey in d:             # <<<<<<<<<<<<<<
+ * 			d = d[prevkey]
+ * 			dtemp = factory()
+*/
+    __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_prevkey, __pyx_v_d, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 843, __pyx_L1_error)
+    if (__pyx_t_5) {
+
+      /* "humpy_cytoolz/dicttoolz.pyx":844
+ * 	for key in keys:
+ * 		if prevkey in d:
+ * 			d = d[prevkey]             # <<<<<<<<<<<<<<
+ * 			dtemp = factory()
+ * 			if PyDict_CheckExact(dtemp):
+*/
+      __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_d, __pyx_v_prevkey); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 844, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_3);
+      __pyx_t_3 = 0;
+
+      /* "humpy_cytoolz/dicttoolz.pyx":845
+ * 		if prevkey in d:
+ * 			d = d[prevkey]
+ * 			dtemp = factory()             # <<<<<<<<<<<<<<
+ * 			if PyDict_CheckExact(dtemp):
+ * 				PyDict_Update(dtemp, d)
+*/
+      __pyx_t_1 = NULL;
+      __Pyx_INCREF(__pyx_v_factory);
+      __pyx_t_9 = __pyx_v_factory; 
+      __pyx_t_4 = 1;
+      #if CYTHON_UNPACK_METHODS
+      if (unlikely(PyMethod_Check(__pyx_t_9))) {
+        __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_9);
+        assert(__pyx_t_1);
+        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_9);
+        __Pyx_INCREF(__pyx_t_1);
+        __Pyx_INCREF(__pyx__function);
+        __Pyx_DECREF_SET(__pyx_t_9, __pyx__function);
+        __pyx_t_4 = 0;
+      }
+      #endif
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_1, NULL};
+        __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_9, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 845, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+      }
+      __Pyx_XDECREF_SET(__pyx_v_dtemp, __pyx_t_3);
+      __pyx_t_3 = 0;
+
+      /* "humpy_cytoolz/dicttoolz.pyx":846
+ * 			d = d[prevkey]
+ * 			dtemp = factory()
+ * 			if PyDict_CheckExact(dtemp):             # <<<<<<<<<<<<<<
+ * 				PyDict_Update(dtemp, d)
+ * 			else:
+*/
+      __pyx_t_5 = PyDict_CheckExact(__pyx_v_dtemp);
+      if (__pyx_t_5) {
+
+        /* "humpy_cytoolz/dicttoolz.pyx":847
+ * 			dtemp = factory()
+ * 			if PyDict_CheckExact(dtemp):
+ * 				PyDict_Update(dtemp, d)             # <<<<<<<<<<<<<<
+ * 			else:
+ * 				dtemp.update(d)
+*/
+        __pyx_t_6 = PyDict_Update(__pyx_v_dtemp, __pyx_v_d); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 847, __pyx_L1_error)
+
+        /* "humpy_cytoolz/dicttoolz.pyx":846
+ * 			d = d[prevkey]
+ * 			dtemp = factory()
+ * 			if PyDict_CheckExact(dtemp):             # <<<<<<<<<<<<<<
+ * 				PyDict_Update(dtemp, d)
+ * 			else:
+*/
+        goto __pyx_L7;
+      }
+
+      /* "humpy_cytoolz/dicttoolz.pyx":849
+ * 				PyDict_Update(dtemp, d)
+ * 			else:
+ * 				dtemp.update(d)             # <<<<<<<<<<<<<<
+ * 		else:
+ * 			d = factory()
+*/
+      /*else*/ {
+        __pyx_t_9 = __pyx_v_dtemp;
+        __Pyx_INCREF(__pyx_t_9);
+        __pyx_t_4 = 0;
+        {
+          PyObject *__pyx_callargs[2] = {__pyx_t_9, __pyx_v_d};
+          __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_update, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 849, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_3);
+        }
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      }
+      __pyx_L7:;
+
+      /* "humpy_cytoolz/dicttoolz.pyx":843
+ * 
+ * 	for key in keys:
+ * 		if prevkey in d:             # <<<<<<<<<<<<<<
+ * 			d = d[prevkey]
+ * 			dtemp = factory()
+*/
+      goto __pyx_L6;
+    }
+
+    /* "humpy_cytoolz/dicttoolz.pyx":851
+ * 				dtemp.update(d)
+ * 		else:
+ * 			d = factory()             # <<<<<<<<<<<<<<
+ * 			dtemp = d
+ * 		inner[prevkey] = dtemp
+*/
+    /*else*/ {
+      __pyx_t_9 = NULL;
+      __Pyx_INCREF(__pyx_v_factory);
+      __pyx_t_1 = __pyx_v_factory; 
+      __pyx_t_4 = 1;
+      #if CYTHON_UNPACK_METHODS
+      if (unlikely(PyMethod_Check(__pyx_t_1))) {
+        __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_1);
+        assert(__pyx_t_9);
+        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_1);
+        __Pyx_INCREF(__pyx_t_9);
+        __Pyx_INCREF(__pyx__function);
+        __Pyx_DECREF_SET(__pyx_t_1, __pyx__function);
+        __pyx_t_4 = 0;
+      }
+      #endif
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_9, NULL};
+        __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_1, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 851, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+      }
+      __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_3);
+      __pyx_t_3 = 0;
+
+      /* "humpy_cytoolz/dicttoolz.pyx":852
+ * 		else:
+ * 			d = factory()
+ * 			dtemp = d             # <<<<<<<<<<<<<<
+ * 		inner[prevkey] = dtemp
+ * 		prevkey = key
+*/
+      __Pyx_INCREF(__pyx_v_d);
+      __Pyx_XDECREF_SET(__pyx_v_dtemp, __pyx_v_d);
+    }
+    __pyx_L6:;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":853
+ * 			d = factory()
+ * 			dtemp = d
+ * 		inner[prevkey] = dtemp             # <<<<<<<<<<<<<<
+ * 		prevkey = key
+ * 		inner = dtemp
+*/
+    if (unlikely((PyObject_SetItem(__pyx_v_inner, __pyx_v_prevkey, __pyx_v_dtemp) < 0))) __PYX_ERR(0, 853, __pyx_L1_error)
+
+    /* "humpy_cytoolz/dicttoolz.pyx":854
+ * 			dtemp = d
+ * 		inner[prevkey] = dtemp
+ * 		prevkey = key             # <<<<<<<<<<<<<<
+ * 		inner = dtemp
+ * 
+*/
+    __Pyx_INCREF(__pyx_v_key);
+    __Pyx_DECREF_SET(__pyx_v_prevkey, __pyx_v_key);
+
+    /* "humpy_cytoolz/dicttoolz.pyx":855
+ * 		inner[prevkey] = dtemp
+ * 		prevkey = key
+ * 		inner = dtemp             # <<<<<<<<<<<<<<
+ * 
+ * 	if prevkey in d:
+*/
+    __Pyx_INCREF(__pyx_v_dtemp);
+    __Pyx_DECREF_SET(__pyx_v_inner, __pyx_v_dtemp);
+
+    /* "humpy_cytoolz/dicttoolz.pyx":842
+ * 	inner = rv
+ * 
+ * 	for key in keys:             # <<<<<<<<<<<<<<
+ * 		if prevkey in d:
+ * 			d = d[prevkey]
+*/
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":857
+ * 		inner = dtemp
+ * 
+ * 	if prevkey in d:             # <<<<<<<<<<<<<<
+ * 		key = func(d[prevkey])
+ * 	else:
+*/
+  __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_prevkey, __pyx_v_d, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 857, __pyx_L1_error)
+  if (__pyx_t_5) {
+
+    /* "humpy_cytoolz/dicttoolz.pyx":858
+ * 
+ * 	if prevkey in d:
+ * 		key = func(d[prevkey])             # <<<<<<<<<<<<<<
+ * 	else:
+ * 		key = func(default)
+*/
+    __pyx_t_3 = NULL;
+    __Pyx_INCREF(__pyx_v_func);
+    __pyx_t_1 = __pyx_v_func; 
+    __pyx_t_9 = __Pyx_PyObject_GetItem(__pyx_v_d, __pyx_v_prevkey); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 858, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_4 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_1))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_1);
+      assert(__pyx_t_3);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_1);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_1, __pyx__function);
+      __pyx_t_4 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_t_9};
+      __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_1, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 858, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+    }
+    __Pyx_XDECREF_SET(__pyx_v_key, __pyx_t_2);
+    __pyx_t_2 = 0;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":857
+ * 		inner = dtemp
+ * 
+ * 	if prevkey in d:             # <<<<<<<<<<<<<<
+ * 		key = func(d[prevkey])
+ * 	else:
+*/
+    goto __pyx_L9;
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":860
+ * 		key = func(d[prevkey])
+ * 	else:
+ * 		key = func(default)             # <<<<<<<<<<<<<<
+ * 	inner[prevkey] = key
+ * 	return rv
+*/
+  /*else*/ {
+    __pyx_t_1 = NULL;
+    __Pyx_INCREF(__pyx_v_func);
+    __pyx_t_9 = __pyx_v_func; 
+    __pyx_t_4 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_9))) {
+      __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_9);
+      assert(__pyx_t_1);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_9);
+      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_9, __pyx__function);
+      __pyx_t_4 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_1, __pyx_v_default};
+      __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_9, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 860, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+    }
+    __Pyx_XDECREF_SET(__pyx_v_key, __pyx_t_2);
+    __pyx_t_2 = 0;
+  }
+  __pyx_L9:;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":861
+ * 	else:
+ * 		key = func(default)
+ * 	inner[prevkey] = key             # <<<<<<<<<<<<<<
+ * 	return rv
+ * 
+*/
+  if (unlikely((PyObject_SetItem(__pyx_v_inner, __pyx_v_prevkey, __pyx_v_key) < 0))) __PYX_ERR(0, 861, __pyx_L1_error)
+
+  /* "humpy_cytoolz/dicttoolz.pyx":862
+ * 		key = func(default)
+ * 	inner[prevkey] = key
+ * 	return rv             # <<<<<<<<<<<<<<
+ * 
+ * cpdef object valfilter(object predicate, object d, object factory=dict):
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_rv);
+  __pyx_r = __pyx_v_rv;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":777
+ * 	return c_merge_with(func, dicts, factory)
+ * 
+ * cpdef object update_in(object d, object keys, object func, object default=None, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply a `Callable` to a value at a nested path in a `Mapping`.
+ * 
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.update_in", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_prevkey);
+  __Pyx_XDECREF(__pyx_v_key);
+  __Pyx_XDECREF(__pyx_v_rv);
+  __Pyx_XDECREF(__pyx_v_inner);
+  __Pyx_XDECREF(__pyx_v_dtemp);
+  __Pyx_XDECREF(__pyx_v_d);
+  __Pyx_XDECREF(__pyx_v_keys);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_21update_in(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_20update_in, "update_in(d, keys, func, default=None, factory=dict)\n\nApply a `Callable` to a value at a nested path in a `Mapping`.\n\n(AI generated docstring)\n\nYou can use `update_in` to produce a copy of `d` with the value at the nested path\nspecified by `keys` replaced by the result of calling `func` on the current value.\n`update_in` creates intermediate `MutableMapping` instances as needed when a key in\n`keys` is absent from `d`. If the innermost key is absent, `func` receives `default`\ninstead of an existing value. `update_in` does not mutate `d` or any nested `Mapping`\nwithin `d`.\n\nParameters\n----------\nd : Mapping[K, V]\n        Source `Mapping`.\nkeys : Sequence[K]\n        Non-empty sequence of keys specifying the nested path to the value to update in `d`.\nfunc : Callable[[V], V]\n        `Callable` applied to the current value at the path in `keys`. If the innermost\n        key is absent from `d`, `func` receives `default`.\ndefault : V | None = None\n        Value passed to `func` when the innermost key is absent from `d`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates each new `MutableMapping`[1] in the result.\n\nReturns\n-------\nmappingUpdated : MutableMapping[K, V]\n        New `MutableMapping` based on `d` with the value at the path specified by `keys`\n        replaced by the result of `func`.\n\nSee Also\n--------\nassoc_in : Create a new `Mapping` from `d` with a value at a nested path.\nget_in : Retrieve a value at a nested path in a `Mapping`.\nassoc : Create a new `Mapping` from `d` with one key associated to a value.\n\nExamples\n--------\n>>> inc = lambda x: x + 1\n>>> update_in({'a': 0}, ['a'], inc)\n{'a': 1}\n\n>>> update_in({}, ['z'], inc, 0)\n{'z': 1}\n\n>>> update_in({}, [1, 2, 3], str, default='bar')\n{1: {2: {3: 'bar'}}}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_21update_in = {"update_in", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_21update_in, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_20update_in};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_21update_in(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_d = 0;
+  PyObject *__pyx_v_keys = 0;
+  PyObject *__pyx_v_func = 0;
+  PyObject *__pyx_v_default = 0;
+  PyObject *__pyx_v_factory = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[5] = {0,0,0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("update_in (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_keys,&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_default,&__pyx_mstate_global->__pyx_n_u_factory,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 777, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  5:
+        values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 777, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  4:
+        values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 777, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 777, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 777, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 777, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "update_in", 0) < (0)) __PYX_ERR(0, 777, __pyx_L3_error)
+      if (!values[3]) values[3] = __Pyx_NewRef(((PyObject *)Py_None));
+      if (!values[4]) values[4] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__10);
+      for (Py_ssize_t i = __pyx_nargs; i < 3; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("update_in", 0, 3, 5, i); __PYX_ERR(0, 777, __pyx_L3_error) }
+      }
+    } else {
+      switch (__pyx_nargs) {
+        case  5:
+        values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 777, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  4:
+        values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 777, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 777, __pyx_L3_error)
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 777, __pyx_L3_error)
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 777, __pyx_L3_error)
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      if (!values[3]) values[3] = __Pyx_NewRef(((PyObject *)Py_None));
+      if (!values[4]) values[4] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__10);
+    }
+    __pyx_v_d = values[0];
+    __pyx_v_keys = values[1];
+    __pyx_v_func = values[2];
+    __pyx_v_default = values[3];
+    __pyx_v_factory = values[4];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("update_in", 0, 3, 5, __pyx_nargs); __PYX_ERR(0, 777, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.update_in", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_20update_in(__pyx_self, __pyx_v_d, __pyx_v_keys, __pyx_v_func, __pyx_v_default, __pyx_v_factory);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_20update_in(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_d, PyObject *__pyx_v_keys, PyObject *__pyx_v_func, PyObject *__pyx_v_default, PyObject *__pyx_v_factory) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("update_in", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2.__pyx_n = 2;
+  __pyx_t_2.__pyx_default = __pyx_v_default;
+  __pyx_t_2.factory = __pyx_v_factory;
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_update_in(__pyx_v_d, __pyx_v_keys, __pyx_v_func, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 777, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.update_in", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":864
+ * 	return rv
+ * 
+ * cpdef object valfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
+ * 
+*/
+
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_23valfilter(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_valfilter(PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter *__pyx_optional_args) {
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__11;
+  PyObject *__pyx_v_rv = 0;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
+  PyObject *__pyx_v_obj;
+  PyObject *__pyx_v_pkey;
+  PyObject *__pyx_v_pval;
+  Py_ssize_t __pyx_v_pos;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  size_t __pyx_t_4;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("valfilter", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_factory = __pyx_optional_args->factory;
+    }
+  }
+  __Pyx_INCREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":914
+ * 		PyObject *pkey
+ * 		PyObject *pval
+ * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
+ * 
+ * 	rv = factory()
+*/
+  __pyx_v_pos = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":916
+ * 		Py_ssize_t pos = 0
+ * 
+ * 	rv = factory()             # <<<<<<<<<<<<<<
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_INCREF(__pyx_v_factory);
+  __pyx_t_3 = __pyx_v_factory; 
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 916, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_rv = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":917
+ * 
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+*/
+  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 917, __pyx_L1_error)
+  __pyx_v_f = __pyx_t_5;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":918
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj             # <<<<<<<<<<<<<<
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+*/
+  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
+  __Pyx_INCREF(__pyx_t_1);
+  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":919
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+ * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		if predicate(<object>pval):
+*/
+  Py_DECREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":920
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
+ * 		if predicate(<object>pval):
+ * 			rv[<object>pkey] = <object>pval
+*/
+  while (1) {
+    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 920, __pyx_L1_error)
+    __pyx_t_7 = (__pyx_t_6 != 0);
+    if (!__pyx_t_7) break;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":921
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		if predicate(<object>pval):             # <<<<<<<<<<<<<<
+ * 			rv[<object>pkey] = <object>pval
+ * 	return rv
+*/
+    __pyx_t_3 = NULL;
+    __Pyx_INCREF(__pyx_v_predicate);
+    __pyx_t_2 = __pyx_v_predicate; 
+    __pyx_t_4 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_2))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+      assert(__pyx_t_3);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
+      __pyx_t_4 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_3, ((PyObject *)__pyx_v_pval)};
+      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 921, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 921, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (__pyx_t_7) {
+
+      /* "humpy_cytoolz/dicttoolz.pyx":922
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		if predicate(<object>pval):
+ * 			rv[<object>pkey] = <object>pval             # <<<<<<<<<<<<<<
+ * 	return rv
+ * 
+*/
+      __pyx_t_1 = ((PyObject *)__pyx_v_pval);
+      __Pyx_INCREF(__pyx_t_1);
+      if (unlikely((PyObject_SetItem(__pyx_v_rv, ((PyObject *)__pyx_v_pkey), __pyx_t_1) < 0))) __PYX_ERR(0, 922, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "humpy_cytoolz/dicttoolz.pyx":921
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		if predicate(<object>pval):             # <<<<<<<<<<<<<<
+ * 			rv[<object>pkey] = <object>pval
+ * 	return rv
+*/
+    }
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":923
+ * 		if predicate(<object>pval):
+ * 			rv[<object>pkey] = <object>pval
+ * 	return rv             # <<<<<<<<<<<<<<
+ * 
+ * cpdef object valmap(object func, object d, object factory=dict):
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_rv);
+  __pyx_r = __pyx_v_rv;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":864
+ * 	return rv
+ * 
+ * cpdef object valfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
+ * 
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_rv);
+  __Pyx_XDECREF(__pyx_v_d);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_23valfilter(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_22valfilter, "valfilter(predicate, d, factory=dict)\n\nRetain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\n\n(AI generated docstring)\n\nYou can use `valfilter` to select items from `d` (***d***ictionary) by their values. `valfilter`\ncalls `predicate` with each value yielded by `d.values()`. `valfilter` inserts each item whose\nvalue causes `predicate` to return `True` into a new `MutableMapping`[1] created by `factory`.\n`valfilter` does not change `d`.\n\nParameters\n----------\npredicate : Callable[[V], bool]\n        `Callable` applied to each value of `d`. `valfilter` keeps each item for which `predicate`\n        returns `True`.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `valfilter` reads all items from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingFiltered : MutableMapping[K, V]\n        New `MutableMapping` created by `factory` containing only items from `d` whose values\n        cause `predicate` to return `True`.\n\nSee Also\n--------\nkeyfilter : Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\nitemfilter : Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\nvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\n\nExamples\n--------\n>>> iseven = lambda x: x % 2 == 0\n>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n>>> valfilter(iseven, d)\n{1: 2, 3: 4}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_23valfilter = {"valfilter", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_23valfilter, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_22valfilter};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_23valfilter(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_predicate = 0;
+  PyObject *__pyx_v_d = 0;
+  PyObject *__pyx_v_factory = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("valfilter (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_predicate,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 864, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 864, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 864, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 864, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "valfilter", 0) < (0)) __PYX_ERR(0, 864, __pyx_L3_error)
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__11);
+      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("valfilter", 0, 2, 3, i); __PYX_ERR(0, 864, __pyx_L3_error) }
+      }
+    } else {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 864, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 864, __pyx_L3_error)
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 864, __pyx_L3_error)
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__11);
+    }
+    __pyx_v_predicate = values[0];
+    __pyx_v_d = values[1];
+    __pyx_v_factory = values[2];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("valfilter", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 864, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_22valfilter(__pyx_self, __pyx_v_predicate, __pyx_v_d, __pyx_v_factory);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_22valfilter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_predicate, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("valfilter", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2.__pyx_n = 1;
+  __pyx_t_2.factory = __pyx_v_factory;
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_valfilter(__pyx_v_predicate, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 864, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "humpy_cytoolz/dicttoolz.pyx":925
+ * 	return rv
+ * 
+ * cpdef object valmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply `func` to all values of `d` and return a new `Mapping` with the transformed values.
+ * 
+*/
+
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_25valmap(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyObject *__pyx_f_13humpy_cytoolz_9dicttoolz_valmap(PyObject *__pyx_v_func, PyObject *__pyx_v_d, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap *__pyx_optional_args) {
+  PyObject *__pyx_v_factory = __pyx_mstate_global->__pyx_k__12;
+  PyObject *__pyx_v_rv = 0;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_v_f;
+  PyObject *__pyx_v_obj;
+  PyObject *__pyx_v_pkey;
+  PyObject *__pyx_v_pval;
+  Py_ssize_t __pyx_v_pos;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  size_t __pyx_t_4;
+  __pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("valmap", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_factory = __pyx_optional_args->factory;
+    }
+  }
+  __Pyx_INCREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":972
+ * 		PyObject *pkey
+ * 		PyObject *pval
+ * 		Py_ssize_t pos = 0             # <<<<<<<<<<<<<<
+ * 
+ * 	rv = factory()
+*/
+  __pyx_v_pos = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":974
+ * 		Py_ssize_t pos = 0
+ * 
+ * 	rv = factory()             # <<<<<<<<<<<<<<
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_INCREF(__pyx_v_factory);
+  __pyx_t_3 = __pyx_v_factory; 
+  __pyx_t_4 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_3);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_3, __pyx__function);
+    __pyx_t_4 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 974, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __pyx_v_rv = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":975
+ * 
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)             # <<<<<<<<<<<<<<
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+*/
+  __pyx_t_5 = __pyx_f_13humpy_cytoolz_9dicttoolz_get_map_iter(__pyx_v_d, (&__pyx_v_obj)); if (unlikely(__pyx_t_5 == ((void *)NULL))) __PYX_ERR(0, 975, __pyx_L1_error)
+  __pyx_v_f = __pyx_t_5;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":976
+ * 	rv = factory()
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj             # <<<<<<<<<<<<<<
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+*/
+  __pyx_t_1 = ((PyObject *)__pyx_v_obj);
+  __Pyx_INCREF(__pyx_t_1);
+  __Pyx_DECREF_SET(__pyx_v_d, __pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":977
+ * 	f = get_map_iter(d, &obj)
+ * 	d = <object>obj
+ * 	Py_DECREF(d)             # <<<<<<<<<<<<<<
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		rv[<object>pkey] = func(<object>pval)
+*/
+  Py_DECREF(__pyx_v_d);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":978
+ * 	d = <object>obj
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):             # <<<<<<<<<<<<<<
+ * 		rv[<object>pkey] = func(<object>pval)
+ * 	return rv
+*/
+  while (1) {
+    __pyx_t_6 = __pyx_v_f(__pyx_v_d, (&__pyx_v_pos), (&__pyx_v_pkey), (&__pyx_v_pval)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 978, __pyx_L1_error)
+    __pyx_t_7 = (__pyx_t_6 != 0);
+    if (!__pyx_t_7) break;
+
+    /* "humpy_cytoolz/dicttoolz.pyx":979
+ * 	Py_DECREF(d)
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		rv[<object>pkey] = func(<object>pval)             # <<<<<<<<<<<<<<
+ * 	return rv
+*/
+    __pyx_t_3 = NULL;
+    __Pyx_INCREF(__pyx_v_func);
+    __pyx_t_2 = __pyx_v_func; 
+    __pyx_t_4 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_2))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+      assert(__pyx_t_3);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_2, __pyx__function);
+      __pyx_t_4 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_3, ((PyObject *)__pyx_v_pval)};
+      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 979, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    if (unlikely((PyObject_SetItem(__pyx_v_rv, ((PyObject *)__pyx_v_pkey), __pyx_t_1) < 0))) __PYX_ERR(0, 979, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  }
+
+  /* "humpy_cytoolz/dicttoolz.pyx":980
+ * 	while f(d, &pos, &pkey, &pval):
+ * 		rv[<object>pkey] = func(<object>pval)
+ * 	return rv             # <<<<<<<<<<<<<<
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_rv);
+  __pyx_r = __pyx_v_rv;
+  goto __pyx_L0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":925
+ * 	return rv
+ * 
+ * cpdef object valmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply `func` to all values of `d` and return a new `Mapping` with the transformed values.
+ * 
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_rv);
+  __Pyx_XDECREF(__pyx_v_d);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_25valmap(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_13humpy_cytoolz_9dicttoolz_24valmap, "valmap(func, d, factory=dict)\n\nApply `func` to all values of `d` and return a new `Mapping` with the transformed values.\n\n(AI generated docstring)\n\nYou can use `valmap` to transform all values in `d` without changing `d`. `valmap` applies\n`func` to each value yielded by `d.values()` and builds a new `MutableMapping`[1] created\nby `factory`, preserving each original key associated with its transformed value.\n\nParameters\n----------\nfunc : Callable[[V], W]\n        `Callable` applied to each value of `d`. Each value of `d` is passed to `func`\n        individually, and `func` returns the corresponding transformed value.\nd : Mapping[K, V]\n        Source `Mapping`[1]. `valmap` reads all values from `d` and does not change `d`.\nfactory : Callable[[], MutableMapping[K, W]] = dict\n        `Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingTransformed : MutableMapping[K, W]\n        New `MutableMapping` created by `factory` in which each key from `d` is associated\n        with the result of applying `func` to the corresponding value of `d`.\n\nSee Also\n--------\nkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\nitemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\nExamples\n--------\n>>> bills = {'Alice': [20, 15, 30], 'Bob': [10, 35]}\n>>> valmap(sum, bills)  # doctest: +SKIP\n{'Alice': 65, 'Bob': 45}\n\nReferences\n----------\n[1] Python `collections.abc` module\n        https://docs.python.org/3/library/collections.abc.html");
+static PyMethodDef __pyx_mdef_13humpy_cytoolz_9dicttoolz_25valmap = {"valmap", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_13humpy_cytoolz_9dicttoolz_25valmap, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_13humpy_cytoolz_9dicttoolz_24valmap};
+static PyObject *__pyx_pw_13humpy_cytoolz_9dicttoolz_25valmap(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_func = 0;
+  PyObject *__pyx_v_d = 0;
+  PyObject *__pyx_v_factory = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("valmap (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_func,&__pyx_mstate_global->__pyx_n_u_d,&__pyx_mstate_global->__pyx_n_u_factory,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len < 0)) __PYX_ERR(0, 925, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 925, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 925, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 925, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "valmap", 0) < (0)) __PYX_ERR(0, 925, __pyx_L3_error)
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__12);
+      for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("valmap", 0, 2, 3, i); __PYX_ERR(0, 925, __pyx_L3_error) }
+      }
+    } else {
+      switch (__pyx_nargs) {
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 925, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 925, __pyx_L3_error)
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 925, __pyx_L3_error)
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      if (!values[2]) values[2] = __Pyx_NewRef(__pyx_mstate_global->__pyx_k__12);
+    }
+    __pyx_v_func = values[0];
+    __pyx_v_d = values[1];
+    __pyx_v_factory = values[2];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("valmap", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 925, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_13humpy_cytoolz_9dicttoolz_24valmap(__pyx_self, __pyx_v_func, __pyx_v_d, __pyx_v_factory);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_13humpy_cytoolz_9dicttoolz_24valmap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_func, PyObject *__pyx_v_d, PyObject *__pyx_v_factory) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("valmap", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2.__pyx_n = 1;
+  __pyx_t_2.factory = __pyx_v_factory;
+  __pyx_t_1 = __pyx_f_13humpy_cytoolz_9dicttoolz_valmap(__pyx_v_func, __pyx_v_d, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 925, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("humpy_cytoolz.dicttoolz.valmap", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -10288,15 +10286,15 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_13humpy_cytoolz_9dicttoolz__iter_mapping_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping)) __PYX_ERR(0, 25, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_13humpy_cytoolz_9dicttoolz__iter_mapping_spec, __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping) < (0)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_13humpy_cytoolz_9dicttoolz__iter_mapping_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping)) __PYX_ERR(0, 59, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_13humpy_cytoolz_9dicttoolz__iter_mapping_spec, __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping) < (0)) __PYX_ERR(0, 59, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping = &__pyx_type_13humpy_cytoolz_9dicttoolz__iter_mapping;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping) < (0)) __PYX_ERR(0, 25, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping) < (0)) __PYX_ERR(0, 59, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping);
@@ -10306,18 +10304,18 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_iter_mapping, (PyObject *) __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping) < (0)) __PYX_ERR(0, 25, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject *) __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping) < (0)) __PYX_ERR(0, 25, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_iter_mapping, (PyObject *) __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping) < (0)) __PYX_ERR(0, 59, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz__iter_mapping) < (0)) __PYX_ERR(0, 59, __pyx_L1_error)
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_13humpy_cytoolz_9dicttoolz___pyx_defaults_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults)) __PYX_ERR(0, 98, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_13humpy_cytoolz_9dicttoolz___pyx_defaults_spec, __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults) < (0)) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_13humpy_cytoolz_9dicttoolz___pyx_defaults_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults)) __PYX_ERR(0, 642, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_13humpy_cytoolz_9dicttoolz___pyx_defaults_spec, __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults) < (0)) __PYX_ERR(0, 642, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults = &__pyx_type_13humpy_cytoolz_9dicttoolz___pyx_defaults;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults) < (0)) __PYX_ERR(0, 98, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults) < (0)) __PYX_ERR(0, 642, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults);
@@ -10406,7 +10404,7 @@ namespace {
   {
       PyModuleDef_HEAD_INIT,
       "dicttoolz",
-      0, /* m_doc */
+      __pyx_k_Provide_Cython_implementations_o, /* m_doc */
     #if CYTHON_USE_MODULE_STATE
       sizeof(__pyx_mstatetype), /* m_size */
     #else
@@ -10649,7 +10647,7 @@ __Pyx_RefNannySetupContext("PyInit_dicttoolz", 0);
   (void)__Pyx_modinit_function_import_code(__pyx_mstate);
   /*--- Execution code ---*/
 
-  /* "humpy_cytoolz/dicttoolz.pyx":14
+  /* "humpy_cytoolz/dicttoolz.pyx":46
  * from humpy_cytoolz.cpython cimport PyDict_Next_Compat, PtrIter_Next
  * 
  * from collections import abc             # <<<<<<<<<<<<<<
@@ -10658,31 +10656,31 @@ __Pyx_RefNannySetupContext("PyInit_dicttoolz", 0);
 */
   {
     PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_abc};
-    __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_collections, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_collections, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
   }
   __pyx_t_2 = __pyx_t_1;
   __Pyx_GOTREF(__pyx_t_2);
   {
     PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_abc};
     __pyx_t_3 = 0; {
-      __pyx_t_4 = __Pyx_ImportFrom(__pyx_t_2, __pyx_imported_names[__pyx_t_3]); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 14, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_ImportFrom(__pyx_t_2, __pyx_imported_names[__pyx_t_3]); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_imported_names[__pyx_t_3], __pyx_t_4) < (0)) __PYX_ERR(0, 14, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_imported_names[__pyx_t_3], __pyx_t_4) < (0)) __PYX_ERR(0, 46, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":18
+  /* "humpy_cytoolz/dicttoolz.pyx":50
  * # cdef aliases to eliminate global lookups
  * 
  * cdef object Mapping = abc.Mapping             # <<<<<<<<<<<<<<
  * del abc
  * 
 */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_abc); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_abc); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_Mapping); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_Mapping); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_XGOTREF(__pyx_v_13humpy_cytoolz_9dicttoolz_Mapping);
@@ -10690,26 +10688,23 @@ __Pyx_RefNannySetupContext("PyInit_dicttoolz", 0);
   __Pyx_GIVEREF(__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":19
+  /* "humpy_cytoolz/dicttoolz.pyx":51
  * 
  * cdef object Mapping = abc.Mapping
  * del abc             # <<<<<<<<<<<<<<
  * 
- * __all__ = ['merge', 'merge_with', 'valmap', 'keymap', 'itemmap', 'valfilter',
+ * __all__ = ('assoc', 'assoc_in', 'dissoc', 'get_in', 'itemfilter', 'itemmap',
 */
-  if (__Pyx_PyObject_DelAttrStr(__pyx_m, __pyx_mstate_global->__pyx_n_u_abc) < (0)) __PYX_ERR(0, 19, __pyx_L1_error)
+  if (__Pyx_PyObject_DelAttrStr(__pyx_m, __pyx_mstate_global->__pyx_n_u_abc) < (0)) __PYX_ERR(0, 51, __pyx_L1_error)
 
-  /* "humpy_cytoolz/dicttoolz.pyx":21
+  /* "humpy_cytoolz/dicttoolz.pyx":53
  * del abc
  * 
- * __all__ = ['merge', 'merge_with', 'valmap', 'keymap', 'itemmap', 'valfilter',             # <<<<<<<<<<<<<<
- * 		   'keyfilter', 'itemfilter', 'assoc', 'dissoc', 'assoc_in', 'get_in',
- * 		   'update_in']
+ * __all__ = ('assoc', 'assoc_in', 'dissoc', 'get_in', 'itemfilter', 'itemmap',             # <<<<<<<<<<<<<<
+ * 		   'keyfilter', 'keymap', 'merge', 'merge_with', 'update_in', 'valfilter',
+ * 		   'valmap')
 */
-  __pyx_t_4 = __Pyx_PyList_Pack(13, __pyx_mstate_global->__pyx_n_u_merge, __pyx_mstate_global->__pyx_n_u_merge_with, __pyx_mstate_global->__pyx_n_u_valmap, __pyx_mstate_global->__pyx_n_u_keymap, __pyx_mstate_global->__pyx_n_u_itemmap, __pyx_mstate_global->__pyx_n_u_valfilter, __pyx_mstate_global->__pyx_n_u_keyfilter, __pyx_mstate_global->__pyx_n_u_itemfilter, __pyx_mstate_global->__pyx_n_u_assoc, __pyx_mstate_global->__pyx_n_u_dissoc, __pyx_mstate_global->__pyx_n_u_assoc_in, __pyx_mstate_global->__pyx_n_u_get_in, __pyx_mstate_global->__pyx_n_u_update_in); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_all, __pyx_t_4) < (0)) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_all, __pyx_mstate_global->__pyx_tuple[0]) < (0)) __PYX_ERR(0, 53, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
@@ -10738,245 +10733,51 @@ __Pyx_RefNannySetupContext("PyInit_dicttoolz", 0);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_setstate_cython, __pyx_t_4) < (0)) __PYX_ERR(1, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":87
- * 	return factory
+  /* "humpy_cytoolz/dicttoolz.pyx":123
+ * #======== Public Mapping Operations ========
  * 
- * cdef object c_merge(object dicts, object factory=dict):             # <<<<<<<<<<<<<<
- * 	cdef object rv
- * 	rv = factory()
+ * cpdef object assoc(object d, object key, object value, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Create a new `Mapping`[1] with `key` associated with `value`.
+ * 
 */
   __Pyx_INCREF((PyObject *)(&PyDict_Type));
   __pyx_mstate_global->__pyx_k_ = ((PyObject *)(&PyDict_Type));
   __Pyx_GIVEREF((&PyDict_Type));
+  __pyx_t_4 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_1assoc, 0, __pyx_mstate_global->__pyx_n_u_assoc, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
+  #endif
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_t_4);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_assoc, __pyx_t_2) < (0)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":98
+  /* "humpy_cytoolz/dicttoolz.pyx":168
  * 	return rv
  * 
- * def merge(*dicts, factory=dict):             # <<<<<<<<<<<<<<
- * 	"""\
- * merge(*dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-*/
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_1merge, 0, __pyx_mstate_global->__pyx_n_u_merge, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 98, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
-  #endif
-  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_4, __pyx_mstate_global->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults)) __PYX_ERR(0, 98, __pyx_L1_error)
-  __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_t_4)->arg0 = ((PyObject *)(&PyDict_Type));
-  __Pyx_GIVEREF((&PyDict_Type));
-  __Pyx_CyFunction_SetDefaultsGetter(__pyx_t_4, __pyx_pf_13humpy_cytoolz_9dicttoolz_26__defaults__);
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_merge, __pyx_t_4) < (0)) __PYX_ERR(0, 98, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":150
- * 	return c_merge(dicts, factory)
+ * cpdef object assoc_in(object d, object keys, object value, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Create a new `MutableMapping` from `d` with `value` at the path specified by `keys`.
  * 
- * cdef object c_merge_with(object func, object dicts, object factory=dict):             # <<<<<<<<<<<<<<
- * 	cdef:
- * 		dict result
 */
   __Pyx_INCREF((PyObject *)(&PyDict_Type));
   __pyx_mstate_global->__pyx_k__2 = ((PyObject *)(&PyDict_Type));
   __Pyx_GIVEREF((&PyDict_Type));
-
-  /* "humpy_cytoolz/dicttoolz.pyx":185
- * 	return rv
- * 
- * def merge_with(func, *dicts, factory=dict):             # <<<<<<<<<<<<<<
- * 	"""\
- * merge_with(func: collections.abc.Callable[[list[V]], V], *dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
-*/
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_3merge_with, 0, __pyx_mstate_global->__pyx_n_u_merge_with, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
-  #endif
-  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_4, __pyx_mstate_global->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults)) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_t_4)->arg0 = ((PyObject *)(&PyDict_Type));
-  __Pyx_GIVEREF((&PyDict_Type));
-  __Pyx_CyFunction_SetDefaultsGetter(__pyx_t_4, __pyx_pf_13humpy_cytoolz_9dicttoolz_28__defaults__);
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_merge_with, __pyx_t_4) < (0)) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":239
- * 	return c_merge_with(func, dicts, factory)
- * 
- * cpdef object valmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""valmap(func: collections.abc.Callable[[V], W], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, W]] = dict) -> collections.abc.MutableMapping[K, W]
- * 
-*/
-  __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __pyx_mstate_global->__pyx_k__3 = ((PyObject *)(&PyDict_Type));
-  __Pyx_GIVEREF((&PyDict_Type));
-  __pyx_t_4 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 239, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_5valmap, 0, __pyx_mstate_global->__pyx_n_u_valmap, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
-  #endif
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_t_4);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_valmap, __pyx_t_2) < (0)) __PYX_ERR(0, 239, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":298
- * 	return rv
- * 
- * cpdef object keymap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""keymap(func: collections.abc.Callable[[K], L], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, V]] = dict) -> collections.abc.MutableMapping[L, V]
- * 
-*/
-  __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __pyx_mstate_global->__pyx_k__4 = ((PyObject *)(&PyDict_Type));
-  __Pyx_GIVEREF((&PyDict_Type));
-  __pyx_t_2 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 298, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_7keymap, 0, __pyx_mstate_global->__pyx_n_u_keymap, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 298, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_3assoc_in, 0, __pyx_mstate_global->__pyx_n_u_assoc_in, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 168, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_t_2);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_keymap, __pyx_t_4) < (0)) __PYX_ERR(0, 298, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_assoc_in, __pyx_t_4) < (0)) __PYX_ERR(0, 168, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":357
- * 	return rv
- * 
- * cpdef object itemmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""itemmap(func: collections.abc.Callable[[tuple[K, V]], tuple[L, W]], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, W]] = dict) -> collections.abc.MutableMapping[L, W]
- * 
-*/
-  __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __pyx_mstate_global->__pyx_k__5 = ((PyObject *)(&PyDict_Type));
-  __Pyx_GIVEREF((&PyDict_Type));
-  __pyx_t_4 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 357, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_9itemmap, 0, __pyx_mstate_global->__pyx_n_u_itemmap, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 357, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
-  #endif
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_t_4);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_itemmap, __pyx_t_2) < (0)) __PYX_ERR(0, 357, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":419
- * 	return rv
- * 
- * cpdef object valfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""valfilter(predicate: collections.abc.Callable[[V], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-  __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __pyx_mstate_global->__pyx_k__6 = ((PyObject *)(&PyDict_Type));
-  __Pyx_GIVEREF((&PyDict_Type));
-  __pyx_t_2 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 419, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_11valfilter, 0, __pyx_mstate_global->__pyx_n_u_valfilter, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 419, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
-  #endif
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_t_2);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_valfilter, __pyx_t_4) < (0)) __PYX_ERR(0, 419, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":480
- * 	return rv
- * 
- * cpdef object keyfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""keyfilter(predicate: collections.abc.Callable[[K], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-  __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __pyx_mstate_global->__pyx_k__7 = ((PyObject *)(&PyDict_Type));
-  __Pyx_GIVEREF((&PyDict_Type));
-  __pyx_t_4 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 480, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_13keyfilter, 0, __pyx_mstate_global->__pyx_n_u_keyfilter, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[8])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 480, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
-  #endif
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_t_4);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_keyfilter, __pyx_t_2) < (0)) __PYX_ERR(0, 480, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":541
- * 	return rv
- * 
- * cpdef object itemfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""itemfilter(predicate: collections.abc.Callable[[tuple[K, V]], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-  __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __pyx_mstate_global->__pyx_k__8 = ((PyObject *)(&PyDict_Type));
-  __Pyx_GIVEREF((&PyDict_Type));
-  __pyx_t_2 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 541, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_15itemfilter, 0, __pyx_mstate_global->__pyx_n_u_itemfilter, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[9])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 541, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
-  #endif
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_t_2);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_itemfilter, __pyx_t_4) < (0)) __PYX_ERR(0, 541, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":608
- * 	return rv
- * 
- * cpdef object assoc(object d, object key, object value, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""assoc(d: collections.abc.Mapping[K, V], key: K, value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-  __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __pyx_mstate_global->__pyx_k__9 = ((PyObject *)(&PyDict_Type));
-  __Pyx_GIVEREF((&PyDict_Type));
-  __pyx_t_4 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 608, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_17assoc, 0, __pyx_mstate_global->__pyx_n_u_assoc, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[10])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 608, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
-  #endif
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_t_4);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_assoc, __pyx_t_2) < (0)) __PYX_ERR(0, 608, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":655
- * 	return rv
- * 
- * cpdef object assoc_in(object d, object keys, object value, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""assoc_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
- * 
-*/
-  __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __pyx_mstate_global->__pyx_k__10 = ((PyObject *)(&PyDict_Type));
-  __Pyx_GIVEREF((&PyDict_Type));
-  __pyx_t_2 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 655, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_19assoc_in, 0, __pyx_mstate_global->__pyx_n_u_assoc_in, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[11])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 655, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
-  #endif
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_t_2);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_assoc_in, __pyx_t_4) < (0)) __PYX_ERR(0, 655, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "humpy_cytoolz/dicttoolz.pyx":731
+  /* "humpy_cytoolz/dicttoolz.pyx":242
  * 	return rv
  * 
  * cdef object c_dissoc(object d, object keys, object factory=dict):             # <<<<<<<<<<<<<<
@@ -10984,74 +10785,268 @@ __Pyx_RefNannySetupContext("PyInit_dicttoolz", 0);
  * 	cdef object rv
 */
   __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __pyx_mstate_global->__pyx_k__11 = ((PyObject *)(&PyDict_Type));
+  __pyx_mstate_global->__pyx_k__3 = ((PyObject *)(&PyDict_Type));
   __Pyx_GIVEREF((&PyDict_Type));
 
-  /* "humpy_cytoolz/dicttoolz.pyx":747
+  /* "humpy_cytoolz/dicttoolz.pyx":258
  * 	return rv
  * 
  * def dissoc(d, *keys, **kwargs):             # <<<<<<<<<<<<<<
- * 	"""dissoc(d: collections.abc.Mapping[K, V], *keys: K, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+ * 	"""Create a new `MutableMapping`[1] from `d` with the specified `keys` removed.
  * 
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_21dissoc, 0, __pyx_mstate_global->__pyx_n_u_dissoc, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[12])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 747, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_5dissoc, 0, __pyx_mstate_global->__pyx_n_u_dissoc, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 258, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_dissoc, __pyx_t_4) < (0)) __PYX_ERR(0, 747, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_dissoc, __pyx_t_4) < (0)) __PYX_ERR(0, 258, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":802
+  /* "humpy_cytoolz/dicttoolz.pyx":311
  * 	return c_dissoc(d, keys, get_factory('dissoc', kwargs))
  * 
- * cpdef object update_in(object d, object keys, object func, object default=None, object factory=dict):             # <<<<<<<<<<<<<<
- * 	"""update_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], func: collections.abc.Callable[[V], V], default: V | None = None, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]
+ * cdef tuple _get_in_exceptions = (KeyError, IndexError, TypeError)             # <<<<<<<<<<<<<<
+ * 
+ * cpdef object get_in(object keys, object coll, object default=None, object no_default=False):
+*/
+  __pyx_t_4 = PyTuple_Pack(3, ((PyObject *)(((PyTypeObject*)PyExc_KeyError))), ((PyObject *)(((PyTypeObject*)PyExc_IndexError))), ((PyObject *)(((PyTypeObject*)PyExc_TypeError)))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 311, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_XGOTREF(__pyx_v_13humpy_cytoolz_9dicttoolz__get_in_exceptions);
+  __Pyx_DECREF_SET(__pyx_v_13humpy_cytoolz_9dicttoolz__get_in_exceptions, ((PyObject*)__pyx_t_4));
+  __Pyx_GIVEREF(__pyx_t_4);
+  __pyx_t_4 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":313
+ * cdef tuple _get_in_exceptions = (KeyError, IndexError, TypeError)
+ * 
+ * cpdef object get_in(object keys, object coll, object default=None, object no_default=False):             # <<<<<<<<<<<<<<
+ * 	"""Retrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.
+ * 
+*/
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_7get_in, 0, __pyx_mstate_global->__pyx_n_u_get_in, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 313, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
+  #endif
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_mstate_global->__pyx_tuple[1]);
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_get_in, __pyx_t_4) < (0)) __PYX_ERR(0, 313, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":386
+ * 		return default
+ * 
+ * cpdef object itemfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.
  * 
 */
   __Pyx_INCREF((PyObject *)(&PyDict_Type));
-  __pyx_mstate_global->__pyx_k__12 = ((PyObject *)(&PyDict_Type));
+  __pyx_mstate_global->__pyx_k__4 = ((PyObject *)(&PyDict_Type));
   __Pyx_GIVEREF((&PyDict_Type));
-  __pyx_t_4 = PyTuple_Pack(2, Py_None, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 802, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 386, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_23update_in, 0, __pyx_mstate_global->__pyx_n_u_update_in, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[13])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 802, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_9itemfilter, 0, __pyx_mstate_global->__pyx_n_u_itemfilter, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 386, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_t_4);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_update_in, __pyx_t_2) < (0)) __PYX_ERR(0, 802, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_itemfilter, __pyx_t_2) < (0)) __PYX_ERR(0, 386, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":891
+  /* "humpy_cytoolz/dicttoolz.pyx":453
  * 	return rv
  * 
- * cdef tuple _get_in_exceptions = (KeyError, IndexError, TypeError)             # <<<<<<<<<<<<<<
+ * cpdef object itemmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply `func` to all items of `d` and return a new `Mapping` with the transformed items.
  * 
- * cpdef object get_in(object keys, object coll, object default=None, object no_default=False):
 */
-  __pyx_t_2 = PyTuple_Pack(3, ((PyObject *)(((PyTypeObject*)PyExc_KeyError))), ((PyObject *)(((PyTypeObject*)PyExc_IndexError))), ((PyObject *)(((PyTypeObject*)PyExc_TypeError)))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 891, __pyx_L1_error)
+  __Pyx_INCREF((PyObject *)(&PyDict_Type));
+  __pyx_mstate_global->__pyx_k__5 = ((PyObject *)(&PyDict_Type));
+  __Pyx_GIVEREF((&PyDict_Type));
+  __pyx_t_2 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 453, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_XGOTREF(__pyx_v_13humpy_cytoolz_9dicttoolz__get_in_exceptions);
-  __Pyx_DECREF_SET(__pyx_v_13humpy_cytoolz_9dicttoolz__get_in_exceptions, ((PyObject*)__pyx_t_2));
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_11itemmap, 0, __pyx_mstate_global->__pyx_n_u_itemmap, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 453, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
+  #endif
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_t_2);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_itemmap, __pyx_t_4) < (0)) __PYX_ERR(0, 453, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "humpy_cytoolz/dicttoolz.pyx":893
- * cdef tuple _get_in_exceptions = (KeyError, IndexError, TypeError)
+  /* "humpy_cytoolz/dicttoolz.pyx":513
+ * 	return rv
  * 
- * cpdef object get_in(object keys, object coll, object default=None, object no_default=False):             # <<<<<<<<<<<<<<
- * 	"""get_in(keys: collections.abc.Sequence[K], coll: humpy_toolz.dicttoolz.SupportsGetItem[K, V], default: Optional[V] = None, no_default: bool = False) -> Optional[V]
+ * cpdef object keyfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.
  * 
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_25get_in, 0, __pyx_mstate_global->__pyx_n_u_get_in, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[14])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 893, __pyx_L1_error)
+  __Pyx_INCREF((PyObject *)(&PyDict_Type));
+  __pyx_mstate_global->__pyx_k__6 = ((PyObject *)(&PyDict_Type));
+  __Pyx_GIVEREF((&PyDict_Type));
+  __pyx_t_4 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 513, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_13keyfilter, 0, __pyx_mstate_global->__pyx_n_u_keyfilter, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[8])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 513, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[0]);
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_get_in, __pyx_t_2) < (0)) __PYX_ERR(0, 893, __pyx_L1_error)
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_t_4);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_keyfilter, __pyx_t_2) < (0)) __PYX_ERR(0, 513, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":574
+ * 	return rv
+ * 
+ * cpdef object keymap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.
+ * 
+*/
+  __Pyx_INCREF((PyObject *)(&PyDict_Type));
+  __pyx_mstate_global->__pyx_k__7 = ((PyObject *)(&PyDict_Type));
+  __Pyx_GIVEREF((&PyDict_Type));
+  __pyx_t_2 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 574, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_15keymap, 0, __pyx_mstate_global->__pyx_n_u_keymap, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[9])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 574, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
+  #endif
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_t_2);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_keymap, __pyx_t_4) < (0)) __PYX_ERR(0, 574, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":631
+ * 	return rv
+ * 
+ * cdef object c_merge(object dicts, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	cdef object rv
+ * 	rv = factory()
+*/
+  __Pyx_INCREF((PyObject *)(&PyDict_Type));
+  __pyx_mstate_global->__pyx_k__8 = ((PyObject *)(&PyDict_Type));
+  __Pyx_GIVEREF((&PyDict_Type));
+
+  /* "humpy_cytoolz/dicttoolz.pyx":642
+ * 	return rv
+ * 
+ * def merge(*dicts, factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Merge a collection of dictionaries and return a new `Mapping`.
+ * 
+*/
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_17merge, 0, __pyx_mstate_global->__pyx_n_u_merge, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[10])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 642, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
+  #endif
+  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_4, __pyx_mstate_global->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults)) __PYX_ERR(0, 642, __pyx_L1_error)
+  __Pyx_INCREF((PyObject *)(&PyDict_Type));
+  __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_t_4)->arg0 = ((PyObject *)(&PyDict_Type));
+  __Pyx_GIVEREF((&PyDict_Type));
+  __Pyx_CyFunction_SetDefaultsGetter(__pyx_t_4, __pyx_pf_13humpy_cytoolz_9dicttoolz_26__defaults__);
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_merge, __pyx_t_4) < (0)) __PYX_ERR(0, 642, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":691
+ * 	return c_merge(dicts, factory)
+ * 
+ * cdef object c_merge_with(object func, object dicts, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	cdef:
+ * 		dict result
+*/
+  __Pyx_INCREF((PyObject *)(&PyDict_Type));
+  __pyx_mstate_global->__pyx_k__9 = ((PyObject *)(&PyDict_Type));
+  __Pyx_GIVEREF((&PyDict_Type));
+
+  /* "humpy_cytoolz/dicttoolz.pyx":726
+ * 	return rv
+ * 
+ * def merge_with(func, *dicts, factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Merge dictionaries and apply a `Callable` to combined values.
+ * 
+*/
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_19merge_with, 0, __pyx_mstate_global->__pyx_n_u_merge_with, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[11])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 726, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
+  #endif
+  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_4, __pyx_mstate_global->__pyx_ptype_13humpy_cytoolz_9dicttoolz___pyx_defaults)) __PYX_ERR(0, 726, __pyx_L1_error)
+  __Pyx_INCREF((PyObject *)(&PyDict_Type));
+  __Pyx_CyFunction_Defaults(struct __pyx_defaults, __pyx_t_4)->arg0 = ((PyObject *)(&PyDict_Type));
+  __Pyx_GIVEREF((&PyDict_Type));
+  __Pyx_CyFunction_SetDefaultsGetter(__pyx_t_4, __pyx_pf_13humpy_cytoolz_9dicttoolz_28__defaults__);
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_merge_with, __pyx_t_4) < (0)) __PYX_ERR(0, 726, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":777
+ * 	return c_merge_with(func, dicts, factory)
+ * 
+ * cpdef object update_in(object d, object keys, object func, object default=None, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply a `Callable` to a value at a nested path in a `Mapping`.
+ * 
+*/
+  __Pyx_INCREF((PyObject *)(&PyDict_Type));
+  __pyx_mstate_global->__pyx_k__10 = ((PyObject *)(&PyDict_Type));
+  __Pyx_GIVEREF((&PyDict_Type));
+  __pyx_t_4 = PyTuple_Pack(2, Py_None, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 777, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_21update_in, 0, __pyx_mstate_global->__pyx_n_u_update_in, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[12])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 777, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
+  #endif
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_t_4);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_update_in, __pyx_t_2) < (0)) __PYX_ERR(0, 777, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":864
+ * 	return rv
+ * 
+ * cpdef object valfilter(object predicate, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
+ * 
+*/
+  __Pyx_INCREF((PyObject *)(&PyDict_Type));
+  __pyx_mstate_global->__pyx_k__11 = ((PyObject *)(&PyDict_Type));
+  __Pyx_GIVEREF((&PyDict_Type));
+  __pyx_t_2 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 864, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_23valfilter, 0, __pyx_mstate_global->__pyx_n_u_valfilter, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[13])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 864, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
+  #endif
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_t_2);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_valfilter, __pyx_t_4) < (0)) __PYX_ERR(0, 864, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "humpy_cytoolz/dicttoolz.pyx":925
+ * 	return rv
+ * 
+ * cpdef object valmap(object func, object d, object factory=dict):             # <<<<<<<<<<<<<<
+ * 	"""Apply `func` to all values of `d` and return a new `Mapping` with the transformed values.
+ * 
+*/
+  __Pyx_INCREF((PyObject *)(&PyDict_Type));
+  __pyx_mstate_global->__pyx_k__12 = ((PyObject *)(&PyDict_Type));
+  __Pyx_GIVEREF((&PyDict_Type));
+  __pyx_t_4 = PyTuple_Pack(1, ((PyObject *)(&PyDict_Type))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 925, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_13humpy_cytoolz_9dicttoolz_25valmap, 0, __pyx_mstate_global->__pyx_n_u_valmap, NULL, __pyx_mstate_global->__pyx_n_u_humpy_cytoolz_dicttoolz, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[14])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 925, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
+  #endif
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_t_4);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_valmap, __pyx_t_2) < (0)) __PYX_ERR(0, 925, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "humpy_cytoolz/dicttoolz.pyx":1
@@ -11061,19 +11056,19 @@ __Pyx_RefNannySetupContext("PyInit_dicttoolz", 0);
 */
   __pyx_t_2 = __Pyx_PyDict_NewPresized(13); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_merge_line_98, __pyx_mstate_global->__pyx_kp_u_merge_dicts_collections_abc_Mapp) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_merge_with_line_185, __pyx_mstate_global->__pyx_kp_u_merge_with_func_collections_abc) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_valmap_line_239, __pyx_mstate_global->__pyx_kp_u_valmap_func_collections_abc_Call) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_keymap_line_298, __pyx_mstate_global->__pyx_kp_u_keymap_func_collections_abc_Call) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_itemmap_line_357, __pyx_mstate_global->__pyx_kp_u_itemmap_func_collections_abc_Cal) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_valfilter_line_419, __pyx_mstate_global->__pyx_kp_u_valfilter_predicate_collections) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_keyfilter_line_480, __pyx_mstate_global->__pyx_kp_u_keyfilter_predicate_collections) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_itemfilter_line_541, __pyx_mstate_global->__pyx_kp_u_itemfilter_predicate_collections) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_assoc_line_608, __pyx_mstate_global->__pyx_kp_u_assoc_d_collections_abc_Mapping) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_assoc_in_line_655, __pyx_mstate_global->__pyx_kp_u_assoc_in_d_collections_abc_Mappi) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_dissoc_line_747, __pyx_mstate_global->__pyx_kp_u_dissoc_d_collections_abc_Mapping) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_update_in_line_802, __pyx_mstate_global->__pyx_kp_u_update_in_d_collections_abc_Mapp) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_get_in_line_893, __pyx_mstate_global->__pyx_kp_u_get_in_keys_collections_abc_Sequ) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_assoc_line_123, __pyx_mstate_global->__pyx_kp_u_Create_a_new_Mapping_1_with_key) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_assoc_in_line_168, __pyx_mstate_global->__pyx_kp_u_Create_a_new_MutableMapping_from) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_dissoc_line_258, __pyx_mstate_global->__pyx_kp_u_Create_a_new_MutableMapping_1_fr) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_get_in_line_313, __pyx_mstate_global->__pyx_kp_u_Retrieve_a_value_from_a_potentia) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_itemfilter_line_386, __pyx_mstate_global->__pyx_kp_u_Retain_only_items_from_d_whose_k) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_itemmap_line_453, __pyx_mstate_global->__pyx_kp_u_Apply_func_to_all_items_of_d_and) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_keyfilter_line_513, __pyx_mstate_global->__pyx_kp_u_Retain_only_items_from_d_whose_k_2) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_keymap_line_574, __pyx_mstate_global->__pyx_kp_u_Apply_func_to_all_keys_of_d_and) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_merge_line_642, __pyx_mstate_global->__pyx_kp_u_Merge_a_collection_of_dictionari) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_merge_with_line_726, __pyx_mstate_global->__pyx_kp_u_Merge_dictionaries_and_apply_a_C) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_update_in_line_777, __pyx_mstate_global->__pyx_kp_u_Apply_a_Callable_to_a_value_at_a) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_valfilter_line_864, __pyx_mstate_global->__pyx_kp_u_Retain_only_items_from_d_whose_v) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_mstate_global->__pyx_kp_u_valmap_line_925, __pyx_mstate_global->__pyx_kp_u_Apply_func_to_all_values_of_d_an) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_test, __pyx_t_2) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
@@ -11133,31 +11128,42 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":705
+  /* "humpy_cytoolz/dicttoolz.pyx":216
  * 	cdef object prevkey, key
  * 	cdef object rv, inner, dtemp
  * 	prevkey, keys = keys[0], keys[1:]             # <<<<<<<<<<<<<<
  * 	rv = factory()
  * 	if PyDict_CheckExact(rv):
 */
-  __pyx_mstate_global->__pyx_slice[0] = PySlice_New(__pyx_mstate_global->__pyx_int_1, Py_None, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[0])) __PYX_ERR(0, 705, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_slice[0] = PySlice_New(__pyx_mstate_global->__pyx_int_1, Py_None, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[0])) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_slice[0]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_slice[0]);
 
-  /* "humpy_cytoolz/dicttoolz.pyx":893
+  /* "humpy_cytoolz/dicttoolz.pyx":53
+ * del abc
+ * 
+ * __all__ = ('assoc', 'assoc_in', 'dissoc', 'get_in', 'itemfilter', 'itemmap',             # <<<<<<<<<<<<<<
+ * 		   'keyfilter', 'keymap', 'merge', 'merge_with', 'update_in', 'valfilter',
+ * 		   'valmap')
+*/
+  __pyx_mstate_global->__pyx_tuple[0] = PyTuple_Pack(13, __pyx_mstate_global->__pyx_n_u_assoc, __pyx_mstate_global->__pyx_n_u_assoc_in, __pyx_mstate_global->__pyx_n_u_dissoc, __pyx_mstate_global->__pyx_n_u_get_in, __pyx_mstate_global->__pyx_n_u_itemfilter, __pyx_mstate_global->__pyx_n_u_itemmap, __pyx_mstate_global->__pyx_n_u_keyfilter, __pyx_mstate_global->__pyx_n_u_keymap, __pyx_mstate_global->__pyx_n_u_merge, __pyx_mstate_global->__pyx_n_u_merge_with, __pyx_mstate_global->__pyx_n_u_update_in, __pyx_mstate_global->__pyx_n_u_valfilter, __pyx_mstate_global->__pyx_n_u_valmap); if (unlikely(!__pyx_mstate_global->__pyx_tuple[0])) __PYX_ERR(0, 53, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[0]);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[0]);
+
+  /* "humpy_cytoolz/dicttoolz.pyx":313
  * cdef tuple _get_in_exceptions = (KeyError, IndexError, TypeError)
  * 
  * cpdef object get_in(object keys, object coll, object default=None, object no_default=False):             # <<<<<<<<<<<<<<
- * 	"""get_in(keys: collections.abc.Sequence[K], coll: humpy_toolz.dicttoolz.SupportsGetItem[K, V], default: Optional[V] = None, no_default: bool = False) -> Optional[V]
+ * 	"""Retrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.
  * 
 */
-  __pyx_mstate_global->__pyx_tuple[0] = PyTuple_Pack(2, Py_None, Py_False); if (unlikely(!__pyx_mstate_global->__pyx_tuple[0])) __PYX_ERR(0, 893, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[0]);
-  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[0]);
+  __pyx_mstate_global->__pyx_tuple[1] = PyTuple_Pack(2, Py_None, Py_False); if (unlikely(!__pyx_mstate_global->__pyx_tuple[1])) __PYX_ERR(0, 313, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[1]);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[1]);
   #if CYTHON_IMMORTAL_CONSTANTS
   {
     PyObject **table = __pyx_mstate->__pyx_tuple;
-    for (Py_ssize_t i=0; i<1; ++i) {
+    for (Py_ssize_t i=0; i<2; ++i) {
       #if PY_VERSION_HEX >= 0x030F0000
       PyUnstable_SetImmortal(table[i]);
       #elif CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
@@ -11211,33 +11217,33 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 12; } index[] = {{46},{1},{1},{1067},{1651},{19},{16},{7},{1774},{17},{6},{2},{2745},{17},{27},{9},{21},{1953},{1789},{18},{20},{1765},{1719},{17},{1590},{15},{1909},{21},{50},{14},{2093},{20},{20},{1779},{1685},{17},{7},{20},{3},{7},{12},{5},{8},{18},{17},{18},{4},{11},{1},{7},{5},{17},{6},{7},{6},{4},{8},{6},{12},{23},{13},{2},{10},{7},{5},{13},{31},{33},{3},{9},{6},{4},{6},{8},{5},{10},{10},{8},{4},{10},{3},{7},{9},{12},{11},{12},{10},{17},{13},{4},{12},{10},{12},{19},{8},{6},{9},{9},{6},{5},{6},{2038},{99},{97},{107},{57},{57},{205},{170},{9},{59},{52},{90},{90},{24}};
-    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (5545 bytes) */
-const char* const cstring = "(\265/\375`7k\375\254\000Z{\260\030F\020\2576\007\000\000 QH!\202\212\020\n\250\000H\024\n\002\020\210\321\230\365\267-%z\213\234\376H\333\226BV.\337\r\344\377\343\201\374\017.\3752\355\341\025\021\263\357wO\272?\223Q\264G\362\006\200\r\030\315\006]\001]\001r\001XOo[Q\1776}\363Y|\377\036\265\217;\004\377\343\342\024\024=\336\r\356\373\332\233\256\253O\023}=\347\246\017\346\337\267\336?\325\222\317\017[\353\322\224\204\277\034by\347\277_r\024\223\217\256\244\252g\270\247\2038\223\334%e$\302\374\212\276\225\263.\013n\023\310\230g\366\252\005\021\001)e\254\205\232\3760\005\001\021\351po\323[\221b\320;l\332\343\210\377\356\347'm\236\210\310\314\346\"\031\353\3026\317<\323\343\331\214\214[\260`\341m\010N\324I\010\021\rK\200$n\026\367g\255]\3777m\370\3313v\275\363\353[\3674m\267\376\313\"^\261,\0279\265\256\017\353\322\371\367\2033\317\021_\272\323\364]\327\217\251vK\225\336\316\272F\357\363\347c\236\224v>\206x;\346\341\341\361\361\256\363\327\237\213\030\205\326\321\352]\347\246]c\334e\033u\235\307\374\365\351\277\347\347\014\326uY\370pl\177\225z\211\273l1s\031\215\336z\323\332\231a\314x\177\223\344Y\213\213^\264\363\344\242\314\245\305\263\224Q\351\3260\234 \264\317\233\232\276\270Z\213?\027\321\317\207\265\236\0274\317\314&\343\361}\037\024Ky:\3158f\374\027\247\277\277\017Q\177E\277\3237.9\366\231\001\311\004[O{\377\373\354[c\360\343/\337\364\376\233\231\245d\004m\323c]\030h\344\031\021\t\331>B4\317\317w\375f\\B!\332\346\031(\244\201\266\306\237\307\305#\342=\243\327\323\364e1\364\270\246i\236\377\2525\361<8\257Gf\352\255\315\255s\335\"\256~It>\352\351E\3118\347\223\316[X\270\325S\324/\037\216\036\326\236i\361{\025\036\316\177\232\331\253\371\263\256\356\305\314\222\351Z\263\256\013\357\207]\347'\257\353\2646\333\272\242>W\375\224\204\242el\255+\006\223\366,\325\323\274\235\350\230\265\263\356\373\033\207>_\333\271\301\343\360\365\354[F6\024\341\242Iz\n\376F\331\317A\357\214\303P\\\321VX\21477\206\240hr\321\347+\335\307$\214H\250\024t\215\342\r\03453\242*\235\371\303""\217\017\255\377\373{EZ\361iz\206\367\335/\206 \3509{p\363\307<\311\204\235\033\353\257\245\255\035\307\374\307\354\367\\\277\266\257\301\301\214K\326$\306_\343\360?\324k\360w\365[\347\276\370{\022\364\361\246\237\261\255\372\363L\261\256\233\271uU\372'\014~N\361\320\225b$ ,\024\212\340\177\253\375\270\347\221\231\t\t\031\375\237\276\3469}\372h\303\320D\304\332\232\370\377\312\r\033\365!8\r\250q\004\307a\023DB#\241\010'z\327\223\t\023--\0236,\0044\343\3610\310\323cP\222m+@\233C\370<\323\370\336\352\373~\316\342\267-\350\n\034\267\353\255\237\235\365D\235\343>s\234\343\213\205H\266\255s%m \320L\310\226\201\242\326\350\177\326u\221\346ui\215\3637\375\312\256\313\222N#\221\220\353O\323\364\341\272<\273\260\031\217\307\263\031\217gr\326\265u\306\033.\355OW\253\227\255\032\207\270\233\256\275\314}\355i\357\203:\317\327\335\225\237\356\267\332\003\241=>_\312\017b$\023B\274\351\311\362\307`\253\271\214\\@\241\220\221\265\325\323\365\326\226Q\244\365TOf\3158\324\237s\246\251\255\242\347\037P.B\371\244\0368\255\016?E\3135\005D2\202I\010\211\210@\333\010\224\224\025\010.\332\r\334\261\214~\006a\014\"M\353\276\"\376>\317\212!\016E,\326%b\372 \355:\027\023\236}\370\256H\372\204\204\\4\342\331\210\213\266\021\257\340 /)\361\020\177\340/%~\362\354\345C+\to\240\032\375\274\265\010fn]\031\223\272\020<q\255\303>\032\245\366\353\250\265\321j\021\377\235`\325\326\265G\257\363\221\244\353\236\332u\2563\374\310\304\3759\374`\333H(\377\266\225DA\306\017\023\231@\322\300E\326%\302\002\035\027*hTh \2506\224\007\006p:*nh>,\345\t\032\022\025V~H\016\357\246\343\205\210S\263\241\261R\261\006X\223t@^\032\032\031\234\014\226\233\226\0225%JjJ85\0354\022T-\245IY\200\336\250\320<\340\324\250\224\020\310+\025C&5m`T6\310\001\031+\0302\003\331!\265\321\261)P\022\310\230d\214\rG\331)\025\220\326\206\r\207\312\303\261\261\352\250`J\005\001j\002h\254:J\t$\001\215\025\207\306J\206\t\033\016\322Z\301\250\246\312\201\212\"(=$\201\323M\307\325p\036j<l)\215\316\312\204\334H\0166&\345\206\201\214\004\0335\033""\002B\334L\030\033850\245\000\001\235\022\206|@^\031+\016\027,-LZ\2104\223\306\203jC\245\241dPjR@\006N\247\273\351P-\370\255\324(\275\031\300\336l02L\225\2514\221\246\224J\n\200\306\nf\222(\350M\007\014\014\234\232\0169\240\263\352 K\244LR\033\031+\025\232\023\252S\211\"I\220\010H\226\024\200\214U\207\212C\025\241\354(K\220&\344\001\262C\302\244\004tV\033\331A^'f\251R6(9\312\024)\000\235\225\nYJ\005\350\330l%\002\rN\207t\263\275\240\300\251\341p8\034\356WT\255\271[9\230\207\2236\367q0\017\237\300\211l\334\016\361'\232\276=C.\254/\356\331\307\303E\214#8\216dQ\017\363\2058\014qx9]\3123\346E\177\032W\271]9]9M\357\311\221*\245\233\343\254\326p\375\356\250'w9\216\343\002\206\333\250\203*B\007\031\232\021\021\021I\222$\303\001s` 0($\236\017\347\003\333\026\037Ssi%0\005u(\302! C\024!\210\020B\014Q\002B\210!2\"5#\243zj\002\006-\353K\014J\022\315\244:\376\203I\257<\n\236:\225\317\024d0\000\345\335\315\2244\245\267\370\362e4\365)D\253V\365\023&\257\203$\224_f\270$t\206z\325!\241\025:uE\222@<}\307\225\226m1\342[\\s\342g`\227\263p\201\226\257\010\001gD\244\016OM\263\237\201N\315S\314l\342\314Wh\362\003i\"\374\303Y\307n7\355a\022\272\t\352\212\255\361\027\323\311\205$\252\0138\212|\304\245\177\022\032+\200M\313^y\253\200e%\177155lH\240\311\350\220\022\\\326\010\260\325j\356\325\014(\254h\022U\312\220;G6\256\2653\221D\265\003u4\346\020\362t\231\007n\201\361\374\355\014'\027\001+}\023\212\200B\004\322\350\250i\312w\223K\267\242j@\312\316]\361#2]\346b\347\020\250\025\022\226\240!]\002\304\307#\360\200c\007\373\244\020\211\316\207C\204FI>\276\037\302\"\316F\232\274\214\r>\243d7\306'\307\036\354\246\224\331e1 \350\371\003\243\375:x\177\324\034\211\016[`\372u\n\374\355\372\017\3043@\375\323sp\\\212\000\361P\237\031\307\002\032\252\205\342\023\300\204\332V\303\303.e\237?\342\345\256\305\371\351\005\3220\022\220\347\310\2436\277 |\3455&\242\316\233\247;\207#\032W\277\216\014\nG\205\320\337{\256\273\220\267\311N\311GH|5\335\311\347\323\206\025T\016O\010\355\373Ll\024\024\n\217\005w\270""\010;\335\031\002q\332\336@\205\212{\234g\247\024\265O\3356\303\335\013\3365\372?\002\260`\026\0039\375l\245\010\025\351\323\374\306t\346\345,\255q\241\302\255\311m\"4t\262ib\007\007n\240SR\302q\004\007\3034,\203^\215.K\347\241\034\032@\330\013\335^ b\rK\225\300\261\271)E\230\010\357C\307\237\222T\000\022\2478\246\360n\202\227\216C\020;CC\207\007/L\013\202. \034)N@\321+\017Z\010?\013\304\376^\361nL!T\204\261\375\304\250K\247\245\036\307\236\220\260\2536S\276\004-!\264j<\\UY\251-C\010U`\236\212|U\301\354\005\303\255\020\205\3027\356\026\366r\213~\263\220\334\265\3557/@x\024R\315\370\237\t\201\212v=\202\301X\022b\375\201\242B\376N1t\265nq\013#Mz\324\332\302*t\270\013\250\347I*B\226\013~o\353\203\220\357\"&I]D\210\331\013[o\226\030\224\010\2040\034\356\333\264{\314\021Wq$\307\244\007\221LG\213[X\034D\360,<\325t\032\2100H\234!Y\005|\212\000\311\245\323\202\250z\014\255\221\357\202E\367\255)\310\013\326\260\332/s>8\366\230\234\270\350V\031\020\305\024\013 \242\000\244r\374-\376\322|Z\370\370\241\231\006{\034f\271\206\315\377\314\233\374f\321\310\217P7q\325X\242c\353\362:\032\032\313\265\256 B\301\204\326\335\034\255\237\350@\277\000\2735b\374$4\371\025j\267\223\250\366a\213\010(\211\266U\233\301s\253\267\261\210\033m\327\247\212\323\264\034-\225\367\314\232\000B\nP\271\316=\206O\246\306f\350\016\272i@T:\222a\321\332\215\023\037\256\311\370\320\200v7\007\024!gI\270>1\231\363\r\213\233K]2\343\317\007\006\315\220?\326\246YX\2737\210\303U~\342P\370\030\305\346\004\353\247*=\004k\024\030Yqd\213>\001y\237\016S{\214Rt\032.{\220\341\356\3559=^\266t\372\235\216p4\014Z5\024\020\213@\225h+C\377\374h\371\324\330\264'UZ\340\002\212\233\023?A\274z{p\037\266\302\013\343H\323?>\234Vy\237\027G\2579\241eo\200\341\341\203\344\202\304\307\243)\252\302\334{E\252b\032?'Do6;\002\016\216\330\255\363\323\271?\\vg\246\306\013O\374\227\365\263\021\021\250\323\244%\216qL\347^\254i!\"\004\303\007\331 7\023}\3754\345\301i\321\037\005\344\337\3002>/R\207\034\3346.\235\035\326<\362\217;\033\217\344q""\020\370\275\205c\377a4MR\366\024n>5\271\262y\320\033\317\364J89\230\274\265\"\354\247\361\270GfA\204\325\272\333\301Ei_\215\364>\224\033\357\247\253\211\205\352\335\260\327\346\177\305\204\247V\272<\340\323\2224\372\010Q:\370\360\241\026\362;6'\022lm\316\233\327\360\265T\213\000)Ep\231z\356\027\363t#Aq QXn\03451\246\341\221\266\264\013\315\030g\000\326{g\224JI\022\335\336\031\376\3513\232\\O\"z\022,\244=\247T&\361\327\2736\255FQ\243<\201jI\242Y\217\271\261\245\373\336\337\244 \254\270\331/\217\240\250G<\327\341\266\"*\204/\365wE\2211J\326\237\230E\377\232Q\330\t'I\006\225\267K\23045\022\016\213S\222\206\360\300\205\223\361o\374&\276\022\360\201\260\207\205\271\t\377M\272\325\232\317#\2200\217\200\264Z\003\364\346)\350\032\201\365\331\201\332\274\262\017\0132]A\233Y\200\215\021\354\366C<bTj\254\3322V'M$kU,\274#\263\271\225\264\332P\003\237\021\341C\356\204\237\327\"|&\361\220\323\222t\361\310Zq\007\211\237k\203\325\345\370\311\353\247\300\205R\231\006\374\2751\271|!\024*\036\275\275O\0139\351\2356\333S\263vd\260\245\246\367/I\203\021\200\263\013\244+y\007\372$V*\016\313\016\270'6;FF\034\236t\254\247mH\020\201\344\373\016S\252y\360C\32265\002FF\017n^\020\370\371\342Cf\031\276\253Go\004\202\206x=\307~[]\013\300\311\\\373,\003x\242\002\223]\372}\037\246\225t\222\221L\"\350\212}]?\253 HD\016dA\201\233\032;\n\347\032\270?\240u\356\210\314\220V\026\301W\353\356o\002\253\237\244\\\300\266\243\255\353w%\226w(\244\266ka\031^|\355iAt\006g\017\340\262\205\266\021?\365\274\206\007\rV\355\014\257\315\367\273\245F'\253\345\377\325\033\243&MS.\200\245\036\013{\032y\304}\213[D\0130q\220Y{\353K\235\362T|$7\343\006vm\226\203\370\201\266c\025_\211d\025+gc^\177\320\031\234\325lxm\320\372J\364A\254\375\252ySWP-W\244\225\262}\307 \022\205\346\237\322T\013ZC\320\306j\n\304\325J\355[\200\010\003c\206%\005\r\263jU6V\371'\210YC\371\324\021\273Rv\003\321\353T\346\333\212ni\376\023\255\257m\326\222(P>w;\255\222}\367\025\314Tp\237\007\314:\354\266\222\013|W:\322d\225\037\030.)a\023\372\227\220""\356\027\3361H\341V\264Y\346J\332\347(W\027\261\326H\037\2451\003\376\014VaH\314\342\313ijE\223M\317\030\001\022\215\330\321\366\355\340\326\226\326K\325-\013W\312\234\377\006\305\376\220n\3462\307\203\034\311\365\262\237)\276\204\270b\227\037\307{\030\270\232 .\257#0m\310y\250B\231\010*A'\302z!j`\306\372\005\227\274n\035c3i\354\3670A1\2365\035\0170Q\254s\0010bB\354\335M\331\0233\021e\002\317\317UA\370xJ\006\300\005\256\304s9\3672\374\370W-A\341\003\337\312\244\t\371p!p\373\255\326\211\271\316\326%\377\346\206D\250\025\333\262\267(\372W\010F\237t\\\024F<W\261\373\007\233\273\325-\276\221\274\241\343\206\272\320O\206\202\036\242x\224\216\254+IE\204\215\324\270\301oi&\034\211\216M\017\334Z[\025\221\321'fKf\222\271\016C\001&F\310\244Z=\367>\217\363\326\345\254k\036k\304d\220\203\205\303#\023\363\330\321\255\370q4/v!\335\322I\263\262\226\0243NN\202'\276\355\025z\271\027u\277\205\227E\r\243\002\343\2646\326<d\001\251\347\300@\005\234\317\020f\303w\037\277\314\301\021i7i\324\310\313 i3:Z\302K\235s\0065GV/\201b|)\270m\376O\r\327\256iA\005\003\\\033 \213\236SV\013\023\205\"\022\013\"\361$\\I\r\014Y\035\335(\246p\035dXND\347\223\376*w\240\3156\2328\372'p\230N\367\017\r\261\006\25061\224\233\r\332i3\222\316\311Ij=\301s\212\007\222;\275\312\254q\331\326\033\016g;[JY\331\205\0167\346K\036\240S\372\024\202Sk\360Y\010\261\333L!xK\347F9Jtm,.\312\311\377K:\212\204I\330\223^\360\270G~\225\321\024\2214B\022\325\3773\304!\377%:|\311\256v\203u\221\036\350 >\034S\337j\005M\230\260\317\262\215\016\237\237X\337\032\361ex\204\355\344\0211\355\222\001<\t\263>\202\310\311\356L\240 \267^\303BKv\021\201h\3354J\270\260\177[\225\032\374\217V\261\234\364\361\202\2329\261\244\021\361dd\303!\rSB\204\271\251\376\026\037\217\271\243\264\0309\023\212\332<ZG\366\2700(\020\323\354\336\207\321\345y#\no\257\252i\007\t\216.\311|\202z\352Z\367\236\262\361;\017\207\324\215iK\200F}\016\235\317&\257#\226'\354\360)\2255(\026\235\242P\255\250\317\341}\317i\304\202\020v\351\262\334_\026_Z\000M\030,q\003\212\237b?""\223\234\372n\263\353\352\331\253\201\303\227DXs\333\036\013:\005\205\362*:l\220\004\2367\301\346\344\001\305j\025\365\250\305\203\036\212}o\354\313\334g?\024\204P\253\257!\3325\255\212\037r\251\230\016RD\340>\005\262j\215\237\035j\316\213$`\002\331\177\026\375\0001*x\373\377\030w\214\277\242 j\370\026#\374P\243YD\020\\USz\240\276\261\023\366?\ttu\363\263\250l\203\034\374\262\376\203)\017|\221$Mq\020k\216\025\206\330\370\361\307\204\274|*\3617L\215c^\027\211\240\005\215OV=\337\347'\004\225JL\330\211\2513\313L\265\251[\314^\323\343\027T\2125g\364\244-\213J\325\260\033\253I\234|\332|\213\263\t\0332\310l\267Y%;Pg7+\273\000@\261\nd\354*\005\\M\204\331\334W\3708\370\274\356\247\207\020\013\204\371\r\207m)2\374v=\264\2603A\036\000\345\035\360\026\"\374\006D\213X\0171@Z\030#\2768\202\307\361r\202@\223\332\236\234N\343N\002\346nx1\33354\360\356\353\365\351\263\301\217|q\250\223;\235\255\203\265\375<6\247_\257\242\2622\212\222\205\216\327\375\362y\345\025\031\256\262\370i\037\204N\230_\017U\213D\252\240\037\275\227\313u\013\341E)\270\025-\374}I\355c\266A}K\357\351\340M\312\323\333\276\220\200\325-6\230&\031\367\215\253\n\336\265\372\033\323C\317~\032\005\026\2661&P`\320f}\335,\256\023\320h}\3033\346>\347\367)U\026\0317\225s\254T\021\271\261\t\253\002\314\206\n\212\245\244\203\\v-\010\247\207\271\371#\204\324\351\263X\347\245{z\343M#D\215\261uC\276\341\336\325{Ft\224\325\2429\234\"O\371\310\260^\350\202\027\365\024\314\267N\203dv\257\370\331\016\310\222;6\367\221\363Y\373kL\363\025\207\221~b\301\254\215\032\321N\376\245\256\321\001\245\227\324\377\210_\227\220\016AB0\360\r\317\264\376\027w\260l\302\r\214\241kNpJ\241\031F\332\007\004\250\317t\321\245\363F\"\260\233\014v\222\314\021\374\310\2756aEw\343\341\372m\332\300\014\342\014\201\242b\374\362\250\261\320/@\2575\272\356f\255\265qZ4\324\224Z\235G\216\264\301\3121\371\221\036\3243\\\205\006\25191\0048\340\364JE\217>rc\027;\261\014|\3702\247X\010\315\362H\215\216\215\327\230\213\306\357\007U\306\333E\220\022\027\245\341\320""\3632m[\240(\313\246\022\326\023\231\267\024\375\r3H\266\3654\031P\313\310\300\215)T\242\326\210R\003\221\254(A\177\n\206%\335\361\351r_\n\177h\237\357d\336b\265}\2555\237A\254\305\216M\342\233\354\375\315f\034\204\263M\323\247\273I\231\301\027\366D\300j\222af\352E\257\2739@\357\261\262]\252\205^\305\024\326\325g\007\314r\014M{\355(\264\003\226WU\001\030\2166\363\235(\016U\356\251\025\346\345X^\352\203a\205\317\034\022kLBH\013\223\301&\202l[\271\327\\\340+\r\346\332\006\257K\321\242\276\202\350hN\266\260g:\347\237\342V\264Y\213\241\3313\212O\013\235Y\364\"\331\016\014mJ\201\346\372\355\334\210\345\305v\274F\242 \006J\tt\0072*Z\303\252\216\307\373\335\340\026B\233\017\026\254\236\334\306\010#\203\322\374.{\300\016+\230\3110\373\3236\314\037\037\305\257f\2021\355\333P\\f\370+P\276\344\205\227\007\372\204\261\246\202\251Xk\325,GZ7Gq\225\004\361\035\206Q\024\212\314\313!\334\267\241\231\335?\241\010\214\346f}a\225\222\r\214-\306uij\327=\252\265u\236c.&!|\nKR\300\031Wt\240\261\212\200\242\277\372'B:\210^m\237\331\303\357\020\013\003\274\233e\326\032\226\201\275D\322(,\337E\245\304\277b\214\251\035\233m\033\324`d/\361\"\026|_\347\355\322\205`\023\222_T\003\330\337F\023\253\033\212\202\201Z\353\373_\036c@\256\237&\024LX\236\356\207\253\n\324\255\34089AF{d\374\366\307dM\364\254\275\024\312\020\326\202\361\206;\327t\205\t>\3464:\352a\036CA\225\234\013=\234\211\312\344\377\247\2664\0315\212&R\302\026\332\336I\316S\323\377\007T\006\013V\265\257x&\016\315{\361\023\345\3421\333\260\322\350\302\305m\350+\256\311\207q\202\224\022'\001\231b\350\215\0235L\363\360i\365w\273_\221\370A{\3204i\3012!G\371\200\004\014\262\330\335\275\271\035{'\251:FF\342@\364zi\035i}\250\r\177A\0064z\323\237\3450yH\350\320f\264Z(A+9\360\022\352\215MP\241\226>\026\3470!\310`\314\253\tY\316\206\t9\023\014\320yz\314\025z\235\240\345\376;\202\030\272\327\000\232\004<\254\340f&\242\225\003\270\232\230\221,\206\014\024\241\301\207\013\375\271\2624jr\367\335:\221u\000]\332\251\233\352\006";
-    PyObject *data = __Pyx_DecompressString(cstring, 5545, 3);
+    const struct { const unsigned int length: 12; } index[] = {{46},{1822},{1561},{1512},{1478},{883},{1598},{1437},{1453},{1724},{1744},{1567},{1581},{2291},{1},{1},{19},{16},{7},{17},{6},{2},{17},{27},{9},{21},{18},{20},{17},{16},{21},{50},{14},{20},{20},{17},{7},{20},{3},{7},{12},{5},{8},{18},{17},{18},{4},{11},{1},{7},{5},{17},{6},{7},{6},{4},{8},{6},{12},{23},{13},{2},{10},{7},{5},{13},{31},{33},{3},{9},{6},{4},{6},{8},{5},{10},{10},{8},{4},{10},{3},{7},{9},{12},{11},{12},{10},{17},{13},{4},{12},{10},{12},{19},{8},{6},{9},{9},{6},{5},{6},{2038},{90},{90},{99},{97},{107},{57},{205},{170},{9},{59},{52},{57},{24}};
+    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (5223 bytes) */
+const char* const cstring = "(\265/\375`\004`\355\242\000\372w\010\030E\000\2616\007\374?\365}\337\332\325\372_^\275\272\276\367\357W\277\016[\370\232\331-%z\213l\177\244-I\"W\266\377\271\213w=\017\356<\017c\335\275P\274\331\354\373\315\267\320>\347u\260t\336E\270\327\2676T\001W\001`\001\377}\230\236\366H\"\277\267Z\255\274D\032\311xI\373\344\331}N\034#96rL\0239\366\302\263\322.O\310\305\261\225\310K\237\371\221\001i\016\301U^R\371\254\0358?Z\241B\005\375_\010N\325\006\373\250\267y\277\211b\254?\024\3777q\361\354\374\004x\263\270\277\304\213\346\222\372\353':\177\317Mm}\0313\336tj\335r\342\3570\274\345{iqq\271|\324>\356\020\374\220\213E\250\270\274\030\363&\256\247Y\304&\256\313\363\322\342\230\212\213\227\274^\236\220\313\243\037\234y\222\270v\314x\213\240o|\267\266\252\257\363/\0177\275\327\217\262O?c[\343\353\245x\006\342\354\351\316\376)U_Oz\347\326[\264\365\301\374[\177\246\227'\313Y\244\027;G\257\350qN\367'j:\277\360\263s\232\363\261\263\236\325\227\347O\333\246\234\253\234{\330\307\020S\247b\3059\274v\253\241\310\371k\352\"V\021\312[S\\g\376\373&OA\001]\036O\306\231\256\r\303\031\342Z?\355\031\352\277{\372\213\337D\341\355\334\177\335\374\276\231\201\363\351\343\027\206(\237\225&\363\361}\037\024Myz\31585>\214\327\337\364C\325_\321\357\364\215M\036\002\255D2\001\237\347\203S\347\257[\377\347\242\303\177m\007VS\376\020Z7b\361\375\246<w\212\373}\22459\305\037\350:E\265Z\215F\325\314\037\206\204h\375\364\357\025\253\305\250\351\030\336\373\305\020\314\330\003Q\211\337\374\251\367P|sc\017\373\324oM[;N\375\247\366w\256_\177\257\301\301\214M\037J\312w\370T\365T\254_\002o\220\372\031\177V\177\236*\027\273<\266\326GaP\353H$\2553V\311\256\311\326\020\010\010\010\210\343HFHJ@Q\005E\213\336\026\225_\177\016\273\371\301\362\247\360\227\345\255A/$$\227\027\021\3111\022m\344\362}\266\273N\324^\333\322\242G\261Z\224\005\2412m\306\365\342P\177\316\230b\272~V\354\334K\"\022)*& xi7p\017a\371Q\237A+\321\250\303\030>\216\211\236\332\017\345#\243\253\335W\304\224N\017\177b\210C\367\022\013\367\272f\327\316}1""\365\313S\263E\205\324\337\371_P8\006bk\021\3048q\353\2517\204@Y\255\337\333\321\265\351\316\023\025\361\370i\021\377\235\240\325\330\323w\346\235\275\336\251\301\337\326\277\357\362|\340>e\"c\236\271\263\237\010I\304\224q\026f\"\"%\035\356}\372\300nf\372b\273i[\304\031\323\014[zG=\267\273m\333F\273\271U/b\323\240\032Il[\210d$a\244$B\310\304\244\202\246\260m\333^K\277iQ\325\267-o\233\343\033*\031\231\214FJB#&\032I\210\024*\211 2\322m\014A\361\024\"i$j\272\037\212@2\322\266\206B\021J4\377k?\220\205\006^\332wk\014\202\034\206\316\356\351\311(\322\246\013h\2044\322BHj\336t\224\221d\242\2551\375\344\021\037\377\274\236'\232\305\360\363\340\274\237\371bg/c\325\327\233\222q\316\033\306W\341NT\3240\031\247>\034w\207\265c\034\370;e\177\007\2753\016C\321\372\314\235\315\024\303\276\311\201\333\360\r\353\375p\203\2663c\365\263\325_\263\214u\n{\277\247\311\242\346\025=d\367\375\215\303\026\320}\324\353\360U\262\255\216\201HF\236\021\247 \362\223\023\037\371\003\2079q\224c0\236e\331\345)\205@\325j\353\336W\016\363\273\017s/f\026\317N\033w\326\343\252\247\365\326\331z\232H\224\353\365\351\342M\327\032g:\375\362h\314\303\316mm\277\317C\2158F\362<j\236@8\266\372|\260\325\347/\376\200\346\2665\265_(\326\2149\354y3\020m\255\306!\346\246g\372a\346\276<\371>\370_\035\031.fVf \2648\224\007\006\220\227w\323a\305\224\002\004\254\270\371h-\340\320tp\324\254\\\003\256I: =\034\034\033\234\215\0137-'hN\234\320\234ph>fLZ-%JY\240\363\300C\006K\014\224\030\342\314\234\371\320\352hi(\031\224\232\024\220ae\346\001\207f\245\204@zX\334\315G\r\031\326\264\211Y\351 \007l\324\304\220\031H\017\254\216\216M\201\222\300\306$S6\036e\247T@^\0356\036\255\217GGM\247\025S*\010@\023\200\243\346\2434!\tp\324xp\324tJ\023\033(l<\310\253&\2465[\016Z\025A\371!\t\344\033n\243\331>\320|\320X\034\235\032\024R#;\330\240\224\035e\014i`#A\007M\207\200\rN\347\303\315\244\301\201|\255\344(\273\031\340\273\321hd\230\255Sy\"O\254\025\026\000\216\232\230I\252\2507\03740\220'VfR\264P\245\212,A\"\000\320\335h3&|\314\200X\312""\024\035r\300L\204V\250\004\221\036$\013\013\205\325\261Q\363\321\362h\225\224\037\345\t\022\205<@v\310\030\226\200N\215F~\220\236\024\263\\)\033\224\036%\013\026\200N\315\nib\005\350\330h%\002\016N\247\305\315\307\214\022\207\206\303\341p8\333\277\260Zo\327rB \356\355\215rB \0226\222\266\355\020S\361D\367\014\265\255[ha\3341\020\210\217\030Il\233\367\251\376\233b\014\rq\030\342p\323\246<S0\232f\333\266\355\246\355\226\351+z{n\236\255uo\333\247\003\206u\250\263\3525\013\031*\022\221$%I\2411\203@\020\034\030\225P\250\003z\265\346\003\343\362\362I4(R\201\034\203\220\210!\312\020b\010a\204\020\021\tD\002\021\223\021\322<o@\345\2232+\200\\\"c\002(\327\256\005h\016\177L\310\371\021g\366rB\364Um\322]\264\220(\253\365\013P\230\247\320WL\272\364\211\340P\234\025\3211\322\020\222(\206\315mU\361|c\263\036\\\024\340\3205\351\245\254\364Y.\301\020\271\341\206\315\372V\000\002yB\311$\327\177\310&^\177\212\310\214sQ\260\\\264:\177\325\001\203\206YhD\356\030\304c6U<]\3705\272+)e\034\235\305C*i\353\226\220\022\263\356\031\017\254XiNL\277\032\375\220\214\322\270\253\000\037\\\363U\317\003\023eab\224\323[\310\027\216\207\346\351Lb\265Fu\237:\367\307\224\2734(\2563=\366(\001M\022\334\351k\272\010q\002\261\023\352\"\255\363ns\351\021\253\006G\331,S\274.\240\337\271\001\343\010J\024\002\233\2401\232\000\231\304S6\340(\201U\220\020\351\375P(B#\223\367^\203\000\205\003\315\234ics\316 \0207\306\2357\305\006\203(\036\020\320\003\201\254p \331\277z\316#k;\3454\364\255\300\243y\240\303\265\2719\262\006\224\372\241ZY<\274\203<\035\271S\033\256\002\242Cp\3557\303\217\235g\377\277\315K7\212\366\021\021R\001*\341\365\200{a\361\013<KD\344\325\232\226\210\235q\027B\317\255c\352\310f\202un\320}\312\204B\363\201\255C9'\347w\203\2411\242bP\214pU\000\027\257\205\273f\266\315\234d(\346I\236\262\371\330\214\232M\214#\237\251\024\360\330D\374\t\243.S\030.\342\264\307\031\336\342_Kvo\373\263\265\330\341\014D~\307\363\225\234\313i\305\rB\247\356\241Iq#\262\355\220md\304/\225\315K\203\274\322\0065\333\213""\253E$\206O\272\304\210\372z\351D9\006\323\371\032\242\265\021\331u\274\0250D\267\217\324\372\323\031>=oe\220\271D\302\214d9Q\355\315AG\267]\375\336\247X\237v3U\"M\335\334\244\207-\300\210c\226Z\247L\267\315\351\\&\201\372y\030\362\233\016+2\273\036N\005\017q\336\007\253\246\226\273B\275A\347\224\244\344YT\260#\361\252J\354\022\251\257\3131\003\217@v\210\314\252\003\363\260k\372;\302\211\352I\006\256Vq\200\260\307\237\302N\250<\025g\336\235$\023\210\364\360rB\364\244)g\037\316\227(\032\244\326\252\203\n\340\022h/l\"\317\251\226\336s\25477\222\357\363]\361\0253\036\363l\325\315R{\307\003\002\327\314\2300\211\337\375\267\350\003\207\014\230\010\317\341f\201\351\250\300\300\003\3567\366\032\224,\213\006\232\250)\253\373\\\030\346\223\251\302\346d`\371\347\2319kA\344\205\005m\231\033\260\276.\203\177J\274\347\3043\324\250\303\375[\017\322\022\t\007\t\275\233\034\377\231\241\003\354-\276c[\257\024\0036a\227\346\236\361~=\246v\347\347\002o\257z\202\374\005\320q\005\236w\335\004b\315\204\314wi\301\035\365\356\265\036Z\302\276{\003\221\373\025\335\263\017t\034q\036.<\nG\250\342\330\353\353\003\372\355D+6J\372\220Z\004`)\210gq\020\023R\217\300\017\351\014>\352\001Sl\311\037\355\345\027\252\237\363q=eFU\027\177(+\212\024\352\370YF\212\244-\026\3564\013\221\025\246{<qw\214\211\302{\n\373MB\004E\211\364\350\352e\242L\2139[tK\004\036\342@\346\200\367\214K\213\026Z{\212\365\253\005\274\210[\3670>\364\231Wp\026\324xc\235\354\325a\271\001\356\033zW\316\242\022\373Z\006o\276ly_\3628!u\224\321r\306\223\216.\030d\035\355\001N\305,\342E\274\215\262\222\342\013\203\261\247\371\314B\263\215+|\230\"s7\365\347\350i)\331\346\372\223\013\365P\212\020\t\266\214`S\371\314\242m\330C\356\3147\257\265X\274R\235);\215\273\352\251\271w\331\217\312c#\370\252^\330\200Y\203\"\210\211\376\303\350\360\374\373ZHp\365thk\245\026\221l\noO\3400\365H\213T-\334\263\006\304\204\237\214a\351\237\022X)\303\0200j\344H=E\306E\320m\034S\200\021\357\335\361n\334\270\354q\261\223h\350\325\331;O\243~\262\257d\261\360$""Q1byu@g\305\304\t&\225\0165\230;\246\336\226$\n\272\232\264\210\330\267B8l\274\2049\030|=\324S\\\3207\326W;\254\231\375\014I\210\372\320\206R\225'<.\211D\265;Jr&\366y\373Xv\224\256\0349f,=\357\000\000\2351\357\322\rzx\2276G\213\234\r\010\237(\014\335\302\231\335\347\332a\340\203M\226\275\377w\326-A\304\245S\340\270\256\226\334\346\253\207\266\211\312\331\265\305\272\364\342\354XI\034/\221\005z3-2+\306\031!\177I\311\006\307\034\301Z{ vxV\313J\337^b\351\227\006\347\307\314m\234\005q0\033\026\324z\014\363FaML\217NM\244o\363\202\266\245>\022\266\314\211n!\301K\372\373\220$3\350e\037\337p\374\036QwL\232{\212\341\206\3146\2711\304-\333a\272\0048Y\030S\344[\210K\315\022>Z\326\235d\374l\004\0279m&\264\331\200\213\2436\316\007\037_\263\177\223\014\351\213\345\216 \207eh\336\307\n\214\265\327T>&\357\245\010\255\312\347\364\225\035\340\375\263\205\347\004o\340\310\344JO\263\241WK\034\251\014v\2521R\242\266\247\305\310\032\341Z\227\211I\026\326b\264\206-\355\030r\227\023\001@\234\034\231\nt \356\247\367\221t\026\312y,\345\253\240IR\273}\302\254a\345\246\320_yWNt\334~W\326:Na\241E\"Y\3231\005$H\207(3\033U\301\210i!\344\\\332\362H\370b\253\205\032c\215r\325\007\226+\200T\002\226\212\216\251\257g\221\035\262s(Af\243\237s\325\335\2431L\214\\sV\257\330\315qMwW'%\nn\373'\324\"b\023}\026]\362\275\2076M\347\005\210\245\373m\034#c\263\245\3451\271\000<\017OJRp\332\243~t\344j\344\264l\317\347\261\007\215\225;\210S\274\367)\024\314\333K'\014\256GA\3332\204\314\214\344\212\213`A\366c\023L\211\332\224\302sT\020b58\346\317\004\036K\301@\337\210\007{|\277y\006Lu\315\353\r\225]\337\326\203\344=\254\037\231\331=$\006'R\372\032W\006\256\301\325\230\321\221\331m1k\257\213\322\200\302\311`\036\177\022\372\376iq\027m\003\335\312\277V\205\2435\227\303v\213;\0012\263\254\020\354E\026\270\tW\331\230^\274\247s\275\034\211\t\367\036\031\222\332g\217J\235\177\340\026\247\214\363\226\314\212\362\234M\217\241\334\025@>T2q\007\002x\003\314\207\316\333\233\310\343\027O\335#q\342\300u,D\270N\341\354@\206\275""\311`\317\255vBq\352\006\247\231Z\005\017P\207a\230+\003c\242\334\"\347&\312\242C\223\246\255\261\252\3563\3704c\255\220\305L1\360\323\2103?\177\337\332\331b\234\303\2605XA\027>\025'v\334\213\026N\302\307\031\232\272\241\242\332\004\221+\226\352z\340q=\007W\306gK\262\037\227\227 \216\306+1\023\337|\323*gU\247\245\"\346\264{x\302\312Cb\302J\255\311 \201\343\217XJ[\343\341\034n?\236\343\235\203\2008.-#I\337\343\277\353\033\271i\356h\311gy\361\035k\273t\353\347\3154\320D\265T8\013\353Y\357\032\245\024\006G4,?\231(P\034#\001\037h\245Ta\255S\014\316K0\200\356\346\323|\270o\t\247\203s\247\005-\216U\243\365\272Z\241\035\324\210\331\255h\356\264\205rU\207=\352o\355\205\376\353F\363\021\030\316\315\027\364\037\242\235p\321Dd\010\243T\365_\211\021>\337T\302\366+\204\206\201i\207=\263Z\025\204\204\367\226J^8\2511G\240y\t\020y\214\304\215j\010sv_\206\350\220k\227uK'\302\210l;'z\222\275\304\206\275\277\364\254\\\230\025\324\323\304\214\377PWa\345\225Z\222\202H\361\277\336$\342\364L\202\254f\263j\014#\257\210\000\365M\234\242WO\365\352\207\32454\330\006<z\202\301^\202\334j\273\333!\313+\335\377\246\001\244\251\207\022>\263/h\245\013\322s\342\021\220\206\351\313\271\277\221\3348W\23583\260~\235\023\036\371%\036\2257\232aL!\034|?4\243O!\274\355\004\037\035Q\216\236\n\215X\266\013\320\004\353Q\241\324+ezapF2\\\236\376\300G\226\222\370?ZF\245\244s(i\221Fba\322\222\373u!\026R\234#;\300y:\333\006')`\206\313\326l\2669\373\311'\337\214L\274\260\330\014\372`~\2629&\315\360\223\362$\302Py\220\357\236F\345\321\335\267E\245ca\252\220\260\337\250`\214#\377\377\205ngB\177?\327\207b\021\3138<\253\371\371S\356$\030\226\357 \321E\233\350\333\362\201\307&\323\361\032\030iI\322\201\233\372mT\275\243\372\204\305I\264\321\027\341\320\332\"{\t\265\355U\320\373B\326~\274\t\034:\276`\327)\233\250\037,3\234\024\nV\206]0\302\300\256\232\343*\246\352\240Bm3\363\344<\032\034\270\2356\272\256o\323\232RdK\201\346\224\253\217\236\235\035\365\002x\261\210\334\300\222\270lH\270b\342dl\355\352\201@\276+\270\275A""\347{}\000\266\026\024\2428_\265\007\003\342\245\006\037.#B\220\305\247\263<\330\330Q \361\300C\343bTkN1r\333\031\006^\367%\213H\372\032D\211JF\301\262L1o\026\2665G\304MN\333\232\366u\225\317\2162\003\242\372\371]\327\211\035\204\360\376zKf_\nx\200Q\272B\375h\202\020\336\003x\343B\371\246G\010\370\304Z\221\2027,\320\275\211,e\217\022\274\211Lat\325;\364Q\001\274,T\342C4\203\320'\316\354\256A^\337\221\213\315\207F\266\366\000I\022_\313 \020`\365\307\367\322\2019\267G\343\255\230X\357\336PBtC\330.\026X\036\267\222v\360\372\314S\001\355L\212\316\001\013\235\231\251:\345\024\250\251\354\344\336\371\353\250\351\3003\"\324d\312<X\315\301\261\215 o\335\031T \2369\270d>4\030\3255\253\230\323\344\301\3214\335Yj\033\340\262\211=\225\232b\357\364\346bh\353\013\356d\352\323\240g\177\264\330\211lh\237\264\246\210*\255\340\316\007\323\372\357\330\243n:c_\277\032\302\317C|\343m\200\013\304Tm\321EY\364-D\307\275\311k\201)\371\331\225\277k\325\354/\035}\375s:y\375i\277=\375C\377\rqP\222\341\326\354S\303\314\377i7\\H\247+8\264\r\007l!\027f\355\017\206\330\336\032\023I5`K\375\n\261X\232\243\342\rO\005\351\3713%b\0264\033M\230y\355\340\257 \321\202\254\305\307\215\371Wcr\363\006R\275\244hdt\351?mbk\177\261\010\373b\366\263\252\243\361\020\350\221\327OA)\"\"\024\353\226M\315\032Z9Tm\353\236\267c\237\003\263\242Z\322\034\006\007r\3630a\330\004\321 \272+\252n\004\267yW]\234\235\\\377\324\014\310Q\343:MQE#\355?z4\214O\r\351\234\266\023\007+X\r\005&U\312+\367\344\254\250\217:I\213\261\036\330\230>\005[\320\352r\250\366\237z\272\351&\325\273\202\032\007\263Z\003\034\211\340\200\025\013\277U\020u\0307\360\032SP\252\2404+\320\343\307\264\271\025\034t\201\334\240\365Cj\267\221\017\221-\337\322\217\034\022\202I\315*p\255-\177i\240\3779\026a\306\021\200\340Z\351\263\351\034\005\3708Jr\310\200r)p\303\214\255\265L\353v\216\252\220\345+\376}I\177\0225\356-\020Mq\371\351C{X>U]\322\214\016\372\312\241\225+\035\262e\201\346`\022Z\234\377\024\023\343\223!dO0\315p0U\025\035\345\017\212\300k+;<r\343\372""\020\030\252\033&;\330}\265Uuk\342\257\202\214$M\037\352)\270\223!\365\340\210V\014\177D\235\215D\027-N\271y/\000\276+\341\\DS\246\025pk\203\3325D\003\234\325U\200d=5\200\371ih\266\2000\n\363\230\274\203\352\027\327\213\276\247\271-\325E4A\t\027\205\241WoF \213\345Y\241=\263\366\356y\240\361\034\273\002be\024\366\267\000\025\310\354\265\0241T\022/\371\370p<\314\200;A\236\212\364 d\272\351\376h?\226\357\321\354\366*\222L\357\\jp\226g*\006\270!\2674\214N\360i\307\270I\374\365]\363,\321p\335\215\355\300\222\200\264\370+O\3322\314Z\341\312\021\276\343\375\377\242\260\223\334\312\361\001-[h_\334Sn\014\320\200o\315\231\363\3619\032\202\362\024T\273e\3121\236:[\237\033\341C\013h\272h\\\207\337\360\245\"\017\267\312*c\231cn6\364\327\306\224J\t(|J\273&\336`6}P\314\027\266ed\220\031\201\367\010\304\326\021\024\367f>\260t?\022\"\331\210\346\207\375@\247\024\021`o\207\014r\211=\007\343\036\217J^\215\314Wq\037\030E\r\007\316\260)\201\270bZ_\200\233,T\261\033bq\217\352\237\333\202\340\350\251g\340!|\263\030\306h\272+";
+    PyObject *data = __Pyx_DecompressString(cstring, 5223, 3);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (5726 bytes) */
-const char* const cstring = "BZh91AY&SY\r\207\300\002\0004w\177\377\377\376\256\260~\377\377\377\277\377\377\356\377\377\377\376@@@@@@@@@@@@@\000@\000`\035\256\373\261\332\234\335\364\340\274\006\272\006\200;\331\346\363zm;\233\336\334\354\345\321\267w\263@x\336\205+F\255\232\270\315\000Hs\030t2\013F\221J\256\214q\223\267r\322k\241\327mgxw|$\211#E=!\350\324\306&\2464e0&\321\r\001\240\031\001\24014\030\324= \365\006\3214\032l\240H\211\240\204\021\023jd@\323#A\241\2404\003@\320\000\000\000\r\000\000\000\034\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000B\224\2111O \232i\246\232dd\304\323@\000\000\000\000\000\320\000\000\0004\000\"H\205<B&)\262(\375S\364i\224\324\360\223\304\217Sj2`CFF\200\000\000\000\000\000\004I\020\020\023&\211\221\220\0216JmL=S\324z\236\243C@\320\001\240\000\000\0004z\236\240\016\351\034&S \370SB\324m}\275\227\261\261!\343\222\321\245\010C\325\261\247\355\263\r\242\273\330\267q\230\204\246HS\234\177_\272\035\006\030:\037\301|\034m\227i\303\020\243UG\317\002\210\r\213#Id\360\317\307\023\021L_\006\343\216\303'rW\252\241\214\204\2304dB\301\010%Xl\204A\006\0263@k#W1\001\016d*\311CD\245\"\0201\024\022\2444\2441\001E\023\024\245\021\n\022\3040\264+2P\264\241\251\324rNg\225\355}\n\214_s,5\004\255\010lY1c|\311X6\216\"ERc-\371\031\004\344\0322\201\026\2044\221\331\374=%\217\033\374\014c5\362\307\022|\212\207\016\255E\004|\311$h\013\254\006\240@\001J\203\241g\244E8\242\345\375\367J\370\344\033\223\256\245\302\214\014\t.N\363\234G\210\362\016\266\231\354\t\003y\273\325\204Sg\206\016\245\023\305\2144\367\213\301,\230f6\362\304X\266\237+\254\255o\215\260\334D\020\315__\237\300\223{\272\211\212\037\251\036\342v\254D\241<\326\013*a$\213\r0\242\\\242\210\027;\212\343\250x\2208`H\255\316\276\374\2739gc\036F\206\374\246\336\2461\021H\215\210\330p\250V >C\247\220c\245\222(V\031\020 :\035\266S\rn\206\364\332\354%w\351\272\230\037\261\371\363^PP\024\021\021H\234|\350C\267\351=\017\306\346\220\354\351\222\251{\270c$\226\313,\315u\r\250\363\335N\236\226\0304T\354b\236\203\241\213T""\350b\0301\014\306`8\363\347J\320p2\r\3232L7\020\334\322.\270\034\251r>\202\376\321(\303\205\201\3429\035^\354\217^m\337\303\261g\332\203l\215\2715\253\372\356@\367\234A\r\264=\010?\247t\256e*D$\222O\247\0020\375\353\335C\2024\211H\003\213T\222A\343\324\003\356\027\207\034w\207\206]Y!\177\241;5\373V\014p\305\262T\204J\213#D\203\005\205\252\321l%j\354a!$\355\336`iS3\007X\017\220z1\016\343\014\333&\254\006\323\006\307\r\007\n4\306\035\016\327&\372q\303\231\345\233\321\211\317S\236\351]\245\355C\231\305\313\3114\257\005\343kr1\247\241\2044\371\231$%\216\373\255\342\0067\250\210|\253\246\320U\323\3367\342 \322\016\r\350\310\326\273\r;\210\341i\347\226\2306;-\357\033\034\347\201.H.+U2L\017\244\035$\334\265\354\223\240\241\"!\262\344(\202\230L\215lA\t\312;\375z\3626).2\017ir\034\267\265\254\034\035\205\371\353\034\"\224\014ChC~\353\202ym%\002\311\0325\205U\332\241rj\314,\372\nc*\361$\276\016\2500\302\211e\271\361\032(\353 \351\240.^\203[\024n\336m\306}\004\210\337<\351\035:\006\300\003j\t@\333m\302\3170yb\303\223\005\262\023\334S`5r\006%\314\334\320\230\332\315\353\224\006\033x\262x\024\354\206\22406q\321\355Q\337\\\306D5\274\2716v,x\355\312\233Q\216k\277\324\023\336\250\361\326\3420\313Q\t\024.\332\t8\272\255zi\035\211o\337\356\327\203<\245\307]\371R\215T\325\324T\213\255\254b\375\014B\343\231}\251P\260\350E+9M\243#\033\230\362\345v\017\215\217\006{\254\006\230Q\272\360\213pL+\272\374\3671'\223p\303\305\216\373o8&B\234T\026\306.\252\325\327r\274\006#\241\002\314\251Q\016{\330'\242\252{>:nw\014\267a\330\205\300vs\225\313sX3\261\273\200\204B\n\310'\022\253\2011\304\003>\271\255Cm\335t\347E4UIn.B\007\231\014W\255eU\033D\261\367\2439\346\236\325\t\264\332\266\260s\031\242w\250/\254\315\230\262`\220\226m\r\215\r1\262tJ\346\352\364\272Z\3509N\365\024V\037]\254\0138\006H\220\342\255\306d'()O1\330|#\211Y\341\221\222\331bY\267\0164a\211b1R\n&\0103\033\020\363=\016)\335\234\324\345\345\3301\033\326!\355e\246]]\324)g\004\340\347+\211\332\310\317(:\210q\3345\t\202\341\204\216F\306""\307C\3445\014!\204\267'\003\225\016\334v\362\024)\256\260\361\026(\203\2471\336\262\244KU\276\372\271\032\354I\235\034\314.]\356N\013X\202\367,\235\362_\267+\266\360\330YB\226r\346\344 \307a`\273\020\337ol,\265\234\312\252\013\201b\344oxn\371\3335\233g\t\326\026\3431\204w\201\316FZ8\031\235\353!\207\037\204\271r\362dfb/\335\022\345\221*\244\n\323K\263\021\234\361\374b\0213.OJ}\366\336*\261\222\"\037\373\210\033\302z\"\031Z!B\224\376.\217\370\021\376dV\275\333\332{[\333\006\r\002\201\300\323G\331\372p\244\264\021-Id\203j\225\354\353\3364\345\3439\016>\021\315\014xP\366\013}\340d\363\327\312C\277\351\022m{7\310[7p\276$#\241)\335\315\265\035K\234\321\216\277r_F\020}(\346\3541\014\324\213\325\305M\t\234\260X\\f6\230\210\204Y\226$\213R\305\211\334\353\225\3149\347\343\346G\264\206\304>\023\310v\245\360P\200\244\003\304\306\326\023\317C\346\363ww{\373y\362\261|\t:Qh6lX\362q\300\266U\0320\261-\0366\306\363v\304\344i\207q\231\013\300\241\363\327\370E-\t\n\210dR\006@\3226Y\231\225&\350\367=)\277\302\214\2169R\334\3359\250q\031P\026\347\370\206\313\251\264H\337f\246\302\\\3511`\026\350\335D\300\017\225\245_\177\r\002\376\352*\234\300\363\220B\004\024\201<\343\353\371\321\343\327\320)7|?o\245\244p\230\332\261\225\005\353\202aT\035s\031R\212\035q\026\373V\006\222p \"\327!\246aUA\2339y\242\\\245\274\033\332\232\205KL\2411\242\244\275\254ZLGx\370\371\274|\352/\326\342j\240\237\035\237\004\300\031\304'$qG\013\23729\242\273\005\025\204*hP\276&\266\330\306U\345Z\251\301\263b\223\024R\324p\2043\235\342\014\030\357LbS\215\035\247\331\026\203\033\213\202\211d\250?_\300\207\251\037\020\036\247\247\212s\3003bmgj\032\311\0263\202/\243\007\221\030\226`K\324\200b,\016Q\207J>\314R\216\316\314]\230ay\352\3145\300:4v\242/=\343\317\355\354/\\\235m<\367\256\341/D\346ng&\017+\315\013\205\223\211H5E\2211N\262\2143\034\267\n\014\333T9<z\021\316\010O\210\300\013[\340\274&\000\325O`dA\217\277\347t\r\333\260G\302\354\341\365\032A7F}\\:\275\204 1P;\242\2760\203\303\332\363)n\005\324XSR\t\336y\327\267""\377JZqM\270\347$\222H\3010M\266\337\236  47\2437\267\213D\n8\356\210q\2209\232\230\223\352\264g\247a\265?\261O\22415\214\323\260\265\007g\260\324\271\361\212\204>\200\24132\275Y\0328rZ\022\020\210u\203\004.\020\036\017/6A\232Bi\211JQ\220\210Iv7\205\301$6P\220\220\252\252\252\324\010\177\333`\361\210\326\006\242\244<\237p.\246\246<; 9>P\204I\022) \270\3149\016\317`O$\241j\323\036\267-)\260\314\250HHHE(\313\336\013\tb\3477\233q-lNwt}\031\013i\264\335\342yro\242g\261\004\356\204\204\030\200B\003\251\247\323el3!2\363X\270\034\010\340Y:\326\r\204\2717\212\331\332\277<\001\221\027\312\020 @\235\320\234\032 9f\203\3024\0010W\242O\005\177\232\344\030\246^\237\257XK\341\022\322E0\001\357(\035\277\023r\234M\001\266$d\304D9\005\225\235^\342/\202\026\275\244\354\306\356^),\340M\266\nI\002A\300(\240\237`=(z\323\214\003\346\026\326\345\356\262\034\357{\001w\025\3064\031\214\347\2372|D\211\022\236Cu\242#B\354\2410\214\230>?\037\301\024\330\233\327\361\325\nP\273Ik0\271\344<\340\017DG\307\021\332[8o\014\235Q\021\021\014\202\020DDBd7\020\334D@DR\277\215|Z\033\307?Ah._:\332#\005H&\331\262W^\267\302\212\023\350\37157\\\332o\335[\242K\365=\004F9\r\034\375\301B\313VY\032m1D\001\245\211\266i\263\324\204h\222\303\337\177\r\352\341\211\224\032 \301\312M\266w\025\270\201\316\214,\321\030WF\014\"\305\3046S.\240\273r\353.\331\302\341ah\332\344\251\304\342HB\263M\246\323kv\255+[2\301\262\261\262\252\233\351\"V\360\213eB\207)\215\231v\331\356\263\\G\212\361|\300\312\223r\264\025x\010\021v\242\320\223wjB\267\204\300\306\371\301S\231\227\031-\202fy\227\013dp1\352\007\3014\306\3174\021\341I6\220\231 $J\355\nn\220\342\032H\003B\035l\230HR\244M\tJSBP\2719\031\t\222\261\nU%4%<(Qv\036H\207\025P8\220;\301\023\232s\021\016<\215\000\265\310\237{\254\221\204\006E$\017l\301\311t\021.\205\214\304\353FD\353\246\217\372\261\263\267\002\241\010\257\335\027\2144\004\356\200s\373\302!e\314\373\246 \317\367r, |R@S\243\317jp\027\324&^y\265\205JG\211H\017\332\242\352bG\341\240L<\323\260\020\316\024xR\277H\250H(=""\227@\261\335\345;\377\211\0351M\375\342?\263gl9\206\247]'\024n\274`r\035\316\340\363\242\334\342\350\335\274\377L\037\0067\3027|\257\024\013\331\035\r\333B\300A\010\004\332&O\211\326r\003\331\360al\npdpF\225-r\314\027\232\226\035\221/o\263|\002\360I\335\252\206Yf\316\3047\224\276\304\033\206\353\027\337\362\236g\314z\247\246\225b\230\373\276#\241\364a\002\023\214\3726\325\372\200\211\321\243\256%\007\374\212\231\201|\005\004\307\024,\215\206\2248\363T<\251ww\203\321\244\320\024\\\245@\222\216GU\251\032\251,X\204\033\203@T\000\304s \006\022\372\252\306\345\215L~\257h\220\265\214\200\205\342] \\\250\035K\356n\255\255\247\2532\344&T\322\201\352\023U6C`\346\216\210m\331\231F^\303>\225\372t\252\375\000l\017U\2238&Q7\276\035\007'AH\341\020-\354\334\360\001\344\017\021S\2321\241a`\275\021!!d \"P\211M!\024r5\004\346n\033f\242@pbX*\223\203dJ\2040\024l\260\270\003(ED\210\333<\036iv\330S\324?\217\210\306\204\023\310\374 \234z\307#-\307\n\t'n\215$$\372\225\362c\2238\231\233\333\200\024\003\234\016!K\247'/\316Z\213\277\230qO\016\372\233\246\335\256\335\251g#b8 \345\023>\243\240\323\332\3468P\270\374\007\206\257\rT\264+\277\332W\205\346\006(\364k&\316\300qLC\256A\310\314L\3123\022\206\321h\271p<a\216\300Y\206\317 `\275\351\324\265\234\332p\247\305\025\346ef\326\002\360\217%\243\207\241m\301}Z\206\206\332WZ\214\r#-CC\3378\013,\215\006\310\325\207\260\345\021[\302'\211\252\225z\311b\326J1#\253*S\241\222*RD\006L\352\355BUI\"\031\300\371\255\240\2264ti\014\300\204\242\360-\203TK\203 7\205\226\306\021y\000\026v\016\254T7\210\272Y\017\316*f\312\243\224\212\211i\006\371.Y;\r\315\314!\322\261,x\214\006\351b\224\303(_\225]\340\305\"\300\270\032\\\264\320\320\262\344ez\317\231\253\231a]\271\325D\371~\340:\037c\3407a\020b9g\330e\261\342<\003\255\320\256&`;\365z\254#a\236\246\010\033LH2\022\007)F~\215{HD\3221\036\335\212t\0169\245`U\033r\337c\250\327 \336h\350t\002j\211\323\"\206\242\016jn\003\215\237\254.\320\367\204@\204,\030\261^L\325$\3438\201\275N\204\355\261FE\360j\202\330\264dQP\242N""^ \026\013\351N\002y\241FQ6r\322D\276\tq\013)\320\333\364\224\211_O\225\014-\307\250Y\210\340\027\250`\253h\201\021\203\273M\273\341\210a\261?T\021\212@x\370\036\256d\271\204\234I\311\025\017i\210\244\212H+\345\360r\212{\244\000\347\202S\301]}\270y\353\344#\300\037r\007\206\010<\3427\324\017/\343l%\022\250\242\231R\252\252\212\252\252\222\252\252\252\252\276N\230\257\221\302\tH\247\306nw\314\257\037/\036 \271\241\270\330*w\243\020\001\256\026\264`\220$d\020\321O\222\276\276\335a\202\363\266\301\303\"\321\232j\352\346D\243\244\345}\2528A\355\003}\272\301A2\322D\244\215P\263\022\0043\t,\t*k\200C\353\202\203\307Ni\231a\231\224\260@\204\200\300\334\217Y\035\376\377\266.z\207\227\311\341\360ju\0363\254\217\r\370\321\301\221F\001\324\264\003\340\211\222^\221a\334\304\314\356-\300\350\030\354\325\360Z\255\003\255\246\3443\273\332\302w\211\330{\341\325\270P\365\230\340w\271\260\030\007B\010b\204\002\310\025\021\342\313'\224\352GRC\036e\264\315\363\333\255\337\205\316\254\254[\234f%P_\222\235`\200\342\225\261z\3705\036\021\220\365\305\016\2551\212\000{D\231{\rh:f\201\254\r7`\374\262\347\3245C\001=\244\027\027\240\023\034o\\\246R@\326\001R\035o\275\313\371^j1\212\273\013\320w\273\362!{\260\363\010\234\006<(I\224z\303\246[N\362\316<\014~?0\243\363\351\345\376\231Gy\276\220\221\t\0259\247_NX\030[\001\360\303\034j\0068<(\267\256\024\241\330@\267\222\214P;k\220\231\316^`xy\275ePF) \022B\001j)\205\206\251\030\200\231\216o(z\345\374\203\361\227G>\360\316S\335f\002$\002D\200\245\340\025\004qrAILr\270\224\350/\275\346F\364\266\350\205\201\342Gv\207\270q\216\354\2660\026\231\026\010\204\021HJ)!\020;z\216\334\360\210`\356\006\035H\205\324K\022\213 &{\220<\376\240s\223\266\034\312\301\305@\260|4\"w6\002\230:\220|\263>\357\n\224J\246\232d\242\252\345\255j*\252\252\253\252\347'\353\021j\330\353\305\330\020h\035v\004\222e\234\323\317\250Z\362\366\274\307\240V\032\013tlrF\221\244o\023W\311q\333\220\224\025\261\002\204\0163%\201\204\264Z\252\030al\233B\355\301\214i)Py2+\016\304\t\024\240n""\210\231\265\213BD\310\3553iAV\227\221\032\260\205\300\271\005*B\304J\213(K\024\026b\275'\007ke\320\303#MR\314P3A\322\023\206\364 \317\031}\340\261\030\214B\021'.m9\223#\0250mtW=L\356\252.@\020s\200Y\034)\277.\274\316c\316\216D\000\333\252\206w\324\0214Yd\244bm\"\220[-\024l%,%\336Pt\000t\200i\021\303\250\300\2625\002\242\224Z\342}!\351\233\3638@\320D\350\301~\020^\247\274Z\000\301\001\366\362\003\020\364\242\017\252\254\240f\212\\xx\203\231\nJ`\034~\311(\272\004\025\364\005\307\001\361(\254\2428\"%/0:(\027\374\034\\oT\310\324\346\021\224\233\356\361\341\342\240\250\225 j7$;\027;S\231\360#g\307\014\305\324v\032\210\235\000(6;\003\014\366\000d\314y\177\342\270\2370\235\336sk\303q\270|\0178\017p\220\034\0203\022\010a\332\027\336c\322\034\016(|-\275\2404\206\000\200\3124.\032\340\350.\301%\000\032\004\353\312\211\361GE@}\244F+\023fe\371\344{\316\274\352\227\r\306\366\304k4a\353\024\216L\351\032\306\311H\036t}(\207\272T\315Oz\236\361\367\277l\242\245\303E\200\3026\335\225\30312\254\2034%\336\3505\200\321C\022wzp\034\005\343\325q0b\372\221\311J\275\001GD\r3\201/U#0\037\315\003\324\253\336\3301wcq\\9u\222d\271\013\350+\272\031\347W\010\202{\341\310\030\230\221\357\311\034\321w\210\033`q\013\260\033\325U+\023\201\024\204T\330\367QM\253\274\342`@\371\213\222=m\010\323 \334\321\0365lX\034\024 \255v\347uH\241\252\2354\027\271E\3417\256B\036,M\003)\034\216\341z\221\216\211\210\346\301t<\320Y\231\202\\\003\246\022u\031\t\372\261EBKy,\354\342$\275\225\207\017C\000\275\342\234\022\340\202\"i(n]\341\216\032\271\0027)\301#\213\225\234\304\373\311\010\275\244q\354P\271\034Z\325\025\245Q\225U\224\023\2226\271\035Q\243\r\021\223n\3752C\026$$\222_E\351\214C;c\267\211\315^\252\027\250omZ\263\252\337P\357\307\311\024\255\321\305\267V\272\362\035\202\350M\006\212<8$\224g\220NDt\271\314K\024\002L\311\236\315\204X\263\025\203c\2407\r\005\033\304:\246\231\212\026\246*\221\325f;a\246\233\353`\"\207q\304\316\024\334B\372wN\265?\232\221\3331S\003\023g\234\314N0\337}N\354\272\006\350\213\247\013H""\334J\336\311K\033j\265\262\232\027\026\233\"\2520\252\3033s(\314\322(\016\354\221\220V\305\242!\300\310d\003E\315\344\336\373\336\332B\300\221$\266\320\312n!\255\201\010\262\231\256\356\356\327#\"\371\026\274\r\242ocB\025\020\0331\221\201\020t\244h]\202\036\362 \006S%|L\361,7b\006)\023a\014\021\275`\256\227\3209nc \262,\002i\032b\221\214#\261S\257\004\031\020w@,\362\252\321N\303\030jW\t\262\020\220N&!\025\244-\001\023}!\274p\243?r<\366\002ZI$\010\240\035\275{\374\226\245b\271\256\321\023\037\210\335\202.\206\251\001\014\346\020\013\321hY\026\340\303\210\203\245\255%\206\005\302 pG\345\017Xj@\301\020)\336rh\345\330\257\240\377\350\206\375\324x*\006\222d$\304\023\0056\245 \036\250\332\326/@\311$\030!\351$\224zG\251\003\304\004\336n'\207\207t?b\357G\246\026\236Qx}\371\252\235Cp@\3562\023\250\201\010`r\010\037l\021(\312\307\342\037>'W\317\277\221{u\017\217i\2269@\313\027\313V`2\003\350H-\326\000}r\007g\010\034\0177:\017Ir\020\261(kd\361]Q\357\362\326Z\"\315\360\241\035\37042\243\202t\327\220\216]#M\027\221P\372\242T*\220\367\036\307\2006\241\344Ay1vz\220\221*\025\2306]\303%\240`\237\204\210\300\313`\202\002\321UR\033\027$\261he@U\221\250\017\271LU.\001%\254E\221d\222\0137\016\016\245\321\357\330|\205\225\035\005\321\037H%\255`\023S5\003\227^(z\024\3062\024\224Q'\212z\026\227dNe\342\304\r9\010\360\014>\227\243\365\376\374\375\335}_\254\376\243t_1x\265S\373Z\274g.\\\274j\213\267\031\232\225l<:\273\267C\323\364\327\356\032\247\013\341\266\3209~\223\374\374pL\305\360\310:\363\357;\365\220\216$g#M\3512f\034Th\2627O\303\352\256\004Uy\0018\374\242\365j\226Ks\364\200k\210\3760\350kt|\275\365\346\035\367\216\005\203\205\2048\333<&\0353L\320p\377#\014\250\261\314Te\226\216\241%,\374S/\222\214dS\252\266\316W\261\026\324f\345J\265\004bR0\265\214\003\336n\243:\221=\0275\307\257\366\326\236X\254]\344\230\224\367\250P\314\334(\312+\224\2137\346\371\376\263\315\277\231\231uA\374\231.Sc\262\372\347\363\317\311\3668\266>rA\320\365Sa\ty[\014LR\362{2\304\304\236L\031\346\356u,aj+&\305+""\220\234\261\3220\257`\277\255\272\3131\227w\370\273\222)\302\204\200l>\000\020";
-    PyObject *data = __Pyx_DecompressString(cstring, 5726, 2);
+    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (5427 bytes) */
+const char* const cstring = "BZh91AY&SY0R\0335\000.\361\177\377\377\376\256\220~\377\377\377\377\377\377\377\377\377\377\376@@@@@@@@@@@@@\000@\000`\033\317\207\232\333\276\346\367nk\000P\000\027\276\356\345\242^-\214\002\235\300\033\276\300\302\242\201\300\224\014\276\272\344\243C@hh\001D\303OfNJ\005m\263\276\r\360\222BMD\366\244\332\004\330\231OCM\t\352z\23144\031\006\206\206\200hi\2406S =A\210\323CF\311\004\210\232\010AM\032\215OMM\007\251\240\032i\221\352\000\000\000\000\003@\000\000\000\000D\336\251I\247\244\003@\364\232\000\003@4\0004\000\r\000h\000\000\3204\000\000\006\312R(i\352\003@\000\003@\003@\310d\003@2h2\000\006@\000\006@\010\222\022\232\251\377\240A)\355F\243\365G\236R\217j\217\021\250\311\371SFe\036\240\r\r\000\014\004\006L\206\200m\010\320D\221\002\000L\211\246\232dMOM2\232d\321\014@\007\244\321\221\352\000\000\000\000\001\344\2009\311\033\345VA\361\303B\362\267\243\341a\336\372\361:9M\032O{\365}:V!\353\201^\307\272\325\266a\004\221\211\005>\004\377\257\234\017\241\213\003\350\373\344\373\275\371\2724R\0225T0\200\321\366\221\244\262w\347\347\304\305\007\027\275\270\343\254\311\326Y\360\300\204)`D\314G\"\220\263rB\222\2122r\317\0000!\177X\250\236\270(\0220X\214\202$\006BH\020d\"\305\210*\212#\024\"\214BE\t\020\031\005\222\013\024E\214c \240KE\251\261\227\230]\254\224\n\236\273'\001\266\t\225;2\260\362l\2274\266\310\245\241S$h2y\r\331UK\364Nn\365\272\204>2\010C\235\370t\237*n\264\371Q\214e\316\224\251d\302\267M6\256\334&\004>\355\026'\3020]\322\210#\002 \345\025\336\217t\334\007g\340\027\305\344\270\243u\014'\023g\335\334\300\275\032p\371\344\250A\363\001\340H\361\300\236\332d\036N\362\215>\344\004+\347\314\005b\305Rw\332*\233l/:\374\235\253&\271RE\311OC.V\312\310\214\007\255J8\222D7'\274k\206\310P}\"\211\360SW=\213\355\033|DK\026)*d\224`\330\346|?\032\273SjR|\347\372\372\337@H\004\211\010BH\235\275\2503\335ym\372\177r\337\203\313\265\255\266\022H\305*\246\333\233\343}\303\354.\024|\370 K\026\335\r\004\352\226J\005R\312$\2501\2022\250RJ\177Lm,0(\201\250\252\201F\2244\332\023\234""\032\251r;\313\372\241\020W9\005\320X:\371\230=^U\227\365\231=\000S\203\207\205\262\372k\000\274\007\000Ce\017H?5\332\352\245H\204\222I\367\360!J\033\221\270\205\n85I$\035\374\000~\021w\357\307hwe\303$/\364'M_R\301\226+&%HA\250\004\242\240\301aj\264[\tZ]d\204\223\257q\201\245L\314\025\354\036l \353`\306d^\201\226\2418PH\240l\230LRy\320\333\351\276\356g\214\336\214Nz\234\267J\355/\030r8\271y&\225\340\274r7\254i\350a\r>\246I\tc\255\326\361\003\033\314D>U\323h(\337\033\361\020i\007\006\364dk]\303N\3428Zy\345\246\r\216\313{\306\3079\340K\222\013\212\325L\223\003\351\007I*\022r\022$D6Q\n \246\023#Z \204\345\036\217^\274\033\024\226\371\007\264\271\0167\265\254\034\035\302\371\276\350e\2046$\330\036=\311\343RP.\244h\326\025Wb\205\311\2530\263\350)\214\253\304\222\370:\240\303\n%\226\347\304h\243\274\326\264\tc\304m$\034\271\234]\377q\264+g0\205\332\025\314\0351Y\311b\324\023\344\224\330\r\\\201\210\261\271\332\314mk\327h0\331\325\223\275O(j\241\201\263\235\037-\034\335\304*\242\336\\\233;\026;\355\312\233Q\216k\272mk\035\365\260\213\262\324BE\013\262\202JV\374\311\035R\327{\310\305\366\210\216Z\332\224f\363WQR.V\261\213\360b\026\375\244\251\0259\021ug)\263\003\033\016c\333'z\375\266\003,(\331w\305\260&\025\333~\233\230\223\312\270a\342\307co8 )\323'\030\2455[\026\355/\034\310\025\345J\210s\331\034\325\254\364\371\350\355\031=z\241l\0358\225\306\306\260gc\253\200\2041\210lIt\";\035\356\001\236\353\332\031\305\226\332\356\301\n\010\206\347\213\220\201\346C\025\352YU[D\261\367c9\346\236\325\t\264\332\266\260s\031\242w\250/\254\312Y0\\%\233CcCLl\235\022\271\272\275)\244\034t\336\242\212\303\353\265\201g\000\311\022\034U\270\314\204\345\005)\346;\017\204q+<22[,K6\341\306\2141,F*AD\301\006cb\036g\241\305;\263\232\234\274\273\006#z\304=\254\264\313\253\272\205,\340\234\034\345q;Y\031\345\007Q\016;F\2410\\0\221\310\330\330\350|\206\241\2040\226\344\340r\241\333\216\316B\2055\326\036\"\305A\323\233\275eH\226\253}\365r5\334I\235\034\314.]\336N\013X\202\367,\235\353\263\013\262\241""\260\262\205,\345\315\310A\307p\260]\244\345\312\234\343\235T\222H\023\214\245\250n\362\273\335F\006\243\240`\033\032Xp\306r\243U\025\221\375fs\262\320\303\207o\226\355\304e\"k\221\034d\025A\345\244\322?Gl\306\336\254\027Pb<kU\251\224\331Z\027\215G\020\005\374\004Uz\305q\001J\311\n\024\247\360\364|\020\217\361\357\254*\306\033\336{\315\357\223\006\300\240p4\336\370\376,mW\261\022\251,\220mR\276\rsN\\\316\303\177\021\315\016*6\260&j\211d\334\256$BY\252\021s\006\031]\014\345uBD)d\n\014\243\261\243s\315{\335\325\216\365L{\r\224\220\322(aH\305v.\207\326\255\247([\023\031\265\330\307\274~\303\350\367#\330CD=G\220\353K\340\241\001H\007\234\202JN\356\356\277!\336\360w\275\002\3247\341\202F)Rw\371\330\254CPT\216Z\355ReYI:\332a\315\231#\301C\363\300\377\010\r\210%@eJ\201\264~\2773\205\022\025\016\362Io7\247G\250\312\3265\211\246f\204\271\3500`\026\361\327D\301\177*\333/\240a\367\024\001\356@\016G\324\333\277\200P\353\372\320\365F\363\t\212p\322\341\201\325\210\274@uxp\330\323j\3551\220\316Qi\0130\014\016\316\032%\2470i\022BZb\251\205\014\207/\014\230\321R^\326-& l_/\222\276\221\220\017\277\360\235\211\347\006o\t\305\034\221\305\316\204t#\302\r\377j<\310\333y\256s\220\341\354v\032\t\334\252\320\342\326\267v\252\353\211\210\224\342\236g\034\035\361n\030\027%\022\222\240\376>p:`w\000\351\350\311;0\017\210\304\330\037\272\276Oz\265\311\0263\216,\313\204\260\365\243\006\354\014$\200\\X\034\262\347f\305P9\345l]0\342\347\2338\312p\251\371\363\0043=\304o:\210\354<\356U\275Y\371\002^\364\346z\242\374\033\r\334\341\220]\220\212@\274%B0\221\301!ES\\U$\n\315A \023\350\264\031e\275\036\333\226\276\226\204t\306~,w\300\023p\t\335\353|=*_j\346,)\252\202v^\262\374\177\204\245\247\t\253\020O\214@\201\231&fX_\331\231C[g^h\350a=\255\031g\323Z\177Z\237`14\216\235*\203\227O\003Y\201\357\250\237\360\0214\316\365`*\271!@\304,\020yz1\264R2!\031\030@d\021\210B\t\027\014I\310\2006\004,\017q\013&B\247_\312\027G\r\234\3409=\241\010\222$RAp\230t<\235\202}9B\325\246\356\274\321\314\220\220\220\220\210""\343\367B\201\261\301\241*\3458\276|\001\320\325\346<\230\267\3152\320W\255\202H&\243O\242\310Y\231\t\227m\213\243s\313d\344\260n\216\341Zv!\366b'i\002\004#\254\246\244Zx\350\022\225\315>\260\036)'\310\"\236\017\245\340\254K\2060\007\337P=\317\210_P8bKU\314}\265\224$\306]t\304\t$\002\341E\004\372a\321\360C\320\234`\037\202-\255\325\354\262\034\357{\001\312\366\230\316f3\335:\\\350\021Ep\350\233\245\0024-\004&\021\222\367e]\366\2412\r\221$\304)B\354%\254\302\347\220\366 \036\374_\010Gal\341\2742uC\210p\310!\004Bd7\020\334D@DR\277m\361ho\034\374kAb\331\216\004&$\206#\207\273\357m5\004 \364{\373\034\371\321\310\236Q\312&\375O\202\210\307!\235=\002\205\226\254di\260b\210\003K\023l\323g\226\021\242K\017}\375%\352\341\211\224\032 \301\312M\266w\025\270\201\316\214,\321\030W0a\026.\t\324\027P]\271u\227l\341p\260\264mrT\342q$!Y\246\323i\265\273V\225\255\231`\331X\331UM\364\221+xE\262\241C\224\306\314\273l\367Y\256#\301x\276a\266T\233\225\240\332\370\220\201\030j*\020\336\032R\027\276\362\230\214\332\345\243\004\313\216d\204P\340\204\312\211\260\266\020\220\366\002v\253\"\214\"\002B\003\254SY\006\220\264\000\031\004$HD$T\204d\022!\024XE\200\242\305\005\001\214\010\252E\024I\036qAp}\002\036P|\220\035\240\257$\344(\357\344h\005\256D\377>D\214 2) |\246\016K\250V\350X\320N\021\221:&\246\215~\020*\020\210\374\310\357\206`\235\220\016_\344(\331s>c\025'\372\031\026\020=rA\023\233\313bn\027\305\034\273\346\306T\244x\024*}\272.\2461\365P&\035\323\242\001\234(\265\013\376\342$\202\203\322\350\026;;O'\355\243\246)\267\264G\364\354\354\207 \314\344\244\332\215\327\0208\207[\254:\221nq\365\365\350n\363\343\373c\006\037)\343\201{#\231\263XX\010!\000\232\204\340y\216C\214\r\333\361l\030m\034\003J\226\271f\013\310\245\207LK\333\347\337\001x$\361\263\020\340\340\320\316\252\033\n]\312\027\r\226/\267\312:\036\203\315<\304\253\024\307\356w{\017\307\010\020\234\3125?2\0176\216\250\224\0378\251\220\030\010\2568L\221\260\322\2074d\220d]9\017\nFA\220\233\221\207\217\236\340\325Ib\304 \334\032\002""\240\006#\221\0000\227\320\0267,h{\262\350%\026\261\220\020\274.\220.T\r\353\354n\255\255\247\216e\310L\251\245\003\304MJk\206\261\315\035\020\331\2572\214\267\233\207\320\314<\360l\016\373+\224N\016\365\007W\256R8\210\026\335\251\332\003\310\036\002\247R1\242\026\013\321\022\022\026B \320\2554\204\001\310\326\t\335p\3455\211\001\301\211`\222C\252T\"\241\006\001!\233\005\240\030\241\t!\"6\317\007\251.\333\nx\200\247c\357(o\352\034\r6\033\251\235z4BOU{\261\311\233\314\315\267E\240s\201\274\245\325\331\367\227\311\027~\201\312|\033\324\3316;6%\334Mh\340\203\272&\234NcO[\230\341B\343\351<\332\235\372\221\365\227\231\360xe\330\272\027j\212Rp\013\010\270y\003\026\r\010\321\006\204@\245\245\005\213\001\346\205\366\002\3146y\003\005\357N\245\254\346\323\205.\336,,Z\300T#\302\321\273\310\265\271}Z\206\206\332WZ\214\r#-CC\360\347\001e\221\240\331\022ka\312\"\267\204O\023U%\3624\261k\021\213F\260\220\004\014\022o1\225\014q\r\266\006Xx\347H$\322h0\003\036\2130\232Q\003\260&\301Y\222\224\224\323\310\000\263\260u\261P\314\213\252\310\177\350\251\243*\217!\001m \337%\313^l\332\334\302\035+\022\307\234`7K\024\246\031B\374\252\353\242i\r&\026\003V'P\364JX1h\317t\331d\224\205\306b\"\177\317\333\007C\342\365\033p\212\021\034\263\3532\326\360\035\341\315\320\256\006j\233\265<l\003a\236\226\010\033\014H\310H\034\245\031\370\352\354!\r#\021\354\326\247@\341\232V\005Q\263-\3268\232\262\r\306\216\207D\232\221:dSQ\00756\201\302\317\302.\300\372\241\025\204,\030\261^L\324\222p\354\342\216\364z\311\221X\265AlZ2(\250Q'/8\005\202\372S\200\236hQ\224M|\264\221/\202\\B\312t6|\364\t_?r\030\267\017\020\263!\300^\241\205[D\010\214\035y\353\332\031\0065'\212\010\305 =N\037\225\314\2271'\"r\300C\302E\022E$\021\371=\276AO\316 \007\204B\236\025\327\267\017X?\002\007\232\312\034\242\214~\371\021 \340J\000\000\202\014QA\000\005P\000\003\"u\353\030\353\204\022\201Oi\265<\273\367\202\342\206\303@S\265\030\212\205n\231i\210`\332A\262G\233\036\317\263n\013\245\033\212\260KO[-\226\006\224s\234o\261G\010=`o""\334\300\221\214Y\022\021H\214\222\013\030D\0100\202E\200\221S\020\004=\370\022\007\204\355\025R\212\252\221`\201\t\001\201\261\036$v\374\317\260.\220\372\377\037\273\333\250\365\037\021\305\036\\\321\273 \014\003\324\264\017\266&)z\021\207\2473C\322\267\003\304c\263[\355\265Z\007n\255\310iw\307\t\354'k\360\006\375\212\007\234\307\007Y\320\300`\037\024\202\031!\000\260\265\021\340\313=\307\024u\022\030\365\026\3237\302\334\335\330\\\343\225\255\325\031\211T\027\344\2475T1J\326\274\367\265\035\361\220\367\242\207\0351\202\201\354\022e\3525Pt\315MP4\333\203\370\027=\363R\030\t\354\210\340\364Y\2167\256S&\330l\300\251\016\267\336\345\375j/\177\025\356\257p\356\367\244B\361\207\230D\3402\355Q2\2170\351\226\323\312Y\307y\217p\243\366s\362\376\304\243\264\333HH\204\200\234\223\237>8\030`>k\343\215b\343\213\272\213zaJ\035\010\030 t\256\002e>\237\230\035\336oz\250#\024\220\t!\000\265\024Y\224\214\005s\034\3360\367\245\373\007\334]\034\373C9M>@V\014\201\000o\000\250#\223\300+)\217\005\321\2474~\367J7\245\266\350X\037\024wj>\3471\335\226\306\002\321 \301F*\302QI\010\001\327\304\353\317\010\206\006\320a\305V\340%\211E\225C=\250\036\036\220s\223\262\035E`\342\200X=t\202v\266\002\230:\210\235\323>\337<\225UT\323MU\\\265\255EUUUX\344\014\345\206\233\335A\006\201\323PI&]\363M\002\255-c\016aW\314[\203n(\3204\215\342h\366\\qF\006\275`\024 u\031,\014!h5T0\302\3316\205\333\203!\025\207u\r\211r\2050h\222\211\213IhH\231\035\246e\300D\2736\205\022\222\260\026\030\221\022\026\"TYBX\240\263\021\367\215\376\033.\206\031\032\265\245\230+\240\016\243\214U>+f\030\221\210\300!\031\331\243N\204\310\305L\033]\025\323Q\235\320A\311X9\300,\216\024\337\253\253>\247\252\216D\000\331\255CK\353A\324\262\311H\304\332E \266Z(\324JXK\274\240\346\000\347\000\316#\216\311\202\310\324\n\212Qk\217\337\017\031\2733|\r\025\016\214\027\351\002\361{E\240\014\000\037g \304<@OEY\000\314\024\272o\357\0072\024\224\3008|\204\242\350\020\027\300.\230\017\234\231Dp\021\245\352\016\210\005\377w\253\233\352\231\032\316""\361\031I\227\273\252\222\242T\201\250x\222\035\267;\023\250\365#g\317\206b\352\035z\205z\000Pku\206\031\353\000\311\230\362\377\305q>\300\235\276\006\307a\260{\317\004N\321 <\2203\022\010x\243\367\230\372\216\016\010|;|@\322\030*\241(\320\270j\301\321M\210\312\0004\t\317*\207|4\020\023\330Db\2615\347|$t\357T\260l2\324\215f\214\"8\263\304k\013%\000y\221\363\242\036\374\251\220\037\037\310\247\3104~AEK\207\324\324\024\014#5\312\223\241IRJ\201V l\260\311@\310H0\211\321n'\002\370,%\330\276\204qR\272\250\n: i\234\tz\251\031\200\374\240z\025{[\006.\334n\243\207WBL\227!|\n\355\206y\325\302 \237Z\034\201\211\211\037\253\2229\250\356\0206@\340\027`7\252\252V'\004R\021SS\332\0055\206\207#\004\017\262\034\010\361fF\231\006\371\243\324\006\305\201\302\204\020\256\304\355#\021\323\021\200\366i\321\206\014\363\254m\206\325\317\021hm5\262.9\260]\0174\026f`\227\000\351\204\235FB~\240QP\222\336K;8\211%H\315\014\002\252,\340r\242\033\234\n\033\227xc\206\256@\215\312pH\342\345g1>\332B/i\034z\364.G\026\265D+\352I\200\027b\026\310Um!I\263v\232!\213\031\t$\222\372/Lb\031\333\035\234\016\245x\320\274F6U+d\255\260x/\341\024\255\321\306\352n\274\247\200\272\023A\242\217I\202e\031\344\023\221\035.s\022\305!\t\2313\334\330E\2131X6:\002\322In\345R\252Db\220Tb\251\013MQ\233\222\3137\314BH;N\006p\246\342\027\323\266sS\370)\035\223\025015\370\231\203\302\333\265\236\374\301\003tE\325\311\244n%g\232\2266\325k\262\232\213\tB\262*\243\n\254372\210\262,\007\223\202&\246\"\034D\020\306\014\255\347}m{i\013\010D\222\333\031M\3045\270$\254\221\242\356\345\265\310\310\276E\257\003h\231\343B\025\021K1\221\201\020t\244h]b\037^*\271L\225\3573\304\263v b\2216\020\3027\254+\235\363\016[\231H\214\213\000\231\306\230\244a\010\352T\327\004\031\020d\002\236UZ)\322\031\231l\231\302\022\t\274\304\"4\205\242\016\332Ch\341F~\324yk\004\264\222H\021@6vvR\261\\\227X\256\036\303f\010\356:`\201P\330\024\017\202#\240t\204\rUF\333\336\367\003 \200\033Q\3507\006\250\030\"\005;\216Mr\350\257\201\377\321\r\333Q\352P-\022\240""\220#\002F\\\010\003\340i\200\275\003$\220`>$\222\217\021\342\001\336\240n6\223\315\372\235\275\345\336\217K\332w)\277\342\324\247\021\270 v\231\t\304\201\010`r\010\376H+FV?\014\300\341\366\266\360/\300{\372\314\262\313',\237-Y\200\310\017\202@n\260\003\343 t\335\003q\335\312\203\304\271\010X\2245\256}K\252>\316\312\313R,\336\024\203\276\r$\250\3417\327x\216\361\216\213\310\250v\321\250U!\316ov\203j\036D\027\223\027_\241\013\013\200\336\004\2062\241h\004\006yH\214\014\266\010 -N[8K\010\222Y\210\002%\013\344H\322H\270\004\265\210\262,\222Df\261\303\231p~6\236\345\224\035\002\350\217\210%\255`\023Y\242\001\344\326uC\335Lc!AE\022y\254\207)\264\310w\222\006\234\204v\215|\357\177\364\376\334\375\232\372?I\375\006\361s\214\273U\265_[3SV\303\227\215\250\323q\251\251V\303\303\275\313s\363\377\017\341_\260j\356\026\n\244\212\036i\374\370T%P`\306M\324\365\334\006\021\232\206V\276\314\364FC\234|\321\242\310\3337\035\250\267\221Q\321\005\361\272\214\005\250~KSt@kh\3760\3445\251\372zK\3049\333F\362\342\322\2448mo\361\207\210wN\213\203\201\030f2\311)\242\261\3663\311If\323+QFB1*+f?\251\026\224f\3165La\030\264\250\232\206\021\260m#2\2015\026\365GX\372\352M=\271e\345S\027\023\357:vV\311>\340\256P,\340\233\207\005\236^\014\271\262xr\312\254\211\313@\374\\fy\257xJ\375\014*\207M\0223\020s\232BQ)\020f\3533\307q\371\3703\315\334\352X\302\324VM\212W!9c\244a^\301\342\305\362\331&\256\033\277\342\356H\247\n\022\006\nCf\240";
+    PyObject *data = __Pyx_DecompressString(cstring, 5427, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (5762 bytes) */
-const char* const cstring = "x\332\355\\Os\033\307\261\007)\3312\340T\275R\305\257R\225\323\310\216\013\204\014A\004%\3322\023\351\025#\313y\262\034\333\262h\312)>\325b\201\035\220k\001\273\253\335\005IXOU<\342\210#\217:\346\230c\216>\276#\217<\352#\350#\274\356\236\177\273\213\005\010\220\224\310\270\242\262%`1\323\323\323\323\323\277\356\236\236}\276\370b\241\3026\375\230\331\036\353y|7\340\255\230;\354)\357\357\370\241\303\354p\263\327\345^\314\312\317\353/\312\265\377\262\243\310o-8+\254\345w:\320\324\365\275\250f7[\265\277\332A\340z\233\033\017\252l\375I\025\373\2570\370\274mwz|\205\255WY\333n\305~\330\037\355y\327\356t\354f\207ol@\277\021\262\275\030\177KQ\177\302n3\307m\305\025v\355\316T\035J\245\342\335\220\3331g6\363\370\016k\310_\033\033\365'l\307\215\267X\003\370m0\232\234k\343\374\305S\342\276Q\203\376\177\363{\254\205\"\2128kP\273\006[\270z\365*}\204\177\261W\205\305>\360\023\364Y\303\021\277:\370\0131g\207}\3729\303\000k\021_\016k\366K\305\206\024\0210\3429\310\214\273\351)\036\260/1Y\323\303;>\217\230\007+\327\332\262\275M\216\203\"\247\337\331\241\335\3451\017\243R\361\232\376S*:l\205\245\245R,>\362{a\213\033vj\245\"\214\001\r\037\300\217B&\361\226\035\353!]/\342a\0341?d!\017:v\213G\320\2058\204N\353\330I\261\233\354&\246\022\2319\224\212r\252\320+\265\374\223\226\033\251\253\306r\000!= \274\205\223H\365\245\265\305\001C\036\367B\217D\363=}4r)\025\273\242\361\017\201C\253\260\222\313\000\014\374Mj\321\362U\006\0073\nso\327\356\006\035\236X\204R\361\316\235;\242\303\302\363\027UV\266\313UV\257\224\212\317\341\323\n\253\277H5\220\317d\263\033\272\331\215q\315\232\251fuzB\315q\336m\036r\257\3053*\201\"\372\256\037o\371\240f\231}\324`]\337\351u8\314}+\216\203h\345\372u\307oE\265\200\232\327\374p\363\372\215\353\035\267\031\202b_\317\356\301\255\270\333)\025\211C\313\365\246\263\026\321h\243G\374Y\017\271\336x\360\344\334\032\222\264\316\261v\350wi\367'\355\007\003ME\r\rlx\026\201\201u\333.my\322\241\210\324ea\365>\333\344\036\017I\225P\324q\010\024+\271\246\007\204J\006!\010a\215Z""\310\014Y\035\277=:4mRGq\340\361\010\310\227\212\035\277e\343L\331\246\273\315\275\004'\311\001\324\346r=0&]\356\240\226\217\316\030LBl\013\325\262\301\034q\356\240\365\334\002\2526.+\374.i37bv3B,QRJ\r\247\315Y\027F\210\311\234\201\235\001\252^_\362\235\331\201H\371\264L^\004-\357\003\001R\237\007\264\343}\357\032\357\006q\237ER\rQ\276\324T,a\037z'\204*V\027\026\005\037\305\000\233<fZ\314\212\325\224\251\\\203\206\342;.%\256\223Z&\335/WYN\331vr\273\265\225\253\314h\035\200qd(\344Q\257\023\237\206\t\315hO\323\216\240\217\357\035k\317<\342\234\255v\"?ib{\304\006(\0240\262\032\004\235>\250ar\346\210\300B\3500\200\235Z;\027U6\251\027\260\204\202\020L:t\3716\237\241/\3515\256P\256\337\221\261\023\276\307i\257\244\301D\016v$\230\240\21158\260\001\237@\031\2264\022,\275\310m\373\234\340\241\376Bv!\270H\365\023\r\226^\214t\317\364\250gz\000\3113\207\034\266\320qA\246\237./W\304B\310\357\213\267*\216\033\241*\300?\3239\262W\0056=8\327\270\203RM\253\024\356\035\263m\244\005\016y\327\337\346\316,x#\344$\275Y\367\230\316n\232\331R\3218\275L\373\274Ud\331\223,\n\243\224\206\017\232_\302\030\031\3362\21608\322\010-\017\320T\233\356d\363\354\220g1\210\236En\007\236\201\261\0007\325\017\205\204N\010*W%\252\240'M\254\200<\344\344\364\320\332\272\242M%|KK\352\334\371\311\337s\3647f5\362-\337\213m\327C\274\004\266\230\033\363nd\204\300w[<@c\357\203\276\355\320\337$:\\\027\275|\310\325jg\323\017A\267\273\354\013\016\364:\251u\321\234j\255\2108n\253\2105y\274\303A\263\342\035\237\201\222\203\0346]\020\205F\036Z\001\204[\304w\271C\004\007\010\346~lw\350\033r\360\0305\264\315wx\210b\365\300\236|\254\235\002dW\366\256\032\325\204\r\202\203\345L\033C<\324xP(`T-\216\331\262D\024\201\0016\t\374\243\207\2471C0\225!?r\354n\320\323\204\301\035\021\363\223+!:z\340\014J\036}\017\364_\254\202`U\3722b\273U\231\275\355\273\016\366\354y\036\007\273\036\301.'\003p\r\250\\\023\223`~\300I\226^4\016\240\307\000\343D?\372\330\370(\255\374\363\362\256\014\211\372\004i\364\201`k7\021xMj\014\177\355R\217\334""\266\222 \373\210\335'\373\021\261.\374\256\244\234\030\347\254pQ\260+Q\360\263\233\237U\270\207\342\336l\t\027ga\212\370\013\177\\a[\275n\320\267b\337\357\374\\C[#>=\352\005\201\017y\201\277\360\030\234\350\256\202N\207\267mP\235\025\366m@\250\320\331XG\033\005\2365\257\202\275\266\364\357M\240\002?|iw\"N\230\230\350 \314Q\332\375\"\355\260Y\340\307`\265]\330\\&B@6\005\034\341'\370GL\250\002hF\366\2075\324\254\032\024/i\353\222B=!\026r\027={\333\335DM\2050\3107^\337\370\201`\277\266\341\211\277C\343\201A\312\033\320\014\001\032\337q\225\033\236F<\021x\310\t\022\377@M\3540?\254\001\001\334\247h\277\221\377\373m\332\255\016\217\334P\230\017\203\213|\327\215`\007\3531w\\\260G\215\320v#t\264a\274{d\203\201}\014\2714\024\300\006\024+\324@#\025p\217\266\2774\231\201\202G\3260K\t\023\003>\222\0170\352k\320\302\002\302\357l\2710I7\222\234R\213*\314)\303Wv\364|\242ka\017i\216\233\024\2205\263\232\204\347\022\247\023\312\216\000\232Z4\201\006\010\244 \336V\3506\245Q\325!_ho\003]\201W\244\03054\253\300\017\320\315\333\0330\202\332\354~\363'\320\234F\222LB;@\033a\252yk^e\221\237\014?\005\035\364x\220}\241\235\250\317M\323\202a(\035\367\003.\346\002\371\335\247\221\014\272FF\000\362=X+\010\351mD\024\344\020\203\361b\243\003\252\204\323\223k\201\261,\373_\332\323rkC\243u\025\325\212\245\024\351\000-0\243\340i\005MI\317\2546K\333\007 O8\250\327_\256x\003\234\254{a\350\207\370\354\276\347\360]\365\r5z\rf-\276S\302\202\333\216@Cd\017\225\332\350Z\256\373\243\303v9\325T\364\236\312\255\230)\322L\304\350Fo\333F\014\351\311\323\2708\023=l\251\250f\244\247\234\273\005D\262X\230\016\003<\322DJ\277\r\004jD2\r9LY@{|\354\367\204\347\200\2565\320\321\222\234\232+\3228\0275\023=\022\360\016\000y\244\332\311\325\316\367\024@\017C\201/\230K\311\211\302A\264\364!R\2635\000\006\214fUZP@u\214\223Kg\313\034\2304\275\031\":\240\2342\222\037\227 \250\235jfb\274\303\003&\304\213l\342\0366\314\363\262\007&\017\\\217\362j\307m\3612\330\332Z\255\3062\177\312\001\004/[\340\016S\010O\276\037|\332(#\223""\034=\237oi\355!\326\317\355\236\246\325\362\243\230\272/\326\226\027!9P[Z~\362b\314\270\020\2258.\004'v\350 \217\313\360\347Z}\351\306M\363WY\272[\322M\3310\254\002[\202\323*[\004[\230\2307xi\222\365L_\222EN[\022\315\204q(\006\030\355x$_e\233\270\230\275c}q\372>y\314\201H\240\313b\246W\037[a\362\306\354\327\333\270U\241\351Z\010\311\307\246\335z\312\026\272\260~`\027[\030\"\2670l\351\330Q\\Y\201\315\016+hL\322\n:\274S\272\263j#\316\344\307\352\335\213\016\354G\331\275\254ss\302\243\275\365\371\215\212\360L[}\262\030\327\215o\032\364\301\274\nw\327\301\256m\267\203N\213\350\270|\263^1\017\027\002THH\275\362I9\236\270\027`\216\230\"\356*A\023\272\272G\346\221\3166{\364=F\314\236\210\3612\201\250\016\271\257\t\353\023\330n\0109n\260\323Q\033\3623Z&\302\244KD\317X\301Y2JF\336d\364D\230\236e*'\237\004~u\323\217\205\217\214\234\020\267\245b\344vA\223m\217\373\275\250\323\257\245\351\243\006G\2519\220\225&_\2330\241\357\362\216#3QN\215\230X\250\200\303y\017Z\020\002u\021\271\002\200\001y\300\227\024\007\371F\tuhdFW\247\245f\2706@\0269\301\340\235&(\t\241j\350\324\221F~\242//{\226\036\031\274\263\331\316\2065/\251<S\216\246\247sK\"v!\301\2309\212S(!Bv\264\004\221bR\206UZ\334d\253n\217L\022\351\235\224\020\312\021Q\234\310\003\321&%\321@\3031u7U\206\016\243\246\364j\201T\235\261\231\232\\y\236\263\344\334\2274\221\331\263s9\352\224L\331\345\331\214\204\036OP\344q\216\035\354`i\205\311%;\3220\315n\215\320a\237~\010\351D\316<\010\022\003\331\217\367\347\264.\301\236H8pG\030R\312/\3616l\033`\314u\026\220\004\"\260r\241\236\302a8h\223\300A\365P\222{\312>fK\354\366m\266(l$\373\023\273\251H\242CX\207\214\026\034\362@]\000\024\013\254\260\233Uvs\205-K/+\201\204rl\0006Lz-\235i\035\201\024\363B\273\347\265\246\007f\361\355\353*{\374\344\355\341\263\030n\006|\246\016\230\333&\005j\340\024GUG\031\241|\2251\347=\344\002\302\326\204\263z\321yVX\006)\253D\204 D|\250L\261\332'\3420\233\245\201\227\270\200P\021\362\036h!EL\255`\211\350\252D\227\231\344t0,\025=\r\"\202\306(\002K\364\020?'""\201C\267#\211'\031\003\322I\2346\2071\324^\016\202\022O\273H*(\033\213\317\245b\n\240'\240/r;\001x\223\232|,\374\225*4N\202c\020\370H\031&AB$@v\322\316\331\314PLz\362\306p8\2659\337 \016\257%\266\341J.\0233Aq\340\007\275\216\251I\244\205N\257\203RY \333TFd\002\366\036\005Y\342\344iz\304B\260=\212\2464\0353\341\340\330\242\207V\313\357AZ\034\264\004S\034\"~\207\343\025H7\224\377\354S\321\302b\002\321\020:BN\211U\3003\323\271\302\340\274\006\354!,9\034A|\362\350\301\375\357\000\352\352\213&[\002tV\004\3113\007?\031\257\336X\376\254b\274'\361\354\346\255E\363l\272\020\366\301\257+p}\223\321\252\226\354\314\301*\230\021@\t::N\222\001\200\234\020\224\242\375L\203!\022 ,L\2622\032Y\2220D\365n\313\026\247\006\211\001L*\376\004!f\251\230d\341T\"\314\007\323\305\2258+\005kI\036\236r\036\344\206\327\311\311\003\351lX2\003,%F\373w\2008}\200h\366&P%\205\234\250\217\343\320\352\255\205q3\305\243'J\224\275\t\004\226`\027q<\310\270\r)\333n\323\261\331\356\n\333\325\341\340\2641\240A\022A.\021\001\252vg\005\205BpG\206\201hS\276~\253!\337\372\254!\337\372\270\220O-\374q\">U\2444\003\262M\210\367\\S\222\213\007\200\231\240N\365\2251\035^]I\005uca\214f\325\354\271\035'\232\n~\022\227b\252\272\374\007\371\240a2\3237ri\371!T\341\004\276\254X\010]\340\335\356\250c\303\366Q`5\022\220\t\235\232\036\244\356\245\037\344\205^@\014\216X\335m\327\351a}G*\350Rx5:\225\314\214g\205\262L\200E+}\232\361\325\372y\210\257fD2\327\223>\203^ES\237\031\251kNB\027\213\246\036\216\3143\356`\332\024Z\373i\242@\243:r\227\014\273\216U\3041\330w\372Q\325\233\312Y\216\213\325\232.\372\272\3110mc\t\217\205\227\001z\360\224S\006l\033\030\274\335\200\223b\rBh\351\301p\325\240\216\212\207UA'?b+\333\371\224\233\031\312g\013[2X[\372\374V\245\313\341r\310\302U\334%\321\371\216\276\376\212\234\246J\"P+\034\025\347Pe\353$\265\030\017E)$\"\2014D=y\267\211b\302Z]U\344\232\272\254i\252\234(~\301R\227\016\317\216\253\010\312@K\357t\034@\024q$\353Z\251\354\\\024g\000]\252B\202\213\257\340\014&\322-\211\333N%\252\206\302\022""\276\307\252\252)\002\020\021\231\257 \340vH\340I\254S\2210VFA\330\210\227h\253\211\322\023]\316\216\271\235P\265(\305\366S`#\300\023x\007U\265\306\224\250\240\370\311'\0241\363n\350+K\351\225\246\274\036q\346C\253\300\217\\QNY\322\267y\023EP\230\305u\203\016O\356u\331\014\375\211\004F&\366\214\320\336Q\35014\324J\201\320i9j`\340\200\212\007\360\275\315\021\357f\233\n\034\364\246\347\242\231\254\225\216\025e\235\014\235\0248)yHh\242\r3>\276:Vx%\201:\025tH\204\222\212\370%\026c9\220\021\024\0016\242\372\030M\203\\nR\227\025\t)\0011\246\020\001\025n\241.R\350\256\224\261T\322H\245U\201V\327\242\315\002\363&\2131b!\354\\\254\221\273]\035,\000u\r#\232:\302\2010\230\030\267\224a3\225\241\204\005\343\2212\030\211\362\213JI?\247\230F<-\225\276\246]\225bd\013\252+\023;\253\224\241\275$\242!\244~CE;7%}\361\233z\206\313\257\221$\261)\246\302\221\343\302\0101*QD\201\010I\375\310\200\010+67\350$\201\3563\375\313\340\316\261\265h\026\330!\021\316\206=\002\362\300\034m\213m\002\373\246\335A\241\226\232\375<\237\020\030\246\242Y\362\250\214\327\226u\020\225\373I\373\3318\243\2705K\t`A8Q\354I\320\220!#m\345jz^R\336\302\335O\214\250\217\362\220\277\222\344O^G\022\350\007\237\024\240A\322<\364\301X\353!\0102\025\272\3224\245\213\213w\376\005-s;\271d,Q\3726\351\211\221\255\224\203\006\314nSM\272:\004\311\207\257\221\000/\271GJc\242<B\006\275\222G\254\242\222\031\312\275an\276\031\377\305\230o\035\364\2658@#\305\305\372\356\261\034\017U.y\022\207\254t\005\326H\033\217\020\240\202\217\332y\202\347\314\202\374\n\261\032\252\333\303\304\215E \237\271;\205\352\202\273E\\\340Hl\230\t\326@\255ef\357\215G`\r\276Yw}t\315S\311\177\343\255O\000_\0014Q\257[\245\364a\235\240\026\257F\321\267E\361uQ\202e]\376\014\027\217\263\024\332\340\274\304#4\250\263@X\240\221\023\344%\332\253fg\207\301\302\325\021@\\\277\265\\\361|u\225\205YVH\027$-\2139\342\002\004\356d\000\237m\270\303\003\277\266\300\243\213-\353O\002\217\"\312\322\334\321u\341\247\363\236\214\243\274\201\365'\231\313Y\231\353\033g}\340w""\342\322\370i\363\237Z\356G\275J#\236p\323\003\354\336\350\273\t\222I\243|3\240l\276\274K\325\352A\216\017L\245\252\232H\3626\343[8\330\230\227p\210\303\2731o\341\220w\307\\\270\330\031R\001\270\274L\"\032VG\020*q/,\021H\202`\351*\013\316O\314$%\344\374\367{\260\274\327{\224\212o\342\375\036\351\033^'z\277\207~m\207\230\237y\277\307\210c\261.]\212\t>Ej\365S\357\2750\327\237G\226\010(\246\026I\257\346\204\325\232\352\326\326H\211\220\276\2745F=\214\036\375\312\337L2b\007\306\275\233\204N\234\307Y\200\311\3459\247x\337\350\374\277\275\004.\204eN+?au\361\223\001E\361j\221E\363f\023\350\225|g\326H{j\371\263l)\256\302<\207\357\343\033\243g\001n\005\336\250\214C\r\214\267?l\332\341\207\330\031\234\017tQ0+P\206g\345\027g\370\202\023s\211L\336|Y\\\252\230CrY\020T\377\334<\233\256 h\375WT\020t\3142\200\351\035\007-\333c\226\004\311<E\222\320\344\242 \261k\323\347\251\202\210(\014J04\2660H\320x\203\245A\t&N\2454h}\272\322\240\324IZJ\024o\2418(1\332\277\213\203f-\016\022\032|\242\362\240\267p\221\344-\027\007\275\241R\332S+\0172\270\222*\017J\244\317\317\014\032\205\350\026\246\211\177\037\277U\234{<+\316\215\275\021b\226\3768\005B:?>\013\322\345\227\010\245o\202\214)\022R\275\307\025\tM\204\265\231\n\205\322W-\252x\310\0030\270\255\353\204t\335E\306M%1\271\230\005\315\212i\246\352 \241R\263\340\324\275\354\2437S!4\373-\014\265f\006\316\222oX8%<;\373[\030\017f\276\2051\271J\310\350\024\020\325\233\357\210J\241\354\312MS\024\364&\256o\374K\224\004I\353N)\350I\305@\212\346\247\313\232\322\315\345\263\006%U\374s\343\363\212\224\220e}\327\337\205\377\277\200M`}\303wc`\017zY\026\010\333\202?\266\007\333\013#=\213TK\245\005\354\250\357\265\\\277\006\212\003\006\027hF\220T\206c\375\310\222/F\300\257\360\030\232Z\261z\251\003r\226\340\316\221\001.\035(8n[\212\305\022\241\245xS\230T{\334>v\214*kY\342o\221T\240\177#\301_\352\275\013\346\235`\226\033Y\232K76n\224\3246R(\013_\361b\311\r\233\372R\323\251\364\026\t\033D\222\3719R\034\250\006\240\367\332\037\024\333\004w\302\323\0358\210""\002)\341k\357\340oL\340\233,><\240\005F\211\343\333A\340oX\n\363~\014\270z\005\377!\253\332\177\263,x\241\204\325\202\t`'\374,\345\360\014\214\264\240aN\001F'\241\036\360]\234A\247M\363\220c\303'9nbvV\316L-\013\225\336\222+\246S\002\3327\023JG\346DX\357\357\372\337\322\321\017\273\272`>V\331\270\317\020\00129\267\247n`\201J@\226\250\265E\371\221^K\375\346\007\261E\262\255\337H\351\200\365\271Q\002\221G\272\252;\320\321 \365\252\024\316\226)L\241\2343\276Ln\347\330\214\235\03632{x\0168ID`\347\204\033\264\350\347\200\025\023\375\236\017f\316\211XL:\364|0s\"\261\314<`\313\222\357\372|\233C&\316\305g\032\366\270C\215\031E<\214'\021h\243\007A(\317\306\010\340j\245\200\313\237\371\325\202\267\352\375\314\255l\333LGB\226\202\302\227\2026\350\005aM\013\306\224\025\244\035)\350M\\\020;\250\240\325\267 t\247\240V\264\220\224\263\372B\224qJ\350\035\201\230\225{\211.\345A\341\217\377\254\277n\317\025.|0\254\277\232{wos\360\360p\356\235\275\377\031^\036~4|8\264\361\313\217\370\2544\2702\250\037\316]\332{6\230\033\374v\260:\370axe\370\351\376\345\375+\207\363\357\354\255\r>\030|?\330\035n\357\377\370\362\341\341\374\305\275\325\275\037\006W\016\347\336\033\314\035\024\376\374\313\225\327\316\211\207\370\333\300\206\001\236\035^xg\357\341\336\326`k\270\265o\313\001\356\376R\177\3359\341\000\357\002M[\377\203\3035\207\027\206u1\034\307n4\324\357\367\257\274n\314\025\240\301]\240ri\020\r?\034~\261\177q\377\253\227\366\313\336\337W\377\276\366\217\313\207\363\245\301\307\203g\3039\354r\t>\\\032>;(|\371\213\375\372\033\350xI\260w\361\340\342\177\022o\363\377\001-.\016W_\201\320\3762\250\017V\017\347.\354\325\361\243\034\361\253\203\257\254\003\253\361z\033:\277?(\017?\200n\316\376\037\366\355\375g\207j\262\223\250\025\007\227_\201\000\036\303\347y\224\303#`\354\202\020\301\345\303\013\357\017>\033^9\274\360\356\301\273\277\033>\333\237;\274x\031\244V\336\277\374\352bq\360\273\341\334\360\362+h\273\003\"\201\226\365\303y\354\367>He\3767H\016\344\371j\356\342\336\177\017\356\016\236""\035\316\2777\270\010\"}\010\313\364\354\225\372\202\034\332{\317\207J\025\276\372?R\205s9\221$\247{@\2404\370d\370\360\240\360\361\313\207\304\362\264+\376\233\341\352p}\377\263\227W\016\n\267\017n\377p\360\303\372\353\265\371\302\374\005\245[\027J\203?\240\214\016\347aB\207\357\025q2\017\017/\\\244\357\007\205\225\177^y\335<\241.\343\366[\033\\\036,\014+\373\267^*E:-\312?\016~\034\256\301\327\205\227JV\257\177\002\371\024\007\357\201\230\177;\374r\377\223\227\017_\376\364\217\271\377\007\342\376\310+";
-    PyObject *data = __Pyx_DecompressString(cstring, 5762, 1);
+    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (5411 bytes) */
+const char* const cstring = "x\332\355\\\315s\033\307\225'%\371\003p\252\266T\361V\252\366\324Z\307EB\206 \202\024%\207\033y\227\361GV\226\223X\266,;\253\325\002\203A\223\234\010\230\201f\006$a-\253x\304\021G\036u\3141\307\034}\334\243\216<\352O\320\237\220\337{\335=\3233\030\200\004II\334TT\266\004\014\272\337w\377\336\233\3567\363tio\261\"6\203X8\276\350\373r\267'\335X\266\305c9\330\t\302\266p\302\315~W\372\261XxZ\337[X\357\365:\003\341\210\346\247N\247\343\264:\262)\342\000\337\267\235N_\n\007D\204/#\232\337s\342-\341\3714\366wN\257\347\371\233\315Z\271\\Z\\\277#6\245/C\207\006\265\0037\212C\374V\301O\177\014\372\302%!\")\232\375^\033#\032\236\317\014za\320\356\273` \334\2407\020\301\206h\266\233b\307\003\213xK\246\334\351\213\305\277\\\212\240\215\267\341\341{k \232\320)j\212P\366:\216\253.\321\204PF\375NLD](\005aDs\243\357\273M\021\370\374\273\333\017C2\000s\251\225K\266ln(\3611\202\242\261\014\273\262\355\341\033\024\356\307d\033\2437~\215b\307w1\316\211 \237l\203\371\316\226$\343@$\374\014\242J6\017CZ\021q\333\010\203.iY\023w6X\014\317\207\325\272A\024\2539f`\325H\033JWz\333\340\321l\313\r\007\0325\313%b,\2356\351\006\303\312]/\212I?\245I\306\310\355\0003}DA\027\262\223\016\260o\020b\326\300\0304qc\271D\206\207kI:\370\355k't\272\022\372G\345\322\265\344O\271\324\026kB\317yx\267*\036<*\227J\337\006\375\320\225vH\224Hq\214\374V>\351K\330\350\341]\032\367\373\300\277&\273\275x \"}\235t\340\241\312\245\003\322#\347n\212\2244\034\360E\351'\214\250%2\024X\231\330}\370\360\301#-\227\025\317\220\254C\001\243\211e\274ob\314\004\267\362\332\270\213@1\343\244\304\233S\274\005\371\364G\210\370@\374\257\200\r\244\270\315\377\200\336\003\346\337s\242H\311\246\351p\030M\t\2174\216\240\276\343\306A8\310X\000\006\310F\253r\325#0n{n\2345M\274\005\375M\310K\307\335\202\365w\306\302\375a\375\021\331&]Z\024$\337\310\270\037\372i\204\224K]5\374;\366\021\307J\201\034\024\n\005,D\313!3\004\376\024\034`\037\025\254\177\220\234\214\000\312\252$\360\267R\212\365N\024\2441].\301\370\201\213\345B\026d+0\334\355\244""\341\234X[\3114\t\027\341\213M\031+B0L\350\311my|\020Ub\034W\006\n\"\212\010\236\344\261\251S\304&E?\337u\272\275\216\214lE?\371\344\023\260u\021\004\035\247\333j;bwM\354\212\217D]\375\224\340\306\342\323\005gaM,\355U\305C|B0aV\245\\R\227\353{\345\261\361<\362G=\262*\226x\360\217S\006\327\253b\271*V0\001\231\242*\364\022\271\275\320r\302\005\232\\_\023O\227\361\377\312\232\340k{{{\034n\0332$\330\310a\022\305\346\327\203x\213\"\307\r:\035\344:/\360\243\232\323\302Z\352\"\311th\255m\305q/Z\273~\235\322S\255\307\303kA\270y}\345z\307k\205N8\270\236\233[\333\212\273\235rIeG\2752\311\312\235\216\360b\331\215L\306r\3746\202\215V\302\230\327\222 \216C\307\2176\002\312&j\362,i\223&`a1\367\204\020\313\301\330I\374\331\361\221\006E\021y]\230\323\361e\320\217 ;I\021\364\261\354\335-\307\337\344\\H)(\245\253\3201\262\224d\034\240\337\305\300\223\235\266^j\355\032\313\276X\301\354\317\315\010$\244h\034\302\220\023\021\337q\037A\250\026=P\222\004\325?w\373\300\264\304hz\334WU\361\375#[0\316u2\2145.\251\361\224\265x\274fB\026\207\035\256mk,\365B\263\270\306\021L\301\\\273\\\"m4rNMwc\311\305\322\010\321k\311=9\341\244\266T\001c\331\316\204\320$\013\022\315\223\330\020\025\225\037;\236\237\346\323\035\205\027&Tj\307\313\344\260\231\035'\260^;\262\026@\002JD7)68\312\344L\351IY\360\350\364D\272\024\371\225\254\246,\321\234\232\227\356[\313p\255P\210I\271IG\216\260\003G\364\202^\277\303\227y\241\263\243\263~0!\013\262\255\301\021\211\010\016\202\230\220kB=n\326;\325}\026\306L\206\037\230\037\316>\212\246\206\216\031\250NN/\216\353\006}?\366\020%\267\305\323\205\365\216\347JJ\003KU\261\360\233\240\205\217\313K{:\023\251\240Z\014\221&CD~\325\232\\\021\342\003\302C\270<^\023\037}{\367\316\327\224\024\226\220\r\024I\244\017\372B$\317Wb0\016:I^\240\271\263\244\005\025/\223\262\202\227\226Q\300~\221\203~3W#?nU\262\320O`\221E~\"\n\340g\255Z}\257\323\216\022\255&\342,\246\022e\275\\\252I\271Br0\233\234\372\251]\334\000\005z\324\013\3746\215\rB\017\262;:V\r\214\316\002\333w\2019_\035\001\321$@""\006\241\323\013E\000\rb\036\304\333\366\332}\220\034d\240Y\271=*P%\247\361L8l\234\226\3020{\372,Q\370\301y@\341\007\263\2410\"}g\313s\267R/&\026\201\333\254\333\002P\315\336\030P\004\014\254\275\001\276;t\370f\253j\327\326IXN\014\304\"<\177%\330[\322\2709\225lR\236\236\036\321[^\247\223\005\363\207\313@\363\372*\312\367\245G\t\254?$\210_Y}\244\301]E\352\"\200\253\326\tv$J|\246S\214\353\013N1\345V\216\362y\302\371\324q'Az5{\026\254W\261T\200\365\331\302\177\002\332\233\331\223\320^Es\026\357\025\341Y\021?[YW\261\307'Q\300o'\200\237,\240\334\335+\233\311C\241?f\246\231`\236\266~\276?\002\3463KW\001\275}\351\325@\375\354E\267\361Y\n\366\332\325g\006\367w\317C\321}w\346\242{:\334\2471\005\242\311\342;\002\362\363\236;\016\272\277\212j\375\377\005\266\253\300\\\214\372\335\351\250nh\336\\M(\335X}s(^\274\257F<9J\250\270j\216!R\223#\201\215\230\201c\036\327\024\213W\257^\345\217\370\227fU\310I|\230A\321H\277\266\351\027\226\005\222U\324&]6A\024\226\312\354PP\3666}#\003/7\022\262\226\260/\\\374g\261u\217\201w\t\020\330&\214\005\206\245\331\217\301)\202.\254\"u\227\211\365\202\rn\232d\304\265\247)U\242T\207\263\336\267>-F\035s\303:\223\325\307B\206\230\245\0013\361\036\231&\3606(\366S\261\332\354\235U{\200\276\246\207\255$\303V&\rke\206\325\371\n\017?'Kn\334;\331Mm\362a\272\265\237\234\353u\203m\331\236\245Vj{\351\352T\237O\260<\263\302b\353\264 \025UId_\213\230\246\243\344\010I\351g\035\231\244\262\345\226.\226>\025#w\315\215\273\232\316\021\356\2042\177\352\303\327\"\257\203kH\022XXA\250,t\312\225\177U\237\332\321\332gQ`\017\255\\\232b\315\031\220\331\212\315Y\352\334\255\354o$\0352\317z\024e\355\237\026lw\312]W\366\350@*@\274\355\360\337j'>\224\326\001\"\244Z\357l\242\342\215\267\272\3423\tz\235\214_\022I\223\250\210$\255\242H\264d\274#\351\010p'\240\003\022\330a\223\266\347\223\3631\366\000\266Q\002\252\003\364\nQ\022P9\023\304\252\276\346\033\214\357)B7$\356\301\310\254\276\270\271\364ar\350J\342\352\331\32544\261@\210\331\204]^\212x:\323\354H\343\234t\311\252z\007GSX$""\370'a\317<C\340I(\217\344\335\355\365\023\3022\326\372iO\230\323\016\254F%c\340w\006\332\013JT]\315\251\345\2062};\360\270\240\353\343\034\025\340\027a\2253\000\\\003\225kJ\t\021\364$\333\322\217\246\236\020\216\037\315\345B\346\214N\350\224)\200\353\273\032\304\007\264k\272\307\037\030\334w\255T1m0\376\332\345\031\205c5A*\335\3560\200D\242\213\001\306\314\026\243s\231=r\3266E\307\021\247\304\263d\021s,|T\253\212a\255w\2312\375*\345R'p9\266\304&\372\002|K\022\233\301\214\375&\024\220\205\r'bJ\277\211\305\256\270+\004T\013\332B\304\253\350\n\271\003\002\234\026N\337\025\022\243\223\t0\221\2309\351\n\261K\322\373v\373\010\373\311\270)\231W\030,\177\337\275\0253\254\231\"PLN\364'\337\255\036\273\367\341\374\367M\230\325c\325\333\2727b9\251\270\227\367\n\307>\3452\274\276\247\247pY\236\231\247\006,\357\215M\317\315\250\347f\324\337`S\304\357$\326\035\303\241\371\225\026m\333\324\322\\@L\335\2238.\014w\211QS\025\356\335\226\007\377QQd\252\211\314}|\320\372\023WO\200Q\362)\345\262\216\034\333c1\024\251-0\262\266\225\210\203\n!\273\202\340\002_\205:\010\307\024~\350\237D1e\035\370Z\010\315\265\034d\000\340~oz\270\" \246\n\272^O:!\027\370,<\327c\024\221\250C\272\334\364\227\266;%w\016t\274\034\232\021\345R\354<\206 =j4k\223\323k\302X\313\301\372\344\215\313T\365f\002\264Y\250\342\336\002\026-\300\250^\020y\3545\2705\351\013\265z\014\251\225\304\353u\244\275\335\244\207E\323r\302U\266DAbH\351\030\217\301\366\354\225\032P\006\204|`\362\266\244}\326\331\364\001\355\234F\211\244\347\356\266\204\027\320\314w%E\373\241\271[\225l+LR\275\353\250\374\202\022}\251\215\026\005\317\245X'\210\237\020wh.\261C\333\320\320fPL\225\035(\27090A\332\n\315\t\211\203=\335\340\365\003\355\031G\306p\303)L(\032\001\354\363\223Ix\315L\026\251\217l\001+l\001HJ\375d\013\300\216\205=\335`\306?\000\207\315eP\373\212\027[F\232-\007\331(U\252\234'Oml\330\330$\006\370w\245*n\3207\315B\375h.\276a\260>\271\221g\302j\366\354l\200\2552\005\226\356\266\212%\004\327F\207\202\215O\223\nv\354!s\007]\317M\336\006O""OF\362\273\267fG\206\303>\335\237\241\000\006\324\245hL\030l\004\324H\253\217\3668\342\253Y\315\264\215\325\035\262\30529\211#\001\221\010\224\204\272\256SI\003\237L\032@\267K\030DQ\312\2033\215IJ\252\013Xm\212\3216\252\242\225\336\210\224K\351\222\315V\216\247\316\007\345R\001|\ng\203VF\332\277t\354\0239\222\374!\367\312\035\321\222\235z\364\010o\032\313\221\371\255\366\365R\232\376S\270\313\367e\243\020I\35664C\n>\273\223\216d\351*p\326\220\310\220i\372\002j\347,\261\345<\363w\233\345p\243\033Z{\254\240\237\333\355\261\036\365 \205\254%4\005!\214Ws\253qj\352J\262V\276\372\035w\277\256D\217} \227\302\214:^\243\034R\347\024E{:\374mI}]2)\246\256\177_\336+\217\321\330@\376\217\307\250\360t\225\230@\245\270\323.\231`\306\275\261\334\365\r\355\233\372j\247/\267\035\231l\274f\352\235\010k,\332@\350 i\267\271\310i\236\321\255\010\261\337\360h\0353\024\253\315\332\274P\005\247\n\210\343V\020oe\033p\361\024S\246I\273\226\245\257\023\201\245C\212\201G\266e\253\203\344\\#\203m\216\261\336\354\034\367L\3275\323\002\010\252Sw$6\213\222i~h\336\017i+!\023\357\323\272\002\255\346\353\014g\354$\315v\246\231\3102\245I\273\025\004\235\223ugO\265\340\204\336lk\224\235V\264\205\310\216\374`\017\221\007\321\026\037\2458Tp\315\334\222m\274\365\312\272\262_W\226\370\202\0259\363\273\241\"\314\260\342xJ O\351\371PFW[UG\002\323\354hD\373\226\307g\241\263\332\314L^s\237\t\036\357\301R\202\260^{\221\310V\326\312\245Z\255&\350\317\343\252\330F\204\251\007I\314E\315\342\261\370P,\213\333\267\305\222\302M\361kqCg\2716\265\255\250;\254e\276\303\242\2330\276\317Z\265\372\313\225%\0275o<gDIs\371\215\236\211\277\232\260\231\251i\374\2049\014\253\034\217\326\360\271\242M\006\207qSr\325\304>\362\014\215\202\204\303\306P\315(\256\003\311\263\014\370`\332\306\325\223d\036\365|\256\021\341L\022\317\335\343\245\033\273\323\334\226\341\261\224\275\302\254k+\317\217:f\321j\266\036\362\177\344\215\331\363F\2726A\225\003rj<Ni\t\177=\350>S\232:U\375\374*\032!\247<\277\032I:G\315>\302j\262\304qSC\262\006\026""\0259+1\230q\3476=\2340(f\3524?U\202\320\333\2066\241\351)bj\363y\206\316\3444\241h\274\302Da\tq&\211\342\301\361\022E\266W\335\226\3425\244\n\213\333?R\305\254\251BE\360\251\222\305k\270\333x\315\251\3425?\215z&\311\"Y\005\331da\035\375\274\311d\221\355\226`\1779\330&\216\2613\354\321\243*IC\017QP\300M\237\360\217\"W\001\350\363\311\241h\232w\265\360\036|\332\373\221I\016\252Q\203\235\345;\333\336\246z\021\213F\324#\030a\rm\340J\260\303\374\200\251E\014S\026\346\235\004\005m\265\252OH+\310\362\203\232j\343\013\302\032\010P\3642\210A~\375\026\227\266\214\274P?e\232\000\026\277;\247\232\362\334\361\350L!t\340i\2129\321\374\234\033=!>\2777\307 \215\3752\236\266\354I\375\220\252\257\373ht\036\020M?h$\357\201\241\267\311\330\027ho\251\371\005\016i$6\216\024p{\221\226\224GT\241SN\256<\367b\242\214)\223\225\002\331T\253i\211\253\360\025>Y\247\251\226S\302i\230\327\r\275\226F\352\244C+t\370\341n\366\035\007F\215z7!\017\350\366{\275\000\311\374\2672\306\351G7\301a\263\\\324\036z\323&cE\207J\364E>\307+E\002\273[,\335\213'\361UtR<\267\322\021\374B\244x\320\223J\027\274!\353q\244{\244\3068\200|\037\276R[\250\224\264T\357\234>\356;\326\353~R\374O\336\363\223}\365P.@3\326K\275\r\016TA\200:\207\021\310s\313I\342\177\355\361&:\271?\017\303 \244kw\374\266\3345\337(\242\357Ck\365\335n\371P\342\251\347\007\223\027\031\025e\327\244\313N\253\232i\266\033\177uW\252\211\342\236\306\355Fj\206\254\362\223\222#\234\021\306P\377G\362LQ\347X\020f\036\230\263\017k`\306\274_\025\005s\376g\365\236\251\276M\215?9\"g\370\346\2403\354\246\233\234\017\371\201DG\235W!\355\245\373m\013>\020`!}\273\202\365K\017\225\341\026z\007\271\353\214\253\002z\"\214_\031G\335\023\013\177\010\251\346\243\366\264\005\027\357\251\342_\227j\253\364\030Ym\031\317\214\331\264\\*\023P\3239a\233\230\255\342\317\265\372\362\312\215\364/\303Z\347^\265\332\027\037\246R\200\215\022\002o\031\242\367\257\244\032!)k\251rsY\267\202\261\254\352\024>\334G?>\361H\271\026\034\226b\366\211\365\245\343\317)\022N\275xi)7k@\243\250\2250E""\216\333\004\021\030\212\0073]\331r\334\307b\221\3371F\307\344~\314gO\334\377C\373\264\344\216r\311`\310\0325\215\037\263\3361Kl\246B'Y\227T\341|\220_\245\010\216\177O\026\335b\207\232K\3527?\256\250\026P\375}y\245\202NwZ6\252\341]__^\375\270\"}\272\274\351\352vS\365\303J}\245\262\325\357\366\006\rw\300\200r\235P]AKo\000\010R\263\332V\251\254'~|\263b6\322\325\225\033\253+\225\264hW\327V\353|-\035\264z\353FE\235#\253\3577o,W\254\226(u\361\326\362\315\212\037\230R@4\032!?\305\322h\210\266J \324\306\000\300\333F\r\204_]\334\215\304\215\306\257\325-}\304ws\237\244\220\242i\336\272UI\367\237\324\265\217o\336\250\350\242\\]\370\325\362jECI\243\361\365`\027\377\177\006s4~/wc8\035\265g\243\201\360h\340\217\343\003\244\211C\203\355o\374\342D\003\337\365\202\032\236\250\305\223\350\240\031A>DS\324\320N\244\257\270\214\241\215\330\004 \301\252U\343\266\265\342|\032\337\3666t\2605\224J\312\257\372v\214\236+vb:\355o4\324\337\312\273\374o\244\344\313\270\267\226\270\267\341E\215DJ/N\035\254\275\312\353\262A\211\246\241\357\"3_j\211W\\\216d\230$\367sd$0\003\020\010I|\250\240\240|\377x\007\315\034\260\022=\346\202\277)\026\322\200\300\005^=dqB2\374\rW\244k\031\257 \302\177$jr\023\326h n\033.\024\240I\364Y\333\341\t\236^W4\322\200\032W\302\\\220\273\244Ag\203\365\320\274\361I\363\265\264k\024h\332hPGAC{,\t\305$\376T\320qFSY\372\353\301\037\270P\023W\027\323\217U1\3513n:\204\326\355\261\327k $\220\013\335-~\237\\\3375\277\005\275\270\301\266\255\257db\240\361\2534\010\024x\\M&p{\r\317\252\314\275Y\241h\351\2363\271RL9\261`g'\214\206\361s \211\225\033\316\2114\204\350\347@\2244\033\236\017a\316\211Y\3224|>\2049\225Yff\3506te\366:YZ%\326LlO\312j\002\027u1\236F`\203*\010\316\362b\202\001\256V\346\310\375\271_\033xz\363G\331\310\217\315M\344\3142g\362\313\\\002\350s\nM\347R(\233\32382\227,\3429\265\202\346\222\360\235S\2613g<:g\333\331|a\312\244\022UG0\263)/\251\244|>\267\366\327+/\377g~\356\342\373\243\372\213\371\267\3677\207\367\016\347\337\332\377\357\321\345\321\007\243{#\207\276""\374@\327\312\303+\303\372\341\374;\373O\206\363\303\237\017\327\207\337\215\256\214n\036\\>\270rx\341\322\376\372\376\375\341\345\341\342\250r\360\3613\214zw8\177v\224\177\030\3760\272\217\257\213\317\256h\312\377\366\327\372\313\326))\277\005\211\337\037~3\334\035m\037\374\360\354\236b\365\335\320\260\370\315OW^\266O\315\342\217C\007\014\236\034^|k\377\336\376\326pk\264u\340h\006\237\376T\177\3319%\203\267A\323I\376!v\255\321\305Q]\261\223C\343\210/~r^~9?w\341\035\305\345\322\363K\377\314,.\374\323\360\311\350\322h\375\005t\377\355\260>\\?\234\277\270_\247\217z\342\227\317\277l<o4_\206\230\374\336pa\364>\246\265\017~y\340\034<942O\243V\032^~\001=\276\307\347\013\244\316\267\243\371\303\213J\223\313\207\027\337\033\336\032]9\274\370\366\363\267\1771zr0\177x\3512\224_8\270\374\342Ri\370\213\321\374\350\362\013\214\335\201f\030Y?\274@\363\336\203r\027~F\344`\226\027\363\227\366\377s\370\351\360\311\341\205w\207\227`\231{\260\366\223\027\346\013I\350\354?\035\031\217~\371\177W^6\317\251\"\266\244\373 P\036~4\272\367|\356\303g\367h\005\201\345\247\230\363\3160\032\375\353\350\263\203K\007_>s\236\365\377\274\376\347\373\177\271L\004>\204\274\3634\367g\243\365\321\203\203[\317\256<\237\273\375\374\366w\317\277{\360\362?.\314]\270hB\344by\370K\262\321\341\005(t\370n\211\224\271wx\361\022\177\177>\367/\007W^\376\327\014\354\336\301\207wFO\366\347_n`Vi\370.t\375\371\350\213\203\217\236\335{\366\247\277\314\377\r\264q\313\256";
+    PyObject *data = __Pyx_DecompressString(cstring, 5411, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (27703 bytes) */
-const char* const bytes = "{0}() got an unexpected keyword argument '{1}'.?assoc(d: collections.abc.Mapping[K, V], key: K, value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\n\tCreate a new `Mapping`[1] with `key` associated with `value`.\n\n\tYou can use `assoc` (***assoc***iate) to copy `d` (***d***ictionary) to a new `Mapping` created by\n\t`factory` and assign `value` to `key`. `assoc` does not change `d`.\n\n\tParameters\n\t----------\n\td : Mapping[K, V]\n\t\tSource `Mapping`.\n\tkey : K\n\t\t`key` that `assoc` inserts or replaces.\n\tvalue : V\n\t\t`value` that `assoc` assigns to `key`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingUpdated : MutableMapping[K, V]\n\t\tNew `Mapping` with `key` associated to `value`.\n\n\tExamples\n\t--------\n\t>>> assoc({}, 'a', 1)\n\t{'a': 1}\n\t>>> assoc({'a': 1}, 'a', 3)\n\t{'a': 3}\n\t>>> assoc({'a': 1}, 'b', 3)\n\t{'a': 1, 'b': 3}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tassoc_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], value: V, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\n\tCreate a new `MutableMapping` from `d` with `value` at the path specified by `keys`.\n\n\t(AI generated docstring)\n\n\tYou can use `assoc_in` to produce a copy of `d` with `value` placed at the nested\n\tlocation given by `keys`. `assoc_in` creates intermediate `MutableMapping` instances\n\tas needed when a key in `keys` is absent from `d`. `assoc_in` does not mutate `d` or\n\tany nested `Mapping` within `d`.\n\n\tParameters\n\t----------\n\td : Mapping[K, V]\n\t\tSource `Mapping`.\n\tkeys : Iterable[K]\n\t\tNon-empty sequence of keys specifying the nested path to the target location in `""d`.\n\tvalue : V\n\t\tThe value to place at the location specified by `keys`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates each new `MutableMapping`[1] in the result.\n\n\tReturns\n\t-------\n\tmappingUpdated : MutableMapping[K, V]\n\t\tNew `MutableMapping` based on `d` with `value` at the path specified by `keys`.\n\n\tSee Also\n\t--------\n\tupdate_in : Apply a `Callable` to a value at a nested path in a `Mapping`.\n\tget_in : Retrieve a value at a nested path in a `Mapping`.\n\tassoc : Create a new `Mapping` from `d` with one key associated to a value.\n\n\tExamples\n\t--------\n\t>>> assoc_in({'a': 1}, ['a'], 2)\n\t{'a': 2}\n\t>>> assoc_in({'a': {'b': 1}}, ['a', 'b'], 2)\n\t{'a': {'b': 2}}\n\t>>> assoc_in({}, ['a', 'b'], 1)\n\t{'a': {'b': 1}}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tassoc_in (line 655)assoc (line 608)disabledissoc(d: collections.abc.Mapping[K, V], *keys: K, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\n\tCreate a new `MutableMapping`[1] from `d` with the specified `keys` removed.\n\n\t(AI generated docstring)\n\n\tYou can use `dissoc` (***dissoc***iate) to copy `d` (***d***ictionary) to a new `MutableMapping`\n\tcreated by `factory`, then remove each key in `keys` from the result. `dissoc` does not change\n\t`d`. Keys in `keys` that are absent from `d` are silently ignored.\n\n\tParameters\n\t----------\n\td : Mapping[K, V]\n\t\tSource `Mapping`.\n\t*keys : K\n\t\tKeys to remove from `d` in the returned `MutableMapping`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingReduced : MutableMapping[K, V]\n\t\tNew `MutableMapping` containing all items from `d` except those whose keys are in `keys`.\n\n\tAlgorithm Details\n\t----------------""-\n\t`dissoc` selects between two strategies based on the ratio of removed keys to total keys.\n\n\tWhen fewer than 60% of keys are removed, `dissoc` copies all items from `d` and then\n\tdeletes the specified keys one by one.\n\n\tWhen 60% or more of keys are removed, `dissoc` computes the set of remaining keys and\n\tcopies only those items to the result, avoiding unnecessary copy-and-delete operations.\n\n\tSee Also\n\t--------\n\tassoc : Create a new `MutableMapping` from `d` with one key associated to a value.\n\n\tExamples\n\t--------\n\t>>> dissoc({'x': 1, 'y': 2}, 'y')\n\t{'x': 1}\n\t>>> dissoc({'x': 1, 'y': 2}, 'y', 'x')\n\t{}\n\t>>> dissoc({'x': 1}, 'y') # Ignores missing keys\n\t{'x': 1}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tdissoc (line 747)enablegcget_in(keys: collections.abc.Sequence[K], coll: humpy_toolz.dicttoolz.SupportsGetItem[K, V], default: Optional[V] = None, no_default: bool = False) -> Optional[V]\n\n\tRetrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.\n\n\tYou can use `get_in` to navigate into a nested `coll` (***coll***ection) by following a\n\t`Sequence` of `keys`. `get_in` applies each key in `keys` sequentially using\n\t`operator.getitem`[1].\n\n\tIf the desired key does not exist, `get_in` will `raise` an `Exception` or `return` `default`\n\tdepending on the parameter `no_default`. If `no_default` is `False`, which is the default,\n\t`get_in` will `return` `default`. If `no_default` is `True`, `get_in` will `raise` an\n\t`Exception`.\n\n\tParameters\n\t----------\n\tkeys : Sequence[K]\n\t\t`Sequence` of keys that describes the path to traverse in `coll`.\n\tcoll : SupportsGetItem[K, V]\n\t\tPython `object` to traverse. `get_in` uses `operator.getitem`[1], so the nested objects in\n\t\t`coll` can be nested o any type that works with `operator.getitem`, such as a `dict` or\n\t\t`list`.\n\tdefault : V"" | None = None\n\t\tValue to return when the path in `keys` does not exist in `coll`.\n\tno_default : bool = False\n\t\tWhen `True`, `raise` `KeyError`, `IndexError`, or `TypeError` instead of returning `default`.\n\n\tReturns\n\t-------\n\tvalue : V | None\n\t\tThe value at the nested path in `coll`, or `default` if the path does not exist.\n\n\tRaises\n\t------\n\tKeyError\n\t\tWhen `no_default` is `True` and a key is missing from a mapping.\n\tIndexError\n\t\tWhen `no_default` is `True` and an index is out of range.\n\tTypeError\n\t\tWhen `no_default` is `True` and a key type is incompatible with `coll`.\n\n\tSee Also\n\t--------\n\titertoolz.get : Retrieve a value or values from a collection.\n\toperator.getitem : Return the value at a given key in a collection.\n\tassoc_in : Create a new `Mapping` from `d` with a value at a nested path.\n\tupdate_in : Apply a `Callable` to a value at a nested path in a `Mapping`.\n\n\tExamples\n\t--------\n\t>>> transaction = {'name': 'Alice',\n\t...                'purchase': {'items': ['Apple', 'Orange'],\n\t...                             'costs': [0.50, 1.25]},\n\t...                'credit card': '5555-1234-1234-1234'}\n\t>>> get_in(['purchase', 'items', 0], transaction)\n\t'Apple'\n\t>>> get_in(['name'], transaction)\n\t'Alice'\n\t>>> get_in(['purchase', 'total'], transaction)\n\t>>> get_in(['purchase', 'items', 'apple'], transaction)\n\t>>> get_in(['purchase', 'items', 10], transaction)\n\t>>> get_in(['purchase', 'total'], transaction, 0)\n\t0\n\t>>> get_in(['y'], {}, no_default=True)\n\tTraceback (most recent call last):\n\t\t...\n\tKeyError: 'y'\n\n\tReferences\n\t----------\n\t[1] Python `operator` module\n\t\thttps://docs.python.org/3/library/operator.html#operator.getitem\n\tget_in (line 893)humpy_cytoolz/dicttoolz.pyxisenableditemfilter (line 541)itemfilter(predicate: collections.abc.Callable[[tuple[K, V]], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping""[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\n\tRetain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\n\n\t(AI generated docstring)\n\n\tYou can use `itemfilter` to select items from `d` (***d***ictionary) by both key and value\n\tsimultaneously. `itemfilter` calls `predicate` with each item yielded by `d.items()`. Each\n\titem is passed to `predicate` as a `tuple[K, V]`. `itemfilter` inserts each item for which\n\t`predicate` returns `True` into a new `MutableMapping`[1] created by `factory`. `itemfilter`\n\tdoes not change `d`.\n\n\tParameters\n\t----------\n\tpredicate : Callable[[tuple[K, V]], bool]\n\t\t`Callable` applied to each item of `d`. Each item is passed to `predicate` as a\n\t\t`tuple[K, V]`, and `predicate` must return `True` for the item to be retained.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `itemfilter` reads all items from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingFiltered : MutableMapping[K, V]\n\t\tNew `MutableMapping` created by `factory` containing only items from `d` for which\n\t\t`predicate` returns `True`.\n\n\tSee Also\n\t--------\n\tkeyfilter : Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\n\tvalfilter : Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\n\titemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\n\t>>> def isvalid(item):\n\t...     k, v = item\n\t...     return k % 2 == 0 and v < 4\n\n\t>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n\t>>> itemfilter(isvalid, d)\n\t{2: 3}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\titemmap(func: collections.abc.Callable[[tuple[K, V]], tuple[L, W]], d: collections.abc.Mapping[K, V], factory: collections.abc.C""allable[[], collections.abc.MutableMapping[L, W]] = dict) -> collections.abc.MutableMapping[L, W]\n\n\tApply `func` to all items of `d` and return a new `Mapping` with the transformed items.\n\n\t(AI generated docstring)\n\n\tYou can use `itemmap` to transform all keys and values in `d` simultaneously without\n\tchanging `d`. `itemmap` applies `func` to each item yielded by `d.items()`. Each item\n\tis passed to `func` as a `tuple[K, V]`, and `func` must return a `tuple[L, W]`. `itemmap`\n\tinserts each returned `tuple` as a new key-value pair in a `MutableMapping`[1] created\n\tby `factory`.\n\n\tParameters\n\t----------\n\tfunc : Callable[[tuple[K, V]], tuple[L, W]]\n\t\t`Callable` applied to each item of `d`. Each item of `d` is passed to `func` as a\n\t\t`tuple[K, V]`, and `func` must return a `tuple[L, W]` containing the new key and value.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `itemmap` reads all items from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[L, W]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingTransformed : MutableMapping[L, W]\n\t\tNew `MutableMapping` created by `factory` populated with each `tuple[L, W]` returned\n\t\tby `func`.\n\n\tSee Also\n\t--------\n\tkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\n\tvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\n\n\tExamples\n\t--------\n\t>>> accountids = {'Alice': 10, 'Bob': 20}\n\t>>> itemmap(reversed, accountids)  # doctest: +SKIP\n\t{10: 'Alice', 20: 'Bob'}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\titemmap (line 357)keyfilter (line 480)keyfilter(predicate: collections.abc.Callable[[K], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]""\n\n\tRetain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\n\n\t(AI generated docstring)\n\n\tYou can use `keyfilter` to select items from `d` (***d***ictionary) by their keys. `keyfilter`\n\tcalls `predicate` with each key yielded by `d.keys()`. `keyfilter` inserts each item whose\n\tkey causes `predicate` to return `True` into a new `MutableMapping`[1] created by `factory`.\n\t`keyfilter` does not change `d`.\n\n\tParameters\n\t----------\n\tpredicate : Callable[[K], bool]\n\t\t`Callable` applied to each key of `d`. `keyfilter` keeps each item for which `predicate`\n\t\treturns `True`.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `keyfilter` reads all items from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingFiltered : MutableMapping[K, V]\n\t\tNew `MutableMapping` created by `factory` containing only items from `d` whose keys\n\t\tcause `predicate` to return `True`.\n\n\tSee Also\n\t--------\n\tvalfilter : Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\n\titemfilter : Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\n\tkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\n\n\t>>> iseven = lambda x: x % 2 == 0\n\t>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n\t>>> keyfilter(iseven, d)\n\t{2: 3, 4: 5}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tkeymap(func: collections.abc.Callable[[K], L], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[L, V]] = dict) -> collections.abc.MutableMapping[L, V]\n\n\tApply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.\n\n\t(AI generated docstring)\n\n\tYou can use `keymap` to transform al""l keys in `d` without changing `d`. `keymap` applies\n\t`func` to each key yielded by `d.keys()` and builds a new `MutableMapping`[1] created by\n\t`factory`, associating each transformed key with the corresponding original value of `d`.\n\n\tParameters\n\t----------\n\tfunc : Callable[[K], L]\n\t\t`Callable` applied to each key of `d`. Each key of `d` is passed to `func`\n\t\tindividually, and `func` returns the corresponding transformed key.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `keymap` reads all keys from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[L, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingTransformed : MutableMapping[L, V]\n\t\tNew `MutableMapping` created by `factory` in which each key from `d` is replaced by\n\t\tthe result of applying `func` to that key, associated with the original value of `d`.\n\n\tSee Also\n\t--------\n\tvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\n\titemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\n\tExamples\n\t--------\n\t>>> bills = {'Alice': [20, 15, 30], 'Bob': [10, 35]}\n\t>>> keymap(str.lower, bills)  # doctest: +SKIP\n\t{'alice': [20, 15, 30], 'bob': [10, 35]}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tkeymap (line 298)merge(*dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nMerge a collection of dictionaries and return a new `Mapping`.\n\n(AI generated docstring)\n\nYou can use `merge` to combine two or more `Mapping`[1] objects into a single new `Mapping`.\n`merge` calls `factory` to create the result, then updates it in order with each `Mapping` in\n`dicts`. When the same key appears in more than one element, the value from the later element""\ntakes precedence. You can also pass a single `Iterable[Mapping[K, V]]` as the sole positional\nargument instead of multiple `Mapping` arguments.\n\nParameters\n----------\n*dicts : Mapping[K, V]\n\t`Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the\n\tsole positional argument.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingMerged : MutableMapping[K, V]\n\tNew `MutableMapping` created by `factory` containing all key-value pairs from `dicts`. For\n\tduplicate keys, the value from the last `Mapping` in `dicts` that contains the key takes\n\tprecedence.\n\nSee Also\n--------\nmerge_with : Merge dictionaries and apply a `Callable` to combined values.\n\nExamples\n--------\n>>> merge({1: 'one'}, {2: 'two'})\n{1: 'one', 2: 'two'}\n\nLater dictionaries have precedence\n\n>>> merge({1: 2, 3: 4}, {3: 3, 4: 4})\n{1: 2, 3: 3, 4: 4}\n\nReferences\n----------\n[1] Python `collections.abc` module\n\thttps://docs.python.org/3/library/collections.abc.html\n\tmerge (line 98)merge_with(func: collections.abc.Callable[[list[V]], V], *dicts: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\nMerge dictionaries and apply a `Callable` to combined values.\n\n(AI generated docstring)\n\nYou can use `merge_with` to combine two or more `Mapping`[1] objects and resolve key conflicts\nby applying `func` to a `list` of all values associated with each key. For each key that\nappears in one or more elements of `dicts`, `merge_with` collects all associated values into a\n`list` in the order they appear across `dicts`, then calls `func` with that `list` to produce\nthe value in the result. You can also pass a single `Iterable[Mapping[K, V]]` as the sole\npositional argument after `func`.\n\nParameters\n----------\nfunc : Callable[[list[V]], V]\n\t`Callable` a""pplied to the `list` of values associated with each key across all `Mapping`\n\tobjects in `dicts`. `func` receives a non-empty `list` and must return the merged value for\n\tthat key.\n*dicts : Mapping[K, V]\n\t`Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the\n\tsole positional argument after `func`.\nfactory : Callable[[], MutableMapping[K, V]] = dict\n\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\nReturns\n-------\nmappingMerged : MutableMapping[K, V]\n\tNew `MutableMapping` created by `factory` where each key maps to the result of calling\n\t`func` with all values associated with that key across `dicts`.\n\nSee Also\n--------\nmerge : Merge a collection of `Mapping` objects into a new `Mapping`.\n\nExamples\n--------\n>>> merge_with(sum, {1: 1, 2: 2}, {1: 10, 2: 20})\n{1: 11, 2: 22}\n\n>>> merge_with(first, {1: 1, 2: 2}, {2: 20, 3: 30})  # doctest: +SKIP\n{1: 1, 2: 2, 3: 30}\n\nReferences\n----------\n[1] Python `collections.abc` module\n\thttps://docs.python.org/3/library/collections.abc.html\n\tmerge_with (line 185)no default __reduce__ due to non-trivial __cinit__<stringsource>update_in(d: collections.abc.Mapping[K, V], keys: collections.abc.Sequence[K], func: collections.abc.Callable[[V], V], default: V | None = None, factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\n\tApply a `Callable` to a value at a nested path in a `Mapping`.\n\n\t(AI generated docstring)\n\n\tYou can use `update_in` to produce a copy of `d` with the value at the nested path\n\tspecified by `keys` replaced by the result of calling `func` on the current value.\n\t`update_in` creates intermediate `MutableMapping` instances as needed when a key in\n\t`keys` is absent from `d`. If the innermost key is absent, `func` receives `default`\n\tinstead of an existing value. `update_in` does not mutate `d` or any nested `Mapping`\n\twithin `d`.\n\n\tParameters""\n\t----------\n\td : Mapping[K, V]\n\t\tSource `Mapping`.\n\tkeys : Sequence[K]\n\t\tNon-empty sequence of keys specifying the nested path to the value to update in `d`.\n\tfunc : Callable[[V], V]\n\t\t`Callable` applied to the current value at the path in `keys`. If the innermost\n\t\tkey is absent from `d`, `func` receives `default`.\n\tdefault : V | None = None\n\t\tValue passed to `func` when the innermost key is absent from `d`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates each new `MutableMapping`[1] in the result.\n\n\tReturns\n\t-------\n\tmappingUpdated : MutableMapping[K, V]\n\t\tNew `MutableMapping` based on `d` with the value at the path specified by `keys`\n\t\treplaced by the result of `func`.\n\n\tSee Also\n\t--------\n\tassoc_in : Create a new `Mapping` from `d` with a value at a nested path.\n\tget_in : Retrieve a value at a nested path in a `Mapping`.\n\tassoc : Create a new `Mapping` from `d` with one key associated to a value.\n\n\tExamples\n\t--------\n\t>>> inc = lambda x: x + 1\n\t>>> update_in({'a': 0}, ['a'], inc)\n\t{'a': 1}\n\n\t>>> update_in({}, ['z'], inc, 0)\n\t{'z': 1}\n\n\t>>> update_in({}, [1, 2, 3], str, default=\"bar\")\n\t{1: {2: {3: 'bar'}}}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tupdate_in (line 802)valfilter (line 419)valfilter(predicate: collections.abc.Callable[[V], bool], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, V]] = dict) -> collections.abc.MutableMapping[K, V]\n\n\tRetain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\n\n\t(AI generated docstring)\n\n\tYou can use `valfilter` to select items from `d` (***d***ictionary) by their values. `valfilter`\n\tcalls `predicate` with each value yielded by `d.values()`. `valfilter` inserts each item whose\n\tvalue causes `predicate` to return `True` into a ""new `MutableMapping`[1] created by `factory`.\n\t`valfilter` does not change `d`.\n\n\tParameters\n\t----------\n\tpredicate : Callable[[V], bool]\n\t\t`Callable` applied to each value of `d`. `valfilter` keeps each item for which `predicate`\n\t\treturns `True`.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `valfilter` reads all items from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingFiltered : MutableMapping[K, V]\n\t\tNew `MutableMapping` created by `factory` containing only items from `d` whose values\n\t\tcause `predicate` to return `True`.\n\n\tSee Also\n\t--------\n\tkeyfilter : Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\n\titemfilter : Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\n\tvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\n\n\t>>> iseven = lambda x: x % 2 == 0\n\t>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n\t>>> valfilter(iseven, d)\n\t{1: 2, 3: 4}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tvalmap(func: collections.abc.Callable[[V], W], d: collections.abc.Mapping[K, V], factory: collections.abc.Callable[[], collections.abc.MutableMapping[K, W]] = dict) -> collections.abc.MutableMapping[K, W]\n\n\tApply `func` to all values of `d` and return a new `Mapping` with the transformed values.\n\n\t(AI generated docstring)\n\n\tYou can use `valmap` to transform all values in `d` without changing `d`. `valmap` applies\n\t`func` to each value yielded by `d.values()` and builds a new `MutableMapping`[1] created\n\tby `factory`, preserving each original key associated with its transformed value.\n\n\tParameters\n\t----------\n\tfunc : Callable[[V], W]\n\t\t`Callable` applied to each value of `d`. Each value of `d` is p""assed to `func`\n\t\tindividually, and `func` returns the corresponding transformed value.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `valmap` reads all values from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[K, W]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingTransformed : MutableMapping[K, W]\n\t\tNew `MutableMapping` created by `factory` in which each key from `d` is associated\n\t\twith the result of applying `func` to the corresponding value of `d`.\n\n\tSee Also\n\t--------\n\tkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\n\titemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\n\tExamples\n\t--------\n\t>>> bills = {'Alice': [20, 15, 30], 'Bob': [10, 35]}\n\t>>> valmap(sum, bills)  # doctest: +SKIP\n\t{'Alice': 65, 'Bob': 45}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tvalmap (line 239)Mapping__Pyx_PyDict_NextRefabc__all____annotate__assocassoc_inasyncio.coroutines__class_getitem__cline_in_tracebackcollcollectionsddefaultdictsdifference_updatedissocfactoryformatfunc__func__get_in__getstate__humpy_cytoolz.dicttoolz_is_coroutineititemfilteritemmapitems_iter_mapping_iter_mapping.__reduce_cython___iter_mapping.__setstate_cython__keykeyfilterkeymapkeyskwargs__main__mergemerge_with__module____name__nextno_defaultpoppopitempredicate__pyx_capi____pyx_state__qualname____reduce____reduce_cython____reduce_ex__self__set_name__setdefault__setstate____setstate_cython____test__updateupdate_invalfiltervalmapvaluevaluesPyObject *(PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc_in *__pyx_optional_args)\000PyObject *""(PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_get_in *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_dissoc *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with *__pyx_optional_args)\000PyObject *(PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge *__pyx_optional_args)\000__pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next (PyObject *, PyObject **)\000int (PyObject *, Py_ssize_t *, PyObject **, PyObject **)\000assoc\000assoc_in\000update_in\000get_in\000itemfilter\000itemmap\000keyfilter\000keymap\000valfilter\000valmap\000c_dissoc\000c_merge_with\000c_merge\000get_map_iter\000PyMapping_Next\320\000;\2701\360f\001\000\003\024\2201\340\001\006\200g\210Q\330\001\005\200\\\220\021\220#\220Q\220a\330\001\005\200X\210Q\330\001\n\210!\2101\330\001\007\200q\210\001\210\023\210A\210U""\220!\2206\230\021\230!\330\002\005\200T\210\024\210R\210x\220v\230X\240Q\330\002\004\200A\200U\210!\330\001\010\210\001\320\000B\300!\360d\001\000\003\024\2201\340\001\006\200g\210Q\330\001\005\200\\\220\021\220#\220Q\220a\330\001\005\200X\210Q\330\001\n\210!\2101\330\001\007\200q\210\001\210\023\210A\210U\220!\2206\230\021\230!\330\002\005\200Y\210a\210x\220q\330\003\005\200Q\200h\210h\220h\230a\330\001\010\210\001\320\000C\3001\360l\001\000\003\024\2201\340\001\006\200g\210Q\330\001\005\200\\\220\021\220#\220Q\220a\330\001\005\200X\210Q\330\001\n\210!\2101\330\001\007\200q\210\001\210\023\210A\210U\220!\2206\230\021\230!\330\002\006\200h\210a\330\002\006\200h\210a\330\002\005\200Y\210b\220\003\2201\330\003\005\200Q\200e\2101\330\001\010\210\001\320\000\032\230!\360`\001\000\002\005\200C\200q\210\007\210s\220\"\220D\230\004\230J\240a\240u\250A\250T\260\021\330\002\n\210%\210q\220\001\330\001\010\210\007\210q\220\007\220q\320\000F\300a\360N\001\000\002\007\200g\210Q\330\001\004\320\004\025\220Q\220a\330\002\017\210q\220\004\220A\340\002\004\200G\2101\210A\330\001\003\2001\200G\2101\330\001\010\210\001\320\000J\320J_\320_`\360v\001\000\002\013\210'\220\024\220Q\220d\230$\230a\230q\330\001\006\200g\210Q\330\001\004\320\004\025\220Q\220a\330\002\017\210q\220\004\220A\340\002\004\200G\2101\210A\330\001\t\210\021\340\001\005\200W\210A\330\002\005\200X\210S\220\001\330\003\007\200q\210\001\210\021\330\003\013\2107\220!\330\003\006\320\006\027\220q\230\001\330\004\021\220\021\220'\230\021\340\004\t\210\027\220\001\220\021\340\003\007\200w\210a\330\003\013\2101\330\002\007\200q\210\013\2201\330\002\014\210A\330\002\n\210!\340\001\004\200H\210C\210q\330\002\010\210\004\210A\210Q\210a\210q\340\002\010\210\004\210A\210Q\330\001\006\200a\200{\220!\330\001\010\210\001\320\000J\310!\360d\001\000\002\013\210'\220\024\220Q\220d\230$\230a\230q\330\001\006\200g\210Q\330\001\004\320\004\025\220Q\220a\330\002\017\210q\220\004\220A\340\002\004\200G\2101\210A\330\001\t\210\021\340\001""\005\200W\210A\330\002\005\200X\210S\220\001\330\003\007\200q\210\001\210\021\330\003\013\2107\220!\330\003\006\320\006\027\220q\230\001\330\004\021\220\021\220'\230\021\340\004\t\210\027\220\001\220\021\340\003\007\200w\210a\330\003\013\2101\330\002\007\200q\210\013\2201\330\002\014\210A\330\002\n\210!\340\001\006\200a\200{\220!\330\001\010\210\001\200\001\330\004\n\210+\220Q\320\000%\240Q\360d\001\000\002\005\200C\200q\210\007\210s\220\"\220D\230\004\230J\240a\240u\250A\250T\260\021\330\002\n\210%\210q\220\001\330\001\010\210\014\220A\220V\2307\240!\320\000=\320=U\320UV\360T\002\000\002\003\330\002\006\200h\210a\330\003\n\210$\210a\210q\330\002\t\210\021\330\010\t\330\002\005\200Q\330\003\004\330\002\t\210\021\320\000:\270!\360b\001\000\003\024\2201\340\001\006\200g\210Q\330\001\005\200\\\220\021\220#\220Q\220a\330\001\005\200X\210Q\330\001\n\210!\2101\330\001\007\200q\210\001\210\023\210A\210U\220!\2206\230\021\230!\330\002\004\200A\200T\210\021\210(\220)\2308\2401\330\001\010\210\001\320\000:\270!\360b\001\000\003\024\2201\340\001\006\200g\210Q\330\001\005\200\\\220\021\220#\220Q\220a\330\001\005\200X\210Q\330\001\n\210!\2101\330\001\007\200q\210\001\210\023\210A\210U\220!\2206\230\021\230!\330\002\004\200A\200X\210X\220T\230\021\230(\240!\330\001\010\210\001\200\001\360j\001\000\002\t\210\010\220\001\220\023\220F\230+\240Q\240j\260\001";
+    #else /* compression: none (24836 bytes) */
+const char* const bytes = "{0}() got an unexpected keyword argument '{1}'Apply a `Callable` to a value at a nested path in a `Mapping`.\n\n\t(AI generated docstring)\n\n\tYou can use `update_in` to produce a copy of `d` with the value at the nested path\n\tspecified by `keys` replaced by the result of calling `func` on the current value.\n\t`update_in` creates intermediate `MutableMapping` instances as needed when a key in\n\t`keys` is absent from `d`. If the innermost key is absent, `func` receives `default`\n\tinstead of an existing value. `update_in` does not mutate `d` or any nested `Mapping`\n\twithin `d`.\n\n\tParameters\n\t----------\n\td : Mapping[K, V]\n\t\tSource `Mapping`.\n\tkeys : Sequence[K]\n\t\tNon-empty sequence of keys specifying the nested path to the value to update in `d`.\n\tfunc : Callable[[V], V]\n\t\t`Callable` applied to the current value at the path in `keys`. If the innermost\n\t\tkey is absent from `d`, `func` receives `default`.\n\tdefault : V | None = None\n\t\tValue passed to `func` when the innermost key is absent from `d`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates each new `MutableMapping`[1] in the result.\n\n\tReturns\n\t-------\n\tmappingUpdated : MutableMapping[K, V]\n\t\tNew `MutableMapping` based on `d` with the value at the path specified by `keys`\n\t\treplaced by the result of `func`.\n\n\tSee Also\n\t--------\n\tassoc_in : Create a new `Mapping` from `d` with a value at a nested path.\n\tget_in : Retrieve a value at a nested path in a `Mapping`.\n\tassoc : Create a new `Mapping` from `d` with one key associated to a value.\n\n\tExamples\n\t--------\n\t>>> inc = lambda x: x + 1\n\t>>> update_in({'a': 0}, ['a'], inc)\n\t{'a': 1}\n\n\t>>> update_in({}, ['z'], inc, 0)\n\t{'z': 1}\n\n\t>>> update_in({}, [1, 2, 3], str, default='bar')\n\t{1: {2: {3: 'bar'}}}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tApply `func` to all items ""of `d` and return a new `Mapping` with the transformed items.\n\n\t(AI generated docstring)\n\n\tYou can use `itemmap` to transform all keys and values in `d` simultaneously without\n\tchanging `d`. `itemmap` applies `func` to each item yielded by `d.items()`. Each item\n\tis passed to `func` as a `tuple[K, V]`, and `func` must return a `tuple[L, W]`. `itemmap`\n\tinserts each returned `tuple` as a new key-value pair in a `MutableMapping`[1] created\n\tby `factory`.\n\n\tParameters\n\t----------\n\tfunc : Callable[[tuple[K, V]], tuple[L, W]]\n\t\t`Callable` applied to each item of `d`. Each item of `d` is passed to `func` as a\n\t\t`tuple[K, V]`, and `func` must return a `tuple[L, W]` containing the new key and value.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `itemmap` reads all items from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[L, W]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingTransformed : MutableMapping[L, W]\n\t\tNew `MutableMapping` created by `factory` populated with each `tuple[L, W]` returned\n\t\tby `func`.\n\n\tSee Also\n\t--------\n\tkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\n\tvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\n\n\tExamples\n\t--------\n\t>>> accountids = {'Alice': 10, 'Bob': 20}\n\t>>> itemmap(reversed, accountids)  # doctest: +SKIP\n\t{10: 'Alice', 20: 'Bob'}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tApply `func` to all keys of `d` and return a new `Mapping` with the transformed keys.\n\n\t(AI generated docstring)\n\n\tYou can use `keymap` to transform all keys in `d` without changing `d`. `keymap` applies\n\t`func` to each key yielded by `d.keys()` and builds a new `MutableMapping`[1] created by\n\t`factory`, associating each transformed key with the corresponding original va""lue of `d`.\n\n\tParameters\n\t----------\n\tfunc : Callable[[K], L]\n\t\t`Callable` applied to each key of `d`. Each key of `d` is passed to `func`\n\t\tindividually, and `func` returns the corresponding transformed key.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `keymap` reads all keys from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[L, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingTransformed : MutableMapping[L, V]\n\t\tNew `MutableMapping` created by `factory` in which each key from `d` is replaced by\n\t\tthe result of applying `func` to that key, associated with the original value of `d`.\n\n\tSee Also\n\t--------\n\tvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\n\titemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\n\tExamples\n\t--------\n\t>>> bills = {'Alice': [20, 15, 30], 'Bob': [10, 35]}\n\t>>> keymap(str.lower, bills)  # doctest: +SKIP\n\t{'alice': [20, 15, 30], 'bob': [10, 35]}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tApply `func` to all values of `d` and return a new `Mapping` with the transformed values.\n\n\t(AI generated docstring)\n\n\tYou can use `valmap` to transform all values in `d` without changing `d`. `valmap` applies\n\t`func` to each value yielded by `d.values()` and builds a new `MutableMapping`[1] created\n\tby `factory`, preserving each original key associated with its transformed value.\n\n\tParameters\n\t----------\n\tfunc : Callable[[V], W]\n\t\t`Callable` applied to each value of `d`. Each value of `d` is passed to `func`\n\t\tindividually, and `func` returns the corresponding transformed value.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `valmap` reads all values from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[K, W]] = dict\n\t\t`Callable` that ""creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingTransformed : MutableMapping[K, W]\n\t\tNew `MutableMapping` created by `factory` in which each key from `d` is associated\n\t\twith the result of applying `func` to the corresponding value of `d`.\n\n\tSee Also\n\t--------\n\tkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\n\titemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\n\tExamples\n\t--------\n\t>>> bills = {'Alice': [20, 15, 30], 'Bob': [10, 35]}\n\t>>> valmap(sum, bills)  # doctest: +SKIP\n\t{'Alice': 65, 'Bob': 45}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tCreate a new `Mapping`[1] with `key` associated with `value`.\n\n\tYou can use `assoc` (***assoc***iate) to copy `d` (***d***ictionary) to a new `Mapping` created by\n\t`factory` and assign `value` to `key`. `assoc` does not change `d`.\n\n\tParameters\n\t----------\n\td : Mapping[K, V]\n\t\tSource `Mapping`.\n\tkey : K\n\t\t`key` that `assoc` inserts or replaces.\n\tvalue : V\n\t\t`value` that `assoc` assigns to `key`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingUpdated : MutableMapping[K, V]\n\t\tNew `Mapping` with `key` associated to `value`.\n\n\tExamples\n\t--------\n\t>>> assoc({}, 'a', 1)\n\t{'a': 1}\n\t>>> assoc({'a': 1}, 'a', 3)\n\t{'a': 3}\n\t>>> assoc({'a': 1}, 'b', 3)\n\t{'a': 1, 'b': 3}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tCreate a new `MutableMapping`[1] from `d` with the specified `keys` removed.\n\n\t(AI generated docstring)\n\n\tYou can use `dissoc` (***dissoc***iate) to copy `d` (***d***ictionary) to a new `MutableMapping`\n\tcreated by `factory`, then remove each key in `keys` from the result. `di""ssoc` does not change\n\t`d`. Keys in `keys` that are absent from `d` are silently ignored.\n\n\tParameters\n\t----------\n\td : Mapping[K, V]\n\t\tSource `Mapping`.\n\t*keys : K\n\t\tKeys to remove from `d` in the returned `MutableMapping`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingReduced : MutableMapping[K, V]\n\t\tNew `MutableMapping` containing all items from `d` except those whose keys are in `keys`.\n\n\tAlgorithm Details\n\t-----------------\n\t`dissoc` selects between two strategies based on the ratio of removed keys to total keys.\n\n\tWhen fewer than 60% of keys are removed, `dissoc` copies all items from `d` and then\n\tdeletes the specified keys one by one.\n\n\tWhen 60% or more of keys are removed, `dissoc` computes the set of remaining keys and\n\tcopies only those items to the result, avoiding unnecessary copy-and-delete operations.\n\n\tSee Also\n\t--------\n\tassoc : Create a new `MutableMapping` from `d` with one key associated to a value.\n\n\tExamples\n\t--------\n\t>>> dissoc({'x': 1, 'y': 2}, 'y')\n\t{'x': 1}\n\t>>> dissoc({'x': 1, 'y': 2}, 'y', 'x')\n\t{}\n\t>>> dissoc({'x': 1}, 'y')  # Ignores missing keys\n\t{'x': 1}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tCreate a new `MutableMapping` from `d` with `value` at the path specified by `keys`.\n\n\t(AI generated docstring)\n\n\tYou can use `assoc_in` to produce a copy of `d` with `value` placed at the nested\n\tlocation given by `keys`. `assoc_in` creates intermediate `MutableMapping` instances\n\tas needed when a key in `keys` is absent from `d`. `assoc_in` does not mutate `d` or\n\tany nested `Mapping` within `d`.\n\n\tParameters\n\t----------\n\td : Mapping[K, V]\n\t\tSource `Mapping`.\n\tkeys : Iterable[K]\n\t\tNon-empty sequence of keys specifying the nested path to the target location in"" `d`.\n\tvalue : V\n\t\tThe value to place at the location specified by `keys`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates each new `MutableMapping`[1] in the result.\n\n\tReturns\n\t-------\n\tmappingUpdated : MutableMapping[K, V]\n\t\tNew `MutableMapping` based on `d` with `value` at the path specified by `keys`.\n\n\tSee Also\n\t--------\n\tupdate_in : Apply a `Callable` to a value at a nested path in a `Mapping`.\n\tget_in : Retrieve a value at a nested path in a `Mapping`.\n\tassoc : Create a new `Mapping` from `d` with one key associated to a value.\n\n\tExamples\n\t--------\n\t>>> assoc_in({'a': 1}, ['a'], 2)\n\t{'a': 2}\n\t>>> assoc_in({'a': {'b': 1}}, ['a', 'b'], 2)\n\t{'a': {'b': 2}}\n\t>>> assoc_in({}, ['a', 'b'], 1)\n\t{'a': {'b': 1}}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tMerge a collection of dictionaries and return a new `Mapping`.\n\n\t(AI generated docstring)\n\n\tYou can use `merge` to combine two or more `Mapping`[1] objects into a single new `Mapping`.\n\t`merge` calls `factory` to create the result, then updates it in order with each `Mapping` in\n\t`dicts`. When the same key appears in more than one element, the value from the later element\n\ttakes precedence. You can also pass a single `Iterable[Mapping[K, V]]` as the sole positional\n\targument instead of multiple `Mapping` arguments.\n\n\tParameters\n\t----------\n\t*dicts : Mapping[K, V]\n\t\t`Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the\n\t\tsole positional argument.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingMerged : MutableMapping[K, V]\n\t\tNew `MutableMapping` created by `factory` containing all key-value pairs from `dicts`. For\n\t\tduplicate keys, the value from the last `Mapping` in `dicts` that c""ontains the key takes\n\t\tprecedence.\n\n\tSee Also\n\t--------\n\tmerge_with : Merge dictionaries and apply a `Callable` to combined values.\n\n\tExamples\n\t--------\n\t>>> merge({1: 'one'}, {2: 'two'})\n\t{1: 'one', 2: 'two'}\n\n\tLater dictionaries have precedence\n\n\t>>> merge({1: 2, 3: 4}, {3: 3, 4: 4})\n\t{1: 2, 3: 3, 4: 4}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tMerge dictionaries and apply a `Callable` to combined values.\n\n\t(AI generated docstring)\n\n\tYou can use `merge_with` to combine two or more `Mapping`[1] objects and resolve key conflicts\n\tby applying `func` to a `list` of all values associated with each key. For each key that\n\tappears in one or more elements of `dicts`, `merge_with` collects all associated values into a\n\t`list` in the order they appear across `dicts`, then calls `func` with that `list` to produce\n\tthe value in the result. You can also pass a single `Iterable[Mapping[K, V]]` as the sole\n\tpositional argument after `func`.\n\n\tParameters\n\t----------\n\tfunc : Callable[[list[V]], V]\n\t\t`Callable` applied to the `list` of values associated with each key across all `Mapping`\n\t\tobjects in `dicts`. `func` receives a non-empty `list` and must return the merged value for\n\t\tthat key.\n\t*dicts : Mapping[K, V]\n\t\t`Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the\n\t\tsole positional argument after `func`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingMerged : MutableMapping[K, V]\n\t\tNew `MutableMapping` created by `factory` where each key maps to the result of calling\n\t\t`func` with all values associated with that key across `dicts`.\n\n\tSee Also\n\t--------\n\tmerge : Merge a collection of `Mapping` objects into a new `Mapping`.\n\n\tExamples\n\t--------\n\t>>> merge_with(s""um, {1: 1, 2: 2}, {1: 10, 2: 20})\n\t{1: 11, 2: 22}\n\n\t>>> merge_with(first, {1: 1, 2: 2}, {2: 20, 3: 30})  # doctest: +SKIP\n\t{1: 1, 2: 2, 3: 30}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tRetain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\n\n\t(AI generated docstring)\n\n\tYou can use `itemfilter` to select items from `d` (***d***ictionary) by both key and value\n\tsimultaneously. `itemfilter` calls `predicate` with each item yielded by `d.items()`. Each\n\titem is passed to `predicate` as a `tuple[K, V]`. `itemfilter` inserts each item for which\n\t`predicate` returns `True` into a new `MutableMapping`[1] created by `factory`. `itemfilter`\n\tdoes not change `d`.\n\n\tParameters\n\t----------\n\tpredicate : Callable[[tuple[K, V]], bool]\n\t\t`Callable` applied to each item of `d`. Each item is passed to `predicate` as a\n\t\t`tuple[K, V]`, and `predicate` must return `True` for the item to be retained.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `itemfilter` reads all items from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingFiltered : MutableMapping[K, V]\n\t\tNew `MutableMapping` created by `factory` containing only items from `d` for which\n\t\t`predicate` returns `True`.\n\n\tSee Also\n\t--------\n\tkeyfilter : Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\n\tvalfilter : Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\n\titemmap : Apply a `Callable` to all items of a `Mapping` and return a new `Mapping`.\n\n\tExamples\n\t--------\n\t>>> def isvalid(item):\n\t...     k, v = item\n\t...     return k % 2 == 0 and v < 4\n\n\t>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n\t>>> itemfilter(isvalid, d)\n\t{2: 3}\n\n\tReferences""\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tRetain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\n\n\t(AI generated docstring)\n\n\tYou can use `keyfilter` to select items from `d` (***d***ictionary) by their keys. `keyfilter`\n\tcalls `predicate` with each key yielded by `d.keys()`. `keyfilter` inserts each item whose\n\tkey causes `predicate` to return `True` into a new `MutableMapping`[1] created by `factory`.\n\t`keyfilter` does not change `d`.\n\n\tParameters\n\t----------\n\tpredicate : Callable[[K], bool]\n\t\t`Callable` applied to each key of `d`. `keyfilter` keeps each item for which `predicate`\n\t\treturns `True`.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `keyfilter` reads all items from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingFiltered : MutableMapping[K, V]\n\t\tNew `MutableMapping` created by `factory` containing only items from `d` whose keys\n\t\tcause `predicate` to return `True`.\n\n\tSee Also\n\t--------\n\tvalfilter : Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\n\titemfilter : Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\n\tkeymap : Apply a `Callable` to all keys of a `Mapping` and return a new `Mapping`.\n\n\tExamples\n\t--------\n\t>>> iseven = lambda x: x % 2 == 0\n\t>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n\t>>> keyfilter(iseven, d)\n\t{2: 3, 4: 5}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tRetain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.\n\n\t(AI generated docstring)\n\n\tYou can use `valfilter` to select items from `d` (***d***ictionary) by their values. `valfilter`\n\tcalls `pr""edicate` with each value yielded by `d.values()`. `valfilter` inserts each item whose\n\tvalue causes `predicate` to return `True` into a new `MutableMapping`[1] created by `factory`.\n\t`valfilter` does not change `d`.\n\n\tParameters\n\t----------\n\tpredicate : Callable[[V], bool]\n\t\t`Callable` applied to each value of `d`. `valfilter` keeps each item for which `predicate`\n\t\treturns `True`.\n\td : Mapping[K, V]\n\t\tSource `Mapping`[1]. `valfilter` reads all items from `d` and does not change `d`.\n\tfactory : Callable[[], MutableMapping[K, V]] = dict\n\t\t`Callable` that creates the `MutableMapping`[1] to `return`.\n\n\tReturns\n\t-------\n\tmappingFiltered : MutableMapping[K, V]\n\t\tNew `MutableMapping` created by `factory` containing only items from `d` whose values\n\t\tcause `predicate` to return `True`.\n\n\tSee Also\n\t--------\n\tkeyfilter : Retain only items from `d` whose keys satisfy `predicate` and return a new `Mapping`.\n\titemfilter : Retain only items from `d` whose key-value pairs satisfy `predicate` and return a new `Mapping`.\n\tvalmap : Apply a `Callable` to all values of a `Mapping` and return a new `Mapping`.\n\n\tExamples\n\t--------\n\t>>> iseven = lambda x: x % 2 == 0\n\t>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n\t>>> valfilter(iseven, d)\n\t{1: 2, 3: 4}\n\n\tReferences\n\t----------\n\t[1] Python `collections.abc` module\n\t\thttps://docs.python.org/3/library/collections.abc.html\n\tRetrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.\n\n\tYou can use `get_in` to navigate into a nested `coll` (***coll***ection) by following a\n\t`Sequence` of `keys`. `get_in` applies each key in `keys` sequentially using\n\t`operator.getitem`[1].\n\n\tIf the desired key does not exist, `get_in` will `raise` an `Exception` or `return` `default`\n\tdepending on the parameter `no_default`. If `no_default` is `False`, which is the default,\n\t`get_in` will `return` `default`. If `no_default` is `True`, `get_in` wil""l `raise` an\n\t`Exception`.\n\n\tParameters\n\t----------\n\tkeys : Sequence[K]\n\t\t`Sequence` of keys that describes the path to traverse in `coll`.\n\tcoll : SupportsGetItem[K, V]\n\t\tPython `object` to traverse. `get_in` uses `operator.getitem`[1], so the nested objects in\n\t\t`coll` can be nested o any type that works with `operator.getitem`, such as a `dict` or\n\t\t`list`.\n\tdefault : V | None = None\n\t\tValue to return when the path in `keys` does not exist in `coll`.\n\tno_default : bool = False\n\t\tWhen `True`, `raise` `KeyError`, `IndexError`, or `TypeError` instead of returning `default`.\n\n\tReturns\n\t-------\n\tvalue : V | None\n\t\tThe value at the nested path in `coll`, or `default` if the path does not exist.\n\n\tSee Also\n\t--------\n\titertoolz.get : Retrieve a value or values from a collection.\n\toperator.getitem : Return the value at a given key in a collection.\n\tassoc_in : Create a new `Mapping` from `d` with a value at a nested path.\n\tupdate_in : Apply a `Callable` to a value at a nested path in a `Mapping`.\n\n\tExamples\n\t--------\n\t>>> transaction = {\n\t...     'name': 'Alice',\n\t...     'purchase': {'items': ['Apple', 'Orange'], 'costs': [0.50, 1.25]},\n\t...     'credit card': '5555-1234-1234-1234',\n\t... }\n\t>>> get_in(['purchase', 'items', 0], transaction)\n\t'Apple'\n\t>>> get_in(['name'], transaction)\n\t'Alice'\n\t>>> get_in(['purchase', 'total'], transaction)\n\t>>> get_in(['purchase', 'items', 'apple'], transaction)\n\t>>> get_in(['purchase', 'items', 10], transaction)\n\t>>> get_in(['purchase', 'total'], transaction, 0)\n\t0\n\t>>> get_in(['y'], {}, no_default=True)\n\tTraceback (most recent call last):\n\t\t...\n\tKeyError: 'y'\n\n\tReferences\n\t----------\n\t[1] Python `operator` module\n\t\thttps://docs.python.org/3/library/operator.html#operator.getitem\n\t.?assoc_in (line 168)assoc (line 123)disabledissoc (line 258)enablegcget_in (line 313)humpy_cytoolz/dicttoolz.pyxisenableditemfilter (line 386)itemmap (""line 453)keyfilter (line 513)keymap (line 574)merge (line 642)merge_with (line 726)no default __reduce__ due to non-trivial __cinit__<stringsource>update_in (line 777)valfilter (line 864)valmap (line 925)Mapping__Pyx_PyDict_NextRefabc__all____annotate__assocassoc_inasyncio.coroutines__class_getitem__cline_in_tracebackcollcollectionsddefaultdictsdifference_updatedissocfactoryformatfunc__func__get_in__getstate__humpy_cytoolz.dicttoolz_is_coroutineititemfilteritemmapitems_iter_mapping_iter_mapping.__reduce_cython___iter_mapping.__setstate_cython__keykeyfilterkeymapkeyskwargs__main__mergemerge_with__module____name__nextno_defaultpoppopitempredicate__pyx_capi____pyx_state__qualname____reduce____reduce_cython____reduce_ex__self__set_name__setdefault__setstate____setstate_cython____test__updateupdate_invalfiltervalmapvaluevaluesPyObject *(PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_assoc_in *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_update_in *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_get_in *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemfilter *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_itemmap *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keyfilter *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_keymap *__pyx_optional_""args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valfilter *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_valmap *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_dissoc *__pyx_optional_args)\000PyObject *(PyObject *, PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge_with *__pyx_optional_args)\000PyObject *(PyObject *, struct __pyx_opt_args_13humpy_cytoolz_9dicttoolz_c_merge *__pyx_optional_args)\000__pyx_t_13humpy_cytoolz_9dicttoolz_f_map_next (PyObject *, PyObject **)\000int (PyObject *, Py_ssize_t *, PyObject **, PyObject **)\000assoc\000assoc_in\000update_in\000get_in\000itemfilter\000itemmap\000keyfilter\000keymap\000valfilter\000valmap\000c_dissoc\000c_merge_with\000c_merge\000get_map_iter\000PyMapping_Next\320\000:\270!\360^\001\000\003\024\2201\340\001\006\200g\210Q\330\001\005\200\\\220\021\220#\220Q\220a\330\001\005\200X\210Q\330\001\n\210!\2101\330\001\007\200q\210\001\210\023\210A\210U\220!\2206\230\021\230!\330\002\004\200A\200T\210\021\210(\220)\2308\2401\330\001\010\210\001\320\000:\270!\360^\001\000\003\024\2201\340\001\006\200g\210Q\330\001\005\200\\\220\021\220#\220Q\220a\330\001\005\200X\210Q\330\001\n\210!\2101\330\001\007\200q\210\001\210\023\210A\210U\220!\2206\230\021\230!\330\002\004\200A\200X\210X\220T\230\021\230(\240!\330\001\010\210\001\320\000;\2701\360b\001\000\003\024\2201\340\001\006\200g\210Q\330\001\005\200\\\220\021\220#\220Q\220a\330\001\005\200X\210Q\330\001\n\210!\2101\330\001\007\200q\210\001\210\023\210A\210U\220!\2206\230\021\230!\330\002\005\200T\210\024\210R\210x\220v\230X\240Q\330\002\004\200A\200U\210!\330\001\010\210\001\320\000B\300!\360d\001\000\003\024\2201\340\001\006\200g\210Q\330\001\005\200\\\220\021\220#\220Q\220a\330\001\005\200X\210Q\330\001\n\210!\2101\330\001\007\200q\210\001""\210\023\210A\210U\220!\2206\230\021\230!\330\002\005\200Y\210a\210x\220q\330\003\005\200Q\200h\210h\220h\230a\330\001\010\210\001\320\000C\3001\360l\001\000\003\024\2201\340\001\006\200g\210Q\330\001\005\200\\\220\021\220#\220Q\220a\330\001\005\200X\210Q\330\001\n\210!\2101\330\001\007\200q\210\001\210\023\210A\210U\220!\2206\230\021\230!\330\002\006\200h\210a\330\002\006\200h\210a\330\002\005\200Y\210b\220\003\2201\330\003\005\200Q\200e\2101\330\001\010\210\001\320\000F\300a\360J\001\000\002\007\200g\210Q\330\001\004\320\004\025\220Q\220a\330\002\017\210q\220\004\220A\340\002\004\200G\2101\210A\330\001\003\2001\200G\2101\330\001\010\210\001\320\000J\320J_\320_`\360r\001\000\002\013\210'\220\024\220Q\220d\230$\230a\230q\330\001\006\200g\210Q\330\001\004\320\004\025\220Q\220a\330\002\017\210q\220\004\220A\340\002\004\200G\2101\210A\330\001\t\210\021\340\001\005\200W\210A\330\002\005\200X\210S\220\001\330\003\007\200q\210\001\210\021\330\003\013\2107\220!\330\003\006\320\006\027\220q\230\001\330\004\021\220\021\220'\230\021\340\004\t\210\027\220\001\220\021\340\003\007\200w\210a\330\003\013\2101\330\002\007\200q\210\013\2201\330\002\014\210A\330\002\n\210!\340\001\004\200H\210C\210q\330\002\010\210\004\210A\210Q\210a\210q\340\002\010\210\004\210A\210Q\330\001\006\200a\200{\220!\330\001\010\210\001\320\000J\310!\360`\001\000\002\013\210'\220\024\220Q\220d\230$\230a\230q\330\001\006\200g\210Q\330\001\004\320\004\025\220Q\220a\330\002\017\210q\220\004\220A\340\002\004\200G\2101\210A\330\001\t\210\021\340\001\005\200W\210A\330\002\005\200X\210S\220\001\330\003\007\200q\210\001\210\021\330\003\013\2107\220!\330\003\006\320\006\027\220q\230\001\330\004\021\220\021\220'\230\021\340\004\t\210\027\220\001\220\021\340\003\007\200w\210a\330\003\013\2101\330\002\007\200q\210\013\2201\330\002\014\210A\330\002\n\210!\340\001\006\200a\200{\220!\330\001\010\210\001\200\001\330\004\n\210+\220Q\320\000%\240Q\360^\001\000\002\005\200C\200q\210\007\210s\220\"\220D\230\004\230J\240a\240u""\250A\250T\260\021\330\002\n\210%\210q\220\001\330\001\010\210\014\220A\220V\2307\240!\320\000=\320=U\320UV\360@\002\000\002\003\330\002\006\200h\210a\330\003\n\210$\210a\210q\330\002\t\210\021\330\010\t\330\002\005\200Q\330\003\004\330\002\t\210\021\320\000\032\230!\360Z\001\000\002\005\200C\200q\210\007\210s\220\"\220D\230\004\230J\240a\240u\250A\250T\260\021\330\002\n\210%\210q\220\001\330\001\010\210\007\210q\220\007\220q\200\001\360f\001\000\002\t\210\010\220\001\220\023\220F\230+\240Q\240j\260\001";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
@@ -11363,69 +11369,69 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_setstate_cython, __pyx_mstate->__pyx_kp_b_iso88591_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {0, 0, 1, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS), 98};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_factory, __pyx_mstate->__pyx_n_u_dicts};
-    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_merge, __pyx_mstate->__pyx_kp_b_iso88591_Cq_s_D_JauAT_q_q_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {4, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 123};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_key, __pyx_mstate->__pyx_n_u_value, __pyx_mstate->__pyx_n_u_factory};
+    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_assoc, __pyx_mstate->__pyx_kp_b_iso88591_FaJ_gQ_Qa_q_A_G1A_1G1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 1, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS), 185};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_func, __pyx_mstate->__pyx_n_u_factory, __pyx_mstate->__pyx_n_u_dicts};
-    __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_merge_with, __pyx_mstate->__pyx_kp_b_iso88591_Qd_Cq_s_D_JauAT_q_AV7, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {4, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 168};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_keys, __pyx_mstate->__pyx_n_u_value, __pyx_mstate->__pyx_n_u_factory};
+    __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_assoc_in, __pyx_mstate->__pyx_kp_b_iso88591_J_Qd_aq_gQ_Qa_q_A_G1A_WA_XS_q_7, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 239};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_func, __pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_factory};
-    __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_valmap, __pyx_mstate->__pyx_kp_b_iso88591_b_1_gQ_Qa_XQ_1_q_AU_6_AXXT, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS|CO_VARKEYWORDS), 258};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_keys, __pyx_mstate->__pyx_n_u_kwargs};
+    __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_dissoc, __pyx_mstate->__pyx_kp_b_iso88591_f_F_Qj, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 298};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_func, __pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_factory};
-    __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_keymap, __pyx_mstate->__pyx_kp_b_iso88591_b_1_gQ_Qa_XQ_1_q_AU_6_AT_81, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {4, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 313};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_keys, __pyx_mstate->__pyx_n_u_coll, __pyx_mstate->__pyx_n_u_default, __pyx_mstate->__pyx_n_u_no_default};
+    __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_get_in, __pyx_mstate->__pyx_kp_b_iso88591_UUV_ha_aq_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 357};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_func, __pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_factory};
-    __pyx_mstate_global->__pyx_codeobj_tab[6] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_itemmap, __pyx_mstate->__pyx_kp_b_iso88591_1f_1_gQ_Qa_XQ_1_q_AU_6_T_RxvXQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[6])) goto bad;
-  }
-  {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 419};
+    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 386};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_predicate, __pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_factory};
-    __pyx_mstate_global->__pyx_codeobj_tab[7] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_valfilter, __pyx_mstate->__pyx_kp_b_iso88591_B_d_1_gQ_Qa_XQ_1_q_AU_6_Yaxq_Qh, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[7])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[6] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_itemfilter, __pyx_mstate->__pyx_kp_b_iso88591_C1l_1_gQ_Qa_XQ_1_q_AU_6_ha_ha_Y, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[6])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 480};
+    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 453};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_func, __pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_factory};
+    __pyx_mstate_global->__pyx_codeobj_tab[7] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_itemmap, __pyx_mstate->__pyx_kp_b_iso88591_1b_1_gQ_Qa_XQ_1_q_AU_6_T_RxvXQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[7])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 513};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_predicate, __pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_factory};
     __pyx_mstate_global->__pyx_codeobj_tab[8] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_keyfilter, __pyx_mstate->__pyx_kp_b_iso88591_B_d_1_gQ_Qa_XQ_1_q_AU_6_Yaxq_Qh, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[8])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 541};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_predicate, __pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_factory};
-    __pyx_mstate_global->__pyx_codeobj_tab[9] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_itemfilter, __pyx_mstate->__pyx_kp_b_iso88591_C1l_1_gQ_Qa_XQ_1_q_AU_6_ha_ha_Y, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[9])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 574};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_func, __pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_factory};
+    __pyx_mstate_global->__pyx_codeobj_tab[9] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_keymap, __pyx_mstate->__pyx_kp_b_iso88591_1_gQ_Qa_XQ_1_q_AU_6_AT_81, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[9])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {4, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 608};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_key, __pyx_mstate->__pyx_n_u_value, __pyx_mstate->__pyx_n_u_factory};
-    __pyx_mstate_global->__pyx_codeobj_tab[10] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_assoc, __pyx_mstate->__pyx_kp_b_iso88591_FaN_gQ_Qa_q_A_G1A_1G1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[10])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {0, 0, 1, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS), 642};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_factory, __pyx_mstate->__pyx_n_u_dicts};
+    __pyx_mstate_global->__pyx_codeobj_tab[10] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_merge, __pyx_mstate->__pyx_kp_b_iso88591_Z_Cq_s_D_JauAT_q_q_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[10])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {4, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 655};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_keys, __pyx_mstate->__pyx_n_u_value, __pyx_mstate->__pyx_n_u_factory};
-    __pyx_mstate_global->__pyx_codeobj_tab[11] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_assoc_in, __pyx_mstate->__pyx_kp_b_iso88591_J_d_Qd_aq_gQ_Qa_q_A_G1A_WA_XS_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[11])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 1, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS), 726};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_func, __pyx_mstate->__pyx_n_u_factory, __pyx_mstate->__pyx_n_u_dicts};
+    __pyx_mstate_global->__pyx_codeobj_tab[11] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_merge_with, __pyx_mstate->__pyx_kp_b_iso88591_Q_Cq_s_D_JauAT_q_AV7, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[11])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS|CO_VARKEYWORDS), 747};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_keys, __pyx_mstate->__pyx_n_u_kwargs};
-    __pyx_mstate_global->__pyx_codeobj_tab[12] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_dissoc, __pyx_mstate->__pyx_kp_b_iso88591_j_F_Qj, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[12])) goto bad;
-  }
-  {
-    const __Pyx_PyCode_New_function_description descr = {5, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 802};
+    const __Pyx_PyCode_New_function_description descr = {5, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 777};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_keys, __pyx_mstate->__pyx_n_u_func, __pyx_mstate->__pyx_n_u_default, __pyx_mstate->__pyx_n_u_factory};
-    __pyx_mstate_global->__pyx_codeobj_tab[13] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_update_in, __pyx_mstate->__pyx_kp_b_iso88591_JJ___v_Qd_aq_gQ_Qa_q_A_G1A_WA_X, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[13])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[12] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_update_in, __pyx_mstate->__pyx_kp_b_iso88591_JJ___r_Qd_aq_gQ_Qa_q_A_G1A_WA_X, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[12])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {4, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 893};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_keys, __pyx_mstate->__pyx_n_u_coll, __pyx_mstate->__pyx_n_u_default, __pyx_mstate->__pyx_n_u_no_default};
-    __pyx_mstate_global->__pyx_codeobj_tab[14] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_get_in, __pyx_mstate->__pyx_kp_b_iso88591_UUVT_ha_aq_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[14])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 864};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_predicate, __pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_factory};
+    __pyx_mstate_global->__pyx_codeobj_tab[13] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_valfilter, __pyx_mstate->__pyx_kp_b_iso88591_B_d_1_gQ_Qa_XQ_1_q_AU_6_Yaxq_Qh, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[13])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 925};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_func, __pyx_mstate->__pyx_n_u_d, __pyx_mstate->__pyx_n_u_factory};
+    __pyx_mstate_global->__pyx_codeobj_tab[14] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_humpy_cytoolz_dicttoolz_pyx, __pyx_mstate->__pyx_n_u_valmap, __pyx_mstate->__pyx_kp_b_iso88591_1_gQ_Qa_XQ_1_q_AU_6_AXXT, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[14])) goto bad;
   }
   Py_DECREF(tuple_dedup_map);
   return 0;
@@ -13010,44 +13016,6 @@ static PyObject *__Pyx_PyObject_FastCallMethod(PyObject *name, PyObject *const *
 }
 #endif
 
-/* RaiseTooManyValuesToUnpack */
-static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected) {
-    PyErr_Format(PyExc_ValueError,
-                 "too many values to unpack (expected %" CYTHON_FORMAT_SSIZE_T "d)", expected);
-}
-
-/* RaiseNeedMoreValuesToUnpack */
-static CYTHON_INLINE void __Pyx_RaiseNeedMoreValuesError(Py_ssize_t index) {
-    PyErr_Format(PyExc_ValueError,
-                 "need more than %" CYTHON_FORMAT_SSIZE_T "d value%.1s to unpack",
-                 index, (index == 1) ? "" : "s");
-}
-
-/* IterFinish */
-static CYTHON_INLINE int __Pyx_IterFinish(void) {
-    PyObject* exc_type;
-    __Pyx_PyThreadState_declare
-    __Pyx_PyThreadState_assign
-    exc_type = __Pyx_PyErr_CurrentExceptionType();
-    if (unlikely(exc_type)) {
-        if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration)))
-            return -1;
-        __Pyx_PyErr_Clear();
-        return 0;
-    }
-    return 0;
-}
-
-/* UnpackItemEndCheck */
-static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected) {
-    if (unlikely(retval)) {
-        Py_DECREF(retval);
-        __Pyx_RaiseTooManyValuesError(expected);
-        return -1;
-    }
-    return __Pyx_IterFinish();
-}
-
 /* SliceObject */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_GetSlice(PyObject* obj,
         Py_ssize_t cstart, Py_ssize_t cstop,
@@ -13217,6 +13185,21 @@ static PyObject* __Pyx__CallUnboundCMethod1(__Pyx_CachedCFunction* cfunc, PyObje
         result = __Pyx_PyObject_Call2Args(cfunc->method, self, arg);
     }
     return result;
+}
+
+/* IterFinish (used by set_iter) */
+static CYTHON_INLINE int __Pyx_IterFinish(void) {
+    PyObject* exc_type;
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    exc_type = __Pyx_PyErr_CurrentExceptionType();
+    if (unlikely(exc_type)) {
+        if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration)))
+            return -1;
+        __Pyx_PyErr_Clear();
+        return 0;
+    }
+    return 0;
 }
 
 /* set_iter */
@@ -13453,6 +13436,29 @@ bad:
     Py_XDECREF(local_tb);
     return -1;
 #endif
+}
+
+/* RaiseTooManyValuesToUnpack */
+static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected) {
+    PyErr_Format(PyExc_ValueError,
+                 "too many values to unpack (expected %" CYTHON_FORMAT_SSIZE_T "d)", expected);
+}
+
+/* RaiseNeedMoreValuesToUnpack */
+static CYTHON_INLINE void __Pyx_RaiseNeedMoreValuesError(Py_ssize_t index) {
+    PyErr_Format(PyExc_ValueError,
+                 "need more than %" CYTHON_FORMAT_SSIZE_T "d value%.1s to unpack",
+                 index, (index == 1) ? "" : "s");
+}
+
+/* UnpackItemEndCheck */
+static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected) {
+    if (unlikely(retval)) {
+        Py_DECREF(retval);
+        __Pyx_RaiseTooManyValuesError(expected);
+        return -1;
+    }
+    return __Pyx_IterFinish();
 }
 
 /* AllocateExtensionType */
@@ -14439,25 +14445,6 @@ static CYTHON_INLINE int __Pyx_PyObject_SetAttrStr(PyObject* obj, PyObject* attr
     return PyObject_SetAttr(obj, attr_name, value);
 }
 #endif
-
-/* ListPack */
-static PyObject *__Pyx_PyList_Pack(Py_ssize_t n, ...) {
-    va_list va;
-    PyObject *l = PyList_New(n);
-    va_start(va, n);
-    if (unlikely(!l)) goto end;
-    for (Py_ssize_t i=0; i<n; ++i) {
-        PyObject *arg = va_arg(va, PyObject*);
-        Py_INCREF(arg);
-        if (__Pyx_PyList_SET_ITEM(l, i, arg) != (0)) {
-            Py_CLEAR(l);
-            goto end;
-        }
-    }
-    end:
-    va_end(va);
-    return l;
-}
 
 /* dict_setdefault (used by FetchCommonType) */
 static CYTHON_INLINE PyObject *__Pyx_PyDict_SetDefault(PyObject *d, PyObject *key, PyObject *default_value) {

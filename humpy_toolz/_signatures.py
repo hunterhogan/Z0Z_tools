@@ -1,6 +1,15 @@
+# ty:ignore[invalid-return-type, unsupported-operator]
+# ty:ignore[invalid-assignment]
+# ty:ignore[invalid-argument-type]
+# pyright: reportUnknownParameterType=false
+# pyright: reportUnknownMemberType=false
+# pyright: reportUnknownVariableType=false
+# pyright: reportArgumentType=false
+# pyright: reportUnknownArgumentType=false
+# pyright: reportMissingParameterType=false
 # pyright: reportUnusedFunction=false
 # pyright: reportUnknownLambdaType=false
-# ruff: noqa: ARG005 A006 ANN202 TRY300 ANN001
+# ruff: noqa: ARG005 A006 ANN202 TRY300 ANN001 S101 DOC201
 """Internal module for better introspection of builtins.
 
 The main functions are ``is_builtin_valid_args``, ``is_builtin_partial_args``,
@@ -286,7 +295,8 @@ module_info['humpy_toolz'] = {
 	'memoize': [(0, lambda func=None, cache=None, key=None: None)],
 }
 module_info['humpy_toolz.functoolz'] = {
-	'Compose': [(0, lambda funcs: None)], 'InstanceProperty': [(0, lambda fget=None, fset=None, fdel=None, doc=None, classval=None: None)]
+	'Compose': [(0, lambda funcs: None)],
+	'InstanceProperty': [(0, lambda fget=None, fset=None, fdel=None, doc=None, classval=None: None)],
 }
 
 def num_pos_args(sigspec: inspect.Signature) -> builtins.int:
@@ -344,7 +354,10 @@ def expand_sig(sig: SignatureInput) -> SignatureSpecification:
 
 signatures: dict[Callable[..., Any], tuple[SignatureSpecification, ...]] = {}
 
-def create_signature_registry(module_info: dict[ModuleType, dict[str, list[SignatureInput]]] = module_info, signatures: dict[Callable[..., Any], tuple[SignatureSpecification, ...]] = signatures):
+def create_signature_registry(
+	module_info: dict[ModuleType, dict[str, list[SignatureInput]]] = module_info,
+	signatures: dict[Callable[..., Any], tuple[SignatureSpecification, ...]] = signatures,
+):
 	for module, info in module_info.items():
 		if isinstance(module, str):
 			module: ModuleType = import_module(module)
@@ -380,7 +393,7 @@ def check_partial(sig: SignatureSpecification, args, kwargs) -> builtins.bool | 
 	num_pos_only, func, keyword_exclude, sigspec = sig
 	if len(args) < num_pos_only:
 		pad: builtins.tuple[None, ...] = (None,) * (num_pos_only - len(args))
-		args = args + pad
+		args += pad
 	if keyword_exclude:
 		kwargs = dict(kwargs)
 		for item in keyword_exclude:

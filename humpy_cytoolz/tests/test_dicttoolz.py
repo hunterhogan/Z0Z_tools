@@ -37,12 +37,12 @@ def itemHasEvenKeyAndOddValue(item: tuple[int, int]) -> bool:
 def itemHasLargeKeyAndLargeValue(item: tuple[int, int]) -> bool:
     return item[0] > 300 and item[1] > 300
 
-def makeDefaultDictFactory(itemIterable: ItemsView[Any, Any] | Iterator[tuple[Any, Any]] | None=None) -> 'defaultdict[Any, Any]':
+def makeDefaultDictFactory(itemIterable: ItemsView[Any, Any] | Iterator[tuple[Any, Any]] | None=None) -> defaultdict[Any, Any]:
     if itemIterable is None:
         return defaultdict(int)
     return defaultdict(int, itemIterable)
 
-def makeCustomMappingFactory(itemIterable: ItemsView[Any, Any] | Iterator[tuple[Any, Any]] | None=None) -> 'CustomMapping':
+def makeCustomMappingFactory(itemIterable: ItemsView[Any, Any] | Iterator[tuple[Any, Any]] | None=None) -> CustomMapping:
     if itemIterable is None:
         return CustomMapping()
     return CustomMapping(itemIterable)

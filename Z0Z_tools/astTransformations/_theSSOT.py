@@ -9,20 +9,13 @@ import re as regex
 import textwrap
 
 """# DEVELOPMENT
-Potentially dynamic sources each have their own git branch.
-	https://github.com/pytoolz/toolz/
-	https://github.com/pytoolz/cytoolz/
-	https://github.com/mgrinshpon/toolz-stubs
-	On their branch, they are processed through the chop shop.
-	Desired changes are moved from the branch to main by a pull request.
-	If the sources do not change, the branch will stay unchanged, but main can improve.
-	My goal is to feed the changes in main back to the original source via a pull request. If the source updates, then the cycle continues.
-
-	https://github.com/getzze/toolz/tree/typed is static.
-	Instead of trying to consolidate all of the changes at one time, I will process the changes per function.
-
-Consolidate settings.
+1. Reconcile logic differences between toolz and cytoolz.
+2. Initiate changes from toolz because I know Python, not Cython.
+3. Use `astToolkit` to automate changes propagating from toolz to cytoolz.
+4. Switch to `optype` to enable sophisticated type annotations.
+5. `optype` Python>=3.12, so switch to Python>=3.12.
 """
+
 #============ Eliminate hardcoding. ===============
 
 subModulesHARDCODED: frozenset[identifierDotAttribute] = frozenset(('', '._signatures', '.compatibility', '.curried', '.curried.exceptions'
@@ -42,7 +35,6 @@ cythonDirectives: str = """# cython: embedsignature=True
 # cython: freethreading_compatible=True
 # cython: language_level=3
 """
-noticeCopyrightHeader: str = textwrap.fill("Some of the original or derivative works in this directory and its subdirectories may be protected by the following copyright.", width=80) + "\n___\n\n"
 pathRoot_toolz_stubs = Path("/clones/toolz-stubs/src/toolz-stubs")
 regexChangeImports: partial[str] = partial(regex.sub, "(from |import )(.?.?toolz)", "\\1humpy_\\2")
 subModules: frozenset[identifierDotAttribute] = subModulesHARDCODED
@@ -62,6 +54,8 @@ for identifierTransformee in allTransformeePackages:
 	pathTransformee: Path = Path(f'/clones/{identifierTransformee}/{identifierTransformee}')
 
 	settingsFor[humpyPackage] = PackageSettings(identifierPackage=humpyPackage, pathPackage=(pathPackageRoot / humpyPackage))
+"""# The original plan, 2026 March 22:
+noticeCopyrightHeader: str = textwrap.fill("Some of the original or derivative works in this directory and its subdirectories may be protected by the following copyright.", width=80) + "\n___\n\n"
 	settingsFor[humpyPackage].pathPackage.mkdir(parents=True, exist_ok=True)
 
 	if identifierTransformee == 'tlz':
@@ -70,3 +64,18 @@ for identifierTransformee in allTransformeePackages:
 		writeStringToHere(noticeCopyrightHeader + (pathTransformee.parent / 'LICENSE.txt').read_text(encoding='utf-8'), settingsFor[humpyPackage].pathPackage / 'Notice_of_Copyright.txt')
 
 	transformALLdot_pyHere.append((pathTransformee, identifierTransformee, getOtherName[identifierTransformee]))
+
+My goal is to feed changes back to the original source via a pull request. If the source updates, pull
+the update, and the cycle continues. See, e.g., https://github.com/pytoolz/toolz/issues/622
+
+2026 July 3: I'm proceeding under the assumption that the original plan is not viable.
+
+Original sources would each have their own git branch.
+- https://github.com/pytoolz/toolz/
+- https://github.com/pytoolz/cytoolz/
+- https://github.com/mgrinshpon/toolz-stubs
+
+On their branch, they are processed through the chop shop. Desired changes are moved from the branch
+to main by a pull request. If the sources do not change, the branch will stay unchanged, but main can
+improve.
+"""
