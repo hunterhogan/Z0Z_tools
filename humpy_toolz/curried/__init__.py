@@ -20,15 +20,20 @@ Example:
     >>> list(map(get(0), data))
     [1, 11, 111]
 
-See Also:
+See Also
+--------
     humpy_toolz.functoolz.curry
 """
-from . import operator
-from .exceptions import merge, merge_with
+from __future__ import annotations
+
 from humpy_toolz import (
-	apply, comp, complement, compose, compose_left, concat, concatv, count, curry, diff, first, flip, frequencies,
-	identity, interleave, isdistinct, isiterable, juxt, last, memoize, merge_sorted, peek, pipe, second, thread_first,
-	thread_last)
+	apply as apply, comp as comp, complement as complement, compose as compose, compose_left as compose_left, concat as concat,
+	concatv as concatv, count as count, curry as curry, diff as diff, first as first, flip as flip, frequencies as frequencies,
+	identity as identity, interleave as interleave, isdistinct as isdistinct, isiterable as isiterable, juxt as juxt, last as last,
+	memoize as memoize, merge_sorted as merge_sorted, peek as peek, pipe as pipe, second as second, thread_first as thread_first,
+	thread_last as thread_last)
+from humpy_toolz.curried import operator as operator
+from humpy_toolz.curried.exceptions import merge as merge, merge_with as merge_with
 import humpy_toolz
 
 accumulate = humpy_toolz.curry(humpy_toolz.accumulate)
@@ -74,5 +79,4 @@ unique = humpy_toolz.curry(humpy_toolz.unique)
 update_in = humpy_toolz.curry(humpy_toolz.update_in)
 valfilter = humpy_toolz.curry(humpy_toolz.valfilter)
 valmap = humpy_toolz.curry(humpy_toolz.valmap)
-del exceptions
 del humpy_toolz

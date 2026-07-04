@@ -4,8 +4,6 @@ K = TypeVar('K')
 V = TypeVar('V')
 
 
-__all__ = ["merge", "merge_with"]
-
 @overload
 def merge_with() -> Callable[
 	..., dict[K, V] | MutableMapping[K, V]

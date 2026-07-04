@@ -1,7 +1,5 @@
 import humpy_toolz
 
-__all__ = ['merge_with', 'merge']
-
 @humpy_toolz.curry
 def merge_with(func, d, *dicts, **kwargs):
     return humpy_toolz.merge_with(func, d, *dicts, **kwargs)
