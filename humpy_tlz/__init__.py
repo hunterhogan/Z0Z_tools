@@ -5,5 +5,6 @@ a convenient way to use functions from ``humpy_cytoolz``--a faster Cython
 implementation of ``humpy_toolz``--if it is installed, otherwise it uses
 functions from ``humpy_toolz``.
 """
-from . import _build_tlz
+from __future__ import annotations
 
+from . import _build_tlz  # pyright: ignore[reportUnusedImport]
