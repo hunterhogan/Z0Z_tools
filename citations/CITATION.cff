@@ -13,9 +13,7 @@ identifiers:
 keywords:
 - Python
 - cytoolz
-- filesystem
 - functional programming
-- tools
 - toolz
 license: CC-BY-NC-4.0
 message: Cite this software with the metadata in this file.
