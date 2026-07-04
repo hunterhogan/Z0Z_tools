@@ -36,6 +36,13 @@ falling back to `humpy_toolz` otherwise.
 from humpy_tlz import curry, groupby, pipe
 ```
 
+## Standard library `operator` module is "curried"
+
+```python
+from humpy_toolz.curried import operator
+from humpy_cytoolz.curried import operator
+```
+
 ## Installation
 
 ```bash
