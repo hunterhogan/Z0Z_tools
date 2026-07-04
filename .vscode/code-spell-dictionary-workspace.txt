@@ -1,6 +1,13 @@
 accountids
 ection
+evalform
+getargspec
 iate
 ictionary
 iseven
+kwonly
+memof
+modname
+newparams
+objtype
 popleft

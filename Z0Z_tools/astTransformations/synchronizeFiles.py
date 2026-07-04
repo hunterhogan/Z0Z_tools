@@ -6,6 +6,7 @@ from astToolkit.transformationTools import write_astModule
 from collections import deque
 from functools import partial, reduce
 from hunterMakesPy import raiseIfNone
+from hunterMakesPy.filesystemToolkit import writeStringToHere
 from pathlib import Path
 from typing import TYPE_CHECKING
 from Z0Z_tools.astTransformations._theSSOT import settingsFor, settingsWrite_astModule
