@@ -49,6 +49,13 @@ from humpy_cytoolz.curried import operator
 pip install Z0Z_tools
 ```
 
+## Sources
+
+1. [toolz](https://github.com/pytoolz/toolz)
+2. [cytoolz](https://github.com/pytoolz/cytoolz)
+3. [toolz-stubs](https://github.com/mgrinshpon/toolz-stubs)
+4. [cytoolz-stubs](https://github.com/OutSquareCapital/cytoolz-stubs)
+
 ## My recovery
 
 [![Static Badge](https://img.shields.io/badge/2011_August-Homeless_since-blue?style=flat)](https://HunterThinks.com/support)
