@@ -41,7 +41,7 @@ __all__ = ('accumulate', 'concat', 'concatv', 'cons', 'count', 'diff', 'drop', '
 
 no_pad: Literal['__no__pad__'] = '__no__pad__'
 
-def _getter(index: K | Sequence[K]) -> Callable[[SupportsGetItem[K, T]], T | tuple[T, ...]]:
+def getter(index: K | Sequence[K]) -> Callable[[SupportsGetItem[K, T]], T | tuple[T, ...]]:
 	if isinstance(index, Sequence) and not isinstance(index, str):
 		if len(index) == 1:
 			element: K = index[0]
@@ -342,7 +342,7 @@ def groupby(key: Callable[[T], KHashable] | KHashable, seq: Iterable[T]) -> dict
 		countby
 	"""
 	if not callable(key):
-		predicate: Callable[[SupportsGetItem[KHashable, T]], tuple[T]] = _getter(key)
+		predicate: Callable[[SupportsGetItem[KHashable, T]], tuple[T]] = getter(key)
 	else:
 		predicate = key
 	d: defaultdict[KHashable, list[T]] = defaultdict(list)
@@ -602,9 +602,9 @@ def join(
 	>>> result = join(1, friends, 0, cities)  # doctest: +SKIP
 	"""
 	if not callable(leftkey):
-		leftkey = _getter(leftkey)
+		leftkey = getter(leftkey)
 	if not callable(rightkey):
-		rightkey = _getter(rightkey)
+		rightkey = getter(rightkey)
 	d: dict[Hashable, list[T]] = groupby(leftkey, leftseq)
 	if left_default == no_default and right_default == no_default:
 		for item in rightseq:
@@ -910,7 +910,7 @@ def pluck(ind: Any | list[Any], seqs: Iterable[Sequence[T] | Mapping[Any, T]], d
 		map
 	"""
 	if default == no_default:
-		get: Callable[[SupportsGetItem[Any, T]], tuple[T, ...]] = _getter(ind)
+		get: Callable[[SupportsGetItem[Any, T]], tuple[T, ...]] = getter(ind)
 		return map(get, seqs)
 	elif isinstance(ind, list):
 		return (tuple(_get(item, seq, default) for item in ind) for seq in seqs)
@@ -1038,7 +1038,7 @@ def reduceby(key: Callable[[T], K] | Any, binop: Callable[[T, T], T], seq: Itera
 		_init: T = init
 		init = lambda: _init
 	if not callable(key):
-		key = _getter(key)
+		key = getter(key)
 	d: dict[K, T] = {}
 	for item in seq:
 		k: K = key(item)
@@ -1178,7 +1178,7 @@ def topk(k: int, seq: Iterable[Any], key: Callable[[Any], Any] | None = None) ->
 		heapq.nlargest
 	"""
 	if key is not None and (not callable(key)):
-		key = _getter(key)
+		key = getter(key)
 	return tuple(heapq.nlargest(k, seq, key=key))
 
 def unique(seq: Iterable[T], key: Callable[[T], Any] | None = None) -> Iterator[T]:
