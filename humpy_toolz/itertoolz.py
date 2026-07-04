@@ -33,7 +33,7 @@ import itertools
 if TYPE_CHECKING:
 	from collections.abc import Callable, Collection, Hashable, ItemsView, Iterable, Iterator, KeysView, Mapping, ValuesView
 	from humpy_toolz._theTypes import (
-		K, KHashable, L, P, R, Randomable, S, SSequence, SupportsDunderLT, SupportsGetItem, T, TIterable, TSupportsRichComparison, U)
+		K, KHashable, L, R, Randomable, S, SSequence, SupportsDunderLT, SupportsGetItem, T, TIterable, TSupportsRichComparison, U)
 	from typing import Any, Literal
 	from typing_extensions import TypeIs
 
@@ -806,7 +806,7 @@ def nth(n: int, seq: Iterable[T]) -> T:
 	else:
 		return next(itertools.islice(seq, n, None))
 
-def partition(n: int, seq: Iterable[T], pad: P | Literal['__no__pad__'] = no_pad) -> Iterator[tuple[T, ...]] | Iterator[tuple[T | P, ...]]:
+def partition(n: int, seq: Iterable[T], pad: L | Literal['__no__pad__'] = no_pad) -> Iterator[tuple[T, ...]] | Iterator[tuple[T | L, ...]]:
 	"""Partition sequence into tuples of length n
 
 	>>> list(partition(2, [1, 2, 3, 4]))
@@ -829,7 +829,7 @@ def partition(n: int, seq: Iterable[T], pad: P | Literal['__no__pad__'] = no_pad
 	if pad == no_pad:
 		return zip(*args, strict=False)
 	else:
-		fillvalue: P = pad
+		fillvalue: L = pad
 		return zip_longest(*args, fillvalue=fillvalue)
 
 def partition_all(n: int, seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
