@@ -10,20 +10,14 @@ authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
 keywords = [
   "Python",
   "cytoolz",
-  "filesystem",
   "functional programming",
-  "tools",
   "toolz"
 ]
 classifiers = [
-  "Development Status :: 5 - Production/Stable",
+  "Development Status :: 4 - Beta",
   "Environment :: Console",
   "Framework :: Pytest",
   "Intended Audience :: Developers",
-  "Intended Audience :: Education",
-  "Intended Audience :: End Users/Desktop",
-  "Intended Audience :: Other Audience",
-  "Intended Audience :: Science/Research",
   "Natural Language :: English",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
@@ -32,18 +26,23 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
-  "Topic :: System :: Filesystems",
-  "Topic :: Text Processing",
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
-urls = { Donate = "https://www.patreon.com/integrated", Homepage = "https://github.com/hunterhogan/Z0Z_tools", Issues = "https://github.com/hunterhogan/Z0Z_tools/issues", Repository = "https://github.com/hunterhogan/Z0Z_tools.git" }
 dependencies = ["typing_extensions>=4.10.0"]
 optional-dependencies = { development = [
   "astToolkit",
   "hunterMakesPy",
   "pytest-cov"
-], testing = ["cython", "pytest"] }
+], testing = ["pytest"] }
+
+[project.urls]
+Context7 = "https://context7.com/hunterhogan/z0z-tools"
+Donate = "https://www.patreon.com/integrated"
+Download = "https://pypi.org/project/Z0Z_tools"
+Homepage = "https://github.com/hunterhogan/Z0Z_tools"
+Issues = "https://github.com/hunterhogan/Z0Z_tools/issues"
+Repository = "https://github.com/hunterhogan/Z0Z_tools.git"
 
 [build-system]
 requires = ["cython>=3.0", "setuptools>=74.1.0"]
@@ -88,7 +87,6 @@ packages = [
   "humpy_tlz",
   "humpy_toolz",
   "humpy_toolz.curried",
-  "humpy_toolz.curried.operator",
   "humpy_toolz.sandbox.tests",
   "humpy_toolz.sandbox",
   "humpy_toolz.tests",
