@@ -1,7 +1,13 @@
 from __future__ import annotations
 
-from humpy_toolz.itertoolz import _getter, cons, pluck
+from humpy_toolz.itertoolz import cons, getter, pluck
 from itertools import starmap, tee
+from typing import overload, TYPE_CHECKING
+from typing_extensions import override
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Hashable, Iterable, Iterator, Sequence
+    from humpy_toolz._theTypes import T, V0, V1, V2, V3
 
 class EqualityHashKey:
     """Create a hash key that uses equality comparisons between items.
@@ -58,41 +64,79 @@ class EqualityHashKey:
     --------
         identity
     """
-    __slots__ = ['item', 'key']
-    _default_hashkey = '__default__hashkey__'
+    __slots__: list[str] = ['item', 'key']
+    _default_hashkey: str = '__default__hashkey__'
 
-    def __init__(self, key, item):
+    def __init__(
+        self,
+        key: Callable[[T], Hashable] | Hashable | Sequence[Hashable] | None,
+        item: T,
+    ) -> None:
         if key is None:
             self.key = self._default_hashkey
         elif not callable(key):
-            self.key = _getter(key)
+            self.key = getter(key)
         else:
             self.key = key
         self.item = item
 
-    def __hash__(self):
+    @override
+    def __hash__(self) -> int:
         if self.key == self._default_hashkey:
             val = self.key
         else:
             val = self.key(self.item)
         return hash(val)
 
-    def __eq__(self, other):
+    @override
+    def __eq__(self, other: object) -> bool:
         try:
             return self._default_hashkey == other._default_hashkey and self.item == other.item
         except AttributeError:
             return False
 
-    def __ne__(self, other):
+    @override
+    def __ne__(self, other: object) -> bool:
         return not self.__eq__(other)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '=%s=' % str(self.item)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '=%s=' % repr(self.item)
 
-def unzip(seq):
+@overload
+def unzip(seq: Iterable[tuple[()]]) -> tuple[()]: ...
+@overload
+def unzip(
+    seq: Iterable[tuple[V0]],
+) -> tuple[Iterator[V0]]: ...
+@overload
+def unzip(
+    seq: Iterable[tuple[V0, V1]],
+) -> tuple[Iterator[V0], Iterator[V1]]: ...
+@overload
+def unzip(
+    seq: Iterable[tuple[V0, V1, V2]],
+) -> tuple[
+    Iterator[V0],
+    Iterator[V1],
+    Iterator[V2],
+]: ...
+@overload
+def unzip(
+    seq: Iterable[tuple[V0, V1, V2, V3]],
+) -> tuple[
+    Iterator[V0],
+    Iterator[V1],
+    Iterator[V2],
+    Iterator[V3],
+]: ...
+@overload
+def unzip(
+    seq: Iterable[tuple[T, ...]],
+) -> tuple[Iterator[T], ...]: ...
+def unzip(seq: Iterable[tuple[T, ...]]) -> tuple[Iterator[T], ...]:
     """Inverse of ``zip``
 
     >>> a, b = unzip([('a', 1), ('b', 2)])

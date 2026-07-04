@@ -1,14 +1,64 @@
+# ruff: noqa: D100
+from __future__ import annotations
+
 from humpy_toolz.itertoolz import partition_all
 from humpy_toolz.utils import no_default
+from typing import overload, TYPE_CHECKING
 import functools
 
-def _reduce(func, seq, initial=None):
+if TYPE_CHECKING:
+	from collections.abc import Callable, Iterable
+	from humpy_toolz._theTypes import MapFunction, TypeElement, TypeResult
+	from typing import Literal
+
+@overload
+def _reduce(
+	func: Callable[[TypeElement, TypeElement], TypeElement],
+	seq: Iterable[TypeElement],
+	initial: None = None,
+) -> TypeElement: ...
+@overload
+def _reduce(
+	func: Callable[[TypeResult, TypeElement], TypeResult],
+	seq: Iterable[TypeElement],
+	initial: TypeResult,
+) -> TypeResult: ...
+def _reduce(
+	func: Callable[[TypeResult, TypeElement], TypeResult] | Callable[[TypeElement, TypeElement], TypeElement],
+	seq: Iterable[TypeElement],
+	initial: TypeResult | None = None,
+) -> TypeResult | TypeElement:
 	if initial is None:
 		return functools.reduce(func, seq)
 	else:
 		return functools.reduce(func, seq, initial)
 
-def fold(binop, seq, default=no_default, map=map, chunksize=128, combine=None):
+@overload
+def fold(
+	binop: Callable[[TypeElement, TypeElement], TypeElement],
+	seq: Iterable[TypeElement],
+	default: Literal['__no__default__'] = no_default,
+	map: MapFunction[TypeElement, TypeElement] = map,
+	chunksize: int = 128,
+	combine: Callable[[TypeElement, TypeElement], TypeElement] | None = None,
+) -> TypeElement: ...
+@overload
+def fold(
+	binop: Callable[[TypeResult, TypeElement], TypeResult],
+	seq: Iterable[TypeElement],
+	default: TypeResult,
+	map: MapFunction[TypeElement, TypeResult] = map,
+	chunksize: int = 128,
+	combine: Callable[[TypeResult, TypeResult], TypeResult] | None = None,
+) -> TypeResult: ...
+def fold(
+	binop: Callable[[TypeResult, TypeElement], TypeResult] | Callable[[TypeElement, TypeElement], TypeElement],
+	seq: Iterable[TypeElement],
+	default: TypeResult | Literal['__no__default__'] = no_default,
+	map: MapFunction[TypeElement, TypeResult] | MapFunction[TypeElement, TypeElement] = map,
+	chunksize: int = 128,
+	combine: Callable[[TypeResult, TypeResult], TypeResult] | Callable[[TypeElement, TypeElement], TypeElement] | None = None,
+) -> TypeResult | TypeElement:
 	"""
 	Reduce without guarantee of ordered reduction.
 
