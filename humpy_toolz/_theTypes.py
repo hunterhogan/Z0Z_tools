@@ -42,13 +42,11 @@ class SupportsGetItem(Protocol[_KT_contra, _VT_co]):
 SupportsRichComparison: TypeAlias = SupportsDunderLT[Any] | SupportsDunderGT[Any]
 
 Instance = TypeVar('Instance')
-K = TypeVar('K')
-K0Hashable = TypeVar('K0Hashable', bound=Hashable)
-K1 = TypeVar('K1')
-K1Hashable = TypeVar('K1Hashable', bound=Hashable)
-K2 = TypeVar('K2')
-K3 = TypeVar('K3')
-KHashable = TypeVar('KHashable', bound=Hashable)
+K = TypeVar('K', bound=Hashable)
+K0 = TypeVar('K0', bound=Hashable)
+K1 = TypeVar('K1', bound=Hashable)
+K2 = TypeVar('K2', bound=Hashable)
+K3 = TypeVar('K3', bound=Hashable)
 L = TypeVar('L')
 P = ParamSpec('P')
 R = TypeVar('R')

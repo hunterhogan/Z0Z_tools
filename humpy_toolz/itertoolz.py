@@ -33,7 +33,7 @@ import itertools
 if TYPE_CHECKING:
 	from collections.abc import Callable, Collection, Hashable, ItemsView, Iterable, Iterator, KeysView, Mapping, ValuesView
 	from humpy_toolz._theTypes import (
-		K, KHashable, L, R, Randomable, S, SSequence, SupportsDunderLT, SupportsGetItem, T, TIterable, TSupportsRichComparison, U)
+		K, L, R, Randomable, S, SSequence, SupportsDunderLT, SupportsGetItem, T, TIterable, TSupportsRichComparison, U, V)
 	from typing import Any, Literal
 	from typing_extensions import TypeIs
 
@@ -78,20 +78,20 @@ __all__ = (
 
 no_pad: Literal['__no__pad__'] = '__no__pad__'
 
-def getter(index: K | Sequence[K]) -> Callable[[SupportsGetItem[K, T]], T | tuple[T, ...]]:
+def getter(index: T | Sequence[T]) -> Callable[[SupportsGetItem[T, V]], V | tuple[V, ...]]:
 	if isinstance(index, Sequence) and not isinstance(index, str):
 		if len(index) == 1:
-			element: K = index[0]
+			element: T = index[0]
 
-			def one_tuple(x: SupportsGetItem[K, T]) -> tuple[T]:
+			def one_tuple(x: SupportsGetItem[T, V]) -> tuple[V]:
 				return (x[element],)
 
-			callableGetter: Callable[[SupportsGetItem[K, T]], tuple[T]] = one_tuple
+			callableGetter: Callable[[SupportsGetItem[T, V]], tuple[V]] = one_tuple
 		elif index:
 			callableGetter = itemgetter(*index)
 		else:
 
-			def emptyTuple(_x: SupportsGetItem[K, T]) -> tuple[()]:
+			def emptyTuple(_x: SupportsGetItem[T, V]) -> tuple[()]:
 				return ()
 
 			callableGetter = emptyTuple
@@ -282,25 +282,17 @@ def frequencies(seq: Iterable[T]) -> dict[T, int]:
 		d[item] += 1
 	return dict(d)
 
-def _get(ind: K, seq: SupportsGetItem[K, T], default: T) -> T:
+def _get(ind: T, seq: SupportsGetItem[T, V], default: V) -> V:
 	try:
 		return seq[ind]
 	except (KeyError, IndexError):
 		return default
 
-""" # TODO troubleshoot `get` type annotations
-	# NOTE this part is correct.
-	ww: Callable[[fs2Path], DecodedFilename] = compose(librarianDecodesFilename, fs_path.basename)
-	# NOTE `T` should be a TypeVar. The input to get is `DecodedFilename`, a typeddict[str, str].
-	# I guess the annotation is returning an item tuple instead of the value.
-	qq: Callable[[fs2Path], tuple[T, ...]] = compose(get('fractionType'), ww)
-"""
-
 @overload
-def get(ind: Sequence[K], seq: SupportsGetItem[K, T], default: T | Literal['__no__default__'] = no_default) -> tuple[T, ...]: ...
+def get(ind: Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> tuple[V, ...]: ...
 @overload
-def get(ind: K, seq: SupportsGetItem[K, T], default: T | Literal['__no__default__'] = no_default) -> T: ...
-def get(ind: K | Sequence[K], seq: SupportsGetItem[K, T], default: T | Literal['__no__default__'] = no_default) -> T | tuple[T, ...]:
+def get(ind: T, seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> V: ...
+def get(ind: T | Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> V | tuple[V, ...]:
 	"""Get element in a sequence or dict
 
 	Provides standard indexing
@@ -356,10 +348,10 @@ def get(ind: K | Sequence[K], seq: SupportsGetItem[K, T], default: T | Literal['
 		return default
 
 @overload
-def groupby(key: Callable[[T], KHashable], seq: Iterable[T]) -> dict[KHashable, list[T]]: ...
+def groupby(key: Callable[[T], K], seq: Iterable[T]) -> dict[K, list[T]]: ...
 @overload
-def groupby(key: KHashable, seq: Iterable[T]) -> dict[KHashable, list[T]]: ...
-def groupby(key: Callable[[T], KHashable] | KHashable, seq: Iterable[T]) -> dict[KHashable, list[T]]:
+def groupby(key: K, seq: Iterable[T]) -> dict[K, list[T]]: ...
+def groupby(key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, list[T]]:
 	"""Group a collection by a key function
 
 	>>> names = ['Alice', 'Bob', 'Charlie', 'Dan', 'Edith', 'Frank']
@@ -386,10 +378,10 @@ def groupby(key: Callable[[T], KHashable] | KHashable, seq: Iterable[T]) -> dict
 		countby
 	"""
 	if not callable(key):
-		predicate: Callable[[SupportsGetItem[KHashable, T]], tuple[T]] = getter(key)
+		predicate: Callable[[SupportsGetItem[K, T]], tuple[T]] = getter(key)
 	else:
 		predicate = key
-	d: defaultdict[KHashable, list[T]] = defaultdict(list)
+	d: defaultdict[K, list[T]] = defaultdict(list)
 	for item in seq:
 		d[predicate(item)].append(item)
 	return dict(d)
@@ -1149,16 +1141,16 @@ def sliding_window(n: int, seq: Iterable[Any]) -> Iterator[tuple[Any, ...]]:
 @overload
 def tail(n: int, seq: SSequence) -> SSequence: ...
 @overload
-def tail(n: int, seq: Mapping[KHashable, Any]) -> tuple[KHashable, ...]: ...
+def tail(n: int, seq: Mapping[K, Any]) -> tuple[K, ...]: ...
 @overload
-def tail(n: int, seq: ItemsView[KHashable, T]) -> tuple[tuple[KHashable, T], ...]: ...
+def tail(n: int, seq: ItemsView[K, T]) -> tuple[tuple[K, T], ...]: ...
 @overload
-def tail(n: int, seq: KeysView[KHashable]) -> tuple[KHashable, ...]: ...
+def tail(n: int, seq: KeysView[K]) -> tuple[K, ...]: ...
 @overload
 def tail(n: int, seq: ValuesView[T]) -> tuple[T, ...]: ...
 def tail(
-	n: int, seq: SSequence | Mapping[KHashable, Any] | ItemsView[KHashable, T] | KeysView[KHashable] | ValuesView[T]
-) -> SSequence | tuple[KHashable, ...] | tuple[tuple[KHashable, T], ...] | tuple[T, ...]:
+	n: int, seq: SSequence | Mapping[K, Any] | ItemsView[K, T] | KeysView[K] | ValuesView[T]
+) -> SSequence | tuple[K, ...] | tuple[tuple[K, T], ...] | tuple[T, ...]:
 	"""The last n elements of a sequence
 
 	>>> tail(2, [10, 20, 30, 40, 50])
