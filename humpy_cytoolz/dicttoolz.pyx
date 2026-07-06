@@ -44,6 +44,9 @@ from cpython.ref cimport PyObject, Py_DECREF, Py_INCREF, Py_XDECREF
 from humpy_cytoolz.cpython cimport PyDict_Next_Compat, PtrIter_Next
 
 from collections import abc
+from collections import deque
+from copy import deepcopy
+import operator
 
 # cdef aliases to eliminate global lookups
 
@@ -829,37 +832,40 @@ cpdef object update_in(object d, object keys, object func, object default=None, 
 	[1] Python `collections.abc` module
 		https://docs.python.org/3/library/collections.abc.html
 	"""
-	cdef object prevkey, key
-	cdef object rv, inner, dtemp
-	prevkey, keys = keys[0], keys[1:]
-	rv = factory()
-	if PyDict_CheckExact(rv):
-		PyDict_Update(rv, d)
-	else:
-		rv.update(d)
-	inner = rv
+	cdef object returnMe, mappingATkey, sherpa, dequeKeys, keyFinal, key, reconstructor, valueUpdated
 
-	for key in keys:
-		if prevkey in d:
-			d = d[prevkey]
-			dtemp = factory()
-			if PyDict_CheckExact(dtemp):
-				PyDict_Update(dtemp, d)
-			else:
-				dtemp.update(d)
-		else:
-			d = factory()
-			dtemp = d
-		inner[prevkey] = dtemp
-		prevkey = key
-		inner = dtemp
+	returnMe = deepcopy(d)
+	mappingATkey = returnMe
+	sherpa = deepcopy(d)
+	dequeKeys = deque(keys)
 
-	if prevkey in d:
-		key = func(d[prevkey])
-	else:
-		key = func(default)
-	inner[prevkey] = key
-	return rv
+	keyFinal = dequeKeys.pop()
+
+	while dequeKeys:
+		key = dequeKeys.popleft()
+		sherpa = sherpa.get(key, factory())
+
+		try:
+			mappingATkey[key] = sherpa
+			mappingATkey = sherpa
+		except TypeError:
+			reconstructor = type(mappingATkey)
+			mappingATkey = dict(mappingATkey)
+			operator.setitem(mappingATkey, key, sherpa)
+			mappingATkey = reconstructor(mappingATkey)
+			mappingATkey = sherpa
+
+	valueUpdated = func(sherpa.get(keyFinal, default))
+
+	try:
+		mappingATkey[keyFinal] = valueUpdated
+	except TypeError:
+		reconstructor = type(mappingATkey)
+		mappingATkey = dict(mappingATkey)
+		operator.setitem(mappingATkey, keyFinal, valueUpdated)
+		mappingATkey = reconstructor(mappingATkey)
+
+	return returnMe
 
 cpdef object valfilter(object predicate, object d, object factory=dict):
 	"""Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
