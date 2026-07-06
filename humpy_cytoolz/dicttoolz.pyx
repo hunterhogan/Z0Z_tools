@@ -324,9 +324,9 @@ cpdef object get_in(object keys, object coll, object default=None, object no_def
 
 	Parameters
 	----------
-	keys : Sequence[K]
+	keys : Sequence[T]
 		`Sequence` of keys that describes the path to traverse in `coll`.
-	coll : SupportsGetItem[K, V]
+	coll : SupportsGetItem[T, V]
 		Python `object` to traverse. `get_in` uses `operator.getitem`[1], so the nested objects in
 		`coll` can be nested o any type that works with `operator.getitem`, such as a `dict` or
 		`list`.
@@ -788,21 +788,21 @@ cpdef object update_in(object d, object keys, object func, object default=None, 
 
 	Parameters
 	----------
-	d : Mapping[K, V]
+	d : Mapping[K, V_co]
 		Source `Mapping`.
 	keys : Sequence[K]
 		Non-empty sequence of keys specifying the nested path to the value to update in `d`.
-	func : Callable[[V], V]
+	func : Callable[[V_co], V_co] | Callable[[V_co | None], V_co]
 		`Callable` applied to the current value at the path in `keys`. If the innermost
 		key is absent from `d`, `func` receives `default`.
-	default : V | None = None
+	default : V_co | None = None
 		Value passed to `func` when the innermost key is absent from `d`.
-	factory : Callable[[], MutableMapping[K, V]] = dict
+	factory : Callable[[], MutableMapping[K, V_co]] = dict
 		`Callable` that creates each new `MutableMapping`[1] in the result.
 
 	Returns
 	-------
-	mappingUpdated : MutableMapping[K, V]
+	mappingUpdated : MutableMapping[K, V_co]
 		New `MutableMapping` based on `d` with the value at the path specified by `keys`
 		replaced by the result of `func`.
 

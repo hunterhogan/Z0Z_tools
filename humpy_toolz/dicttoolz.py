@@ -5,7 +5,6 @@
 # ruff: noqa: FBT001, FBT002
 # ty:ignore[invalid-assignment]
 # ty:ignore[invalid-return-type]
-# ty:ignore[invalid-argument-type]
 """Provide immutable, functional-style operations on `Mapping`[1] objects.
 
 You can use this module to transform, filter, retrieve from, and merge `Mapping`[1] objects without
@@ -49,11 +48,11 @@ References
 [1] Python `collections.abc` module
 	https://docs.python.org/3/library/collections.abc.html
 """
-
 from __future__ import annotations
 
 from collections import defaultdict, deque
 from collections.abc import Mapping
+from copy import deepcopy
 from functools import reduce
 from typing import cast, overload, TYPE_CHECKING
 import contextlib
@@ -61,9 +60,11 @@ import operator
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, MutableMapping, Sequence
-	from humpy_toolz._theTypes import K, K0, K1, K2, K3, SupportsGetItem, T, V, V0, V1, V2, V3
+	from humpy_toolz._theTypes import K, K0, K1, K2, K3, SupportsGetItem, T, V, V0, V1, V2, V3, V_co
 	from typing import Any, Literal, TypeGuard
 	from typing_extensions import TypeIs
+
+# TODO update functions to work with `frozendict`.
 
 __all__ = (
 	'assoc',
@@ -771,22 +772,14 @@ def merge_with(
 		rv[k] = func(valueList)
 	return rv
 
-# TODO Given `d: dict[str, int | str]`. It does not follow that `func: Callable[[int | str], int | str]`
-@overload
-def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V | None], V], default: None = None, *, factory: Callable[..., MutableMapping[K, V]] = dict) -> dict[K, V]: ...
-@overload
-def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V], V], default: V, factory: Callable[..., MutableMapping[K, V]] = dict) -> dict[K, V]: ...
-@overload
-def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V | None], V], default: None = None, *, factory: Callable[..., MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
-@overload
-def update_in(d: Mapping[K, V], keys: Sequence[K], func: Callable[[V], V], default: V, factory: Callable[..., MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
+# TODO make tests with `frozendict`.
 def update_in(
-	d: Mapping[K, V],
-	keys: Sequence[K],
-	func: Callable[[V | None], V] | Callable[[V], V],
-	default: V | None = None,
-	factory: Callable[..., MutableMapping[K, V]] = dict,
-) -> MutableMapping[K, V]:
+	d: Mapping[K, Mapping[K, V_co] | V_co]
+	, keys: Sequence[K]
+	, func: Callable[[V_co | None], V_co] | Callable[[V_co], V_co]
+	, default: V_co | None = None
+	, factory: Callable[..., Mapping[K, Mapping[K, V_co] | V_co]] = dict
+) -> Mapping[K, Mapping[K, V_co] | V_co]:
 	"""Apply a `Callable` to a value at a nested path in a `Mapping`.
 
 	(AI generated docstring)
@@ -800,21 +793,21 @@ def update_in(
 
 	Parameters
 	----------
-	d : Mapping[K, V]
+	d : Mapping[K, V_co]
 		Source `Mapping`.
 	keys : Sequence[K]
 		Non-empty sequence of keys specifying the nested path to the value to update in `d`.
-	func : Callable[[V], V]
+	func : Callable[[V_co], V_co] | Callable[[V_co | None], V_co]
 		`Callable` applied to the current value at the path in `keys`. If the innermost
 		key is absent from `d`, `func` receives `default`.
-	default : V | None = None
+	default : V_co | None = None
 		Value passed to `func` when the innermost key is absent from `d`.
-	factory : Callable[[], MutableMapping[K, V]] = dict
+	factory : Callable[[], MutableMapping[K, V_co]] = dict
 		`Callable` that creates each new `MutableMapping`[1] in the result.
 
 	Returns
 	-------
-	mappingUpdated : MutableMapping[K, V]
+	mappingUpdated : MutableMapping[K, V_co]
 		New `MutableMapping` based on `d` with the value at the path specified by `keys`
 		replaced by the result of `func`.
 
@@ -841,16 +834,65 @@ def update_in(
 	[1] Python `collections.abc` module
 		https://docs.python.org/3/library/collections.abc.html
 	"""
-	rv = dATk = factory(d)
+	# DEVELOPMENT Python 3.15 includes `builtins.frozendict`, which does not have `__setitem__`, and
+	# could be passed as `factory`.
+	# https://docs.python.org/3.15/whatsnew/3.15.html#pep-814-add-frozendict-built-in-type
+
+	# DEVELOPMENT The original toolz function applied `factory` to every _existing_ mapping, as
+	# opposed to only using it to create a new mapping. That's excessive.
+	# - If the user wants the topmost mapping to be the same type as `factory`, for example, the user
+	#   can easily call factory before or after `update_in`. So, it should not be applied to the top
+	#   mapping.
+	# - If `d` has nested heterogenous mappings (via `keys`), applying `factory` homogenizes the
+	#   mappings. `update_in` is supposed to update one value: that doesn't imply or require altering
+	#   the `type` of any existing mapping.
+
+	#---------- Initialize. --------------------------------------------------
+	# DEVELOPMENT preserves the original `type`.
+	returnMe: Mapping[K, Mapping[K, V_co] | V_co] = deepcopy(d)
+	# DEVELOPMENT The mutable containers in `returnMe` can be changed by modifying `mappingATkey`.
+	mappingATkey: Mapping[K, Mapping[K, V_co] | V_co] = returnMe
+	sherpa: Mapping[K, Mapping[K, V_co] | V_co] = deepcopy(d)
 	dequeKeys: deque[K] = deque(keys)
+
 	keyFinal: K = dequeKeys.pop()
-	sherpa: MutableMapping[K, V] = factory(d)
+
+	#--------- From outermost mapping, `d`, get or construct innermost mapping --------------
 	while dequeKeys:
-		k: K = dequeKeys.popleft()
-		sherpa = cast('MutableMapping[K, V]', sherpa.get(k, factory()))
-		dATk[k] = dATk = factory(sherpa)
-	dATk[keyFinal] = func(sherpa.get(keyFinal, default))
-	return rv
+		# DEVELOPMENT Never fails:
+		key: K = dequeKeys.popleft()
+		# DEVELOPMENT Never fails:
+		sherpa = sherpa.get(key, factory())
+
+		try:
+			# DEVELOPMENT `mappingATkey = sherpa` never fails.
+			# DEVELOPMENT `mappingATkey[key]` raises exception if `setitem` isn't available.
+			mappingATkey[key] = mappingATkey = sherpa  # pyright: ignore[reportIndexIssue]
+		except TypeError:
+			reconstructor = type(mappingATkey)
+			mappingATkey = dict(mappingATkey)
+			operator.setitem(mappingATkey, key, sherpa)  # pyright: ignore[reportCallIssue]  # ty:ignore[no-matching-overload]
+			mappingATkey = reconstructor(mappingATkey)  # pyright: ignore[reportCallIssue]  # ty:ignore[too-many-positional-arguments]
+			mappingATkey = sherpa
+
+		del key
+
+	#--------- Compute value at location `keys` --------------------------
+	# DEVELOPMENT Never fails:
+	valueUpdated: V_co = func(sherpa.get(keyFinal, default))  # ty:ignore[invalid-argument-type]
+	del default, dequeKeys, func, sherpa
+
+	#--------- Innermost `mapping[keys[-1]] = func(mapping.get(keys[-1], default))` -----------
+	try:
+		# DEVELOPMENT `mappingATkey[keyFinal]` raises exception if `setitem` isn't available.
+		mappingATkey[keyFinal] = valueUpdated  # pyright: ignore[reportIndexIssue]
+	except TypeError:
+		reconstructor = type(mappingATkey)
+		mappingATkey = dict(mappingATkey)
+		operator.setitem(mappingATkey, keyFinal, valueUpdated)
+		mappingATkey = reconstructor(mappingATkey)  # pyright: ignore[reportCallIssue]  # ty:ignore[too-many-positional-arguments]
+
+	return returnMe
 
 @overload
 def valfilter(
