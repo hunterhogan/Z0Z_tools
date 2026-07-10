@@ -643,7 +643,7 @@ def test_do() -> None:
 
 def test_juxt_generator_input() -> None:
 	data: list[int] = list(range(10))
-	juxtfunc = juxt((itemgetter(2 * i) for i in range(5)))
+	juxtfunc = juxt(itemgetter(2 * i) for i in range(5))
 	assert juxtfunc(data) == (0, 2, 4, 6, 8)
 	assert juxtfunc(data) == (0, 2, 4, 6, 8)
 
@@ -658,7 +658,7 @@ def test_flip() -> None:
 
 def test_excepts() -> None:
 	assert excepts.__name__ == 'excepts'
-	testlines: str = '\n'.join((line.strip() for line in excepts.__doc__.splitlines()))
+	testlines: str = '\n'.join(line.strip() for line in excepts.__doc__.splitlines())
 	assert 'A wrapper around a function to catch exceptions and\ndispatch to a handler.\n' in testlines
 
 	def idx(a: int) -> int:

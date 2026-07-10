@@ -110,6 +110,7 @@ inline-quotes = "single"
   "FBT",
   "PT",
   "S101",
+  "S311",
   "TRY",
   "DOC201",
 ]

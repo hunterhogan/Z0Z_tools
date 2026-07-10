@@ -1,9 +1,9 @@
+# ruff: noqa [undocumented-public-module]
 from __future__ import annotations
 
 from humpy_toolz.itertoolz import cons, getter, pluck
 from itertools import starmap, tee
-from typing import overload, TYPE_CHECKING
-from typing_extensions import override
+from typing import overload, override, TYPE_CHECKING
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, Hashable, Iterable, Iterator, Sequence
@@ -141,7 +141,7 @@ def unzip(seq: Iterable[tuple[T, ...]]) -> tuple[Iterator[T], ...]:
 	try:
 		first = tuple(next(seq))
 	except StopIteration:
-		return tuple()
+		return ()
 	niters = len(first)
 	seqs = tee(cons(first, seq), niters)
 	return tuple(starmap(pluck, enumerate(seqs)))

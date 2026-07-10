@@ -60,7 +60,7 @@ class TestDict:
 		D: callable that inputs a dict and creates or returns a MutableMapping
 		kw: kwargs dict to specify "factory" keyword (if applicable)
 	"""
-	D: ClassVar[Callable[..., Any]] = dict
+	D: ClassVar[Callable[..., MutableMapping[Any, Any]]] = dict
 	kw: ClassVar[dict[str, Any]] = {}
 
 	def test_merge(self) -> None:
@@ -101,11 +101,11 @@ class TestDict:
 
 	@pytest.mark.parametrize(('functionUnderTest', 'sourceMappingDefinition', 'expectedMappingDefinition'), (pytest.param(inc, {13: 21, 34: 55}, {13: 22, 34: 56}, id='increments each value'), pytest.param(str, {13: 21, 34: 55}, {13: '21', 34: '55'}, id='converts each value to text')))
 	def test_valmap(self, functionUnderTest: Callable[[Any], Any], sourceMappingDefinition: dict[int, Any], expectedMappingDefinition: dict[int, Any]) -> None:
-		mappingFactory: Callable[[dict[Any, Any]], Any] = self.D
-		factoryKeywordArguments: dict[str, Any] = self.kw
-		sourceMapping: Any = mappingFactory(sourceMappingDefinition)
-		expectedMapping: Any = mappingFactory(expectedMappingDefinition)
-		resultMapping: Any = valmap(functionUnderTest, sourceMapping, **factoryKeywordArguments)
+		mappingFactory = self.D
+		factoryKeywordArguments = self.kw
+		sourceMapping = mappingFactory(sourceMappingDefinition)
+		expectedMapping = mappingFactory(expectedMappingDefinition)
+		resultMapping = valmap(functionUnderTest, sourceMapping, **factoryKeywordArguments)
 		assert resultMapping == expectedMapping, f'valmap returned {resultMapping}, expected {expectedMapping} for source {sourceMappingDefinition}.'
 		assert sourceMapping == mappingFactory(sourceMappingDefinition), f'valmap mutated source mapping {sourceMapping}, expected {sourceMappingDefinition}.'
 		assert resultMapping is not sourceMapping, f'valmap returned source mapping {sourceMapping} instead of a new mapping for {sourceMappingDefinition}.'
@@ -113,11 +113,11 @@ class TestDict:
 
 	@pytest.mark.parametrize(('functionUnderTest', 'sourceMappingDefinition', 'expectedMappingDefinition'), (pytest.param(inc, {13: 21, 34: 55}, {14: 21, 35: 55}, id='increments each key'), pytest.param(bucketKeyByParity, {13: 21, 34: 55, 55: 89}, {1: 89, 0: 55}, id='keeps last value when transformed keys collide')))
 	def test_keymap(self, functionUnderTest: Callable[[Any], Any], sourceMappingDefinition: dict[int, Any], expectedMappingDefinition: dict[int, Any]) -> None:
-		mappingFactory: Callable[[dict[Any, Any]], Any] = self.D
-		factoryKeywordArguments: dict[str, Any] = self.kw
-		sourceMapping: Any = mappingFactory(sourceMappingDefinition)
-		expectedMapping: Any = mappingFactory(expectedMappingDefinition)
-		resultMapping: Any = keymap(functionUnderTest, sourceMapping, **factoryKeywordArguments)
+		mappingFactory = self.D
+		factoryKeywordArguments = self.kw
+		sourceMapping = mappingFactory(sourceMappingDefinition)
+		expectedMapping = mappingFactory(expectedMappingDefinition)
+		resultMapping = keymap(functionUnderTest, sourceMapping, **factoryKeywordArguments)
 		assert resultMapping == expectedMapping, f'keymap returned {resultMapping}, expected {expectedMapping} for source {sourceMappingDefinition}.'
 		assert sourceMapping == mappingFactory(sourceMappingDefinition), f'keymap mutated source mapping {sourceMapping}, expected {sourceMappingDefinition}.'
 		assert resultMapping is not sourceMapping, f'keymap returned source mapping {sourceMapping} instead of a new mapping for {sourceMappingDefinition}.'
@@ -125,11 +125,11 @@ class TestDict:
 
 	@pytest.mark.parametrize(('functionUnderTest', 'sourceMappingDefinition', 'expectedMappingDefinition'), (pytest.param(swapItemKeyWithValue, {13: 21, 34: 55}, {21: 13, 55: 34}, id='swaps keys with values'), pytest.param(summarizeItemToParityAndTotal, {13: 21, 34: 55, 55: 89}, {1: 144, 0: 89}, id='keeps last transformed item when keys collide')))
 	def test_itemmap(self, functionUnderTest: Callable[[tuple[Any, Any]], tuple[Any, Any]], sourceMappingDefinition: dict[int, Any], expectedMappingDefinition: dict[int, Any]) -> None:
-		mappingFactory: Callable[[dict[Any, Any]], Any] = self.D
-		factoryKeywordArguments: dict[str, Any] = self.kw
-		sourceMapping: Any = mappingFactory(sourceMappingDefinition)
-		expectedMapping: Any = mappingFactory(expectedMappingDefinition)
-		resultMapping: Any = itemmap(functionUnderTest, sourceMapping, **factoryKeywordArguments)
+		mappingFactory = self.D
+		factoryKeywordArguments = self.kw
+		sourceMapping = mappingFactory(sourceMappingDefinition)
+		expectedMapping = mappingFactory(expectedMappingDefinition)
+		resultMapping = itemmap(functionUnderTest, sourceMapping, **factoryKeywordArguments)
 		assert resultMapping == expectedMapping, f'itemmap returned {resultMapping}, expected {expectedMapping} for source {sourceMappingDefinition}.'
 		assert sourceMapping == mappingFactory(sourceMappingDefinition), f'itemmap mutated source mapping {sourceMapping}, expected {sourceMappingDefinition}.'
 		assert resultMapping is not sourceMapping, f'itemmap returned source mapping {sourceMapping} instead of a new mapping for {sourceMappingDefinition}.'
@@ -137,11 +137,11 @@ class TestDict:
 
 	@pytest.mark.parametrize(('predicateUnderTest', 'sourceMappingDefinition', 'expectedMappingDefinition'), (pytest.param(iseven, {13: 21, 34: 144, 55: 233}, {34: 144}, id='keeps matching values'), pytest.param(valueExceedsThreeHundred, {13: 21, 34: 144, 55: 233}, {}, id='returns empty mapping when nothing matches')))
 	def test_valfilter(self, predicateUnderTest: Callable[[Any], bool], sourceMappingDefinition: dict[int, Any], expectedMappingDefinition: dict[int, Any]) -> None:
-		mappingFactory: Callable[[dict[Any, Any]], Any] = self.D
-		factoryKeywordArguments: dict[str, Any] = self.kw
-		sourceMapping: Any = mappingFactory(sourceMappingDefinition)
-		expectedMapping: Any = mappingFactory(expectedMappingDefinition)
-		resultMapping: Any = valfilter(predicateUnderTest, sourceMapping, **factoryKeywordArguments)
+		mappingFactory = self.D
+		factoryKeywordArguments = self.kw
+		sourceMapping = mappingFactory(sourceMappingDefinition)
+		expectedMapping = mappingFactory(expectedMappingDefinition)
+		resultMapping = valfilter(predicateUnderTest, sourceMapping, **factoryKeywordArguments)
 		assert resultMapping == expectedMapping, f'valfilter returned {resultMapping}, expected {expectedMapping} for source {sourceMappingDefinition}.'
 		assert sourceMapping == mappingFactory(sourceMappingDefinition), f'valfilter mutated source mapping {sourceMapping}, expected {sourceMappingDefinition}.'
 		assert resultMapping is not sourceMapping, f'valfilter returned source mapping {sourceMapping} instead of a new mapping for {sourceMappingDefinition}.'
@@ -149,11 +149,11 @@ class TestDict:
 
 	@pytest.mark.parametrize(('predicateUnderTest', 'sourceMappingDefinition', 'expectedMappingDefinition'), (pytest.param(iseven, {13: 21, 34: 55, 55: 89, 144: 233}, {34: 55, 144: 233}, id='keeps matching keys'), pytest.param(keyExceedsThreeHundred, {13: 21, 34: 55, 55: 89}, {}, id='returns empty mapping when no keys match')))
 	def test_keyfilter(self, predicateUnderTest: Callable[[Any], bool], sourceMappingDefinition: dict[int, Any], expectedMappingDefinition: dict[int, Any]) -> None:
-		mappingFactory: Callable[[dict[Any, Any]], Any] = self.D
-		factoryKeywordArguments: dict[str, Any] = self.kw
-		sourceMapping: Any = mappingFactory(sourceMappingDefinition)
-		expectedMapping: Any = mappingFactory(expectedMappingDefinition)
-		resultMapping: Any = keyfilter(predicateUnderTest, sourceMapping, **factoryKeywordArguments)
+		mappingFactory = self.D
+		factoryKeywordArguments = self.kw
+		sourceMapping = mappingFactory(sourceMappingDefinition)
+		expectedMapping = mappingFactory(expectedMappingDefinition)
+		resultMapping = keyfilter(predicateUnderTest, sourceMapping, **factoryKeywordArguments)
 		assert resultMapping == expectedMapping, f'keyfilter returned {resultMapping}, expected {expectedMapping} for source {sourceMappingDefinition}.'
 		assert sourceMapping == mappingFactory(sourceMappingDefinition), f'keyfilter mutated source mapping {sourceMapping}, expected {sourceMappingDefinition}.'
 		assert resultMapping is not sourceMapping, f'keyfilter returned source mapping {sourceMapping} instead of a new mapping for {sourceMappingDefinition}.'
@@ -161,11 +161,11 @@ class TestDict:
 
 	@pytest.mark.parametrize(('predicateUnderTest', 'sourceMappingDefinition', 'expectedMappingDefinition'), (pytest.param(itemHasEvenKeyAndOddValue, {13: 21, 34: 55, 55: 144, 144: 233}, {34: 55, 144: 233}, id='filters on both key and value'), pytest.param(itemHasLargeKeyAndLargeValue, {13: 21, 34: 55, 55: 144}, {}, id='returns empty mapping when no items match')))
 	def test_itemfilter(self, predicateUnderTest: Callable[[tuple[Any, Any]], bool], sourceMappingDefinition: dict[int, Any], expectedMappingDefinition: dict[int, Any]) -> None:
-		mappingFactory: Callable[[dict[Any, Any]], Any] = self.D
-		factoryKeywordArguments: dict[str, Any] = self.kw
-		sourceMapping: Any = mappingFactory(sourceMappingDefinition)
-		expectedMapping: Any = mappingFactory(expectedMappingDefinition)
-		resultMapping: Any = itemfilter(predicateUnderTest, sourceMapping, **factoryKeywordArguments)
+		mappingFactory = self.D
+		factoryKeywordArguments = self.kw
+		sourceMapping = mappingFactory(sourceMappingDefinition)
+		expectedMapping = mappingFactory(expectedMappingDefinition)
+		resultMapping = itemfilter(predicateUnderTest, sourceMapping, **factoryKeywordArguments)
 		assert resultMapping == expectedMapping, f'itemfilter returned {resultMapping}, expected {expectedMapping} for source {sourceMappingDefinition}.'
 		assert sourceMapping == mappingFactory(sourceMappingDefinition), f'itemfilter mutated source mapping {sourceMapping}, expected {sourceMappingDefinition}.'
 		assert resultMapping is not sourceMapping, f'itemfilter returned source mapping {sourceMapping} instead of a new mapping for {sourceMappingDefinition}.'
@@ -173,18 +173,18 @@ class TestDict:
 
 	@pytest.mark.parametrize(('sourceMappingDefinition', 'keyToAssociate', 'valueToAssociate', 'expectedMappingDefinition'), (pytest.param({}, 'alpha', 13, {'alpha': 13}, id='associates into empty mapping'), pytest.param({'alpha': 13, 'beta': 21}, 'beta', 34, {'alpha': 13, 'beta': 34}, id='replaces existing value'), pytest.param({'alpha': 13, 'beta': 21}, 'gamma', 55, {'alpha': 13, 'beta': 21, 'gamma': 55}, id='preserves siblings when inserting')))
 	def test_assoc(self, sourceMappingDefinition: dict[str, int], keyToAssociate: str, valueToAssociate: int, expectedMappingDefinition: dict[str, int]) -> None:
-		mappingFactory: Callable[[dict[Any, Any]], Any] = self.D
-		factoryKeywordArguments: dict[str, Any] = self.kw
-		sourceMapping: Any = mappingFactory(sourceMappingDefinition)
-		expectedMapping: Any = mappingFactory(expectedMappingDefinition)
-		resultMapping: Any = assoc(sourceMapping, keyToAssociate, valueToAssociate, **factoryKeywordArguments)
+		mappingFactory = self.D
+		factoryKeywordArguments = self.kw
+		sourceMapping = mappingFactory(sourceMappingDefinition)
+		expectedMapping = mappingFactory(expectedMappingDefinition)
+		resultMapping = assoc(sourceMapping, keyToAssociate, valueToAssociate, **factoryKeywordArguments)
 		assert resultMapping == expectedMapping, f'assoc returned {resultMapping}, expected {expectedMapping} for source {sourceMappingDefinition}, key {keyToAssociate}, and value {valueToAssociate}.'
 		assert sourceMapping == mappingFactory(sourceMappingDefinition), f'assoc mutated source mapping {sourceMapping}, expected {sourceMappingDefinition}.'
 		assert resultMapping is not sourceMapping, f'assoc returned source mapping {sourceMapping} instead of a new mapping for {sourceMappingDefinition}.'
 		assert isinstance(resultMapping, type(expectedMapping)), f'assoc returned {type(resultMapping).__name__}, expected {type(expectedMapping).__name__} for source {sourceMappingDefinition}.'
 
 	@pytest.mark.parametrize(('sourceMappingDefinition', 'keysToRemove', 'expectedMappingDefinition'), (pytest.param({'north': 13, 'south': 21, 'east': 34}, ('south',), {'north': 13, 'east': 34}, id='removes single key'), pytest.param({'north': 13, 'south': 21, 'east': 34, 'west': 55}, ('north', 'west'), {'south': 21, 'east': 34}, id='removes multiple keys'), pytest.param({'alpha': 13, 'beta': 21, 'gamma': 34}, ('beta', 'omega'), {'alpha': 13, 'gamma': 34}, id='ignores missing keys'), pytest.param({'alpha': 13, 'beta': 21, 'gamma': 34, 'delta': 55, 'epsilon': 89}, ('alpha', 'beta', 'gamma'), {'delta': 55, 'epsilon': 89}, id='removes sixty percent boundary'), pytest.param({'alpha': 13, 'beta': 21, 'gamma': 34}, (), {'alpha': 13, 'beta': 21, 'gamma': 34}, id='keeps mapping when no keys provided'), pytest.param({'north': 13, 'south': 21, 'east': 34}, ('south', 'north', 'south', 'east'), {}, id='removes all keys even with duplicates')))
-	def test_dissocRemovesKeys(self, sourceMappingDefinition: dict[str, int], keysToRemove: tuple[str, ...], expectedMappingDefinition: dict[str, int]) -> None:
+	def test_dissoc(self, sourceMappingDefinition: dict[str, int], keysToRemove: tuple[str, ...], expectedMappingDefinition: dict[str, int]) -> None:
 		mappingFactory = self.D
 		factoryKeywordArguments: dict[str, Callable[[], MutableMapping[str, int]]] = self.kw
 		sourceMapping = mappingFactory(sourceMappingDefinition)
