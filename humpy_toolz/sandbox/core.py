@@ -3,7 +3,8 @@ from __future__ import annotations
 
 from humpy_toolz.itertoolz import cons, getter, pluck
 from itertools import starmap, tee
-from typing import overload, override, TYPE_CHECKING
+from typing import overload, TYPE_CHECKING
+from typing_extensions import override
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, Hashable, Iterable, Iterator, Sequence

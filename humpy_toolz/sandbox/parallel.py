@@ -1,4 +1,4 @@
-# ruff: noqa: D100
+# ruff: noqa: D100 A002
 from __future__ import annotations
 
 from humpy_toolz.itertoolz import partition_all

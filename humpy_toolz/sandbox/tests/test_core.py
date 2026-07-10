@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from humpy_toolz import curry, first, take, unique
-from humpy_toolz.sandbox.core import EqualityHashKey, unzip
+from humpy_toolz.sandbox import EqualityHashKey, unzip
 from itertools import count, repeat
 
 def test_EqualityHashKey_default_key():

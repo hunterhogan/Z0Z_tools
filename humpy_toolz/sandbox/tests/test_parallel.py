@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from humpy_toolz import reduce
-from humpy_toolz.sandbox.parallel import fold
+from humpy_toolz.sandbox import fold
 from multiprocessing import Pool
 from operator import add
 from pickle import dumps, loads

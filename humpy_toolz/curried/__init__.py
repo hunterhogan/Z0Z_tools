@@ -1,4 +1,4 @@
-# ruff: noqa: RUF067
+# ruff: noqa: RUF067 A001
 """
 Alternate namespace for toolz such that all functions are curried
 
