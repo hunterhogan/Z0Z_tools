@@ -291,6 +291,12 @@ class curry[**P, T]:
 						https://toolz.readthedocs.io/en/latest/curry.html
 	"""
 
+	@overload
+	def __init__(self, func: curry[P, T] | partial[T], /, *args: Any, **kwargs: Any) -> None: ...
+
+	@overload
+	def __init__(self, func: Callable[P, T], /, *args: Any, **kwargs: Any) -> None: ...
+
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
 		if not args:
 			message = '__init__() takes at least 2 arguments (1 given)'
