@@ -1,4 +1,4 @@
-# ruff: noqa: DOC201, D100, D103
+# ruff:file-ignore[docstring-missing-returns, undocumented-public-module, undocumented-public-function]
 from __future__ import annotations
 
 from collections.abc import Hashable, Sequence
@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 #======== Boolean antecedents ================================================
 
 @syntacticCurry
-def between吗(floor: 小于, ceiling: 小于, comparand: 小于) -> bool:
+def between吗[小于: Ordinals](floor: 小于, ceiling: 小于, comparand: 小于) -> bool:
 	"""Inclusive `floor <= comparand <= ceiling`."""
 	return floor <= comparand <= ceiling
 
@@ -32,7 +32,7 @@ def consecutive吗(flatContainer: Sequence[int]) -> bool:
 	return (abs(difference) == (len(flatContainer) - 1)) and (all(map(eq, flatContainer, ImaRangeOfInt)))
 
 @syntacticCurry
-def thisHasThat吗(this: Container[个], that: 个) -> bool:
+def thisHasThat吗[个](this: Container[个], that: 个) -> bool:
 	"""You can test whether `that` is present in `this`.
 
 	You can use `thisHasThat` in an `if` statement, or you can pass `thisHasThat` as a
@@ -59,12 +59,12 @@ def thisHasThat吗(this: Container[个], that: 个) -> bool:
 	return that in this
 
 @syntacticCurry
-def thisNotHaveThat吗(this: Container[个], that: 个) -> bool:
+def thisNotHaveThat吗[个](this: Container[个], that: 个) -> bool:
 	return not thisHasThat吗(this, that)
 
 #======== Filtering functions ================================================
 
-def exclude(flatContainer: Sequence[个], indices: Iterable[int]) -> Iterator[个]:
+def exclude[个](flatContainer: Sequence[个], indices: Iterable[int]) -> Iterator[个]:
 	"""Yield items from `flatContainer` whose positions are not in `indices`."""
 	lengthIterable: int = len(flatContainer)
 
@@ -77,7 +77,7 @@ def exclude(flatContainer: Sequence[个], indices: Iterable[int]) -> Iterator[�
 
 #======== Disaggregation and deconstruction functions ================================================
 
-def DOTitems(dictionary: Mapping[文件, 文义], /) -> Iterator[tuple[文件, 文义]]:
+def DOTitems[文件: Hashable, 文义](dictionary: Mapping[文件, 文义], /) -> Iterator[tuple[文件, 文义]]:
 	"""Create an `Iterator` of key-value pairs from a mapping.
 
 	You can use this function to convert `dictionary.items()` into an `Iterator` that you can
@@ -113,7 +113,7 @@ def DOTitems(dictionary: Mapping[文件, 文义], /) -> Iterator[tuple[文件, �
 	"""
 	return iter(dictionary.items())
 
-def DOTkeys(dictionary: Mapping[个, Any], /) -> Iterator[个]:
+def DOTkeys[个](dictionary: Mapping[个, Any], /) -> Iterator[个]:
 	"""Create an `Iterator` of keys from a mapping.
 
 	You can use this function to convert `dictionary.keys()` into an `Iterator` that you can
@@ -148,7 +148,7 @@ def DOTkeys(dictionary: Mapping[个, Any], /) -> Iterator[个]:
 	"""
 	return iter(dictionary.keys())
 
-def DOTvalues(dictionary: Mapping[Any, 个], /) -> Iterator[个]:
+def DOTvalues[个](dictionary: Mapping[Any, 个], /) -> Iterator[个]:
 	"""Create an `Iterator` of values from a mapping.
 
 	You can use this function to convert `dictionary.values()` into an `Iterator` that you can
@@ -187,7 +187,7 @@ def DOTvalues(dictionary: Mapping[Any, 个], /) -> Iterator[个]:
 	"""
 	return iter(dictionary.values())
 
-def reverseLookup(dictionary: dict[文件, 文义], keyValue: 文义) -> 文件 | None:
+def reverseLookup[文件: Hashable, 文义](dictionary: dict[文件, 文义], keyValue: 文义) -> 文件 | None:
 	"""Find the key in a dictionary that maps to a specified value.
 
 	You can use this function to perform reverse dictionary lookup: given a value, find the

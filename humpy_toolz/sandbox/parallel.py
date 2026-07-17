@@ -1,4 +1,4 @@
-# ruff: noqa: D100 A002
+# ruff:file-ignore[undocumented-public-module, builtin-argument-shadowing]
 from __future__ import annotations
 
 from humpy_toolz.itertoolz import partition_all
@@ -8,14 +8,15 @@ import functools
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, Iterable
-	from humpy_toolz._theTypes import MapFunction, TypeElement, TypeResult
 	from typing import Literal
 
+type MapFunction[TypeElement, TypeResult] = Callable[[Callable[[Iterable[TypeElement]], TypeResult], Iterable[Iterable[TypeElement]]], Iterable[TypeResult]]
+
 @overload
-def _reduce(func: Callable[[TypeElement, TypeElement], TypeElement], seq: Iterable[TypeElement], initial: None = None) -> TypeElement: ...
+def _reduce[TypeElement](func: Callable[[TypeElement, TypeElement], TypeElement], seq: Iterable[TypeElement], initial: None = None) -> TypeElement: ...
 @overload
-def _reduce(func: Callable[[TypeResult, TypeElement], TypeResult], seq: Iterable[TypeElement], initial: TypeResult) -> TypeResult: ...
-def _reduce(
+def _reduce[TypeResult, TypeElement](func: Callable[[TypeResult, TypeElement], TypeResult], seq: Iterable[TypeElement], initial: TypeResult) -> TypeResult: ...
+def _reduce[TypeResult, TypeElement](
 	func: Callable[[TypeResult, TypeElement], TypeResult] | Callable[[TypeElement, TypeElement], TypeElement],
 	seq: Iterable[TypeElement],
 	initial: TypeResult | None = None,
@@ -26,7 +27,7 @@ def _reduce(
 		return functools.reduce(func, seq, initial)
 
 @overload
-def fold(
+def fold[TypeElement](
 	binop: Callable[[TypeElement, TypeElement], TypeElement],
 	seq: Iterable[TypeElement],
 	default: Literal['__no__default__'] = no_default,
@@ -35,7 +36,7 @@ def fold(
 	combine: Callable[[TypeElement, TypeElement], TypeElement] | None = None,
 ) -> TypeElement: ...
 @overload
-def fold(
+def fold[TypeResult, TypeElement](
 	binop: Callable[[TypeResult, TypeElement], TypeResult],
 	seq: Iterable[TypeElement],
 	default: TypeResult,
@@ -43,7 +44,7 @@ def fold(
 	chunksize: int = 128,
 	combine: Callable[[TypeResult, TypeResult], TypeResult] | None = None,
 ) -> TypeResult: ...
-def fold(
+def fold[TypeResult, TypeElement](
 	binop: Callable[[TypeResult, TypeElement], TypeResult] | Callable[[TypeElement, TypeElement], TypeElement],
 	seq: Iterable[TypeElement],
 	default: TypeResult | Literal['__no__default__'] = no_default,

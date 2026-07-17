@@ -1,16 +1,14 @@
-# ruff: noqa [undocumented-public-module]
+# ruff:ignore[undocumented-public-module]
 from __future__ import annotations
 
 from humpy_toolz.itertoolz import cons, getter, pluck
 from itertools import starmap, tee
-from typing import overload, TYPE_CHECKING
-from typing_extensions import override
+from typing import overload, override, TYPE_CHECKING
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, Hashable, Iterable, Iterator, Sequence
-	from humpy_toolz._theTypes import T, V0, V1, V2, V3
 
-class EqualityHashKey:
+class EqualityHashKey[T]:
 	"""Create a hash key that uses equality comparisons between items.
 
 	This may be used to create hash keys for otherwise unhashable types:
@@ -99,24 +97,24 @@ class EqualityHashKey:
 		return not self.__eq__(other)
 
 	def __str__(self) -> str:
-		return '=%s=' % str(self.item)
+		return f'={str(self.item)}='
 
 	def __repr__(self) -> str:
-		return '=%s=' % repr(self.item)
+		return f'={repr(self.item)}='
 
 @overload
 def unzip(seq: Iterable[tuple[()]]) -> tuple[()]: ...
 @overload
-def unzip(seq: Iterable[tuple[V0]]) -> tuple[Iterator[V0]]: ...
+def unzip[V0](seq: Iterable[tuple[V0]]) -> tuple[Iterator[V0]]: ...
 @overload
-def unzip(seq: Iterable[tuple[V0, V1]]) -> tuple[Iterator[V0], Iterator[V1]]: ...
+def unzip[V0, V1](seq: Iterable[tuple[V0, V1]]) -> tuple[Iterator[V0], Iterator[V1]]: ...
 @overload
-def unzip(seq: Iterable[tuple[V0, V1, V2]]) -> tuple[Iterator[V0], Iterator[V1], Iterator[V2]]: ...
+def unzip[V0, V1, V2](seq: Iterable[tuple[V0, V1, V2]]) -> tuple[Iterator[V0], Iterator[V1], Iterator[V2]]: ...
 @overload
-def unzip(seq: Iterable[tuple[V0, V1, V2, V3]]) -> tuple[Iterator[V0], Iterator[V1], Iterator[V2], Iterator[V3]]: ...
+def unzip[V0, V1, V2, V3](seq: Iterable[tuple[V0, V1, V2, V3]]) -> tuple[Iterator[V0], Iterator[V1], Iterator[V2], Iterator[V3]]: ...
 @overload
-def unzip(seq: Iterable[tuple[T, ...]]) -> tuple[Iterator[T], ...]: ...
-def unzip(seq: Iterable[tuple[T, ...]]) -> tuple[Iterator[T], ...]:
+def unzip[T](seq: Iterable[tuple[T, ...]]) -> tuple[Iterator[T], ...]: ...
+def unzip[T](seq: Iterable[tuple[T, ...]]) -> tuple[Iterator[T], ...]:
 	"""Inverse of ``zip``
 
 	>>> a, b = unzip([('a', 1), ('b', 2)])

@@ -1,5 +1,5 @@
 # pyright: reportUnknownVariableType=false
-# ruff: noqa: D104 RUF067 F403 A004 PLC0415 F405, SLF001
+# ruff:file-ignore[undocumented-public-package, non-empty-init-module, undefined-local-with-import-star, builtin-import-shadowing, import-outside-top-level, undefined-local-with-import-star-usage, private-member-access]
 from __future__ import annotations
 
 from .dicttoolz import *

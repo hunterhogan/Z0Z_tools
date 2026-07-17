@@ -9,7 +9,7 @@
 # pyright: reportUnknownParameterType=false
 # pyright: reportUnknownVariableType=false
 # pyright: reportUnnecessaryComparison=false
-# ruff: noqa: D100, DOC201, TRY300, DOC402, S311, PLC0415, B905, PLR0911, ERA001, E101, E731, RUF052, DOC501
+# ruff:file-ignore[undocumented-public-module, docstring-missing-returns, try-consider-else, docstring-missing-yields, suspicious-non-cryptographic-random-usage, import-outside-top-level, zip-without-explicit-strict, too-many-return-statements, commented-out-code, mixed-spaces-and-tabs, lambda-assignment, used-dummy-variable, docstring-missing-exception]
 # ty:ignore[call-non-callable]
 # ty:ignore[call-top-callable]
 # ty:ignore[invalid-argument-type]
@@ -32,8 +32,7 @@ import itertools
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, Collection, Hashable, ItemsView, Iterable, Iterator, KeysView, Mapping, ValuesView
-	from humpy_toolz._theTypes import (
-		K, L, R, Randomable, S, SSequence, SupportsDunderLT, SupportsGetItem, T, TIterable, TSupportsRichComparison, U, V)
+	from humpy_toolz._theTypes import Randomable, SupportsDunderLT, SupportsGetItem, SupportsRichComparison
 	from typing import Any, Literal
 	from typing_extensions import TypeIs
 
@@ -78,7 +77,7 @@ __all__ = (
 
 no_pad: Literal['__no__pad__'] = '__no__pad__'
 
-def getter(index: T | Sequence[T]) -> Callable[[SupportsGetItem[T, V]], V | tuple[V, ...]]:
+def getter[T, V](index: T | Sequence[T]) -> Callable[[SupportsGetItem[T, V]], V | tuple[V, ...]]:
 	if isinstance(index, Sequence) and not isinstance(index, str):
 		if len(index) == 1:
 			element: T = index[0]
@@ -100,10 +99,10 @@ def getter(index: T | Sequence[T]) -> Callable[[SupportsGetItem[T, V]], V | tupl
 	return callableGetter
 
 @overload
-def accumulate(binop: Callable[[T, T], T], seq: Iterable[T], initial: Literal['__no__default__'] = no_default) -> Iterator[T]: ...
+def accumulate[T](binop: Callable[[T, T], T], seq: Iterable[T], initial: Literal['__no__default__'] = no_default) -> Iterator[T]: ...
 @overload
-def accumulate(binop: Callable[[T, S], T], seq: Iterable[S], initial: T) -> Iterator[T]: ...
-def accumulate(binop: Callable[[T, S], T], seq: Iterable[S], initial: T | Literal['__no__default__'] = no_default) -> Iterator[T]:
+def accumulate[T, S](binop: Callable[[T, S], T], seq: Iterable[S], initial: T) -> Iterator[T]: ...
+def accumulate[T, S](binop: Callable[[T, S], T], seq: Iterable[S], initial: T | Literal['__no__default__'] = no_default) -> Iterator[T]:
 	"""Repeatedly apply binary function to a sequence, accumulating results
 
 	>>> from operator import add, mul
@@ -144,7 +143,7 @@ def accumulate(binop: Callable[[T, S], T], seq: Iterable[S], initial: T | Litera
 		result = binop(result, elem)
 		yield result
 
-def concat(seqs: Iterable[Iterable[T]]) -> Iterator[T]:
+def concat[T](seqs: Iterable[Iterable[T]]) -> Iterator[T]:
 	"""Concatenate zero or more iterables, any of which may be infinite.
 
 	An infinite sequence will prevent the rest of the arguments from
@@ -162,7 +161,7 @@ def concat(seqs: Iterable[Iterable[T]]) -> Iterator[T]:
 	"""
 	return itertools.chain.from_iterable(seqs)
 
-def concatv(*seqs: Iterable[T]) -> Iterator[T]:
+def concatv[T](*seqs: Iterable[T]) -> Iterator[T]:
 	"""Variadic version of concat
 
 	>>> list(concatv([], ['a'], ['b', 'c']))
@@ -174,7 +173,7 @@ def concatv(*seqs: Iterable[T]) -> Iterator[T]:
 	"""
 	return concat(seqs)
 
-def cons(el: T, seq: Iterable[T]) -> Iterator[T]:
+def cons[T](el: T, seq: Iterable[T]) -> Iterator[T]:
 	"""Add el to beginning of (possibly infinite) sequence seq.
 
 	>>> list(cons(1, [2, 3]))
@@ -198,14 +197,14 @@ def count(seq: Iterable[Any]) -> int:
 	return sum(1 for _i in seq)
 
 @overload
-def diff(
+def diff[T](
 	*seqs: Iterable[T], default: Literal['__no__default__'] = no_default, key: Callable[[T], Any] | None = None
 ) -> Iterator[tuple[T | None, ...]]: ...
 @overload
-def diff(*seqs: Iterable[T], default: U, key: Callable[[T], Any] | None = None) -> Iterator[tuple[T | U, ...]]: ...
+def diff[T, U](*seqs: Iterable[T], default: U, key: Callable[[T], Any] | None = None) -> Iterator[tuple[T | U, ...]]: ...
 @overload
-def diff(*seqs: Iterable[T], default: T, key: Callable[[T], Any] | None = None) -> Iterator[tuple[T, ...]]: ...
-def diff(
+def diff[T](*seqs: Iterable[T], default: T, key: Callable[[T], Any] | None = None) -> Iterator[tuple[T, ...]]: ...
+def diff[T, U](
 	*seqs: Iterable[T], default: U | Literal['__no__default__'] = no_default, key: Callable[[T], Any] | None = None
 ) -> Iterator[tuple[T | U | None, ...]]:
 	"""Return those items that differ between sequences
@@ -245,7 +244,7 @@ def diff(
 			if vals.count(vals[0]) != N:
 				yield items
 
-def drop(n: int, seq: Iterable[T]) -> Iterator[T]:
+def drop[T](n: int, seq: Iterable[T]) -> Iterator[T]:
 	"""The sequence following the first n elements
 
 	>>> list(drop(2, [10, 20, 30, 40, 50]))
@@ -258,7 +257,7 @@ def drop(n: int, seq: Iterable[T]) -> Iterator[T]:
 	"""
 	return itertools.islice(seq, n, None)
 
-def first(seq: Iterable[T]) -> T:
+def first[T](seq: Iterable[T]) -> T:
 	"""The first element in a sequence
 
 	>>> first('ABC')
@@ -266,7 +265,7 @@ def first(seq: Iterable[T]) -> T:
 	"""
 	return next(iter(seq))
 
-def frequencies(seq: Iterable[T]) -> dict[T, int]:
+def frequencies[T](seq: Iterable[T]) -> dict[T, int]:
 	"""Find number of occurrences of each value in seq
 
 	>>> frequencies(['cat', 'cat', 'ox', 'pig', 'pig', 'cat'])  # doctest: +SKIP
@@ -282,17 +281,17 @@ def frequencies(seq: Iterable[T]) -> dict[T, int]:
 		d[item] += 1
 	return dict(d)
 
-def _get(ind: T, seq: SupportsGetItem[T, V], default: V) -> V:
+def _get[T, V](ind: T, seq: SupportsGetItem[T, V], default: V) -> V:
 	try:
 		return seq[ind]
 	except (KeyError, IndexError):
 		return default
 
 @overload
-def get(ind: Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> tuple[V, ...]: ...
+def get[T, V](ind: Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> tuple[V, ...]: ...
 @overload
-def get(ind: T, seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> V: ...
-def get(ind: T | Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> V | tuple[V, ...]:
+def get[T, V](ind: T, seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> V: ...
+def get[T, V](ind: T | Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> V | tuple[V, ...]:
 	"""Get element in a sequence or dict
 
 	Provides standard indexing
@@ -348,10 +347,10 @@ def get(ind: T | Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['
 		return default
 
 @overload
-def groupby(key: Callable[[T], K], seq: Iterable[T]) -> dict[K, list[T]]: ...
+def groupby[T, K: Hashable](key: Callable[[T], K], seq: Iterable[T]) -> dict[K, list[T]]: ...
 @overload
-def groupby(key: K, seq: Iterable[T]) -> dict[K, list[T]]: ...
-def groupby(key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, list[T]]:
+def groupby[K: Hashable, T](key: K, seq: Iterable[T]) -> dict[K, list[T]]: ...
+def groupby[T, K: Hashable](key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, list[T]]:
 	"""Group a collection by a key function
 
 	>>> names = ['Alice', 'Bob', 'Charlie', 'Dan', 'Edith', 'Frank']
@@ -386,7 +385,7 @@ def groupby(key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, list[T]]:
 		d[predicate(item)].append(item)
 	return dict(d)
 
-def interleave(seqs: Iterable[Iterable[T]]) -> Iterator[T]:
+def interleave[T](seqs: Iterable[Iterable[T]]) -> Iterator[T]:
 	"""Interleave a sequence of sequences
 
 	>>> list(interleave([[1, 2], [3, 4]]))
@@ -414,7 +413,7 @@ def interleave(seqs: Iterable[Iterable[T]]) -> Iterator[T]:
 				predicate: Callable[[Iterator[T]], bool] = partial(is_not, anIterator)
 				lazy = itertools.cycle(itertools.takewhile(predicate, lazy))
 
-def interpose(el: T, seq: Iterable[T]) -> Iterator[T]:
+def interpose[T](el: T, seq: Iterable[T]) -> Iterator[T]:
 	"""Introduce element between each pair of elements in seq
 
 	>>> list(interpose('a', [1, 2, 3]))
@@ -449,7 +448,7 @@ def isdistinct(seq: Collection[Any]) -> bool:
 		return len(seq) == len(set(seq))
 
 @overload
-def isiterable(x: TIterable) -> TypeIs[TIterable]: ...
+def isiterable[TIterable: Iterable[Any]](x: TIterable) -> TypeIs[TIterable]: ...
 @overload
 def isiterable(x: object) -> bool: ...
 def isiterable(x: Any) -> bool:
@@ -468,7 +467,7 @@ def isiterable(x: Any) -> bool:
 	except TypeError:
 		return False
 
-def iterate(func: Callable[[T], T], x: T) -> Iterator[T]:
+def iterate[T](func: Callable[[T], T], x: T) -> Iterator[T]:
 	"""Repeatedly apply a function func onto an original input
 
 	Yields x, then func(x), then func(func(x)), then func(func(func(x))), etc..
@@ -500,19 +499,19 @@ def iterate(func: Callable[[T], T], x: T) -> Iterator[T]:
 
 # === CALLABLE + CALLABLE (4 overloads) ===
 @overload
-def join(
+def join[T, U](
 	leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U]
 ) -> Iterator[tuple[T, U]]: ...
 @overload
-def join(
+def join[T, U, L](
 	leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U], left_default: L
 ) -> Iterator[tuple[T | L, U]]: ...
 @overload
-def join(
+def join[T, U, R](
 	leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U], *, right_default: R
 ) -> Iterator[tuple[T, U | R]]: ...
 @overload
-def join(
+def join[T, U, L, R](
 	leftkey: Callable[[T], Hashable],
 	leftseq: Iterable[T],
 	rightkey: Callable[[U], Hashable],
@@ -523,52 +522,52 @@ def join(
 
 # === HASHABLE + CALLABLE (4 overloads) ===
 @overload
-def join(leftkey: Hashable, leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
+def join[T, U](leftkey: Hashable, leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
 @overload
-def join(
+def join[T, U, L](
 	leftkey: Hashable, leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U], left_default: L
 ) -> Iterator[tuple[T | L, U]]: ...
 @overload
-def join(
+def join[T, U, R](
 	leftkey: Hashable, leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U], *, right_default: R
 ) -> Iterator[tuple[T, U | R]]: ...
 @overload
-def join(
+def join[T, U, L, R](
 	leftkey: Hashable, leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U], left_default: L, right_default: R
 ) -> Iterator[tuple[T | L, U | R]]: ...
 
 # === CALLABLE + HASHABLE (4 overloads) ===
 @overload
-def join(leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
+def join[T, U](leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
 @overload
-def join(
+def join[T, U, L](
 	leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U], left_default: L
 ) -> Iterator[tuple[T | L, U]]: ...
 @overload
-def join(
+def join[T, U, R](
 	leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U], *, right_default: R
 ) -> Iterator[tuple[T, U | R]]: ...
 @overload
-def join(
+def join[T, U, L, R](
 	leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U], left_default: L, right_default: R
 ) -> Iterator[tuple[T | L, U | R]]: ...
 
 # === HASHABLE + HASHABLE (4 overloads) ===
 @overload
-def join(leftkey: Hashable, leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
+def join[T, U](leftkey: Hashable, leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
 @overload
-def join(
+def join[T, U, L](
 	leftkey: Hashable, leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U], left_default: L
 ) -> Iterator[tuple[T | L, U]]: ...
 @overload
-def join(
+def join[T, U, R](
 	leftkey: Hashable, leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U], *, right_default: R
 ) -> Iterator[tuple[T, U | R]]: ...
 @overload
-def join(
+def join[T, U, L, R](
 	leftkey: Hashable, leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U], left_default: L, right_default: R
 ) -> Iterator[tuple[T | L, U | R]]: ...
-def join(
+def join[T, U, L, R](
 	leftkey: Callable[[T], Hashable] | Hashable,
 	leftseq: Iterable[T],
 	rightkey: Callable[[U], Hashable] | Hashable,
@@ -665,7 +664,7 @@ def join(
 				for match in matches:
 					yield (match, right_default)
 
-def last(seq: Iterable[T]) -> T:
+def last[T](seq: Iterable[T]) -> T:
 	"""The last element in a sequence
 
 	>>> last('ABC')
@@ -673,7 +672,7 @@ def last(seq: Iterable[T]) -> T:
 	"""
 	return tail(1, seq)[0]
 
-def mapcat(func: Callable[[T], Iterable[R]], seqs: Iterable[T]) -> Iterator[R]:
+def mapcat[T, R](func: Callable[[T], Iterable[R]], seqs: Iterable[T]) -> Iterator[R]:
 	"""Apply func to each sequence in seqs, concatenating results.
 
 	>>> list(mapcat(lambda s: [c.upper() for c in s], [['a', 'b'], ['c', 'd', 'e']]))
@@ -718,7 +717,7 @@ def _merge_sorted_binary(seqs: Sequence[Iterable[SupportsDunderLT[Any]]]) -> Ite
 	yield val1
 	yield from seq1
 
-def _merge_sorted_binary_key(seqs: Sequence[Iterable[T]], key: Callable[[T], SupportsDunderLT[Any]]) -> Iterator[T]:
+def _merge_sorted_binary_key[T](seqs: Sequence[Iterable[T]], key: Callable[[T], SupportsDunderLT[Any]]) -> Iterator[T]:
 	mid: int = len(seqs) // 2
 	L1: Sequence[Iterable[T]] = seqs[:mid]
 	if len(L1) == 1:
@@ -759,10 +758,10 @@ def _merge_sorted_binary_key(seqs: Sequence[Iterable[T]], key: Callable[[T], Sup
 	yield from seq1
 
 @overload
-def merge_sorted(*seqs: Iterable[TSupportsRichComparison], key: None = None) -> Iterator[TSupportsRichComparison]: ...
+def merge_sorted[TSupportsRichComparison: SupportsRichComparison](*seqs: Iterable[TSupportsRichComparison], key: None = None) -> Iterator[TSupportsRichComparison]: ...
 @overload
-def merge_sorted(*seqs: Iterable[T], key: Callable[[T], SupportsDunderLT[Any]]) -> Iterator[T]: ...
-def merge_sorted(*seqs: Iterable[T], key: Callable[[T], SupportsDunderLT[Any]] | None = None) -> Iterator[T]:
+def merge_sorted[T](*seqs: Iterable[T], key: Callable[[T], SupportsDunderLT[Any]]) -> Iterator[T]: ...
+def merge_sorted[T](*seqs: Iterable[T], key: Callable[[T], SupportsDunderLT[Any]] | None = None) -> Iterator[T]:
 	"""Merge and sort a collection of sorted collections
 
 	This works lazily and only keeps one value from each iterable in memory.
@@ -787,7 +786,7 @@ def merge_sorted(*seqs: Iterable[T], key: Callable[[T], SupportsDunderLT[Any]] |
 	else:
 		return _merge_sorted_binary_key(seqs, key)
 
-def nth(n: int, seq: Iterable[T]) -> T:
+def nth[T](n: int, seq: Iterable[T]) -> T:
 	"""The nth element in a sequence
 
 	>>> nth(1, 'ABC')
@@ -798,7 +797,7 @@ def nth(n: int, seq: Iterable[T]) -> T:
 	else:
 		return next(itertools.islice(seq, n, None))
 
-def partition(n: int, seq: Iterable[T], pad: L | Literal['__no__pad__'] = no_pad) -> Iterator[tuple[T, ...]] | Iterator[tuple[T | L, ...]]:
+def partition[T, L](n: int, seq: Iterable[T], pad: L | Literal['__no__pad__'] = no_pad) -> Iterator[tuple[T, ...]] | Iterator[tuple[T | L, ...]]:
 	"""Partition sequence into tuples of length n
 
 	>>> list(partition(2, [1, 2, 3, 4]))
@@ -824,7 +823,7 @@ def partition(n: int, seq: Iterable[T], pad: L | Literal['__no__pad__'] = no_pad
 		fillvalue: L = pad
 		return zip_longest(*args, fillvalue=fillvalue)
 
-def partition_all(n: int, seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
+def partition_all[T](n: int, seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
 	"""Partition all elements of sequence into tuples of length at most n
 
 	The final tuple may be shorter to accommodate extra elements.
@@ -867,7 +866,7 @@ def partition_all(n: int, seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
 	else:
 		yield prev
 
-def peek(seq: Iterable[T]) -> tuple[T, Iterator[T]]:
+def peek[T](seq: Iterable[T]) -> tuple[T, Iterator[T]]:
 	"""Retrieve the next element of a sequence
 
 	Returns the first element and an iterable equivalent to the original
@@ -884,7 +883,7 @@ def peek(seq: Iterable[T]) -> tuple[T, Iterator[T]]:
 	item: T = next(iterator)
 	return (item, itertools.chain((item,), iterator))
 
-def peekn(n: int, seq: Iterable[T]) -> tuple[tuple[T, ...], Iterator[T]]:
+def peekn[T](n: int, seq: Iterable[T]) -> tuple[tuple[T, ...], Iterator[T]]:
 	"""Retrieve the next n elements of a sequence
 
 	Returns a tuple of the first n elements and an iterable equivalent
@@ -902,12 +901,12 @@ def peekn(n: int, seq: Iterable[T]) -> tuple[tuple[T, ...], Iterator[T]]:
 	return (peeked, itertools.chain(iter(peeked), iterator))
 
 @overload
-def pluck(
+def pluck[T](
 	ind: list[Any], seqs: Iterable[Sequence[T] | Mapping[Any, T]], default: T | Literal['__no__default__'] = ...
 ) -> Iterator[tuple[T, ...]]: ...
 @overload
-def pluck(ind: Any, seqs: Iterable[Sequence[T] | Mapping[Any, T]], default: T | Literal['__no__default__'] = ...) -> Iterator[T]: ...
-def pluck(
+def pluck[T](ind: Any, seqs: Iterable[Sequence[T] | Mapping[Any, T]], default: T | Literal['__no__default__'] = ...) -> Iterator[T]: ...
+def pluck[T](
 	ind: Any | list[Any], seqs: Iterable[Sequence[T] | Mapping[Any, T]], default: T | Literal['__no__default__'] = no_default
 ) -> Iterator[T] | Iterator[tuple[T, ...]]:
 	"""Plucks an element or several elements from each item in a sequence.
@@ -940,7 +939,7 @@ def pluck(
 		return (tuple(_get(item, seq, default) for item in ind) for seq in seqs)
 	return (_get(ind, seq, default) for seq in seqs)
 
-def random_sample(
+def random_sample[T](
 	prob: float, seq: Iterable[T], random_state: Randomable | int | float | str | bytes | bytearray | None = None
 ) -> Iterator[T]:
 	"""Return elements from a sequence with probability of prob
@@ -983,23 +982,23 @@ def random_sample(
 	return filter(lambda _faux_bool: getNumber.random() < prob, seq)
 
 @overload
-def reduceby(key: Callable[[T], K], binop: Callable[[T, T], T], seq: Iterable[T]) -> dict[K, T]: ...
+def reduceby[T, K: Hashable](key: Callable[[T], K], binop: Callable[[T, T], T], seq: Iterable[T]) -> dict[K, T]: ...
 @overload
-def reduceby(key: Callable[[T], K], binop: Callable[[T, T], T], seq: Iterable[T], init: T | Callable[[], T]) -> dict[K, T]: ...
+def reduceby[T, K: Hashable](key: Callable[[T], K], binop: Callable[[T, T], T], seq: Iterable[T], init: T | Callable[[], T]) -> dict[K, T]: ...
 @overload
-def reduceby(
+def reduceby[T](
 	key: Any,  # when not callable, use identity function
 	binop: Callable[[T, T], T],
 	seq: Iterable[T],
 ) -> dict[T, T]: ...
 @overload
-def reduceby(
+def reduceby[T](
 	key: Any,  # when not callable, use identity function
 	binop: Callable[[T, T], T],
 	seq: Iterable[T],
 	init: T | Callable[[], T],
 ) -> dict[T, T]: ...
-def reduceby(
+def reduceby[T, K: Hashable](
 	key: Callable[[T], K] | Any,
 	binop: Callable[[T, T], T],
 	seq: Iterable[T],
@@ -1088,7 +1087,7 @@ def reduceby(
 		d[k] = binop(d[k], item)
 	return d
 
-def remove(predicate: Callable[[T], bool], seq: Iterable[T]) -> Iterable[T]:
+def remove[T](predicate: Callable[[T], bool], seq: Iterable[T]) -> Iterable[T]:
 	"""Return those items of sequence for which predicate(item) is False
 
 	>>> def iseven(x):
@@ -1101,7 +1100,7 @@ def remove(predicate: Callable[[T], bool], seq: Iterable[T]) -> Iterable[T]:
 # def rest[T](seq: Iterable[T]) -> Iterable[T]: ...
 rest = partial(drop, 1)
 
-def second(seq: Iterable[T]) -> T:
+def second[T](seq: Iterable[T]) -> T:
 	"""The second element in a sequence
 
 	>>> second('ABC')
@@ -1112,17 +1111,17 @@ def second(seq: Iterable[T]) -> T:
 	return next(seq)
 
 @overload
-def sliding_window(n: Literal[1], seq: Iterable[T]) -> Iterator[tuple[T]]: ...
+def sliding_window[T](n: Literal[1], seq: Iterable[T]) -> Iterator[tuple[T]]: ...
 @overload
-def sliding_window(n: Literal[2], seq: Iterable[T]) -> Iterator[tuple[T, T]]: ...
+def sliding_window[T](n: Literal[2], seq: Iterable[T]) -> Iterator[tuple[T, T]]: ...
 @overload
-def sliding_window(n: Literal[3], seq: Iterable[T]) -> Iterator[tuple[T, T, T]]: ...
+def sliding_window[T](n: Literal[3], seq: Iterable[T]) -> Iterator[tuple[T, T, T]]: ...
 @overload
-def sliding_window(n: Literal[4], seq: Iterable[T]) -> Iterator[tuple[T, T, T, T]]: ...
+def sliding_window[T](n: Literal[4], seq: Iterable[T]) -> Iterator[tuple[T, T, T, T]]: ...
 @overload
-def sliding_window(n: Literal[5], seq: Iterable[T]) -> Iterator[tuple[T, T, T, T, T]]: ...
+def sliding_window[T](n: Literal[5], seq: Iterable[T]) -> Iterator[tuple[T, T, T, T, T]]: ...
 @overload
-def sliding_window(n: int, seq: Iterable[T]) -> Iterator[tuple[T, ...]]: ...
+def sliding_window[T](n: int, seq: Iterable[T]) -> Iterator[tuple[T, ...]]: ...
 def sliding_window(n: int, seq: Iterable[Any]) -> Iterator[tuple[Any, ...]]:
 	"""A sequence of overlapping subsequences
 
@@ -1139,16 +1138,16 @@ def sliding_window(n: int, seq: Iterable[Any]) -> Iterator[tuple[Any, ...]]:
 	return zip(*(deque(itertools.islice(it, i), 0) or it for i, it in enumerate(itertools.tee(seq, n))))
 
 @overload
-def tail(n: int, seq: SSequence) -> SSequence: ...
+def tail[SSequence: Sequence[Any]](n: int, seq: SSequence) -> SSequence: ...
 @overload
-def tail(n: int, seq: Mapping[K, Any]) -> tuple[K, ...]: ...
+def tail[K: Hashable](n: int, seq: Mapping[K, Any]) -> tuple[K, ...]: ...
 @overload
-def tail(n: int, seq: ItemsView[K, T]) -> tuple[tuple[K, T], ...]: ...
+def tail[K: Hashable, T](n: int, seq: ItemsView[K, T]) -> tuple[tuple[K, T], ...]: ...
 @overload
-def tail(n: int, seq: KeysView[K]) -> tuple[K, ...]: ...
+def tail[K: Hashable](n: int, seq: KeysView[K]) -> tuple[K, ...]: ...
 @overload
-def tail(n: int, seq: ValuesView[T]) -> tuple[T, ...]: ...
-def tail(
+def tail[T](n: int, seq: ValuesView[T]) -> tuple[T, ...]: ...
+def tail[SSequence: Sequence[Any], K: Hashable, T](
 	n: int, seq: SSequence | Mapping[K, Any] | ItemsView[K, T] | KeysView[K] | ValuesView[T]
 ) -> SSequence | tuple[K, ...] | tuple[tuple[K, T], ...] | tuple[T, ...]:
 	"""The last n elements of a sequence
@@ -1166,7 +1165,7 @@ def tail(
 	except (TypeError, KeyError):
 		return tuple(deque(seq, n))
 
-def take(n: int, seq: Iterable[T]) -> Iterator[T]:
+def take[T](n: int, seq: Iterable[T]) -> Iterator[T]:
 	"""The first n elements of a sequence
 
 	>>> list(take(2, [10, 20, 30, 40, 50]))
@@ -1179,7 +1178,7 @@ def take(n: int, seq: Iterable[T]) -> Iterator[T]:
 	"""
 	return itertools.islice(seq, n)
 
-def take_nth(n: int, seq: Iterable[T]) -> Iterator[T]:
+def take_nth[T](n: int, seq: Iterable[T]) -> Iterator[T]:
 	"""Every nth item in seq
 
 	>>> list(take_nth(2, [10, 20, 30, 40, 50]))
@@ -1188,17 +1187,17 @@ def take_nth(n: int, seq: Iterable[T]) -> Iterator[T]:
 	return itertools.islice(seq, 0, None, n)
 
 @overload
-def topk(k: Literal[1], seq: Iterable[T], key: Callable[[T], Any] | None = ...) -> tuple[T]: ...
+def topk[T](k: Literal[1], seq: Iterable[T], key: Callable[[T], Any] | None = ...) -> tuple[T]: ...
 @overload
-def topk(k: Literal[2], seq: Iterable[T], key: Callable[[T], Any] | None = ...) -> tuple[T, T]: ...
+def topk[T](k: Literal[2], seq: Iterable[T], key: Callable[[T], Any] | None = ...) -> tuple[T, T]: ...
 @overload
-def topk(k: Literal[3], seq: Iterable[T], key: Callable[[T], Any] | None = ...) -> tuple[T, T, T]: ...
+def topk[T](k: Literal[3], seq: Iterable[T], key: Callable[[T], Any] | None = ...) -> tuple[T, T, T]: ...
 @overload
-def topk(k: Literal[4], seq: Iterable[T], key: Callable[[T], Any] | None = ...) -> tuple[T, T, T, T]: ...
+def topk[T](k: Literal[4], seq: Iterable[T], key: Callable[[T], Any] | None = ...) -> tuple[T, T, T, T]: ...
 @overload
-def topk(k: Literal[5], seq: Iterable[T], key: Callable[[T], Any] | None = ...) -> tuple[T, T, T, T, T]: ...
+def topk[T](k: Literal[5], seq: Iterable[T], key: Callable[[T], Any] | None = ...) -> tuple[T, T, T, T, T]: ...
 @overload
-def topk(k: int, seq: Iterable[T], key: Callable[[T], Any] | None = None) -> tuple[T, ...]: ...
+def topk[T](k: int, seq: Iterable[T], key: Callable[[T], Any] | None = None) -> tuple[T, ...]: ...
 def topk(k: int, seq: Iterable[Any], key: Callable[[Any], Any] | None = None) -> tuple[Any, ...]:
 	"""Find the k largest elements of a sequence
 
@@ -1220,7 +1219,7 @@ def topk(k: int, seq: Iterable[Any], key: Callable[[Any], Any] | None = None) ->
 		key = getter(key)
 	return tuple(heapq.nlargest(k, seq, key=key))
 
-def unique(seq: Iterable[T], key: Callable[[T], Any] | None = None) -> Iterator[T]:
+def unique[T](seq: Iterable[T], key: Callable[[T], Any] | None = None) -> Iterator[T]:
 	"""Return only unique elements of a sequence
 
 	>>> tuple(unique((1, 2, 3)))

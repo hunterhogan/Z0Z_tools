@@ -1,3 +1,6 @@
+# ruff:ignore[undocumented-public-module]
+from __future__ import annotations
+
 from humpy_cytoolz.functoolz import curry
 import operator
 

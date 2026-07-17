@@ -1,8 +1,8 @@
-# ruff: noqa: D102 D105
-# ruff: noqa: DOC201, DOC501
-# ruff: noqa: FBT001
-# ruff: noqa: A002 `type`.
-# ruff: noqa: TRY300, PLW3201,RUF052, SLF001, PLC0415
+# ruff:file-ignore[undocumented-public-method, undocumented-magic-method]
+# ruff:file-ignore[docstring-missing-returns, docstring-missing-exception]
+# ruff:file-ignore[boolean-type-hint-positional-argument]
+# ruff:file-ignore[builtin-argument-shadowing] `type`.
+# ruff:file-ignore[try-consider-else, bad-dunder-method-name, used-dummy-variable, private-member-access, import-outside-top-level]
 # ty:ignore[call-top-callable]
 # ty:ignore[invalid-parameter-default]
 # ty:ignore[no-matching-overload]
@@ -13,9 +13,7 @@
 # pyright: reportIncompatibleVariableOverride=false
 # pyright: reportInconsistentOverload=false
 # pyright: reportRedeclaration=false
-
-"""# pyright: reportUnknownVariableType=false
-
+# pyright: reportUnknownVariableType=false
 # pyright: reportUnknownMemberType=false
 # pyright: reportUnknownArgumentType=false
 # pyright: reportReturnType=false
@@ -23,8 +21,7 @@
 # pyright: reportAssignmentType=false
 # ty:ignore[invalid-assignment]
 # ty:ignore[invalid-return-type]
-# ruff: noqa: D100 ARG001, ARG002
-"""
+# ruff:file-ignore[undocumented-public-module, unused-function-argument, unused-method-argument]
 from __future__ import annotations
 
 from functools import partial, reduce
@@ -39,8 +36,15 @@ import sys
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, Iterable, Mapping
-	from humpy_toolz._theTypes import _Deleter, _Getter, _Instance, _Setter, _T, CurryState, InstancePropertyState
 	from typing import Any
+
+type CurryState = tuple[Any, ...]
+type _Getter[_Instance, _T] = Callable[[_Instance], _T]
+type _Setter[_Instance, _T] = Callable[[_Instance, _T], None]
+type _Deleter[_Instance] = Callable[[_Instance], None]
+type InstancePropertyState[_Instance, _T] = tuple[
+	_Getter[_Instance, _T] | None, _Setter[_Instance, _T] | None, _Deleter[_Instance] | None, str | None, _T | None
+]
 
 PYPY: bool = hasattr(sys, 'pypy_version_info')
 
@@ -182,28 +186,28 @@ def thread_last[T, U](val: T, *forms: Callable[[T], U] | tuple[Callable[..., U],
 	return reduce(evalform_back, forms, val)
 
 @overload
-def instanceproperty(
-	fget: _Getter[_Instance, _T]
-	, fset: _Setter[_Instance, _T] | None = ...
-	, fdel: _Deleter[_Instance] | None = ...
+def instanceproperty[Instance, T](
+	fget: _Getter[Instance, T]
+	, fset: _Setter[Instance, T] | None = ...
+	, fdel: _Deleter[Instance] | None = ...
 	, doc: str | None = ...
-	, classval: _T | None = ...
-) -> InstanceProperty[_Instance, _T]: ...
+	, classval: T | None = ...
+) -> InstanceProperty[Instance, T]: ...
 @overload
-def instanceproperty(
+def instanceproperty[Instance, T](
 	fget: None = None
-	, fset: _Setter[_Instance, _T] | None = ...
-	, fdel: _Deleter[_Instance] | None = ...
+	, fset: _Setter[Instance, T] | None = ...
+	, fdel: _Deleter[Instance] | None = ...
 	, doc: str | None = ...
-	, classval: _T | None = ...
-) -> Callable[[_Getter[_Instance, _T]], InstanceProperty[_Instance, _T]]: ...
-def instanceproperty(
-	fget: _Getter[_Instance, _T] | None = None
-	, fset: _Setter[_Instance, _T] | None = None
-	, fdel: _Deleter[_Instance] | None = None
+	, classval: T | None = ...
+) -> Callable[[_Getter[Instance, T]], InstanceProperty[Instance, T]]: ...
+def instanceproperty[Instance, T](
+	fget: _Getter[Instance, T] | None = None
+	, fset: _Setter[Instance, T] | None = None
+	, fdel: _Deleter[Instance] | None = None
 	, doc: str | None = None
-	, classval: _T | None = None
-) -> InstanceProperty[_Instance, _T] | Callable[[_Getter[_Instance, _T]], InstanceProperty[_Instance, _T]]:
+	, classval: T | None = None
+) -> InstanceProperty[Instance, T] | Callable[[_Getter[Instance, T]], InstanceProperty[Instance, T]]:
 	"""Like @property, but returns ``classval`` when used as a class attribute
 
 	>>> class MyClass(object):
@@ -801,7 +805,6 @@ def complement[**P](func: Callable[P, bool]) -> Callable[P, bool]:
 	"""
 	return compose(not_, func)
 
-
 # @overload
 # def juxt() -> Callable[..., tuple[()]]: ...  # ruff:ignore[commented-out-code]
 # @overload
@@ -932,7 +935,7 @@ class excepts[**P, T]:
 	>>> excepting({})
 	>>> excepting({0: 1})
 	1
-	"""  # noqa: D205
+	"""  # ruff:ignore[missing-blank-line-after-summary]
 
 	def __init__(
 		self, exc: type[Exception] | tuple[type[Exception], ...], func: Callable[P, T], handler: Callable[[Exception], T] = return_none
@@ -1085,4 +1088,4 @@ has_varargs.__doc__ = " Does a function have variadic positional arguments?\n\n 
 has_keywords.__doc__ = " Does a function have keyword arguments?\n\n    This function relies on introspection and does not call the function.\n    Returns None if validity can't be determined.\n\n    >>> def f(x, y=0):\n    ...     return x + y\n\n    >>> has_keywords(f)\n    True\n    "
 is_valid_args.__doc__ = " Is ``func(*args, **kwargs)`` a valid function call?\n\n    This function relies on introspection and does not call the function.\n    Returns None if validity can't be determined.\n\n    >>> def add(x, y):\n    ...     return x + y\n\n    >>> is_valid_args(add, (1,), {})\n    False\n    >>> is_valid_args(add, (1, 2), {})\n    True\n    >>> is_valid_args(map, (), {})\n    False\n\n    **Implementation notes**\n    Python 2 relies on ``inspect.getargspec``, which only works for\n    user-defined functions.  Python 3 uses ``inspect.signature``, which\n    works for many more types of callables.\n\n    Many builtins in the standard library are also supported.\n    "
 is_partial_args.__doc__ = " Can partial(func, *args, **kwargs)(*args2, **kwargs2) be a valid call?\n\n    Returns True *only* if the call is valid or if it is possible for the\n    call to become valid by adding more positional or keyword arguments.\n\n    This function relies on introspection and does not call the function.\n    Returns None if validity can't be determined.\n\n    >>> def add(x, y):\n    ...     return x + y\n\n    >>> is_partial_args(add, (1,), {})\n    True\n    >>> is_partial_args(add, (1, 2), {})\n    True\n    >>> is_partial_args(add, (1, 2, 3), {})\n    False\n    >>> is_partial_args(map, (), {})\n    True\n\n    **Implementation notes**\n    Python 2 relies on ``inspect.getargspec``, which only works for\n    user-defined functions.  Python 3 uses ``inspect.signature``, which\n    works for many more types of callables.\n\n    Many builtins in the standard library are also supported.\n    "
-from humpy_toolz import _signatures as _sigs  # noqa: E402
+from humpy_toolz import _signatures as _sigs  # ruff:ignore[module-import-not-at-top-of-file]

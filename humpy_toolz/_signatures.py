@@ -9,7 +9,7 @@
 # pyright: reportMissingParameterType=false
 # pyright: reportUnusedFunction=false
 # pyright: reportUnknownLambdaType=false
-# ruff: noqa: ARG005 A006 ANN202 TRY300 ANN001 S101 DOC201
+# ruff:file-ignore[unused-lambda-argument, builtin-lambda-argument-shadowing, try-consider-else, missing-type-function-argument, assert, docstring-missing-returns]
 """Internal module for better introspection of builtins.
 
 The main functions are ``is_builtin_valid_args``, ``is_builtin_partial_args``,
@@ -40,8 +40,8 @@ import operator
 if TYPE_CHECKING:
 	from types import ModuleType
 
-SignatureSpecification: TypeAlias = tuple[int, Callable[..., Any], tuple[str, ...], inspect.Signature | None]
-SignatureInput: TypeAlias = Callable[..., Any] | tuple[int, Callable[..., Any]] | tuple[int, Callable[..., Any], tuple[str, ...]]
+type SignatureSpecification = tuple[int, Callable[..., Any], tuple[str, ...], inspect.Signature | None]
+type SignatureInput = Callable[..., Any] | tuple[int, Callable[..., Any]] | tuple[int, Callable[..., Any], tuple[str, ...]]
 
 module_info: dict[ModuleType, dict[str, list[SignatureInput]]] = {}
 module_info[builtins] = {
@@ -357,7 +357,7 @@ signatures: dict[Callable[..., Any], tuple[SignatureSpecification, ...]] = {}
 def create_signature_registry(
 	module_info: dict[ModuleType, dict[str, list[SignatureInput]]] = module_info,
 	signatures: dict[Callable[..., Any], tuple[SignatureSpecification, ...]] = signatures,
-):
+) -> None:
 	for module, info in module_info.items():
 		if isinstance(module, str):
 			module: ModuleType = import_module(module)

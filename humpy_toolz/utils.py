@@ -1,4 +1,4 @@
-# noqa: D100
+# ruff:ignore[undocumented-public-module]
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -59,6 +59,6 @@ def raises(err: type[Exception], lamda: Callable[[], None]) -> bool:
 	"""
 	try:
 		lamda()
-		return False  # noqa: TRY300
+		return False  # ruff:ignore[try-consider-else]
 	except err:
 		return True

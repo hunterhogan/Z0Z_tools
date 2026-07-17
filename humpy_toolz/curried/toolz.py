@@ -1,4 +1,9 @@
-# ruff: noqa: A001 `abs`, `filter`, `map`, `pow`, `sorted`
+# ruff:ignore[undocumented-public-module]
+# pyright: reportInvalidTypeArguments=false
+# pyright: reportOverlappingOverload=false
+# ty:ignore[invalid-type-arguments]
+# ruff:file-ignore[undefined-name]
+# ruff:file-ignore[builtin-variable-shadowing] `abs`, `filter`, `map`, `pow`, `sorted`
 from __future__ import annotations
 
 from typing import (

@@ -1,4 +1,4 @@
-# ruff: noqa: D100
+# ruff:file-ignore[undocumented-public-module]
 from __future__ import annotations
 
 from humpy_toolz.itertoolz import frequencies, getter, pluck
@@ -6,13 +6,12 @@ from typing import TYPE_CHECKING
 import itertools
 
 if TYPE_CHECKING:
-	from collections.abc import Callable, Iterable, Iterator
-	from humpy_toolz._theTypes import K, T
+	from collections.abc import Callable, Hashable, Iterable, Iterator
 	from typing import Any
 
 __all__ = ('countby', 'partitionby')
 
-def countby(key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, int]:
+def countby[T, K: Hashable](key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, int]:
 	"""Count elements of a collection by a key function.
 
 	Returns
@@ -36,7 +35,7 @@ def countby(key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, int]:
 		key = getter(key)
 	return frequencies(map(key, seq))
 
-def partitionby(func: Callable[[T], Any], seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
+def partitionby[T](func: Callable[[T], Any], seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
 	"""Partition a sequence according to a function.
 
 	Partition `s` into a sequence of lists such that, when traversing

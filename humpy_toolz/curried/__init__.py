@@ -1,4 +1,4 @@
-# ruff: noqa: A004 `filter`, `map`, `pow`, `sorted`
+# ruff:file-ignore[builtin-import-shadowing] `filter`, `map`, `pow`, `sorted`
 """
 Alternate namespace for toolz such that all functions are curried
 
