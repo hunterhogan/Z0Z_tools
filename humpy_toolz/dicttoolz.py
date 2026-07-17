@@ -1,10 +1,5 @@
-# pyright: reportArgumentType=false
-# pyright: reportAssignmentType=false
-# pyright: reportInconsistentOverload=false
-# pyright: reportReturnType=false
-# ruff: noqa: FBT001, FBT002
-# ty:ignore[invalid-assignment]
-# ty:ignore[invalid-return-type]
+# ruff: noqa: FBT002
+
 """Provide immutable, functional-style operations on `Mapping`[1] objects.
 
 You can use this module to transform, filter, retrieve from, and merge `Mapping`[1] objects without
@@ -51,21 +46,27 @@ References
 from __future__ import annotations
 
 from collections import defaultdict, deque
-from collections.abc import Mapping
+from collections.abc import Hashable, Mapping
 from copy import deepcopy
 from functools import reduce
-from typing import cast, overload, TYPE_CHECKING
+from typing import overload, TYPE_CHECKING
 import contextlib
 import operator
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, MutableMapping, Sequence
-	from humpy_toolz._theTypes import K, K0, K1, K2, K3, SupportsGetItem, T, V, V0, V1, V2, V3, V_co
-	from typing import Any, Literal, TypeGuard
+	from humpy_toolz._theTypes import K, K0, K1, K2, K3, V, V0, V1, V2, V3, V_co
+	from optype import CanBool, CanGetitem, CanIter, CanNext
+	from typing import Any, TypeGuard
 	from typing_extensions import TypeIs
 
-# TODO update functions to work with `frozendict`.
-
+"""# TODO update functions to work with `frozendict`.
+# pyright: reportArgumentType=false
+# pyright: reportAssignmentType=false
+# pyright: reportInconsistentOverload=false
+# pyright: reportReturnType=false
+# ty:ignore[invalid-assignment]
+# ty:ignore[invalid-return-type]"""
 __all__ = (
 	'assoc',
 	'assoc_in',
@@ -278,17 +279,7 @@ def dissoc(
 			d2[k] = d[k]
 	return d2
 
-@overload
-def get_in(keys: Sequence[T], coll: Sequence[V] | SupportsGetItem[T, V], default: None = None, *, no_default: Literal[True]) -> V: ...
-@overload
-def get_in(keys: Sequence[T], coll: Sequence[V] | SupportsGetItem[T, V], default: V, no_default: Literal[True]) -> V: ...
-@overload
-def get_in(keys: Sequence[T], coll: Sequence[V0] | SupportsGetItem[T, V0], default: V1, no_default: bool = False) -> V0 | V1: ...
-@overload
-def get_in(keys: Sequence[T], coll: Sequence[V] | SupportsGetItem[T, V], default: None = None, no_default: bool = False) -> V | None: ...
-def get_in(
-	keys: Sequence[T], coll: Sequence[V0] | SupportsGetItem[T, V0], default: V1 | None = None, no_default: bool = False
-) -> V0 | V1 | None:
+def get_in[T, R, R2](keys: CanIter[CanNext[T]], coll: CanGetitem[T, R], default: R2 | None = None, no_default: CanBool = False) -> R | R2 | None:
 	"""Retrieve a value from a potentially nested `coll` (***coll***ection) using a `Sequence` of `keys`.
 
 	You can use `get_in` to navigate into a nested `coll` (***coll***ection) by following a
@@ -354,7 +345,7 @@ def get_in(
 	if no_default:
 		return reduce(operator.getitem, keys, coll)
 	else:
-		v: V1 | None = default
+		v: R | R2 | None = default
 		with contextlib.suppress(KeyError, IndexError, TypeError):
 			v = reduce(operator.getitem, keys, coll)
 		return v
@@ -448,7 +439,7 @@ def itemfilter(
 	rv: MutableMapping[K1, V1] = factory()
 	for item in d.items():
 		if predicate(item):
-			k, v = cast('tuple[K1, V1]', item)
+			k, v = item
 			rv[k] = v
 	return rv
 
@@ -590,7 +581,7 @@ def keyfilter(
 	rv: MutableMapping[K1, V] = factory()
 	for k, v in d.items():
 		if predicate(k):
-			rv[cast('K1', k)] = v
+			rv[k] = v
 	return rv
 
 @overload
@@ -648,6 +639,9 @@ def keymap(
 	rv.update(zip(map(func, d.keys()), d.values(), strict=True))
 	return rv
 
+# TODO Think about: the `*dicts` need not be homogeneous.
+# TODO Think about: the `*dicts` need not match the factory.
+# TODO Think about: the `*dicts` need not match the return.
 @overload
 def merge(*dicts: Mapping[K, V], factory: Callable[[], dict[K, V]] = dict) -> dict[K, V]: ...
 @overload
@@ -841,10 +835,10 @@ def update_in(
 	# DEVELOPMENT The original toolz function applied `factory` to every _existing_ mapping, as
 	# opposed to only using it to create a new mapping. That's excessive.
 	# - If the user wants the topmost mapping to be the same type as `factory`, for example, the user
-	#   can easily call factory before or after `update_in`. So, it should not be applied to the top
-	#   mapping.
-	# - If `d` has nested heterogenous mappings (via `keys`), applying `factory` homogenizes the
-	#   mappings. `update_in` is supposed to update one value: that doesn't imply or require altering
+	#   can easily call factory before or after `update_in`. So, it should not be applied to the
+	#   topmost mapping.
+	# - If `d` has nested heterogenous mappings, applying `factory` homogenizes the mappings of
+	#   `keys`. `update_in` is supposed to update one value: that doesn't imply or require altering
 	#   the `type` of any existing mapping.
 
 	#---------- Initialize. --------------------------------------------------
@@ -895,33 +889,22 @@ def update_in(
 	return returnMe
 
 @overload
-def valfilter(
-	predicate: Callable[[V0], TypeIs[V1]], d: Mapping[K, V0], factory: Callable[[], dict[K, V1]] = dict
-) -> dict[K, V1]: ...
+def valfilter[K: Hashable, T, V](predicate: Callable[[T], TypeIs[V]], d: Mapping[K, T], factory: Callable[[], dict[K, V]] = dict) -> dict[K, V]: ...
 @overload
-def valfilter(
-	predicate: Callable[[V0], TypeGuard[V1]], d: Mapping[K, V0], factory: Callable[[], dict[K, V1]] = dict
-) -> dict[K, V1]: ...
+def valfilter[K: Hashable, T, V](predicate: Callable[[T], TypeGuard[V]], d: Mapping[K, T], factory: Callable[[], dict[K, V]] = dict) -> dict[K, V]: ...
 @overload
-def valfilter(predicate: Callable[[V], bool], d: Mapping[K, V]) -> dict[K, V]: ...
+def valfilter[K: Hashable, T, V](predicate: Callable[[V], bool], d: Mapping[K, T], factory: Callable[[], dict[K, V]] = dict) -> dict[K, V]: ...
 @overload
-def valfilter(
-	predicate: Callable[[V0], TypeIs[V1]], d: Mapping[K, V0], factory: Callable[[], MutableMapping[K, V1]]
-) -> MutableMapping[K, V1]: ...
+def valfilter[K: Hashable, T, V](predicate: Callable[[T], TypeIs[V]], d: Mapping[K, T], factory: Callable[[], MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
 @overload
-def valfilter(
-	predicate: Callable[[V0], TypeGuard[V1]], d: Mapping[K, V0], factory: Callable[[], MutableMapping[K, V1]]
-) -> MutableMapping[K, V1]: ...
+def valfilter[K: Hashable, T, V](predicate: Callable[[T], TypeGuard[V]], d: Mapping[K, T], factory: Callable[[], MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
 @overload
-def valfilter(
-	predicate: Callable[[V0], bool], d: Mapping[K, V0], factory: Callable[[], MutableMapping[K, V1]]
-) -> MutableMapping[K, V1]: ...
-
-def valfilter(
-	predicate: Callable[[V0], bool] | Callable[[V0], TypeGuard[V1]] | Callable[[V0], TypeIs[V1]],
-	d: Mapping[K, V0],
-	factory: Callable[[], MutableMapping[K, V1]] = dict,
-) -> MutableMapping[K, V1]:
+def valfilter[K: Hashable, T, V](predicate: Callable[[T], bool], d: Mapping[K, T], factory: Callable[[], MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
+def valfilter[K: Hashable, T, V](
+	predicate: Callable[[T], bool] | Callable[[T], TypeIs[V]] | Callable[[T], TypeGuard[V]]
+	, d: Mapping[K, T]
+	, factory: Callable[[], dict[K, V]] | Callable[[], MutableMapping[K, V]] = dict
+) -> dict[K, V] | MutableMapping[K, V]:
 	"""Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.
 
 	(AI generated docstring)
@@ -965,11 +948,11 @@ def valfilter(
 	[1] Python `collections.abc` module
 		https://docs.python.org/3/library/collections.abc.html
 	"""
-	rv: MutableMapping[K, V1] = factory()
+	returnMe: MutableMapping[K, V] = factory()
 	for k, v in d.items():
 		if predicate(v):
-			rv[k] = cast('V1', v)
-	return rv
+			returnMe[k] = v
+	return returnMe
 
 @overload
 def valmap(

@@ -1,9 +1,9 @@
 [project]
 name = "Z0Z_tools"
-version = "2.2.3"
+version = "3.0.0"
 description = "Typing, documenting, and improving toolz and cytoolz."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 license = "CC-BY-NC-4.0"
 license-files = ["LICEN[CS]E*"]
 authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
@@ -16,15 +16,13 @@ classifiers = [
   "Natural Language :: English",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
-dependencies = ["typing_extensions>=4.10.0"]
+dependencies = ["optype", "typing_extensions>=4.10.0"]
 optional-dependencies = { development = [
   "astToolkit",
   "hunterMakesPy",

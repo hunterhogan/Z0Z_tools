@@ -5,11 +5,11 @@ authors:
   email: HunterHogan@pm.me
 cff-version: 1.2.0
 commit: 2f1dd7fdbe41005eedadb1c9e2f500d7e096a93b
-date-released: '2026-07-10'
+date-released: '2026-07-17'
 identifiers:
 - type: url
-  value: https://github.com/hunterhogan/Z0Z_tools/releases/tag/2.2.3
-  description: The URL for Z0Z_tools 2.2.3.
+  value: https://github.com/hunterhogan/Z0Z_tools/releases/tag/3.0.0
+  description: The URL for Z0Z_tools 3.0.0.
 keywords:
 - Python
 - cytoolz
@@ -18,8 +18,8 @@ keywords:
 license: CC-BY-NC-4.0
 message: Cite this software with the metadata in this file.
 repository: https://github.com/hunterhogan/Z0Z_tools.git
-repository-artifact: https://pypi.org/project/z0z-tools/2.2.3/
-repository-code: https://github.com/hunterhogan/Z0Z_tools/releases/tag/2.2.3
+repository-artifact: https://pypi.org/project/z0z-tools/3.0.0/
+repository-code: https://github.com/hunterhogan/Z0Z_tools/releases/tag/3.0.0
 title: Z0Z_tools
 url: https://github.com/hunterhogan/Z0Z_tools
-version: 2.2.3
+version: 3.0.0

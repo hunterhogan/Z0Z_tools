@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Hashable, Iterable, Sequence
-from typing import Any, Protocol, TypeAlias, TypeVar
+from typing import Any, Protocol, TypeVar
 from typing_extensions import ParamSpec
 
 _KT_contra = TypeVar('_KT_contra', contravariant=True)
@@ -33,7 +33,7 @@ class SupportsGetItem(Protocol[_KT_contra, _VT_co]):
 
 	def __getitem__(self, key: _KT_contra, /) -> _VT_co: ...
 
-SupportsRichComparison: TypeAlias = SupportsDunderLT[Any] | SupportsDunderGT[Any]
+type SupportsRichComparison = SupportsDunderLT[Any] | SupportsDunderGT[Any]
 
 Instance = TypeVar('Instance')
 K = TypeVar('K', bound=Hashable)
@@ -65,14 +65,14 @@ V2 = TypeVar('V2')
 V3 = TypeVar('V3')
 _T = TypeVar('_T')
 _Instance = TypeVar('_Instance')
-_Getter: TypeAlias = Callable[[_Instance], _T]
-_Setter: TypeAlias = Callable[[_Instance, _T], None]
-_Deleter: TypeAlias = Callable[[_Instance], None]
-InstancePropertyState: TypeAlias = tuple[
+type _Getter[_Instance, _T] = Callable[[_Instance], _T]
+type _Setter[_Instance, _T] = Callable[[_Instance, _T], None]
+type _Deleter[_Instance] = Callable[[_Instance], None]
+type InstancePropertyState[_Instance, _T] = tuple[
 	_Getter[_Instance, _T] | None, _Setter[_Instance, _T] | None, _Deleter[_Instance] | None, str | None, _T | None
 ]
-CurryState: TypeAlias = tuple[Any, ...]
+type CurryState = tuple[Any, ...]
 TypeElement = TypeVar('TypeElement')
 TypeResult = TypeVar('TypeResult')
 
-MapFunction: TypeAlias = Callable[[Callable[[Iterable[TypeElement]], TypeResult], Iterable[Iterable[TypeElement]]], Iterable[TypeResult]]
+type MapFunction[TypeElement, TypeResult] = Callable[[Callable[[Iterable[TypeElement]], TypeResult], Iterable[Iterable[TypeElement]]], Iterable[TypeResult]]

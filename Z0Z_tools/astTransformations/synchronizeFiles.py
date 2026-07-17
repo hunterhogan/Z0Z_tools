@@ -23,7 +23,7 @@ def strStartsWith(identifierPackage: str) -> Callable[[str | None], TypeIs[str]]
 		return isinstance(node, str) and (node.startswith(identifierPackage))
 	return workhorse
 
-def synchronizeFilesTests(settingsPackageSource: PackageSettings, settingsPackageDuplicate: PackageSettings, listFilenames: Iterable[str] = frozenset(), relativePathTests: Path = Path('tests')) -> None:
+def synchronizeTests(settingsPackageSource: PackageSettings, settingsPackageDuplicate: PackageSettings, listFilenames: Iterable[str] = frozenset(), relativePathTests: Path = Path('tests')) -> None:
 	for filename in listFilenames:
 		astModule: ast.Module = parsePathFilename2astModule(settingsPackageSource.pathPackage / relativePathTests / filename)
 
@@ -147,12 +147,12 @@ def synchronizeFileDocstrings(settingsPackageSource: PackageSettings, settingsPa
 	docstringsByIdentifier: Mapping[str, str] = getDocstringsByIdentifier(pathFilenameSource, settingsPackageSource, settingsPackageDuplicate)
 	pathFilenameDuplicate.write_text(''.join(reduce(replaceCythonDocstringForIdentifier, docstringsByIdentifier.items(), listLines)), encoding='utf-8', newline='\n')
 
-def synchronizeFilesDocstrings(settingsPackageSource: PackageSettings, settingsPackageDuplicate: PackageSettings, listFilenames: Iterable[str] = frozenset()) -> None:
+def synchronizeDocstrings(settingsPackageSource: PackageSettings, settingsPackageDuplicate: PackageSettings, listFilenames: Iterable[str] = frozenset()) -> None:
 	deque(map(partial(synchronizeFileDocstrings, settingsPackageSource, settingsPackageDuplicate), listFilenames), maxlen=0)
 
 if __name__ == '__main__':
 	listFilenames: Iterable[str] = frozenset(('test_dicttoolz.py','test_itertoolz.py',))
-	synchronizeFilesTests(settingsFor['humpy_toolz'], settingsFor['humpy_cytoolz'], listFilenames)
+	synchronizeTests(settingsFor['humpy_toolz'], settingsFor['humpy_cytoolz'], listFilenames)
 
 	listFilenamesDocstrings: Iterable[str] = frozenset(('dicttoolz', 'functoolz', 'itertoolz', 'recipes', 'utils'))
-	synchronizeFilesDocstrings(settingsFor['humpy_toolz'], settingsFor['humpy_cytoolz'], listFilenamesDocstrings)
+	synchronizeDocstrings(settingsFor['humpy_toolz'], settingsFor['humpy_cytoolz'], listFilenamesDocstrings)

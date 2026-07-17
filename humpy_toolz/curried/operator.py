@@ -1,7 +1,9 @@
+# ruff:ignore[undocumented-public-module]
+# ruff: noqa: A001 `pow`
+# ruff: noqa: A004 `abs`
 from __future__ import annotations
 
 from humpy_toolz.functoolz import curry
-# Unary operators and special cases - not curried.
 from operator import (
 	__abs__ as __abs__, __index__ as __index__, __inv__ as __inv__, __invert__ as __invert__, __neg__ as __neg__, __not__ as __not__,
 	__pos__ as __pos__, abs as abs, attrgetter as attrgetter, index as index, inv as inv, invert as invert, itemgetter as itemgetter,
@@ -9,8 +11,10 @@ from operator import (
 import operator
 import sys
 
-__all__ = [
-	# Unary operators and special cases (not curried)
+#================== Define `__all__` ================================================================
+
+#------------------ Not curried: `operator` functions with one parameter. ---------------------------
+__all__: list[str] = [
 	'__abs__',
 	'__index__',
 	'__inv__',
@@ -19,11 +23,9 @@ __all__ = [
 	'__not__',
 	'__pos__',
 	'abs',
-	'attrgetter',
 	'index',
 	'inv',
 	'invert',
-	'itemgetter',
 	'neg',
 	'not_',
 	'pos',
@@ -35,7 +37,13 @@ if (3, 14) <= sys.version_info:
 
 	__all__ += ['is_none', 'is_not_none']
 
-# Binary and n-ary operators (curried)
+#------------------ Not curried: `operator` classes. ------------------------------------------------
+__all__ += [
+	'attrgetter',
+	'itemgetter',
+]
+
+#------------------ Curried: `operator` functions with more than one parameter. ---------------------
 __all__ += [
 	'__add__',
 	'__and__',
@@ -121,10 +129,12 @@ __all__ += [
 	'xor',
 ]
 
-# Binary and n-ary operators - curried
-# Define non-dunder versions (canonical), then alias dunder versions.
+if (3, 11) <= sys.version_info:
+	__all__ += ['__call__', 'call']
 
-# Arithmetic operators
+#================== Function definitions ============================================================
+
+#------------------ Arithmetic operators ------------------------------------------------------------
 add = curry(operator.add)
 __add__ = add
 
@@ -149,7 +159,7 @@ __pow__ = pow
 matmul = curry(operator.matmul)
 __matmul__ = matmul
 
-# Bitwise operators
+#------------------ Bitwise operators ------------------------------------------------------------
 and_ = curry(operator.and_)
 __and__ = and_
 
@@ -165,7 +175,7 @@ __lshift__ = lshift
 rshift = curry(operator.rshift)
 __rshift__ = rshift
 
-# Comparison operators
+#------------------ Comparison operators ------------------------------------------------------------
 eq = curry(operator.eq)
 __eq__ = eq
 
@@ -184,7 +194,7 @@ __gt__ = gt
 ge = curry(operator.ge)
 __ge__ = ge
 
-# In-place operators
+#------------------ In-place operators ------------------------------------------------------------
 iadd = curry(operator.iadd)
 __iadd__ = iadd
 
@@ -224,7 +234,7 @@ __ilshift__ = ilshift
 irshift = curry(operator.irshift)
 __irshift__ = irshift
 
-# Sequence/container operators
+#------------------ Sequence/container operators ------------------------------------------------------------
 concat = curry(operator.concat)
 __concat__ = concat
 
@@ -243,16 +253,15 @@ __setitem__ = setitem
 delitem = curry(operator.delitem)
 __delitem__ = delitem
 
-# Other binary operators
+#------------------ Other binary operators ------------------------------------------------------------
 is_ = curry(operator.is_)
 is_not = curry(operator.is_not)
 
 if (3, 11) <= sys.version_info:
 	call = curry(operator.call)
 	__call__ = call
-	__all__ += ['__call__', 'call']
 
-# Utility functions
+#------------------ Utility functions ------------------------------------------------------------
 countOf = curry(operator.countOf)
 indexOf = curry(operator.indexOf)
 length_hint = curry(operator.length_hint)

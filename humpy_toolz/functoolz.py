@@ -1,44 +1,49 @@
-# pyright: reportReturnType=false
-# pyright: reportArgumentType=false
-# pyright: reportAssignmentType=false
-# pyright: reportAttributeAccessIssue=false
-# pyright: reportCallIssue=false
-# pyright: reportFunctionMemberAccess=false
-# pyright: reportIncompatibleVariableOverride=false
-# pyright: reportInconsistentOverload=false
-# pyright: reportMissingTypeArgument=false
-# pyright: reportRedeclaration=false
-# pyright: reportUnknownArgumentType=false
-# pyright: reportUnknownMemberType=false
-# pyright: reportUnknownParameterType=false
-# pyright: reportUnknownVariableType=false
-# ruff: noqa: D100, DOC201, DOC501, RET503, EM101, TRY003, TRY300, D103, D102, D105, PLW3201, FBT001, SIM103, ARG002, RUF052, A002, PYI061, SLF001, PLC0415, B904, ARG001
+# ruff: noqa: D102 D105
+# ruff: noqa: DOC201, DOC501
+# ruff: noqa: FBT001
+# ruff: noqa: A002 `type`.
+# ruff: noqa: TRY300, PLW3201,RUF052, SLF001, PLC0415
 # ty:ignore[call-top-callable]
-# ty:ignore[invalid-assignment]
 # ty:ignore[invalid-parameter-default]
-# ty:ignore[invalid-return-type]
 # ty:ignore[no-matching-overload]
 # ty:ignore[unresolved-attribute]
+# pyright: reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false
+# pyright: reportCallIssue=false
+# pyright: reportIncompatibleVariableOverride=false
+# pyright: reportInconsistentOverload=false
+# pyright: reportRedeclaration=false
+
+"""# pyright: reportUnknownVariableType=false
+
+# pyright: reportUnknownMemberType=false
+# pyright: reportUnknownArgumentType=false
+# pyright: reportReturnType=false
+# pyright: reportFunctionMemberAccess=false
+# pyright: reportAssignmentType=false
+# ty:ignore[invalid-assignment]
+# ty:ignore[invalid-return-type]
+# ruff: noqa: D100 ARG001, ARG002
+"""
 from __future__ import annotations
 
 from functools import partial, reduce
-from humpy_toolz._theTypes import Instance, P, T
 from humpy_toolz.utils import no_default
 from importlib import import_module
 from operator import attrgetter, not_
 from types import MethodType
-from typing import Generic, overload, TYPE_CHECKING
+from typing import overload, TYPE_CHECKING
 import contextlib
 import inspect
 import sys
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, Iterable, Mapping
-	from humpy_toolz._theTypes import (
-		_Deleter, _Getter, _Instance, _Setter, _T, CurryState, InstancePropertyState, R, T0, T1, T2, T3, T4, T5, T6, U)
-	from typing import Any, Literal
+	from humpy_toolz._theTypes import _Deleter, _Getter, _Instance, _Setter, _T, CurryState, InstancePropertyState
+	from typing import Any
 
 PYPY: bool = hasattr(sys, 'pypy_version_info')
+
 __all__: tuple[str, ...] = (
 	'apply',
 	'complement',
@@ -56,7 +61,7 @@ __all__: tuple[str, ...] = (
 	'thread_last',
 )
 
-def identity(x: T) -> T:
+def identity[T](x: T) -> T:
 	"""Identity function. Return x
 
 	>>> identity(3)
@@ -65,7 +70,7 @@ def identity(x: T) -> T:
 	return x
 
 @overload
-def apply(func: Callable[P, T], *args: P.args, **kwargs: P.kwargs) -> T: ...
+def apply[**P, T](func: Callable[P, T], *args: P.args, **kwargs: P.kwargs) -> T: ...
 
 @overload
 def apply(*func_and_args: Any, **kwargs: Any) -> Any: ...
@@ -89,7 +94,7 @@ def apply(*func_and_args: Any, **kwargs: Any) -> Any:
 	func, args = (func_and_args[0], func_and_args[1:])
 	return func(*args, **kwargs)
 
-def thread_first(val: T, *forms: Callable[[T], R] | tuple[Callable[..., R], Any]) -> R:
+def thread_first[T, R](val: T, *forms: Callable[[T], R] | tuple[Callable[..., R], Any]) -> R:
 	"""Thread value through a sequence of functions/forms
 
 	>>> def double(x):
@@ -126,10 +131,11 @@ def thread_first(val: T, *forms: Callable[[T], R] | tuple[Callable[..., R], Any]
 			func, args = (form[0], form[1:])
 			args = (val, *args)
 			return func(*args)
+		return None
 
 	return reduce(evalform_front, forms, val)
 
-def thread_last(val: T, *forms: Callable[[T], U] | tuple[Callable[..., U], ...]) -> U:
+def thread_last[T, U](val: T, *forms: Callable[[T], U] | tuple[Callable[..., U], ...]) -> U:
 	"""Thread value through a sequence of functions/forms
 
 	>>> def double(x):
@@ -171,33 +177,32 @@ def thread_last(val: T, *forms: Callable[[T], U] | tuple[Callable[..., U], ...])
 			func, args = (form[0], form[1:])
 			args += (val,)
 			return func(*args)
+		return None
 
 	return reduce(evalform_back, forms, val)
 
 @overload
 def instanceproperty(
-	fget: _Getter[_Instance, _T],
-	fset: _Setter[_Instance, _T] | None = ...,
-	fdel: _Deleter[_Instance] | None = ...,
-	doc: str | None = ...,
-	classval: _T | None = ...,
+	fget: _Getter[_Instance, _T]
+	, fset: _Setter[_Instance, _T] | None = ...
+	, fdel: _Deleter[_Instance] | None = ...
+	, doc: str | None = ...
+	, classval: _T | None = ...
 ) -> InstanceProperty[_Instance, _T]: ...
-
 @overload
 def instanceproperty(
-	fget: Literal[None] | None = None,
-	fset: _Setter[_Instance, _T] | None = ...,
-	fdel: _Deleter[_Instance] | None = ...,
-	doc: str | None = ...,
-	classval: _T | None = ...,
+	fget: None = None
+	, fset: _Setter[_Instance, _T] | None = ...
+	, fdel: _Deleter[_Instance] | None = ...
+	, doc: str | None = ...
+	, classval: _T | None = ...
 ) -> Callable[[_Getter[_Instance, _T]], InstanceProperty[_Instance, _T]]: ...
-
 def instanceproperty(
-	fget: _Getter[_Instance, _T] | None = None,
-	fset: _Setter[_Instance, _T] | None = None,
-	fdel: _Deleter[_Instance] | None = None,
-	doc: str | None = None,
-	classval: _T | None = None,
+	fget: _Getter[_Instance, _T] | None = None
+	, fset: _Setter[_Instance, _T] | None = None
+	, fdel: _Deleter[_Instance] | None = None
+	, doc: str | None = None
+	, classval: _T | None = None
 ) -> InstanceProperty[_Instance, _T] | Callable[[_Getter[_Instance, _T]], InstanceProperty[_Instance, _T]]:
 	"""Like @property, but returns ``classval`` when used as a class attribute
 
@@ -225,39 +230,38 @@ def instanceproperty(
 		return partial(instanceproperty, fset=fset, fdel=fdel, doc=doc, classval=classval)
 	return InstanceProperty(fget=fget, fset=fset, fdel=fdel, doc=doc, classval=classval)
 
-class InstanceProperty(property, Generic[Instance, T]):
+class InstanceProperty[Instance, T](property):
 	"""Like @property, but returns ``classval`` when used as a class attribute
 
 	Should not be used directly.  Use ``instanceproperty`` instead.
 	"""
 
 	def __init__(
-		self,
-		fget: _Getter[Instance, T] | None = None,
-		fset: _Setter[Instance, T] | None = None,
-		fdel: _Deleter[Instance] | None = None,
-		doc: str | None = None,
-		classval: T | None = None,
+		self
+		, fget: _Getter[Instance, T] | None = None
+		, fset: _Setter[Instance, T] | None = None
+		, fdel: _Deleter[Instance] | None = None
+		, doc: str | None = None
+		, classval: T | None = None
 	) -> None:
 		self.classval = classval
 		property.__init__(self, fget=fget, fset=fset, fdel=fdel, doc=doc)
 
 	@overload
 	def __get__(self, obj: None, type: type | None = ...) -> T | None: ...
-
 	@overload
 	def __get__(self, obj: Instance, type: type | None = ...) -> T: ...
-
 	def __get__(self, obj: Instance | None, type: type | None = None) -> T | None:
 		if obj is None:
 			return self.classval
 		return property.__get__(self, obj, type)
 
-	def __reduce__(self) -> tuple[type[InstanceProperty], InstancePropertyState]:
+	# TODO
+	def __reduce__(self) -> tuple[type[InstanceProperty[Any, Any]], InstancePropertyState[Callable[..., Any], Any]]:
 		state = (self.fget, self.fset, self.fdel, self.__doc__, self.classval)
 		return (InstanceProperty, state)
 
-class curry(Generic[P, T]):
+class curry[**P, T]:
 	"""Curry a callable function
 
 	Enables partial application of arguments through calling a function with an
@@ -287,16 +291,24 @@ class curry(Generic[P, T]):
 						https://toolz.readthedocs.io/en/latest/curry.html
 	"""
 
+	@overload
+	def __init__(self, func: curry[P, T] | partial[T], /, *args: Any, **kwargs: Any) -> None: ...
+
+	@overload
+	def __init__(self, func: Callable[P, T], /, *args: Any, **kwargs: Any) -> None: ...
+
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
 		if not args:
-			raise TypeError('__init__() takes at least 2 arguments (1 given)')
+			message = '__init__() takes at least 2 arguments (1 given)'
+			raise TypeError(message)
 		func, args = (args[0], args[1:])
 		if not callable(func):
-			raise TypeError('Input must be callable')
+			msg_0 = 'Input must be callable'
+			raise TypeError(msg_0)
 		if hasattr(func, 'func') and hasattr(func, 'args') and hasattr(func, 'keywords') and isinstance(func.args, tuple):
 			_kwargs = {}
 			if func.keywords:
-				_kwargs.update(func.keywords)  # pyright: ignore[]
+				_kwargs.update(func.keywords)
 			_kwargs.update(kwargs)
 			kwargs = _kwargs
 			args = func.args + args
@@ -307,22 +319,24 @@ class curry(Generic[P, T]):
 			self._partial = partial(func, *args)
 		self.__doc__ = getattr(func, '__doc__', None)
 		self.__name__ = getattr(func, '__name__', '<curry>')
-		self.__module__ = getattr(func, '__module__', None)  # pyright: ignore[]
+		self.__module__ = getattr(func, '__module__', None)
 		self.__qualname__ = getattr(func, '__qualname__', None)
 		self._sigspec = None
 		self._has_unknown_args = None
 
 	@instanceproperty
 	def func(self) -> Callable[P, T]:
-		return self._partial.func  # pyright: ignore[reportReturnType]
+		return self._partial.func
 
+	# TODO remove?
 	@instanceproperty
 	def __signature__(self) -> inspect.Signature:
 		sig = inspect.signature(self.func)
 		args = self.args or ()
 		keywords = self.keywords or {}
 		if is_partial_args(self.func, args, keywords, sig) is False:
-			raise TypeError('curry object has incorrect arguments')
+			message = 'curry object has incorrect arguments'
+			raise TypeError(message)
 		params = list(sig.parameters.values())
 		skip = 0
 		for param in params[: len(args)]:
@@ -399,15 +413,12 @@ class curry(Generic[P, T]):
 			kwargs = dict(self.keywords, **kwargs)
 		if self._sigspec is None:
 			sigspec = self._sigspec = _sigs.signature_or_spec(func)
-			self._has_unknown_args = has_varargs(func, sigspec) is not False
+			self._has_unknown_args: bool = has_varargs(func, sigspec) is not False
 		else:
-			sigspec = self._sigspec
+			sigspec: inspect.Signature = self._sigspec
 		if is_partial_args(func, args, kwargs, sigspec) is False:
 			return False
-		elif self._has_unknown_args or not is_valid_args(func, args, kwargs, sigspec):
-			return True
-		else:
-			return False
+		return bool((self._has_unknown_args) or not (is_valid_args(func, args, kwargs, sigspec)))
 
 	def bind(self, *args: Any, **kwargs: Any) -> curry[P, T]:
 		return type(self)(self, *args, **kwargs)
@@ -446,13 +457,13 @@ class curry(Generic[P, T]):
 		state = (type(self), func, self.args, self.keywords, userdict, is_decorated)
 		return (_restore_curry, state)
 
-def _restore_curry(
-	cls: type[curry[P, T]],
-	func: str | Callable[P, T],
-	args: tuple[Any, ...],
-	kwargs: Mapping[str, Any] | None,
-	userdict: Iterable[tuple[str, Any]],
-	is_decorated: bool | None,
+def _restore_curry[**P, T](
+	cls: type[curry[P, T]]
+	, func: str | Callable[P, T]
+	, args: tuple[Any, ...]
+	, kwargs: Mapping[str, Any] | None
+	, userdict: Iterable[tuple[str, Any]]
+	, is_decorated: bool | None
 ) -> curry[P, T] | Callable[P, T]:
 	if isinstance(func, str):
 		modname, qualname = func.rsplit(':', 1)
@@ -467,10 +478,10 @@ def _restore_curry(
 	return obj
 
 @curry
-def memoize(
-	func: Callable[..., T],
-	cache: dict[Any, T] | None = None,
-	key: Callable[[tuple[Any, ...], Mapping[str, Any]], Any] | None = None,  # pyright: ignore[]
+def memoize[T](
+	func: Callable[..., T]
+	, cache: dict[Any, T] | None = None
+	, key: Callable[[tuple[Any, ...], Mapping[str, Any]], Any] | None = None
 ) -> Callable[..., T]:
 	"""Cache a function's result for speedy future evaluation
 
@@ -534,8 +545,9 @@ def memoize(
 		k = key(args, kwargs)
 		try:
 			return cache[k]
-		except TypeError:
-			raise TypeError('Arguments to memoized function must be hashable')
+		except TypeError as error:
+			message = 'Arguments to memoized function must be hashable'
+			raise TypeError(message) from error
 		except KeyError:
 			cache[k] = result = func(*args, **kwargs)
 			return result
@@ -559,7 +571,7 @@ class Compose:
 	funcs: tuple[Callable[..., Any], ...]
 
 	def __init__(self, funcs: Iterable[Callable[..., Any]]) -> None:
-		funcs = tuple(reversed(funcs))  # pyright: ignore[]
+		funcs = tuple(reversed(funcs))
 		self.first = funcs[0]
 		self.funcs = funcs[1:]
 
@@ -576,7 +588,7 @@ class Compose:
 		self.first, self.funcs = state
 
 	@instanceproperty(classval=__doc__)
-	def __doc__(self) -> str:  # pyright: ignore[]
+	def __doc__(self) -> str:
 
 		def composed_doc(*fs: Callable[..., Any]) -> str:
 			"""Generate a docstring for the composition of fs."""
@@ -614,6 +626,7 @@ class Compose:
 	def __get__(self, obj: object | None, objtype: type | None = None) -> Compose:
 		return self if obj is None else MethodType(self, obj)
 
+	# TODO remove?
 	@instanceproperty
 	def __signature__(self) -> inspect.Signature:
 		base = inspect.signature(self.first)
@@ -623,36 +636,27 @@ class Compose:
 	__wrapped__ = instanceproperty(attrgetter('first'))
 
 @overload
-def compose(fn_0: Callable[P, T]) -> Callable[P, T]: ...
+def compose[**P, T](fn_0: Callable[P, T]) -> Callable[P, T]: ...
 
 @overload
-def compose(fn_0: Callable[[T0], T1], fn_1: Callable[P, T0]) -> Callable[P, T1]: ...
+def compose[**P, T0, T1](fn_0: Callable[[T0], T1], fn_1: Callable[P, T0]) -> Callable[P, T1]: ...
 
 @overload
-def compose(fn_0: Callable[[T1], T2], fn_1: Callable[[T0], T1], fn_2: Callable[P, T0]) -> Callable[P, T2]: ...
+def compose[**P, T0, T1, T2](fn_0: Callable[[T1], T2], fn_1: Callable[[T0], T1], fn_2: Callable[P, T0]) -> Callable[P, T2]: ...
 
 @overload
-def compose(fn_0: Callable[[T2], T3], fn_1: Callable[[T1], T2], fn_2: Callable[[T0], T1], fn_3: Callable[P, T0]) -> Callable[P, T3]: ...
+def compose[**P, T0, T1, T2, T3](fn_0: Callable[[T2], T3], fn_1: Callable[[T1], T2], fn_2: Callable[[T0], T1], fn_3: Callable[P, T0]) -> Callable[P, T3]: ...
 
 @overload
-def compose(
-	fn_0: Callable[[T3], T4], fn_1: Callable[[T2], T3], fn_2: Callable[[T1], T2], fn_3: Callable[[T0], T1], fn_4: Callable[P, T0]
-) -> Callable[P, T4]: ...
+def compose[**P, T0, T1, T2, T3, T4](fn_0: Callable[[T3], T4], fn_1: Callable[[T2], T3], fn_2: Callable[[T1], T2], fn_3: Callable[[T0], T1], fn_4: Callable[P, T0]) -> Callable[P, T4]: ...
 
 @overload
-def compose(
-	fn_0: Callable[[T4], T5],
-	fn_1: Callable[[T3], T4],
-	fn_2: Callable[[T2], T3],
-	fn_3: Callable[[T1], T2],
-	fn_4: Callable[[T0], T1],
-	fn_5: Callable[P, T0],
-) -> Callable[P, T5]: ...
+def compose[**P, T0, T1, T2, T3, T4, T5](fn_0: Callable[[T4], T5], fn_1: Callable[[T3], T4], fn_2: Callable[[T2], T3], fn_3: Callable[[T1], T2], fn_4: Callable[[T0], T1], fn_5: Callable[P, T0]) -> Callable[P, T5]: ...
 
 @overload
 def compose(*funcs: Callable[..., Any]) -> Callable[..., Any]: ...
 
-def compose(*funcs: Callable[..., Any]) -> Callable[..., Any]:  # pyright: ignore[]
+def compose(*funcs: Callable[..., Any]) -> Callable[..., Any]:
 	"""Compose functions to operate in series.
 
 	Returns a function that applies other functions in sequence.
@@ -679,33 +683,22 @@ def compose(*funcs: Callable[..., Any]) -> Callable[..., Any]:  # pyright: ignor
 		return Compose(funcs)
 
 @overload
-def compose_left(fn_0: Callable[P, T]) -> Callable[P, T]: ...
+def compose_left[**P, T](fn_0: Callable[P, T]) -> Callable[P, T]: ...
 
 @overload
-def compose_left(fn_0: Callable[P, T0], fn_1: Callable[[T0], T1]) -> Callable[P, T1]: ...
+def compose_left[**P, T0, T1](fn_0: Callable[P, T0], fn_1: Callable[[T0], T1]) -> Callable[P, T1]: ...
 
 @overload
-def compose_left(fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2]) -> Callable[P, T2]: ...
+def compose_left[**P, T0, T1, T2](fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2]) -> Callable[P, T2]: ...
 
 @overload
-def compose_left(
-	fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2], fn_3: Callable[[T2], T3]
-) -> Callable[P, T3]: ...
+def compose_left[**P, T0, T1, T2, T3](fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2], fn_3: Callable[[T2], T3]) -> Callable[P, T3]: ...
 
 @overload
-def compose_left(
-	fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2], fn_3: Callable[[T2], T3], fn_4: Callable[[T3], T4]
-) -> Callable[P, T4]: ...
+def compose_left[**P, T0, T1, T2, T3, T4](fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2], fn_3: Callable[[T2], T3], fn_4: Callable[[T3], T4]) -> Callable[P, T4]: ...
 
 @overload
-def compose_left(
-	fn_0: Callable[P, T0],
-	fn_1: Callable[[T0], T1],
-	fn_2: Callable[[T1], T2],
-	fn_3: Callable[[T2], T3],
-	fn_4: Callable[[T3], T4],
-	fn_5: Callable[[T4], T5],
-) -> Callable[P, T5]: ...
+def compose_left[**P, T0, T1, T2, T3, T4, T5](fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2], fn_3: Callable[[T2], T3], fn_4: Callable[[T3], T4], fn_5: Callable[[T4], T5]) -> Callable[P, T5]: ...
 
 @overload
 def compose_left(*funcs: Callable[..., Any]) -> Callable[..., Any]: ...
@@ -732,19 +725,19 @@ def compose_left(*funcs: Callable[..., Any]) -> Callable[..., Any]:
 	return compose(*reversed(funcs))
 
 @overload
-def pipe(data: T0, fn_0: Callable[[T0], T1]) -> T1: ...
+def pipe[T0, T1](data: T0, fn_0: Callable[[T0], T1]) -> T1: ...
 
 @overload
-def pipe(data: T0, fn_0: Callable[[T0], T1], fn_1: Callable[[T1], T2]) -> T2: ...
+def pipe[T0, T1, T2](data: T0, fn_0: Callable[[T0], T1], fn_1: Callable[[T1], T2]) -> T2: ...
 
 @overload
-def pipe(data: T0, fn_0: Callable[[T0], T1], fn_1: Callable[[T1], T2], fn_2: Callable[[T2], T3]) -> T3: ...
+def pipe[T0, T1, T2, T3](data: T0, fn_0: Callable[[T0], T1], fn_1: Callable[[T1], T2], fn_2: Callable[[T2], T3]) -> T3: ...
 
 @overload
-def pipe(data: T0, fn_0: Callable[[T0], T1], fn_1: Callable[[T1], T2], fn_2: Callable[[T2], T3], fn_3: Callable[[T3], T4]) -> T4: ...
+def pipe[T0, T1, T2, T3, T4](data: T0, fn_0: Callable[[T0], T1], fn_1: Callable[[T1], T2], fn_2: Callable[[T2], T3], fn_3: Callable[[T3], T4]) -> T4: ...
 
 @overload
-def pipe(
+def pipe[T0, T1, T2, T3, T4, T5](
 	data: T0,
 	fn_0: Callable[[T0], T1],
 	fn_1: Callable[[T1], T2],
@@ -754,7 +747,7 @@ def pipe(
 ) -> T5: ...
 
 @overload
-def pipe(
+def pipe[T0, T1, T2, T3, T4, T5, T6](
 	data: T0,
 	fn_0: Callable[[T0], T1],
 	fn_1: Callable[[T1], T2],
@@ -792,7 +785,7 @@ def pipe(data: Any, *funcs: Callable[..., Any]) -> Any:
 		data = func(data)
 	return data
 
-def complement(func: Callable[P, bool]) -> Callable[P, bool]:
+def complement[**P](func: Callable[P, bool]) -> Callable[P, bool]:
 	"""Convert a predicate function to its logical complement.
 
 	In other words, return a function that, for inputs that normally
@@ -808,85 +801,60 @@ def complement(func: Callable[P, bool]) -> Callable[P, bool]:
 	"""
 	return compose(not_, func)
 
-if TYPE_CHECKING:
 
-	@overload
-	def juxt() -> Callable[..., tuple[()]]: ...
+# @overload
+# def juxt() -> Callable[..., tuple[()]]: ...  # ruff:ignore[commented-out-code]
+# @overload
+# def juxt[**P, T0](fn_0: Callable[P, T0]) -> Callable[P, tuple[T0]]: ...  # ruff:ignore[commented-out-code]
+# @overload
+# def juxt[**P, T0, T1](fn_0: Callable[P, T0], fn_1: Callable[P, T1]) -> Callable[P, tuple[T0, T1]]: ...  # ruff:ignore[commented-out-code]
+# @overload
+# def juxt[**P, T0, T1, T2](fn_0: Callable[P, T0], fn_1: Callable[P, T1], fn_2: Callable[P, T2]) -> Callable[P, tuple[T0, T1, T2]]: ...  # ruff:ignore[commented-out-code]
+# @overload
+# def juxt[**P, T0, T1, T2, T3](fn_0: Callable[P, T0], fn_1: Callable[P, T1], fn_2: Callable[P, T2], fn_3: Callable[P, T3]) -> Callable[P, tuple[T0, T1, T2, T3]]: ...  # ruff:ignore[commented-out-code]
+# @overload
+# def juxt[**P, T0, T1, T2, T3, T4](fn_0: Callable[P, T0], fn_1: Callable[P, T1], fn_2: Callable[P, T2], fn_3: Callable[P, T3], fn_4: Callable[P, T4]) -> Callable[P, tuple[T0, T1, T2, T3, T4]]: ...  # ruff:ignore[commented-out-code]
+# @overload
+# def juxt[**P, T0, T1, T2, T3, T4, T5](fn_0: Callable[P, T0], fn_1: Callable[P, T1], fn_2: Callable[P, T2], fn_3: Callable[P, T3], fn_4: Callable[P, T4], fn_5: Callable[P, T5]) -> Callable[P, tuple[T0, T1, T2, T3, T4, T5]]: ...  # ruff:ignore[commented-out-code]
+# @overload
+# def juxt[**P, T](funcs: Iterable[Callable[P, T]]) -> Callable[P, tuple[T, ...]]: ...  # ruff:ignore[commented-out-code]
+# @overload
+# def juxt[**P, T](*funcs: Callable[P, T]) -> Callable[P, tuple[T, ...]]: ...  # ruff:ignore[commented-out-code]
+class juxt[**P, T]:
+	"""Creates a function that calls several functions with the same arguments
 
-	@overload
-	def juxt(fn_0: Callable[P, T0]) -> Callable[P, tuple[T0]]: ...
+	Takes several functions and returns a function that applies its arguments
+	to each of those functions then returns a tuple of the results.
 
-	@overload
-	def juxt(fn_0: Callable[P, T0], fn_1: Callable[P, T1]) -> Callable[P, tuple[T0, T1]]: ...
+	Name comes from juxtaposition: the fact of two things being seen or placed
+	close together with contrasting effect.
 
-	@overload
-	def juxt(fn_0: Callable[P, T0], fn_1: Callable[P, T1], fn_2: Callable[P, T2]) -> Callable[P, tuple[T0, T1, T2]]: ...
+	>>> inc = lambda x: x + 1
+	>>> double = lambda x: x * 2
+	>>> juxt(inc, double)(10)
+	(11, 20)
+	>>> juxt([inc, double])(10)
+	(11, 20)
+	"""
 
-	@overload
-	def juxt(
-		fn_0: Callable[P, T0], fn_1: Callable[P, T1], fn_2: Callable[P, T2], fn_3: Callable[P, T3]
-	) -> Callable[P, tuple[T0, T1, T2, T3]]: ...
+	__slots__ = ['funcs']
+	funcs: tuple[Callable[..., Any], ...]
 
-	@overload
-	def juxt(
-		fn_0: Callable[P, T0], fn_1: Callable[P, T1], fn_2: Callable[P, T2], fn_3: Callable[P, T3], fn_4: Callable[P, T4]
-	) -> Callable[P, tuple[T0, T1, T2, T3, T4]]: ...
+	def __init__(self, *funcs: Callable[..., Any] | Iterable[Callable[..., Any]]) -> None:
+		if len(funcs) == 1 and (not callable(funcs[0])):
+			funcs = funcs[0]
+		self.funcs = tuple(funcs)
 
-	@overload
-	def juxt(
-		fn_0: Callable[P, T0],
-		fn_1: Callable[P, T1],
-		fn_2: Callable[P, T2],
-		fn_3: Callable[P, T3],
-		fn_4: Callable[P, T4],
-		fn_5: Callable[P, T5],
-	) -> Callable[P, tuple[T0, T1, T2, T3, T4, T5]]: ...
+	def __call__(self, *args: Any, **kwargs: Any) -> tuple[Any, ...]:
+		return tuple(func(*args, **kwargs) for func in self.funcs)
 
-	@overload
-	def juxt(funcs: Iterable[Callable[P, T]]) -> Callable[P, tuple[T, ...]]: ...
+	def __getstate__(self) -> tuple[Callable[..., Any], ...]:
+		return self.funcs
 
-	@overload
-	def juxt(*funcs: Callable[P, T]) -> Callable[P, tuple[T, ...]]: ...
+	def __setstate__(self, state: tuple[Callable[..., Any], ...]) -> None:
+		self.funcs = state
 
-	def juxt(*funcs: Callable[P, T] | Iterable[Callable[P, T]]) -> Callable[P, tuple[T, ...]]: ...
-
-else:
-
-	class juxt(Generic[P, T]):
-		"""Creates a function that calls several functions with the same arguments
-
-		Takes several functions and returns a function that applies its arguments
-		to each of those functions then returns a tuple of the results.
-
-		Name comes from juxtaposition: the fact of two things being seen or placed
-		close together with contrasting effect.
-
-		>>> inc = lambda x: x + 1
-		>>> double = lambda x: x * 2
-		>>> juxt(inc, double)(10)
-		(11, 20)
-		>>> juxt([inc, double])(10)
-		(11, 20)
-		"""
-
-		__slots__ = ['funcs']
-		funcs: tuple[Callable[..., Any], ...]
-
-		def __init__(self, *funcs: Callable[..., Any] | Iterable[Callable[..., Any]]) -> None:
-			if len(funcs) == 1 and (not callable(funcs[0])):
-				funcs = funcs[0]
-			self.funcs = tuple(funcs)
-
-		def __call__(self, *args: Any, **kwargs: Any) -> tuple[Any, ...]:
-			return tuple(func(*args, **kwargs) for func in self.funcs)
-
-		def __getstate__(self) -> tuple[Callable[..., Any], ...]:
-			return self.funcs
-
-		def __setstate__(self, state: tuple[Callable[..., Any], ...]) -> None:
-			self.funcs = state
-
-def do(func: Callable[[T], Any], x: T) -> T:
+def do[T](func: Callable[[T], Any], x: T) -> T:
 	"""Runs ``func`` on ``x``, returns ``x``
 
 	Because the results of ``func`` are not returned, only the side
@@ -912,7 +880,7 @@ def do(func: Callable[[T], Any], x: T) -> T:
 	return x
 
 @curry
-def flip(func: Callable[[T, U], R], a: U, b: T) -> R:
+def flip[T, U, R](func: Callable[[T, U], R], a: U, b: T) -> R:
 	"""Call the function call with the arguments flipped
 
 	This function is curried.
@@ -940,7 +908,7 @@ def return_none(exc: Exception) -> None:
 	"""Returns None."""
 	return
 
-class excepts(Generic[T, P]):
+class excepts[**P, T]:
 	"""A wrapper around a function to catch exceptions and
 	dispatch to a handler.
 
@@ -1007,14 +975,14 @@ class excepts(Generic[T, P]):
 		except AttributeError:
 			return 'excepting'
 
-def _check_sigspec(
+def _check_sigspec[T](
 	sigspec: inspect.Signature | None, func: Callable[..., Any], builtin_func: Callable[..., T], *builtin_args: Any
 ) -> tuple[inspect.Signature | None, T | bool | None]:
 	if sigspec is None:
 		try:
 			sigspec = inspect.signature(func)
 		except (ValueError, TypeError) as e:
-			sigspec = e  # pyright: ignore[]
+			sigspec = e
 	if isinstance(sigspec, ValueError):
 		return (None, builtin_func(*builtin_args))
 	elif not isinstance(sigspec, inspect.Signature):
@@ -1027,7 +995,7 @@ def _check_sigspec(
 if PYPY:
 	_check_sigspec_orig = _check_sigspec
 
-	def _check_sigspec(
+	def _check_sigspec[T](
 		sigspec: inspect.Signature | None, func: Callable[..., Any], builtin_func: Callable[..., T], *builtin_args: Any
 	) -> tuple[inspect.Signature | None, T | bool | None]:
 		if func in _sigs.signatures:
