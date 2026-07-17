@@ -764,7 +764,6 @@ def merge_with[V, K: Hashable](
 		rv[k] = func(valueList)
 	return rv
 
-# TODO make tests with `frozendict`.
 def update_in[K: Hashable, V_co](
 	d: Mapping[K, Mapping[K, V_co] | V_co]
 	, keys: Sequence[K]

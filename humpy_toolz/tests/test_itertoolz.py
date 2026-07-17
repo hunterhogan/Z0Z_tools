@@ -20,42 +20,33 @@ if TYPE_CHECKING:
 
 no_default2 = loads(dumps('__no__default__'))
 
-
 def identity(x: object) -> object:
 	return x
-
 
 def iseven(x: int) -> bool:
 	return x % 2 == 0
 
-
 def isodd(x: int) -> bool:
 	return x % 2 == 1
-
 
 def inc(x: int) -> int:
 	return x + 1
 
-
 def double(x: int) -> int:
 	return 2 * x
-
 
 def test_remove() -> None:
 	r: Iterable[int] = remove(iseven, range(5))
 	assert type(r) is not list
 	assert list(r) == list(filter(isodd, range(5)))
 
-
 def test_groupby() -> None:
 	assert groupby(iseven, [1, 2, 3, 4]) == {True: [2, 4], False: [1, 3]}
-
 
 def test_groupby_non_callable() -> None:
 	assert groupby(0, [(1, 2), (1, 3), (2, 2), (2, 4)]) == {1: [(1, 2), (1, 3)], 2: [(2, 2), (2, 4)]}
 	assert groupby([0], [(1, 2), (1, 3), (2, 2), (2, 4)]) == {(1,): [(1, 2), (1, 3)], (2,): [(2, 2), (2, 4)]}
 	assert groupby([0, 0], [(1, 2), (1, 3), (2, 2), (2, 4)]) == {(1, 1): [(1, 2), (1, 3)], (2, 2): [(2, 2), (2, 4)]}
-
 
 def test_merge_sorted() -> None:
 	assert list(merge_sorted([1, 2, 3], [1, 2, 3])) == [1, 1, 2, 2, 3, 3]
@@ -76,17 +67,14 @@ def test_merge_sorted() -> None:
 	assert list(merge_sorted([1, 4, 5], [2, 3], key=identity)) == [1, 2, 3, 4, 5]
 	assert list(merge_sorted([1, 5], [2], [4, 7], [3, 6], key=identity)) == [1, 2, 3, 4, 5, 6, 7]
 
-
 def test_interleave() -> None:
 	assert ''.join(interleave(('ABC', '123'))) == 'A1B2C3'
 	assert ''.join(interleave(('ABC', '1'))) == 'A1BC'
-
 
 def test_unique() -> None:
 	assert tuple(unique((1, 2, 3))) == (1, 2, 3)
 	assert tuple(unique((1, 2, 1, 3))) == (1, 2, 3)
 	assert tuple(unique((1, 2, 3), key=iseven)) == (1, 2)
-
 
 def test_isiterable() -> None:
 
@@ -115,7 +103,6 @@ def test_isiterable() -> None:
 	assert isiterable(NotIterable()) is False
 	assert isiterable(NotIterableEvenWithGetItem()) is False
 
-
 def test_isdistinct() -> None:
 	assert isdistinct([1, 2, 3]) is True
 	assert isdistinct([1, 2, 1]) is False
@@ -123,7 +110,6 @@ def test_isdistinct() -> None:
 	assert isdistinct('World') is True
 	assert isdistinct(iter([1, 2, 3])) is True
 	assert isdistinct(iter([1, 2, 1])) is False
-
 
 def test_nth() -> None:
 	assert nth(2, 'ABCDE') == 'C'
@@ -134,34 +120,28 @@ def test_nth() -> None:
 	assert nth(-2, 'ABCDE') == 'D'
 	assert raises(ValueError, lambda: nth(-2, iter('ABCDE')))
 
-
 def test_first() -> None:
 	assert first('ABCDE') == 'A'
 	assert first((3, 2, 1)) == 3
 	assert isinstance(first({0: 'zero', 1: 'one'}), int)
-
 
 def test_second() -> None:
 	assert second('ABCDE') == 'B'
 	assert second((3, 2, 1)) == 2
 	assert isinstance(second({0: 'zero', 1: 'one'}), int)
 
-
 def test_last() -> None:
 	assert last('ABCDE') == 'E'
 	assert last((3, 2, 1)) == 1
 	assert isinstance(last({0: 'zero', 1: 'one'}), int)
 
-
 def test_rest() -> None:
 	assert list(rest('ABCDE')) == list('BCDE')
 	assert list(rest((3, 2, 1))) == list((2, 1))
 
-
 def test_take() -> None:
 	assert list(take(3, 'ABCDE')) == list('ABC')
 	assert list(take(2, (3, 2, 1))) == list((3, 2))
-
 
 @pytest.mark.parametrize(
 	('n', 'seq', 'expected'),
@@ -189,7 +169,6 @@ def test_take() -> None:
 )
 def test_tail(n: int, seq: object, expected: object) -> None:
 	assert tail(n, seq) == expected
-
 
 @pytest.mark.parametrize(
 	('n', 'seq', 'expected', 'incorrect_full_result'),
@@ -223,15 +202,12 @@ def test_tail_issue626_zero(n: int, seq: object, expected: object, incorrect_ful
 	assert len(result) == 0
 	assert result != incorrect_full_result
 
-
 def test_drop() -> None:
 	assert list(drop(3, 'ABCDE')) == list('DE')
 	assert list(drop(1, (3, 2, 1))) == list((2, 1))
 
-
 def test_take_nth() -> None:
 	assert list(take_nth(2, 'ABCDE')) == list('ACE')
-
 
 def test_get() -> None:
 	assert get(1, 'ABCDE') == 'B'
@@ -249,27 +225,22 @@ def test_get() -> None:
 	assert raises(TypeError, lambda: get([1, 2, 3], 1, None))
 	assert raises(KeyError, lambda: get('foo', {}, default=no_default2))
 
-
 def test_mapcat() -> None:
 	assert list(mapcat(identity, [[1, 2, 3], [4, 5, 6]])) == [1, 2, 3, 4, 5, 6]
 	assert list(mapcat(reversed, [[3, 2, 1, 0], [6, 5, 4], [9, 8, 7]])) == list(range(10))
 	inc = lambda i: i + 1
 	assert [4, 5, 6, 7, 8, 9] == list(mapcat(partial(map, inc), [[3, 4, 5], [6, 7, 8]]))
 
-
 def test_cons() -> None:
 	assert list(cons(1, [2, 3])) == [1, 2, 3]
-
 
 def test_concat() -> None:
 	assert list(concat([[], [], []])) == []
 	assert list(take(5, concat([['a', 'b'], range(1000000000)]))) == ['a', 'b', 0, 1, 2]
 
-
 def test_concatv() -> None:
 	assert list(concatv([], [], [])) == []
 	assert list(take(5, concatv(['a', 'b'], range(1000000000)))) == ['a', 'b', 0, 1, 2]
-
 
 def test_interpose() -> None:
 	assert 'a' == first(rest(interpose('a', range(1000000000))))
@@ -277,12 +248,10 @@ def test_interpose() -> None:
 	assert list(interpose(0, itertools.repeat(1, 4))) == [1, 0, 1, 0, 1, 0, 1]
 	assert list(interpose('.', ['a', 'b', 'c'])) == ['a', '.', 'b', '.', 'c']
 
-
 def test_frequencies() -> None:
 	assert frequencies(['cat', 'pig', 'cat', 'eel', 'pig', 'dog', 'dog', 'dog']) == {'cat': 2, 'eel': 1, 'pig': 2, 'dog': 3}
 	assert frequencies([]) == {}
 	assert frequencies('onomatopoeia') == {'a': 2, 'e': 1, 'i': 1, 'm': 1, 'o': 4, 'n': 1, 'p': 1, 't': 1}
-
 
 def test_reduceby() -> None:
 	data: list[int] = [1, 2, 3, 4, 5]
@@ -298,11 +267,9 @@ def test_reduceby() -> None:
 	assert reduceby(lambda x: x['state'], lambda acc, x: acc + x['cost'], projects, 0) == {'CA': 1200000, 'IL': 2100000}
 	assert reduceby('state', lambda acc, x: acc + x['cost'], projects, 0) == {'CA': 1200000, 'IL': 2100000}
 
-
 def test_reduce_by_init() -> None:
 	assert reduceby(iseven, add, [1, 2, 3, 4]) == {True: 2 + 4, False: 1 + 3}
 	assert reduceby(iseven, add, [1, 2, 3, 4], no_default2) == {True: 2 + 4, False: 1 + 3}
-
 
 def test_reduce_by_callable_default() -> None:
 
@@ -312,11 +279,9 @@ def test_reduce_by_callable_default() -> None:
 
 	assert reduceby(iseven, set_add, [1, 2, 3, 4, 1, 2], set) == {True: {2, 4}, False: {1, 3}}
 
-
 def test_iterate() -> None:
 	assert list(itertools.islice(iterate(inc, 0), 0, 5)) == [0, 1, 2, 3, 4]
 	assert list(take(4, iterate(double, 1))) == [1, 2, 4, 8]
-
 
 def test_accumulate() -> None:
 	assert list(accumulate(add, [1, 2, 3, 4, 5])) == [1, 3, 6, 10, 15]
@@ -331,27 +296,22 @@ def test_accumulate() -> None:
 	assert list(accumulate(binop, [])) == []
 	assert list(accumulate(add, [1, 2, 3], no_default2)) == [1, 3, 6]
 
-
 def test_accumulate_works_on_consumable_iterables() -> None:
 	assert list(accumulate(add, iter((1, 2, 3)))) == [1, 3, 6]
-
 
 def test_sliding_window() -> None:
 	assert list(sliding_window(2, [1, 2, 3, 4])) == [(1, 2), (2, 3), (3, 4)]
 	assert list(sliding_window(3, [1, 2, 3, 4])) == [(1, 2, 3), (2, 3, 4)]
 
-
 def test_sliding_window_of_short_iterator() -> None:
 	assert list(sliding_window(3, [1, 2])) == []
 	assert list(sliding_window(7, [1, 2])) == []
-
 
 def test_partition() -> None:
 	assert list(partition(2, [1, 2, 3, 4])) == [(1, 2), (3, 4)]
 	assert list(partition(3, range(7))) == [(0, 1, 2), (3, 4, 5)]
 	assert list(partition(3, range(4), pad=-1)) == [(0, 1, 2), (3, -1, -1)]
 	assert list(partition(2, [])) == []
-
 
 def test_partition_all() -> None:
 	assert list(partition_all(2, [1, 2, 3, 4])) == [(1, 2), (3, 4)]
@@ -382,14 +342,12 @@ def test_partition_all() -> None:
 	too_short_list: ListWithBadLength = ListWithBadLength([1, 2], off_by=-1)
 	assert raises(LookupError, lambda: list(partition_all(5, too_short_list)))
 
-
 def test_count() -> None:
 	assert count((1, 2, 3)) == 3
 	assert count([]) == 0
 	assert count(iter((1, 2, 3, 4))) == 4
 	assert count('hello') == 5
 	assert count(iter('hello')) == 5
-
 
 def test_pluck() -> None:
 	assert list(pluck(0, [[0, 1], [2, 3], [4, 5]])) == [0, 2, 4]
@@ -405,7 +363,6 @@ def test_pluck() -> None:
 	assert raises(KeyError, lambda: list(pluck('name', [{'id': 1}])))
 	assert list(pluck(0, [[0, 1], [2, 3], [4, 5]], no_default2)) == [0, 2, 4]
 	assert raises(IndexError, lambda: list(pluck(1, [[0]], no_default2)))
-
 
 def test_join() -> None:
 	names: list[tuple[int, str]] = [(1, 'one'), (2, 'two'), (3, 'three')]
@@ -425,12 +382,10 @@ def test_join() -> None:
 	result = set(starmap(add, join(first, names, second, fruit, left_default=no_default2, right_default=no_default2)))
 	assert result == expected
 
-
 def test_getter() -> None:
 	assert getter(0)('Alice') == 'A'
 	assert getter([0])('Alice') == ('A',)
 	assert getter([])('Alice') == ()
-
 
 def test_key_as_getter() -> None:
 	squares: list[tuple[int, int]] = [(i, i**2) for i in range(5)]
@@ -440,7 +395,6 @@ def test_key_as_getter() -> None:
 	assert set(join([0, 1], squares, [0, 1], pows)) == set(join(get, squares, get, pows))
 	get = lambda x: (x[0],)
 	assert set(join([0], squares, [0], pows)) == set(join(get, squares, get, pows))
-
 
 def test_join_double_repeats() -> None:
 	names: list[tuple[int, str]] = [(1, 'one'), (2, 'two'), (3, 'three'), (1, 'uno'), (2, 'dos')]
@@ -458,7 +412,6 @@ def test_join_double_repeats() -> None:
 	}
 	assert result == expected
 
-
 def test_join_missing_element() -> None:
 	names: list[tuple[int, str]] = [(1, 'one'), (2, 'two'), (3, 'three')]
 	fruit: list[tuple[str, int]] = [('apple', 5), ('orange', 1)]
@@ -466,24 +419,20 @@ def test_join_missing_element() -> None:
 	expected: set[tuple[int, str, str, int]] = {(1, 'one', 'orange', 1)}
 	assert result == expected
 
-
 def test_left_outer_join() -> None:
 	result: set[tuple[int | None, int | None]] = set(join(identity, [1, 2], identity, [2, 3], left_default=None))
 	expected: set[tuple[int | None, int | None]] = {(2, 2), (None, 3)}
 	assert result == expected
-
 
 def test_right_outer_join() -> None:
 	result: set[tuple[int | None, int | None]] = set(join(identity, [1, 2], identity, [2, 3], right_default=None))
 	expected: set[tuple[int | None, int | None]] = {(2, 2), (1, None)}
 	assert result == expected
 
-
 def test_outer_join() -> None:
 	result: set[tuple[int | None, int | None]] = set(join(identity, [1, 2], identity, [2, 3], left_default=None, right_default=None))
 	expected: set[tuple[int | None, int | None]] = {(2, 2), (1, None), (None, 3)}
 	assert result == expected
-
 
 def test_diff() -> None:
 	assert raises(TypeError, lambda: list(diff()))
@@ -507,7 +456,6 @@ def test_diff() -> None:
 
 	list(diff(data1, data2, key=indollars)) == [({'cost': 2, 'currency': 'dollar'}, {'cost': 300, 'currency': 'yen'})]
 
-
 def test_topk() -> None:
 	assert topk(2, [4, 1, 5, 2]) == (5, 4)
 	assert topk(2, [4, 1, 5, 2], key=lambda x: -x) == (1, 2)
@@ -522,10 +470,8 @@ def test_topk() -> None:
 	)
 	assert topk(2, [(0, 4), (1, 3), (2, 2), (3, 1), (4, 0)], 0) == ((4, 0), (3, 1))
 
-
 def test_topk_is_stable() -> None:
 	assert topk(4, [5, 9, 2, 1, 5, 3], key=lambda x: 1) == (5, 9, 2, 1)
-
 
 def test_peek() -> None:
 	alist: list[str] = ['Alice', 'Bob', 'Carol']
@@ -533,7 +479,6 @@ def test_peek() -> None:
 	assert element == alist[0]
 	assert list(blist) == alist
 	assert raises(StopIteration, lambda: peek([]))
-
 
 def test_peekn() -> None:
 	alist: tuple[str, str, str] = ('Alice', 'Bob', 'Carol')
@@ -543,7 +488,6 @@ def test_peekn() -> None:
 	elements, blist = peekn(len(alist) * 4, alist)
 	assert elements == alist
 	assert tuple(blist) == alist
-
 
 def test_random_sample() -> None:
 	alist: list[int] = list(range(100))

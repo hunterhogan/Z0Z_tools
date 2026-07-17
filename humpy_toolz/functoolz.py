@@ -42,21 +42,19 @@ type CurryState = tuple[Any, ...]
 type _Getter[_Instance, _T] = Callable[[_Instance], _T]
 type _Setter[_Instance, _T] = Callable[[_Instance, _T], None]
 type _Deleter[_Instance] = Callable[[_Instance], None]
-type InstancePropertyState[_Instance, _T] = tuple[
-	_Getter[_Instance, _T] | None, _Setter[_Instance, _T] | None, _Deleter[_Instance] | None, str | None, _T | None
-]
+type InstancePropertyState[_Instance, _T] = tuple[_Getter[_Instance, _T] | None, _Setter[_Instance, _T] | None, _Deleter[_Instance] | None, str | None, _T | None]
 
 PYPY: bool = hasattr(sys, 'pypy_version_info')
 
 __all__: tuple[str, ...] = (
 	'apply',
 	'complement',
-	'compose',
+	'compose',  # DEVELOPMENT
 	'compose_left',
-	'curry',
+	'curry',  	# DEVELOPMENT
 	'do',
 	'excepts',
-	'flip',
+	'flip',  	# DEVELOPMENT
 	'identity',
 	'juxt',
 	'memoize',
@@ -75,10 +73,8 @@ def identity[T](x: T) -> T:
 
 @overload
 def apply[**P, T](func: Callable[P, T], *args: P.args, **kwargs: P.kwargs) -> T: ...
-
 @overload
 def apply(*func_and_args: Any, **kwargs: Any) -> Any: ...
-
 def apply(*func_and_args: Any, **kwargs: Any) -> Any:
 	"""Applies a function and returns the results
 
@@ -260,7 +256,6 @@ class InstanceProperty[Instance, T](property):
 			return self.classval
 		return property.__get__(self, obj, type)
 
-	# TODO
 	def __reduce__(self) -> tuple[type[InstanceProperty[Any, Any]], InstancePropertyState[Callable[..., Any], Any]]:
 		state = (self.fget, self.fset, self.fdel, self.__doc__, self.classval)
 		return (InstanceProperty, state)
@@ -641,25 +636,18 @@ class Compose:
 
 @overload
 def compose[**P, T](fn_0: Callable[P, T]) -> Callable[P, T]: ...
-
 @overload
 def compose[**P, T0, T1](fn_0: Callable[[T0], T1], fn_1: Callable[P, T0]) -> Callable[P, T1]: ...
-
 @overload
 def compose[**P, T0, T1, T2](fn_0: Callable[[T1], T2], fn_1: Callable[[T0], T1], fn_2: Callable[P, T0]) -> Callable[P, T2]: ...
-
 @overload
 def compose[**P, T0, T1, T2, T3](fn_0: Callable[[T2], T3], fn_1: Callable[[T1], T2], fn_2: Callable[[T0], T1], fn_3: Callable[P, T0]) -> Callable[P, T3]: ...
-
 @overload
 def compose[**P, T0, T1, T2, T3, T4](fn_0: Callable[[T3], T4], fn_1: Callable[[T2], T3], fn_2: Callable[[T1], T2], fn_3: Callable[[T0], T1], fn_4: Callable[P, T0]) -> Callable[P, T4]: ...
-
 @overload
 def compose[**P, T0, T1, T2, T3, T4, T5](fn_0: Callable[[T4], T5], fn_1: Callable[[T3], T4], fn_2: Callable[[T2], T3], fn_3: Callable[[T1], T2], fn_4: Callable[[T0], T1], fn_5: Callable[P, T0]) -> Callable[P, T5]: ...
-
 @overload
 def compose(*funcs: Callable[..., Any]) -> Callable[..., Any]: ...
-
 def compose(*funcs: Callable[..., Any]) -> Callable[..., Any]:
 	"""Compose functions to operate in series.
 
@@ -688,25 +676,18 @@ def compose(*funcs: Callable[..., Any]) -> Callable[..., Any]:
 
 @overload
 def compose_left[**P, T](fn_0: Callable[P, T]) -> Callable[P, T]: ...
-
 @overload
 def compose_left[**P, T0, T1](fn_0: Callable[P, T0], fn_1: Callable[[T0], T1]) -> Callable[P, T1]: ...
-
 @overload
 def compose_left[**P, T0, T1, T2](fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2]) -> Callable[P, T2]: ...
-
 @overload
 def compose_left[**P, T0, T1, T2, T3](fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2], fn_3: Callable[[T2], T3]) -> Callable[P, T3]: ...
-
 @overload
 def compose_left[**P, T0, T1, T2, T3, T4](fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2], fn_3: Callable[[T2], T3], fn_4: Callable[[T3], T4]) -> Callable[P, T4]: ...
-
 @overload
 def compose_left[**P, T0, T1, T2, T3, T4, T5](fn_0: Callable[P, T0], fn_1: Callable[[T0], T1], fn_2: Callable[[T1], T2], fn_3: Callable[[T2], T3], fn_4: Callable[[T3], T4], fn_5: Callable[[T4], T5]) -> Callable[P, T5]: ...
-
 @overload
 def compose_left(*funcs: Callable[..., Any]) -> Callable[..., Any]: ...
-
 def compose_left(*funcs: Callable[..., Any]) -> Callable[..., Any]:
 	"""Compose functions to operate in series.
 
@@ -730,16 +711,12 @@ def compose_left(*funcs: Callable[..., Any]) -> Callable[..., Any]:
 
 @overload
 def pipe[T0, T1](data: T0, fn_0: Callable[[T0], T1]) -> T1: ...
-
 @overload
 def pipe[T0, T1, T2](data: T0, fn_0: Callable[[T0], T1], fn_1: Callable[[T1], T2]) -> T2: ...
-
 @overload
 def pipe[T0, T1, T2, T3](data: T0, fn_0: Callable[[T0], T1], fn_1: Callable[[T1], T2], fn_2: Callable[[T2], T3]) -> T3: ...
-
 @overload
 def pipe[T0, T1, T2, T3, T4](data: T0, fn_0: Callable[[T0], T1], fn_1: Callable[[T1], T2], fn_2: Callable[[T2], T3], fn_3: Callable[[T3], T4]) -> T4: ...
-
 @overload
 def pipe[T0, T1, T2, T3, T4, T5](
 	data: T0,
@@ -749,7 +726,6 @@ def pipe[T0, T1, T2, T3, T4, T5](
 	fn_3: Callable[[T3], T4],
 	fn_4: Callable[[T4], T5],
 ) -> T5: ...
-
 @overload
 def pipe[T0, T1, T2, T3, T4, T5, T6](
 	data: T0,
@@ -760,10 +736,8 @@ def pipe[T0, T1, T2, T3, T4, T5, T6](
 	fn_4: Callable[[T4], T5],
 	fn_5: Callable[[T5], T6],
 ) -> T6: ...
-
 @overload
 def pipe(data: Any, *funcs: Callable[..., Any]) -> Any: ...
-
 def pipe(data: Any, *funcs: Callable[..., Any]) -> Any:
 	"""Pipe a value through a sequence of functions
 

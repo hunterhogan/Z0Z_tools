@@ -1,4 +1,4 @@
-# ruff: noqa: PLR0904 PLR6301
+# ruff:file-ignore[too-many-public-methods, no-self-use]
 from __future__ import annotations
 
 from collections import defaultdict as _defaultdict
@@ -7,12 +7,13 @@ from humpy_cytoolz.dicttoolz import (
 	assoc, assoc_in, dissoc, get_in, itemfilter, itemmap, keyfilter, keymap, merge, merge_with, update_in, valfilter, valmap)
 from humpy_cytoolz.functoolz import identity
 from humpy_cytoolz.utils import raises
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 import os
 import pytest
+import sys
 
 if TYPE_CHECKING:
-	from collections.abc import Callable, ItemsView, Iterator, KeysView, MutableMapping, ValuesView
+	from collections.abc import Callable, Hashable, ItemsView, Iterator, KeysView, MutableMapping, ValuesView
 	from hunterMakesPy import CallableFunction
 	from typing import Any, ClassVar
 
@@ -25,7 +26,7 @@ def iseven(i: int) -> bool:
 def bucketKeyByParity(key: int) -> int:
 	return key % 2
 
-def swapItemKeyWithValue(item: tuple[int, int]) -> tuple[int, int]:  # noqa: FURB118
+def swapItemKeyWithValue(item: tuple[int, int]) -> tuple[int, int]:  # ruff:ignore[reimplemented-operator]
 	return (item[1], item[0])
 
 def summarizeItemToParityAndTotal(item: tuple[int, int]) -> tuple[int, int]:
@@ -84,7 +85,7 @@ class TestDict:
 		dicts = (D({1: 1, 2: 2, 3: 3}), D({1: 10, 2: 20}))
 		assert merge_with(sum, *dicts, **kw) == D({1: 11, 2: 22, 3: 3})
 		assert merge_with(tuple, *dicts, **kw) == D({1: (1, 10), 2: (2, 20), 3: (3,)})
-		assert not merge_with(sum)
+		assert not merge_with(sum)  # pyright: ignore[reportArgumentType]
 
 	def test_merge_with_iterable_arg(self) -> None:
 		D, kw = (self.D, self.kw)
@@ -212,16 +213,16 @@ class TestDict:
 		assert assoc_in(D({'a': D({'b': 1})}), ['a', 'b'], 2, **kw) == D({'a': D({'b': 2})})
 		assert assoc_in(D({}), ['a', 'b'], 1, **kw) == D({'a': D({'b': 1})})
 		d = D({'x': 1})
-		oldd = d
+		old_d = d
 		d2 = assoc_in(d, ['x'], 2, **kw)
-		assert d is oldd
-		assert d2 is not oldd
+		assert d is old_d
+		assert d2 is not old_d
 		assert assoc_in(D({}), ['a', 'b', 'c'], 42, **kw) == D({'a': D({'b': D({'c': 42})})})
 		inner = D({'b': 1})
 		d3 = D({'a': inner})
 		d4 = assoc_in(d3, ['a', 'b'], 99, **kw)
 		assert inner['b'] == 1
-		assert d4['a']['b'] == 99
+		assert d4['a']['b'] == 99  # ty:ignore[not-subscriptable]
 		assert assoc_in(D({'a': 1, 'b': 2}), ['a'], 99, **kw) == D({'a': 99, 'b': 2})
 
 	def test_get_in(self) -> None:
@@ -256,7 +257,7 @@ class TestDict:
 		d3 = D({'a': inner})
 		d4 = update_in(d3, ['a', 'b'], inc, **kw)
 		assert inner['b'] == 1
-		assert d4['a']['b'] == 2
+		assert d4['a']['b'] == 2  # ty:ignore[not-subscriptable]
 
 	@pytest.mark.parametrize(('dictsDefinition', 'expectedMappingDefinition'), (pytest.param([{2: 'north', 5: 'south'}, {3: 'east', 7: 'west'}], {2: 'north', 3: 'east', 5: 'south', 7: 'west'}, id='non-overlapping keys from both dicts are preserved'), pytest.param([{2: 'north', 5: 'south'}, {5: 'southeast'}], {2: 'north', 5: 'southeast'}, id='last dict value takes precedence for repeated key'), pytest.param([{}, {3: 'east'}], {3: 'east'}, id='leading empty dict does not alter result'), pytest.param([{2: 'north'}, {}], {2: 'north'}, id='trailing empty dict does not alter result')))
 	def test_mergeProducesExpectedResult(self, dictsDefinition: list[dict[Any, Any]], expectedMappingDefinition: dict[Any, Any]) -> None:
@@ -308,12 +309,9 @@ class TestDict:
 		assert merge(defaultdict(int, D({1: 2})), D({2: 3})) == {1: 2, 2: 3}
 		assert merge(defaultdict(int, D({1: 2})), D({2: 3}), factory=lambda: defaultdict(int)) == defaultdict(int, D({1: 2, 2: 3}))
 		assert not merge(defaultdict(int, D({1: 2})), D({2: 3}), factory=lambda: defaultdict(int)) == {1: 2, 2: 3}
-		assert raises(TypeError, lambda: merge(D({1: 2}), D({2: 3}), factoryy=dict))
+		assert raises(TypeError, lambda: merge(D({1: 2}), D({2: 3}), factoryy=dict))  # pyright: ignore[reportUnknownLambdaType, reportCallIssue] # ty:ignore[no-matching-overload]
 
-KeyType = TypeVar('KeyType')
-ValueType = TypeVar('ValueType')
-
-class defaultdict(_defaultdict[KeyType, ValueType]):
+class defaultdict[KeyType: Hashable, ValueType](_defaultdict[KeyType, ValueType]):
 	__hash__ = None
 
 	def __eq__(self, other: object) -> bool:
@@ -334,7 +332,7 @@ class TestDefaultDict(TestDict):
 
 class CustomMapping:
 	"""Define methods of the MutableMapping protocol required by dicttoolz"""
-	__hash__ = None
+	__hash__ = None  # pyright: ignore[reportAssignmentType]
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
 		self._d: dict[Any, Any] = dict(*args, **kwargs)
@@ -387,6 +385,16 @@ class TestCustomMapping(TestDict):
 	"""
 	D: ClassVar[Callable[..., Any]] = CustomMapping
 	kw: ClassVar[dict[str, Any]] = {'factory': makeCustomMappingFactory}
+
+if (3, 15) <= sys.version_info:
+	def makeFrozenDictFactory(itemIterable: ItemsView[Any, Any] | Iterator[tuple[Any, Any]] | None = None) -> frozendict[Any, Any]:
+		if itemIterable is None:
+			return frozendict()
+		return frozendict(itemIterable)
+
+	class TestFrozenDict(TestDict):
+		D: ClassVar[Callable[..., frozendict[Any, Any]]] = frozendict
+		kw: ClassVar[frozendict[str, Any]] = {'factory': makeFrozenDictFactory}
 
 @pytest.mark.parametrize(('keys', 'coll', 'expectedValue'), (pytest.param(['alpha'], {'alpha': 13, 'beta': 21}, 13, id='retrieves value at single-key path'), pytest.param(['alpha', 'beta'], {'alpha': {'beta': 34}, 'gamma': 55}, 34, id='retrieves value at two-key nested path'), pytest.param(['alpha', 'beta', 'gamma'], {'alpha': {'beta': {'gamma': 89}, 'delta': 144}, 'epsilon': 233}, 89, id='retrieves value at three-key nested path'), pytest.param([2], [3, 5, 7, 11, 13], 7, id='retrieves value at integer index in list')))
 def test_get_in_retrieves_value_at_path(keys: list[Any], coll: Any, expectedValue: Any) -> None:

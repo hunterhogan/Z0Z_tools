@@ -1,37 +1,11 @@
 
-from ._theTypes import K, T, V
-from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
-from typing import Any, Generic, overload
+from collections.abc import Callable, Hashable, Iterable, Iterator
+from typing import Any
 
-__all__ = ("countby", "partitionby")
+__all__ = ('countby', 'partitionby')
 
-@overload
-def countby(key: Callable[[T], K], seq: Iterable[T]) -> dict[K, int]: ...
-@overload
-def countby(key: Any, seq: Iterable[Sequence[V] | Mapping[Any, V]]) -> dict[V, int]: ...
-def countby(key: Callable[[T], K] | Any, seq: Iterable[T] | Iterable[Sequence[V] | Mapping[Any, V]]) -> dict[K, int] | dict[V, int]: ...
+def countby[T, K: Hashable](key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, int]:
+    ...
 
-class partitionby(Iterator[tuple[T, ...]], Generic[T]):
-	"""Partition a sequence according to a function
-
-	Partition `s` into a sequence of lists such that, when traversing
-	`s`, every time the output of `func` changes a new list is started
-	and that and subsequent items are collected into that list.
-
-	>>> is_space = lambda c: c == " "
-	>>> list(partitionby(is_space, "I have space"))
-	[('I',), (' ',), ('h', 'a', 'v', 'e'), (' ',), ('s', 'p', 'a', 'c', 'e')]
-
-	>>> is_large = lambda x: x > 10
-	>>> list(partitionby(is_large, [1, 2, 1, 99, 88, 33, 99, -1, 5]))
-	[(1, 2, 1), (99, 88, 33, 99), (-1, 5)]
-
-	See Also
-	--------
-		partition
-		groupby
-		itertools.groupby
-	"""
-	def __init__(self, func: Callable[[T], Any], seq: Iterable[T]) -> None: ...
-	def __iter__(self) -> partitionby[T]: ...
-	def __next__(self) -> tuple[T, ...]: ...
+def partitionby[T](func: Callable[[T], Any], seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
+    ...
