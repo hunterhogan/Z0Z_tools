@@ -1,13 +1,13 @@
 [project]
 name = "Z0Z_tools"
-version = "3.0.0"
+version = "3.1.1"
 description = "Typing, documenting, and improving toolz and cytoolz."
 readme = "README.md"
 requires-python = ">=3.12"
 license = "CC-BY-NC-4.0"
 license-files = ["LICEN[CS]E*"]
 authors = [{ name = "Hunter Hogan", email = "HunterHogan@pm.me" }]
-keywords = ["Python", "cytoolz", "functional programming", "toolz"]
+keywords = ["cytoolz", "functional programming", "toolz"]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Environment :: Console",
@@ -44,7 +44,7 @@ requires = ["cython>=3.0", "setuptools>=74.1.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
-build = "cp310-* cp311-* cp312-* cp313-* cp314-*"
+build = "cp312-* cp313-* cp314-*"
 skip = ["*-musllinux_*", "*-win32", "*-manylinux_i686", "pp*"]
 test-requires = ["pytest"]
 test-command = "pytest --pyargs humpy_cytoolz.tests humpy_toolz.tests humpy_toolz.sandbox.tests"
