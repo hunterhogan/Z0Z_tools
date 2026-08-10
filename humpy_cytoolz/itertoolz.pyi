@@ -1,6 +1,6 @@
 
 from collections.abc import Callable, Collection, Hashable, ItemsView, Iterable, Iterator, KeysView, Mapping, Sequence, ValuesView
-from humpy_toolz._theTypes import Randomable, SupportsDunderLT, SupportsGetItem, SupportsRichComparison
+from humpy_toolz.theTypes import Randomable, SupportsDunderLT, SupportsGetItem, SupportsRichComparison
 from humpy_toolz.utils import no_default
 from typing import Any, Literal, overload
 from typing_extensions import TypeIs

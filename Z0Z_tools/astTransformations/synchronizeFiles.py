@@ -39,5 +39,5 @@ if __name__ == '__main__':
 	listFilenamesDocstrings: Iterable[str] = frozenset(('dicttoolz', 'functoolz', 'itertoolz', 'recipes', 'utils'))
 	synchronizeDocstrings(settingsFor['humpy_toolz'], settingsFor['humpy_cytoolz'], listFilenamesDocstrings)
 
-	listFilenamesStubs: Iterable[str] = frozenset(('dicttoolz', 'functoolz', 'itertoolz', 'recipes'))
+	listFilenamesStubs: Iterable[str] = frozenset(('dicttoolz', 'itertoolz', 'utils'))
 	exportStubs(settingsFor['humpy_toolz'], settingsFor['humpy_cytoolz'], listFilenamesStubs)

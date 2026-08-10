@@ -137,7 +137,7 @@ cpdef object assoc(object d, object key, object value, object factory=dict):
 		`key` that `assoc` inserts or replaces.
 	value : V
 		`value` that `assoc` assigns to `key`.
-	factory : Callable[[], MutableMapping[K, V]] = dict
+	factory : Callable[..., MutableMapping[K, V]] = dict
 		`Callable` that creates the `MutableMapping`[1] to `return`.
 
 	Returns
@@ -186,7 +186,7 @@ cpdef object assoc_in(object d, object keys, object value, object factory=dict):
 		Non-empty sequence of keys specifying the nested path to the target location in `d`.
 	value : V
 		The value to place at the location specified by `keys`.
-	factory : Callable[[], MutableMapping[K, V]] = dict
+	factory : Callable[..., MutableMapping[K, V]] = dict
 		`Callable` that creates each new `MutableMapping`[1] in the result.
 
 	Returns
@@ -273,7 +273,7 @@ def dissoc(d, *keys, **kwargs):
 		Source `Mapping`.
 	*keys : K
 		Keys to remove from `d` in the returned `MutableMapping`.
-	factory : Callable[[], MutableMapping[K, V]] = dict
+	factory : Callable[..., MutableMapping[K, V]] = dict
 		`Callable` that creates the `MutableMapping`[1] to `return`.
 
 	Returns
@@ -404,7 +404,7 @@ cpdef object itemfilter(object predicate, object d, object factory=dict):
 		`tuple[K, V]`, and `predicate` must return `True` for the item to be retained.
 	d : Mapping[K, V]
 		Source `Mapping`[1]. `itemfilter` reads all items from `d` and does not change `d`.
-	factory : Callable[[], MutableMapping[K, V]] = dict
+	factory : Callable[..., MutableMapping[K, V]] = dict
 		`Callable` that creates the `MutableMapping`[1] to `return`.
 
 	Returns
@@ -471,7 +471,7 @@ cpdef object itemmap(object func, object d, object factory=dict):
 		`tuple[K, V]`, and `func` must return a `tuple[L, W]` containing the new key and value.
 	d : Mapping[K, V]
 		Source `Mapping`[1]. `itemmap` reads all items from `d` and does not change `d`.
-	factory : Callable[[], MutableMapping[L, W]] = dict
+	factory : Callable[..., MutableMapping[L, W]] = dict
 		`Callable` that creates the `MutableMapping`[1] to `return`.
 
 	Returns
@@ -530,7 +530,7 @@ cpdef object keyfilter(object predicate, object d, object factory=dict):
 		returns `True`.
 	d : Mapping[K, V]
 		Source `Mapping`[1]. `keyfilter` reads all items from `d` and does not change `d`.
-	factory : Callable[[], MutableMapping[K, V]] = dict
+	factory : Callable[..., MutableMapping[K, V]] = dict
 		`Callable` that creates the `MutableMapping`[1] to `return`.
 
 	Returns
@@ -590,7 +590,7 @@ cpdef object keymap(object func, object d, object factory=dict):
 		individually, and `func` returns the corresponding transformed key.
 	d : Mapping[K, V]
 		Source `Mapping`[1]. `keymap` reads all keys from `d` and does not change `d`.
-	factory : Callable[[], MutableMapping[L, V]] = dict
+	factory : Callable[..., MutableMapping[L, V]] = dict
 		`Callable` that creates the `MutableMapping`[1] to `return`.
 
 	Returns
@@ -658,7 +658,7 @@ def merge(*dicts, factory=dict):
 	*dicts : Mapping[K, V]
 		`Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the
 		sole positional argument.
-	factory : Callable[[], MutableMapping[K, V]] = dict
+	factory : Callable[..., MutableMapping[K, V]] = dict
 		`Callable` that creates the `MutableMapping`[1] to `return`.
 
 	Returns
@@ -747,7 +747,7 @@ def merge_with(func, *dicts, factory=dict):
 	*dicts : Mapping[K, V]
 		`Mapping` objects to merge. Alternatively, pass a single `Iterable[Mapping[K, V]]` as the
 		sole positional argument after `func`.
-	factory : Callable[[], MutableMapping[K, V]] = dict
+	factory : Callable[..., MutableMapping[K, V]] = dict
 		`Callable` that creates the `MutableMapping`[1] to `return`.
 
 	Returns
@@ -800,7 +800,7 @@ cpdef object update_in(object d, object keys, object func, object default=None, 
 		key is absent from `d`, `func` receives `default`.
 	default : V_co | None = None
 		Value passed to `func` when the innermost key is absent from `d`.
-	factory : Callable[[], MutableMapping[K, V_co]] = dict
+	factory : Callable[..., MutableMapping[K, V_co]] = dict
 		`Callable` that creates each new `MutableMapping`[1] in the result.
 
 	Returns
@@ -884,7 +884,7 @@ cpdef object valfilter(object predicate, object d, object factory=dict):
 		returns `True`.
 	d : Mapping[K, V]
 		Source `Mapping`[1]. `valfilter` reads all items from `d` and does not change `d`.
-	factory : Callable[[], MutableMapping[K, V]] = dict
+	factory : Callable[..., MutableMapping[K, V]] = dict
 		`Callable` that creates the `MutableMapping`[1] to `return`.
 
 	Returns
@@ -944,7 +944,7 @@ cpdef object valmap(object func, object d, object factory=dict):
 		individually, and `func` returns the corresponding transformed value.
 	d : Mapping[K, V]
 		Source `Mapping`[1]. `valmap` reads all values from `d` and does not change `d`.
-	factory : Callable[[], MutableMapping[K, W]] = dict
+	factory : Callable[..., MutableMapping[K, W]] = dict
 		`Callable` that creates the `MutableMapping`[1] to `return`.
 
 	Returns

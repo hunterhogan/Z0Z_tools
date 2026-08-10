@@ -51,7 +51,7 @@ __all__: tuple[str, ...] = (
 	'complement',
 	'compose',  # DEVELOPMENT
 	'compose_left',
-	'curry',  	# DEVELOPMENT
+	'curry',
 	'do',
 	'excepts',
 	'flip',  	# DEVELOPMENT

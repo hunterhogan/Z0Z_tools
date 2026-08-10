@@ -1,6 +1,6 @@
 [project]
 name = "Z0Z_tools"
-version = "3.1.1"
+version = "3.2.0"
 description = "Typing, documenting, and improving toolz and cytoolz."
 readme = "README.md"
 requires-python = ">=3.12"

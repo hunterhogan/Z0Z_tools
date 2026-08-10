@@ -15,7 +15,7 @@ from .itertoolz import (
 	reduceby as reduceby, remove as remove, second as second, sliding_window as sliding_window, tail as tail, take as take,
 	take_nth as take_nth, topk as topk, unique as unique)
 from .recipes import countby as countby, partitionby as partitionby
-from builtins import filter as filter, map as map, sorted as sorted  # noqa: A004
+from builtins import filter as filter, map as map, sorted as sorted  # ruff: ignore[builtin-import-shadowing]
 from functools import partial as partial, reduce as reduce
 
 # Aliases

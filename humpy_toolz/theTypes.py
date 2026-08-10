@@ -1,11 +1,16 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
+from optype import CanGetitem, CanSetitem
 from typing import Any, Protocol, TypeVar
 
 _KT_contra = TypeVar('_KT_contra', contravariant=True)
 _T_contra = TypeVar('_T_contra', contravariant=True)
 _VT_co = TypeVar('_VT_co', covariant=True)
+
+class CanGetSetitem[Key, Value](CanGetitem[Key, Value], CanSetitem[Key, Value], Protocol): ...
+
+type MapFunction[TypeElement, TypeResult] = Callable[[Callable[[Iterable[TypeElement]], TypeResult], Iterable[Iterable[TypeElement]]], Iterable[TypeResult]]
 
 class Randomable(Protocol):
 	"""Protocol for objects exposing a ``random() -> float`` method."""
@@ -33,5 +38,3 @@ class SupportsGetItem(Protocol[_KT_contra, _VT_co]):
 	def __getitem__(self, key: _KT_contra, /) -> _VT_co: ...
 
 type SupportsRichComparison = SupportsDunderLT[Any] | SupportsDunderGT[Any]
-
-type MapFunction[TypeElement, TypeResult] = Callable[[Callable[[Iterable[TypeElement]], TypeResult], Iterable[Iterable[TypeElement]]], Iterable[TypeResult]]

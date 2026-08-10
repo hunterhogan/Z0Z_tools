@@ -6,16 +6,11 @@ from humpy_cytoolz import curry as syntacticCurry
 from hunterMakesPy import Ordinals
 from more_itertools import extract
 from operator import eq
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
 	from collections.abc import Container, Iterable, Iterator, Mapping
 	from typing import Any
-
-小于 = TypeVar("小于", bound=Ordinals)
-个 = TypeVar("个")
-文件 = TypeVar("文件", bound=Hashable)
-文义 = TypeVar("文义")
 
 #======== Boolean antecedents ================================================
 

@@ -32,7 +32,7 @@ import itertools
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, Collection, Hashable, ItemsView, Iterable, Iterator, KeysView, Mapping, ValuesView
-	from humpy_toolz._theTypes import Randomable, SupportsDunderLT, SupportsGetItem, SupportsRichComparison
+	from humpy_toolz.theTypes import Randomable, SupportsDunderLT, SupportsGetItem, SupportsRichComparison
 	from typing import Any, Literal
 	from typing_extensions import TypeIs
 
@@ -323,6 +323,7 @@ def get[T, V](ind: T | Sequence[T], seq: SupportsGetItem[T, V], default: V | Lit
 	--------
 		pluck
 	"""
+	# TODO https://github.com/hunterhogan/Z0Z_tools/issues/126
 	try:
 		return seq[ind]
 	except TypeError:
@@ -336,10 +337,11 @@ def get[T, V](ind: T | Sequence[T], seq: SupportsGetItem[T, V], default: V | Lit
 				else:
 					return ()
 			else:
-				return tuple(_get(i, seq, default) for i in ind)
+				return tuple(_get(index, seq, default) for index in ind)
 		elif default != no_default:
 			return default
 		else:
+			# TODO raise from?
 			raise
 	except (KeyError, IndexError):
 		if default == no_default:
