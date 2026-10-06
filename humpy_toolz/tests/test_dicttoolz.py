@@ -226,7 +226,7 @@ class TestDict:
 		assert assoc_in(D({'a': 1, 'b': 2}), ['a'], 99, **kw) == D({'a': 99, 'b': 2})
 
 	def test_get_in(self) -> None:
-		transaction: Any = {'name': 'Alice', 'purchase': {'items': ['Apple', 'Orange'], 'costs': [0.5, 1.25]}, 'credit card': '5555-1234-1234-1234'}
+		transaction: Any = self.D({'name': 'Alice', 'purchase': {'items': ['Apple', 'Orange'], 'costs': [0.5, 1.25]}, 'credit card': '5555-1234-1234-1234'})
 		assert get_in(['name'], transaction) == 'Alice'
 		assert get_in(['purchase', 'items', 0], transaction) == 'Apple'
 		assert get_in(['purchase', 'total'], transaction) is None
@@ -387,14 +387,9 @@ class TestCustomMapping(TestDict):
 	kw: ClassVar[dict[str, Any]] = {'factory': makeCustomMappingFactory}
 
 if (3, 15) <= sys.version_info:
-	def makeFrozenDictFactory(itemIterable: ItemsView[Any, Any] | Iterator[tuple[Any, Any]] | None = None) -> frozendict[Any, Any]:
-		if itemIterable is None:
-			return frozendict()
-		return frozendict(itemIterable)
-
-	class TestFrozenDict(TestDict):
+	class TestFrozenDict:
 		D: ClassVar[Callable[..., frozendict[Any, Any]]] = frozendict
-		kw: ClassVar[frozendict[str, Any]] = {'factory': makeFrozenDictFactory}
+		test_get_in = TestDict.test_get_in
 
 @pytest.mark.parametrize(('keys', 'coll', 'expectedValue'), (pytest.param(['alpha'], {'alpha': 13, 'beta': 21}, 13, id='retrieves value at single-key path'), pytest.param(['alpha', 'beta'], {'alpha': {'beta': 34}, 'gamma': 55}, 34, id='retrieves value at two-key nested path'), pytest.param(['alpha', 'beta', 'gamma'], {'alpha': {'beta': {'gamma': 89}, 'delta': 144}, 'epsilon': 233}, 89, id='retrieves value at three-key nested path'), pytest.param([2], [3, 5, 7, 11, 13], 7, id='retrieves value at integer index in list')))
 def test_get_in_retrieves_value_at_path(keys: list[Any], coll: Any, expectedValue: Any) -> None:
