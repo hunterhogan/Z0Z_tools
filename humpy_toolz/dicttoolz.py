@@ -49,12 +49,12 @@ from collections import defaultdict, deque
 from collections.abc import Mapping
 from copy import deepcopy
 from functools import reduce
-from typing import overload, TYPE_CHECKING
+from typing import cast, overload, TYPE_CHECKING
 import contextlib
 import operator
 
 if TYPE_CHECKING:
-	from collections.abc import Callable, Hashable, MutableMapping, Sequence
+	from collections.abc import Callable, Hashable, Iterable, MutableMapping, Sequence
 	from humpy_toolz.theTypes import CanGetSetitem
 	from optype import CanBool, CanGetitem
 	from optype.typing import AnyIterable, EmptyIterable
@@ -725,7 +725,11 @@ def keymap[K0: Hashable, K1: Hashable, V](
 def merge[K: Hashable, V](*dicts: Mapping[K, V], factory: Callable[..., dict[K, V]] = dict) -> dict[K, V]: ...
 @overload
 def merge[K: Hashable, V](*dicts: Mapping[K, V], factory: Callable[..., MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
-def merge[K: Hashable, V](*dicts: Mapping[K, V], factory: Callable[..., MutableMapping[K, V]] = dict) -> MutableMapping[K, V]:
+@overload
+def merge[K: Hashable, V](dicts: Iterable[Mapping[K, V]], /, *, factory: Callable[..., dict[K, V]] = dict) -> dict[K, V]: ...
+@overload
+def merge[K: Hashable, V](dicts: Iterable[Mapping[K, V]], /, *, factory: Callable[..., MutableMapping[K, V]]) -> MutableMapping[K, V]: ...
+def merge[K: Hashable, V](*dicts: Mapping[K, V] | Iterable[Mapping[K, V]], factory: Callable[..., MutableMapping[K, V]] = dict) -> MutableMapping[K, V]:
 	"""Merge a collection of dictionaries and return a new `Mapping`.
 
 	(AI generated docstring)
@@ -771,23 +775,34 @@ def merge[K: Hashable, V](*dicts: Mapping[K, V], factory: Callable[..., MutableM
 		https://docs.python.org/3/library/collections.abc.html
 	"""
 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
-		dicts = dicts[0]
+		dictsToMerge: Iterable[Mapping[K, V]] = dicts[0]
+	else:
+		#=SIN= Cast: overloads require mappings here, but checking the first variadic argument cannot narrow the entire tuple.
+		dictsToMerge = cast('tuple[Mapping[K, V], ...]', dicts)
 	rv: MutableMapping[K, V] = factory()
-	for d in dicts:
+	for d in dictsToMerge:
 		rv.update(d)
 	return rv
 
 @overload
-def merge_with[V, K: Hashable](
-	func: Callable[[Sequence[V]], V], *dicts: Mapping[K, V], factory: Callable[..., dict[K, V]] = dict
-) -> dict[K, V]: ...
+def merge_with[V, ValueResult, K: Hashable](
+	func: Callable[[list[V]], ValueResult], *dicts: Mapping[K, V], factory: Callable[..., dict[K, ValueResult]] = dict
+) -> dict[K, ValueResult]: ...
 @overload
-def merge_with[V, K: Hashable](
-	func: Callable[[Sequence[V]], V], *dicts: Mapping[K, V], factory: Callable[..., MutableMapping[K, V]]
-) -> MutableMapping[K, V]: ...
-def merge_with[V, K: Hashable](
-	func: Callable[[Sequence[V]], V], *dicts: Mapping[K, V], factory: Callable[..., MutableMapping[K, V]] = dict
-) -> MutableMapping[K, V]:
+def merge_with[V, ValueResult, K: Hashable](
+	func: Callable[[list[V]], ValueResult], *dicts: Mapping[K, V], factory: Callable[..., MutableMapping[K, ValueResult]]
+) -> MutableMapping[K, ValueResult]: ...
+@overload
+def merge_with[V, ValueResult, K: Hashable](
+	func: Callable[[list[V]], ValueResult], dicts: Iterable[Mapping[K, V]], /, *, factory: Callable[..., dict[K, ValueResult]] = dict
+) -> dict[K, ValueResult]: ...
+@overload
+def merge_with[V, ValueResult, K: Hashable](
+	func: Callable[[list[V]], ValueResult], dicts: Iterable[Mapping[K, V]], /, *, factory: Callable[..., MutableMapping[K, ValueResult]]
+) -> MutableMapping[K, ValueResult]: ...
+def merge_with[V, ValueResult, K: Hashable](
+	func: Callable[[list[V]], ValueResult], *dicts: Mapping[K, V] | Iterable[Mapping[K, V]], factory: Callable[..., MutableMapping[K, ValueResult]] = dict
+) -> MutableMapping[K, ValueResult]:
 	"""Merge dictionaries and apply a `Callable` to combined values.
 
 	(AI generated docstring)
@@ -835,12 +850,15 @@ def merge_with[V, K: Hashable](
 		https://docs.python.org/3/library/collections.abc.html
 	"""
 	if len(dicts) == 1 and not isinstance(dicts[0], Mapping):
-		dicts = dicts[0]
+		dictsToMerge: Iterable[Mapping[K, V]] = dicts[0]
+	else:
+		#=SIN= Cast: overloads require mappings here, but checking the first variadic argument cannot narrow the entire tuple.
+		dictsToMerge = cast('tuple[Mapping[K, V], ...]', dicts)
 	groupedValues: defaultdict[K, list[V]] = defaultdict(list)
-	for d in dicts:
+	for d in dictsToMerge:
 		for k, v in d.items():
 			groupedValues[k].append(v)
-	rv: MutableMapping[K, V] = factory()
+	rv: MutableMapping[K, ValueResult] = factory()
 	for k, valueList in groupedValues.items():
 		rv[k] = func(valueList)
 	return rv

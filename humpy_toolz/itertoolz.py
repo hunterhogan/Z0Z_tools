@@ -11,7 +11,6 @@
 # pyright: reportUnnecessaryComparison=false
 # ruff:file-ignore[undocumented-public-module, docstring-missing-returns, try-consider-else, docstring-missing-yields, suspicious-non-cryptographic-random-usage, import-outside-top-level, zip-without-explicit-strict, too-many-return-statements, commented-out-code, mixed-spaces-and-tabs, lambda-assignment, used-dummy-variable, docstring-missing-exception]
 # ty:ignore[call-non-callable]
-# ty:ignore[call-top-callable]
 # ty:ignore[invalid-argument-type]
 # ty:ignore[invalid-assignment]
 # ty:ignore[invalid-return-type]
@@ -345,6 +344,7 @@ def get[T, V](ind: T | Sequence[T], seq: SupportsGetItem[T, V], default: V | Lit
 			raise
 	except (KeyError, IndexError):
 		if default == no_default:
+			# TODO raise from?
 			raise
 		return default
 

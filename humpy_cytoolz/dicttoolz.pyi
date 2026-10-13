@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Hashable, Mapping, MutableMapping, Sequence
+from collections.abc import Callable, Hashable, Iterable, Mapping, MutableMapping, Sequence
 from humpy_toolz.theTypes import CanGetSetitem
 from optype import CanBool, CanGetitem
 from optype.typing import AnyIterable, EmptyIterable
@@ -217,18 +217,34 @@ def merge[K: Hashable, V](*dicts: Mapping[K, V], factory: Callable[..., dict[K, 
 def merge[K: Hashable, V](*dicts: Mapping[K, V], factory: Callable[..., MutableMapping[K, V]]) -> MutableMapping[K, V]:
     ...
 
-def merge[K: Hashable, V](*dicts: Mapping[K, V], factory: Callable[..., MutableMapping[K, V]]=dict) -> MutableMapping[K, V]:
+@overload
+def merge[K: Hashable, V](dicts: Iterable[Mapping[K, V]], /, *, factory: Callable[..., dict[K, V]]=dict) -> dict[K, V]:
     ...
 
 @overload
-def merge_with[V, K: Hashable](func: Callable[[Sequence[V]], V], *dicts: Mapping[K, V], factory: Callable[..., dict[K, V]]=dict) -> dict[K, V]:
+def merge[K: Hashable, V](dicts: Iterable[Mapping[K, V]], /, *, factory: Callable[..., MutableMapping[K, V]]) -> MutableMapping[K, V]:
+    ...
+
+def merge[K: Hashable, V](*dicts: Mapping[K, V] | Iterable[Mapping[K, V]], factory: Callable[..., MutableMapping[K, V]]=dict) -> MutableMapping[K, V]:
     ...
 
 @overload
-def merge_with[V, K: Hashable](func: Callable[[Sequence[V]], V], *dicts: Mapping[K, V], factory: Callable[..., MutableMapping[K, V]]) -> MutableMapping[K, V]:
+def merge_with[V, ValueResult, K: Hashable](func: Callable[[list[V]], ValueResult], *dicts: Mapping[K, V], factory: Callable[..., dict[K, ValueResult]]=dict) -> dict[K, ValueResult]:
     ...
 
-def merge_with[V, K: Hashable](func: Callable[[Sequence[V]], V], *dicts: Mapping[K, V], factory: Callable[..., MutableMapping[K, V]]=dict) -> MutableMapping[K, V]:
+@overload
+def merge_with[V, ValueResult, K: Hashable](func: Callable[[list[V]], ValueResult], *dicts: Mapping[K, V], factory: Callable[..., MutableMapping[K, ValueResult]]) -> MutableMapping[K, ValueResult]:
+    ...
+
+@overload
+def merge_with[V, ValueResult, K: Hashable](func: Callable[[list[V]], ValueResult], dicts: Iterable[Mapping[K, V]], /, *, factory: Callable[..., dict[K, ValueResult]]=dict) -> dict[K, ValueResult]:
+    ...
+
+@overload
+def merge_with[V, ValueResult, K: Hashable](func: Callable[[list[V]], ValueResult], dicts: Iterable[Mapping[K, V]], /, *, factory: Callable[..., MutableMapping[K, ValueResult]]) -> MutableMapping[K, ValueResult]:
+    ...
+
+def merge_with[V, ValueResult, K: Hashable](func: Callable[[list[V]], ValueResult], *dicts: Mapping[K, V] | Iterable[Mapping[K, V]], factory: Callable[..., MutableMapping[K, ValueResult]]=dict) -> MutableMapping[K, ValueResult]:
     ...
 
 def update_in[K: Hashable, V_co](d: Mapping[K, Mapping[K, V_co] | V_co], keys: Sequence[K], func: Callable[[V_co | None], V_co] | Callable[[V_co], V_co], default: V_co | None=None, factory: Callable[..., Mapping[K, Mapping[K, V_co] | V_co]]=dict) -> Mapping[K, Mapping[K, V_co] | V_co]:
