@@ -9,7 +9,7 @@
 # pyright: reportUnknownParameterType=false
 # pyright: reportUnknownVariableType=false
 # pyright: reportUnnecessaryComparison=false
-# ruff:file-ignore[undocumented-public-module, docstring-missing-returns, try-consider-else, docstring-missing-yields, suspicious-non-cryptographic-random-usage, import-outside-top-level, zip-without-explicit-strict, too-many-return-statements, commented-out-code, mixed-spaces-and-tabs, lambda-assignment, used-dummy-variable, docstring-missing-exception]
+# ruff:file-ignore[undocumented-public-module, docstring-missing-returns, try-consider-else, docstring-missing-yields, suspicious-non-cryptographic-random-usage, import-outside-top-level, zip-without-explicit-strict, commented-out-code, mixed-spaces-and-tabs, lambda-assignment, used-dummy-variable, docstring-missing-exception]
 # ty:ignore[call-non-callable]
 # ty:ignore[invalid-argument-type]
 # ty:ignore[invalid-assignment]
@@ -24,6 +24,7 @@ from collections.abc import Sequence
 from functools import partial
 from humpy_toolz.utils import no_default
 from itertools import filterfalse, zip_longest
+from optype import do_getitem
 from operator import is_not, itemgetter
 from typing import cast, overload, TYPE_CHECKING
 import heapq
@@ -32,6 +33,7 @@ import itertools
 if TYPE_CHECKING:
 	from collections.abc import Callable, Collection, Hashable, ItemsView, Iterable, Iterator, KeysView, Mapping, ValuesView
 	from humpy_toolz.theTypes import Randomable, SupportsDunderLT, SupportsGetItem, SupportsRichComparison
+	from optype import CanGetitem
 	from typing import Any, Literal
 	from typing_extensions import TypeIs
 
@@ -280,17 +282,23 @@ def frequencies[T](seq: Iterable[T]) -> dict[T, int]:
 		d[item] += 1
 	return dict(d)
 
-def _get[T, V](ind: T, seq: SupportsGetItem[T, V], default: V) -> V:
+def _get[Key, Value, ValueDefault](ind: Key, seq: CanGetitem[Key, Value], default: ValueDefault) -> Value | ValueDefault:
 	try:
 		return seq[ind]
 	except (KeyError, IndexError):
 		return default
 
 @overload
-def get[T, V](ind: Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> tuple[V, ...]: ...
+def get[Key, Value](ind: list[Key], seq: CanGetitem[Key, Value], default: Literal['__no__default__'] = ...) -> tuple[Value, ...]: ...
 @overload
-def get[T, V](ind: T, seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> V: ...
-def get[T, V](ind: T | Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['__no__default__'] = no_default) -> V | tuple[V, ...]:
+def get[Key, Value, ValueDefault](ind: list[Key], seq: CanGetitem[Key, Value], default: ValueDefault) -> tuple[Value | ValueDefault, ...]: ...
+@overload
+def get[Key, Value](ind: Key, seq: CanGetitem[Key, Value], default: Literal['__no__default__'] = ...) -> Value: ...
+@overload
+def get[Key, Value, ValueDefault](ind: Key, seq: CanGetitem[Key, Value], default: ValueDefault) -> Value | ValueDefault: ...
+def get[Key, Value, ValueDefault](
+	ind: Key | list[Key], seq: CanGetitem[Key, Value], default: ValueDefault | Literal['__no__default__'] = no_default
+) -> Value | ValueDefault | tuple[Value | ValueDefault, ...]:
 	"""Get element in a sequence or dict
 
 	Provides standard indexing
@@ -322,29 +330,14 @@ def get[T, V](ind: T | Sequence[T], seq: SupportsGetItem[T, V], default: V | Lit
 	--------
 		pluck
 	"""
-	# TODO https://github.com/hunterhogan/Z0Z_tools/issues/126
+	if isinstance(ind, list):
+		if default == no_default:
+			return tuple(map(partial(do_getitem, seq), ind))
+		return tuple(map(partial(_get, seq=seq, default=default), ind))
 	try:
 		return seq[ind]
-	except TypeError:
-		if isinstance(ind, Sequence) and not isinstance(ind, str):
-			if default == no_default:
-				# TODO I think len == 1 and len > 1 can have the same logic.
-				if len(ind) > 1:
-					return itemgetter(*ind)(seq)
-				elif ind:
-					return (seq[ind[0]],)
-				else:
-					return ()
-			else:
-				return tuple(_get(index, seq, default) for index in ind)
-		elif default != no_default:
-			return default
-		else:
-			# TODO raise from?
-			raise
-	except (KeyError, IndexError):
+	except (KeyError, IndexError, TypeError):
 		if default == no_default:
-			# TODO raise from?
 			raise
 		return default
 

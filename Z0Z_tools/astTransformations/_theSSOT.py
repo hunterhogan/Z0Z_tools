@@ -12,7 +12,7 @@ import re as regex
 2. Initiate changes from toolz because I know Python, not Cython.
 3. Use `astToolkit` to automate changes propagating from toolz to cytoolz.
 4. Switch to `optype` to enable sophisticated type annotations.
-5. `optype` Python>=3.12, so switch to Python>=3.12.
+5. [x]`optype` Python>=3.12, so switch to Python>=3.12.
 """
 
 #============ Eliminate hardcoding. ===============

@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import Callable, Collection, Hashable, ItemsView, Iterable, Iterator, KeysView, Mapping, Sequence, ValuesView
 from humpy_toolz.theTypes import Randomable, SupportsDunderLT, SupportsGetItem, SupportsRichComparison
 from humpy_toolz.utils import no_default
+from optype import CanGetitem
 from typing import Any, Literal, overload
 from typing_extensions import TypeIs
 
@@ -59,18 +60,26 @@ def first[T](seq: Iterable[T]) -> T:
 def frequencies[T](seq: Iterable[T]) -> dict[T, int]:
     ...
 
-def _get[T, V](ind: T, seq: SupportsGetItem[T, V], default: V) -> V:
+def _get[Key, Value, ValueDefault](ind: Key, seq: CanGetitem[Key, Value], default: ValueDefault) -> Value | ValueDefault:
     ...
 
 @overload
-def get[T, V](ind: Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['__no__default__']=no_default) -> tuple[V, ...]:
+def get[Key, Value](ind: list[Key], seq: CanGetitem[Key, Value], default: Literal['__no__default__']=...) -> tuple[Value, ...]:
     ...
 
 @overload
-def get[T, V](ind: T, seq: SupportsGetItem[T, V], default: V | Literal['__no__default__']=no_default) -> V:
+def get[Key, Value, ValueDefault](ind: list[Key], seq: CanGetitem[Key, Value], default: ValueDefault) -> tuple[Value | ValueDefault, ...]:
     ...
 
-def get[T, V](ind: T | Sequence[T], seq: SupportsGetItem[T, V], default: V | Literal['__no__default__']=no_default) -> V | tuple[V, ...]:
+@overload
+def get[Key, Value](ind: Key, seq: CanGetitem[Key, Value], default: Literal['__no__default__']=...) -> Value:
+    ...
+
+@overload
+def get[Key, Value, ValueDefault](ind: Key, seq: CanGetitem[Key, Value], default: ValueDefault) -> Value | ValueDefault:
+    ...
+
+def get[Key, Value, ValueDefault](ind: Key | list[Key], seq: CanGetitem[Key, Value], default: ValueDefault | Literal['__no__default__']=no_default) -> Value | ValueDefault | tuple[Value | ValueDefault, ...]:
     ...
 
 @overload
