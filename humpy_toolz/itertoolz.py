@@ -24,8 +24,8 @@ from collections.abc import Sequence
 from functools import partial
 from humpy_toolz.utils import no_default
 from itertools import filterfalse, zip_longest
-from optype import do_getitem
 from operator import is_not, itemgetter
+from optype import do_getitem
 from typing import cast, overload, TYPE_CHECKING
 import heapq
 import itertools
