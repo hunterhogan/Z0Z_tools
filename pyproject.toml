@@ -33,7 +33,7 @@ optional-dependencies = { development = [
 ], testing = ["pytest"] }
 
 [project.urls]
-Context7 = "https://context7.com/hunterhogan/z0z-tools"
+Context7 = "https://context7.com/hunterhogan/z0z_tools"
 Donate = "https://www.patreon.com/integrated"
 Download = "https://pypi.org/project/Z0Z_tools"
 Homepage = "https://github.com/hunterhogan/Z0Z_tools"
