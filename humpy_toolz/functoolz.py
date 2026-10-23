@@ -29,7 +29,7 @@ from humpy_toolz.utils import no_default
 from importlib import import_module
 from operator import attrgetter, not_
 from types import MethodType
-from typing import overload, TYPE_CHECKING
+from typing import Concatenate, overload, TYPE_CHECKING
 import contextlib
 import inspect
 import sys
@@ -393,6 +393,12 @@ class curry[**P, T]:
 
 	@overload
 	def __call__(self, *args: P.args, **kwargs: P.kwargs) -> T: ...
+
+	@overload
+	def __call__[First, **Remaining](self: curry[Concatenate[First, Remaining], T], first: First, /) -> curry[Remaining, T]: ...
+
+	@overload
+	def __call__[First, Second, **Remaining](self: curry[Concatenate[First, Second, Remaining], T], first: First, second: Second, /) -> curry[Remaining, T]: ...
 
 	@overload
 	def __call__(self, *args: Any, **kwargs: Any) -> curry[P, T]: ...

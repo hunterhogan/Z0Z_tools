@@ -1,9 +1,9 @@
 # ruff:file-ignore[undocumented-public-module, undocumented-public-function]
 from __future__ import annotations
 
-from astToolkit import Be, Grab, IfThis, Make, NodeChanger, parsePathFilename2astModule, Then
+from astToolkit import Be, Grab, IfThis, Make, NodeChanger, Then
 from astToolkit.containers import LedgerOfImports
-from astToolkit.transformationTools import write_astModule
+from astToolkit.filesystem import parsePathFilename2astModule, write_astModule
 from copy import deepcopy
 from functools import partial
 from pathlib import Path
@@ -43,9 +43,8 @@ def exportStub(settingsPackageSource: PackageSettings, settingsPackageDuplicate:
 
 	NodeChanger(assignmentIsReplaceable, Then.removeIt).visit(astModule)
 	NodeChanger(annotatedAssignmentValueIsReplaceable, Grab.valueAttribute(Then.replaceWith(None))).visit(astModule)
-	NodeChanger(Be.ClassDef, Grab.bodyAttribute(Then.replaceWith(ellipsisBody))).visit(astModule)
 
-	Grab.bodyAttribute(lambda listStatements: [*ledgerOfImports.makeList_ast(), *listStatements])(astModule)
+	NodeChanger(Be.Module, Grab.bodyAttribute(ledgerOfImports.makeList_ast().__add__)).visit(astModule)
 
 	settingsWriteStub_astModule = deepcopy(settingsWrite_astModule)
 	settingsWriteStub_astModule['autoflake']['ignore_init_module_imports'] = False
