@@ -31,6 +31,14 @@ def assignmentIsReplaceable(node: ast.AST) -> TypeIs[ast.Assign]:
 def exportStub(settingsPackageSource: PackageSettings, settingsPackageDuplicate: PackageSettings, filename: str) -> Path:
 	astModule: ast.Module = parsePathFilename2astModule(settingsPackageSource.pathPackage / Path(filename).with_suffix('.py'))
 
+	NodeChanger(Be.FunctionDef.nameIs(IfThis.isIdentifier('__doc__')),
+		Then.replaceWith(Make.AnnAssign(Make.Name('__doc__', Make.Store()), Make.Name('str')))).visit(astModule)
+
+	NodeChanger(IfThis.isAnyOf(
+		Be.ImportFrom.moduleIs(IfThis.isIdentifier('__future__')),
+		Be.FunctionDef.nameIs(IfThis.isIdentifier('__str__')),
+		Be.FunctionDef.nameIs(IfThis.isIdentifier('__repr__'))), Then.removeIt).visit(astModule)
+
 	NodeChanger(Be.Expr, Then.removeIt).visit(astModule)
 
 	ellipsisBody: list[ast.stmt] = [Make.Expr(Make.Constant(...))]
