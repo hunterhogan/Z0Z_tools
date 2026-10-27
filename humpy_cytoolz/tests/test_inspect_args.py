@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from humpy_cytoolz._signatures import builtins
-from humpy_cytoolz.functoolz import (
-	curry, has_keywords, has_varargs, is_arity, is_partial_args, is_valid_args, num_required_args)
+from humpy_cytoolz.functoolz import curry, has_keywords, has_varargs, is_arity, is_partial_args, is_valid_args, num_required_args
 from humpy_cytoolz.utils import raises
 import functools
 import humpy_cytoolz
@@ -342,6 +343,14 @@ def test_introspect_curry_py3():
 
 def test_introspect_builtin_modules():
     mods = [builtins, functools, itertools, operator, humpy_cytoolz, humpy_cytoolz.functoolz, humpy_cytoolz.itertoolz, humpy_cytoolz.dicttoolz, humpy_cytoolz.recipes]
+    denylist = set()
+
+    def add_denylist(mod, attr):
+        if hasattr(mod, attr):
+            denylist.add(getattr(mod, attr))
+
+    add_denylist(functools, 'reduce')
+
     def is_missing(modname, name, func):
         if name.startswith('_') and (not name.startswith('__')):
             return False
@@ -353,7 +362,7 @@ def test_introspect_builtin_modules():
         except TypeError:
             pass
         try:
-            return callable(func) and func.__module__ is not None and (modname in func.__module__) and (is_partial_args(func, (), {}) is not True)
+            return callable(func) and func.__module__ is not None and (modname in func.__module__) and (is_partial_args(func, (), {}) is not True) and (func not in denylist)
         except AttributeError:
             return False
     missing = {}

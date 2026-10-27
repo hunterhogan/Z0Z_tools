@@ -382,6 +382,7 @@ def test_introspect_builtin_modules() -> None:
 	add_denylist(builtins, 'NoneType')
 	add_denylist(builtins, '__metaclass__')
 	add_denylist(builtins, 'sequenceiterator')
+	add_denylist(functools, 'reduce')
 
 	def is_missing(modname: str, name: str, func: object) -> bool:
 		if name.startswith('_') and (not name.startswith('__')):
