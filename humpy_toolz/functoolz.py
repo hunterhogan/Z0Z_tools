@@ -1,9 +1,7 @@
 # ruff:file-ignore[undocumented-public-method, undocumented-magic-method]
-# ruff:file-ignore[docstring-missing-returns, docstring-missing-exception]
 # ruff:file-ignore[boolean-type-hint-positional-argument]
 # ruff:file-ignore[builtin-argument-shadowing] `type`.
 # ruff:file-ignore[try-consider-else, bad-dunder-method-name, used-dummy-variable, private-member-access, import-outside-top-level]
-# ty:ignore[call-top-callable]
 # ty:ignore[invalid-parameter-default]
 # ty:ignore[no-matching-overload]
 # ty:ignore[unresolved-attribute]
@@ -577,8 +575,8 @@ class Compose:
 
 	def __init__(self, funcs: Iterable[Callable[..., Any]]) -> None:
 		funcs = tuple(reversed(funcs))
-		self.first = funcs[0]
-		self.funcs = funcs[1:]
+		self.first = funcs[0]  # ty: ignore[not-subscriptable]
+		self.funcs = funcs[1:]  # ty: ignore[not-subscriptable]
 
 	def __call__(self, *args: Any, **kwargs: Any) -> Any:
 		ret = self.first(*args, **kwargs)

@@ -33,3 +33,6 @@ def checkGetInAnnotations(metadata: Mapping[str, Metadata], default: dict[int, i
     assert_type(get_in(('A123456',), metadata, dict[str, dict[int, int]]()).get('valuesKnown', default), dict[int, int])
     assert_type(get_in(('A123456',), metadata), Metadata | None)
     assert_type(get_in((), metadata), Mapping[str, Metadata])
+    assert_type(get_in(('A123456',), metadata, no_default=True), Metadata)
+    assert_type(get_in(('A123456',), metadata, default, no_default=True), Metadata)
+    assert_type(get_in(('A123456',), metadata, default, True), Metadata)

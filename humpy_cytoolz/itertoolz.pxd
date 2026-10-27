@@ -1,8 +1,3 @@
-cdef class remove:
-    cdef object predicate
-    cdef object iter_seq
-
-
 cdef class accumulate:
     cdef object binop
     cdef object iter_seq
@@ -13,27 +8,6 @@ cdef class accumulate:
 cpdef dict groupby(object key, object seq)
 
 
-cdef class _merge_sorted:
-    cdef object seq1
-    cdef object seq2
-    cdef object val1
-    cdef object val2
-    cdef Py_ssize_t loop
-
-cdef class _merge_sorted_key:
-    cdef object seq1
-    cdef object seq2
-    cdef object val1
-    cdef object val2
-    cdef object key
-    cdef object key1
-    cdef object key2
-    cdef Py_ssize_t loop
-
-
-cdef object c_merge_sorted(object seqs, object key=*)
-
-
 cdef class interleave:
     cdef list iters
     cdef list newiters
@@ -41,24 +15,7 @@ cdef class interleave:
     cdef Py_ssize_t n
 
 
-cdef class _unique_key:
-    cdef object key
-    cdef object iter_seq
-    cdef object seen
-
-
-cdef class _unique_identity:
-    cdef object iter_seq
-    cdef object seen
-
-
-cpdef object unique(object seq, object key=*)
-
-
 cpdef object isiterable(object x)
-
-
-cpdef object isdistinct(object seq)
 
 
 cpdef object take(Py_ssize_t n, object seq)
@@ -94,17 +51,7 @@ cpdef object get(object ind, object seq, object default=*)
 cpdef object cons(object el, object seq)
 
 
-cpdef object concat(object seqs)
-
-
 cpdef object mapcat(object func, object seqs)
-
-
-cdef class interpose:
-    cdef object el
-    cdef object iter_seq
-    cdef object val
-    cdef bint do_el
 
 
 cpdef dict frequencies(object seq)
@@ -113,28 +60,13 @@ cpdef dict frequencies(object seq)
 cpdef dict reduceby(object key, object binop, object seq, object init=*)
 
 
-cdef class iterate:
-    cdef object func
-    cdef object x
-    cdef object val
-
-
-cdef class sliding_window:
-    cdef object iterseq
-    cdef tuple prev
-    cdef Py_ssize_t n
+cpdef object sliding_window(Py_ssize_t n, object seq)
 
 
 cpdef object partition(Py_ssize_t n, object seq, object pad=*)
 
 
-cdef class partition_all:
-    cdef Py_ssize_t n
-    cdef object iterseq
-    cdef object seq
-
-
-cpdef object count(object seq)
+cpdef object partition_all(Py_ssize_t n, object seq)
 
 
 cdef class _pluck_index:

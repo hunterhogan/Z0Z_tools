@@ -3,8 +3,7 @@
 # cython: language_level=3
 """Provide Cython implementations of immutable, functional-style operations on `Mapping` objects.
 
-This module mirrors the public function order of `humpy_toolz.dicttoolz` so the Python and
-Cython implementations can be compared function by function. Public functions are ordered by
+Public functions are ordered by
 `__all__`; C-level implementation objects remain adjacent to the public function they support.
 
 Contents
@@ -98,8 +97,7 @@ cdef f_map_next get_map_iter(object d, PyObject* *ptr) except NULL:
 	1) If ``d`` is exactly a dict, use PyDict_Next
 	2) If ``d`` is subtype of dict, use PyMapping_Next.  This lets the user
 	   control the order iteration, such as for ordereddict.
-	3) If using PyMapping_Next, iterate using ``iteritems`` if possible,
-	   otherwise iterate using ``items``.
+	3) If using PyMapping_Next, iterate using ``items``.
 
 	"""
 	cdef object val

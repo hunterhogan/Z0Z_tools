@@ -6,9 +6,7 @@ from astToolkit.filesystem import parsePathFilename2astModule, write_astModule
 from hunterMakesPy import raiseIfNone
 from pathlib import Path
 from typing import TYPE_CHECKING
-from Z0Z_tools.astTransformations._synchronizeDocstrings import synchronizeDocstrings
-from Z0Z_tools.astTransformations._theSSOT import settingsFor, settingsWrite_astModule
-from Z0Z_tools.astTransformations.exportStub import exportStubs
+from Z0Z_tools.astTransformations._theSSOT import settingsWrite_astModule
 
 if TYPE_CHECKING:
 	from collections.abc import Callable, Iterable
@@ -32,12 +30,3 @@ def synchronizeTests(settingsPackageSource: PackageSettings, settingsPackageDupl
 
 		write_astModule(astModule, settingsPackageDuplicate.pathPackage / relativePathTests / filename, settingsWrite_astModule)
 
-if __name__ == '__main__':
-	listFilenames: Iterable[str] = frozenset(('test_dicttoolz.py', 'test_itertoolz.py'))
-	synchronizeTests(settingsFor['humpy_toolz'], settingsFor['humpy_cytoolz'], listFilenames)
-
-	listFilenamesDocstrings: Iterable[str] = frozenset(('dicttoolz', 'functoolz', 'itertoolz', 'recipes', 'utils'))
-	synchronizeDocstrings(settingsFor['humpy_toolz'], settingsFor['humpy_cytoolz'], listFilenamesDocstrings)
-
-	listFilenamesStubs: Iterable[str] = frozenset(('dicttoolz', 'functoolz', 'itertoolz', 'utils'))
-	exportStubs(settingsFor['humpy_toolz'], settingsFor['humpy_cytoolz'], listFilenamesStubs)

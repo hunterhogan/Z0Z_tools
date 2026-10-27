@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import UserDict
 from functools import partial
 from humpy_cytoolz.itertoolz import (
 	accumulate, concat, concatv, cons, count, diff, drop, first, frequencies, get, getter, groupby, interleave, interpose, isdistinct,
@@ -60,6 +61,8 @@ def test_merge_sorted() -> None:
     assert list(merge_sorted([1], [2, 3, 4], key=identity)) == [1, 2, 3, 4]
     data: list[list[tuple[int, int]]] = [[(1, 2), (0, 4), (3, 6)], [(5, 3), (6, 5), (8, 8)], [(9, 1), (9, 8), (9, 9)]]
     assert list(merge_sorted(*data, key=lambda x: x[1])) == [(9, 1), (1, 2), (5, 3), (0, 4), (6, 5), (3, 6), (8, 8), (9, 8), (9, 9)]
+    with pytest.raises(TypeError):
+        merge_sorted([1, 2], unknown=True)
     assert list(merge_sorted()) == []
     assert list(merge_sorted([1, 2, 3])) == [1, 2, 3]
     assert list(merge_sorted([1, 4, 5], [2, 3])) == [1, 2, 3, 4, 5]
@@ -110,12 +113,16 @@ def test_isdistinct() -> None:
     assert isdistinct('World') is True
     assert isdistinct(iter([1, 2, 3])) is True
     assert isdistinct(iter([1, 2, 1])) is False
+    assert isdistinct([[13], [17]]) is True
+    assert isdistinct([[13], [17], [13]]) is False
 
 def test_nth() -> None:
     assert nth(2, 'ABCDE') == 'C'
     assert nth(2, iter('ABCDE')) == 'C'
     assert nth(1, (3, 2, 1)) == 2
     assert nth(0, {'foo': 'bar'}) == 'foo'
+    assert nth(0, UserDict({'alpha': 13, 'beta': 17})) == 'alpha'
+    assert nth(1, UserDict({'alpha': 13, 'beta': 17})) == 'beta'
     assert raises(StopIteration, lambda: nth(10, {10: 'foo'}))
     assert nth(-2, 'ABCDE') == 'D'
     assert raises(ValueError, lambda: nth(-2, iter('ABCDE')))
@@ -134,20 +141,22 @@ def test_last() -> None:
     assert last('ABCDE') == 'E'
     assert last((3, 2, 1)) == 1
     assert isinstance(last({0: 'zero', 1: 'one'}), int)
+    assert last(UserDict({'alpha': 13, 'beta': 17})) == 'beta'
 
 def test_rest() -> None:
     assert list(rest('ABCDE')) == list('BCDE')
     assert list(rest((3, 2, 1))) == list((2, 1))
+    assert list(rest([])) == []
 
 def test_take() -> None:
     assert list(take(3, 'ABCDE')) == list('ABC')
     assert list(take(2, (3, 2, 1))) == list((3, 2))
 
-@pytest.mark.parametrize(('n', 'seq', 'expected'), [pytest.param(2, [11, 22, 33, 44], [33, 44], id='sequence_list_n2'), pytest.param(10, [11, 22, 33, 44], [11, 22, 33, 44], id='sequence_list_n_gt_len'), pytest.param(2, (11, 22, 33, 44), (33, 44), id='sequence_tuple_n2'), pytest.param(10, (11, 22, 33, 44), (11, 22, 33, 44), id='sequence_tuple_n_gt_len'), pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}, ('gamma', 'delta'), id='mapping_n2'), pytest.param(10, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}, ('alpha', 'beta', 'gamma', 'delta'), id='mapping_n_gt_len'), pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.items(), (('gamma', 33), ('delta', 44)), id='itemsview_n2'), pytest.param(10, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.items(), (('alpha', 11), ('beta', 22), ('gamma', 33), ('delta', 44)), id='itemsview_n_gt_len'), pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.keys(), ('gamma', 'delta'), id='keysview_n2'), pytest.param(10, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.keys(), ('alpha', 'beta', 'gamma', 'delta'), id='keysview_n_gt_len'), pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.values(), (33, 44), id='valuesview_n2'), pytest.param(10, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.values(), (11, 22, 33, 44), id='valuesview_n_gt_len')])
+@pytest.mark.parametrize(('n', 'seq', 'expected'), [pytest.param(2, [11, 22, 33, 44], [33, 44], id='sequence_list_n2'), pytest.param(10, [11, 22, 33, 44], [11, 22, 33, 44], id='sequence_list_n_gt_len'), pytest.param(5, [11, 22, 33, 44], [11, 22, 33, 44], id='sequence_list_n_len_plus_one'), pytest.param(2, (11, 22, 33, 44), (33, 44), id='sequence_tuple_n2'), pytest.param(10, (11, 22, 33, 44), (11, 22, 33, 44), id='sequence_tuple_n_gt_len'), pytest.param(2, UserDict({'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}), ('gamma', 'delta'), id='userdict_n2'), pytest.param(10, UserDict({'alpha': 11, 'beta': 22}), ('alpha', 'beta'), id='userdict_n_gt_len'), pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}, ('gamma', 'delta'), id='mapping_n2'), pytest.param(10, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}, ('alpha', 'beta', 'gamma', 'delta'), id='mapping_n_gt_len'), pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.items(), (('gamma', 33), ('delta', 44)), id='itemsview_n2'), pytest.param(10, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.items(), (('alpha', 11), ('beta', 22), ('gamma', 33), ('delta', 44)), id='itemsview_n_gt_len'), pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.keys(), ('gamma', 'delta'), id='keysview_n2'), pytest.param(10, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.keys(), ('alpha', 'beta', 'gamma', 'delta'), id='keysview_n_gt_len'), pytest.param(2, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.values(), (33, 44), id='valuesview_n2'), pytest.param(10, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.values(), (11, 22, 33, 44), id='valuesview_n_gt_len')])
 def test_tail(n: int, seq: object, expected: object) -> None:
     assert tail(n, seq) == expected
 
-@pytest.mark.parametrize(('n', 'seq', 'expected', 'incorrect_full_result'), [pytest.param(0, [11, 22, 33, 44], [], [11, 22, 33, 44], id='sequence_list_n0_issue626'), pytest.param(0, (11, 22, 33, 44), (), (11, 22, 33, 44), id='sequence_tuple_n0_issue626'), pytest.param(0, 'ABCD', '', 'ABCD', id='sequence_str_n0_issue626'), pytest.param(0, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}, (), ('alpha', 'beta', 'gamma', 'delta'), id='mapping_n0_issue626'), pytest.param(0, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.items(), (), (('alpha', 11), ('beta', 22), ('gamma', 33), ('delta', 44)), id='itemsview_n0_issue626'), pytest.param(0, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.keys(), (), ('alpha', 'beta', 'gamma', 'delta'), id='keysview_n0_issue626'), pytest.param(0, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.values(), (), (11, 22, 33, 44), id='valuesview_n0_issue626')])
+@pytest.mark.parametrize(('n', 'seq', 'expected', 'incorrect_full_result'), [pytest.param(0, [11, 22, 33, 44], [], [11, 22, 33, 44], id='sequence_list_n0_issue626'), pytest.param(0, (11, 22, 33, 44), (), (11, 22, 33, 44), id='sequence_tuple_n0_issue626'), pytest.param(0, 'ABCD', '', 'ABCD', id='sequence_str_n0_issue626'), pytest.param(0, UserDict({'alpha': 11, 'beta': 22}), (), ('alpha', 'beta'), id='userdict_n0'), pytest.param(0, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}, (), ('alpha', 'beta', 'gamma', 'delta'), id='mapping_n0_issue626'), pytest.param(0, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.items(), (), (('alpha', 11), ('beta', 22), ('gamma', 33), ('delta', 44)), id='itemsview_n0_issue626'), pytest.param(0, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.keys(), (), ('alpha', 'beta', 'gamma', 'delta'), id='keysview_n0_issue626'), pytest.param(0, {'alpha': 11, 'beta': 22, 'gamma': 33, 'delta': 44}.values(), (), (11, 22, 33, 44), id='valuesview_n0_issue626')])
 def test_tail_issue626_zero(n: int, seq: object, expected: object, incorrect_full_result: object) -> None:
     result = tail(n, seq)
     assert result == expected
@@ -157,6 +166,10 @@ def test_tail_issue626_zero(n: int, seq: object, expected: object, incorrect_ful
 def test_drop() -> None:
     assert list(drop(3, 'ABCDE')) == list('DE')
     assert list(drop(1, (3, 2, 1))) == list((2, 1))
+    seq: Iterator[int] = iter([13, 17, 19])
+    result: Iterator[int] = drop(1, seq)
+    assert next(seq) == 13
+    assert list(result) == [19]
 
 def test_take_nth() -> None:
     assert list(take_nth(2, 'ABCDE')) == list('ACE')
@@ -247,6 +260,10 @@ def test_accumulate_works_on_consumable_iterables() -> None:
 def test_sliding_window() -> None:
     assert list(sliding_window(2, [1, 2, 3, 4])) == [(1, 2), (2, 3), (3, 4)]
     assert list(sliding_window(3, [1, 2, 3, 4])) == [(1, 2, 3), (2, 3, 4)]
+    with pytest.raises(ValueError):
+        sliding_window(0, [13, 17])
+    with pytest.raises(ValueError):
+        sliding_window(-1, [13, 17])
 
 def test_sliding_window_of_short_iterator() -> None:
     assert list(sliding_window(3, [1, 2])) == []
@@ -262,6 +279,10 @@ def test_partition_all() -> None:
     assert list(partition_all(2, [1, 2, 3, 4])) == [(1, 2), (3, 4)]
     assert list(partition_all(3, range(5))) == [(0, 1, 2), (3, 4)]
     assert list(partition_all(2, [])) == []
+    with pytest.raises(ValueError):
+        partition_all(0, [13, 17])
+    with pytest.raises(ValueError):
+        partition_all(-1, [13, 17])
 
     class NoCompare:
 
@@ -283,9 +304,9 @@ def test_partition_all() -> None:
         def __len__(self) -> int:
             return super().__len__() + self.off_by
     too_long_list: ListWithBadLength = ListWithBadLength([1, 2], off_by=+1)
-    assert raises(LookupError, lambda: list(partition_all(5, too_long_list)))
+    assert list(partition_all(5, too_long_list)) == [(1, 2)]
     too_short_list: ListWithBadLength = ListWithBadLength([1, 2], off_by=-1)
-    assert raises(LookupError, lambda: list(partition_all(5, too_short_list)))
+    assert list(partition_all(5, too_short_list)) == [(1, 2)]
 
 def test_count() -> None:
     assert count((1, 2, 3)) == 3
@@ -365,6 +386,8 @@ def test_outer_join() -> None:
     assert result == expected
 
 def test_diff() -> None:
+    with pytest.raises(TypeError):
+        diff([13], [17], unknown=True)
     assert raises(TypeError, lambda: list(diff()))
     assert raises(TypeError, lambda: list(diff([1, 2])))
     assert raises(TypeError, lambda: list(diff([1, 2], 3)))
@@ -426,3 +449,12 @@ def test_random_sample() -> None:
     assert mk_rsample(hash(object)) != mk_rsample(hash(object()))
     assert mk_rsample(b'a') == mk_rsample('a')
     assert raises(TypeError, lambda: mk_rsample([]))
+    randobj = Random(1984)
+    state: tuple[object, ...] = randobj.getstate()
+    assert list(random_sample(0.1, [], random_state=randobj)) == []
+    assert randobj.getstate() == state
+    assert list(random_sample(1.0, [13, 17], random_state=randobj)) == [13, 17]
+    expected: Random = Random(1984)
+    expected.random()
+    expected.random()
+    assert randobj.getstate() == expected.getstate()

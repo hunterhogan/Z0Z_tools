@@ -7,28 +7,33 @@ from cpython.list cimport PyList_Append, PyList_GET_ITEM, PyList_GET_SIZE
 from cpython.object cimport PyObject_RichCompareBool, Py_NE
 from cpython.ref cimport PyObject, Py_INCREF, Py_XDECREF
 from cpython.sequence cimport PySequence_Check
-from cpython.set cimport PySet_Add, PySet_Contains
-from cpython.tuple cimport PyTuple_GET_ITEM, PyTuple_GetSlice, PyTuple_New, PyTuple_SET_ITEM
+from cpython.set cimport PySet_Add
+from cpython.tuple cimport PyTuple_GET_ITEM, PyTuple_New, PyTuple_SET_ITEM
 
 # Locally defined bindings that differ from `cython.cpython` bindings
 from humpy_cytoolz.cpython cimport PtrIter_Next, PtrObject_GetItem
 
-import collections
+import collections.abc
 import heapq
+import more_itertools
+from heapq import merge as merge_sorted
+from itertools import chain as concatv, filterfalse as remove
+from more_itertools import all_unique as isdistinct, ilen as count, intersperse as interpose, iterate, unique_everseen as unique
 import itertools
 import operator
 from humpy_cytoolz import utils
 
 # cdef aliases to eliminate global lookups
 cdef object deque = collections.deque
+cdef object Mapping = collections.abc.Mapping
 del collections
 
 cdef object heapify = heapq.heapify
-cdef object heappop = heapq.heappop
 cdef object heapreplace = heapq.heapreplace
 del heapq
 
 cdef object chain = itertools.chain
+cdef object batched = itertools.batched
 cdef object islice = itertools.islice
 cdef object zip_longest = itertools.zip_longest
 del itertools
@@ -50,29 +55,6 @@ __all__ = ['remove', 'accumulate', 'groupby', 'merge_sorted', 'interleave',
 
 cpdef object identity(object x):
     return x
-
-
-cdef class remove:
-    """Return those items of sequence for which predicate(item) is False
-
-	>>> def iseven(x):
-	...     return x % 2 == 0
-	>>> list(remove(iseven, [1, 2, 3, 4]))
-	[1, 3]
-	"""
-    def __cinit__(self, object predicate, object seq):
-        self.predicate = predicate
-        self.iter_seq = iter(seq)
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        cdef object val
-        val = next(self.iter_seq)
-        while self.predicate(val):
-            val = next(self.iter_seq)
-        return val
 
 
 cdef class accumulate:
@@ -183,154 +165,6 @@ cpdef dict groupby(object key, object seq):
     return d
 
 
-cdef object _merge_sorted_binary(object seqs):
-    mid = len(seqs) // 2
-    L1 = seqs[:mid]
-    if len(L1) == 1:
-        seq1 = iter(L1[0])
-    else:
-        seq1 = _merge_sorted_binary(L1)
-    L2 = seqs[mid:]
-    if len(L2) == 1:
-        seq2 = iter(L2[0])
-    else:
-        seq2 = _merge_sorted_binary(L2)
-    try:
-        val2 = next(seq2)
-    except StopIteration:
-        return seq1
-    return _merge_sorted(seq1, seq2, val2)
-
-
-cdef class _merge_sorted:
-    def __cinit__(self, seq1, seq2, val2):
-        self.seq1 = seq1
-        self.seq2 = seq2
-        self.val1 = None
-        self.val2 = val2
-        self.loop = 0
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.loop == 0:
-            try:
-                self.val1 = next(self.seq1)
-            except StopIteration:
-                self.loop = 2
-                return self.val2
-            if self.val2 < self.val1:
-                self.loop = 1
-                return self.val2
-            return self.val1
-        elif self.loop == 1:
-            try:
-                self.val2 = next(self.seq2)
-            except StopIteration:
-                self.loop = 3
-                return self.val1
-            if self.val2 < self.val1:
-                return self.val2
-            self.loop = 0
-            return self.val1
-        elif self.loop == 2:
-            return next(self.seq2)
-        return next(self.seq1)
-
-
-cdef object _merge_sorted_binary_key(object seqs, object key):
-    mid = len(seqs) // 2
-    L1 = seqs[:mid]
-    if len(L1) == 1:
-        seq1 = iter(L1[0])
-    else:
-        seq1 = _merge_sorted_binary_key(L1, key)
-    L2 = seqs[mid:]
-    if len(L2) == 1:
-        seq2 = iter(L2[0])
-    else:
-        seq2 = _merge_sorted_binary_key(L2, key)
-    try:
-        val2 = next(seq2)
-    except StopIteration:
-        return seq1
-    return _merge_sorted_key(seq1, seq2, val2, key)
-
-
-cdef class _merge_sorted_key:
-    def __cinit__(self, seq1, seq2, val2, key):
-        self.seq1 = seq1
-        self.seq2 = seq2
-        self.key = key
-        self.val1 = None
-        self.key1 = None
-        self.val2 = val2
-        self.key2 = key(val2)
-        self.loop = 0
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.loop == 0:
-            try:
-                self.val1 = next(self.seq1)
-            except StopIteration:
-                self.loop = 2
-                return self.val2
-            self.key1 = self.key(self.val1)
-            if self.key2 < self.key1:
-                self.loop = 1
-                return self.val2
-            return self.val1
-        elif self.loop == 1:
-            try:
-                self.val2 = next(self.seq2)
-            except StopIteration:
-                self.loop = 3
-                return self.val1
-            self.key2 = self.key(self.val2)
-            if self.key2 < self.key1:
-                return self.val2
-            self.loop = 0
-            return self.val1
-        elif self.loop == 2:
-            return next(self.seq2)
-        return next(self.seq1)
-
-
-cdef object c_merge_sorted(object seqs, object key=None):
-    if len(seqs) == 0:
-        return iter([])
-    elif len(seqs) == 1:
-        return iter(seqs[0])
-    elif key is None:
-        return _merge_sorted_binary(seqs)
-    return _merge_sorted_binary_key(seqs, key)
-
-
-def merge_sorted(*seqs, **kwargs):
-    """Merge and sort a collection of sorted collections
-
-	This works lazily and only keeps one value from each iterable in memory.
-
-	>>> list(merge_sorted([1, 3, 5], [2, 4, 6]))
-	[1, 2, 3, 4, 5, 6]
-
-	>>> ''.join(merge_sorted('abc', 'abc', 'abc'))
-	'aaabbbccc'
-
-	The "key" function used to sort the input may be passed as a keyword.
-
-	>>> list(merge_sorted([2, 3], [1, 3], key=lambda x: x // 3))
-	[2, 1, 3, 3]
-	"""
-    if 'key' in kwargs:
-        return c_merge_sorted(seqs, kwargs['key'])
-    return c_merge_sorted(seqs)
-
-
 cdef class interleave:
     """Interleave a sequence of sequences
 
@@ -398,62 +232,6 @@ cdef class interleave:
         return val
 
 
-cdef class _unique_key:
-    def __cinit__(self, object seq, object key):
-        self.iter_seq = iter(seq)
-        self.key = key
-        self.seen = set()
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        cdef object item, tag
-        item = next(self.iter_seq)
-        tag = self.key(item)
-        while PySet_Contains(self.seen, tag):
-            item = next(self.iter_seq)
-            tag = self.key(item)
-        PySet_Add(self.seen, tag)
-        return item
-
-
-cdef class _unique_identity:
-    def __cinit__(self, object seq):
-        self.iter_seq = iter(seq)
-        self.seen = set()
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        cdef object item
-        item = next(self.iter_seq)
-        while PySet_Contains(self.seen, item):
-            item = next(self.iter_seq)
-        PySet_Add(self.seen, item)
-        return item
-
-
-cpdef object unique(object seq, object key=None):
-    """Return only unique elements of a sequence
-
-	>>> tuple(unique((1, 2, 3)))
-	(1, 2, 3)
-	>>> tuple(unique((1, 2, 1, 3)))
-	(1, 2, 3)
-
-	Uniqueness can be defined by key keyword
-
-	>>> tuple(unique(['cat', 'mouse', 'dog', 'hen'], key=len))
-	('cat', 'mouse')
-	"""
-    if key is None:
-        return _unique_identity(seq)
-    else:
-        return _unique_key(seq, key)
-
-
 cpdef object isiterable(object x):
     """Is x iterable?
 
@@ -470,30 +248,6 @@ cpdef object isiterable(object x):
     except TypeError:
         pass
     return False
-
-
-cpdef object isdistinct(object seq):
-    """All values in sequence are distinct
-
-	>>> isdistinct([1, 2, 3])
-	True
-	>>> isdistinct([1, 2, 1])
-	False
-
-	>>> isdistinct('Hello')
-	False
-	>>> isdistinct('World')
-	True
-	"""
-    if iter(seq) is seq:
-        seen = set()
-        for item in seq:
-            if PySet_Contains(seen, item):
-                return False
-            seen.add(item)
-        return True
-    else:
-        return len(seq) == len(set(seq))
 
 
 cpdef object take(Py_ssize_t n, object seq):
@@ -521,8 +275,8 @@ cpdef object tail(Py_ssize_t n, object seq):
 		drop
 		take
 	"""
-    if PySequence_Check(seq):
-        return seq[len(seq) - n: None]
+    if PySequence_Check(seq) and not isinstance(seq, Mapping):
+        return seq[max(0, len(seq) - n):]
     return tuple(deque(seq, n))
 
 
@@ -537,17 +291,7 @@ cpdef object drop(Py_ssize_t n, object seq):
 		take
 		tail
 	"""
-    if n < 0:
-        raise ValueError('n argument for drop() must be non-negative')
-    cdef Py_ssize_t i
-    cdef object iter_seq
-    iter_seq = iter(seq)
-    try:
-        for i in range(n):
-            next(iter_seq)
-    except StopIteration:
-        pass
-    return iter_seq
+    return islice(seq, n, None)
 
 
 cpdef object take_nth(Py_ssize_t n, object seq):
@@ -585,7 +329,7 @@ cpdef object nth(Py_ssize_t n, object seq):
 	>>> nth(1, 'ABC')
 	'B'
 	"""
-    if PySequence_Check(seq):
+    if PySequence_Check(seq) and not isinstance(seq, Mapping):
         return seq[n]
     if n < 0:
         raise ValueError('"n" must be positive when indexing an iterator')
@@ -603,7 +347,7 @@ cpdef object last(object seq):
 	'C'
 	"""
     cdef object val
-    if PySequence_Check(seq):
+    if PySequence_Check(seq) and not isinstance(seq, Mapping):
         return seq[-1]
     val = no_default
     for val in seq:
@@ -614,9 +358,7 @@ cpdef object last(object seq):
 
 
 cpdef object rest(object seq):
-    seq = iter(seq)
-    next(seq)
-    return seq
+    return islice(seq, 1, None)
 
 
 cdef tuple _get_exceptions = (IndexError, KeyError, TypeError)
@@ -699,39 +441,7 @@ cpdef object get(object ind, object seq, object default='__no__default__'):
     return val
 
 
-cdef object _chain_from_iterable = chain.from_iterable
-
-
-cpdef object concat(object seqs):
-    """Concatenate zero or more iterables, any of which may be infinite.
-
-	An infinite sequence will prevent the rest of the arguments from
-	being included.
-
-	We use chain.from_iterable rather than ``chain(*seqs)`` so that seqs
-	can be a generator.
-
-	>>> list(concat([[], [1], [2, 3]]))
-	[1, 2, 3]
-
-	See Also
-	--------
-		itertools.chain.from_iterable  equivalent
-	"""
-    return _chain_from_iterable(seqs)
-
-
-def concatv(*seqs):
-    """Variadic version of concat
-
-	>>> list(concatv([], ['a'], ['b', 'c']))
-	['a', 'b', 'c']
-
-	See Also
-	--------
-		itertools.chain
-	"""
-    return _chain_from_iterable(seqs)
+concat = chain.from_iterable
 
 
 cpdef object mapcat(object func, object seqs):
@@ -750,34 +460,6 @@ cpdef object cons(object el, object seq):
 	[1, 2, 3]
 	"""
     return chain((el,), seq)
-
-
-cdef class interpose:
-    """Introduce element between each pair of elements in seq
-
-	>>> list(interpose('a', [1, 2, 3]))
-	[1, 'a', 2, 'a', 3]
-	"""
-    def __cinit__(self, object el, object seq):
-        self.el = el
-        self.iter_seq = iter(seq)
-        self.do_el = False
-        try:
-            self.val = next(self.iter_seq)
-        except StopIteration:
-            self.do_el = True
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.do_el:
-            self.val = next(self.iter_seq)
-            self.do_el = False
-            return self.el
-        else:
-            self.do_el = True
-            return self.val
 
 
 cpdef dict frequencies(object seq):
@@ -909,49 +591,7 @@ cpdef dict reduceby(object key, object binop, object seq, object init='__no__def
     return d
 
 
-cdef class iterate:
-    """Repeatedly apply a function func onto an original input
-
-	Yields x, then func(x), then func(func(x)), then func(func(func(x))), etc..
-
-	>>> def inc(x):
-	...     return x + 1
-	>>> counter = iterate(inc, 0)
-	>>> next(counter)
-	0
-	>>> next(counter)
-	1
-	>>> next(counter)
-	2
-
-	>>> double = lambda x: x * 2
-	>>> powers_of_two = iterate(double, 1)
-	>>> next(powers_of_two)
-	1
-	>>> next(powers_of_two)
-	2
-	>>> next(powers_of_two)
-	4
-	>>> next(powers_of_two)
-	8
-	"""
-    def __cinit__(self, object func, object x):
-        self.func = func
-        self.x = x
-        self.val = self  # sentinel
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.val is self:
-            self.val = self.x
-        else:
-            self.x = self.func(self.x)
-        return self.x
-
-
-cdef class sliding_window:
+cpdef object sliding_window(Py_ssize_t n, object seq):
     """A sequence of overlapping subsequences
 
 	>>> list(sliding_window(2, [1, 2, 3, 4]))
@@ -964,35 +604,7 @@ cdef class sliding_window:
 	>>> list(map(mean, sliding_window(2, [1, 2, 3, 4])))
 	[1.5, 2.5, 3.5]
 	"""
-    def __cinit__(self, Py_ssize_t n, object seq):
-        cdef Py_ssize_t i
-        self.iterseq = iter(seq)
-        self.prev = PyTuple_New(n)
-        Py_INCREF(None)
-        PyTuple_SET_ITEM(self.prev, 0, None)
-        for i, seq in enumerate(islice(self.iterseq, n-1), 1):
-            Py_INCREF(seq)
-            PyTuple_SET_ITEM(self.prev, i, seq)
-        self.n = n
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        cdef tuple current
-        cdef object item
-        cdef Py_ssize_t i
-
-        item = next(self.iterseq)
-        current = PyTuple_New(self.n)
-        Py_INCREF(item)
-        PyTuple_SET_ITEM(current, self.n-1, item)
-        for i in range(1, self.n):
-            item = self.prev[i]
-            Py_INCREF(item)
-            PyTuple_SET_ITEM(current, i-1, item)
-        self.prev = current
-        return current
+    return more_itertools.sliding_window(seq, n)
 
 
 no_pad = '__no__pad__'
@@ -1024,7 +636,7 @@ cpdef object partition(Py_ssize_t n, object seq, object pad='__no__pad__'):
         return zip_longest(*args, fillvalue=pad)
 
 
-cdef class partition_all:
+cpdef object partition_all(Py_ssize_t n, object seq):
     """Partition all elements of sequence into tuples of length at most n
 
 	The final tuple may be shorter to accommodate extra elements.
@@ -1039,64 +651,7 @@ cdef class partition_all:
 	--------
 		partition
 	"""
-    def __cinit__(self, Py_ssize_t n, object seq):
-        self.n = n
-        self.iterseq = iter(seq)
-        self.seq = seq
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        cdef tuple result
-        cdef object item
-        cdef Py_ssize_t i = 0, end
-        result = PyTuple_New(self.n)
-        for item in self.iterseq:
-            Py_INCREF(item)
-            PyTuple_SET_ITEM(result, i, item)
-            i += 1
-            if i == self.n:
-                return result
-        # iterable exhausted before filling the tuple
-        if i == 0:
-            raise StopIteration
-        for j in range(i, self.n):
-            Py_INCREF(None)
-            PyTuple_SET_ITEM(result, j, None)
-
-        try:
-            # toolz uses `len` to try to determine the size of the final result
-            # and raises LookupError if `len` lies, so we need to do the same.
-            end = len(self.seq)
-            end = end % self.n
-            if end != i:
-                raise LookupError(
-                    'The sequence passed to `parition_all` has invalid length'
-                )
-        except TypeError:
-            pass
-
-        return PyTuple_GetSlice(result, 0, i)
-
-
-cpdef object count(object seq):
-    """Count the number of items in seq
-
-	Like the builtin ``len`` but works on lazy sequences.
-
-	Not to be confused with ``itertools.count``
-
-	See Also
-	--------
-		len
-	"""
-    if iter(seq) is not seq and hasattr(seq, '__len__'):
-        return len(seq)
-    cdef Py_ssize_t i = 0
-    for _ in seq:
-        i += 1
-    return i
+    return batched(seq, n)
 
 
 cdef class _pluck_index:
@@ -1627,7 +1182,7 @@ cdef object c_diff(object seqs, object default=no_default, object key=None):
         return _diff_key(seqs, key, default=default)
 
 
-def diff(*seqs, **kwargs):
+def diff(*seqs, default=no_default, key=None):
     """Return those items that differ between sequences
 
 	>>> list(diff([1, 2, 3], [1, 2, 10, 100]))
@@ -1647,8 +1202,6 @@ def diff(*seqs, **kwargs):
     N = len(seqs)
     if N == 1 and isinstance(seqs[0], list):
         seqs = seqs[0]
-    default = kwargs.get('default', no_default)
-    key = kwargs.get('key')
     return c_diff(seqs, default=default, key=key)
 
 
@@ -1793,8 +1346,7 @@ cdef class random_sample:
 	[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]
 	"""
     def __cinit__(self, object prob, object seq, random_state=None):
-        float(prob)
-        self.prob = prob
+        self.prob = float(prob)
         self.iter_seq = iter(seq)
         if not hasattr(random_state, 'random'):
             from random import Random
@@ -1806,7 +1358,7 @@ cdef class random_sample:
         return self
 
     def __next__(self):
-        while True:
-            if self.random_func() < self.prob:
-                return next(self.iter_seq)
-            next(self.iter_seq)
+        cdef object item = next(self.iter_seq)
+        while not (self.random_func() < self.prob):
+            item = next(self.iter_seq)
+        return item

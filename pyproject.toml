@@ -1,7 +1,7 @@
 [project]
 name = "Z0Z_tools"
-version = "3.2.4"
-description = "Typing, documenting, and improving toolz and cytoolz."
+version = "4.0.0"
+description = "Typed Cython utilities for iterators, mappings, and function composition."
 readme = "README.md"
 requires-python = ">=3.12"
 license = "CC-BY-NC-4.0"
@@ -23,7 +23,7 @@ classifiers = [
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
-dependencies = ["optype", "typing_extensions>=4.10.0"]
+dependencies = ["more-itertools>=11.0", "optype>=0.19", "typing_extensions>=4.10.0"]
 optional-dependencies = { development = [
   "astToolkit",
   "hunterMakesPy",
@@ -48,7 +48,7 @@ build-backend = "setuptools.build_meta"
 build = "cp312-* cp313-* cp314-* cp315-*"
 skip = ["*-musllinux_*", "*-win32", "*-manylinux_i686", "pp*"]
 test-requires = ["pytest"]
-test-command = "pytest --pyargs humpy_cytoolz.tests humpy_toolz.tests humpy_toolz.sandbox.tests"
+test-command = "pytest --pyargs humpy_cytoolz.tests"
 
 [tool.coverage]
 report = { exclude_lines = ["if TYPE_CHECKING:", "if __name__ == \"__main__\":"], ignore_errors = false }
@@ -80,12 +80,6 @@ packages = [
   "humpy_cytoolz.curried",
   "humpy_cytoolz.tests",
   "humpy_cytoolz",
-  "humpy_tlz",
-  "humpy_toolz",
-  "humpy_toolz.curried",
-  "humpy_toolz.sandbox.tests",
-  "humpy_toolz.sandbox",
-  "humpy_toolz.tests",
   "Z0Z_tools",
 ]
 

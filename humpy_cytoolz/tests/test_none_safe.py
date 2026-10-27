@@ -33,9 +33,6 @@ class GenException:
     def __next__(self):
         raise self.exc
 
-    def next(self):
-        raise self.exc
-
 def test_dicttoolz():
     tested = []
     assert raises((TypeError, AttributeError), lambda: assoc(None, 1, 2))
@@ -187,7 +184,7 @@ def test_itertoolz():
     assert raises(TypeError, lambda: reduceby(identity, None, [1, 2, 3], 0))
     assert raises(TypeError, lambda: reduceby(identity, add, None, 0))
     tested.append('reduceby')
-    assert raises(TypeError, lambda: list(remove(None, [1, 2])))
+    assert list(remove(None, [0, 1, 2])) == [0]
     assert raises(TypeError, lambda: list(remove(identity, None)))
     tested.append('remove')
     assert raises(TypeError, lambda: second(None))

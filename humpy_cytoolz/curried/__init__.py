@@ -1,3 +1,4 @@
+# ruff: file-ignore[non-empty-init-module]
 """
 Alternate namespace for cytoolz such that all functions are curried
 
@@ -24,12 +25,13 @@ See Also
 --------
     humpy_cytoolz.functoolz.curry
 """
+from __future__ import annotations
+
 from . import operator
 from .exceptions import merge, merge_with
 from humpy_cytoolz import (
-	apply, comp, complement, compose, compose_left, concat, concatv, count, curry, diff, first, flip, frequencies,
-	identity, interleave, isdistinct, isiterable, juxt, last, memoize, merge_sorted, peek, pipe, second, thread_first,
-	thread_last)
+	apply, comp, complement, compose, compose_left, concat, concatv, count, curry, diff, first, flip, frequencies, identity, interleave,
+	isiterable, juxt, last, memoize, merge_sorted, peek, pipe, second, thread_first, thread_last)
 import humpy_cytoolz
 
 accumulate = humpy_cytoolz.curry(humpy_cytoolz.accumulate)
@@ -41,18 +43,19 @@ dissoc = humpy_cytoolz.curry(humpy_cytoolz.dissoc)
 do = humpy_cytoolz.curry(humpy_cytoolz.do)
 drop = humpy_cytoolz.curry(humpy_cytoolz.drop)
 excepts = humpy_cytoolz.curry(humpy_cytoolz.excepts)
-filter = humpy_cytoolz.curry(humpy_cytoolz.filter)  # noqa: A001
+filter = humpy_cytoolz.curry(humpy_cytoolz.filter)  # ruff: ignore[builtin-variable-shadowing]
 get = humpy_cytoolz.curry(humpy_cytoolz.get)
 get_in = humpy_cytoolz.curry(humpy_cytoolz.get_in)
 groupby = humpy_cytoolz.curry(humpy_cytoolz.groupby)
 interpose = humpy_cytoolz.curry(humpy_cytoolz.interpose)
+isdistinct = humpy_cytoolz.curry(humpy_cytoolz.isdistinct)
 itemfilter = humpy_cytoolz.curry(humpy_cytoolz.itemfilter)
 itemmap = humpy_cytoolz.curry(humpy_cytoolz.itemmap)
 iterate = humpy_cytoolz.curry(humpy_cytoolz.iterate)
 join = humpy_cytoolz.curry(humpy_cytoolz.join)
 keyfilter = humpy_cytoolz.curry(humpy_cytoolz.keyfilter)
 keymap = humpy_cytoolz.curry(humpy_cytoolz.keymap)
-map = humpy_cytoolz.curry(humpy_cytoolz.map)  # noqa: A001
+map = humpy_cytoolz.curry(humpy_cytoolz.map)  # ruff: ignore[builtin-variable-shadowing]
 mapcat = humpy_cytoolz.curry(humpy_cytoolz.mapcat)
 nth = humpy_cytoolz.curry(humpy_cytoolz.nth)
 partial = humpy_cytoolz.curry(humpy_cytoolz.partial)
@@ -66,7 +69,7 @@ reduce = humpy_cytoolz.curry(humpy_cytoolz.reduce)
 reduceby = humpy_cytoolz.curry(humpy_cytoolz.reduceby)
 remove = humpy_cytoolz.curry(humpy_cytoolz.remove)
 sliding_window = humpy_cytoolz.curry(humpy_cytoolz.sliding_window)
-sorted = humpy_cytoolz.curry(humpy_cytoolz.sorted)  # noqa: A001
+sorted = humpy_cytoolz.curry(humpy_cytoolz.sorted)  # ruff: ignore[builtin-variable-shadowing]
 tail = humpy_cytoolz.curry(humpy_cytoolz.tail)
 take = humpy_cytoolz.curry(humpy_cytoolz.take)
 take_nth = humpy_cytoolz.curry(humpy_cytoolz.take_nth)

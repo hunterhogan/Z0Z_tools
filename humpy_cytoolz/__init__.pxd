@@ -1,9 +1,9 @@
 from humpy_cytoolz.itertoolz cimport (
-    accumulate, c_merge_sorted, cons, count, drop, get, groupby, first,
-    frequencies, interleave, interpose, isdistinct, isiterable, iterate,
-    last, mapcat, nth, partition, partition_all, pluck, reduceby, remove,
-    rest, second, sliding_window, take, tail, take_nth, unique, join,
-    c_diff, topk, peek, random_sample, concat)
+    accumulate, cons, drop, get, groupby, first,
+    frequencies, interleave, isiterable,
+    last, mapcat, nth, partition, partition_all, pluck, reduceby,
+    rest, second, sliding_window, take, tail, take_nth, join,
+    c_diff, topk, peek, random_sample)
 
 
 from humpy_cytoolz.functoolz cimport (

@@ -1,7 +1,8 @@
-"""Filesystem helpers for Z0Z_tools.
+"""Test membership and ordering, filter sequences, and inspect mappings.
 
-The repository also distributes the top-level `humpy_toolz`, `humpy_cytoolz`, and `humpy_tlz`
-packages.
+(AI generated docstring)
+
+`Z0Z_tools` exposes the utilities from `functionsNeedAHome`.
 """
 
 from __future__ import annotations

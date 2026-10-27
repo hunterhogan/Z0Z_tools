@@ -342,16 +342,6 @@ def test_introspect_curry_py3():
 
 def test_introspect_builtin_modules():
     mods = [builtins, functools, itertools, operator, humpy_cytoolz, humpy_cytoolz.functoolz, humpy_cytoolz.itertoolz, humpy_cytoolz.dicttoolz, humpy_cytoolz.recipes]
-    denylist = set()
-
-    def add_denylist(mod, attr):
-        if hasattr(mod, attr):
-            denylist.add(getattr(mod, attr))
-    add_denylist(builtins, 'basestring')
-    add_denylist(builtins, 'NoneType')
-    add_denylist(builtins, '__metaclass__')
-    add_denylist(builtins, 'sequenceiterator')
-
     def is_missing(modname, name, func):
         if name.startswith('_') and (not name.startswith('__')):
             return False
@@ -363,7 +353,7 @@ def test_introspect_builtin_modules():
         except TypeError:
             pass
         try:
-            return callable(func) and func.__module__ is not None and (modname in func.__module__) and (is_partial_args(func, (), {}) is not True) and (func not in denylist)
+            return callable(func) and func.__module__ is not None and (modname in func.__module__) and (is_partial_args(func, (), {}) is not True)
         except AttributeError:
             return False
     missing = {}

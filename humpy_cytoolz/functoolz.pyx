@@ -5,7 +5,7 @@ from functools import partial
 from humpy_cytoolz.utils import no_default
 import humpy_cytoolz._signatures as _sigs
 
-from humpy_toolz.functoolz import (InstanceProperty, instanceproperty, is_arity,
+from humpy_cytoolz._signatures import (is_arity,
                              num_required_args, has_varargs, has_keywords,
                              is_valid_args, is_partial_args)
 

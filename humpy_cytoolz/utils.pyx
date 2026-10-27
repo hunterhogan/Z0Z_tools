@@ -3,16 +3,13 @@
 # cython: language_level=3
 import os.path
 import humpy_cytoolz
+from more_itertools import consume
 
 
 __all__ = ['raises', 'no_default', 'include_dirs', 'consume']
 
 
-try:
-    # Attempt to get the no_default sentinel object from humpy_toolz
-    from humpy_toolz.utils import no_default
-except ImportError:
-    no_default = '__no__default__'
+no_default = '__no__default__'
 
 
 def raises(err, lamda):
@@ -82,10 +79,3 @@ def include_dirs():
         )
     """
     return os.path.split(humpy_cytoolz.__path__[0])
-
-
-cpdef object consume(object seq):
-    """
-    Efficiently consume an iterable """
-    for _ in seq:
-        pass

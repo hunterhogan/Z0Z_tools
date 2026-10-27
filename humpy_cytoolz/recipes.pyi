@@ -1,11 +1,14 @@
-
 from collections.abc import Callable, Hashable, Iterable, Iterator
-from typing import Any
+from optype import CanGetitem
+from typing import overload
 
 __all__ = ('countby', 'partitionby')
 
-def countby[T, K: Hashable](key: Callable[[T], K] | K, seq: Iterable[T]) -> dict[K, int]:
-    ...
+@overload
+def countby[T, Key: Hashable](key: Callable[[T], Key], seq: Iterable[T]) -> dict[Key, int]: ...
+@overload
+def countby[Key, Value: Hashable](key: list[Key], seq: Iterable[CanGetitem[Key, Value]]) -> dict[tuple[Value, ...], int]: ...
+@overload
+def countby[Key, Value: Hashable](key: Key, seq: Iterable[CanGetitem[Key, Value]]) -> dict[Value, int]: ...
 
-def partitionby[T](func: Callable[[T], Any], seq: Iterable[T]) -> Iterator[tuple[T, ...]]:
-    ...
+def partitionby[T](func: Callable[[T], object], seq: Iterable[T]) -> Iterator[tuple[T, ...]]: ...

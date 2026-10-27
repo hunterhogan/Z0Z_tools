@@ -4,9 +4,11 @@ cimport
 cinit
 cpdef
 DECREF
+dictcytoolz
 dtemp
 ection
 evalform
+funccytoolz
 getargspec
 hashkey
 iate
@@ -14,7 +16,9 @@ ictionary
 INCREF
 iseven
 isvalid
+itercytoolz
 iteritems
+keepends
 keymap
 kwonly
 memof

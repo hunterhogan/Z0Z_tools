@@ -9,7 +9,7 @@
 # pyright: reportUnknownParameterType=false
 # pyright: reportUnknownVariableType=false
 # pyright: reportUnnecessaryComparison=false
-# ruff:file-ignore[undocumented-public-module, docstring-missing-returns, try-consider-else, docstring-missing-yields, suspicious-non-cryptographic-random-usage, import-outside-top-level, zip-without-explicit-strict, commented-out-code, mixed-spaces-and-tabs, lambda-assignment, used-dummy-variable, docstring-missing-exception]
+# ruff:file-ignore[undocumented-public-module, try-consider-else, suspicious-non-cryptographic-random-usage, import-outside-top-level, commented-out-code,  lambda-assignment, used-dummy-variable]
 # ty:ignore[call-non-callable]
 # ty:ignore[invalid-argument-type]
 # ty:ignore[invalid-assignment]
@@ -362,8 +362,8 @@ def groupby[T, K: Hashable](key: Callable[[T], K] | K, seq: Iterable[T]) -> dict
 	...     'gender', [{'name': 'Alice', 'gender': 'F'}, {'name': 'Bob', 'gender': 'M'}, {'name': 'Charlie', 'gender': 'M'}]
 	... )  # doctest:+SKIP
 	{'F': [{'gender': 'F', 'name': 'Alice'}],
-	 'M': [{'gender': 'M', 'name': 'Bob'},
-		   {'gender': 'M', 'name': 'Charlie'}]}
+	'M': [{'gender': 'M', 'name': 'Bob'},
+			{'gender': 'M', 'name': 'Charlie'}]}
 
 	Not to be confused with ``itertools.groupby``
 
@@ -492,7 +492,7 @@ def iterate[T](func: Callable[[T], T], x: T) -> Iterator[T]:
 		yield x
 		x = func(x)
 
-# === CALLABLE + CALLABLE (4 overloads) ===
+#=== CALLABLE + CALLABLE (4 overloads) ===
 @overload
 def join[T, U](
 	leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U]
@@ -515,7 +515,7 @@ def join[T, U, L, R](
 	right_default: R,
 ) -> Iterator[tuple[T | L, U | R]]: ...
 
-# === HASHABLE + CALLABLE (4 overloads) ===
+#=== HASHABLE + CALLABLE (4 overloads) ===
 @overload
 def join[T, U](leftkey: Hashable, leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
 @overload
@@ -531,7 +531,7 @@ def join[T, U, L, R](
 	leftkey: Hashable, leftseq: Iterable[T], rightkey: Callable[[U], Hashable], rightseq: Iterable[U], left_default: L, right_default: R
 ) -> Iterator[tuple[T | L, U | R]]: ...
 
-# === CALLABLE + HASHABLE (4 overloads) ===
+#=== CALLABLE + HASHABLE (4 overloads) ===
 @overload
 def join[T, U](leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
 @overload
@@ -547,7 +547,7 @@ def join[T, U, L, R](
 	leftkey: Callable[[T], Hashable], leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U], left_default: L, right_default: R
 ) -> Iterator[tuple[T | L, U | R]]: ...
 
-# === HASHABLE + HASHABLE (4 overloads) ===
+#=== HASHABLE + HASHABLE (4 overloads) ===
 @overload
 def join[T, U](leftkey: Hashable, leftseq: Iterable[T], rightkey: Hashable, rightseq: Iterable[U]) -> Iterator[tuple[T, U]]: ...
 @overload
@@ -1062,7 +1062,7 @@ def reduceby[T, K: Hashable](
 
 	>>> reduceby(iseven, set_add, [1, 2, 3, 4, 1, 2, 3], set)  # doctest: +SKIP
 	{True:  set([2, 4]),
-	 False: set([1, 3])}
+	False: set([1, 3])}
 	"""
 	is_no_default: bool = init == no_default
 	if not is_no_default and (not callable(init)):
@@ -1130,7 +1130,7 @@ def sliding_window(n: int, seq: Iterable[Any]) -> Iterator[tuple[Any, ...]]:
 	>>> list(map(mean, sliding_window(2, [1, 2, 3, 4])))
 	[1.5, 2.5, 3.5]
 	"""
-	return zip(*(deque(itertools.islice(it, i), 0) or it for i, it in enumerate(itertools.tee(seq, n))))
+	return zip(*(deque(itertools.islice(it, i), 0) or it for i, it in enumerate(itertools.tee(seq, n))), strict=False)
 
 @overload
 def tail[SSequence: Sequence[Any]](n: int, seq: SSequence) -> SSequence: ...
