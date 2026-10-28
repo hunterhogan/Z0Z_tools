@@ -61,13 +61,6 @@ if TYPE_CHECKING:
 	from typing import Any, TypeGuard
 	from typing_extensions import TypeIs
 
-"""# TODO update functions to work with `frozendict`.
-# pyright: reportArgumentType=false
-# pyright: reportAssignmentType=false
-# pyright: reportInconsistentOverload=false
-# pyright: reportReturnType=false
-# ty:ignore[invalid-assignment]
-# ty:ignore[invalid-return-type]"""
 __all__ = (
 	'assoc',
 	'assoc_in',
@@ -436,7 +429,7 @@ def get_in(keys: Any, coll: Any, default: Any = None, no_default: CanBool = Fals
 	[1] Python `operator` module
 		https://docs.python.org/3/library/operator.html#operator.getitem
 	"""
-	# DEVELOPMENT typing, see https://github.com/hunterhogan/Z0Z_tools/issues/21?issue=hunterhogan%7CZ0Z_tools%7C31
+	# Typing discussion: https://github.com/hunterhogan/Z0Z_tools/issues/21?issue=hunterhogan%7CZ0Z_tools%7C31
 	if no_default:
 		return reduce(operator.getitem, keys, coll)
 	else:
@@ -718,9 +711,7 @@ def keymap[K0: Hashable, K1: Hashable, V](
 	rv.update(zip(map(func, d.keys()), d.values(), strict=True))
 	return rv
 
-# TODO Think about: the `*dicts` need not be homogeneous.
-# TODO Think about: the `*dicts` need not match the factory.
-# TODO Think about: the `*dicts` need not match the return.
+# Input mappings may be heterogeneous and need not have the type produced by `factory`.
 @overload
 def merge[K: Hashable, V](*dicts: Mapping[K, V], factory: Callable[..., dict[K, V]] = dict) -> dict[K, V]: ...
 @overload
@@ -924,11 +915,9 @@ def update_in[K: Hashable, V_co](
 	[1] Python `collections.abc` module
 		https://docs.python.org/3/library/collections.abc.html
 	"""
-	# DEVELOPMENT Python 3.15 includes `builtins.frozendict`, which does not have `__setitem__`, and
-	# could be passed as `factory`.
-	# https://docs.python.org/3.15/whatsnew/3.15.html#pep-814-add-frozendict-built-in-type
+	# Immutable mappings do not provide `__setitem__`.
 
-	# DEVELOPMENT The original toolz function applied `factory` to every _existing_ mapping, as
+	# The original toolz function applied `factory` to every _existing_ mapping, as
 	# opposed to only using it to create a new mapping. That's excessive.
 	# - If the user wants the topmost mapping to be the same type as `factory`, for example, the user
 	#   can easily call factory before or after `update_in`. So, it should not be applied to the
@@ -938,9 +927,9 @@ def update_in[K: Hashable, V_co](
 	#   the `type` of any existing mapping.
 
 	#---------- Initialize. --------------------------------------------------
-	# DEVELOPMENT preserves the original `type`.
+	# Preserve the original `type`.
 	returnMe: Mapping[K, Mapping[K, V_co] | V_co] = deepcopy(d)
-	# DEVELOPMENT The mutable containers in `returnMe` can be changed by modifying `mappingATkey`.
+	# The mutable containers in `returnMe` can be changed by modifying `mappingATkey`.
 	mappingATkey: Mapping[K, Mapping[K, V_co] | V_co] = returnMe
 	sherpa: Mapping[K, Mapping[K, V_co] | V_co] = deepcopy(d)
 	dequeKeys: deque[K] = deque(keys)
@@ -949,14 +938,11 @@ def update_in[K: Hashable, V_co](
 
 	#--------- From outermost mapping, `d`, get or construct innermost mapping --------------
 	while dequeKeys:
-		# DEVELOPMENT Never fails:
 		key: K = dequeKeys.popleft()
-		# DEVELOPMENT Never fails:
 		sherpa = sherpa.get(key, factory())  # pyright: ignore[reportAssignmentType] # ty: ignore[invalid-assignment]
 
 		try:
-			# DEVELOPMENT `mappingATkey = sherpa` never fails.
-			# DEVELOPMENT `mappingATkey[key]` raises exception if `setitem` isn't available.
+			# Item assignment requires `__setitem__`.
 			mappingATkey[key] = mappingATkey = sherpa  # pyright: ignore[reportIndexIssue]  # ty: ignore[invalid-assignment]
 		except TypeError:
 			reconstructor = type(mappingATkey)
@@ -968,13 +954,12 @@ def update_in[K: Hashable, V_co](
 		del key
 
 	#--------- Compute value at location `keys` --------------------------
-	# DEVELOPMENT Never fails:
 	valueUpdated: V_co = func(sherpa.get(keyFinal, default))  # pyright: ignore[reportArgumentType] # ty:ignore[invalid-argument-type]
 	del default, dequeKeys, func, sherpa
 
 	#--------- Innermost `mapping[keys[-1]] = func(mapping.get(keys[-1], default))` -----------
 	try:
-		# DEVELOPMENT `mappingATkey[keyFinal]` raises exception if `setitem` isn't available.
+		# Item assignment requires `__setitem__`.
 		mappingATkey[keyFinal] = valueUpdated  # pyright: ignore[reportIndexIssue]  # ty: ignore[invalid-assignment]
 	except TypeError:
 		reconstructor = type(mappingATkey)

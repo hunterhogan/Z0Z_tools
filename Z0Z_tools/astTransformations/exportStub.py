@@ -1,8 +1,7 @@
 # ruff:file-ignore[undocumented-public-module, undocumented-public-function]
 from __future__ import annotations
 
-from astToolkit import Be, Grab, IfThis, Make, NodeChanger, Then
-from astToolkit.containers import LedgerOfImports
+from astToolkit import Be, Grab, IfThis, Make, NodeChanger, NodeTourist, Then
 from astToolkit.filesystem import parsePathFilename2astModule, write_astModule
 from copy import deepcopy
 from functools import partial
@@ -45,14 +44,16 @@ def exportStub(settingsPackageSource: PackageSettings, settingsPackageDuplicate:
 	NodeChanger(Be.FunctionDef, Grab.bodyAttribute(Then.replaceWith(ellipsisBody))).visit(astModule)
 	NodeChanger(Be.AsyncFunctionDef, Grab.bodyAttribute(Then.replaceWith(ellipsisBody))).visit(astModule)
 
-	ledgerOfImports = LedgerOfImports(astModule)
+	boxOfImports: list[ast.Import | ast.ImportFrom] = []
+	NodeTourist(Be.ImportFrom, boxOfImports.append).visit(astModule)
+	NodeTourist(Be.Import, boxOfImports.append).visit(astModule)
 	NodeChanger(IfThis.isAnyOf(Be.Import, Be.ImportFrom), Then.removeIt).visit(astModule)
 	NodeChanger(Be.If, Then.removeIt).visit(astModule)
 
 	NodeChanger(assignmentIsReplaceable, Then.removeIt).visit(astModule)
 	NodeChanger(annotatedAssignmentValueIsReplaceable, Grab.valueAttribute(Then.replaceWith(None))).visit(astModule)
 
-	NodeChanger(Be.Module, Grab.bodyAttribute(ledgerOfImports.makeList_ast().__add__)).visit(astModule)
+	NodeChanger(Be.Module, Grab.bodyAttribute(boxOfImports.__add__)).visit(astModule)
 
 	settingsWriteStub_astModule = deepcopy(settingsWrite_astModule)
 	settingsWriteStub_astModule['autoflake']['ignore_init_module_imports'] = False

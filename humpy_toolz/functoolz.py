@@ -47,12 +47,12 @@ PYPY: bool = hasattr(sys, 'pypy_version_info')
 __all__: tuple[str, ...] = (
 	'apply',
 	'complement',
-	'compose',  # DEVELOPMENT
+	'compose',
 	'compose_left',
 	'curry',
 	'do',
 	'excepts',
-	'flip',  	# DEVELOPMENT
+	'flip',
 	'identity',
 	'juxt',
 	'memoize',
@@ -325,7 +325,6 @@ class curry[**P, T]:
 	def func(self) -> Callable[P, T]:
 		return self._partial.func
 
-	# TODO remove?
 	@instanceproperty
 	def __signature__(self) -> inspect.Signature:
 		sig = inspect.signature(self.func)
@@ -629,7 +628,6 @@ class Compose:
 	def __get__(self, obj: object | None, objtype: type | None = None) -> Compose:
 		return self if obj is None else MethodType(self, obj)
 
-	# TODO remove?
 	@instanceproperty
 	def __signature__(self) -> inspect.Signature:
 		base = inspect.signature(self.first)
