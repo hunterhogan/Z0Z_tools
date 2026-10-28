@@ -1681,7 +1681,6 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__pluck_index;
 struct __pyx_obj_13humpy_cytoolz_9itertoolz__pluck_index_default;
 struct __pyx_obj_13humpy_cytoolz_9itertoolz__pluck_list;
 struct __pyx_obj_13humpy_cytoolz_9itertoolz__pluck_list_default;
-struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_index;
 struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_list;
 struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_null;
 struct __pyx_obj_13humpy_cytoolz_9itertoolz__join;
@@ -1761,7 +1760,7 @@ struct __pyx_opt_args_13humpy_cytoolz_9itertoolz_pluck {
   PyObject *__pyx_default;
 };
 
-/* "humpy_cytoolz/itertoolz.pxd":113
+/* "humpy_cytoolz/itertoolz.pxd":108
  * 
  * 
  * cpdef object join(object leftkey, object leftseq,             # <<<<<<<<<<<<<<
@@ -1774,7 +1773,7 @@ struct __pyx_opt_args_13humpy_cytoolz_9itertoolz_join {
   PyObject *right_default;
 };
 
-/* "humpy_cytoolz/itertoolz.pxd":197
+/* "humpy_cytoolz/itertoolz.pxd":192
  * 
  * 
  * cdef object c_diff(object seqs, object default=*, object key=*)             # <<<<<<<<<<<<<<
@@ -1787,7 +1786,7 @@ struct __pyx_opt_args_13humpy_cytoolz_9itertoolz_c_diff {
   PyObject *key;
 };
 
-/* "humpy_cytoolz/itertoolz.pxd":200
+/* "humpy_cytoolz/itertoolz.pxd":195
  * 
  * 
  * cpdef object topk(Py_ssize_t k, object seq, object key=*)             # <<<<<<<<<<<<<<
@@ -1890,31 +1889,17 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__pluck_list_default {
 /* "humpy_cytoolz/itertoolz.pxd":97
  * 
  * 
- * cdef class _getter_index:             # <<<<<<<<<<<<<<
+ * cdef class _getter_list:             # <<<<<<<<<<<<<<
  *     cdef object ind
  * 
 */
-struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_index {
+struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_list {
   PyObject_HEAD
   PyObject *ind;
 };
 
 
 /* "humpy_cytoolz/itertoolz.pxd":101
- * 
- * 
- * cdef class _getter_list:             # <<<<<<<<<<<<<<
- *     cdef list ind
- *     cdef Py_ssize_t n
-*/
-struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_list {
-  PyObject_HEAD
-  PyObject *ind;
-  Py_ssize_t n;
-};
-
-
-/* "humpy_cytoolz/itertoolz.pxd":106
  * 
  * 
  * cdef class _getter_null:             # <<<<<<<<<<<<<<
@@ -1926,7 +1911,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_null {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":118
+/* "humpy_cytoolz/itertoolz.pxd":113
  *                   object right_default=*)
  * 
  * cdef class _join:             # <<<<<<<<<<<<<<
@@ -1952,7 +1937,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__join {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":136
+/* "humpy_cytoolz/itertoolz.pxd":131
  * 
  * 
  * cdef class _inner_join(_join):             # <<<<<<<<<<<<<<
@@ -1964,7 +1949,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":139
+/* "humpy_cytoolz/itertoolz.pxd":134
  *     pass
  * 
  * cdef class _right_outer_join(_join):             # <<<<<<<<<<<<<<
@@ -1976,7 +1961,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":142
+/* "humpy_cytoolz/itertoolz.pxd":137
  *     pass
  * 
  * cdef class _left_outer_join(_join):             # <<<<<<<<<<<<<<
@@ -1988,7 +1973,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":145
+/* "humpy_cytoolz/itertoolz.pxd":140
  *     pass
  * 
  * cdef class _outer_join(_join):             # <<<<<<<<<<<<<<
@@ -2000,7 +1985,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":149
+/* "humpy_cytoolz/itertoolz.pxd":144
  * 
  * 
  * cdef class _inner_join_key(_inner_join):             # <<<<<<<<<<<<<<
@@ -2012,7 +1997,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_key {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":152
+/* "humpy_cytoolz/itertoolz.pxd":147
  *     pass
  * 
  * cdef class _inner_join_index(_inner_join):             # <<<<<<<<<<<<<<
@@ -2024,7 +2009,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_index {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":155
+/* "humpy_cytoolz/itertoolz.pxd":150
  *     pass
  * 
  * cdef class _inner_join_indices(_inner_join):             # <<<<<<<<<<<<<<
@@ -2036,7 +2021,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_indices {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":158
+/* "humpy_cytoolz/itertoolz.pxd":153
  *     pass
  * 
  * cdef class _right_outer_join_key(_right_outer_join):             # <<<<<<<<<<<<<<
@@ -2048,7 +2033,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_key {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":161
+/* "humpy_cytoolz/itertoolz.pxd":156
  *     pass
  * 
  * cdef class _right_outer_join_index(_right_outer_join):             # <<<<<<<<<<<<<<
@@ -2060,7 +2045,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_index {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":164
+/* "humpy_cytoolz/itertoolz.pxd":159
  *     pass
  * 
  * cdef class _right_outer_join_indices(_right_outer_join):             # <<<<<<<<<<<<<<
@@ -2072,7 +2057,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_indices {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":167
+/* "humpy_cytoolz/itertoolz.pxd":162
  *     pass
  * 
  * cdef class _left_outer_join_key(_left_outer_join):             # <<<<<<<<<<<<<<
@@ -2084,7 +2069,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_key {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":170
+/* "humpy_cytoolz/itertoolz.pxd":165
  *     pass
  * 
  * cdef class _left_outer_join_index(_left_outer_join):             # <<<<<<<<<<<<<<
@@ -2096,7 +2081,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_index {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":173
+/* "humpy_cytoolz/itertoolz.pxd":168
  *     pass
  * 
  * cdef class _left_outer_join_indices(_left_outer_join):             # <<<<<<<<<<<<<<
@@ -2108,7 +2093,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_indices {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":176
+/* "humpy_cytoolz/itertoolz.pxd":171
  *     pass
  * 
  * cdef class _outer_join_key(_outer_join):             # <<<<<<<<<<<<<<
@@ -2120,7 +2105,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_key {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":179
+/* "humpy_cytoolz/itertoolz.pxd":174
  *     pass
  * 
  * cdef class _outer_join_index(_outer_join):             # <<<<<<<<<<<<<<
@@ -2132,7 +2117,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_index {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":182
+/* "humpy_cytoolz/itertoolz.pxd":177
  *     pass
  * 
  * cdef class _outer_join_indices(_outer_join):             # <<<<<<<<<<<<<<
@@ -2144,7 +2129,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_indices {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":186
+/* "humpy_cytoolz/itertoolz.pxd":181
  * 
  * 
  * cdef class _diff_key:             # <<<<<<<<<<<<<<
@@ -2159,7 +2144,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__diff_key {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":192
+/* "humpy_cytoolz/itertoolz.pxd":187
  * 
  * 
  * cdef class _diff_identity:             # <<<<<<<<<<<<<<
@@ -2173,7 +2158,7 @@ struct __pyx_obj_13humpy_cytoolz_9itertoolz__diff_identity {
 };
 
 
-/* "humpy_cytoolz/itertoolz.pxd":209
+/* "humpy_cytoolz/itertoolz.pxd":204
  * 
  * 
  * cdef class random_sample:             # <<<<<<<<<<<<<<
@@ -2201,7 +2186,7 @@ struct __pyx_obj_13humpy_cytoolz_7recipes_partitionby {
 
 
 
-/* "humpy_cytoolz/itertoolz.pxd":118
+/* "humpy_cytoolz/itertoolz.pxd":113
  *                   object right_default=*)
  * 
  * cdef class _join:             # <<<<<<<<<<<<<<
@@ -2215,7 +2200,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__join {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__join *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__join;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":136
+/* "humpy_cytoolz/itertoolz.pxd":131
  * 
  * 
  * cdef class _inner_join(_join):             # <<<<<<<<<<<<<<
@@ -2229,7 +2214,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__inner_join {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__inner_join *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":139
+/* "humpy_cytoolz/itertoolz.pxd":134
  *     pass
  * 
  * cdef class _right_outer_join(_join):             # <<<<<<<<<<<<<<
@@ -2243,7 +2228,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__right_outer_join {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__right_outer_join *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":142
+/* "humpy_cytoolz/itertoolz.pxd":137
  *     pass
  * 
  * cdef class _left_outer_join(_join):             # <<<<<<<<<<<<<<
@@ -2257,7 +2242,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__left_outer_join {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__left_outer_join *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":145
+/* "humpy_cytoolz/itertoolz.pxd":140
  *     pass
  * 
  * cdef class _outer_join(_join):             # <<<<<<<<<<<<<<
@@ -2271,7 +2256,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__outer_join {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__outer_join *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":149
+/* "humpy_cytoolz/itertoolz.pxd":144
  * 
  * 
  * cdef class _inner_join_key(_inner_join):             # <<<<<<<<<<<<<<
@@ -2285,7 +2270,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__inner_join_key {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__inner_join_key *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join_key;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":152
+/* "humpy_cytoolz/itertoolz.pxd":147
  *     pass
  * 
  * cdef class _inner_join_index(_inner_join):             # <<<<<<<<<<<<<<
@@ -2299,7 +2284,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__inner_join_index {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__inner_join_index *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join_index;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":155
+/* "humpy_cytoolz/itertoolz.pxd":150
  *     pass
  * 
  * cdef class _inner_join_indices(_inner_join):             # <<<<<<<<<<<<<<
@@ -2313,7 +2298,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__inner_join_indices {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__inner_join_indices *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join_indices;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":158
+/* "humpy_cytoolz/itertoolz.pxd":153
  *     pass
  * 
  * cdef class _right_outer_join_key(_right_outer_join):             # <<<<<<<<<<<<<<
@@ -2327,7 +2312,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__right_outer_join_key {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__right_outer_join_key *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join_key;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":161
+/* "humpy_cytoolz/itertoolz.pxd":156
  *     pass
  * 
  * cdef class _right_outer_join_index(_right_outer_join):             # <<<<<<<<<<<<<<
@@ -2341,7 +2326,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__right_outer_join_index {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__right_outer_join_index *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join_index;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":164
+/* "humpy_cytoolz/itertoolz.pxd":159
  *     pass
  * 
  * cdef class _right_outer_join_indices(_right_outer_join):             # <<<<<<<<<<<<<<
@@ -2355,7 +2340,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__right_outer_join_indices {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__right_outer_join_indices *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join_indices;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":167
+/* "humpy_cytoolz/itertoolz.pxd":162
  *     pass
  * 
  * cdef class _left_outer_join_key(_left_outer_join):             # <<<<<<<<<<<<<<
@@ -2369,7 +2354,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__left_outer_join_key {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__left_outer_join_key *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join_key;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":170
+/* "humpy_cytoolz/itertoolz.pxd":165
  *     pass
  * 
  * cdef class _left_outer_join_index(_left_outer_join):             # <<<<<<<<<<<<<<
@@ -2383,7 +2368,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__left_outer_join_index {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__left_outer_join_index *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join_index;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":173
+/* "humpy_cytoolz/itertoolz.pxd":168
  *     pass
  * 
  * cdef class _left_outer_join_indices(_left_outer_join):             # <<<<<<<<<<<<<<
@@ -2397,7 +2382,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__left_outer_join_indices {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__left_outer_join_indices *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join_indices;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":176
+/* "humpy_cytoolz/itertoolz.pxd":171
  *     pass
  * 
  * cdef class _outer_join_key(_outer_join):             # <<<<<<<<<<<<<<
@@ -2411,7 +2396,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__outer_join_key {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__outer_join_key *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join_key;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":179
+/* "humpy_cytoolz/itertoolz.pxd":174
  *     pass
  * 
  * cdef class _outer_join_index(_outer_join):             # <<<<<<<<<<<<<<
@@ -2425,7 +2410,7 @@ struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__outer_join_index {
 static struct __pyx_vtabstruct_13humpy_cytoolz_9itertoolz__outer_join_index *__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join_index;
 
 
-/* "humpy_cytoolz/itertoolz.pxd":182
+/* "humpy_cytoolz/itertoolz.pxd":177
  *     pass
  * 
  * cdef class _outer_join_indices(_outer_join):             # <<<<<<<<<<<<<<
@@ -3446,7 +3431,6 @@ namespace {
     PyTypeObject *__pyx_ptype_13humpy_cytoolz_9itertoolz__pluck_index_default;
     PyTypeObject *__pyx_ptype_13humpy_cytoolz_9itertoolz__pluck_list;
     PyTypeObject *__pyx_ptype_13humpy_cytoolz_9itertoolz__pluck_list_default;
-    PyTypeObject *__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_index;
     PyTypeObject *__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_list;
     PyTypeObject *__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_null;
     PyTypeObject *__pyx_ptype_13humpy_cytoolz_9itertoolz__join;
@@ -3599,7 +3583,6 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__pluck_index_default);
   Py_CLEAR(clear_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__pluck_list);
   Py_CLEAR(clear_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__pluck_list_default);
-  Py_CLEAR(clear_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_index);
   Py_CLEAR(clear_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_list);
   Py_CLEAR(clear_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_null);
   Py_CLEAR(clear_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__join);
@@ -3659,7 +3642,6 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   Py_VISIT(traverse_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__pluck_index_default);
   Py_VISIT(traverse_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__pluck_list);
   Py_VISIT(traverse_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__pluck_list_default);
-  Py_VISIT(traverse_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_index);
   Py_VISIT(traverse_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_list);
   Py_VISIT(traverse_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_null);
   Py_VISIT(traverse_module_state->__pyx_ptype_13humpy_cytoolz_9itertoolz__join);
@@ -4963,15 +4945,6 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__pluck_list_default), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__pluck_list_default),
   #endif
   __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__pluck_list_default) __PYX_ERR(3, 87, __pyx_L1_error)
-  __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_index = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_getter_index",
-  #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
-  sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_index),
-  #elif CYTHON_COMPILING_IN_LIMITED_API
-  sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_index),
-  #else
-  sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_index),
-  #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_index) __PYX_ERR(3, 97, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_list = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_getter_list",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_list), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_list),
@@ -4980,7 +4953,7 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_list), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_list),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_list) __PYX_ERR(3, 101, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_list) __PYX_ERR(3, 97, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_null = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_getter_null",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_null), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_null),
@@ -4989,7 +4962,7 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_null), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__getter_null),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_null) __PYX_ERR(3, 106, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__getter_null) __PYX_ERR(3, 101, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__join = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_join",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__join), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__join),
@@ -4998,8 +4971,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__join), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__join),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__join) __PYX_ERR(3, 118, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__join, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__join) != 1)) __PYX_ERR(3, 118, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__join) __PYX_ERR(3, 113, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__join, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__join) != 1)) __PYX_ERR(3, 113, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_inner_join",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join),
@@ -5008,8 +4981,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join) __PYX_ERR(3, 136, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join) != 1)) __PYX_ERR(3, 136, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join) __PYX_ERR(3, 131, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join) != 1)) __PYX_ERR(3, 131, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_right_outer_join",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join),
@@ -5018,8 +4991,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join) __PYX_ERR(3, 139, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join) != 1)) __PYX_ERR(3, 139, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join) __PYX_ERR(3, 134, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join) != 1)) __PYX_ERR(3, 134, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_left_outer_join",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join),
@@ -5028,8 +5001,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join) __PYX_ERR(3, 142, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join) != 1)) __PYX_ERR(3, 142, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join) __PYX_ERR(3, 137, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join) != 1)) __PYX_ERR(3, 137, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_outer_join",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join),
@@ -5038,8 +5011,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join) __PYX_ERR(3, 145, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join) != 1)) __PYX_ERR(3, 145, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join) __PYX_ERR(3, 140, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join) != 1)) __PYX_ERR(3, 140, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_key = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_inner_join_key",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_key), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_key),
@@ -5048,8 +5021,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_key), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_key),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_key) __PYX_ERR(3, 149, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_key, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join_key) != 1)) __PYX_ERR(3, 149, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_key) __PYX_ERR(3, 144, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_key, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join_key) != 1)) __PYX_ERR(3, 144, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_index = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_inner_join_index",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_index),
@@ -5058,8 +5031,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_index),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_index) __PYX_ERR(3, 152, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_index, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join_index) != 1)) __PYX_ERR(3, 152, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_index) __PYX_ERR(3, 147, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_index, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join_index) != 1)) __PYX_ERR(3, 147, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_indices = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_inner_join_indices",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_indices), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_indices),
@@ -5068,8 +5041,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_indices), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__inner_join_indices),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_indices) __PYX_ERR(3, 155, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_indices, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join_indices) != 1)) __PYX_ERR(3, 155, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_indices) __PYX_ERR(3, 150, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__inner_join_indices, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__inner_join_indices) != 1)) __PYX_ERR(3, 150, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_key = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_right_outer_join_key",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_key), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_key),
@@ -5078,8 +5051,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_key), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_key),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_key) __PYX_ERR(3, 158, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_key, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join_key) != 1)) __PYX_ERR(3, 158, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_key) __PYX_ERR(3, 153, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_key, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join_key) != 1)) __PYX_ERR(3, 153, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_index = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_right_outer_join_index",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_index),
@@ -5088,8 +5061,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_index),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_index) __PYX_ERR(3, 161, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_index, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join_index) != 1)) __PYX_ERR(3, 161, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_index) __PYX_ERR(3, 156, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_index, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join_index) != 1)) __PYX_ERR(3, 156, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_indices = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_right_outer_join_indices",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_indices), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_indices),
@@ -5098,8 +5071,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_indices), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__right_outer_join_indices),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_indices) __PYX_ERR(3, 164, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_indices, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join_indices) != 1)) __PYX_ERR(3, 164, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_indices) __PYX_ERR(3, 159, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__right_outer_join_indices, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__right_outer_join_indices) != 1)) __PYX_ERR(3, 159, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_key = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_left_outer_join_key",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_key), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_key),
@@ -5108,8 +5081,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_key), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_key),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_key) __PYX_ERR(3, 167, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_key, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join_key) != 1)) __PYX_ERR(3, 167, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_key) __PYX_ERR(3, 162, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_key, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join_key) != 1)) __PYX_ERR(3, 162, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_index = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_left_outer_join_index",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_index),
@@ -5118,8 +5091,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_index),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_index) __PYX_ERR(3, 170, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_index, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join_index) != 1)) __PYX_ERR(3, 170, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_index) __PYX_ERR(3, 165, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_index, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join_index) != 1)) __PYX_ERR(3, 165, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_indices = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_left_outer_join_indices",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_indices), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_indices),
@@ -5128,8 +5101,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_indices), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__left_outer_join_indices),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_indices) __PYX_ERR(3, 173, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_indices, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join_indices) != 1)) __PYX_ERR(3, 173, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_indices) __PYX_ERR(3, 168, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__left_outer_join_indices, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__left_outer_join_indices) != 1)) __PYX_ERR(3, 168, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_key = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_outer_join_key",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_key), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_key),
@@ -5138,8 +5111,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_key), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_key),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_key) __PYX_ERR(3, 176, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_key, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join_key) != 1)) __PYX_ERR(3, 176, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_key) __PYX_ERR(3, 171, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_key, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join_key) != 1)) __PYX_ERR(3, 171, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_index = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_outer_join_index",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_index),
@@ -5148,8 +5121,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_index), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_index),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_index) __PYX_ERR(3, 179, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_index, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join_index) != 1)) __PYX_ERR(3, 179, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_index) __PYX_ERR(3, 174, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_index, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join_index) != 1)) __PYX_ERR(3, 174, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_indices = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_outer_join_indices",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_indices), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_indices),
@@ -5158,8 +5131,8 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_indices), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__outer_join_indices),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_indices) __PYX_ERR(3, 182, __pyx_L1_error)
-  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_indices, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join_indices) != 1)) __PYX_ERR(3, 182, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_indices) __PYX_ERR(3, 177, __pyx_L1_error)
+  if (unlikely(__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__outer_join_indices, (void**)&__pyx_vtabptr_13humpy_cytoolz_9itertoolz__outer_join_indices) != 1)) __PYX_ERR(3, 177, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__diff_key = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_diff_key",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__diff_key), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__diff_key),
@@ -5168,7 +5141,7 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__diff_key), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__diff_key),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__diff_key) __PYX_ERR(3, 186, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__diff_key) __PYX_ERR(3, 181, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__diff_identity = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "_diff_identity",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__diff_identity), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__diff_identity),
@@ -5177,7 +5150,7 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz__diff_identity), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz__diff_identity),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__diff_identity) __PYX_ERR(3, 192, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz__diff_identity) __PYX_ERR(3, 187, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz_random_sample = __Pyx_ImportType_3_3_0(__pyx_t_1, "humpy_cytoolz.itertoolz", "random_sample",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz_random_sample), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz_random_sample),
@@ -5186,7 +5159,7 @@ static int __Pyx_modinit_Type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_13humpy_cytoolz_9itertoolz_random_sample), __PYX_GET_STRUCT_ALIGNMENT_3_3_0(struct __pyx_obj_13humpy_cytoolz_9itertoolz_random_sample),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz_random_sample) __PYX_ERR(3, 209, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_3_0); if (!__pyx_mstate->__pyx_ptype_13humpy_cytoolz_9itertoolz_random_sample) __PYX_ERR(3, 204, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;

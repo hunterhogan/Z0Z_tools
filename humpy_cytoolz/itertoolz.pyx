@@ -764,29 +764,12 @@ cpdef object pluck(object ind, object seqs, object default='__no__default__'):
     return _pluck_index_default(ind, seqs, default)
 
 
-cdef class _getter_index:
-    def __cinit__(self, object ind):
-        self.ind = ind
-
-    def __call__(self, object seq):
-        return seq[self.ind]
-
-
 cdef class _getter_list:
     def __cinit__(self, list ind not None):
-        self.ind = ind
-        self.n = len(ind)
+        self.ind = ind[0]
 
     def __call__(self, object seq):
-        cdef Py_ssize_t i
-        cdef tuple result
-        cdef object val
-        result = PyTuple_New(self.n)
-        for i, val in enumerate(self.ind):
-            val = seq[val]
-            Py_INCREF(val)
-            PyTuple_SET_ITEM(result, i, val)
-        return result
+        return (seq[self.ind],)
 
 
 cdef class _getter_null:
@@ -794,15 +777,14 @@ cdef class _getter_null:
         return ()
 
 
-# TODO: benchmark getters (and compare against itemgetter)
 cpdef object getter(object index):
     if isinstance(index, list):
         if PyList_GET_SIZE(index) == 0:
             return _getter_null()
-        elif PyList_GET_SIZE(index) < 10:
+        elif PyList_GET_SIZE(index) == 1:
             return _getter_list(index)
         return itemgetter(*index)
-    return _getter_index(index)
+    return itemgetter(index)
 
 
 cpdef object join(object leftkey, object leftseq,
