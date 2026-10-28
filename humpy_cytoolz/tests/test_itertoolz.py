@@ -72,6 +72,14 @@ def test_merge_sorted() -> None:
 def test_interleave() -> None:
     assert ''.join(interleave(('ABC', '123'))) == 'A1B2C3'
     assert ''.join(interleave(('ABC', '1'))) == 'A1BC'
+    assert list(interleave(((), (13, 17), (), (19,)))) == [13, 19, 17]
+    assert list(interleave(tuple[tuple[int, ...], ...]())) == []
+    assert list(interleave((tuple[int, ...](), tuple[int, ...]()))) == []
+    seqs: Iterator[tuple[int, ...]] = iter(((13, 17), (19, 23)))
+    result: Iterator[int] = interleave(seqs)
+    assert next(seqs) == (13, 17)
+    assert list(result) == [19, 23]
+    assert list(take(5, interleave(itertools.repeat((13, 17))))) == [13, 13, 13, 13, 13]
 
 def test_unique() -> None:
     assert tuple(unique((1, 2, 3))) == (1, 2, 3)

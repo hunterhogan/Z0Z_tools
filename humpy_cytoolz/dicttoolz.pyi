@@ -1,4 +1,4 @@
-from collections.abc import Callable, Hashable, Iterable, Mapping, MutableMapping, Sequence
+from collections.abc import Callable, Hashable, Iterable, Mapping, MutableMapping
 from humpy_cytoolz.theTypes import CanGetSetitem
 from optype import CanBool, CanGetitem
 from optype.typing import AnyIterable, EmptyIterable
@@ -32,11 +32,11 @@ def assoc_in[K1: Hashable, K2: Hashable, K3: Hashable, V3, V2, V1](d: Mapping[K1
     ...
 
 @overload
-def assoc_in[K: Hashable, V](d: Mapping[K, V], keys: Sequence[K], value: V) -> dict[K, V]:
+def assoc_in[K: Hashable, V](d: Mapping[K, V], keys: Iterable[K], value: V) -> dict[K, V]:
     ...
 
 @overload
-def assoc_in[K: Hashable, V](d: Mapping[K, V], keys: Sequence[K], value: V, factory: Callable[[], MutableMapping[K, V]]) -> MutableMapping[K, V]:
+def assoc_in[K: Hashable, V](d: Mapping[K, V], keys: Iterable[K], value: V, factory: Callable[[], MutableMapping[K, V]]) -> MutableMapping[K, V]:
     ...
 
 @overload

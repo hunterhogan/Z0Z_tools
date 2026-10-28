@@ -214,7 +214,8 @@ cpdef object assoc_in(object d, object keys, object value, object factory=dict):
 	"""
 	cdef object prevkey, key
 	cdef object rv, inner, dtemp
-	prevkey, keys = keys[0], keys[1:]
+	keys = iter(keys)
+	prevkey = next(keys)
 	rv = factory()
 	if PyDict_CheckExact(rv):
 		PyDict_Update(rv, d)

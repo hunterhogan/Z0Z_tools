@@ -179,35 +179,23 @@ cdef class interleave:
 	Returns a lazy iterator
 	"""
     def __cinit__(self, seqs):
-        self.iters = [iter(seq) for seq in seqs]
+        self.iters = map(iter, seqs)
         self.newiters = []
-        self.i = 0
-        self.n = PyList_GET_SIZE(self.iters)
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        # This implementation is similar to what is done in `toolz` in that we
-        # construct a new list of iterators, `self.newiters`, when a value is
-        # successfully retrieved from an iterator from `self.iters`.
         cdef PyObject *obj
         cdef object val
 
-        if self.i == self.n:
-            self.n = PyList_GET_SIZE(self.newiters)
-            self.i = 0
-            if self.n == 0:
-                raise StopIteration
-            self.iters = self.newiters
+        val = next(self.iters, self)
+        if val is self:
+            self.iters = iter(self.newiters)
             self.newiters = []
-        val = <object>PyList_GET_ITEM(self.iters, self.i)
-        self.i += 1
+            val = next(self.iters)
         obj = PtrIter_Next(val)
 
-        # TODO: optimization opportunity.  Previously, it was possible to
-        # continue on given exceptions, `self.pass_exceptions`, which is
-        # why this code is structured this way.  Time to clean up?
         while obj is NULL:
             obj = PyErr_Occurred()
             if obj is not NULL:
@@ -215,15 +203,11 @@ cdef class interleave:
                 PyErr_Clear()
                 raise val
 
-            if self.i == self.n:
-                self.n = PyList_GET_SIZE(self.newiters)
-                self.i = 0
-                if self.n == 0:
-                    raise StopIteration
-                self.iters = self.newiters
+            val = next(self.iters, self)
+            if val is self:
+                self.iters = iter(self.newiters)
                 self.newiters = []
-            val = <object>PyList_GET_ITEM(self.iters, self.i)
-            self.i += 1
+                val = next(self.iters)
             obj = PtrIter_Next(val)
 
         PyList_Append(self.newiters, val)
