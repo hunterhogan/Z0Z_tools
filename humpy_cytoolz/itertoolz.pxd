@@ -9,10 +9,8 @@ cpdef dict groupby(object key, object seq)
 
 
 cdef class interleave:
-    cdef list iters
+    cdef object iters
     cdef list newiters
-    cdef Py_ssize_t i
-    cdef Py_ssize_t n
 
 
 cpdef object isiterable(object x)

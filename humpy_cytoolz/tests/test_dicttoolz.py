@@ -211,6 +211,8 @@ class TestDict:
         assert assoc_in(D({'a': 1}), ['a'], 2, **kw) == D({'a': 2})
         assert assoc_in(D({'a': D({'b': 1})}), ['a', 'b'], 2, **kw) == D({'a': D({'b': 2})})
         assert assoc_in(D({}), ['a', 'b'], 1, **kw) == D({'a': D({'b': 1})})
+        assert assoc_in(D({}), iter(('a', 'b')), 13, **kw) == D({'a': D({'b': 13})})
+        assert assoc_in(D({'a': D({'b': 17})}), iter(('a', 'b')), 19, **kw) == D({'a': D({'b': 19})})
         d = D({'x': 1})
         old_d = d
         d2 = assoc_in(d, ['x'], 2, **kw)
