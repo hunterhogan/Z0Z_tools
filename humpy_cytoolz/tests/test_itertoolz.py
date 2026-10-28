@@ -16,7 +16,8 @@ import itertools
 import pytest
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable, Iterator
+    from collections.abc import Callable, Hashable, Iterable, Iterator
+    from optype import CanGetitem
     from typing import Any, NoReturn
 no_default2 = loads(dumps('__no__default__'))
 
@@ -350,10 +351,29 @@ def test_join() -> None:
     result = set(starmap(add, join(first, names, second, fruit, left_default=no_default2, right_default=no_default2)))
     assert result == expected
 
-def test_getter() -> None:
-    assert getter(0)('Alice') == 'A'
-    assert getter([0])('Alice') == ('A',)
-    assert getter([])('Alice') == ()
+@pytest.mark.parametrize(('index', 'seq', 'expected'), (
+    pytest.param(0, 'Alice', 'A', id='scalar-index'),
+    pytest.param([0], 'Alice', ('A',), id='singleton-list'),
+    pytest.param([], 'Alice', (), id='empty-list'),
+    pytest.param([1, 3], 'Norway', ('o', 'w'), id='multiple-indices'),
+    pytest.param([1, 1], 'Norway', ('o', 'o'), id='repeated-index'),
+    pytest.param('Norway', {'Norway': (13, 17)}, (13, 17), id='scalar-tuple-value'),
+    pytest.param(['Norway'], {'Norway': (13, 17)}, ((13, 17),), id='singleton-tuple-value'),
+    pytest.param(('alpha', 'beta'), {('alpha', 'beta'): 19}, 19, id='scalar-tuple-key'),
+    pytest.param(slice(1, 4), 'Norway', 'orw', id='slice'),
+    pytest.param(list(range(9)), tuple(range(13, 24)), tuple(range(13, 22)), id='nine-indices'),
+    pytest.param(list(range(10)), tuple(range(13, 24)), tuple(range(13, 23)), id='ten-indices'),
+))
+def test_getter[Key: Hashable, Value](index: Key | list[Key], seq: CanGetitem[Key, Value], expected: Value | tuple[Value, ...]) -> None:
+    retrieve = getter(index)
+    assert retrieve(seq) == expected
+    if isinstance(index, list):
+        index.reverse()
+        assert retrieve(seq) == expected
+        index *= 2
+        assert retrieve(seq) == expected
+        index.clear()
+        assert retrieve(seq) == expected
 
 def test_key_as_getter() -> None:
     squares: list[tuple[int, int]] = [(i, i ** 2) for i in range(5)]
