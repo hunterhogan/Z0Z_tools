@@ -5,7 +5,7 @@ authors:
   email: HunterHogan@pm.me
 cff-version: 1.2.0
 commit: 2f1dd7fdbe41005eedadb1c9e2f500d7e096a93b
-date-released: '2026-10-27'
+date-released: '2026-10-28'
 identifiers:
 - type: url
   value: https://github.com/hunterhogan/Z0Z_tools/releases/tag/4.0.0
@@ -13,7 +13,6 @@ identifiers:
 keywords:
 - cytoolz
 - functional programming
-- toolz
 license: CC-BY-NC-4.0
 message: Cite this software with the metadata in this file.
 repository: https://github.com/hunterhogan/Z0Z_tools.git
