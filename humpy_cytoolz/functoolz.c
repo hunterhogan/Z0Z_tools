@@ -1558,7 +1558,7 @@ static const char* const __pyx_f[] = {
   "humpy_cytoolz/functoolz.pyx",
   "(tree fragment)",
   "humpy_cytoolz/functoolz.pxd",
-  ".venv/Lib/site-packages/Cython/Includes/cpython/type.pxd",
+  "cpython/type.pxd",
 };
 /* #### Code section: utility_code_proto_before_types ### */
 /* Atomics.proto (used by UnpackUnboundCMethod) */

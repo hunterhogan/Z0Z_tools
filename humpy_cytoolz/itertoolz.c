@@ -1587,7 +1587,7 @@ static const char * const __pyx_cfilenm = __FILE__;
 static const char* const __pyx_f[] = {
   "humpy_cytoolz/itertoolz.pyx",
   "(tree fragment)",
-  ".venv/Lib/site-packages/Cython/Includes/cpython/type.pxd",
+  "cpython/type.pxd",
 };
 /* #### Code section: utility_code_proto_before_types ### */
 /* Atomics.proto (used by UnpackUnboundCMethod) */

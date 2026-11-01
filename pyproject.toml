@@ -25,7 +25,7 @@ classifiers = [
 ]
 dependencies = ["more-itertools>=11.0", "optype>=0.19", "typing_extensions>=4.10.0"]
 optional-dependencies = { development = [
-  "astToolkit",
+  "astToolkit>=0.13.0",
   "hunterMakesPy",
   "pytest-cov",
   "cython>=3.0",

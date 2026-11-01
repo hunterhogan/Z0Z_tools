@@ -1497,7 +1497,7 @@ static const char * const __pyx_cfilenm = __FILE__;
 static const char* const __pyx_f[] = {
   "humpy_cytoolz/recipes.pyx",
   "(tree fragment)",
-  ".venv/Lib/site-packages/Cython/Includes/cpython/type.pxd",
+  "cpython/type.pxd",
   "humpy_cytoolz/itertoolz.pxd",
 };
 /* #### Code section: utility_code_proto_before_types ### */
