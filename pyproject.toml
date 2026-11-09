@@ -1,6 +1,6 @@
 [project]
 name = "Z0Z_tools"
-version = "4.0.0"
+version = "4.0.1"
 description = "Typed Cython utilities for iterators, mappings, and function composition."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -26,7 +26,7 @@ classifiers = [
 dependencies = ["more-itertools>=11.0", "optype>=0.19", "typing_extensions>=4.10.0"]
 optional-dependencies = { development = [
   "astToolkit>=0.13.0",
-  "hunterMakesPy",
+  "hunterMakesPy>=0.10.0",
   "pytest-cov",
   "cython>=3.0",
   "setuptools>=74.1.0"

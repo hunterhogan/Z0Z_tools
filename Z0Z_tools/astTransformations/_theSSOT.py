@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hunterMakesPy.filesystemToolkit import settings_autoflakeDEFAULT, settings_isortDEFAULT
+from hunterMakesPy.kitFilesystem import settings_autoflakeDEFAULT, settings_isortDEFAULT
 from typing import Any
 
 settingsWrite_astModule: dict[str, dict[str, Any]] = {'isort': settings_isortDEFAULT, 'autoflake': settings_autoflakeDEFAULT}
