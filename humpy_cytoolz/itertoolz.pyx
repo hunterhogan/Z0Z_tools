@@ -1,17 +1,15 @@
 # cython: embedsignature=True
 # cython: freethreading_compatible=True
 # cython: language_level=3
-from cpython.dict cimport PyDict_GetItem, PyDict_SetItem
-from cpython.exc cimport PyErr_Clear, PyErr_GivenExceptionMatches, PyErr_Occurred
+from cpython.dict cimport PyDict_GetItemWithError, PyDict_SetItem
 from cpython.list cimport PyList_Append, PyList_GET_ITEM, PyList_GET_SIZE
+from cpython.mapping cimport PyMapping_Check
 from cpython.object cimport PyObject_RichCompareBool, Py_NE
-from cpython.ref cimport PyObject, Py_INCREF, Py_XDECREF
+from cpython.ref cimport PyObject, Py_INCREF
 from cpython.sequence cimport PySequence_Check
 from cpython.set cimport PySet_Add
 from cpython.tuple cimport PyTuple_GET_ITEM, PyTuple_New, PyTuple_SET_ITEM
-
-# Locally defined bindings that differ from `cython.cpython` bindings
-from humpy_cytoolz.cpython cimport PtrIter_Next, PtrObject_GetItem
+from cpython.unicode cimport PyUnicode_CheckExact
 
 import collections.abc
 import heapq
@@ -43,6 +41,11 @@ del operator
 
 cdef object no_default = utils.no_default
 del utils
+
+
+cdef inline bint isSentinel(object value, str sentinel):
+    """Return `True` for `sentinel` and for a `str` equal to it, such as an unpickled copy, and `False` for every other type."""
+    return PyUnicode_CheckExact(value) and <str>value == sentinel
 
 
 __all__ = ['remove', 'accumulate', 'groupby', 'merge_sorted', 'interleave',
@@ -96,7 +99,7 @@ cdef class accumulate:
 
     def __next__(self):
         if self.result is self:
-            if self.initial != no_default:
+            if not isSentinel(self.initial, no_default):
                 self.result = self.initial
             else:
                 self.result = next(self.iter_seq)
@@ -106,7 +109,7 @@ cdef class accumulate:
 
 
 cdef inline object _groupby_core(dict d, object key, object item):
-    cdef PyObject *obj = PyDict_GetItem(d, key)
+    cdef PyObject *obj = PyDict_GetItemWithError(d, key)
     if obj is NULL:
         val = []
         PyList_Append(val, item)
@@ -186,34 +189,25 @@ cdef class interleave:
         return self
 
     def __next__(self):
-        cdef PyObject *obj
-        cdef object val
+        cdef object val, item
 
         val = next(self.iters, self)
         if val is self:
             self.iters = iter(self.newiters)
             self.newiters = []
             val = next(self.iters)
-        obj = PtrIter_Next(val)
+        item = next(val, self)
 
-        while obj is NULL:
-            obj = PyErr_Occurred()
-            if obj is not NULL:
-                val = <object>obj
-                PyErr_Clear()
-                raise val
-
+        while item is self:
             val = next(self.iters, self)
             if val is self:
                 self.iters = iter(self.newiters)
                 self.newiters = []
                 val = next(self.iters)
-            obj = PtrIter_Next(val)
+            item = next(val, self)
 
         PyList_Append(self.newiters, val)
-        val = <object>obj
-        Py_XDECREF(obj)
-        return val
+        return item
 
 
 cpdef object isiterable(object x):
@@ -259,7 +253,7 @@ cpdef object tail(Py_ssize_t n, object seq):
 		drop
 		take
 	"""
-    if PySequence_Check(seq) and not isinstance(seq, Mapping):
+    if PySequence_Check(seq) and PyMapping_Check(seq) and not isinstance(seq, Mapping):
         return seq[max(0, len(seq) - n):]
     return tuple(deque(seq, n))
 
@@ -330,15 +324,9 @@ cpdef object last(object seq):
 	>>> last('ABC')
 	'C'
 	"""
-    cdef object val
     if PySequence_Check(seq) and not isinstance(seq, Mapping):
         return seq[-1]
-    val = no_default
-    for val in seq:
-        pass
-    if val == no_default:
-        raise IndexError
-    return val
+    return deque(seq, 1)[0]
 
 
 cpdef object rest(object seq):
@@ -384,12 +372,11 @@ cpdef object get(object ind, object seq, object default='__no__default__'):
     cdef Py_ssize_t i
     cdef object val
     cdef tuple result
-    cdef PyObject *obj
     if isinstance(ind, list):
         i = PyList_GET_SIZE(ind)
         result = PyTuple_New(i)
         # List of indices, no default
-        if default == no_default:
+        if isSentinel(default, no_default):
             for i, val in enumerate(ind):
                 val = seq[val]
                 Py_INCREF(val)
@@ -398,31 +385,22 @@ cpdef object get(object ind, object seq, object default='__no__default__'):
 
         # List of indices with default
         for i, val in enumerate(ind):
-            obj = PtrObject_GetItem(seq, val)
-            if obj is NULL:
-                val = <object>PyErr_Occurred()
-                PyErr_Clear()
-                if not PyErr_GivenExceptionMatches(val, _get_list_exc):
-                    raise val
-                Py_INCREF(default)
-                PyTuple_SET_ITEM(result, i, default)
-            else:
-                val = <object>obj
-                PyTuple_SET_ITEM(result, i, val)
+            #=SIN= try/except: the documented contract puts `default` in place of each item that indexing does not find.
+            try:
+                val = seq[val]
+            except _get_list_exc:
+                val = default
+            Py_INCREF(val)
+            PyTuple_SET_ITEM(result, i, val)
         return result
 
-    obj = PtrObject_GetItem(seq, ind)
-    if obj is NULL:
-        val = <object>PyErr_Occurred()
-        PyErr_Clear()
-        if default == no_default:
-            raise val
-        if PyErr_GivenExceptionMatches(val, _get_exceptions):
-            return default
-        raise val
-    val = <object>obj
-    Py_XDECREF(obj)
-    return val
+    if isSentinel(default, no_default):
+        return seq[ind]
+    #=SIN= try/except: the documented contract returns `default` when indexing does not find `ind`.
+    try:
+        return seq[ind]
+    except _get_exceptions:
+        return default
 
 
 concat = chain.from_iterable
@@ -461,7 +439,7 @@ cpdef dict frequencies(object seq):
     cdef PyObject *obj
     cdef Py_ssize_t val
     for item in seq:
-        obj = PyDict_GetItem(d, item)
+        obj = PyDict_GetItemWithError(d, item)
         if obj is NULL:
             d[item] = 1
         else:
@@ -472,7 +450,7 @@ cpdef dict frequencies(object seq):
 
 cdef inline object _reduceby_core(dict d, object key, object item, object binop,
                                 object init, bint skip_init, bint call_init):
-    cdef PyObject *obj = PyDict_GetItem(d, key)
+    cdef PyObject *obj = PyDict_GetItemWithError(d, key)
     if obj is not NULL:
         PyDict_SetItem(d, key, binop(<object>obj, item))
     elif skip_init:
@@ -552,7 +530,7 @@ cpdef dict reduceby(object key, object binop, object seq, object init='__no__def
     cdef dict d = {}
     cdef object item, keyval
     cdef Py_ssize_t i, N
-    cdef bint skip_init = init == no_default
+    cdef bint skip_init = isSentinel(init, no_default)
     cdef bint call_init = callable(init)
     if callable(key):
         for item in seq:
@@ -614,7 +592,7 @@ cpdef object partition(Py_ssize_t n, object seq, object pad='__no__pad__'):
 		partition_all
 	"""
     args = [iter(seq)] * n
-    if pad == '__no__pad__':
+    if isSentinel(pad, '__no__pad__'):
         return zip(*args)
     else:
         return zip_longest(*args, fillvalue=pad)
@@ -661,19 +639,13 @@ cdef class _pluck_index_default:
         return self
 
     def __next__(self):
-        cdef PyObject *obj
         cdef object val
         val = next(self.iterseqs)
-        obj = PtrObject_GetItem(val, self.ind)
-        if obj is NULL:
-            val = <object>PyErr_Occurred()
-            PyErr_Clear()
-            if not PyErr_GivenExceptionMatches(val, _get_exceptions):
-                raise val
+        #=SIN= try/except: the documented contract yields `default` when indexing does not find `ind`.
+        try:
+            return val[self.ind]
+        except _get_exceptions:
             return self.default
-        val = <object>obj
-        Py_XDECREF(obj)
-        return val
 
 
 cdef class _pluck_list:
@@ -715,17 +687,13 @@ cdef class _pluck_list_default:
         seq = next(self.iterseqs)
         result = PyTuple_New(self.n)
         for i, val in enumerate(self.ind):
-            obj = PtrObject_GetItem(seq, val)
-            if obj is NULL:
-                val = <object>PyErr_Occurred()
-                PyErr_Clear()
-                if not PyErr_GivenExceptionMatches(val, _get_list_exc):
-                    raise val
-                Py_INCREF(self.default)
-                PyTuple_SET_ITEM(result, i, self.default)
-            else:
-                val = <object>obj
-                PyTuple_SET_ITEM(result, i, val)
+            #=SIN= try/except: the documented contract puts `default` in place of each item that indexing does not find.
+            try:
+                val = seq[val]
+            except _get_list_exc:
+                val = self.default
+            Py_INCREF(val)
+            PyTuple_SET_ITEM(result, i, val)
         return result
 
 
@@ -754,12 +722,12 @@ cpdef object pluck(object ind, object seqs, object default='__no__default__'):
 		map
 	"""
     if isinstance(ind, list):
-        if default != no_default:
+        if not isSentinel(default, no_default):
             return _pluck_list_default(ind, seqs, default)
         if PyList_GET_SIZE(ind) < 10:
             return _pluck_list(ind, seqs)
         return map(itemgetter(*ind), seqs)
-    if default == no_default:
+    if isSentinel(default, no_default):
         return _pluck_index(ind, seqs)
     return _pluck_index_default(ind, seqs, default)
 
@@ -837,7 +805,9 @@ cpdef object join(object leftkey, object leftseq,
 	>>> # result = join(second, friends, first, cities)
 	>>> result = join(1, friends, 0, cities)  # doctest: +SKIP
 	"""
-    if left_default == no_default and right_default == no_default:
+    cdef bint leftDefaultAbsent = isSentinel(left_default, no_default)
+    cdef bint rightDefaultAbsent = isSentinel(right_default, no_default)
+    if leftDefaultAbsent and rightDefaultAbsent:
         if callable(rightkey):
             return _inner_join_key(leftkey, leftseq, rightkey, rightseq,
                                    left_default, right_default)
@@ -847,7 +817,7 @@ cpdef object join(object leftkey, object leftseq,
         else:
             return _inner_join_index(leftkey, leftseq, rightkey, rightseq,
                                      left_default, right_default)
-    elif left_default != no_default and right_default == no_default:
+    elif not leftDefaultAbsent and rightDefaultAbsent:
         if callable(rightkey):
             return _right_outer_join_key(leftkey, leftseq, rightkey, rightseq,
                                          left_default, right_default)
@@ -857,7 +827,7 @@ cpdef object join(object leftkey, object leftseq,
         else:
             return _right_outer_join_index(leftkey, leftseq, rightkey, rightseq,
                                            left_default, right_default)
-    elif left_default == no_default and right_default != no_default:
+    elif leftDefaultAbsent and not rightDefaultAbsent:
         if callable(rightkey):
             return _left_outer_join_key(leftkey, leftseq, rightkey, rightseq,
                                         left_default, right_default)
@@ -912,7 +882,7 @@ cdef class _right_outer_join(_join):
         if self.i == PyList_GET_SIZE(self.matches):
             self.right = next(self.rightseq)
             key = self.rightkey()
-            obj = PyDict_GetItem(self.d, key)
+            obj = PyDict_GetItemWithError(self.d, key)
             if obj is NULL:
                 return (self.left_default, self.right)
             self.matches = <object>obj
@@ -956,7 +926,7 @@ cdef class _outer_join(_join):
                     return next(self)
                 key = self.rightkey()
                 PySet_Add(self.seen_keys, key)
-                obj = PyDict_GetItem(self.d, key)
+                obj = PyDict_GetItemWithError(self.d, key)
                 if obj is NULL:
                     return (self.left_default, self.right)
                 self.matches = <object>obj
@@ -970,7 +940,7 @@ cdef class _outer_join(_join):
                 key = next(self.keys)
                 while key in self.seen_keys:
                     key = next(self.keys)
-                obj = PyDict_GetItem(self.d, key)
+                obj = PyDict_GetItemWithError(self.d, key)
                 self.matches = <object>obj
                 self.i = 0
             match = <object>PyList_GET_ITEM(self.matches, self.i)  # skip error checking
@@ -1014,7 +984,7 @@ cdef class _left_outer_join(_join):
                         return next(self)
                     key = self.rightkey()
                     PySet_Add(self.seen_keys, key)
-                    obj = PyDict_GetItem(self.d, key)
+                    obj = PyDict_GetItemWithError(self.d, key)
                 self.matches = <object>obj
                 self.i = 0
             match = <object>PyList_GET_ITEM(self.matches, self.i)  # skip error checking
@@ -1026,7 +996,7 @@ cdef class _left_outer_join(_join):
                 key = next(self.keys)
                 while key in self.seen_keys:
                     key = next(self.keys)
-                obj = PyDict_GetItem(self.d, key)
+                obj = PyDict_GetItemWithError(self.d, key)
                 self.matches = <object>obj
                 self.i = 0
             match = <object>PyList_GET_ITEM(self.matches, self.i)  # skip error checking
@@ -1062,7 +1032,7 @@ cdef class _inner_join(_join):
             while obj is NULL:
                 self.right = next(self.rightseq)
                 key = self.rightkey()
-                obj = PyDict_GetItem(self.d, key)
+                obj = PyDict_GetItemWithError(self.d, key)
             self.matches = <object>obj
             self.i = 0
         match = <object>PyList_GET_ITEM(self.matches, self.i)  # skip error checking
@@ -1096,7 +1066,7 @@ cdef class _diff_key:
         self.N = len(seqs)
         if self.N < 2:
             raise TypeError('Too few sequences given (min 2 required)')
-        if default == no_default:
+        if isSentinel(default, no_default):
             self.iters = zip(*seqs)
         else:
             self.iters = zip_longest(*seqs, fillvalue=default)
@@ -1121,7 +1091,7 @@ cdef class _diff_identity:
         self.N = len(seqs)
         if self.N < 2:
             raise TypeError('Too few sequences given (min 2 required)')
-        if default == no_default:
+        if isSentinel(default, no_default):
             self.iters = zip(*seqs)
         else:
             self.iters = zip_longest(*seqs, fillvalue=default)

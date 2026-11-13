@@ -29,10 +29,11 @@ C-level implementation objects
     c_merge_with
     get_factory
     get_map_iter
+    makeMappingsAlongPath
     PyMapping_Next
     _iter_mapping
 """
-from cpython.dict cimport (PyDict_Check, PyDict_CheckExact, PyDict_GetItem,
+from cpython.dict cimport (PyDict_Check, PyDict_CheckExact, PyDict_GetItemWithError,
 						   PyDict_New, PyDict_Next,
 						   PyDict_SetItem, PyDict_Update, PyDict_DelItem)
 from cpython.list cimport PyList_Append, PyList_New
@@ -43,9 +44,6 @@ from cpython.ref cimport PyObject, Py_DECREF, Py_INCREF, Py_XDECREF
 from humpy_cytoolz.cpython cimport PyDict_Next_Compat, PtrIter_Next
 
 from collections import abc
-from collections import deque
-from copy import deepcopy
-import operator
 
 # cdef aliases to eliminate global lookups
 
@@ -212,6 +210,18 @@ cpdef object assoc_in(object d, object keys, object value, object factory=dict):
 	[1] Python `collections.abc` module
 		https://docs.python.org/3/library/collections.abc.html
 	"""
+	cdef object rv, inner, keyFinal
+	rv, inner, _, keyFinal = makeMappingsAlongPath(d, keys, factory)
+	inner[keyFinal] = value
+	return rv
+
+
+cdef tuple makeMappingsAlongPath(object d, object keys, object factory):
+	"""Copy `d`, and each mapping along the path of `keys` before the last key, into new mappings that `factory` creates.
+
+	Return the copy of `d`, the copy that will hold the last key, the source mapping that holds the last key, and the last key.
+	A key absent from its source mapping gets a new, empty mapping, which is also its source.
+	"""
 	cdef object prevkey, key
 	cdef object rv, inner, dtemp
 	keys = iter(keys)
@@ -238,8 +248,7 @@ cpdef object assoc_in(object d, object keys, object value, object factory=dict):
 		prevkey = key
 		inner = dtemp
 
-	inner[prevkey] = value
-	return rv
+	return rv, inner, d, prevkey
 
 cdef object c_dissoc(object d, object keys, object factory=dict):
 	# implementation copied from humpy_toolz.  Not benchmarked.
@@ -709,7 +718,7 @@ cdef object c_merge_with(object func, object dicts, object factory=dict):
 		Py_DECREF(d)
 		pos = 0
 		while f(d, &pos, &pkey, &pval):
-			obj = PyDict_GetItem(result, <object>pkey)
+			obj = PyDict_GetItemWithError(result, <object>pkey)
 			if obj is NULL:
 				seq = PyList_New(0)
 				PyList_Append(seq, <object>pval)
@@ -831,40 +840,10 @@ cpdef object update_in(object d, object keys, object func, object default=None, 
 	[1] Python `collections.abc` module
 		https://docs.python.org/3/library/collections.abc.html
 	"""
-	cdef object returnMe, mappingATkey, sherpa, dequeKeys, keyFinal, key, reconstructor, valueUpdated
-
-	returnMe = deepcopy(d)
-	mappingATkey = returnMe
-	sherpa = deepcopy(d)
-	dequeKeys = deque(keys)
-
-	keyFinal = dequeKeys.pop()
-
-	while dequeKeys:
-		key = dequeKeys.popleft()
-		sherpa = sherpa.get(key, factory())
-
-		try:
-			mappingATkey[key] = sherpa
-			mappingATkey = sherpa
-		except TypeError:
-			reconstructor = type(mappingATkey)
-			mappingATkey = dict(mappingATkey)
-			operator.setitem(mappingATkey, key, sherpa)
-			mappingATkey = reconstructor(mappingATkey)
-			mappingATkey = sherpa
-
-	valueUpdated = func(sherpa.get(keyFinal, default))
-
-	try:
-		mappingATkey[keyFinal] = valueUpdated
-	except TypeError:
-		reconstructor = type(mappingATkey)
-		mappingATkey = dict(mappingATkey)
-		operator.setitem(mappingATkey, keyFinal, valueUpdated)
-		mappingATkey = reconstructor(mappingATkey)
-
-	return returnMe
+	cdef object mappingUpdated, mappingInner, mappingSource, keyFinal
+	mappingUpdated, mappingInner, mappingSource, keyFinal = makeMappingsAlongPath(d, keys, factory)
+	mappingInner[keyFinal] = func(mappingSource.get(keyFinal, default))
+	return mappingUpdated
 
 cpdef object valfilter(object predicate, object d, object factory=dict):
 	"""Retain only items from `d` whose values satisfy `predicate` and return a new `Mapping`.

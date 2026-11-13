@@ -248,7 +248,7 @@ def merge_with[V, ValueResult, K: Hashable](func: Callable[[list[V]], ValueResul
 def merge_with[V, ValueResult, K: Hashable](func: Callable[[list[V]], ValueResult], dicts: Iterable[Mapping[K, V]], /, *, factory: Callable[[], MutableMapping[K, ValueResult]]) -> MutableMapping[K, ValueResult]:
     ...
 
-def update_in[K: Hashable, V_co](d: Mapping[K, Mapping[K, V_co] | V_co], keys: Iterable[K], func: Callable[[V_co | None], V_co] | Callable[[V_co], V_co], default: V_co | None = None, factory: Callable[[], Mapping[K, Mapping[K, V_co] | V_co]] = dict) -> Mapping[K, Mapping[K, V_co] | V_co]:
+def update_in[K: Hashable, V_co](d: Mapping[K, Mapping[K, V_co] | V_co], keys: Iterable[K], func: Callable[[V_co | None], V_co] | Callable[[V_co], V_co], default: V_co | None = None, factory: Callable[[], MutableMapping[K, Mapping[K, V_co] | V_co]] = dict) -> MutableMapping[K, Mapping[K, V_co] | V_co]:
     ...
 
 @overload

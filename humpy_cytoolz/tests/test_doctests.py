@@ -1,16 +1,26 @@
+"""Every example in the docstrings of each module is a reference; `doctest` runs them, and none may fail.
+
+`humpy_cytoolz/__init__.py` re-exports its functions without examples of its own, so it is not a member. Examples marked
+`+SKIP` print a `dict` whose order or a `set` whose repr `doctest` cannot compare; the test modules assert those values.
+"""
+from __future__ import annotations
+
+from humpy_cytoolz.tests import assertEqualTo
+from typing import TYPE_CHECKING
 import doctest
-import humpy_cytoolz
+import humpy_cytoolz.curried
 import humpy_cytoolz.dicttoolz
 import humpy_cytoolz.functoolz
 import humpy_cytoolz.itertoolz
 import humpy_cytoolz.recipes
+import pytest
 
-def module_doctest(m, *args, **kwargs):
-    return doctest.testmod(m, *args, **kwargs).failed == 0
+if TYPE_CHECKING:
+	from types import ModuleType
 
-def test_doctest():
-    assert module_doctest(humpy_cytoolz)
-    assert module_doctest(humpy_cytoolz.dicttoolz)
-    assert module_doctest(humpy_cytoolz.functoolz)
-    assert module_doctest(humpy_cytoolz.itertoolz)
-    assert module_doctest(humpy_cytoolz.recipes)
+@pytest.mark.parametrize('module', (
+	humpy_cytoolz.curried, humpy_cytoolz.dicttoolz, humpy_cytoolz.functoolz, humpy_cytoolz.itertoolz, humpy_cytoolz.recipes,
+), ids=('curried', 'dicttoolz', 'functoolz', 'itertoolz', 'recipes'))
+def test_doctest(module: ModuleType) -> None:
+	testResults: doctest.TestResults = doctest.testmod(module)
+	assertEqualTo((testResults.failed, 0 < testResults.attempted), (0, True), doctest.testmod.__name__, module)

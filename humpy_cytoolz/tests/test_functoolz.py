@@ -1,627 +1,267 @@
+"""Expected values and exceptions come from the targets' docstrings unless a comment names another basis."""
+from __future__ import annotations
+
 from functools import partial
 from humpy_cytoolz.functoolz import (
-	apply, complement, compose, compose_left, curry, do, excepts, flip, juxt, memoize, pipe, thread_first, thread_last)
-from humpy_cytoolz.utils import raises
-from operator import add, itemgetter, mul
-import humpy_cytoolz
-import inspect
-import sys
-
-IS_PYPY_GE_39 = sys.implementation.name == 'pypy' and sys.version_info.major == 3 and (sys.version_info.minor >= 9)
-
-def iseven(x):
-    return x % 2 == 0
-
-def isodd(x):
-    return x % 2 == 1
-
-def inc(x):
-    return x + 1
-
-def double(x):
-    return 2 * x
-
-class AlwaysEquals:
-    """useful to test correct __eq__ implementation of other objects"""
-
-    def __eq__(self, other):
-        return True
-
-    def __ne__(self, other):
-        return False
-
-class NeverEquals:
-    """useful to test correct __eq__ implementation of other objects"""
-
-    def __eq__(self, other):
-        return False
-
-    def __ne__(self, other):
-        return True
-
-def test_apply():
-    assert apply(double, 5) == 10
-    assert tuple(map(apply, [double, inc, double], [10, 500, 8000])) == (20, 501, 16000)
-    assert raises(TypeError, apply)
-
-def test_thread_first():
-    assert thread_first(2) == 2
-    assert thread_first(2, inc) == 3
-    assert thread_first(2, inc, inc) == 4
-    assert thread_first(2, double, inc) == 5
-    assert thread_first(2, (add, 5), double) == 14
-
-def test_thread_last():
-    assert list(thread_last([1, 2, 3], (map, inc), (filter, iseven))) == [2, 4]
-    assert list(thread_last([1, 2, 3], (map, inc), (filter, isodd))) == [3]
-    assert thread_last(2, (add, 5), double) == 14
-
-def test_memoize():
-    fn_calls = [0]
-
-    def f(x, y):
-        """ A docstring """
-        fn_calls[0] += 1
-        return x + y
-    mf = memoize(f)
-    assert mf(2, 3) is mf(2, 3)
-    assert fn_calls == [1]
-    assert mf.__doc__ == f.__doc__
-    assert raises(TypeError, lambda: mf(1, {}))
-
-def test_memoize_kwargs():
-    fn_calls = [0]
-
-    def f(x, y=0):
-        return x + y
-    mf = memoize(f)
-    assert mf(1) == f(1)
-    assert mf(1, 2) == f(1, 2)
-    assert mf(1, y=2) == f(1, y=2)
-    assert mf(1, y=3) == f(1, y=3)
-
-def test_memoize_curried():
-
-    @curry
-    def f(x, y=0):
-        return x + y
-    f2 = f(y=1)
-    fm2 = memoize(f2)
-    assert fm2(3) == f2(3)
-    assert fm2(3) == f2(3)
-
-def test_memoize_partial():
-
-    def f(x, y=0):
-        return x + y
-    f2 = partial(f, y=1)
-    fm2 = memoize(f2)
-    assert fm2(3) == f2(3)
-    assert fm2(3) == f2(3)
-
-def test_memoize_key_signature():
-    mf = memoize(lambda x: False, cache={1: True})
-    assert mf(1) is True
-    assert mf(2) is False
-    mf = memoize(lambda x, *args: False, cache={(1,): True, (1, 2): 2})
-    assert mf(1) is True
-    assert mf(2) is False
-    assert mf(1, 1) is False
-    assert mf(1, 2) == 2
-    assert mf((1, 2)) is False
-    mf = memoize(lambda x, y: False, cache={(1, 2): True})
-    assert mf(1, 2) is True
-    assert mf(1, 3) is False
-    assert raises(TypeError, lambda: mf((1, 2)))
-    mf = memoize(lambda: False, cache={(): True})
-    assert mf() is True
-    mf = memoize(lambda x, y=0: False, cache={((1,), frozenset((('y', 2),))): 2, ((1, 2), None): 3})
-    assert mf(1, y=2) == 2
-    assert mf(1, 2) == 3
-    assert mf(2, y=2) is False
-    assert mf(2, 2) is False
-    assert mf(1) is False
-    assert mf((1, 2)) is False
-    mf = memoize(lambda x=0: False, cache={(None, frozenset((('x', 1),))): 1, ((1,), None): 2})
-    assert mf() is False
-    assert mf(x=1) == 1
-    assert mf(1) == 2
-
-def test_memoize_curry_cache():
-
-    @memoize(cache={1: True})
-    def f(x):
-        return False
-    assert f(1) is True
-    assert f(2) is False
-
-def test_memoize_key():
-
-    @memoize(key=lambda args, kwargs: args[0])
-    def f(x, y, *args, **kwargs):
-        return x + y
-    assert f(1, 2) == 3
-    assert f(1, 3) == 3
-
-def test_memoize_wrapped():
-
-    def foo():
-        """
-        Docstring
-        """
-    memoized_foo = memoize(foo)
-    assert memoized_foo.__wrapped__ is foo
-
-def test_curry_simple():
-    cmul = curry(mul)
-    double = cmul(2)
-    assert callable(double)
-    assert double(10) == 20
-    assert repr(cmul) == repr(mul)
-    cmap = curry(map)
-    assert list(cmap(inc)([1, 2, 3])) == [2, 3, 4]
-    assert raises(TypeError, lambda: curry())
-    assert raises(TypeError, lambda: curry({1: 2}))
-
-def test_curry_kwargs():
-
-    def f(a, b, c=10):
-        return (a + b) * c
-    f = curry(f)
-    assert f(1, 2, 3) == 9
-    assert f(1)(2, 3) == 9
-    assert f(1, 2) == 30
-    assert f(1, c=3)(2) == 9
-    assert f(c=3)(1, 2) == 9
-
-    def g(a=1, b=10, c=0):
-        return a + b + c
-    cg = curry(g, b=2)
-    assert cg() == 3
-    assert cg(b=3) == 4
-    assert cg(a=0) == 2
-    assert cg(a=0, b=1) == 1
-    assert cg(0) == 2
-    assert raises(TypeError, lambda: cg(1, 2))
-
-    def h(x, func=int):
-        return func(x)
-    assert curry(h)(0.0) == 0
-    assert curry(h)(func=str)(0.0) == '0.0'
-    assert curry(h, func=str)(0.0) == '0.0'
-
-def test_curry_passes_errors():
-
-    @curry
-    def f(a, b):
-        if not isinstance(a, int):
-            raise TypeError()
-        return a + b
-    assert f(1, 2) == 3
-    assert raises(TypeError, lambda: f('1', 2))
-    assert raises(TypeError, lambda: f('1')(2))
-    assert raises(TypeError, lambda: f(1, 2, 3))
-
-def test_curry_docstring():
-
-    def f(x, y):
-        """ A docstring """
-        return x
-    g = curry(f)
-    if not IS_PYPY_GE_39:
-        assert g.__doc__ == f.__doc__
-    assert str(g) == str(f)
-    assert f(1, 2) == g(1, 2)
-
-def test_curry_is_like_partial():
-
-    def foo(a, b, c=1):
-        return a + b + c
-    p, c = (partial(foo, 1, c=2), curry(foo)(1, c=2))
-    assert p.keywords == c.keywords
-    assert p.args == c.args
-    assert p(3) == c(3)
-    p, c = (partial(foo, 1), curry(foo)(1))
-    assert p.keywords == c.keywords
-    assert p.args == c.args
-    assert p(3) == c(3)
-    assert p(3, c=2) == c(3, c=2)
-    p, c = (partial(foo, c=1), curry(foo)(c=1))
-    assert p.keywords == c.keywords
-    assert p.args == c.args
-    assert p(1, 2) == c(1, 2)
-
-def test_curry_is_idempotent():
-
-    def foo(a, b, c=1):
-        return a + b + c
-    f = curry(foo, 1, c=2)
-    g = curry(f)
-    assert isinstance(f, curry)
-    assert isinstance(g, curry)
-    assert not isinstance(g.func, curry)
-    assert not hasattr(g.func, 'func')
-    assert f.func == g.func
-    assert f.args == g.args
-    assert f.keywords == g.keywords
-
-def test_curry_attributes_readonly():
-
-    def foo(a, b, c=1):
-        return a + b + c
-    f = curry(foo, 1, c=2)
-    assert raises(AttributeError, lambda: setattr(f, 'args', (2,)))
-    assert raises(AttributeError, lambda: setattr(f, 'keywords', {'c': 3}))
-    assert raises(AttributeError, lambda: setattr(f, 'func', f))
-    assert raises(AttributeError, lambda: delattr(f, 'args'))
-    assert raises(AttributeError, lambda: delattr(f, 'keywords'))
-    assert raises(AttributeError, lambda: delattr(f, 'func'))
-
-def test_curry_attributes_writable():
-
-    def foo(a, b, c=1):
-        return a + b + c
-    foo.__qualname__ = 'this.is.foo'
-    f = curry(foo, 1, c=2)
-    assert f.__qualname__ == 'this.is.foo'
-    f.__name__ = 'newname'
-    f.__doc__ = 'newdoc'
-    f.__module__ = 'newmodule'
-    f.__qualname__ = 'newqualname'
-    assert f.__name__ == 'newname'
-    assert f.__doc__ == 'newdoc'
-    assert f.__module__ == 'newmodule'
-    assert f.__qualname__ == 'newqualname'
-    if hasattr(f, 'func_name'):
-        assert f.__name__ == f.func_name
-
-def test_curry_module():
-    from humpy_cytoolz.curried.exceptions import merge
-    assert merge.__module__ == 'humpy_cytoolz.curried.exceptions'
-
-def test_curry_comparable():
-
-    def foo(a, b, c=1):
-        return a + b + c
-    f1 = curry(foo, 1, c=2)
-    f2 = curry(foo, 1, c=2)
-    g1 = curry(foo, 1, c=3)
-    h1 = curry(foo, c=2)
-    h2 = h1(c=2)
-    h3 = h1()
-    assert f1 == f2
-    assert not f1 != f2
-    assert f1 != g1
-    assert not f1 == g1
-    assert f1 != h1
-    assert h1 == h2
-    assert h1 == h3
-
-    def bar(a, b, c=1):
-        return a + b + c
-    b1 = curry(bar, 1, c=2)
-    assert b1 != f1
-    assert {f1, f2, g1, h1, h2, h3, b1, b1()} == {f1, g1, h1, b1}
-    unhash1 = curry(foo, [])
-    assert raises(TypeError, lambda: hash(unhash1))
-    unhash2 = curry(foo, c=[])
-    assert raises(TypeError, lambda: hash(unhash2))
-
-def test_curry_doesnot_transmogrify():
-
-    def f(x, y=0):
-        return x + y
-    cf = curry(f)
-    assert cf(y=1)(y=2)(y=3)(1) == f(1, 3)
-
-def test_curry_on_classmethods():
-
-    class A:
-        BASE = 10
-
-        def __init__(self, base):
-            self.BASE = base
-
-        @curry
-        def addmethod(self, x, y):
-            return self.BASE + x + y
-
-        @classmethod
-        @curry
-        def addclass(cls, x, y):
-            return cls.BASE + x + y
-
-        @staticmethod
-        @curry
-        def addstatic(x, y):
-            return x + y
-    a = A(100)
-    assert a.addmethod(3, 4) == 107
-    assert a.addmethod(3)(4) == 107
-    assert A.addmethod(a, 3, 4) == 107
-    assert A.addmethod(a)(3)(4) == 107
-    assert a.addclass(3, 4) == 17
-    assert a.addclass(3)(4) == 17
-    assert A.addclass(3, 4) == 17
-    assert A.addclass(3)(4) == 17
-    assert a.addstatic(3, 4) == 7
-    assert a.addstatic(3)(4) == 7
-    assert A.addstatic(3, 4) == 7
-    assert A.addstatic(3)(4) == 7
-    assert isinstance(a.addmethod, curry)
-    assert isinstance(A.addmethod, curry)
-
-def test_memoize_on_classmethods():
-
-    class A:
-        BASE = 10
-        HASH = 10
-
-        def __init__(self, base):
-            self.BASE = base
-
-        @memoize
-        def addmethod(self, x, y):
-            return self.BASE + x + y
-
-        @classmethod
-        @memoize
-        def addclass(cls, x, y):
-            return cls.BASE + x + y
-
-        @staticmethod
-        @memoize
-        def addstatic(x, y):
-            return x + y
-
-        def __hash__(self):
-            return self.HASH
-    a = A(100)
-    assert a.addmethod(3, 4) == 107
-    assert A.addmethod(a, 3, 4) == 107
-    a.BASE = 200
-    assert a.addmethod(3, 4) == 107
-    a.HASH = 200
-    assert a.addmethod(3, 4) == 207
-    assert a.addclass(3, 4) == 17
-    assert A.addclass(3, 4) == 17
-    A.BASE = 20
-    assert A.addclass(3, 4) == 17
-    A.HASH = 20
-    assert A.addclass(3, 4) == 17
-    assert a.addstatic(3, 4) == 7
-    assert A.addstatic(3, 4) == 7
-
-def test_curry_call():
-
-    @curry
-    def add(x, y):
-        return x + y
-    assert raises(TypeError, lambda: add.call(1))
-    assert add(1)(2) == add.call(1, 2)
-    assert add(1)(2) == add(1).call(2)
-
-def test_curry_bind():
-
-    @curry
-    def add(x=1, y=2):
-        return x + y
-    assert add() == add(1, 2)
-    assert add.bind(10)(20) == add(10, 20)
-    assert add.bind(10).bind(20)() == add(10, 20)
-    assert add.bind(x=10)(y=20) == add(10, 20)
-    assert add.bind(x=10).bind(y=20)() == add(10, 20)
-
-def test_curry_unknown_args():
-
-    def add3(x, y, z):
-        return x + y + z
-
-    @curry
-    def f(*args):
-        return add3(*args)
-    assert f()(1)(2)(3) == 6
-    assert f(1)(2)(3) == 6
-    assert f(1, 2)(3) == 6
-    assert f(1, 2, 3) == 6
-    assert f(1, 2)(3, 4) == f(1, 2, 3, 4)
-
-def test_curry_bad_types():
-    assert raises(TypeError, lambda: curry(1))
-
-def test_curry_subclassable():
-
-    class mycurry(curry):
-        pass
-    add = mycurry(lambda x, y: x + y)
-    assert isinstance(add, curry)
-    assert isinstance(add, mycurry)
-    assert isinstance(add(1), mycurry)
-    assert isinstance(add()(1), mycurry)
-    assert add(1)(2) == 3
-    '\n    class curry2(curry):\n        def _should_curry(self, args, kwargs, exc=None):\n            return len(self.args) + len(args) < 2\n\n    add = curry2(lambda x, y: x+y)\n    assert isinstance(add(1), curry2)\n    assert add(1)(2) == 3\n    assert isinstance(add(1)(x=2), curry2)\n    assert raises(TypeError, lambda: add(1)(x=2)(3))\n    '
-
-def generate_compose_test_cases():
-    """
-    Generate test cases for parametrized tests of the compose function.
-    """
-
-    def add_then_multiply(a, b, c=10):
-        return (a + b) * c
-    return (((), (0,), {}, 0), ((inc,), (0,), {}, 1), ((double, inc), (0,), {}, 2), ((str, iseven, inc, double), (3,), {}, 'False'), ((str, add), (1, 2), {}, '3'), ((str, inc, add_then_multiply), (1, 2), {'c': 3}, '10'))
-
-def test_compose():
-    for compose_args, args, kw, expected in generate_compose_test_cases():
-        assert compose(*compose_args)(*args, **kw) == expected
-
-def test_compose_metadata():
-
-    def f(a):
-        return a
-
-    def g(a):
-        return a
-    composed = compose(f, g)
-    assert composed.__name__ == 'f_of_g'
-    if not IS_PYPY_GE_39:
-        assert composed.__doc__ == 'lambda *args, **kwargs: f(g(*args, **kwargs))'
-    h = object()
-    composed = compose(f, h)
-    assert composed.__name__ == 'Compose'
-    if not IS_PYPY_GE_39:
-        assert composed.__doc__ == 'A composition of functions'
-    assert repr(composed) == f'Compose({f!r}, {h!r})'
-    assert composed == compose(f, h)
-    assert composed == AlwaysEquals()
-    assert not composed == compose(h, f)
-    assert not composed == object()
-    assert not composed == NeverEquals()
-    assert composed != compose(h, f)
-    assert composed != NeverEquals()
-    assert composed != object()
-    assert not composed != compose(f, h)
-    assert not composed != AlwaysEquals()
-    assert hash(composed) == hash(compose(f, h))
-    assert hash(composed) != hash(compose(h, f))
-    bindable = compose(str, lambda x: x * 2, lambda x, y=0: int(x) + y)
-
-    class MyClass:
-
-        def __int__(self):
-            return 8
-        my_method = bindable
-        my_static_method = staticmethod(bindable)
-    assert MyClass.my_method(3) == '6'
-    assert MyClass.my_method(3, y=2) == '10'
-    assert MyClass.my_static_method(2) == '4'
-    assert MyClass().my_method() == '16'
-    assert MyClass().my_method(y=3) == '22'
-    assert MyClass().my_static_method(0) == '0'
-    assert MyClass().my_static_method(0, 1) == '2'
-    assert compose(f, h).__wrapped__ is h
-    if hasattr(humpy_cytoolz, 'sandbox'):
-        assert compose(f, h).__class__.__wrapped__ is None
-
-    def myfunc(a, b, c, *d, **e):
-        return 4
-
-    def otherfunc(f):
-        return f'result: {f}'
-    myfunc.__annotations__ = {'a': int, 'b': str, 'c': float, 'd': int, 'e': bool, 'return': int}
-    otherfunc.__annotations__ = {'f': int, 'return': str}
-    composed = compose(otherfunc, myfunc)
-    sig = inspect.signature(composed)
-    assert sig.parameters == inspect.signature(myfunc).parameters
-    assert sig.return_annotation == str
-
-    class MyClass:
-        method = composed
-    assert len(inspect.signature(MyClass().method).parameters) == 4
-
-def generate_compose_left_test_cases():
-    """
-    Generate test cases for parametrized tests of the compose function.
-
-    These are based on, and equivalent to, those produced by
-    enerate_compose_test_cases().
-    """
-    return tuple(((tuple(reversed(compose_args)), args, kwargs, expected) for compose_args, args, kwargs, expected in generate_compose_test_cases()))
-
-def test_compose_left():
-    for compose_left_args, args, kw, expected in generate_compose_left_test_cases():
-        assert compose_left(*compose_left_args)(*args, **kw) == expected
-
-def test_pipe():
-    assert pipe(1, inc) == 2
-    assert pipe(1, inc, inc) == 3
-    assert pipe(1, double, inc, iseven) is False
-
-def test_complement():
-    assert complement(lambda: False)()
-    assert not complement(lambda: True)()
-    assert complement(iseven)(1)
-    assert not complement(iseven)(2)
-    assert complement(complement(iseven))(2)
-    assert not complement(complement(isodd))(2)
-    both_even = lambda a, b: iseven(a) and iseven(b)
-    assert complement(both_even)(1, 2)
-    assert not complement(both_even)(2, 2)
-    assert complement(lambda: '')()
-    assert complement(lambda: 0)()
-    assert complement(lambda: None)()
-    assert complement(lambda: [])()
-    assert not complement(lambda: 'x')()
-    assert not complement(lambda: 1)()
-    assert not complement(lambda: [1])()
-
-def test_do():
-    inc = lambda x: x + 1
-    assert do(inc, 1) == 1
-    log = []
-    assert do(log.append, 1) == 1
-    assert log == [1]
-
-def test_juxt_generator_input():
-    data = list(range(10))
-    juxtfunc = juxt((itemgetter(2 * i) for i in range(5)))
-    assert juxtfunc(data) == (0, 2, 4, 6, 8)
-    assert juxtfunc(data) == (0, 2, 4, 6, 8)
-
-def test_flip():
-
-    def f(a, b):
-        return (a, b)
-    assert flip(f, 'a', 'b') == ('b', 'a')
-
-def test_excepts():
-    assert excepts.__name__ == 'excepts'
-    testlines = '\n'.join((line.strip() for line in excepts.__doc__.splitlines()))
-    assert 'A wrapper around a function to catch exceptions and\ndispatch to a handler.\n' in testlines
-
-    def idx(a):
-        """idx docstring
-        """
-        return [1, 2].index(a)
-
-    def handler(e):
-        """handler docstring
-        """
-        assert isinstance(e, ValueError)
-        return -1
-    excepting = excepts(ValueError, idx, handler)
-    assert excepting(1) == 0
-    assert excepting(2) == 1
-    assert excepting(3) == -1
-    assert excepting.__name__ == 'idx_excepting_ValueError'
-    if not IS_PYPY_GE_39:
-        assert 'idx docstring' in excepting.__doc__
-        assert 'ValueError' in excepting.__doc__
-        assert 'handler docstring' in excepting.__doc__
-
-    def getzero(a):
-        """getzero docstring
-        """
-        return a[0]
-    excepting = excepts((IndexError, KeyError), getzero)
-    assert excepting([]) is None
-    assert excepting([1]) == 1
-    assert excepting({}) is None
-    assert excepting({0: 1}) == 1
-    assert excepting.__name__ == 'getzero_excepting_IndexError_or_KeyError'
-    if not IS_PYPY_GE_39:
-        assert 'getzero docstring' in excepting.__doc__
-        assert 'return_none' in excepting.__doc__
-        assert 'Returns None' in excepting.__doc__
-
-    def raise_(a):
-        """A function that raises an instance of the exception type given.
-        """
-        raise a()
-    excepting = excepts((ValueError, KeyError), raise_)
-    assert excepting(ValueError) is None
-    assert excepting(KeyError) is None
-    assert raises(TypeError, lambda: excepting(TypeError))
-    assert raises(NotImplementedError, lambda: excepting(NotImplementedError))
-    excepting = excepts(object(), object(), object())
-    assert excepting.__name__ == 'excepting'
-    assert excepting.__doc__ == excepts.__doc__
+	apply, complement, compose, compose_left, curry, do, excepts, flip, identity, juxt, memoize, pipe, return_none, thread_first, thread_last)
+from humpy_cytoolz.tests import assertEqualTo, messageTestFailure
+from humpy_cytoolz.tests.dataSamples.callables import addCurried, isEven, keyIgnoresKeywords, scaleSum
+from hypothesis import given, strategies
+from operator import add, itemgetter, mul, neg
+from typing import TYPE_CHECKING
+import pickle
+import pytest
+
+if TYPE_CHECKING:
+	from collections.abc import Callable, Sequence
+	from hunterMakesPy import CallableFunction
+	from typing import Any
+
+increment: Callable[[int], int] = (1).__add__
+double: Callable[[int], int] = (2).__mul__
+
+@pytest.mark.parametrize('x', (13, 'NE', None, [], object), ids=('13', 'NE', 'None', 'listEmpty', 'object'))
+def test_identity(x: object) -> None:
+	assert identity(x) is x, messageTestFailure(identity(x), x, identity.__name__, x)
+
+@pytest.mark.parametrize('func_and_args, kwargs, expected', (
+	pytest.param((double, 5), {}, 10, id='double-5'),
+	pytest.param((dict,), {'N': 0}, {'N': 0}, id='dict-keywords'),
+))
+def test_apply(func_and_args: tuple[Any, ...], kwargs: dict[str, Any], expected: Any) -> None:
+	assertEqualTo(apply(*func_and_args, **kwargs), expected, apply.__name__, *func_and_args, **kwargs)
+
+def test_applyError() -> None:
+	with pytest.raises(TypeError, match='func argument is required'):
+		apply()  # pyright: ignore[reportCallIssue] # ty: ignore[missing-argument]
+
+@pytest.mark.parametrize('val, forms, expected', (
+	pytest.param(1, (increment, double), 4, id='increment-double'),
+	pytest.param(1, ((add, 4), (pow, 2)), 25, id='add4-pow2'),
+))
+def test_thread_first(val: Any, forms: tuple[Any, ...], expected: Any) -> None:
+	assertEqualTo(thread_first(val, *forms), expected, thread_first.__name__, val, *forms)
+
+@pytest.mark.parametrize('val, forms, expected', (
+	pytest.param(1, (increment, double), 4, id='increment-double'),
+	pytest.param(1, ((add, 4), (pow, 2)), 32, id='add4-pow2'),
+	pytest.param([1, 2, 3], ((map, increment), (filter, isEven), list), [2, 4], id='mapIncrement-filterIsEven'),
+))
+def test_thread_last(val: Any, forms: tuple[Any, ...], expected: Any) -> None:
+	assertEqualTo(thread_last(val, *forms), expected, thread_last.__name__, val, *forms)
+
+@pytest.mark.parametrize('funcs, args, expected', (
+	pytest.param((str, increment), (3,), '4', id='str-increment'),
+	# Reference: `compose(f, g, h)(x, y)` is `f(g(h(x, y)))`.
+	pytest.param((str, neg, add), (3, 5), '-8', id='str-neg-add'),
+))
+def test_compose(funcs: tuple[Callable[..., Any], ...], args: tuple[Any, ...], expected: Any) -> None:
+	assertEqualTo(compose(*funcs)(*args), expected, compose.__name__, *funcs)
+
+@pytest.mark.parametrize('funcs, args, expected', (
+	pytest.param((increment, str), (3,), '4', id='increment-str'),
+	pytest.param((add, neg, str), (3, 5), '-8', id='add-neg-str'),
+))
+def test_compose_left(funcs: tuple[Callable[..., Any], ...], args: tuple[Any, ...], expected: Any) -> None:
+	assertEqualTo(compose_left(*funcs)(*args), expected, compose_left.__name__, *funcs)
+
+def test_pipe() -> None:
+	assertEqualTo(pipe(3, double, str), '6', pipe.__name__, 3, double, str)
+
+# Reference: the docstring: with no functions, `compose` returns the identity function.
+@pytest.mark.parametrize('function', (compose, compose_left))
+def test_composeEmpty(function: CallableFunction[..., Any]) -> None:
+	assert function() is identity, messageTestFailure(function(), identity, function.__name__)
+
+# Relation: `pipe(data, *funcs)` is `compose_left(*funcs)(data)`, which is `compose(*reversed(funcs))(data)`.
+@given(data=strategies.integers(-89, 89), funcs=strategies.lists(strategies.sampled_from((increment, double, neg, abs)), min_size=1, max_size=5))
+def test_pipeGenerated(data: int, funcs: list[Callable[[int], int]]) -> None:
+	assertEqualTo((pipe(data, *funcs), compose_left(*funcs)(data)), (compose(*reversed(funcs))(data), compose(*reversed(funcs))(data)), pipe.__name__, data, *funcs)
+
+# Reference: upstream toolz's test suite, for the metadata of a composition.
+@pytest.mark.parametrize('attribute, expected', (
+	pytest.param('__name__', 'str_of_abs', id='name'),
+	pytest.param('__doc__', 'lambda *args, **kwargs: str(abs(*args, **kwargs))', id='doc'),
+	pytest.param('__wrapped__', abs, id='wrapped'),
+))
+def test_composeMetadata(attribute: str, expected: Any) -> None:
+	assertEqualTo(getattr(compose(str, abs), attribute), expected, compose.__name__, str, abs)
+
+# Relation: compositions of the same functions are equal and hash equally; `compose_left` reverses the order of `compose`.
+def test_composeEquality() -> None:
+	assertEqualTo((compose(str, abs) == compose_left(abs, str), hash(compose(str, abs)) == hash(compose_left(abs, str)), compose(str, abs) == compose(abs, str))
+		, (True, True, False), compose.__name__, str, abs)
+
+@pytest.mark.parametrize('x, expected', (pytest.param(2, False, id='2'), pytest.param(3, True, id='3')))
+def test_complement(x: int, expected: bool) -> None:
+	assert complement(isEven)(x) is expected, messageTestFailure(complement(isEven)(x), expected, complement.__name__, isEven)
+
+@pytest.mark.parametrize('funcs', (
+	pytest.param((increment, double), id='positional'),
+	pytest.param(([increment, double],), id='list'),
+	# Reference: upstream toolz's test suite: any iterable of functions.
+	pytest.param(((increment, double),), id='tuple'),
+))
+def test_juxt(funcs: tuple[Any, ...]) -> None:
+	assertEqualTo(juxt(*funcs)(10), (11, 20), juxt.__name__, *funcs)
+
+# Reference: upstream toolz's test suite: keyword arguments reach every function.
+def test_juxtKeywords() -> None:
+	assertEqualTo(juxt(dict, dict)(N=0), ({'N': 0}, {'N': 0}), juxt.__name__, dict, dict)  # pyright: ignore[reportCallIssue, reportUnknownArgumentType]
+
+def test_do() -> None:
+	log: list[object] = []
+	x: object = object()
+	assertEqualTo((do(log.append, x) is x, log), (True, [x]), do.__name__, log.append, x)
+
+@pytest.mark.parametrize('args, expected', (
+	pytest.param((int.__floordiv__, 2, 6), 3, id='floordiv-2-6'),
+	pytest.param((isinstance, int, 1), True, id='isinstance-int-1'),
+))
+def test_flip(args: tuple[Any, ...], expected: Any) -> None:
+	assertEqualTo(flip(*args), expected, flip.__name__, *args)
+
+# Reference: the docstring states that `flip` is curried.
+def test_flipCurried() -> None:
+	assertEqualTo(flip(int.__floordiv__, 2)(4), 2, flip.__name__, int.__floordiv__, 2)
+
+# The handler receives the exception, so `type` as the handler returns the class of the exception it caught. `return_none`
+# is the documented default handler.
+@pytest.mark.parametrize('exc, func, handler, x, expected', (
+	pytest.param(ValueError, [1, 2].index, type, 1, 0, id='ValueError-index-1'),
+	pytest.param(ValueError, [1, 2].index, type, 3, ValueError, id='ValueError-index-3'),
+	pytest.param((IndexError, KeyError), itemgetter(0), return_none, [], None, id='IndexErrorKeyError-listEmpty'),
+	pytest.param((IndexError, KeyError), itemgetter(0), return_none, [1], 1, id='IndexErrorKeyError-list1'),
+	pytest.param((IndexError, KeyError), itemgetter(0), return_none, {}, None, id='IndexErrorKeyError-dictionaryEmpty'),
+	pytest.param((IndexError, KeyError), itemgetter(0), return_none, {0: 1}, 1, id='IndexErrorKeyError-dictionary0'),
+))
+def test_excepts(exc: type[Exception] | tuple[type[Exception], ...], func: Callable[[Any], Any], handler: Callable[[Exception], Any], x: Any, expected: Any) -> None:
+	assertEqualTo(excepts(exc, func, handler)(x), expected, excepts.__qualname__, exc, func, handler)
+
+# Reference: upstream toolz's test suite, for the name of the wrapper.
+@pytest.mark.parametrize('exc, expected', (
+	pytest.param(ValueError, 'int_excepting_ValueError', id='ValueError'),
+	pytest.param((ValueError, KeyError), 'int_excepting_ValueError_or_KeyError', id='ValueErrorKeyError'),
+))
+def test_exceptsName(exc: type[Exception] | tuple[type[Exception], ...], expected: str) -> None:
+	assertEqualTo(excepts(exc, int).__name__, expected, excepts.__qualname__, exc, int)
+
+# Reference: "Use the `cache` keyword to provide a dict-like object as an initial cache": a cached result answers without a
+# call. A unary function keys its cache by its argument; other functions key it by the tuple of arguments, or by `key`.
+@pytest.mark.parametrize('func, cache, key, args, expected', (
+	pytest.param(abs, {-3: 13}, None, (-3,), 13, id='abs-unary'),
+	pytest.param(add, {(1, 2): 13}, None, (1, 2), 13, id='add-tuple'),
+	pytest.param(scaleSum, {(1, 2): 13}, keyIgnoresKeywords, (1, 2), 13, id='scaleSum-keyIgnoresKeywords'),
+	pytest.param(add, {}, None, (1, 2), 3, id='add-cacheEmpty'),
+))
+def test_memoize(func: Callable[..., Any], cache: dict[Any, Any], key: Callable[..., Any] | None, args: tuple[Any, ...], expected: Any) -> None:
+	assertEqualTo(memoize(func, cache=dict(cache), key=key)(*args), expected, memoize.__name__, func, cache, key)
+
+# Relation: the first call stores its result in `cache` under the key that the call's arguments determine.
+def test_memoizeStores() -> None:
+	cache: dict[Any, Any] = {}
+	memoize(add, cache=cache)(1, 2)
+	assertEqualTo(cache, {(1, 2): 3}, memoize.__name__, add, cache)
+
+# Reference: upstream toolz's test suite, for the metadata of the wrapper.
+@pytest.mark.parametrize('attribute, expected', (
+	pytest.param('__name__', 'scaleSum', id='name'),
+	pytest.param('__doc__', scaleSum.__doc__, id='doc'),
+	pytest.param('__wrapped__', scaleSum, id='wrapped'),
+))
+def test_memoizeMetadata(attribute: str, expected: Any) -> None:
+	assertEqualTo(getattr(memoize(scaleSum), attribute), expected, memoize.__name__, scaleSum)
+
+@pytest.mark.parametrize('args, kwargs, argsCall, kwargsCall, expected', (
+	pytest.param((mul,), {}, (2, 10), {}, 20, id='mul-2-10'),
+	pytest.param((scaleSum,), {'a': 1}, (2, 3), {}, 5, id='scaleSum-a1'),
+	pytest.param((scaleSum, 2), {}, (3,), {'a': 1}, 5, id='scaleSum-2-a1'),
+	pytest.param((scaleSum, 2, 3), {}, (), {}, 50, id='scaleSum-2-3'),
+))
+def test_curry(args: tuple[Any, ...], kwargs: dict[str, Any], argsCall: tuple[Any, ...], kwargsCall: dict[str, Any], expected: Any) -> None:
+	assertEqualTo(curry(*args, **kwargs)(*argsCall, **kwargsCall), expected, curry.__name__, *args, **kwargs)
+
+# Relation: while a required parameter lacks an argument, supplying the arguments in several calls returns what supplying
+# them in one call returns. `scaleSum` requires `x` and `y`.
+@pytest.mark.parametrize('argsFirst, argsSecond', (
+	pytest.param((2,), (3, 7), id='1Then2'),
+	pytest.param((2,), (3,), id='1Then1'),
+	pytest.param((), (2, 3), id='0Then2'),
+))
+def test_curryPartial(argsFirst: tuple[int, ...], argsSecond: tuple[int, ...]) -> None:
+	assertEqualTo(curry(scaleSum)(*argsFirst)(*argsSecond), scaleSum(*argsFirst, *argsSecond), curry.__name__, scaleSum)
+
+# Reference: upstream toolz's test suite: currying a curried function or a `functools.partial` flattens to one layer;
+# `keywords` is a `dict`, as it is for `functools.partial`.
+@pytest.mark.parametrize('func, expected', (
+	pytest.param(curry(scaleSum, 2), (scaleSum, (2, 3), dict[str, int]()), id='curry'),
+	pytest.param(partial(scaleSum, 2, a=1), (scaleSum, (2, 3), dict[str, int](a=1)), id='partial'),
+))
+def test_curryFlattens(func: Callable[..., Any], expected: tuple[Any, ...]) -> None:
+	curried: curry[..., Any] = curry(func, 3)
+	assertEqualTo((curried.func, curried.args, curried.keywords), expected, curry.__name__, func, 3)
+
+# Reference: upstream toolz's test suite: a curried function carries the metadata of the function it curries.
+@pytest.mark.parametrize('attribute, expected', (
+	pytest.param('__name__', 'scaleSum', id='name'),
+	pytest.param('__qualname__', 'scaleSum', id='qualname'),
+	pytest.param('__module__', 'humpy_cytoolz.tests.dataSamples.callables', id='module'),
+	pytest.param('__doc__', scaleSum.__doc__, id='doc'),
+))
+def test_curryMetadata(attribute: str, expected: Any) -> None:
+	assertEqualTo(getattr(curry(scaleSum), attribute), expected, curry.__name__, scaleSum)
+
+# Relation: curried functions are equal, and hash equally, exactly when their functions and arguments are equal.
+def test_curryEquality() -> None:
+	assertEqualTo((curry(add, 1) == curry(add, 1), hash(curry(add, 1)) == hash(curry(add, 1)), curry(add, 1) == curry(add, 2), curry(add, 1) == curry(mul, 1))
+		, (True, True, False, False), curry.__name__, add, 1)
+
+# Reference: upstream toolz's test suite: `bind` adds arguments to a new curried function, and `call` calls without currying.
+def test_curryBindCall() -> None:
+	assertEqualTo((curry(add).bind(1)(2), curry(add).call(1, 2), curry(add, 1).call(2)), (3, 3, 3), curry.__name__, add)
+
+# Reference: upstream toolz's test suite: a genuine `TypeError` from complete arguments propagates instead of currying.
+@pytest.mark.parametrize('args, expected, match', (
+	pytest.param((), TypeError, 'takes at least 2 arguments', id='funcAbsent'),
+	pytest.param((1,), TypeError, 'Input must be callable', id='funcNotCallable'),
+))
+def test_curryError(args: tuple[Any, ...], expected: type[Exception], match: str) -> None:
+	with pytest.raises(expected, match=match):
+		curry(*args)
+
+def test_curryCallError() -> None:
+	with pytest.raises(TypeError, match='unsupported operand'):
+		curry(add)(1, 'N')
+
+# Relation: unpickling a pickled function object returns an object that answers as the original does. `pickle` stores a
+# function by its qualified name, so every function here is importable.
+@pytest.mark.parametrize('protocol', (0, 1, 2, 3, 4, 5))
+@pytest.mark.parametrize('function, args, expected', (
+	pytest.param(curry(add, 1), (2,), 3, id='curryAdd1'),
+	pytest.param(compose(str, abs), (-3,), '3', id='composeStrAbs'),
+	pytest.param(juxt(abs, str), (-3,), (3, '-3'), id='juxtAbsStr'),
+	pytest.param(complement(isEven), (3,), True, id='complementIsEven'),
+	pytest.param(flip(pow), (2, 3), 9, id='flipPow'),
+	pytest.param(curry(scaleSum, a=1), (2, 3), 5, id='curryScaleSumA1'),
+))
+def test_pickleRoundTrip(function: Callable[..., Any], args: Sequence[Any], protocol: int, expected: Any) -> None:
+	assertEqualTo(pickle.loads(pickle.dumps(function, protocol))(*args), expected, 'pickle.loads(pickle.dumps(...))', function, protocol)
+
+# Reference: upstream toolz's test suite: a module-level function that `curry` decorates unpickles as the same object.
+@pytest.mark.parametrize('protocol', (0, 1, 2, 3, 4, 5))
+def test_pickleCurriedDecorated(protocol: int) -> None:
+	assert pickle.loads(pickle.dumps(addCurried, protocol)) is addCurried, messageTestFailure(pickle.loads(pickle.dumps(addCurried, protocol)), addCurried, 'pickle.loads(pickle.dumps(...))', addCurried, protocol)
+
+# Reference: upstream toolz's test suite: `None` where a callable belongs raises `TypeError`, never `SystemError`.
+@pytest.mark.parametrize('callNone, expected, match', (
+	pytest.param(partial(apply, None), TypeError, "'NoneType' object is not callable", id='apply'),  # pyright: ignore[reportArgumentType] # ty: ignore[invalid-argument-type]
+	pytest.param(complement(None), TypeError, "'NoneType' object is not callable", id='complement'),  # pyright: ignore[reportArgumentType] # ty: ignore[invalid-argument-type]
+	pytest.param(compose(None, None), TypeError, "'NoneType' object is not callable", id='compose'),  # pyright: ignore[reportArgumentType, reportCallIssue, reportUnknownArgumentType] # ty: ignore[no-matching-overload]
+	pytest.param(partial(curry, None), TypeError, 'Input must be callable', id='curry'),  # pyright: ignore[reportCallIssue, reportUnknownArgumentType]
+	pytest.param(partial(do, None, 1), TypeError, "'NoneType' object is not callable", id='do'),  # pyright: ignore[reportArgumentType] # ty: ignore[invalid-argument-type]
+	pytest.param(partial(juxt, None), TypeError, "'NoneType' object is not iterable", id='juxt'),  # pyright: ignore[reportCallIssue, reportUnknownArgumentType]
+	pytest.param(partial(pipe, 1, None), TypeError, "'NoneType' object is not callable", id='pipe'),  # pyright: ignore[reportCallIssue, reportUnknownArgumentType] # ty: ignore[too-many-positional-arguments]
+))
+def test_functoolzNone(callNone: Callable[[], Any], expected: type[Exception], match: str) -> None:
+	with pytest.raises(expected, match=match):
+		callNone()

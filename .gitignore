@@ -3,3 +3,5 @@ __pycache__/
 /build/
 /dist/
 humpy_cytoolz/*.pyd
+.hypothesis/
+.coverage

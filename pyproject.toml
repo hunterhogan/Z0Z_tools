@@ -1,6 +1,6 @@
 [project]
 name = "Z0Z_tools"
-version = "4.0.1"
+version = "4.1.0"
 description = "Typed Cython utilities for iterators, mappings, and function composition."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -30,7 +30,7 @@ optional-dependencies = { development = [
   "pytest-cov",
   "cython>=3.0",
   "setuptools>=74.1.0"
-], testing = ["pytest"] }
+], testing = ["hunterMakesPy>=0.10.0", "hypothesis", "pytest>=9.0", "pytest-xdist"] }
 
 [project.urls]
 Context7 = "https://context7.com/hunterhogan/z0z_tools"
@@ -47,19 +47,26 @@ build-backend = "setuptools.build_meta"
 [tool.cibuildwheel]
 build = "cp312-* cp313-* cp314-* cp315-*"
 skip = ["*-musllinux_*", "*-win32", "*-manylinux_i686", "pp*"]
-test-requires = ["pytest"]
+test-requires = ["hunterMakesPy>=0.10.0", "hypothesis", "pytest>=9.0"]
 test-command = "pytest --pyargs humpy_cytoolz.tests"
 
 [tool.coverage]
-report = { exclude_lines = ["if TYPE_CHECKING:", "if __name__ == \"__main__\":"], ignore_errors = false }
-run = { branch = true, data_file = "tests/coverage/.coverage", omit = [
-  "**/tests/*"
-], source = ["."] }
+report = { exclude_also = [
+  "@overload",
+  "^\\s*\\.\\.\\.$",
+  "if __name__ == \"__main__\":",
+  "if TYPE_CHECKING:",
+], ignore_errors = false }
+run = { branch = true, data_file = "tests/coverage/.coverage", omit = ["**/tests/*"], source = ["humpy_cytoolz", "Z0Z_tools"] }
 
 [tool.pytest]
 addopts = ["--color=yes"]
+empty_parameter_set_mark = "fail_at_collect"
+filterwarnings = ["error"]
 log_auto_indent = "On"
-testpaths = ["**/tests"]
+minversion = "9.0"
+strict = true
+testpaths = ["humpy_cytoolz/tests", "tests"]
 
 [tool.setuptools]
 ext-modules = [
@@ -79,6 +86,7 @@ package-data = { "*" = [
 packages = [
   "humpy_cytoolz.curried",
   "humpy_cytoolz.tests",
+  "humpy_cytoolz.tests.dataSamples",
   "humpy_cytoolz",
   "Z0Z_tools",
 ]
