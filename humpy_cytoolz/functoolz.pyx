@@ -541,7 +541,7 @@ cdef class Compose:
 		compose
 	"""
     # fix for #103, note: we cannot use __name__ at module-scope in cython
-    __module__ = 'cytooz.functoolz'
+    __module__ = 'humpy_cytoolz.functoolz'
 
     def __cinit__(self, *funcs):
         self.first = funcs[-1]

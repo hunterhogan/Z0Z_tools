@@ -83,6 +83,7 @@ def test_pipeGenerated(data: int, funcs: list[Callable[[int], int]]) -> None:
 	pytest.param('__name__', 'str_of_abs', id='name'),
 	pytest.param('__doc__', 'lambda *args, **kwargs: str(abs(*args, **kwargs))', id='doc'),
 	pytest.param('__wrapped__', abs, id='wrapped'),
+	pytest.param('__module__', 'humpy_cytoolz.functoolz', id='module'),
 ))
 def test_composeMetadata(attribute: str, expected: Any) -> None:
 	assertEqualTo(getattr(compose(str, abs), attribute), expected, compose.__name__, str, abs)
