@@ -883,10 +883,17 @@ cpdef object do(object func, object x):
     return x
 
 
-cpdef object flip(object func, object a, object b):
+cdef object c_flip(object func, tuple args, dict kwargs):
+    return PyObject_Call(func, args[::-1], kwargs)
+
+
+def flip(func, a, b, *args, **kwargs):
     """Call the function call with the arguments flipped
 
 	This function is curried.
+	All positional arguments are reversed, including additional arguments after
+	`a` and `b`. Keyword arguments are forwarded unchanged. A call with fewer
+	than two arguments for `func` returns a curried function.
 
 	>>> def div(a, b):
 	...     return a // b
@@ -905,7 +912,7 @@ cpdef object flip(object func, object a, object b):
 	>>> only_ints
 	[1, 2, 3]
 	"""
-    return PyObject_CallObject(func, (b, a))
+    return c_flip(func, (a, b, *args), kwargs)
 
 
 _flip = flip  # uncurried

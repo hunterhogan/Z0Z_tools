@@ -6,6 +6,7 @@ could complete one. `_signatures` binds with `inspect.Signature`, so `Signature.
 from __future__ import annotations
 
 from humpy_cytoolz._signatures import has_keywords, has_varargs, is_arity, is_partial_args, is_valid_args, num_required_args
+from humpy_cytoolz.functoolz import flip
 from humpy_cytoolz.tests import messageTestFailure
 from humpy_cytoolz.tests.dataSamples.signatures import (
 	signatureABDefaultsCD, signatureArgs, signatureEmpty, signatureFuncDefaultNone, signatureKwargs, signatureLikePartial, signatureX,
@@ -24,6 +25,12 @@ reasonDefectBindPartial: str = ('`is_partial_args` asks `inspect.Signature.bind_
 	' parameter even when `**keywords` would take it; `functools.partial` has such a signature from Python 3.13.')
 
 parametersArguments: tuple[ParameterSet, ...] = (
+	pytest.param(flip.func, (), {}, False, True, id='flipEmpty'),
+	pytest.param(flip.func, (pow,), {}, False, True, id='flipPow'),
+	pytest.param(flip.func, (pow, 2), {'mod': 5}, False, True, id='flipPowPartial'),
+	pytest.param(flip.func, (pow, 2, 3), {'mod': 5}, True, True, id='flipPowMod5'),
+	pytest.param(flip.func, (pow, 2, 3, 5), {}, True, True, id='flipPowThree'),
+	pytest.param(flip.func, (), {'func': pow, 'a': 2, 'b': 3}, True, True, id='flipPowKeywords'),
 	pytest.param(signatureEmpty, (), {}, True, True, id='signatureEmpty'),
 	pytest.param(signatureEmpty, (1,), {}, False, False, id='signatureEmpty-1'),
 	pytest.param(signatureEmpty, (), {'x': 1}, False, False, id='signatureEmpty-x'),
@@ -154,6 +161,7 @@ def test_is_partial_args(func: Callable[..., Any], args: tuple[Any, ...], kwargs
 	pytest.param(signatureXArgs, 1, id='signatureXArgs'),
 	pytest.param(signatureXYDefault1Kwargs, 1, id='signatureXYDefault1Kwargs'),
 	pytest.param(signatureXYArgsKwargs, 2, id='signatureXYArgsKwargs'),
+	pytest.param(flip.func, 3, id='flip'),
 	# Reference: upstream toolz's docstring counts required positional arguments, so a keyword-only parameter counts none.
 	pytest.param(signatureXKeywordOnly, 0, id='signatureXKeywordOnly'),
 	pytest.param(map, 2, id='map'),
@@ -167,6 +175,7 @@ def test_num_required_args(func: Callable[..., Any], expected: int | None) -> No
 	pytest.param(signatureX, False, id='signatureX'),
 	pytest.param(signatureXDefault1, True, id='signatureXDefault1'),
 	pytest.param(signatureKwargs, True, id='signatureKwargs'),
+	pytest.param(flip.func, True, id='flip'),
 	pytest.param(int, True, id='int'),
 	pytest.param(sorted, True, id='sorted'),
 	pytest.param(max, True, id='max'),
@@ -183,6 +192,7 @@ def test_has_keywords(func: Callable[..., Any], expected: bool | None) -> None:
 	pytest.param(signatureArgs, True, id='signatureArgs'),
 	pytest.param(signatureKwargs, False, id='signatureKwargs'),
 	pytest.param(signatureXYArgsKwargs, True, id='signatureXYArgsKwargs'),
+	pytest.param(flip.func, True, id='flip'),
 	pytest.param(map, True, id='map'),
 	pytest.param(max, None, id='max'),
 	pytest.param(1, False, id='notCallable'),
