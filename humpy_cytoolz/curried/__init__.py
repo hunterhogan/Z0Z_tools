@@ -1,81 +1,40 @@
-# ruff: file-ignore[non-empty-init-module]
-"""
-Alternate namespace for cytoolz such that all functions are curried
+"""Alternate namespace for `humpy_cytoolz` where functions are curried.
 
-Currying provides implicit partial evaluation of all functions
+Currying provides implicit partial evaluation of functions.
 
-Example:
+Examples
+--------
+`get` usually requires two arguments, an index and a collection.
 
-    Get usually requires two arguments, an index and a collection
-    >>> from humpy_cytoolz.curried import get
-    >>> get(0, ('a', 'b'))
-    'a'
+	>>> from humpy_cytoolz.curried import get
+	>>> get(0, ('a', 'b'))
+	'a'
 
-    When we use it in higher order functions we often want to pass a partially
-    evaluated form
-    >>> data = [(1, 2), (11, 22), (111, 222)]
-    >>> list(map(lambda seq: get(0, seq), data))
-    [1, 11, 111]
+When we use it in higher-order functions, we often want a partially evaluated form.
 
-    The curried version allows simple expression of partial evaluation
-    >>> list(map(get(0), data))
-    [1, 11, 111]
+	>>> data = [(1, 2), (11, 22), (111, 222)]
+	>>> list(map(get(0), data))
+	[1, 11, 111]
 
 See Also
 --------
-    humpy_cytoolz.functoolz.curry
+`humpy_cytoolz.functoolz.curry`
 """
+# ruff: file-ignore[builtin-import-shadowing, unconventional-import-alias]
 from __future__ import annotations
 
-from . import operator
-from .exceptions import merge, merge_with
+from . import operator as operator
+from ._curryFactory import (
+	accumulate as accumulate, assoc as assoc, assoc_in as assoc_in, cons as cons, countby as countby, dissoc as dissoc, do as do, drop as drop,
+	excepts as excepts, filter as filter, get as get, get_in as get_in, groupby as groupby, interpose as interpose, isdistinct as isdistinct,
+	itemfilter as itemfilter, itemmap as itemmap, iterate as iterate, join as join, keyfilter as keyfilter, keymap as keymap, map as map,
+	mapcat as mapcat, nth as nth, partial as partial, partition as partition, partition_all as partition_all, partitionby as partitionby,
+	peekn as peekn, pluck as pluck, random_sample as random_sample, reduce as reduce, reduceby as reduceby, remove as remove,
+	sliding_window as sliding_window, sorted as sorted, tail as tail, take as take, take_nth as take_nth, topk as topk, unique as unique,
+	update_in as update_in, valfilter as valfilter, valmap as valmap)
+from .exceptions import merge as merge, merge_with as merge_with
 from humpy_cytoolz import (
-	apply, comp, complement, compose, compose_left, concat, concatv, count, curry, diff, first, flip, frequencies, identity, interleave,
-	isiterable, juxt, last, memoize, merge_sorted, peek, pipe, second, thread_first, thread_last)
-import humpy_cytoolz
-
-accumulate = humpy_cytoolz.curry(humpy_cytoolz.accumulate)
-assoc = humpy_cytoolz.curry(humpy_cytoolz.assoc)
-assoc_in = humpy_cytoolz.curry(humpy_cytoolz.assoc_in)
-cons = humpy_cytoolz.curry(humpy_cytoolz.cons)
-countby = humpy_cytoolz.curry(humpy_cytoolz.countby)
-dissoc = humpy_cytoolz.curry(humpy_cytoolz.dissoc)
-do = humpy_cytoolz.curry(humpy_cytoolz.do)
-drop = humpy_cytoolz.curry(humpy_cytoolz.drop)
-excepts = humpy_cytoolz.curry(humpy_cytoolz.excepts)
-filter = humpy_cytoolz.curry(humpy_cytoolz.filter)  # ruff: ignore[builtin-variable-shadowing]
-get = humpy_cytoolz.curry(humpy_cytoolz.get)
-get_in = humpy_cytoolz.curry(humpy_cytoolz.get_in)
-groupby = humpy_cytoolz.curry(humpy_cytoolz.groupby)
-interpose = humpy_cytoolz.curry(humpy_cytoolz.interpose)
-isdistinct = humpy_cytoolz.curry(humpy_cytoolz.isdistinct)
-itemfilter = humpy_cytoolz.curry(humpy_cytoolz.itemfilter)
-itemmap = humpy_cytoolz.curry(humpy_cytoolz.itemmap)
-iterate = humpy_cytoolz.curry(humpy_cytoolz.iterate)
-join = humpy_cytoolz.curry(humpy_cytoolz.join)
-keyfilter = humpy_cytoolz.curry(humpy_cytoolz.keyfilter)
-keymap = humpy_cytoolz.curry(humpy_cytoolz.keymap)
-map = humpy_cytoolz.curry(humpy_cytoolz.map)  # ruff: ignore[builtin-variable-shadowing]
-mapcat = humpy_cytoolz.curry(humpy_cytoolz.mapcat)
-nth = humpy_cytoolz.curry(humpy_cytoolz.nth)
-partial = humpy_cytoolz.curry(humpy_cytoolz.partial)
-partition = humpy_cytoolz.curry(humpy_cytoolz.partition)
-partition_all = humpy_cytoolz.curry(humpy_cytoolz.partition_all)
-partitionby = humpy_cytoolz.curry(humpy_cytoolz.partitionby)
-peekn = humpy_cytoolz.curry(humpy_cytoolz.peekn)
-pluck = humpy_cytoolz.curry(humpy_cytoolz.pluck)
-random_sample = humpy_cytoolz.curry(humpy_cytoolz.random_sample)
-reduce = humpy_cytoolz.curry(humpy_cytoolz.reduce)
-reduceby = humpy_cytoolz.curry(humpy_cytoolz.reduceby)
-remove = humpy_cytoolz.curry(humpy_cytoolz.remove)
-sliding_window = humpy_cytoolz.curry(humpy_cytoolz.sliding_window)
-sorted = humpy_cytoolz.curry(humpy_cytoolz.sorted)  # ruff: ignore[builtin-variable-shadowing]
-tail = humpy_cytoolz.curry(humpy_cytoolz.tail)
-take = humpy_cytoolz.curry(humpy_cytoolz.take)
-take_nth = humpy_cytoolz.curry(humpy_cytoolz.take_nth)
-topk = humpy_cytoolz.curry(humpy_cytoolz.topk)
-unique = humpy_cytoolz.curry(humpy_cytoolz.unique)
-update_in = humpy_cytoolz.curry(humpy_cytoolz.update_in)
-valfilter = humpy_cytoolz.curry(humpy_cytoolz.valfilter)
-valmap = humpy_cytoolz.curry(humpy_cytoolz.valmap)
-del humpy_cytoolz
+	apply as apply, comp as comp, complement as complement, compose as compose, compose_left as compose_left, concat as concat,
+	concatv as concatv, count as count, curry as curry, diff as diff, first as first, flip as flip, frequencies as frequencies,
+	identity as identity, interleave as interleave, isiterable as isiterable, juxt as juxt, last as last, memoize as memoize,
+	merge_sorted as merge_sorted, peek as peek, pipe as pipe, second as second, thread_first as thread_first, thread_last as thread_last)

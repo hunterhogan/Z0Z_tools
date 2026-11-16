@@ -409,7 +409,6 @@ def _num_required_args(func: Callable[..., Any]) -> builtins.int | None:
 		return val
 	return None
 
-
 def _check_sigspec[T](
 	sigspec: inspect.Signature | None, func: Callable[..., Any], builtin_func: Callable[..., T], *builtin_args: Any
 ) -> tuple[inspect.Signature | None, T | bool | None]:
@@ -427,7 +426,6 @@ def _check_sigspec[T](
 			return (None, val)
 		return (None, False)
 	return (inspection, None)
-
 
 def num_required_args(func: Callable[..., Any], sigspec: inspect.Signature | None = None) -> int | None:
 	sigspec, rv = _check_sigspec(sigspec, func, _num_required_args, func)
@@ -503,7 +501,6 @@ def is_arity(n: int, func: Callable[..., Any], sigspec: inspect.Signature | None
 	if num is None or varargs is None or keywords is None:
 		return None
 	return True
-
 
 cytoolz_info: dict[ModuleType | str, dict[str, list[SignatureInput]]] = {}
 cytoolz_info['humpy_cytoolz.dicttoolz'] = dict(assoc=[lambda d, key, value, factory=dict: None], assoc_in=[lambda d, keys, value, factory=dict: None], dissoc=[lambda d, *keys, **kwargs: None], get_in=[lambda keys, coll, default=None, no_default=False: None], itemfilter=[lambda predicate, d, factory=dict: None], itemmap=[lambda func, d, factory=dict: None], keyfilter=[lambda predicate, d, factory=dict: None], keymap=[lambda func, d, factory=dict: None], merge=[lambda *dicts, **kwargs: None], merge_with=[lambda func, *dicts, **kwargs: None], update_in=[lambda d, keys, func, default=None, factory=dict: None], valfilter=[lambda predicate, d, factory=dict: None], valmap=[lambda func, d, factory=dict: None])

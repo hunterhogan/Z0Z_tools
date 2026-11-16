@@ -29,4 +29,3 @@ def synchronizeTests(settingsPackageSource: PackageSettings, settingsPackageDupl
 		).visit(astModule)
 
 		write_astModule(astModule, settingsPackageDuplicate.pathPackage / relativePathTests / filename, settingsWrite_astModule)
-
