@@ -858,11 +858,20 @@ def do[T](func: Callable[[T], Any], x: T) -> T:
 	func(x)
 	return x
 
+@overload
 @curry
-def flip[T, U, R](func: Callable[[T, U], R], a: U, b: T) -> R:
+def flip[T, U, R](func: Callable[[T, U], R], a: U, b: T) -> R: ...
+@overload
+@curry
+def flip[R](func: Callable[..., R], a: Any, b: Any, *args: Any, **kwargs: Any) -> R: ...
+@curry
+def flip[R](func: Callable[..., R], a: Any, b: Any, *args: Any, **kwargs: Any) -> R:
 	"""Call the function call with the arguments flipped
 
 	This function is curried.
+	All positional arguments are reversed, including additional arguments after
+	`a` and `b`. Keyword arguments are forwarded unchanged. A call with fewer
+	than two arguments for `func` returns a curried function.
 
 	>>> def div(a, b):
 	...     return a // b
@@ -881,7 +890,7 @@ def flip[T, U, R](func: Callable[[T, U], R], a: U, b: T) -> R:
 	>>> only_ints
 	[1, 2, 3]
 	"""
-	return func(b, a)
+	return func(*(a, b, *args)[::-1], **kwargs)
 
 def return_none(exc: Exception) -> None:
 	"""Returns None."""

@@ -132,16 +132,32 @@ def test_do() -> None:
 	x: object = object()
 	assertEqualTo((do(log.append, x) is x, log), (True, [x]), do.__name__, log.append, x)
 
-@pytest.mark.parametrize('args, expected', (
-	pytest.param((int.__floordiv__, 2, 6), 3, id='floordiv-2-6'),
-	pytest.param((isinstance, int, 1), True, id='isinstance-int-1'),
+@pytest.mark.parametrize('args, kwargs, expected', (
+	pytest.param((int.__floordiv__, 2, 6), {}, 3, id='floordiv-2-6'),
+	pytest.param((isinstance, int, 1), {}, True, id='isinstance-int-1'),
+	pytest.param((pow, 2, 3, 5), {}, 1, id='powThree'),
+	pytest.param((pow, 2, 3), {'mod': 5}, 4, id='powMod5'),
+	pytest.param((pow, 2), {'b': 3, 'mod': 5}, 4, id='powBMod5'),
+	pytest.param((), {'func': pow, 'a': 2, 'b': 3}, 9, id='powKeywords'),
+	pytest.param((scaleSum, 2, 3, 4), {}, 14, id='scaleSumThree'),
+	pytest.param((str.format, 3, 2, 1, '{0} {1} {2}'), {}, '1 2 3', id='formatFour'),
+	pytest.param((str.format, 'second', 'first', '{0} {1} {ending}'), {'ending': 'done'}, 'first second done', id='formatKeyword'),
+	pytest.param((partial(str.format, '{0} {1} {value} {width}'), 2, 1), {'value': 'N', 'width': 4}, '1 2 N 4', id='formatKeywords'),
 ))
-def test_flip(args: tuple[Any, ...], expected: Any) -> None:
-	assertEqualTo(flip(*args), expected, flip.__name__, *args)
+def test_flip(args: tuple[Any, ...], kwargs: dict[str, Any], expected: Any) -> None:
+	assertEqualTo(flip(*args, **kwargs), expected, flip.__name__, *args, **kwargs)
 
 # Reference: the docstring states that `flip` is curried.
-def test_flipCurried() -> None:
-	assertEqualTo(flip(int.__floordiv__, 2)(4), 2, flip.__name__, int.__floordiv__, 2)
+@pytest.mark.parametrize('args, kwargs, argsCall, kwargsCall, expected', (
+	pytest.param((int.__floordiv__, 2), {}, (4,), {}, 2, id='floordiv'),
+	pytest.param((), {}, (pow, 2, 3), {}, 9, id='empty'),
+	pytest.param((pow,), {}, (2, 3), {}, 9, id='pow'),
+	pytest.param((pow,), {}, (2, 3, 5), {}, 1, id='powThree'),
+	pytest.param((pow, 2), {'mod': 5}, (3,), {}, 4, id='powMod5'),
+	pytest.param((pow,), {'b': 3, 'mod': 5}, (), {'a': 2}, 4, id='powKeywords'),
+))
+def test_flipCurried(args: tuple[Any, ...], kwargs: dict[str, Any], argsCall: tuple[Any, ...], kwargsCall: dict[str, Any], expected: Any) -> None:
+	assertEqualTo(flip(*args, **kwargs)(*argsCall, **kwargsCall), expected, flip.__name__, *args, **kwargs)
 
 # The handler receives the exception, so `type` as the handler returns the class of the exception it caught. `return_none`
 # is the documented default handler.
@@ -263,6 +279,8 @@ def test_curryCallError() -> None:
 	pytest.param(juxt(abs, str), (-3,), (3, '-3'), id='juxtAbsStr'),
 	pytest.param(complement(isEven), (3,), True, id='complementIsEven'),
 	pytest.param(flip(pow), (2, 3), 9, id='flipPow'),
+	pytest.param(flip(pow), (2, 3, 5), 1, id='flipPowThree'),
+	pytest.param(flip(pow, mod=5), (2, 3), 4, id='flipPowMod5'),
 	pytest.param(curry(scaleSum, a=1), (2, 3), 5, id='curryScaleSumA1'),
 ))
 def test_pickleRoundTrip(function: Callable[..., Any], args: Sequence[Any], protocol: int, expected: Any) -> None:

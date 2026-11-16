@@ -8,7 +8,7 @@ from humpy_cytoolz.itertoolz cimport (
 
 from humpy_cytoolz.functoolz cimport (
     c_compose, memoize, c_pipe, c_thread_first, c_thread_last,
-    complement, curry, do, identity, excepts, flip)
+    complement, curry, do, identity, excepts, c_flip)
 
 
 from humpy_cytoolz.dicttoolz cimport (
