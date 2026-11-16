@@ -8,11 +8,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: tests-${{ github.event.pull_request.number || github.ref }}
+  group: tests-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  tests:
+  test:
     name: Python ${{ matrix.python }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -25,7 +25,8 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python }}
-      - name: Install package and test dependencies
-        run: pip install --editable ".[testing]"
+          allow-prereleases: true
+      - name: Build and install
+        run: pip install -e ".[testing]"
       - name: Run full test suite
         run: pytest
