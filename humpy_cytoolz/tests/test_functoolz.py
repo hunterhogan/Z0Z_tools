@@ -227,7 +227,10 @@ def test_curryFlattens(func: Callable[..., Any], expected: tuple[Any, ...]) -> N
 	pytest.param('__doc__', scaleSum.__doc__, id='doc'),
 ))
 def test_curryMetadata(attribute: str, expected: Any) -> None:
-	assertEqualTo(getattr(curry(scaleSum), attribute), expected, curry.__name__, scaleSum)
+	curried: curry[..., int] = curry(scaleSum)
+	assertEqualTo(getattr(curried, attribute), expected, curry.__name__, scaleSum)
+	setattr(curried, attribute, None)
+	assertEqualTo(getattr(curried, attribute), None, curry.__name__, scaleSum)
 
 # Relation: curried functions are equal, and hash equally, exactly when their functions and arguments are equal.
 def test_curryEquality() -> None:
