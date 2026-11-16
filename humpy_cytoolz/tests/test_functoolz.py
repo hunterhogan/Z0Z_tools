@@ -79,13 +79,31 @@ def test_pipeGenerated(data: int, funcs: list[Callable[[int], int]]) -> None:
 	assertEqualTo((pipe(data, *funcs), compose_left(*funcs)(data)), (compose(*reversed(funcs))(data), compose(*reversed(funcs))(data)), pipe.__name__, data, *funcs)
 
 # Reference: upstream toolz's test suite, for the metadata of a composition.
-@pytest.mark.parametrize('attribute, expected', (
-	pytest.param('__name__', 'str_of_abs', id='name'),
-	pytest.param('__doc__', 'lambda *args, **kwargs: str(abs(*args, **kwargs))', id='doc'),
-	pytest.param('__wrapped__', abs, id='wrapped'),
+@pytest.mark.parametrize('funcs, attribute, expected', (
+	pytest.param((str, abs), '__name__', 'str_of_abs', id='str-abs-name'),
+	pytest.param((str, abs), '__doc__', 'lambda *args, **kwargs: str(abs(*args, **kwargs))', id='str-abs-doc'),
+	pytest.param((str, abs), '__wrapped__', abs, id='str-abs-wrapped'),
+	pytest.param((str, abs), '__module__', 'humpy_cytoolz.functoolz', id='str-abs-module'),
+	# Reference: upstream #240 combines the first applied callable's parameter annotations with the last callable's return annotation.
+	pytest.param((isEven, scaleSum), '__annotations__', {'x': 'int', 'y': 'int', 'a': 'int', 'return': 'bool'}, id='isEven-scaleSum-annotations'),
+	pytest.param((identity, scaleSum), '__annotations__', {'x': 'int', 'y': 'int', 'a': 'int'}, id='identity-scaleSum-annotations'),
+	pytest.param((isEven, identity), '__annotations__', {'return': 'bool'}, id='isEven-identity-annotations'),
+	pytest.param((identity, identity), '__annotations__', {}, id='identity-identity-annotations'),
+	pytest.param((identity, str), '__annotations__', {}, id='identity-str-annotations'),
+	pytest.param((str, scaleSum), '__annotations__', {'x': 'int', 'y': 'int', 'a': 'int'}, id='str-scaleSum-annotations'),
+	pytest.param((isEven, len), '__annotations__', {'return': 'bool'}, id='isEven-len-annotations'),
+	pytest.param((identity, isEven, scaleSum), '__annotations__', {'x': 'int', 'y': 'int', 'a': 'int'}, id='identity-isEven-scaleSum-annotations'),
+	pytest.param((isEven, scaleSum, identity), '__annotations__', {'return': 'bool'}, id='isEven-scaleSum-identity-annotations'),
+	pytest.param((compose(isEven, identity), compose(identity, scaleSum)), '__annotations__'
+		, {'x': 'int', 'y': 'int', 'a': 'int', 'return': 'bool'}, id='compose-compose-annotations'),
+	pytest.param((isEven, partial(scaleSum, a=2)), '__annotations__'
+		, {'x': 'int', 'y': 'int', 'a': 'int', 'return': 'bool'}, id='isEven-partial-annotations'),
+	pytest.param((isEven, partial(scaleSum, 2)), '__annotations__', {'y': 'int', 'a': 'int', 'return': 'bool'}, id='isEven-partial2-annotations'),
+	pytest.param((isEven, curry(scaleSum)), '__annotations__'
+		, {'x': 'int', 'y': 'int', 'a': 'int', 'return': 'bool'}, id='isEven-curry-annotations'),
 ))
-def test_composeMetadata(attribute: str, expected: Any) -> None:
-	assertEqualTo(getattr(compose(str, abs), attribute), expected, compose.__name__, str, abs)
+def test_composeMetadata(funcs: tuple[Callable[..., Any], ...], attribute: str, expected: Any) -> None:
+	assertEqualTo(getattr(compose(*funcs), attribute), expected, compose.__name__, *funcs)
 
 # Relation: compositions of the same functions are equal and hash equally; `compose_left` reverses the order of `compose`.
 def test_composeEquality() -> None:

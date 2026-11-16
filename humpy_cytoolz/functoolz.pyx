@@ -1,7 +1,9 @@
 # cython: embedsignature=True
 # cython: freethreading_compatible=True
 # cython: language_level=3
+from collections.abc import Callable
 from functools import partial
+from inspect import Signature
 from humpy_cytoolz.utils import no_default
 import humpy_cytoolz._signatures as _sigs
 
@@ -21,6 +23,7 @@ from cpython.tuple cimport PyTuple_Check, PyTuple_GET_SIZE
 import importlib
 import inspect
 import operator
+import sys
 import types
 
 # cdef constants to eliminate global lookups
@@ -35,6 +38,13 @@ del operator
 
 cdef object MethodType = types.MethodType
 del types
+
+cdef bint PY314 = sys.version_info >= (3, 14)
+del sys
+
+cdef object annotationlib = None
+if PY314:
+    annotationlib = import_module('annotationlib')
 
 cdef object _is_arity = is_arity
 cdef object _has_varargs = has_varargs
@@ -533,6 +543,25 @@ cdef class _memoize:
         return curry(self, instance)
 
 
+class _InstanceAnnotations(dict):
+    __slots__ = ('fget',)
+
+    def __init__(self, fget: Callable[["Compose"], dict[str, object]]) -> None:
+        self.fget = fget
+
+    def __get__(self, obj: "Compose | None", type: type | None = None) -> dict[str, object]:
+        if obj is None:
+            return self
+        return self.fget(obj)
+
+
+class _InstanceAnnotate(property):
+    def __get__(self, obj: "Compose | None", type: type | None = None) -> Callable[[int], dict[str, object]] | None:
+        if obj is None:
+            return None
+        return property.__get__(self, obj, type)
+
+
 cdef class Compose:
     """A composition of functions
 
@@ -541,7 +570,7 @@ cdef class Compose:
 		compose
 	"""
     # fix for #103, note: we cannot use __name__ at module-scope in cython
-    __module__ = 'cytooz.functoolz'
+    __module__ = 'humpy_cytoolz.functoolz'
 
     def __cinit__(self, *funcs):
         self.first = funcs[-1]
@@ -621,6 +650,63 @@ cdef class Compose:
             except AttributeError:
                 # One of our callables does not have a `__name__`, whatever.
                 return 'A composition of functions'
+
+
+    def _combined_annotations(self, annotation_format: int | None = None) -> dict[str, object]:
+        kwargs: dict[str, int] = {}
+        lazy: bool = False
+        if annotation_format is not None:
+            kwargs = {'annotation_format': annotation_format}
+            lazy = annotation_format != annotationlib.Format.VALUE
+
+        def annotations_of(func: object) -> dict[str, object]:
+            if isinstance(func, Compose):
+                return func._combined_annotations(annotation_format)
+            #=SIN= upstream handling: #240 omits unavailable signatures and preserves eager annotation errors.
+            try:
+                sig: Signature = signature(func, **kwargs)
+            except (TypeError, ValueError):
+                return {}
+            except NameError:
+                if not lazy:
+                    raise
+                return {}
+            #=SIN= upstream comprehension: #240 filters unannotated signature parameters.
+            rv: dict[str, object] = {name: param.annotation
+                                    for name, param in sig.parameters.items()
+                                    if param.annotation is not param.empty}
+            if sig.return_annotation is not sig.empty:
+                rv['return'] = sig.return_annotation
+            return rv
+
+        annotations: dict[str, object] = annotations_of(self.first)
+        annotations.pop('return', None)
+        last = self.first
+        if self.funcs:
+            last = self.funcs[-1]
+        last_annotations: dict[str, object] = annotations_of(last)
+        if 'return' in last_annotations:
+            annotations['return'] = last_annotations['return']
+        return annotations
+
+    __annotations__ = _InstanceAnnotations(_combined_annotations)
+
+    def _get_annotate(self) -> Callable[[int], dict[str, object]]:
+        if not PY314:
+            #=SIN= upstream protocol: #240 leaves __annotate__ absent before Python 3.14.
+            raise AttributeError('__annotate__')
+
+        def annotate(format: int) -> dict[str, object]:
+            Format = annotationlib.Format
+            if format == Format.STRING:
+                return annotationlib.annotations_to_string(self._combined_annotations(format))
+            if format in (Format.VALUE, Format.FORWARDREF):
+                return self._combined_annotations(format)
+            #=SIN= upstream protocol: Python annotation hooks reject unsupported formats with NotImplementedError.
+            raise NotImplementedError(format)
+        return annotate
+
+    __annotate__ = _InstanceAnnotate(_get_annotate)
 
 
 cdef object c_compose(object funcs):
