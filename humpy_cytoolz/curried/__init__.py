@@ -32,7 +32,7 @@ from ._curryFactory import (
 	peekn as peekn, pluck as pluck, random_sample as random_sample, reduce as reduce, reduceby as reduceby, remove as remove,
 	sliding_window as sliding_window, sorted as sorted, tail as tail, take as take, take_nth as take_nth, topk as topk, unique as unique,
 	update_in as update_in, valfilter as valfilter, valmap as valmap)
-from .exceptions import merge as merge, merge_with as merge_with
+from ._curryHomemade import merge as merge, merge_with as merge_with
 from humpy_cytoolz import (
 	apply as apply, comp as comp, complement as complement, compose as compose, compose_left as compose_left, concat as concat,
 	concatv as concatv, count as count, curry as curry, diff as diff, first as first, flip as flip, frequencies as frequencies,

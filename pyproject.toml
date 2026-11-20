@@ -1,6 +1,6 @@
 [project]
 name = "Z0Z_tools"
-version = "4.1.1"
+version = "4.1.2"
 description = "Typed Cython utilities for iterators, mappings, and function composition."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -47,7 +47,7 @@ build-backend = "setuptools.build_meta"
 [tool.cibuildwheel]
 build = "cp312-* cp313-* cp314-* cp315-*"
 skip = ["*-musllinux_*", "*-win32", "*-manylinux_i686", "pp*"]
-test-requires = ["hunterMakesPy>=0.10.0", "hypothesis", "pytest>=9.0"]
+test-extras = ["testing"]
 test-command = "pytest --pyargs humpy_cytoolz.tests"
 
 [tool.coverage]

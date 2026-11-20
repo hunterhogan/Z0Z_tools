@@ -1,8 +1,6 @@
-name: Tests
+name: Python Tests
 
-on:
-  pull_request:
-  workflow_dispatch:
+on: [pull_request, workflow_dispatch]
 
 permissions:
   contents: read
@@ -12,21 +10,55 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
-    name: Python ${{ matrix.python }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python: ['3.12', '3.13', '3.14', '3.15']
+
+  get-project-info:
+    runs-on: ubuntu-latest
+    outputs:
+      tests-python-versions: ${{ steps.get-project-info.outputs.versions }}
+
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
-          python-version: ${{ matrix.python }}
-          allow-prereleases: true
-      - name: Build and install
-        run: pip install -e ".[testing]"
-      - name: Run full test suite
-        run: pytest
+          python-version: '>=3.13'
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - run: pip install packaging
+
+      - id: get-project-info
+        run: |
+          python -c "
+          import itertools, json, os, packaging.specifiers, packaging.version, pathlib, tomllib, urllib.request
+
+          dictionaryProject = tomllib.loads(pathlib.Path('pyproject.toml').read_text(encoding='utf-8'))['project']
+
+          listPythonVersions = [str(max(group))
+            for _key, group in itertools.groupby(
+              packaging.specifiers.SpecifierSet(dictionaryProject['requires-python']).filter(
+                (packaging.version.Version(manifest['version'])
+                for manifest in json.loads(urllib.request.urlopen(
+                'https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json'
+                ).read())), prereleases=False)
+              , lambda V: (V.major, V.minor))]
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as writeStream:
+            writeStream.write(f'versions={json.dumps(listPythonVersions)}\n')
+          "
+
+  make-testbeds:
+    needs: get-project-info
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tests-python-versions: ${{ fromJson(needs.get-project-info.outputs.tests-python-versions) }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.tests-python-versions }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: pip install -e .[testing]
+      - run: pytest

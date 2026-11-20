@@ -1,0 +1,19 @@
+preset = "strict"
+enabled-ignores = ["pyrefly"]
+infer-with-first-use = false
+project-excludes = [
+    "typings",
+    "typings/**/*",
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.*",
+    ".venv",
+    ".vAnalysis",
+]
+
+[errors]
+bad-return = "warn"
+invalid-type-var = "warn"
+invalid-yield = "warn"
+protected-access = "warn"
+redundant-condition = "warn"

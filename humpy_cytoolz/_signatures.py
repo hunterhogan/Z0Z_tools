@@ -1,5 +1,3 @@
-# pyright: reportUnknownLambdaType=false
-# ruff:file-ignore[unused-lambda-argument, builtin-lambda-argument-shadowing, try-consider-else]
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping

@@ -1,7 +1,6 @@
 __pycache__/
 *.egg-info/
+*.pyd
 /build/
-/dist/
-humpy_cytoolz/*.pyd
-.hypothesis/
 .coverage
+.hypothesis/

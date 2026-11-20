@@ -26,7 +26,7 @@ boxOfIdentifiersUnchanged: tuple[str, ...] = (
 	'thread_first', 'thread_last')
 
 boxOfIdentifiersExceptions: tuple[str, ...] = ('merge', 'merge_with')
-"""Functions that `humpy_cytoolz.curried.exceptions` curries through a wrapper, because their variadic signatures defeat `curry`."""
+"""Functions that `humpy_cytoolz.curried._curryHomemade` curries through a wrapper, because their variadic signatures defeat `curry`."""
 
 @pytest.mark.parametrize('identifier', boxOfIdentifiersCurried)
 def test_curriedCurried(identifier: str) -> None:
@@ -46,8 +46,8 @@ def test_curriedComplete() -> None:
 @pytest.mark.parametrize('callCurried, expected', (
 	pytest.param(partial(humpy_cytoolz.curried.merge(factory=partial(defaultdict[int, int], int)), {1: 1}), defaultdict(int, {1: 1}), id='merge-factoryThenDicts'),
 	pytest.param(partial(humpy_cytoolz.curried.merge, {1: 1}), {1: 1}, id='merge-dict'),
-	pytest.param(partial(humpy_cytoolz.curried.merge_with(sum), {1: 1}, {1: 2}), {1: 3}, id='merge_with-sumThenDicts'),  # pyright: ignore[reportArgumentType, reportCallIssue]
-	pytest.param(partial(humpy_cytoolz.curried.merge_with, sum, [{'a': 1}, {'a': 2}]), {'a': 3}, id='merge_with-sum-listOfDicts'),  # pyright: ignore[reportCallIssue] # ty: ignore[too-many-positional-arguments]
+	pytest.param(partial(humpy_cytoolz.curried.merge_with(sum), {1: 1}, {1: 2}), {1: 3}, id='merge_with-sumThenDicts'),
+	pytest.param(partial(humpy_cytoolz.curried.merge_with, sum, [{'a': 1}, {'a': 2}]), {'a': 3}, id='merge_with-sum-listOfDicts'),
 ))
 def test_curriedExceptions(callCurried: partial[object], expected: object) -> None:
 	assertEqualTo(callCurried(), expected, 'humpy_cytoolz.curried', callCurried)
