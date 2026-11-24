@@ -60,5 +60,6 @@ jobs:
           python-version: ${{ matrix.tests-python-versions }}
           cache: pip
           cache-dependency-path: pyproject.toml
-      - run: pip install -e .[testing]
+      - run: pip install --upgrade "pip>=25.1"
+      - run: pip install -e . --group testing
       - run: pytest

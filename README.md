@@ -40,6 +40,22 @@ from humpy_cytoolz.curried import operator
 pip install Z0Z_tools
 ```
 
+## Development
+
+Dependency groups need pip 25.1 or later. Installing the project builds its Cython extensions.
+
+```bash
+pip install -e . --group testing
+```
+
+```bash
+pip install -e . --group development
+```
+
+`testing` supplies what `pytest` needs. `development` includes `testing` and adds the tools that
+generate and build the package. `development` installs only on Python 3.14 or later, because
+`astToolkit` requires it.
+
 ## Sources
 
 1. [toolz](https://github.com/pytoolz/toolz)

@@ -25,7 +25,6 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = ["more-itertools>=11.0", "optype>=0.19", "typing_extensions>=4.10.0"]
-optional-dependencies = { development = ["astToolkit>=0.14.0", "hunterMakesPy>=0.10.0", "pytest-cov", "cython>=3.0", "setuptools>=74.1.0"], testing = ["hunterMakesPy>=0.10.0", "hypothesis", "pytest>=9.0", "pytest-xdist"] }
 
 [project.urls]
 Context7 = "https://context7.com/hunterhogan/z0z_tools"
@@ -35,14 +34,25 @@ Homepage = "https://github.com/hunterhogan/Z0Z_tools"
 Issues = "https://github.com/hunterhogan/Z0Z_tools/issues"
 Repository = "https://github.com/hunterhogan/Z0Z_tools.git"
 
+[dependency-groups]
+development = [
+  "astToolkit>=0.14.0",
+  "hunterMakesPy>=0.10.0",
+  "pytest-cov",
+  "cython>=3.0",
+  "setuptools>=77.0.1",
+  { include-group = "testing" },
+]
+testing = ["hunterMakesPy>=0.10.0", "hypothesis", "pytest>=9.0", "pytest-xdist"]
+
 [build-system]
-requires = ["cython>=3.0", "setuptools>=74.1.0"]
+requires = ["cython>=3.0", "setuptools>=77.0.1"]
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
 build = "cp312-* cp313-* cp314-* cp315-*"
 skip = ["*-musllinux_*", "*-win32", "*-manylinux_i686", "pp*"]
-test-extras = ["testing"]
+test-groups = ["testing"]
 test-command = "pytest --pyargs humpy_cytoolz.tests"
 
 [tool.coverage]
