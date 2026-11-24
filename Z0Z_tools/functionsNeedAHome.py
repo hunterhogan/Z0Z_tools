@@ -38,13 +38,13 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
 	from collections.abc import Container, Hashable, Iterable, Iterator, Mapping, Sequence
-	from hunterMakesPy import Ordinals
+	from optype import CanLeSame
 	from typing import Any
 
 #======== Boolean antecedents ================================================
 
 @syntacticCurry
-def between吗[小于: Ordinals](floor: 小于, ceiling: 小于, comparand: 小于) -> bool:
+def between吗[小于: CanLeSame](floor: 小于, ceiling: 小于, comparand: 小于) -> bool:
 	"""Test the inclusive bounds `floor <= comparand <= ceiling`.
 
 	(AI generated docstring)
